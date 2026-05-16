@@ -270,6 +270,39 @@
       line-height: 1.5;
     }
     .section-gap { margin-top: 18px; }
+    .strategy { display: none; }
+    .strategy.active { display: block; }
+    .bar-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(170px, 1.1fr) minmax(120px, 2fr) 72px;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .06);
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #64d2ff);
+    }
+    .bar-fill.alt { background: linear-gradient(90deg, #34c759, #9be15d); }
+    .bar-fill.warn { background: linear-gradient(90deg, #ff9f0a, #ffd60a); }
+    .bar-row strong {
+      color: var(--text);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
     @media (max-width: 850px) {
       main {
         width: min(100% - 28px, 760px);
@@ -322,6 +355,11 @@
       .stat-value { font-size: 28px; }
       .signal { font-size: 52px; }
       #priceChart { height: 280px; }
+      .bar-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .bar-row strong { text-align: left; }
       th, td {
         padding: 10px 8px;
         font-size: 13px;
@@ -338,9 +376,11 @@
   </p>
 
   <nav class="site-nav" aria-label="Strategies">
-    <button type="button" class="active">Guarded A10/B20 SMA20 Leverage Signal</button>
+    <button type="button" class="active" data-strategy-target="guardedStrategy">Guarded A10/B20 SMA20 Leverage Signal</button>
+    <button type="button" data-strategy-target="momentumStrategy">Momentum Strategy Research</button>
   </nav>
 
+  <section id="guardedStrategy" class="strategy active">
   <section class="card" style="margin-bottom: 18px;">
     <h2>Guarded A10/B20 SMA20 Leverage Signal</h2>
     <p>
@@ -625,6 +665,244 @@
       </p>
     </section>
   </section>
+  </section>
+
+  <section id="momentumStrategy" class="strategy">
+    <section class="card" style="margin-bottom: 18px;">
+      <h2>Momentum Strategy Research</h2>
+      <p>
+        This strategy tab collects the momentum leverage tests run over the same 30-year S&amp;P 500 history:
+        $100 starting capital, $10 fixed annual inflow, 1.0% rebalance cost, and the project funding-cost model.
+        It includes both faster daily momentum triggers and slower long-hold momentum rules designed to stay in
+        2x/3x for longer.
+      </p>
+      <nav class="site-nav" aria-label="Momentum strategy sections">
+        <button type="button" class="active" data-page-target="momentumSignalPage">Signal</button>
+        <button type="button" data-page-target="momentumBacktestPage">Back-test</button>
+        <button type="button" data-page-target="momentumMonteCarloPage">Monte Carlo</button>
+      </nav>
+    </section>
+
+    <section id="momentumSignalPage" class="page active">
+      <section class="card">
+        <h2>Momentum Signal Design</h2>
+        <p>
+          These are research signals rather than one live production signal. Each rule maps market state to a
+          target exposure of cash, 1x, 2x, or 3x. The key design difference is whether the rule reacts quickly
+          to trend changes or intentionally holds leverage through normal pullbacks.
+        </p>
+        <div class="kpi-grid">
+          <div class="metric-card"><span class="small">Daily trigger candidates</span><strong>6</strong></div>
+          <div class="metric-card"><span class="small">Long-hold candidates</span><strong>6</strong></div>
+          <div class="metric-card"><span class="small">Backtest window</span><strong>30 years</strong></div>
+          <div class="metric-card"><span class="small">Best candidate CAGR</span><strong>21.46%</strong></div>
+        </div>
+        <p class="callout">
+          The research takeaway is not that every momentum indicator works. RSI, MACD, monthly regime, and
+          absolute-momentum trailing stop were materially weaker in this setup. Keltner, Donchian, SMA slope,
+          and SMA stack are the strongest candidates for further refinement.
+        </p>
+      </section>
+
+      <section class="card section-gap">
+        <h2>Daily Momentum Trigger Rules</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Signal</th><th>Cash / 1x</th><th>2x trigger</th><th>3x trigger</th><th>Exit / de-risk rule</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SMA stack momentum</td><td>Cash below SMA200; 1x above SMA200</td><td>Close &gt; SMA50 &gt; SMA200</td><td>Close &gt; SMA20 &gt; SMA50 &gt; SMA200</td><td>Falls back as the SMA stack weakens</td></tr>
+              <tr><td>SMA slope momentum</td><td>Cash below SMA200; 1x above SMA200</td><td>Close &gt; SMA50 with positive SMA50 slope</td><td>Strong positive SMA20 and SMA50 slopes</td><td>Falls back as slope or price filters fail</td></tr>
+              <tr><td>MACD momentum</td><td>Cash below SMA200; 1x above SMA200</td><td>MACD &gt; signal line</td><td>MACD histogram positive and rising</td><td>Fast MACD deterioration reduces exposure</td></tr>
+              <tr><td>RSI momentum</td><td>1x when RSI &gt; 50</td><td>RSI &gt; 55 and close &gt; SMA50</td><td>RSI &gt; 60 and close &gt; SMA20</td><td>Momentum threshold failures reduce exposure</td></tr>
+              <tr><td>Donchian breakout momentum</td><td>Cash below SMA200; 1x above SMA200</td><td>60-day high breakout</td><td>120-day high breakout</td><td>20-day low reduces to 1x; SMA200 break exits</td></tr>
+              <tr><td>Vol-adjusted SMA stack</td><td>Starts from SMA stack momentum</td><td>Same as SMA stack, reduced in high volatility</td><td>Same as SMA stack, capped when vol is very high</td><td>Reduces one tier above 25% realized vol; caps at 1x above 35%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card section-gap">
+        <h2>Long-Hold Momentum Rules</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Signal</th><th>Entry logic</th><th>Why it holds longer</th><th>Main risk observed</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Long-hold 3/6/12m momentum</td><td>1x/2x/3x from 12m, 6m, and 3m absolute momentum</td><td>Uses slower 6m/12m exits after high leverage is active</td><td>Stayed 3x often, but drawdowns were still deep</td></tr>
+              <tr><td>SMA stack hysteresis</td><td>Enter 3x on SMA20 &gt; SMA50 &gt; SMA200</td><td>Uses SMA100/SMA50 exits instead of immediate fast-stack exit</td><td>Lower CAGR and still near -51% historical max DD</td></tr>
+              <tr><td>Absolute momentum trailing stop</td><td>Enter leverage on 6m/12m absolute momentum</td><td>Holds until 3-month low or SMA100 trailing stop breaks</td><td>Poor risk control in major reversals</td></tr>
+              <tr><td>ADX trend strength</td><td>Add leverage when +DI leads -DI and ADX confirms trend strength</td><td>Does not require repeated breakouts once trend is strong</td><td>Trend-strength confirmation lagged in some reversals</td></tr>
+              <tr><td>Keltner trend channel</td><td>EMA50/EMA100 trend with ATR channel breakout</td><td>Stays leveraged until EMA50/EMA100 trend breaks</td><td>Best candidate, but drawdown still reached -47.94%</td></tr>
+              <tr><td>Monthly momentum regime</td><td>Month-end 3/6/12m momentum and 10-month SMA</td><td>Monthly rebalance reduces churn</td><td>Too slow in this configuration; weak CAGR with high drawdown</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section id="momentumBacktestPage" class="page">
+      <section class="card">
+        <h2>Back-test Overview</h2>
+        <p>
+          Full-sample results cover 1996-05-16 to 2026-05-15. The goal was to see whether momentum indicators
+          could keep 2x/3x exposure for longer without taking unacceptable drawdowns after costs and annual
+          contributions.
+        </p>
+        <div class="kpi-grid">
+          <div class="metric-card"><span class="small">Best long-hold candidate</span><strong>Keltner 21.46%</strong></div>
+          <div class="metric-card"><span class="small">Best daily trigger</span><strong>Donchian 18.48%</strong></div>
+          <div class="metric-card"><span class="small">Best candidate max DD</span><strong>-34.28%</strong></div>
+          <div class="metric-card"><span class="small">Most 3x exposure</span><strong>60.39%</strong></div>
+        </div>
+        <div class="bar-list" aria-label="Historical CAGR comparison">
+          <div class="bar-row"><span>SMA20 3x/cash reference</span><div class="bar-track"><div class="bar-fill alt" style="width: 100%;"></div></div><strong>35.76%</strong></div>
+          <div class="bar-row"><span>Guarded A10/B20 reference</span><div class="bar-track"><div class="bar-fill alt" style="width: 82%;"></div></div><strong>29.39%</strong></div>
+          <div class="bar-row"><span>Keltner trend channel</span><div class="bar-track"><div class="bar-fill" style="width: 60%;"></div></div><strong>21.46%</strong></div>
+          <div class="bar-row"><span>Donchian breakout momentum</span><div class="bar-track"><div class="bar-fill" style="width: 52%;"></div></div><strong>18.48%</strong></div>
+          <div class="bar-row"><span>Long-hold 3/6/12m momentum</span><div class="bar-track"><div class="bar-fill" style="width: 50%;"></div></div><strong>17.80%</strong></div>
+          <div class="bar-row"><span>SMA stack momentum</span><div class="bar-track"><div class="bar-fill" style="width: 44%;"></div></div><strong>15.66%</strong></div>
+        </div>
+      </section>
+
+      <section class="card section-gap">
+        <h2>Daily Momentum Trigger Backtests</h2>
+        <p class="small">Sorted by historical CAGR. Exposure columns show percent of trading sessions at each target leverage.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th><th>1x</th><th>2x</th><th>3x</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Donchian breakout momentum</td><td>18.48%</td><td>23.59%</td><td>1.512</td><td>-34.28%</td><td>$16,041</td><td>379</td><td>26.68%</td><td>29.98%</td><td>4.69%</td><td>38.65%</td></tr>
+              <tr><td>SMA stack momentum</td><td>15.66%</td><td>23.44%</td><td>2.298</td><td>-46.12%</td><td>$7,773</td><td>1,047</td><td>28.22%</td><td>19.94%</td><td>14.93%</td><td>36.91%</td></tr>
+              <tr><td>Vol-adjusted SMA stack</td><td>14.29%</td><td>23.02%</td><td>2.234</td><td>-45.87%</td><td>$5,435</td><td>1,022</td><td>29.45%</td><td>19.08%</td><td>14.75%</td><td>36.72%</td></tr>
+              <tr><td>SMA slope momentum</td><td>13.27%</td><td>23.94%</td><td>2.067</td><td>-42.00%</td><td>$4,153</td><td>1,009</td><td>24.18%</td><td>20.88%</td><td>24.09%</td><td>30.86%</td></tr>
+              <tr><td>MACD momentum</td><td>1.77%</td><td>19.46%</td><td>2.576</td><td>-64.66%</td><td>$167</td><td>1,204</td><td>28.22%</td><td>34.33%</td><td>21.71%</td><td>15.74%</td></tr>
+              <tr><td>RSI momentum</td><td>1.63%</td><td>25.68%</td><td>3.217</td><td>-90.04%</td><td>$161</td><td>1,987</td><td>37.64%</td><td>13.71%</td><td>9.90%</td><td>38.75%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card section-gap">
+        <h2>Long-Hold Momentum Backtests</h2>
+        <p class="small">These rules were built specifically to remain in 2x/3x longer than fast momentum triggers.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th><th>1x</th><th>2x</th><th>3x</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Keltner trend channel</td><td>21.46%</td><td>29.10%</td><td>2.152</td><td>-47.94%</td><td>$33,757</td><td>768</td><td>30.62%</td><td>4.94%</td><td>8.88%</td><td>55.56%</td></tr>
+              <tr><td>Long-hold 3/6/12m momentum</td><td>17.80%</td><td>32.59%</td><td>0.957</td><td>-38.41%</td><td>$13,479</td><td>259</td><td>24.92%</td><td>9.08%</td><td>5.98%</td><td>60.03%</td></tr>
+              <tr><td>SMA stack hysteresis</td><td>10.99%</td><td>29.11%</td><td>1.109</td><td>-51.06%</td><td>$2,259</td><td>557</td><td>28.22%</td><td>7.09%</td><td>14.48%</td><td>50.21%</td></tr>
+              <tr><td>ADX trend strength</td><td>8.90%</td><td>25.57%</td><td>1.396</td><td>-63.87%</td><td>$1,278</td><td>539</td><td>28.22%</td><td>25.83%</td><td>5.02%</td><td>40.92%</td></tr>
+              <tr><td>Monthly momentum regime</td><td>8.52%</td><td>32.41%</td><td>0.471</td><td>-64.00%</td><td>$1,150</td><td>87</td><td>32.42%</td><td>3.88%</td><td>8.90%</td><td>54.80%</td></tr>
+              <tr><td>Absolute momentum trailing stop</td><td>3.67%</td><td>30.17%</td><td>1.648</td><td>-87.31%</td><td>$292</td><td>765</td><td>33.04%</td><td>6.57%</td><td>0.00%</td><td>60.39%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card section-gap">
+        <h2>Reference Benchmarks</h2>
+        <p class="small">References are shown to make the momentum results easier to compare with the existing website strategy.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th><th>3x</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SMA20 3x/cash</td><td>35.76%</td><td>32.95%</td><td>3.754</td><td>-49.16%</td><td>$951,245</td><td>868</td><td>37.08%</td><td>62.92%</td></tr>
+              <tr><td>Guarded A10/B20 SMA20</td><td>29.39%</td><td>26.65%</td><td>3.232</td><td>-34.37%</td><td>$224,918</td><td>878</td><td>37.08%</td><td>26.46%</td></tr>
+              <tr><td>SMA20 2x/cash</td><td>26.23%</td><td>21.97%</td><td>3.794</td><td>-33.92%</td><td>$107,235</td><td>868</td><td>37.08%</td><td>0.00%</td></tr>
+              <tr><td>SMA20 1x/cash</td><td>16.05%</td><td>10.99%</td><td>3.913</td><td>-16.92%</td><td>$8,601</td><td>868</td><td>37.08%</td><td>0.00%</td></tr>
+              <tr><td>Buy &amp; hold 1x</td><td>11.38%</td><td>19.12%</td><td>0.517</td><td>-53.67%</td><td>$2,533</td><td>0</td><td>0.00%</td><td>0.00%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="callout section-gap">
+          Historically, none of the new momentum candidates beat the existing Guarded A10/B20 SMA20 or the simple
+          SMA20 3x/cash reference on CAGR. The best reason to keep studying them is behavior: Keltner and Donchian
+          provide different entry/exit mechanics, while long-hold 3/6/12m momentum produced the lowest rebalance count
+          among the high-leverage candidates.
+        </p>
+      </section>
+    </section>
+
+    <section id="momentumMonteCarloPage" class="page">
+      <section class="card">
+        <h2>Monte Carlo Stress Test</h2>
+        <p>
+          I ran a separate momentum Monte Carlo scan across all 12 momentum candidates and four references.
+          It uses 75 synthetic 10-year market paths, 21-trading-day blocks sampled from historical S&amp;P returns
+          and T-bill yields, and sampled historical high/low relationships for rules such as ADX and Keltner.
+        </p>
+        <div class="kpi-grid">
+          <div class="metric-card"><span class="small">Simulations</span><strong>75</strong></div>
+          <div class="metric-card"><span class="small">Horizon</span><strong>10 years</strong></div>
+          <div class="metric-card"><span class="small">Best median candidate CAGR</span><strong>31.10%</strong></div>
+          <div class="metric-card"><span class="small">Best median candidate DD</span><strong>-29.82%</strong></div>
+        </div>
+        <p class="callout">
+          Treat this as a screening Monte Carlo, not the final production validation. It is broad across many
+          strategy rules; once a short list is chosen, those finalists should get a full 500+ path run like the
+          Guarded A10/B20 SMA20 tab.
+        </p>
+      </section>
+
+      <section class="card section-gap">
+        <h2>Momentum Candidate Monte Carlo Summary</h2>
+        <p class="small">Median and probability values across the 75 synthetic 10-year paths.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Strategy</th><th>Group</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P(DD &lt; -40%)</th><th>P(CAGR &gt; 20%)</th><th>Median 3x</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Keltner trend channel</td><td>Long-hold</td><td>31.10%</td><td>15.53% / 49.19%</td><td>-34.44%</td><td>20.0%</td><td>80.0%</td><td>47.10%</td></tr>
+              <tr><td>SMA slope momentum</td><td>Daily trigger</td><td>23.27%</td><td>11.42% / 35.36%</td><td>-32.44%</td><td>18.7%</td><td>58.7%</td><td>25.36%</td></tr>
+              <tr><td>SMA stack momentum</td><td>Daily trigger</td><td>22.88%</td><td>11.58% / 37.21%</td><td>-29.82%</td><td>9.3%</td><td>64.0%</td><td>29.09%</td></tr>
+              <tr><td>Donchian breakout momentum</td><td>Daily trigger</td><td>20.29%</td><td>10.23% / 33.66%</td><td>-31.98%</td><td>16.0%</td><td>50.7%</td><td>31.23%</td></tr>
+              <tr><td>Vol-adjusted SMA stack</td><td>Daily trigger</td><td>18.27%</td><td>9.48% / 32.52%</td><td>-31.39%</td><td>6.7%</td><td>44.0%</td><td>27.18%</td></tr>
+              <tr><td>Long-hold 3/6/12m momentum</td><td>Long-hold</td><td>14.05%</td><td>2.89% / 29.40%</td><td>-50.54%</td><td>90.7%</td><td>36.0%</td><td>47.10%</td></tr>
+              <tr><td>SMA stack hysteresis</td><td>Long-hold</td><td>13.03%</td><td>4.21% / 25.49%</td><td>-47.86%</td><td>85.3%</td><td>29.3%</td><td>40.56%</td></tr>
+              <tr><td>ADX trend strength</td><td>Long-hold</td><td>11.24%</td><td>4.54% / 21.28%</td><td>-40.79%</td><td>52.0%</td><td>16.0%</td><td>35.79%</td></tr>
+              <tr><td>MACD momentum</td><td>Daily trigger</td><td>8.09%</td><td>2.09% / 15.23%</td><td>-36.14%</td><td>32.0%</td><td>0.0%</td><td>14.40%</td></tr>
+              <tr><td>Monthly momentum regime</td><td>Long-hold</td><td>6.13%</td><td>-2.48% / 19.62%</td><td>-65.47%</td><td>100.0%</td><td>8.0%</td><td>42.06%</td></tr>
+              <tr><td>RSI momentum</td><td>Daily trigger</td><td>1.90%</td><td>-5.26% / 11.74%</td><td>-58.55%</td><td>97.3%</td><td>0.0%</td><td>36.94%</td></tr>
+              <tr><td>Absolute momentum trailing stop</td><td>Long-hold</td><td>0.94%</td><td>-9.52% / 13.72%</td><td>-75.29%</td><td>100.0%</td><td>4.0%</td><td>47.14%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card section-gap">
+        <h2>Reference Monte Carlo Context</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Reference</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P(DD &lt; -40%)</th><th>P(CAGR &gt; 20%)</th><th>Median 3x</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SMA20 3x/cash</td><td>39.69%</td><td>25.78% / 62.42%</td><td>-36.87%</td><td>33.3%</td><td>97.3%</td><td>61.15%</td></tr>
+              <tr><td>Guarded A10/B20 SMA20</td><td>29.85%</td><td>20.86% / 41.14%</td><td>-29.59%</td><td>12.0%</td><td>96.0%</td><td>21.39%</td></tr>
+              <tr><td>SMA20 2x/cash</td><td>29.79%</td><td>21.38% / 43.44%</td><td>-24.85%</td><td>2.7%</td><td>92.0%</td><td>0.00%</td></tr>
+              <tr><td>Buy &amp; hold 1x</td><td>14.28%</td><td>7.34% / 20.33%</td><td>-32.00%</td><td>16.0%</td><td>13.3%</td><td>0.00%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="callout section-gap">
+          The Monte Carlo scan is more favorable to Keltner than the historical backtest, but it still shows a
+          meaningful drawdown profile. SMA stack momentum looks more balanced in simulation: lower median CAGR
+          than Keltner, but the lowest probability of a -40% drawdown among the momentum candidates.
+        </p>
+      </section>
+    </section>
+  </section>
 
 </main>
 
@@ -640,8 +918,11 @@
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
   const fmtPct = (x) => Number.isFinite(x) ? (x * 100).toFixed(2) + "%" : "-";
 
+  document.querySelectorAll("[data-strategy-target]").forEach((button) => {
+    button.addEventListener("click", () => showStrategy(button.dataset.strategyTarget));
+  });
   document.querySelectorAll("[data-page-target]").forEach((button) => {
-    button.addEventListener("click", () => showPage(button.dataset.pageTarget));
+    button.addEventListener("click", () => showPage(button.dataset.pageTarget, button.closest(".strategy")));
   });
   $("refresh").addEventListener("click", refresh);
   document.querySelectorAll("[data-range]").forEach((button) => {
@@ -697,11 +978,25 @@
     $("status").className = isError ? "small bad" : "small";
   }
 
-  function showPage(pageId) {
-    document.querySelectorAll(".page").forEach((page) => {
+  function showStrategy(strategyId) {
+    document.querySelectorAll(".strategy").forEach((strategy) => {
+      strategy.classList.toggle("active", strategy.id === strategyId);
+    });
+    document.querySelectorAll("[data-strategy-target]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.strategyTarget === strategyId);
+    });
+
+    const strategy = $(strategyId);
+    const activePage = strategy.querySelector("[data-page-target].active")?.dataset.pageTarget
+      ?? strategy.querySelector("[data-page-target]")?.dataset.pageTarget;
+    if (activePage) showPage(activePage, strategy);
+  }
+
+  function showPage(pageId, scope = document) {
+    scope.querySelectorAll(".page").forEach((page) => {
       page.classList.toggle("active", page.id === pageId);
     });
-    document.querySelectorAll("[data-page-target]").forEach((button) => {
+    scope.querySelectorAll("[data-page-target]").forEach((button) => {
       button.classList.toggle("active", button.dataset.pageTarget === pageId);
     });
     if (pageId === "signalPage") renderChart();
