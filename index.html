@@ -113,6 +113,63 @@
       gap: 14px;
       margin: 18px 0;
     }
+    .range-controls button {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+    }
+    .range-controls button.active {
+      background: var(--accent);
+      color: #07111f;
+      border-color: var(--accent);
+    }
+    .chart-box {
+      position: relative;
+      width: 100%;
+      min-height: 360px;
+      margin-top: 12px;
+    }
+    #priceChart {
+      width: 100%;
+      height: 360px;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(0,0,0,.14);
+    }
+    .chart-tooltip {
+      position: absolute;
+      pointer-events: none;
+      display: none;
+      min-width: 170px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(15,17,21,.95);
+      color: var(--text);
+      font-size: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .legend span::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 3px;
+      margin-right: 6px;
+      vertical-align: middle;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .legend .sma::before { background: var(--warn); }
     @media (max-width: 850px) {
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .two-col { grid-template-columns: 1fr; }
@@ -201,6 +258,31 @@
     </div>
   </section>
 
+  <section class="card" style="margin-top: 18px;">
+    <h2>S&amp;P 500 Close vs 20-Day SMA</h2>
+    <div class="row range-controls">
+      <button type="button" data-range="1w">1W</button>
+      <button type="button" data-range="1m">1M</button>
+      <button type="button" data-range="3m">3M</button>
+      <button type="button" data-range="1y" class="active">1Y</button>
+      <button type="button" data-range="5y">5Y</button>
+      <button type="button" data-range="10y">10Y</button>
+      <button type="button" data-range="20y">20Y</button>
+      <input id="chartStart" type="date" />
+      <input id="chartEnd" type="date" />
+      <button id="applyCustomRange" type="button" class="secondary">Apply custom</button>
+    </div>
+    <div id="chartMeta" class="small" style="margin-top: 10px;">Load data to draw the chart.</div>
+    <div class="chart-box">
+      <svg id="priceChart" viewBox="0 0 900 360" role="img" aria-label="S&P 500 close and 20-day SMA chart"></svg>
+      <div id="chartTooltip" class="chart-tooltip"></div>
+    </div>
+    <div class="legend">
+      <span>S&amp;P 500 close</span>
+      <span class="sma">20-day SMA</span>
+    </div>
+  </section>
+
   <section class="card">
     <h2>Shared Strategy State From Daily History</h2>
     <table>
@@ -248,7 +330,11 @@
 <script>
   const STOOQ_URL = "https://stooq.com/q/d/l/?s=%5Espx&i=d";
   const LOCAL_URL = "spx_daily.csv";
+  const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040 };
   let lastCsv = "";
+  let latestRows = [];
+  let chartRange = "1y";
+  let chartPoints = [];
 
   const $ = (id) => document.getElementById(id);
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
@@ -267,6 +353,25 @@
     a.click();
     URL.revokeObjectURL(a.href);
   });
+  document.querySelectorAll("[data-range]").forEach((button) => {
+    button.addEventListener("click", () => {
+      chartRange = button.dataset.range;
+      $("chartStart").value = "";
+      $("chartEnd").value = "";
+      setActiveRangeButton(chartRange);
+      renderChart();
+    });
+  });
+  $("applyCustomRange").addEventListener("click", () => {
+    chartRange = "custom";
+    setActiveRangeButton(chartRange);
+    renderChart();
+  });
+  $("priceChart").addEventListener("mousemove", showChartTooltip);
+  $("priceChart").addEventListener("mouseleave", () => {
+    $("chartTooltip").style.display = "none";
+  });
+  window.addEventListener("resize", renderChart);
 
   async function refresh() {
     try {
@@ -282,6 +387,7 @@
 
       const rows = parseCsv(csv);
       if (rows.length < 260) throw new Error("Not enough daily data. Need at least ~260 rows.");
+      latestRows = rows;
       const eodResult = computeSignal(rows);
 
       const livePrice = await getLivePrice();
@@ -292,6 +398,7 @@
       }
 
       render(eodResult, liveResult);
+      renderChart();
       setStatus(`Loaded ${rows.length} daily rows. Last completed close: ${eodResult.latest.date}.`);
     } catch (err) {
       console.error(err);
@@ -467,6 +574,105 @@
     $("tier2Level").textContent = fmtMoney(eod.highWater * 0.90);
     $("tier3Level").textContent = fmtMoney(eod.highWater * 0.80);
     $("aboveSma").textContent = eod.aboveSma ? "Yes" : "No";
+  }
+
+  function setActiveRangeButton(range) {
+    document.querySelectorAll("[data-range]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.range === range);
+    });
+  }
+
+  function chartDataForRange() {
+    if (!latestRows.length) return [];
+    const closes = latestRows.map((row) => row.close);
+    const fullData = latestRows.map((row, index) => ({
+      date: row.date,
+      close: row.close,
+      sma: sma(closes, index, 20)
+    }));
+    if (chartRange === "custom") {
+      const start = $("chartStart").value;
+      const end = $("chartEnd").value;
+      return fullData.filter((row) => (!start || row.date >= start) && (!end || row.date <= end));
+    }
+    return fullData.slice(-RANGE_SESSIONS[chartRange]);
+  }
+
+  function renderChart() {
+    const svg = $("priceChart");
+    const data = chartDataForRange();
+    if (!svg || !latestRows.length) return;
+    if (data.length < 2) {
+      svg.innerHTML = "";
+      $("chartMeta").textContent = "Choose a wider date range to draw the chart.";
+      return;
+    }
+
+    const width = 900;
+    const height = 360;
+    const pad = { left: 58, right: 18, top: 18, bottom: 38 };
+    const values = data.flatMap((point) => Number.isFinite(point.sma) ? [point.close, point.sma] : [point.close]);
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
+    const buffer = (maxValue - minValue) * 0.06 || maxValue * 0.02;
+    const yMin = minValue - buffer;
+    const yMax = maxValue + buffer;
+    const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * (width - pad.left - pad.right);
+    const yScale = (value) => pad.top + ((yMax - value) / (yMax - yMin)) * (height - pad.top - pad.bottom);
+    const linePath = (selector) => data
+      .map((point, index) => {
+        const value = selector(point);
+        return Number.isFinite(value) ? `${xScale(index).toFixed(2)},${yScale(value).toFixed(2)}` : null;
+      })
+      .filter(Boolean)
+      .join(" ");
+
+    chartPoints = data.map((point, index) => ({
+      ...point,
+      x: xScale(index),
+      y: yScale(point.close)
+    }));
+
+    const grid = [];
+    for (let i = 0; i <= 4; i++) {
+      const value = yMin + ((yMax - yMin) * i) / 4;
+      const y = yScale(value);
+      grid.push(`
+        <line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="#2a303a" stroke-width="1" />
+        <text x="${pad.left - 8}" y="${y + 4}" fill="#9aa4b2" font-size="12" text-anchor="end">${fmtMoney(value)}</text>
+      `);
+    }
+
+    const startDate = data[0].date;
+    const endDate = data[data.length - 1].date;
+    svg.innerHTML = `
+      ${grid.join("")}
+      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#2a303a" />
+      <text x="${pad.left}" y="${height - 12}" fill="#9aa4b2" font-size="12">${startDate}</text>
+      <text x="${width - pad.right}" y="${height - 12}" fill="#9aa4b2" font-size="12" text-anchor="end">${endDate}</text>
+      <polyline points="${linePath((point) => point.close)}" fill="none" stroke="#6aa6ff" stroke-width="2.2" />
+      <polyline points="${linePath((point) => point.sma)}" fill="none" stroke="#f0b84a" stroke-width="2" />
+    `;
+    $("chartMeta").textContent = `${data.length} trading sessions shown: ${startDate} to ${endDate}. Latest close ${fmtMoney(data[data.length - 1].close)}, SMA20 ${fmtMoney(data[data.length - 1].sma)}.`;
+  }
+
+  function showChartTooltip(event) {
+    if (!chartPoints.length) return;
+    const svg = $("priceChart");
+    const rect = svg.getBoundingClientRect();
+    const svgX = ((event.clientX - rect.left) / rect.width) * 900;
+    const nearest = chartPoints.reduce((best, point) => (
+      Math.abs(point.x - svgX) < Math.abs(best.x - svgX) ? point : best
+    ), chartPoints[0]);
+    const tooltip = $("chartTooltip");
+    tooltip.innerHTML = `
+      <strong>${nearest.date}</strong><br>
+      Close: ${fmtMoney(nearest.close)}<br>
+      SMA20: ${fmtMoney(nearest.sma)}
+    `;
+    tooltip.style.display = "block";
+    tooltip.style.left = Math.min(event.clientX - rect.left + 14, rect.width - 190) + "px";
+    tooltip.style.top = Math.max(event.clientY - rect.top - 56, 10) + "px";
   }
 
   function renderSignal(prefix, result) {
