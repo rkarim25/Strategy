@@ -303,6 +303,28 @@
       text-align: right;
       font-variant-numeric: tabular-nums;
     }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .field label {
+      display: block;
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .field input,
+    .field select {
+      width: 100%;
+    }
+    .result-highlight {
+      background: rgba(0, 113, 227, .08);
+      border-radius: 18px;
+      padding: 14px;
+    }
     @media (max-width: 850px) {
       main {
         width: min(100% - 28px, 760px);
@@ -310,6 +332,7 @@
       }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .two-col { grid-template-columns: 1fr; }
       .signal { font-size: 46px; }
       .site-nav {
@@ -352,6 +375,7 @@
       }
       .grid { grid-template-columns: 1fr; }
       .kpi-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
       .stat-value { font-size: 28px; }
       .signal { font-size: 52px; }
       #priceChart { height: 280px; }
@@ -493,6 +517,110 @@
         <tr><th>3x trigger (B)</th><td>-20% drawdown from S&amp;P high-water close</td></tr>
       </tbody>
     </table>
+  </section>
+
+  <section class="card section-gap">
+    <h2>Guarded Strategy Calculator</h2>
+    <p>
+      Change the drawdown trigger levels and recovery hold rules, then calculate historical stats using the
+      daily SPX history loaded by <strong>Refresh signal</strong>. The browser backtest uses the same SMA20 guard,
+      $100 starting capital, $10 annual inflow, 1.0% rebalance cost, and a 4.0% annual cash/funding-rate assumption.
+    </p>
+    <div class="form-grid">
+      <div class="field">
+        <label for="calcTriggerA">A trigger: enter 2x after drawdown (%)</label>
+        <input id="calcTriggerA" type="number" min="1" max="80" step="0.5" value="10" />
+      </div>
+      <div class="field">
+        <label for="calcTriggerB">B trigger: enter 3x after drawdown (%)</label>
+        <input id="calcTriggerB" type="number" min="1" max="90" step="0.5" value="20" />
+      </div>
+      <div class="field">
+        <label for="calcHold2">Hold 2x until SPX recovers (%)</label>
+        <input id="calcHold2" type="number" min="1" max="200" step="1" value="25" />
+      </div>
+      <div class="field">
+        <label for="calcHold3">Hold 3x until SPX recovers (%)</label>
+        <input id="calcHold3" type="number" min="1" max="250" step="1" value="33.33" />
+      </div>
+      <div class="field">
+        <label for="calcMaxHold2">Max 2x hold days (optional)</label>
+        <input id="calcMaxHold2" type="number" min="1" max="2520" step="1" placeholder="No cap" />
+      </div>
+      <div class="field">
+        <label for="calcMaxHold3">Max 3x hold days (optional)</label>
+        <input id="calcMaxHold3" type="number" min="1" max="2520" step="1" placeholder="No cap" />
+      </div>
+      <div class="field">
+        <label for="calcTradingCost">Trading cost (%)</label>
+        <input id="calcTradingCost" type="number" min="0" max="10" step="0.1" value="1" />
+      </div>
+      <div class="field">
+        <label for="calcCashRate">Cash / funding rate (%)</label>
+        <input id="calcCashRate" type="number" min="0" max="20" step="0.25" value="4" />
+      </div>
+    </div>
+    <div class="row">
+      <button id="runCalculator" type="button">Calculate stats</button>
+      <button id="resetCalculator" type="button" class="secondary">Reset defaults</button>
+    </div>
+    <div id="calcStatus" class="small section-gap">Load data, then calculate a parameter set.</div>
+    <div class="kpi-grid">
+      <div class="metric-card"><span class="small">CAGR</span><strong id="calcCagr">-</strong></div>
+      <div class="metric-card"><span class="small">Max drawdown</span><strong id="calcMaxDd">-</strong></div>
+      <div class="metric-card"><span class="small">Sharpe ratio</span><strong id="calcSharpe">-</strong></div>
+      <div class="metric-card"><span class="small">End value</span><strong id="calcEndValue">-</strong></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>Trades</th><td id="calcTrades">-</td><th>Trading costs</th><td id="calcCosts">-</td></tr>
+          <tr><th>Cash / 1x / 2x / 3x</th><td id="calcExposure" colspan="3">-</td></tr>
+          <tr><th>Tier entries</th><td id="calcTierEntries" colspan="3">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card section-gap">
+    <h2>Goal Seek / Optimizer</h2>
+    <p>
+      Search a grid of A, B, 2x hold target, and 3x hold target values. Use smaller ranges or larger steps for
+      faster searches. The optimizer enforces B &gt; A.
+    </p>
+    <div class="form-grid">
+      <div class="field"><label for="optAStart">A start (%)</label><input id="optAStart" type="number" step="0.5" value="6" /></div>
+      <div class="field"><label for="optAEnd">A end (%)</label><input id="optAEnd" type="number" step="0.5" value="18" /></div>
+      <div class="field"><label for="optAStep">A step (%)</label><input id="optAStep" type="number" min="0.5" step="0.5" value="2" /></div>
+      <div class="field"><label for="optObjective">Objective</label><select id="optObjective"><option value="cagr">Maximize CAGR</option><option value="drawdown">Minimize max drawdown</option><option value="cagrWithDrawdown">Max CAGR with DD limit</option><option value="targetCagr">Closest to target CAGR</option></select></div>
+      <div class="field"><label for="optBStart">B start (%)</label><input id="optBStart" type="number" step="0.5" value="14" /></div>
+      <div class="field"><label for="optBEnd">B end (%)</label><input id="optBEnd" type="number" step="0.5" value="32" /></div>
+      <div class="field"><label for="optBStep">B step (%)</label><input id="optBStep" type="number" min="0.5" step="0.5" value="3" /></div>
+      <div class="field"><label for="optMaxDd">DD limit / target (%)</label><input id="optMaxDd" type="number" min="1" max="95" step="1" value="35" /></div>
+      <div class="field"><label for="optHold2Start">2x hold start (%)</label><input id="optHold2Start" type="number" step="1" value="10" /></div>
+      <div class="field"><label for="optHold2End">2x hold end (%)</label><input id="optHold2End" type="number" step="1" value="40" /></div>
+      <div class="field"><label for="optHold2Step">2x hold step (%)</label><input id="optHold2Step" type="number" min="1" step="1" value="5" /></div>
+      <div class="field"><label for="optTargetCagr">Target CAGR (%)</label><input id="optTargetCagr" type="number" min="0" max="100" step="1" value="30" /></div>
+      <div class="field"><label for="optHold3Start">3x hold start (%)</label><input id="optHold3Start" type="number" step="1" value="15" /></div>
+      <div class="field"><label for="optHold3End">3x hold end (%)</label><input id="optHold3End" type="number" step="1" value="60" /></div>
+      <div class="field"><label for="optHold3Step">3x hold step (%)</label><input id="optHold3Step" type="number" min="1" step="1" value="5" /></div>
+      <div class="field"><label for="optResultCount">Show top results</label><input id="optResultCount" type="number" min="3" max="25" step="1" value="10" /></div>
+    </div>
+    <div class="row">
+      <button id="runOptimizer" type="button">Run optimizer</button>
+      <button id="useBestOptimizer" type="button" class="secondary">Use best in calculator</button>
+    </div>
+    <div id="optStatus" class="small section-gap">Load data, then run a grid search.</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Rank</th><th>A</th><th>B</th><th>2x hold</th><th>3x hold</th><th>CAGR</th><th>Max DD</th><th>Sharpe</th><th>End value</th><th>Trades</th></tr>
+        </thead>
+        <tbody id="optimizerRows">
+          <tr><td colspan="10">No optimizer results yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   </section>
@@ -910,13 +1038,18 @@
   const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040 };
+  const INITIAL_CAPITAL = 100;
+  const ANNUAL_INFLOW = 10;
+  const TRADING_DAYS = 252;
   let latestRows = [];
   let chartRange = "1y";
   let chartPoints = [];
+  let optimizerResults = [];
 
   const $ = (id) => document.getElementById(id);
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
   const fmtPct = (x) => Number.isFinite(x) ? (x * 100).toFixed(2) + "%" : "-";
+  const fmtPctWhole = (x) => Number.isFinite(x) ? x.toFixed(2) + "%" : "-";
 
   document.querySelectorAll("[data-strategy-target]").forEach((button) => {
     button.addEventListener("click", () => showStrategy(button.dataset.strategyTarget));
@@ -939,6 +1072,10 @@
     setActiveRangeButton(chartRange);
     renderChart();
   });
+  $("runCalculator").addEventListener("click", runCalculator);
+  $("resetCalculator").addEventListener("click", resetCalculator);
+  $("runOptimizer").addEventListener("click", runOptimizer);
+  $("useBestOptimizer").addEventListener("click", useBestOptimizerResult);
   $("priceChart").addEventListener("mousemove", showChartTooltip);
   $("priceChart").addEventListener("mouseleave", () => {
     $("chartTooltip").style.display = "none";
@@ -966,6 +1103,7 @@
 
       render(eodResult, liveResult);
       renderChart();
+      runCalculator();
       setStatus(`Loaded ${rows.length} daily rows. Last completed close: ${eodResult.latest.date}.`);
     } catch (err) {
       console.error(err);
@@ -1153,6 +1291,331 @@
       targetLeverage,
       explanation
     };
+  }
+
+  function readNumber(id, fallback = NaN) {
+    const value = Number($(id).value);
+    return Number.isFinite(value) ? value : fallback;
+  }
+
+  function readOptionalNumber(id) {
+    const value = Number($(id).value);
+    return Number.isFinite(value) && value > 0 ? value : null;
+  }
+
+  function calculatorParamsFromInputs() {
+    const triggerA = readNumber("calcTriggerA") / 100;
+    const triggerB = readNumber("calcTriggerB") / 100;
+    const hold2 = readNumber("calcHold2") / 100;
+    const hold3 = readNumber("calcHold3") / 100;
+    const tradingCost = Math.max(readNumber("calcTradingCost", 1) / 100, 0);
+    const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
+    const maxHold2 = readOptionalNumber("calcMaxHold2");
+    const maxHold3 = readOptionalNumber("calcMaxHold3");
+    if (!(triggerA > 0 && triggerB > triggerA && hold2 > 0 && hold3 > 0)) {
+      throw new Error("Use positive values and keep B greater than A.");
+    }
+    return { triggerA, triggerB, hold2, hold3, maxHold2, maxHold3, tradingCost, cashRate };
+  }
+
+  function guardedLeverageForParams(rows, params) {
+    const closes = rows.map((row) => row.close);
+    const leverage = [];
+    let highWater = closes[0];
+    let regime = "base";
+    let entryClose = null;
+    let entryIndex = null;
+    let tier2Entries = 0;
+    let tier3Entries = 0;
+
+    for (let i = 0; i < rows.length; i++) {
+      const close = closes[i];
+      const avg20 = sma(closes, i, 20);
+      if (close >= highWater) highWater = close;
+
+      const dd = close / highWater - 1;
+      const aboveSma = Number.isFinite(avg20) && close > avg20;
+      const baseLev = aboveSma ? 1 : 0;
+      let target = baseLev;
+
+      if (regime === "tier3") {
+        const hitGain = entryClose != null && close / entryClose - 1 >= params.hold3;
+        const hitTime = params.maxHold3 != null && entryIndex != null && i - entryIndex >= params.maxHold3;
+        if (hitGain || hitTime) {
+          regime = "base";
+          entryClose = null;
+          entryIndex = null;
+        } else {
+          leverage.push(aboveSma ? 3 : baseLev);
+          continue;
+        }
+      }
+
+      if (regime === "tier2") {
+        const hitGain = entryClose != null && close / entryClose - 1 >= params.hold2;
+        const hitTime = params.maxHold2 != null && entryIndex != null && i - entryIndex >= params.maxHold2;
+        if (dd <= -params.triggerB && aboveSma) {
+          regime = "tier3";
+          entryClose = close;
+          entryIndex = i;
+          tier3Entries += 1;
+          leverage.push(3);
+          continue;
+        }
+        if (hitGain || hitTime) {
+          regime = "base";
+          entryClose = null;
+          entryIndex = null;
+        } else {
+          leverage.push(aboveSma ? 2 : baseLev);
+          continue;
+        }
+      }
+
+      if (dd <= -params.triggerB && aboveSma) {
+        regime = "tier3";
+        entryClose = close;
+        entryIndex = i;
+        tier3Entries += 1;
+        target = 3;
+      } else if (dd <= -params.triggerA && aboveSma) {
+        regime = "tier2";
+        entryClose = close;
+        entryIndex = i;
+        tier2Entries += 1;
+        target = 2;
+      }
+      leverage.push(target);
+    }
+
+    return { leverage, tier2Entries, tier3Entries };
+  }
+
+  function backtestParameterizedGuarded(rows, params) {
+    const { leverage, tier2Entries, tier3Entries } = guardedLeverageForParams(rows, params);
+    let aum = INITIAL_CAPITAL;
+    let peak = aum;
+    let prevLev = 1;
+    let prevYear = new Date(rows[0].date).getUTCFullYear();
+    let tradingCosts = 0;
+    let rebalances = 0;
+    const equity = [];
+    const returns = [];
+    const dailyCash = params.cashRate / TRADING_DAYS;
+
+    for (let i = 0; i < rows.length; i++) {
+      const year = new Date(rows[i].date).getUTCFullYear();
+      if (i > 0 && year !== prevYear) {
+        aum += ANNUAL_INFLOW;
+        peak = Math.max(peak, aum);
+      }
+
+      const lev = leverage[i];
+      if (Math.abs(lev - prevLev) > 1e-9) {
+        const cost = Math.abs(lev - prevLev) * aum * params.tradingCost;
+        aum -= cost;
+        tradingCosts += cost;
+        rebalances += 1;
+        prevLev = lev;
+      }
+
+      let ret = 0;
+      if (i > 0) {
+        const spxRet = rows[i].close / rows[i - 1].close - 1;
+        if (lev <= 0) {
+          ret = dailyCash;
+        } else {
+          const funding = lev > 1 ? (lev - 1) * params.cashRate / TRADING_DAYS : 0;
+          ret = lev * spxRet - funding;
+        }
+        aum *= 1 + ret;
+      }
+
+      peak = Math.max(peak, aum);
+      equity.push(aum);
+      returns.push(ret);
+      prevYear = year;
+    }
+
+    return {
+      ...portfolioStats(rows, equity, returns),
+      tradingCosts,
+      rebalances,
+      leverage,
+      tier2Entries,
+      tier3Entries,
+    };
+  }
+
+  function portfolioStats(rows, equity, returns) {
+    const start = new Date(rows[0].date);
+    const end = new Date(rows[rows.length - 1].date);
+    const years = Math.max((end - start) / (365.25 * 24 * 60 * 60 * 1000), 1e-9);
+    const endValue = equity[equity.length - 1];
+    const cagr = Math.pow(endValue / equity[0], 1 / years) - 1;
+    let peak = equity[0];
+    let maxDrawdown = 0;
+    for (const value of equity) {
+      peak = Math.max(peak, value);
+      maxDrawdown = Math.min(maxDrawdown, value / peak - 1);
+    }
+    const mean = returns.reduce((sum, value) => sum + value, 0) / returns.length;
+    const variance = returns.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) / Math.max(returns.length - 1, 1);
+    const stdev = Math.sqrt(variance);
+    const sharpe = stdev > 0 ? Math.sqrt(TRADING_DAYS) * mean / stdev : NaN;
+    return { cagr, maxDrawdown, sharpe, endValue };
+  }
+
+  function runCalculator() {
+    if (!latestRows.length) {
+      $("calcStatus").textContent = "Load data first with Refresh signal.";
+      return null;
+    }
+    try {
+      const params = calculatorParamsFromInputs();
+      const result = backtestParameterizedGuarded(latestRows, params);
+      renderCalculatorResult(result);
+      $("calcStatus").textContent = `Calculated ${latestRows.length} sessions from ${latestRows[0].date} to ${latestRows[latestRows.length - 1].date}.`;
+      $("calcStatus").className = "small section-gap";
+      return result;
+    } catch (err) {
+      $("calcStatus").textContent = "Calculator error: " + err.message;
+      $("calcStatus").className = "small bad section-gap";
+      return null;
+    }
+  }
+
+  function renderCalculatorResult(result) {
+    $("calcCagr").textContent = fmtPct(result.cagr);
+    $("calcMaxDd").textContent = fmtPct(result.maxDrawdown);
+    $("calcSharpe").textContent = Number.isFinite(result.sharpe) ? result.sharpe.toFixed(3) : "-";
+    $("calcEndValue").textContent = "$" + fmtMoney(result.endValue);
+    $("calcTrades").textContent = result.rebalances.toLocaleString();
+    $("calcCosts").textContent = "$" + fmtMoney(result.tradingCosts);
+    const n = result.leverage.length || 1;
+    const pct = (lev) => (100 * result.leverage.filter((x) => x === lev).length / n).toFixed(2) + "%";
+    $("calcExposure").textContent = `${pct(0)} / ${pct(1)} / ${pct(2)} / ${pct(3)}`;
+    $("calcTierEntries").textContent = `2x entries: ${result.tier2Entries}; 3x entries: ${result.tier3Entries}`;
+  }
+
+  function resetCalculator() {
+    $("calcTriggerA").value = 10;
+    $("calcTriggerB").value = 20;
+    $("calcHold2").value = 25;
+    $("calcHold3").value = 33.33;
+    $("calcMaxHold2").value = "";
+    $("calcMaxHold3").value = "";
+    $("calcTradingCost").value = 1;
+    $("calcCashRate").value = 4;
+    runCalculator();
+  }
+
+  function rangeValues(startId, endId, stepId) {
+    const start = readNumber(startId);
+    const end = readNumber(endId);
+    const step = readNumber(stepId);
+    if (!(Number.isFinite(start) && Number.isFinite(end) && step > 0 && end >= start)) {
+      throw new Error(`Invalid optimizer range near ${startId}.`);
+    }
+    const values = [];
+    for (let value = start; value <= end + step / 10; value += step) values.push(Number(value.toFixed(6)));
+    return values;
+  }
+
+  function runOptimizer() {
+    if (!latestRows.length) {
+      $("optStatus").textContent = "Load data first with Refresh signal.";
+      return;
+    }
+    try {
+      const aValues = rangeValues("optAStart", "optAEnd", "optAStep");
+      const bValues = rangeValues("optBStart", "optBEnd", "optBStep");
+      const hold2Values = rangeValues("optHold2Start", "optHold2End", "optHold2Step");
+      const hold3Values = rangeValues("optHold3Start", "optHold3End", "optHold3Step");
+      const comboCount = aValues.length * bValues.length * hold2Values.length * hold3Values.length;
+      if (comboCount > 7000) throw new Error(`Grid has ${comboCount.toLocaleString()} combinations. Narrow the range or increase step size.`);
+
+      const objective = $("optObjective").value;
+      const ddLimit = readNumber("optMaxDd", 35) / 100;
+      const targetCagr = readNumber("optTargetCagr", 30) / 100;
+      const tradingCost = Math.max(readNumber("calcTradingCost", 1) / 100, 0);
+      const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
+      const maxHold2 = readOptionalNumber("calcMaxHold2");
+      const maxHold3 = readOptionalNumber("calcMaxHold3");
+      optimizerResults = [];
+
+      for (const a of aValues) {
+        for (const b of bValues) {
+          if (b <= a) continue;
+          for (const hold2 of hold2Values) {
+            for (const hold3 of hold3Values) {
+              const params = {
+                triggerA: a / 100,
+                triggerB: b / 100,
+                hold2: hold2 / 100,
+                hold3: hold3 / 100,
+                maxHold2,
+                maxHold3,
+                tradingCost,
+                cashRate,
+              };
+              const result = backtestParameterizedGuarded(latestRows, params);
+              if (objective === "cagrWithDrawdown" && Math.abs(result.maxDrawdown) > ddLimit) continue;
+              optimizerResults.push({ params, result, score: optimizerScore(result, objective, ddLimit, targetCagr) });
+            }
+          }
+        }
+      }
+
+      optimizerResults.sort((a, b) => b.score - a.score);
+      renderOptimizerResults();
+      $("optStatus").textContent = `Searched ${comboCount.toLocaleString()} combinations; ${optimizerResults.length.toLocaleString()} passed filters.`;
+      $("optStatus").className = "small section-gap";
+    } catch (err) {
+      $("optStatus").textContent = "Optimizer error: " + err.message;
+      $("optStatus").className = "small bad section-gap";
+    }
+  }
+
+  function optimizerScore(result, objective, ddLimit, targetCagr) {
+    if (objective === "drawdown") return result.maxDrawdown;
+    if (objective === "targetCagr") return -Math.abs(result.cagr - targetCagr) - Math.abs(result.maxDrawdown) * 0.001;
+    if (objective === "cagrWithDrawdown") return result.cagr;
+    return result.cagr;
+  }
+
+  function renderOptimizerResults() {
+    const count = Math.max(3, Math.min(readNumber("optResultCount", 10), 25));
+    const rows = optimizerResults.slice(0, count).map((item, index) => {
+      const p = item.params;
+      const r = item.result;
+      return `<tr>
+        <td>${index + 1}</td>
+        <td>${fmtPctWhole(p.triggerA * 100)}</td>
+        <td>${fmtPctWhole(p.triggerB * 100)}</td>
+        <td>${fmtPctWhole(p.hold2 * 100)}</td>
+        <td>${fmtPctWhole(p.hold3 * 100)}</td>
+        <td>${fmtPct(r.cagr)}</td>
+        <td>${fmtPct(r.maxDrawdown)}</td>
+        <td>${Number.isFinite(r.sharpe) ? r.sharpe.toFixed(3) : "-"}</td>
+        <td>$${fmtMoney(r.endValue)}</td>
+        <td>${r.rebalances.toLocaleString()}</td>
+      </tr>`;
+    });
+    $("optimizerRows").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="10">No combinations passed the selected filters.</td></tr>`;
+  }
+
+  function useBestOptimizerResult() {
+    if (!optimizerResults.length) {
+      $("optStatus").textContent = "Run the optimizer first.";
+      return;
+    }
+    const { params } = optimizerResults[0];
+    $("calcTriggerA").value = (params.triggerA * 100).toFixed(2);
+    $("calcTriggerB").value = (params.triggerB * 100).toFixed(2);
+    $("calcHold2").value = (params.hold2 * 100).toFixed(2);
+    $("calcHold3").value = (params.hold3 * 100).toFixed(2);
+    runCalculator();
   }
 
   function render(eod, live) {
