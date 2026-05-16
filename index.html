@@ -215,11 +215,9 @@
       </select>
       <input id="customUrl" style="min-width: 420px; display: none;" placeholder="https://example.com/spx_daily.csv" />
       <button id="refresh">Refresh signal</button>
-      <button id="download" class="secondary">Download last data</button>
     </div>
     <div class="row" style="margin-top: 12px;">
       <input id="manualIntradayPrice" placeholder="Optional live price override, e.g. 740.16" style="min-width: 280px;" />
-      <input id="intradayUrl" value="https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote" placeholder="Optional intraday quote URL returning JSON {price: ...}" style="min-width: 420px;" />
     </div>
     <div id="status" class="small">Ready.</div>
   </div>
@@ -332,8 +330,8 @@
   const STOOQ_URL = "https://stooq.com/q/d/l/?s=%5Espx&i=d";
   const LOCAL_URL = "spx_daily.csv";
   const TIINGO_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
+  const TIINGO_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040 };
-  let lastCsv = "";
   let latestRows = [];
   let chartRange = "1y";
   let chartPoints = [];
@@ -346,15 +344,6 @@
     $("customUrl").style.display = $("source").value === "custom" ? "inline-block" : "none";
   });
   $("refresh").addEventListener("click", refresh);
-  $("download").addEventListener("click", () => {
-    if (!lastCsv) return;
-    const blob = new Blob([lastCsv], { type: "text/csv" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "spx_daily.csv";
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
   document.querySelectorAll("[data-range]").forEach((button) => {
     button.addEventListener("click", () => {
       chartRange = button.dataset.range;
@@ -391,7 +380,6 @@
       const response = await fetch(url, { cache: "no-store" });
       if (!response.ok) throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
       const csv = await response.text();
-      lastCsv = csv;
 
       const rows = parseCsv(csv);
       if (rows.length < 260) throw new Error("Not enough daily data. Need at least ~260 rows.");
@@ -439,9 +427,7 @@
     const manual = Number($("manualIntradayPrice").value);
     if (Number.isFinite(manual) && manual > 0) return manual;
 
-    const url = $("intradayUrl").value.trim();
-    if (!url) return null;
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch(TIINGO_QUOTE_URL, { cache: "no-store" });
     if (!response.ok) throw new Error(`Intraday fetch failed: ${response.status} ${response.statusText}`);
     const text = await response.text();
     try {
