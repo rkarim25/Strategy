@@ -1,0 +1,4 @@
+objective,winner
+max_sharpe,SMA stair 10/50/200 (excl) + RSI>=60 for 3x
+max_calmar,SMA stair 10/50/200 (stack) + RSI>=50 for 3x
+max_cagr_tiered_with_dd_overlay_15pct,RSI stair (>20d SMA): tiers 50/58 | DD overlay 15%

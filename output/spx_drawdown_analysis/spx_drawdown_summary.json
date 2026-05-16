@@ -1,0 +1,996 @@
+{
+  "source": "Yahoo Finance ^GSPC via data_manager.load_backtest_data(years=30)",
+  "start_date": "1996-05-16",
+  "end_date": "2026-05-15",
+  "trading_days": 7548,
+  "close_start": 664.8499755859375,
+  "close_end": 7408.5,
+  "daily_drawdown_distribution": {
+    "max_drawdown": -0.5677538774277282,
+    "avg_drawdown_when_underwater": -0.12748308667043157,
+    "median_drawdown_when_underwater": -0.08264876733128923,
+    "pct_days_at_new_high": 0.08320084790673025,
+    "pct_days_underwater": 0.9167991520932698,
+    "below_2pct": 0.6869369369369369,
+    "below_5pct": 0.5499470058293587,
+    "below_10pct": 0.41984631690514046,
+    "below_15pct": 0.33465818759936405,
+    "below_20pct": 0.2425808161102279,
+    "below_30pct": 0.10108638049814521,
+    "below_40pct": 0.04517753047164812
+  },
+  "episode_count": 314,
+  "recovered_episode_count": 313,
+  "episode_depth_quantiles": {
+    "median": -0.005694453161254054,
+    "p75": -0.01779504992582079,
+    "p90": -0.04941499855774727,
+    "p95": -0.08699477548938053
+  },
+  "top_10_episodes": [
+    {
+      "start_date": "2007-10-10",
+      "peak_date": "2007-10-09",
+      "trough_date": "2009-03-09",
+      "recovery_date": "2013-03-28",
+      "depth": -0.5677538774277282,
+      "calendar_days_to_recovery": 1996.0,
+      "trading_days_to_recovery": 1375
+    },
+    {
+      "start_date": "2000-03-27",
+      "peak_date": "2000-03-24",
+      "trough_date": "2002-10-09",
+      "recovery_date": "2007-05-30",
+      "depth": -0.4914694789846552,
+      "calendar_days_to_recovery": 2620.0,
+      "trading_days_to_recovery": 1802
+    },
+    {
+      "start_date": "2020-02-20",
+      "peak_date": "2020-02-19",
+      "trough_date": "2020-03-23",
+      "recovery_date": "2020-08-18",
+      "depth": -0.3392496000265327,
+      "calendar_days_to_recovery": 180.0,
+      "trading_days_to_recovery": 125
+    },
+    {
+      "start_date": "2022-01-04",
+      "peak_date": "2022-01-03",
+      "trough_date": "2022-10-12",
+      "recovery_date": "2024-01-19",
+      "depth": -0.2542509661923039,
+      "calendar_days_to_recovery": 745.0,
+      "trading_days_to_recovery": 512
+    },
+    {
+      "start_date": "2018-09-21",
+      "peak_date": "2018-09-20",
+      "trough_date": "2018-12-24",
+      "recovery_date": "2019-04-23",
+      "depth": -0.19778210435681998,
+      "calendar_days_to_recovery": 214.0,
+      "trading_days_to_recovery": 145
+    },
+    {
+      "start_date": "1998-07-20",
+      "peak_date": "1998-07-17",
+      "trough_date": "1998-08-31",
+      "recovery_date": "1998-11-23",
+      "depth": -0.1933599921661049,
+      "calendar_days_to_recovery": 126.0,
+      "trading_days_to_recovery": 89
+    },
+    {
+      "start_date": "2025-02-20",
+      "peak_date": "2025-02-19",
+      "trough_date": "2025-04-08",
+      "recovery_date": "2025-06-27",
+      "depth": -0.1890220618428401,
+      "calendar_days_to_recovery": 127.0,
+      "trading_days_to_recovery": 88
+    },
+    {
+      "start_date": "2015-05-22",
+      "peak_date": "2015-05-21",
+      "trough_date": "2016-02-11",
+      "recovery_date": "2016-07-11",
+      "depth": -0.14160750444640424,
+      "calendar_days_to_recovery": 416.0,
+      "trading_days_to_recovery": 285
+    },
+    {
+      "start_date": "1999-07-19",
+      "peak_date": "1999-07-16",
+      "trough_date": "1999-10-15",
+      "recovery_date": "1999-11-16",
+      "depth": -0.12078686729338572,
+      "calendar_days_to_recovery": 120.0,
+      "trading_days_to_recovery": 85
+    },
+    {
+      "start_date": "1997-10-08",
+      "peak_date": "1997-10-07",
+      "trough_date": "1997-10-27",
+      "recovery_date": "1997-12-05",
+      "depth": -0.10795223920774988,
+      "calendar_days_to_recovery": 58.0,
+      "trading_days_to_recovery": 41
+    }
+  ],
+  "forward_probability_rows": [
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 3,
+      "probability": 0.013780310056976282,
+      "observations": 7547,
+      "events": 104,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 5,
+      "probability": 0.002915065588975752,
+      "observations": 7547,
+      "events": 22,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 7,
+      "probability": 0.0009275208692195575,
+      "observations": 7547,
+      "events": 7,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 10,
+      "probability": 0.00013250298131707962,
+      "observations": 7547,
+      "events": 1,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 15,
+      "probability": 0.0,
+      "observations": 7547,
+      "events": 0,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 20,
+      "probability": 0.0,
+      "observations": 7547,
+      "events": 0,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 25,
+      "probability": 0.0,
+      "observations": 7547,
+      "events": 0,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 30,
+      "probability": 0.0,
+      "observations": 7547,
+      "events": 0,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 35,
+      "probability": 0.0,
+      "observations": 7547,
+      "events": 0,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1d",
+      "trading_days": 1,
+      "selloff_threshold_pct": 40,
+      "probability": 0.0,
+      "observations": 7547,
+      "events": 0,
+      "median_worst_selloff": 0.0006828778599343721,
+      "p95_worst_selloff": -0.018277979508328,
+      "p99_worst_selloff": -0.03348890049042311
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 3,
+      "probability": 0.1189182023067745,
+      "observations": 7543,
+      "events": 897,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 5,
+      "probability": 0.03632506960095453,
+      "observations": 7543,
+      "events": 274,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 7,
+      "probability": 0.015113350125944584,
+      "observations": 7543,
+      "events": 114,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 10,
+      "probability": 0.005435503115471298,
+      "observations": 7543,
+      "events": 41,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 15,
+      "probability": 0.000928012727031685,
+      "observations": 7543,
+      "events": 7,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 20,
+      "probability": 0.0,
+      "observations": 7543,
+      "events": 0,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 25,
+      "probability": 0.0,
+      "observations": 7543,
+      "events": 0,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 30,
+      "probability": 0.0,
+      "observations": 7543,
+      "events": 0,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 35,
+      "probability": 0.0,
+      "observations": 7543,
+      "events": 0,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1w",
+      "trading_days": 5,
+      "selloff_threshold_pct": 40,
+      "probability": 0.0,
+      "observations": 7543,
+      "events": 0,
+      "median_worst_selloff": -0.006230919521754363,
+      "p95_worst_selloff": -0.044762360252484985,
+      "p99_worst_selloff": -0.08173726663761324
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 3,
+      "probability": 0.3531287365484257,
+      "observations": 7527,
+      "events": 2658,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 5,
+      "probability": 0.190381294008237,
+      "observations": 7527,
+      "events": 1433,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 7,
+      "probability": 0.10787830476949647,
+      "observations": 7527,
+      "events": 812,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 10,
+      "probability": 0.047296399628005845,
+      "observations": 7527,
+      "events": 356,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 15,
+      "probability": 0.014746911119968115,
+      "observations": 7527,
+      "events": 111,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 20,
+      "probability": 0.006111332536203003,
+      "observations": 7527,
+      "events": 46,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 25,
+      "probability": 0.0035870864886408927,
+      "observations": 7527,
+      "events": 27,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 30,
+      "probability": 0.0005314202205393915,
+      "observations": 7527,
+      "events": 4,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 35,
+      "probability": 0.0,
+      "observations": 7527,
+      "events": 0,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "1m",
+      "trading_days": 21,
+      "selloff_threshold_pct": 40,
+      "probability": 0.0,
+      "observations": 7527,
+      "events": 0,
+      "median_worst_selloff": -0.01799539171393827,
+      "p95_worst_selloff": -0.09795202156684625,
+      "p99_worst_selloff": -0.17530989799769825
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 3,
+      "probability": 0.5374749498997996,
+      "observations": 7485,
+      "events": 4023,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 5,
+      "probability": 0.360187040748163,
+      "observations": 7485,
+      "events": 2696,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 7,
+      "probability": 0.24876419505678024,
+      "observations": 7485,
+      "events": 1862,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 10,
+      "probability": 0.16045424181696727,
+      "observations": 7485,
+      "events": 1201,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 15,
+      "probability": 0.07307949231796927,
+      "observations": 7485,
+      "events": 547,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 20,
+      "probability": 0.03219772879091516,
+      "observations": 7485,
+      "events": 241,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 25,
+      "probability": 0.02017368069472278,
+      "observations": 7485,
+      "events": 151,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 30,
+      "probability": 0.01229124916499666,
+      "observations": 7485,
+      "events": 92,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 35,
+      "probability": 0.0036072144288577155,
+      "observations": 7485,
+      "events": 27,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "3m",
+      "trading_days": 63,
+      "selloff_threshold_pct": 40,
+      "probability": 0.0013360053440213762,
+      "observations": 7485,
+      "events": 10,
+      "median_worst_selloff": -0.0336139530232904,
+      "p95_worst_selloff": -0.1775658880786057,
+      "p99_worst_selloff": -0.31348048501003145
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 3,
+      "probability": 0.6169496092697386,
+      "observations": 7422,
+      "events": 4579,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 5,
+      "probability": 0.4568849366747507,
+      "observations": 7422,
+      "events": 3391,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 7,
+      "probability": 0.3430342225815144,
+      "observations": 7422,
+      "events": 2546,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 10,
+      "probability": 0.2638102937213689,
+      "observations": 7422,
+      "events": 1958,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 15,
+      "probability": 0.15629210455402856,
+      "observations": 7422,
+      "events": 1160,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 20,
+      "probability": 0.07774184855834007,
+      "observations": 7422,
+      "events": 577,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 25,
+      "probability": 0.04850444624090541,
+      "observations": 7422,
+      "events": 360,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 30,
+      "probability": 0.02681218000538938,
+      "observations": 7422,
+      "events": 199,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 35,
+      "probability": 0.01576394502829426,
+      "observations": 7422,
+      "events": 117,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "6m",
+      "trading_days": 126,
+      "selloff_threshold_pct": 40,
+      "probability": 0.011452438695769335,
+      "observations": 7422,
+      "events": 85,
+      "median_worst_selloff": -0.0441163953589358,
+      "p95_worst_selloff": -0.2457976107132568,
+      "p99_worst_selloff": -0.4043972472563671
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 3,
+      "probability": 0.6861293859649122,
+      "observations": 7296,
+      "events": 5006,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 5,
+      "probability": 0.5533168859649122,
+      "observations": 7296,
+      "events": 4037,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 7,
+      "probability": 0.45230263157894735,
+      "observations": 7296,
+      "events": 3300,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 10,
+      "probability": 0.3675986842105263,
+      "observations": 7296,
+      "events": 2682,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 15,
+      "probability": 0.24917763157894737,
+      "observations": 7296,
+      "events": 1818,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 20,
+      "probability": 0.16652960526315788,
+      "observations": 7296,
+      "events": 1215,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 25,
+      "probability": 0.10978618421052631,
+      "observations": 7296,
+      "events": 801,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 30,
+      "probability": 0.06469298245614036,
+      "observations": 7296,
+      "events": 472,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 35,
+      "probability": 0.03453947368421053,
+      "observations": 7296,
+      "events": 252,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    },
+    {
+      "horizon": "1y",
+      "trading_days": 252,
+      "selloff_threshold_pct": 40,
+      "probability": 0.033717105263157895,
+      "observations": 7296,
+      "events": 246,
+      "median_worst_selloff": -0.06102048364689627,
+      "p95_worst_selloff": -0.3202564112870264,
+      "p99_worst_selloff": -0.49069237278749855
+    }
+  ],
+  "state_conditional_rows": [
+    {
+      "starting_state": "Near high (0 to -2%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 3,
+      "probability": 0.2971818958155423,
+      "observations": 2342
+    },
+    {
+      "starting_state": "Near high (0 to -2%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 5,
+      "probability": 0.13151152860802734,
+      "observations": 2342
+    },
+    {
+      "starting_state": "Near high (0 to -2%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 7,
+      "probability": 0.06959863364645602,
+      "observations": 2342
+    },
+    {
+      "starting_state": "Near high (0 to -2%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 10,
+      "probability": 0.015798462852263023,
+      "observations": 2342
+    },
+    {
+      "starting_state": "Near high (0 to -2%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 15,
+      "probability": 0.004696840307429547,
+      "observations": 2342
+    },
+    {
+      "starting_state": "Near high (0 to -2%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 20,
+      "probability": 0.0034158838599487617,
+      "observations": 2342
+    },
+    {
+      "starting_state": "Pullback (-2% to -5%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 3,
+      "probability": 0.293036750483559,
+      "observations": 1034
+    },
+    {
+      "starting_state": "Pullback (-2% to -5%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 5,
+      "probability": 0.18181818181818182,
+      "observations": 1034
+    },
+    {
+      "starting_state": "Pullback (-2% to -5%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 7,
+      "probability": 0.0735009671179884,
+      "observations": 1034
+    },
+    {
+      "starting_state": "Pullback (-2% to -5%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 10,
+      "probability": 0.014506769825918761,
+      "observations": 1034
+    },
+    {
+      "starting_state": "Pullback (-2% to -5%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 15,
+      "probability": 0.0019342359767891683,
+      "observations": 1034
+    },
+    {
+      "starting_state": "Pullback (-2% to -5%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 20,
+      "probability": 0.0009671179883945841,
+      "observations": 1034
+    },
+    {
+      "starting_state": "Dip (-5% to -10%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 3,
+      "probability": 0.37780040733197556,
+      "observations": 982
+    },
+    {
+      "starting_state": "Dip (-5% to -10%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 5,
+      "probability": 0.20672097759674135,
+      "observations": 982
+    },
+    {
+      "starting_state": "Dip (-5% to -10%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 7,
+      "probability": 0.11303462321792261,
+      "observations": 982
+    },
+    {
+      "starting_state": "Dip (-5% to -10%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 10,
+      "probability": 0.06822810590631365,
+      "observations": 982
+    },
+    {
+      "starting_state": "Dip (-5% to -10%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 15,
+      "probability": 0.004073319755600814,
+      "observations": 982
+    },
+    {
+      "starting_state": "Dip (-5% to -10%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 20,
+      "probability": 0.004073319755600814,
+      "observations": 982
+    },
+    {
+      "starting_state": "Correction (-10% to -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 3,
+      "probability": 0.398355754857997,
+      "observations": 1338
+    },
+    {
+      "starting_state": "Correction (-10% to -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 5,
+      "probability": 0.23617339312406577,
+      "observations": 1338
+    },
+    {
+      "starting_state": "Correction (-10% to -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 7,
+      "probability": 0.14275037369207771,
+      "observations": 1338
+    },
+    {
+      "starting_state": "Correction (-10% to -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 10,
+      "probability": 0.05904334828101644,
+      "observations": 1338
+    },
+    {
+      "starting_state": "Correction (-10% to -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 15,
+      "probability": 0.014947683109118086,
+      "observations": 1338
+    },
+    {
+      "starting_state": "Correction (-10% to -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 20,
+      "probability": 0.005979073243647235,
+      "observations": 1338
+    },
+    {
+      "starting_state": "Bear drawdown (< -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 3,
+      "probability": 0.4123429819770617,
+      "observations": 1831
+    },
+    {
+      "starting_state": "Bear drawdown (< -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 5,
+      "probability": 0.22829055161114145,
+      "observations": 1831
+    },
+    {
+      "starting_state": "Bear drawdown (< -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 7,
+      "probability": 0.14800655379574004,
+      "observations": 1831
+    },
+    {
+      "starting_state": "Bear drawdown (< -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 10,
+      "probability": 0.08629164391043145,
+      "observations": 1831
+    },
+    {
+      "starting_state": "Bear drawdown (< -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 15,
+      "probability": 0.040415073730202075,
+      "observations": 1831
+    },
+    {
+      "starting_state": "Bear drawdown (< -20%)",
+      "horizon": "1m",
+      "selloff_threshold_pct": 20,
+      "probability": 0.013653741125068269,
+      "observations": 1831
+    }
+  ]
+}

@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guarded A10/B20 SMA20 Leverage Signal</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #0f1115;
+      --panel: #171a21;
+      --text: #f2f4f8;
+      --muted: #9aa4b2;
+      --line: #2a303a;
+      --accent: #6aa6ff;
+      --good: #4cc38a;
+      --warn: #f0b84a;
+      --bad: #ff6b6b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    main {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 28px auto;
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    h2 { margin: 0 0 12px; font-size: 18px; }
+    p { color: var(--muted); line-height: 1.5; }
+    button, input, select {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    button {
+      cursor: pointer;
+      background: var(--accent);
+      color: #07111f;
+      border: 0;
+      font-weight: 700;
+    }
+    button.secondary {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      padding: 16px;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .signal {
+      font-size: 58px;
+      line-height: 1;
+    }
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+    th { color: var(--muted); font-weight: 600; }
+    ul { color: var(--muted); line-height: 1.55; }
+    code {
+      color: var(--text);
+      background: rgba(255,255,255,.07);
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+    .small { font-size: 13px; color: var(--muted); }
+    .wide { grid-column: 1 / -1; }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    @media (max-width: 850px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .two-col { grid-template-columns: 1fr; }
+      .signal { font-size: 46px; }
+    }
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Guarded A10/B20 SMA20 Leverage Signal</h1>
+  <p>
+    Computes the strategy state from S&amp;P 500 daily closes: base exposure is 1x only when
+    close is above SMA20; drawdown of 10% arms 2x and drawdown of 20% arms 3x, but recovery
+    leverage is only allowed when price is above SMA20.
+  </p>
+
+  <section class="card" style="margin-bottom: 18px;">
+    <h2>Strategy Rules</h2>
+    <ul>
+      <li><strong>Base trend rule:</strong> hold <strong>1x</strong> S&amp;P exposure only when the close is above the 20-day SMA. Otherwise hold cash/T-bills.</li>
+      <li><strong>2x recovery tier:</strong> if the S&amp;P is down <strong>10%</strong> or more from its closing high-water mark, the 2x tier is armed. It can only run when price is above SMA20.</li>
+      <li><strong>3x recovery tier:</strong> if the S&amp;P is down <strong>20%</strong> or more from its closing high-water mark, the 3x tier is armed. It can only run when price is above SMA20.</li>
+      <li><strong>Guard:</strong> if price falls back below SMA20, recovery leverage is blocked and the page falls back to the base rule.</li>
+      <li><strong>Exit recovery:</strong> 2x resets after the S&amp;P rises 25% from the tier entry close. 3x resets after the S&amp;P rises 33.33% from the tier entry close.</li>
+    </ul>
+    <p class="small">
+      The official signal uses the latest completed daily close and matches the backtest logic.
+      The intraday signal is provisional and can use a delayed SPX quote through an API/proxy or a manually entered price.
+    </p>
+  </section>
+
+  <div class="card">
+    <h2>Data Source</h2>
+    <div class="row">
+      <select id="source">
+        <option value="local">Local preview: spx_daily.csv</option>
+        <option value="stooq">Stooq daily ^SPX CSV (no API key, delayed)</option>
+        <option value="custom">Custom CSV URL</option>
+      </select>
+      <input id="customUrl" style="min-width: 420px; display: none;" placeholder="https://example.com/spx_daily.csv" />
+      <button id="refresh">Refresh signal</button>
+      <button id="download" class="secondary">Download last data</button>
+    </div>
+    <div class="row" style="margin-top: 12px;">
+      <input id="manualIntradayPrice" placeholder="Optional live price override, e.g. 7425.30" style="min-width: 280px;" />
+      <input id="intradayUrl" placeholder="Optional intraday quote URL returning JSON {price: ...}" style="min-width: 420px;" />
+    </div>
+    <div id="status" class="small">Ready.</div>
+  </div>
+
+  <section class="two-col">
+    <div class="card">
+      <h2>Official Signal: Last Completed Close</h2>
+      <div class="stat-label">Target leverage</div>
+      <div id="eodLeverage" class="stat-value signal">-</div>
+      <p id="eodExplanation">Load data to calculate the close-based signal.</p>
+      <table>
+        <tbody>
+          <tr><th>Signal date</th><td id="eodDate">-</td></tr>
+          <tr><th>Close</th><td id="eodClose">-</td></tr>
+          <tr><th>SMA20</th><td id="eodSma20">-</td></tr>
+          <tr><th>Drawdown from high</th><td id="eodDrawdown">-</td></tr>
+          <tr><th>Regime</th><td id="eodRegime">-</td></tr>
+          <tr><th>Recovery target</th><td id="eodRecoveryTarget">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h2>Live Intraday Signal: Provisional</h2>
+      <div class="stat-label">Target leverage</div>
+      <div id="liveLeverage" class="stat-value signal">-</div>
+      <p id="liveExplanation">Enter a live price or quote endpoint to calculate a provisional signal.</p>
+      <table>
+        <tbody>
+          <tr><th>Signal timestamp</th><td id="liveDate">-</td></tr>
+          <tr><th>Live / provisional price</th><td id="liveClose">-</td></tr>
+          <tr><th>Provisional SMA20</th><td id="liveSma20">-</td></tr>
+          <tr><th>Drawdown from high</th><td id="liveDrawdown">-</td></tr>
+          <tr><th>Regime</th><td id="liveRegime">-</td></tr>
+          <tr><th>Recovery target</th><td id="liveRecoveryTarget">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Shared Strategy State From Daily History</h2>
+    <table>
+      <tbody>
+        <tr><th>Daily data through</th><td id="latestDate">-</td></tr>
+        <tr><th>High-water close</th><td id="highWater">-</td></tr>
+        <tr><th>2x entry level (-10%)</th><td id="tier2Level">-</td></tr>
+        <tr><th>3x entry level (-20%)</th><td id="tier3Level">-</td></tr>
+        <tr><th>EOD close above SMA20?</th><td id="aboveSma">-</td></tr>
+        <tr><th>2x trigger (A)</th><td>-10% drawdown from S&amp;P high-water close</td></tr>
+        <tr><th>3x trigger (B)</th><td>-20% drawdown from S&amp;P high-water close</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card" style="margin-top: 18px;">
+    <h2>Backtested Results</h2>
+    <p class="small">
+      Full sample: 1996-05-16 to 2026-05-15. $100 start, $10 fixed annual inflow, 1.0% rebalance cost, project engine funding costs.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Strategy</th>
+          <th>CAGR</th>
+          <th>Max DD</th>
+          <th>Sharpe</th>
+          <th>End value</th>
+          <th>Trades</th>
+          <th>Cash time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Guarded A10/B20 SMA20</td><td>29.39%</td><td>-34.37%</td><td>3.232</td><td>$224,918</td><td>878</td><td>37.08%</td></tr>
+        <tr><td>SMA20 3x/cash</td><td>35.76%</td><td>-49.16%</td><td>3.754</td><td>$951,245</td><td>868</td><td>37.08%</td></tr>
+        <tr><td>SMA20 2x/cash</td><td>26.23%</td><td>-33.92%</td><td>3.794</td><td>$107,235</td><td>868</td><td>37.08%</td></tr>
+        <tr><td>SMA20 1x/cash</td><td>16.05%</td><td>-16.92%</td><td>3.913</td><td>$8,601</td><td>868</td><td>37.08%</td></tr>
+        <tr><td>Buy &amp; hold 1x</td><td>11.38%</td><td>-53.67%</td><td>0.517</td><td>$2,533</td><td>0</td><td>0.00%</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<script>
+  const STOOQ_URL = "https://stooq.com/q/d/l/?s=%5Espx&i=d";
+  const LOCAL_URL = "spx_daily.csv";
+  let lastCsv = "";
+
+  const $ = (id) => document.getElementById(id);
+  const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
+  const fmtPct = (x) => Number.isFinite(x) ? (x * 100).toFixed(2) + "%" : "-";
+
+  $("source").addEventListener("change", () => {
+    $("customUrl").style.display = $("source").value === "custom" ? "inline-block" : "none";
+  });
+  $("refresh").addEventListener("click", refresh);
+  $("download").addEventListener("click", () => {
+    if (!lastCsv) return;
+    const blob = new Blob([lastCsv], { type: "text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "spx_daily.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  async function refresh() {
+    try {
+      setStatus("Fetching daily S&P data...");
+      const source = $("source").value;
+      const url = source === "custom" ? $("customUrl").value.trim() : source === "local" ? LOCAL_URL : STOOQ_URL;
+      if (!url) throw new Error("Enter a custom CSV URL.");
+
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
+      const csv = await response.text();
+      lastCsv = csv;
+
+      const rows = parseCsv(csv);
+      if (rows.length < 260) throw new Error("Not enough daily data. Need at least ~260 rows.");
+      const eodResult = computeSignal(rows);
+
+      const livePrice = await getLivePrice();
+      const liveRows = livePrice == null ? rows : appendIntradayRow(rows, livePrice);
+      const liveResult = computeSignal(liveRows);
+      if (livePrice == null) {
+        liveResult.explanation = "No intraday price provided; showing last completed close as placeholder.";
+      }
+
+      render(eodResult, liveResult);
+      setStatus(`Loaded ${rows.length} daily rows. Last completed close: ${eodResult.latest.date}.`);
+    } catch (err) {
+      console.error(err);
+      setStatus("Error: " + err.message, true);
+    }
+  }
+
+  function setStatus(message, isError = false) {
+    $("status").textContent = message;
+    $("status").className = isError ? "small bad" : "small";
+  }
+
+  function parseCsv(csv) {
+    const lines = csv.trim().split(/\r?\n/);
+    const header = lines.shift().split(",").map((h) => h.trim().toLowerCase());
+    const dateIdx = header.indexOf("date");
+    const closeIdx = header.indexOf("close");
+    if (dateIdx < 0 || closeIdx < 0) throw new Error("CSV must include Date and Close columns.");
+
+    return lines.map((line) => {
+      const parts = line.split(",");
+      return {
+        date: parts[dateIdx],
+        close: Number(parts[closeIdx])
+      };
+    }).filter((row) => row.date && Number.isFinite(row.close) && row.close > 0);
+  }
+
+  async function getLivePrice() {
+    const manual = Number($("manualIntradayPrice").value);
+    if (Number.isFinite(manual) && manual > 0) return manual;
+
+    const url = $("intradayUrl").value.trim();
+    if (!url) return null;
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Intraday fetch failed: ${response.status} ${response.statusText}`);
+    const text = await response.text();
+    try {
+      const json = JSON.parse(text);
+      const price = Number(json.price ?? json.close ?? json.last ?? json.value);
+      if (Number.isFinite(price) && price > 0) return price;
+    } catch (_) {
+      const parsed = parseCsv(text);
+      if (parsed.length) return parsed[parsed.length - 1].close;
+    }
+    throw new Error("Intraday source must return JSON with price/close/last or CSV with Date,Close.");
+  }
+
+  function appendIntradayRow(rows, price) {
+    const out = rows.slice();
+    const now = new Date();
+    const stamp = now.toISOString().replace("T", " ").slice(0, 16) + " UTC";
+    out.push({ date: stamp, close: price });
+    return out;
+  }
+
+  function sma(values, endIndex, window) {
+    if (endIndex + 1 < window) return NaN;
+    let sum = 0;
+    for (let i = endIndex - window + 1; i <= endIndex; i++) sum += values[i];
+    return sum / window;
+  }
+
+  function computeSignal(rows) {
+    const closes = rows.map((r) => r.close);
+    let highWater = closes[0];
+    let highWaterDate = rows[0].date;
+    let regime = "base";
+    let entryClose = null;
+    let entryDate = null;
+    let targetLeverage = 0;
+    let explanation = "";
+
+    for (let i = 0; i < rows.length; i++) {
+      const close = closes[i];
+      const avg20 = sma(closes, i, 20);
+      if (close >= highWater) {
+        highWater = close;
+        highWaterDate = rows[i].date;
+      }
+
+      const dd = close / highWater - 1;
+      const aboveSma = Number.isFinite(avg20) && close > avg20;
+      const baseLev = aboveSma ? 1 : 0;
+
+      if (regime === "tier3") {
+        if (close / entryClose - 1 >= 1 / 3) {
+          regime = "base";
+          entryClose = null;
+          entryDate = null;
+        } else {
+          targetLeverage = aboveSma ? 3 : baseLev;
+          explanation = aboveSma
+            ? "3x recovery tier is active and price is above SMA20."
+            : "3x tier is armed, but guard failed; using base cash/1x rule.";
+          continue;
+        }
+      }
+
+      if (regime === "tier2") {
+        if (dd <= -0.20 && aboveSma) {
+          regime = "tier3";
+          entryClose = close;
+          entryDate = rows[i].date;
+          targetLeverage = 3;
+          explanation = "Drawdown hit B=-20% and guard passed; upgraded to 3x.";
+          continue;
+        }
+        if (close / entryClose - 1 >= 0.25) {
+          regime = "base";
+          entryClose = null;
+          entryDate = null;
+        } else {
+          targetLeverage = aboveSma ? 2 : baseLev;
+          explanation = aboveSma
+            ? "2x recovery tier is active and price is above SMA20."
+            : "2x tier is armed, but guard failed; using base cash/1x rule.";
+          continue;
+        }
+      }
+
+      if (dd <= -0.20 && aboveSma) {
+        regime = "tier3";
+        entryClose = close;
+        entryDate = rows[i].date;
+        targetLeverage = 3;
+        explanation = "Drawdown is at/through -20% and price is above SMA20; enter 3x.";
+      } else if (dd <= -0.10 && aboveSma) {
+        regime = "tier2";
+        entryClose = close;
+        entryDate = rows[i].date;
+        targetLeverage = 2;
+        explanation = "Drawdown is at/through -10% and price is above SMA20; enter 2x.";
+      } else {
+        targetLeverage = baseLev;
+        explanation = aboveSma
+          ? "No recovery tier active; base rule says 1x because close is above SMA20."
+          : "No recovery tier active; base rule says cash because close is below SMA20.";
+      }
+    }
+
+    const lastIndex = rows.length - 1;
+    const latest = rows[lastIndex];
+    const latestSma = sma(closes, lastIndex, 20);
+    const latestDd = latest.close / highWater - 1;
+    const recoveryTarget = entryClose == null
+      ? null
+      : regime === "tier3"
+        ? entryClose * (1 + 1 / 3)
+        : entryClose * 1.25;
+
+    return {
+      latest,
+      latestSma,
+      highWater,
+      highWaterDate,
+      latestDd,
+      regime,
+      entryClose,
+      entryDate,
+      recoveryTarget,
+      aboveSma: latest.close > latestSma,
+      targetLeverage,
+      explanation
+    };
+  }
+
+  function render(eod, live) {
+    renderSignal("eod", eod);
+    renderSignal("live", live);
+    $("latestDate").textContent = eod.latest.date;
+    $("highWater").textContent = `${fmtMoney(eod.highWater)} (${eod.highWaterDate})`;
+    $("tier2Level").textContent = fmtMoney(eod.highWater * 0.90);
+    $("tier3Level").textContent = fmtMoney(eod.highWater * 0.80);
+    $("aboveSma").textContent = eod.aboveSma ? "Yes" : "No";
+  }
+
+  function renderSignal(prefix, result) {
+    const lev = $(prefix + "Leverage");
+    lev.textContent = result.targetLeverage.toFixed(0) + "x";
+    lev.className =
+      "stat-value signal " + (result.targetLeverage >= 3 ? "bad" : result.targetLeverage >= 2 ? "warn" : "good");
+    $(prefix + "Explanation").textContent = result.explanation;
+    $(prefix + "Date").textContent = result.latest.date;
+    $(prefix + "Close").textContent = fmtMoney(result.latest.close);
+    $(prefix + "Sma20").textContent = fmtMoney(result.latestSma);
+    $(prefix + "Drawdown").textContent = fmtPct(result.latestDd);
+    $(prefix + "Regime").textContent = result.regime;
+    $(prefix + "RecoveryTarget").textContent = result.recoveryTarget == null ? "-" : fmtMoney(result.recoveryTarget);
+  }
+
+  refresh();
+</script>
+</body>
+</html>
