@@ -273,15 +273,7 @@
   <div class="card">
     <h2>Data Source</h2>
     <div class="row">
-      <select id="source">
-        <option value="worker">SPX daily via Worker: Yahoo</option>
-        <option value="local">Local preview: spx_daily.csv</option>
-        <option value="custom">Custom CSV URL</option>
-      </select>
-      <input id="customUrl" style="min-width: 420px; display: none;" placeholder="https://example.com/spx_daily.csv" />
       <button id="refresh">Refresh signal</button>
-    </div>
-    <div class="row" style="margin-top: 12px;">
       <input id="manualIntradayPrice" placeholder="Optional SPX live price override, e.g. 7408.50" style="min-width: 280px;" />
     </div>
     <div id="status" class="small">Ready.</div>
@@ -536,7 +528,6 @@
 </main>
 
 <script>
-  const LOCAL_URL = "spx_daily.csv";
   const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040 };
@@ -550,9 +541,6 @@
 
   document.querySelectorAll("[data-page-target]").forEach((button) => {
     button.addEventListener("click", () => showPage(button.dataset.pageTarget));
-  });
-  $("source").addEventListener("change", () => {
-    $("customUrl").style.display = $("source").value === "custom" ? "inline-block" : "none";
   });
   $("refresh").addEventListener("click", refresh);
   document.querySelectorAll("[data-range]").forEach((button) => {
@@ -578,17 +566,7 @@
   async function refresh() {
     try {
       setStatus("Fetching daily S&P data...");
-      const source = $("source").value;
-      const url = source === "custom"
-        ? $("customUrl").value.trim()
-        : source === "local"
-          ? LOCAL_URL
-          : source === "worker"
-            ? WORKER_DAILY_URL
-            : "";
-      if (!url) throw new Error("Enter a custom CSV URL.");
-
-      const response = await fetch(url, { cache: "no-store" });
+      const response = await fetch(WORKER_DAILY_URL, { cache: "no-store" });
       if (!response.ok) throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
       const csv = await response.text();
 
