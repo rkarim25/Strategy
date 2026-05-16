@@ -258,7 +258,7 @@
   <section class="card" style="margin-bottom: 18px;">
     <h2>Strategy Rules</h2>
     <ul>
-      <li><strong>Base trend rule:</strong> hold <strong>1x</strong> S&amp;P exposure only when the close is above the 20-day SMA. Otherwise hold cash/T-bills.</li>
+      <li><strong>Base trend rule:</strong> hold <strong>1x</strong> S&amp;P exposure only when the SPX close is above the 20-day SMA. Otherwise hold cash/T-bills.</li>
       <li><strong>2x recovery tier:</strong> if the S&amp;P is down <strong>10%</strong> or more from its closing high-water mark, the 2x tier is armed. It can only run when price is above SMA20.</li>
       <li><strong>3x recovery tier:</strong> if the S&amp;P is down <strong>20%</strong> or more from its closing high-water mark, the 3x tier is armed. It can only run when price is above SMA20.</li>
       <li><strong>Guard:</strong> if price falls back below SMA20, recovery leverage is blocked and the page falls back to the base rule.</li>
@@ -274,16 +274,15 @@
     <h2>Data Source</h2>
     <div class="row">
       <select id="source">
-        <option value="tiingo">Tiingo via Worker: SPY daily</option>
+        <option value="worker">SPX daily via Worker: Yahoo</option>
         <option value="local">Local preview: spx_daily.csv</option>
-        <option value="stooq">Stooq daily ^SPX CSV (no API key, delayed)</option>
         <option value="custom">Custom CSV URL</option>
       </select>
       <input id="customUrl" style="min-width: 420px; display: none;" placeholder="https://example.com/spx_daily.csv" />
       <button id="refresh">Refresh signal</button>
     </div>
     <div class="row" style="margin-top: 12px;">
-      <input id="manualIntradayPrice" placeholder="Optional live price override, e.g. 740.16" style="min-width: 280px;" />
+      <input id="manualIntradayPrice" placeholder="Optional SPX live price override, e.g. 7408.50" style="min-width: 280px;" />
     </div>
     <div id="status" class="small">Ready.</div>
   </div>
@@ -324,7 +323,7 @@
   </section>
 
   <section class="card" style="margin-top: 18px;">
-    <h2>Market Close vs 20-Day SMA</h2>
+    <h2>SPX Close vs 20-Day SMA</h2>
     <div class="row range-controls">
       <button type="button" data-range="1w">1W</button>
       <button type="button" data-range="1m">1M</button>
@@ -339,11 +338,11 @@
     </div>
     <div id="chartMeta" class="small" style="margin-top: 10px;">Load data to draw the chart.</div>
     <div class="chart-box">
-      <svg id="priceChart" viewBox="0 0 900 360" role="img" aria-label="Market close and 20-day SMA chart"></svg>
+      <svg id="priceChart" viewBox="0 0 900 360" role="img" aria-label="SPX close and 20-day SMA chart"></svg>
       <div id="chartTooltip" class="chart-tooltip"></div>
     </div>
     <div class="legend">
-      <span>Market close</span>
+      <span>SPX close</span>
       <span class="sma">20-day SMA</span>
     </div>
   </section>
@@ -537,10 +536,9 @@
 </main>
 
 <script>
-  const STOOQ_URL = "https://stooq.com/q/d/l/?s=%5Espx&i=d";
   const LOCAL_URL = "spx_daily.csv";
-  const TIINGO_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
-  const TIINGO_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
+  const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
+  const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040 };
   let latestRows = [];
   let chartRange = "1y";
@@ -585,9 +583,9 @@
         ? $("customUrl").value.trim()
         : source === "local"
           ? LOCAL_URL
-          : source === "tiingo"
-            ? TIINGO_DAILY_URL
-            : STOOQ_URL;
+          : source === "worker"
+            ? WORKER_DAILY_URL
+            : "";
       if (!url) throw new Error("Enter a custom CSV URL.");
 
       const response = await fetch(url, { cache: "no-store" });
@@ -650,7 +648,7 @@
     const manual = Number($("manualIntradayPrice").value);
     if (Number.isFinite(manual) && manual > 0) return manual;
 
-    const response = await fetch(TIINGO_QUOTE_URL, { cache: "no-store" });
+    const response = await fetch(WORKER_QUOTE_URL, { cache: "no-store" });
     if (!response.ok) throw new Error(`Intraday fetch failed: ${response.status} ${response.statusText}`);
     const text = await response.text();
     try {

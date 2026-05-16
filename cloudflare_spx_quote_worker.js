@@ -2,7 +2,8 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const mode = url.searchParams.get("mode") || "daily";
-    const ticker = "spy";
+    const dailyUrl = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=1d&range=max";
+    const quoteUrl = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=1m&range=1d";
 
     const corsHeaders = {
       "access-control-allow-origin": "*",
@@ -15,33 +16,17 @@ export default {
     }
 
     try {
-      if (!env.TIINGO_API_TOKEN) {
-        throw new Error("Missing TIINGO_API_TOKEN Worker secret.");
-      }
-
       if (mode === "daily") {
-        const endDate = new Date().toISOString().slice(0, 10);
-        const start = new Date();
-        start.setFullYear(start.getFullYear() - 25);
-        const startDate = start.toISOString().slice(0, 10);
-
-        const tiingoUrl =
-          `https://api.tiingo.com/tiingo/daily/${ticker}/prices?startDate=${startDate}&endDate=${endDate}&format=json&token=${env.TIINGO_API_TOKEN}`;
-
-        const res = await fetch(tiingoUrl);
+        const res = await fetch(dailyUrl, {
+          headers: { "user-agent": "Mozilla/5.0" }
+        });
         const text = await res.text();
 
         if (!res.ok) {
-          throw new Error(`Tiingo daily failed ${res.status}: ${text.slice(0, 300)}`);
+          throw new Error(`Yahoo daily failed ${res.status}: ${text.slice(0, 300)}`);
         }
 
-        const data = JSON.parse(text);
-        const csv = [
-          "Date,Close",
-          ...data
-            .filter((row) => row.date && Number.isFinite(Number(row.close)))
-            .map((row) => `${row.date.slice(0, 10)},${row.close}`)
-        ].join("\n");
+        const csv = yahooChartToCsv(JSON.parse(text));
 
         return new Response(csv, {
           headers: {
@@ -52,25 +37,23 @@ export default {
       }
 
       if (mode === "quote") {
-        const tiingoUrl =
-          `https://api.tiingo.com/iex/${ticker}/prices?token=${env.TIINGO_API_TOKEN}`;
-
-        const res = await fetch(tiingoUrl);
+        const res = await fetch(quoteUrl, {
+          headers: { "user-agent": "Mozilla/5.0" }
+        });
         const text = await res.text();
 
         if (!res.ok) {
-          throw new Error(`Tiingo quote failed ${res.status}: ${text.slice(0, 300)}`);
+          throw new Error(`Yahoo quote failed ${res.status}: ${text.slice(0, 300)}`);
         }
 
-        const data = JSON.parse(text);
-        const row = Array.isArray(data) ? data[0] : data;
-        const price = Number(row?.last ?? row?.close ?? row?.tngoLast ?? row?.prevClose);
+        const latest = latestYahooChartPoint(JSON.parse(text));
 
-        if (!Number.isFinite(price) || price <= 0) {
-          throw new Error(`No valid Tiingo quote price returned: ${text.slice(0, 300)}`);
-        }
-
-        return new Response(JSON.stringify({ price, ticker: "SPY" }), {
+        return new Response(JSON.stringify({
+          price: latest.close,
+          ticker: "^GSPC",
+          source: "Yahoo Finance chart endpoint",
+          timestamp: latest.date
+        }), {
           headers: {
             ...corsHeaders,
             "content-type": "application/json"
@@ -96,3 +79,35 @@ export default {
     }
   }
 };
+
+function yahooChartToCsv(data) {
+  const rows = yahooChartRows(data);
+  if (rows.length < 2) {
+    throw new Error("Yahoo chart response did not include enough close rows.");
+  }
+  return [
+    "Date,Close",
+    ...rows.map((row) => `${row.date},${row.close}`)
+  ].join("\n");
+}
+
+function latestYahooChartPoint(data) {
+  const rows = yahooChartRows(data);
+  const latest = rows.at(-1);
+  if (!latest) {
+    throw new Error("Yahoo quote response did not include a valid close.");
+  }
+  return latest;
+}
+
+function yahooChartRows(data) {
+  const result = data?.chart?.result?.[0];
+  const timestamps = result?.timestamp || [];
+  const closes = result?.indicators?.quote?.[0]?.close || [];
+  return timestamps
+    .map((timestamp, index) => ({
+      date: new Date(timestamp * 1000).toISOString().slice(0, 10),
+      close: Number(closes[index])
+    }))
+    .filter((row) => row.date && Number.isFinite(row.close) && row.close > 0);
+}
