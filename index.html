@@ -6,50 +6,75 @@
   <title>Strategy</title>
   <style>
     :root {
-      color-scheme: light dark;
-      --bg: #0f1115;
-      --panel: #171a21;
-      --text: #f2f4f8;
-      --muted: #9aa4b2;
-      --line: #2a303a;
-      --accent: #6aa6ff;
-      --good: #4cc38a;
-      --warn: #f0b84a;
-      --bad: #ff6b6b;
+      color-scheme: light;
+      --bg: #f5f5f7;
+      --panel: rgba(255, 255, 255, .78);
+      --panel-solid: #ffffff;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --line: rgba(0, 0, 0, .10);
+      --accent: #0071e3;
+      --accent-soft: rgba(0, 113, 227, .10);
+      --good: #248a3d;
+      --warn: #b26a00;
+      --bad: #d70015;
+      --shadow: 0 18px 45px rgba(0, 0, 0, .08);
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top left, rgba(0, 113, 227, .12), transparent 32rem),
+        linear-gradient(180deg, #fbfbfd 0%, var(--bg) 42%, #ffffff 100%);
       color: var(--text);
+      -webkit-font-smoothing: antialiased;
     }
     main {
-      width: min(1120px, calc(100vw - 32px));
-      margin: 28px auto;
+      width: min(1180px, calc(100vw - 40px));
+      margin: 48px auto 72px;
     }
-    h1 { margin: 0 0 8px; font-size: 28px; }
-    h2 { margin: 0 0 12px; font-size: 18px; }
-    p { color: var(--muted); line-height: 1.5; }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(44px, 7vw, 78px);
+      line-height: .95;
+      letter-spacing: -0.065em;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+    p { color: var(--muted); line-height: 1.58; }
     button, input, select {
       border: 1px solid var(--line);
-      background: var(--panel);
+      background: rgba(255, 255, 255, .72);
       color: var(--text);
-      border-radius: 8px;
-      padding: 10px 12px;
+      border-radius: 999px;
+      padding: 11px 16px;
       font-size: 14px;
+      transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
     }
     button {
       cursor: pointer;
       background: var(--accent);
-      color: #07111f;
+      color: #fff;
       border: 0;
-      font-weight: 700;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(0, 113, 227, .24);
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(0, 113, 227, .26);
     }
     button.secondary {
-      background: var(--panel);
+      background: rgba(255, 255, 255, .72);
       color: var(--text);
       border: 1px solid var(--line);
+      box-shadow: none;
     }
     .grid {
       display: grid;
@@ -59,9 +84,11 @@
     }
     .card {
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 28px;
       background: var(--panel);
-      padding: 16px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
     }
     .stat-label {
       color: var(--muted);
@@ -69,12 +96,12 @@
       margin-bottom: 8px;
     }
     .stat-value {
-      font-size: 30px;
+      font-size: 34px;
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.045em;
     }
     .signal {
-      font-size: 58px;
+      font-size: 72px;
       line-height: 1;
     }
     .good { color: var(--good); }
@@ -88,12 +115,13 @@
     }
     table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       margin-top: 8px;
       font-size: 14px;
     }
     th, td {
-      padding: 10px 8px;
+      padding: 12px 10px;
       border-bottom: 1px solid var(--line);
       text-align: left;
     }
@@ -101,7 +129,7 @@
     ul { color: var(--muted); line-height: 1.55; }
     code {
       color: var(--text);
-      background: rgba(255,255,255,.07);
+      background: rgba(0, 0, 0, .05);
       padding: 2px 5px;
       border-radius: 5px;
     }
@@ -118,10 +146,11 @@
       color: var(--text);
       border: 1px solid var(--line);
       padding: 8px 10px;
+      box-shadow: none;
     }
     .range-controls button.active {
       background: var(--accent);
-      color: #07111f;
+      color: #fff;
       border-color: var(--accent);
     }
     .chart-box {
@@ -135,8 +164,8 @@
       height: 360px;
       display: block;
       border: 1px solid var(--line);
-      border-radius: 12px;
-      background: rgba(0,0,0,.14);
+      border-radius: 22px;
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
     }
     .chart-tooltip {
       position: absolute;
@@ -145,11 +174,11 @@
       min-width: 170px;
       padding: 8px 10px;
       border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(15,17,21,.95);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .96);
       color: var(--text);
       font-size: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+      box-shadow: var(--shadow);
     }
     .legend {
       display: flex;
@@ -180,19 +209,21 @@
       margin: 18px 0;
       padding: 10px;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(23, 26, 33, .92);
-      backdrop-filter: blur(10px);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .72);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .06);
+      backdrop-filter: blur(20px);
     }
     .site-nav button {
       background: transparent;
       color: var(--text);
       border: 1px solid var(--line);
+      box-shadow: none;
     }
     .site-nav button.active {
-      background: var(--accent);
-      color: #07111f;
-      border-color: var(--accent);
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
     }
     .page { display: none; }
     .page.active { display: block; }
@@ -204,9 +235,9 @@
     }
     .metric-card {
       border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255,255,255,.03);
-      padding: 14px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .70);
+      padding: 18px;
     }
     .metric-card strong {
       display: block;
@@ -220,9 +251,9 @@
     }
     .callout {
       border-left: 4px solid var(--accent);
-      background: rgba(106,166,255,.08);
-      padding: 12px 14px;
-      border-radius: 10px;
+      background: var(--accent-soft);
+      padding: 16px 18px;
+      border-radius: 18px;
       color: var(--muted);
       line-height: 1.5;
     }
