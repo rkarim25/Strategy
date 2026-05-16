@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Guarded A10/B20 SMA20 Leverage Signal</title>
+  <title>Strategy</title>
   <style>
     :root {
       color-scheme: light dark;
@@ -241,20 +241,31 @@
 </head>
 <body>
 <main>
-  <h1>Guarded A10/B20 SMA20 Leverage Signal</h1>
+  <h1>Strategy</h1>
   <p>
-    Computes the strategy state from S&amp;P 500 daily closes: base exposure is 1x only when
-    close is above SMA20; drawdown of 10% arms 2x and drawdown of 20% arms 3x, but recovery
-    leverage is only allowed when price is above SMA20.
+    A live dashboard and research library for systematic market strategies. Each strategy gets its own tab,
+    with signal, back-test, and Monte Carlo validation shown separately.
   </p>
 
-  <nav class="site-nav" aria-label="Site sections">
-    <button type="button" class="active" data-page-target="homePage">Home</button>
-    <button type="button" data-page-target="backtestPage">Back-test</button>
-    <button type="button" data-page-target="monteCarloPage">Monte Carlo</button>
+  <nav class="site-nav" aria-label="Strategies">
+    <button type="button" class="active">Guarded A10/B20 SMA20 Leverage Signal</button>
   </nav>
 
-  <section id="homePage" class="page active">
+  <section class="card" style="margin-bottom: 18px;">
+    <h2>Guarded A10/B20 SMA20 Leverage Signal</h2>
+    <p>
+      Computes the strategy state from S&amp;P 500 daily closes: base exposure is 1x only when
+      close is above SMA20; drawdown of 10% arms 2x and drawdown of 20% arms 3x, but recovery
+      leverage is only allowed when price is above SMA20.
+    </p>
+    <nav class="site-nav" aria-label="Guarded strategy sections">
+      <button type="button" class="active" data-page-target="signalPage">Signal</button>
+      <button type="button" data-page-target="backtestPage">Back-test</button>
+      <button type="button" data-page-target="monteCarloPage">Monte Carlo</button>
+    </nav>
+  </section>
+
+  <section id="signalPage" class="page active">
   <section class="card" style="margin-bottom: 18px;">
     <h2>Strategy Rules</h2>
     <ul>
@@ -603,7 +614,7 @@
     document.querySelectorAll("[data-page-target]").forEach((button) => {
       button.classList.toggle("active", button.dataset.pageTarget === pageId);
     });
-    if (pageId === "homePage") renderChart();
+    if (pageId === "signalPage") renderChart();
   }
 
   function parseCsv(csv) {
