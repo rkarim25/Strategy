@@ -170,13 +170,72 @@
       background: var(--accent);
     }
     .legend .sma::before { background: var(--warn); }
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(23, 26, 33, .92);
+      backdrop-filter: blur(10px);
+    }
+    .site-nav button {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+    .site-nav button.active {
+      background: var(--accent);
+      color: #07111f;
+      border-color: var(--accent);
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      padding: 14px;
+    }
+    .metric-card strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: rgba(106,166,255,.08);
+      padding: 12px 14px;
+      border-radius: 10px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .section-gap { margin-top: 18px; }
     @media (max-width: 850px) {
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .two-col { grid-template-columns: 1fr; }
       .signal { font-size: 46px; }
     }
     @media (max-width: 520px) {
       .grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -189,6 +248,13 @@
     leverage is only allowed when price is above SMA20.
   </p>
 
+  <nav class="site-nav" aria-label="Site sections">
+    <button type="button" class="active" data-page-target="homePage">Home</button>
+    <button type="button" data-page-target="backtestPage">Back-test</button>
+    <button type="button" data-page-target="monteCarloPage">Monte Carlo</button>
+  </nav>
+
+  <section id="homePage" class="page active">
   <section class="card" style="margin-bottom: 18px;">
     <h2>Strategy Rules</h2>
     <ul>
@@ -297,31 +363,175 @@
     </table>
   </section>
 
-  <section class="card" style="margin-top: 18px;">
-    <h2>Backtested Results</h2>
-    <p class="small">
-      Full sample: 1996-05-16 to 2026-05-15. $100 start, $10 fixed annual inflow, 1.0% rebalance cost, project engine funding costs.
-    </p>
-    <table>
-      <thead>
-        <tr>
-          <th>Strategy</th>
-          <th>CAGR</th>
-          <th>Max DD</th>
-          <th>Sharpe</th>
-          <th>End value</th>
-          <th>Trades</th>
-          <th>Cash time</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Guarded A10/B20 SMA20</td><td>29.39%</td><td>-34.37%</td><td>3.232</td><td>$224,918</td><td>878</td><td>37.08%</td></tr>
-        <tr><td>SMA20 3x/cash</td><td>35.76%</td><td>-49.16%</td><td>3.754</td><td>$951,245</td><td>868</td><td>37.08%</td></tr>
-        <tr><td>SMA20 2x/cash</td><td>26.23%</td><td>-33.92%</td><td>3.794</td><td>$107,235</td><td>868</td><td>37.08%</td></tr>
-        <tr><td>SMA20 1x/cash</td><td>16.05%</td><td>-16.92%</td><td>3.913</td><td>$8,601</td><td>868</td><td>37.08%</td></tr>
-        <tr><td>Buy &amp; hold 1x</td><td>11.38%</td><td>-53.67%</td><td>0.517</td><td>$2,533</td><td>0</td><td>0.00%</td></tr>
-      </tbody>
-    </table>
+  </section>
+
+  <section id="backtestPage" class="page">
+    <section class="card">
+      <h2>Back-test Overview</h2>
+      <p>
+        These results use the project backtest engine over 1996-05-16 to 2026-05-15 with $100 starting capital,
+        $10 fixed annual inflows, 1.0% rebalance cost, and the engine funding-cost model. The core strategy is
+        <strong>Guarded A10/B20 SMA20</strong>: trend exposure is allowed only above SMA20, 2x recovery is armed
+        after a 10% market drawdown, and 3x recovery is armed after a 20% market drawdown.
+      </p>
+      <div class="kpi-grid">
+        <div class="metric-card"><span class="small">Guarded SMA20 CAGR</span><strong>29.39%</strong></div>
+        <div class="metric-card"><span class="small">Guarded SMA20 max DD</span><strong>-34.37%</strong></div>
+        <div class="metric-card"><span class="small">Guarded SMA20 Sharpe</span><strong>3.232</strong></div>
+        <div class="metric-card"><span class="small">Guarded SMA20 end value</span><strong>$224,918</strong></div>
+      </div>
+      <p class="callout">
+        The guarded strategy sits between pure SMA20 2x/cash and SMA20 3x/cash: it gave much more upside than
+        2x/cash, but avoided the full 3x/cash drawdown. The cost is complexity and slightly lower Sharpe than the
+        simple SMA20 fixed-leverage references.
+      </p>
+    </section>
+
+    <section class="card section-gap">
+      <h2>Full-Sample Strategy Comparison</h2>
+      <p class="small">Full sample: 1996-05-16 to 2026-05-15. Cash time is percent of sessions with zero risky exposure.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Buy &amp; hold 1x</td><td>11.38%</td><td>19.12%</td><td>0.517</td><td>-53.67%</td><td>$2,533</td><td>0</td><td>0.00%</td></tr>
+            <tr><td>Buy &amp; hold 2x</td><td>13.47%</td><td>38.24%</td><td>0.442</td><td>-85.66%</td><td>$4,382</td><td>1</td><td>0.00%</td></tr>
+            <tr><td>Buy &amp; hold 3x</td><td>13.16%</td><td>57.35%</td><td>0.417</td><td>-97.32%</td><td>$3,994</td><td>1</td><td>0.00%</td></tr>
+            <tr><td>SMA20 1x/cash</td><td>16.05%</td><td>10.99%</td><td>3.913</td><td>-16.92%</td><td>$8,601</td><td>868</td><td>37.08%</td></tr>
+            <tr><td>SMA20 2x/cash</td><td>26.23%</td><td>21.97%</td><td>3.794</td><td>-33.92%</td><td>$107,235</td><td>868</td><td>37.08%</td></tr>
+            <tr><td>SMA20 3x/cash</td><td>35.76%</td><td>32.95%</td><td>3.754</td><td>-49.16%</td><td>$951,245</td><td>868</td><td>37.08%</td></tr>
+            <tr><td><strong>Guarded A10/B20 SMA20</strong></td><td><strong>29.39%</strong></td><td>26.65%</td><td>3.232</td><td><strong>-34.37%</strong></td><td><strong>$224,918</strong></td><td>878</td><td>37.08%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>Guard SMA Sensitivity</h2>
+      <p class="small">Same A10/B20 tiering, different trend guards. SMA20 is the strongest version in this run.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Strategy</th><th>CAGR</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Cash</th><th>1x</th><th>2x</th><th>3x</th><th>Tier entries</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Guarded A10/B20 SMA20</td><td>29.39%</td><td>3.232</td><td>-34.37%</td><td>$224,918</td><td>37.08%</td><td>26.15%</td><td>10.31%</td><td>26.46%</td><td>8 / 5</td></tr>
+            <tr><td>Guarded A10/B20 SMA50</td><td>20.41%</td><td>2.163</td><td>-46.31%</td><td>$26,007</td><td>33.97%</td><td>31.97%</td><td>6.47%</td><td>27.60%</td><td>5 / 2</td></tr>
+            <tr><td>Guarded A10/B20 SMA200</td><td>17.88%</td><td>1.408</td><td>-35.47%</td><td>$13,765</td><td>28.22%</td><td>33.92%</td><td>19.91%</td><td>17.95%</td><td>6 / 2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>Forward and Out-of-Sample Checks</h2>
+      <p class="small">Fixed strategy tested on later periods without changing parameters.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Period</th><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2006-2026</td><td>Guarded A10/B20 SMA20</td><td>32.69%</td><td>26.14%</td><td>3.078</td><td>-20.94%</td><td>$31,409</td><td>576</td></tr>
+            <tr><td>2006-2026</td><td>SMA20 3x/cash</td><td>37.50%</td><td>32.10%</td><td>3.751</td><td>-48.23%</td><td>$64,800</td><td>568</td></tr>
+            <tr><td>2006-2026</td><td>SMA20 2x/cash</td><td>27.40%</td><td>21.40%</td><td>3.783</td><td>-32.76%</td><td>$13,714</td><td>568</td></tr>
+            <tr><td>2006-2015</td><td>Guarded A10/B20 SMA20</td><td>32.84%</td><td>29.82%</td><td>2.953</td><td>-20.94%</td><td>$1,689</td><td>313</td></tr>
+            <tr><td>2016-2026</td><td>Guarded A10/B20 SMA20</td><td>36.45%</td><td>21.57%</td><td>3.184</td><td>-17.23%</td><td>$2,477</td><td>263</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="callout section-gap">
+        The OOS results are strong for the guarded strategy: the 2006-2026 forward period improved drawdown sharply
+        versus SMA20 3x/cash while retaining a high compound return. This does not eliminate future regime risk, but
+        it is a better check than only looking at the full in-sample history.
+      </p>
+    </section>
+  </section>
+
+  <section id="monteCarloPage" class="page">
+    <section class="card">
+      <h2>Monte Carlo Validation</h2>
+      <p>
+        The Monte Carlo run stress-tests the fixed <strong>Guarded A10/B20 SMA20</strong> strategy over 500 synthetic
+        10-year market paths. Paths are built with 21-trading-day blocks sampled from historical S&amp;P and T-bill
+        data, preserving short-term clustering better than single-day random sampling.
+      </p>
+      <div class="kpi-grid">
+        <div class="metric-card"><span class="small">Simulations</span><strong>500</strong></div>
+        <div class="metric-card"><span class="small">Horizon</span><strong>10 years</strong></div>
+        <div class="metric-card"><span class="small">Median CAGR</span><strong>29.69%</strong></div>
+        <div class="metric-card"><span class="small">Median max DD</span><strong>-28.89%</strong></div>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>Outcome Percentiles</h2>
+      <p class="small">Percentiles across the 500 simulated 10-year paths.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>P05</th><th>P10</th><th>P25</th><th>Median</th><th>P75</th><th>P90</th><th>P95</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>CAGR</td><td>17.74%</td><td>20.41%</td><td>24.58%</td><td>29.69%</td><td>34.24%</td><td>39.28%</td><td>43.03%</td></tr>
+            <tr><td>Max drawdown</td><td>-46.62%</td><td>-42.07%</td><td>-35.49%</td><td>-28.89%</td><td>-23.62%</td><td>-19.27%</td><td>-17.46%</td></tr>
+            <tr><td>Ending value</td><td>$479</td><td>$594</td><td>$825</td><td>$1,217</td><td>$1,698</td><td>$2,423</td><td>$3,130</td></tr>
+            <tr><td>Sharpe</td><td>3.136</td><td>3.239</td><td>3.362</td><td>3.531</td><td>3.689</td><td>3.812</td><td>3.905</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>Risk Probabilities</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Question</th><th>Monte Carlo result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Probability CAGR is positive</td><td>100.0%</td></tr>
+            <tr><td>Probability CAGR is above 20%</td><td>91.2%</td></tr>
+            <tr><td>Probability CAGR is above 30%</td><td>47.8%</td></tr>
+            <tr><td>Probability max drawdown is worse than -30%</td><td>44.8%</td></tr>
+            <tr><td>Probability max drawdown is worse than -40%</td><td>13.6%</td></tr>
+            <tr><td>Probability max drawdown is worse than -50%</td><td>2.8%</td></tr>
+            <tr><td>Probability ending below starting capital</td><td>0.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>Annual Path Percentiles</h2>
+      <p class="small">Equity starts at $100. Drawdown values below are positive drawdown magnitudes.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Year</th><th>Equity P10</th><th>Equity median</th><th>Equity P90</th><th>DD P10</th><th>DD median</th><th>DD P90</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>$97</td><td>$115</td><td>$138</td><td>4.88%</td><td>8.29%</td><td>16.04%</td></tr>
+            <tr><td>2</td><td>$115</td><td>$153</td><td>$213</td><td>5.73%</td><td>12.45%</td><td>23.96%</td></tr>
+            <tr><td>3</td><td>$139</td><td>$205</td><td>$314</td><td>6.14%</td><td>14.68%</td><td>28.46%</td></tr>
+            <tr><td>4</td><td>$177</td><td>$278</td><td>$432</td><td>6.77%</td><td>14.91%</td><td>28.91%</td></tr>
+            <tr><td>5</td><td>$228</td><td>$358</td><td>$586</td><td>7.14%</td><td>15.08%</td><td>29.26%</td></tr>
+            <tr><td>6</td><td>$263</td><td>$453</td><td>$851</td><td>6.63%</td><td>16.43%</td><td>30.39%</td></tr>
+            <tr><td>7</td><td>$331</td><td>$587</td><td>$1,151</td><td>7.03%</td><td>16.17%</td><td>31.60%</td></tr>
+            <tr><td>8</td><td>$417</td><td>$767</td><td>$1,594</td><td>6.50%</td><td>16.00%</td><td>31.11%</td></tr>
+            <tr><td>9</td><td>$517</td><td>$1,002</td><td>$2,067</td><td>6.77%</td><td>16.04%</td><td>31.70%</td></tr>
+            <tr><td>10</td><td>$594</td><td>$1,217</td><td>$2,423</td><td>5.74%</td><td>14.20%</td><td>28.70%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="callout section-gap">
+        The Monte Carlo profile is attractive but not drawdown-free. A -30% drawdown is common enough to plan for,
+        while a -50% drawdown is uncommon in this simulation. Position sizing should assume the strategy can still
+        spend long periods underwater.
+      </p>
+    </section>
   </section>
 
 </main>
@@ -340,6 +550,9 @@
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
   const fmtPct = (x) => Number.isFinite(x) ? (x * 100).toFixed(2) + "%" : "-";
 
+  document.querySelectorAll("[data-page-target]").forEach((button) => {
+    button.addEventListener("click", () => showPage(button.dataset.pageTarget));
+  });
   $("source").addEventListener("change", () => {
     $("customUrl").style.display = $("source").value === "custom" ? "inline-block" : "none";
   });
@@ -405,6 +618,16 @@
   function setStatus(message, isError = false) {
     $("status").textContent = message;
     $("status").className = isError ? "small bad" : "small";
+  }
+
+  function showPage(pageId) {
+    document.querySelectorAll(".page").forEach((page) => {
+      page.classList.toggle("active", page.id === pageId);
+    });
+    document.querySelectorAll("[data-page-target]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.pageTarget === pageId);
+    });
+    if (pageId === "homePage") renderChart();
   }
 
   function parseCsv(csv) {
