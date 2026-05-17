@@ -1,0 +1,218 @@
+year,strategy,equity_$
+1996,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,125.44925502499585
+1997,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,214.85581631758603
+1998,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,391.945848671853
+1999,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,518.8211768407069
+2000,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,545.3622515079102
+2001,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,811.0885460578165
+2002,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,1250.82552715407
+2003,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2030.8566232079113
+2004,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2428.0405925887103
+2005,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2100.920317838704
+2006,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2354.1176838950873
+2007,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2843.143816523109
+2008,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,3538.3940642250677
+2009,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,10270.196152247305
+2010,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,24490.42833286454
+2011,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,34426.95849969074
+2012,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,48068.020750598516
+2013,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,69654.56371229484
+2014,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,73431.80265746551
+2015,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,62083.42227015631
+2016,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,71264.43886991893
+2017,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,87672.38585425827
+2018,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,95336.29018389991
+2019,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,157685.3410729118
+2020,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,395286.47906864155
+2021,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,468364.7571184168
+2022,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,548372.0511251873
+2023,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,836192.1203398318
+2024,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,1214593.7886259286
+2025,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,1615125.1239300845
+2026,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,1965782.6671866693
+1996,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",113.06770413039202
+1997,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",166.63498880045054
+1998,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",241.81607230142723
+1999,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",299.55107030648065
+2000,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",327.8718779813528
+2001,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",408.14107574916864
+2002,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",500.63753248464775
+2003,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",619.7893846273478
+2004,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",685.165329778463
+2005,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",660.0862358269046
+2006,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",729.6906085245217
+2007,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",836.3956122782414
+2008,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",947.5755232768239
+2009,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",1431.7823235174642
+2010,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",1961.5720574416446
+2011,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",2278.02377089032
+2012,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",2652.041268012954
+2013,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",3231.463364158081
+2014,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",3422.0145462327228
+2015,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",2928.199635228215
+2016,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",3177.4065579672083
+2017,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",3569.9794628756954
+2018,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",3854.9815986060166
+2019,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",5056.678929189341
+2020,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",8173.942212551909
+2021,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",9819.160162160933
+2022,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",10808.82097395356
+2023,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",13837.683464046257
+2024,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",16559.04992394344
+2025,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",19501.32208821947
+2026,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_1x",22893.461069080706
+1996,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",113.06770413039202
+1997,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",166.63498880045054
+1998,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",241.81607230142723
+1999,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",299.55107030648065
+2000,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",327.8718779813528
+2001,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",408.14107574916864
+2002,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",500.63753248464775
+2003,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",619.7893846273478
+2004,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",685.165329778463
+2005,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",660.0862358269046
+2006,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",729.6906085245217
+2007,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",836.3956122782414
+2008,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",947.5755232768239
+2009,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",1431.7823235174642
+2010,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",1961.5720574416446
+2011,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",2278.02377089032
+2012,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",2652.041268012954
+2013,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",3231.463364158081
+2014,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",3422.0145462327228
+2015,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",2928.199635228215
+2016,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",3177.4065579672083
+2017,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",3569.9794628756954
+2018,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",3854.9815986060166
+2019,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",5056.678929189341
+2020,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",8173.942212551909
+2021,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",9819.160162160933
+2022,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",10808.82097395356
+2023,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",13837.683464046257
+2024,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",16353.375349059685
+2025,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",19249.43701558339
+2026,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_1x",22597.913638814134
+1996,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",113.06770413039202
+1997,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",166.63498880045054
+1998,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",241.81607230142723
+1999,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",299.55107030648065
+2000,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",327.8718779813528
+2001,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",436.31051267125525
+2002,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",610.8839257078578
+2003,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",878.9445999736237
+2004,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",1008.7190733965955
+2005,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",967.3129681794204
+2006,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",1064.2452513439846
+2007,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",1214.6889583025702
+2008,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",1450.634129556901
+2009,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",3105.3398453360087
+2010,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",5650.081683646594
+2011,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",7188.0180797332405
+2012,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",8833.533718162025
+2013,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",10735.203681221898
+2014,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",11343.717071109102
+2015,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",9687.007364989086
+2016,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",10486.467435620485
+2017,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",11756.320537222839
+2018,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",12670.170213171694
+2019,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",16589.87187897755
+2020,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",26780.144424157832
+2021,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",32143.032298636244
+2022,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",35357.68714234686
+2023,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",45236.6168836205
+2024,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",54105.87191790764
+2025,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",63692.91258099962
+2026,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / reduce_one_tier",74745.32697303507
+1996,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",113.06770413039202
+1997,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",166.63498880045054
+1998,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",241.81607230142723
+1999,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",299.55107030648065
+2000,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",327.8718779813528
+2001,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",436.31051267125525
+2002,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",610.8839257078578
+2003,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",878.9445999736237
+2004,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",1008.7190733965955
+2005,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",967.3129681794204
+2006,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",1064.2452513439846
+2007,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",1214.6889583025702
+2008,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",1450.634129556901
+2009,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",3105.3398453360087
+2010,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",5650.081683646594
+2011,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",7188.0180797332405
+2012,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",8833.533718162025
+2013,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",10735.203681221898
+2014,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",11343.717071109102
+2015,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",9687.007364989086
+2016,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",10486.467435620485
+2017,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",11756.320537222839
+2018,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",12670.170213171694
+2019,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",16589.87187897755
+2020,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",26780.144424157832
+2021,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",32143.032298636244
+2022,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",35357.68714234686
+2023,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",45236.6168836205
+2024,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",53433.84047549139
+2025,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",62869.90423176798
+2026,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / reduce_one_tier",73779.65639892065
+1996,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",125.44925502499585
+1997,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",214.85581631758603
+1998,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",391.945848671853
+1999,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",518.8211768407069
+2000,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",545.3622515079102
+2001,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",764.0875938362643
+2002,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",1059.5261700966487
+2003,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",1514.0579628715357
+2004,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",1754.754809395358
+2005,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",1520.7331848095016
+2006,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",1707.0876760400993
+2007,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",2065.010232704681
+2008,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",2473.0510081609023
+2009,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",5279.020308790762
+2010,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",9592.339280695855
+2011,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",12447.228515633034
+2012,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",16437.804706731262
+2013,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",23829.280885239707
+2014,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",25128.43368531512
+2015,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",21250.567622567647
+2016,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",24400.69118893543
+2017,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",30026.803028101167
+2018,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",32658.75285879466
+2019,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",54028.14757690028
+2020,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",135454.53496427834
+2021,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",160504.37425142393
+2022,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",187929.84742573395
+2023,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",286577.24882281624
+2024,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",416271.4777356985
+2025,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",553552.2609214721
+2026,"2+ signal defensive mode, exit SPX > SMA20 and HY stops widening / cap_2x",673741.2131068236
+1996,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",125.44925502499585
+1997,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",214.85581631758603
+1998,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",391.945848671853
+1999,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",518.8211768407069
+2000,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",545.3622515079102
+2001,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",764.0875938362643
+2002,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",1059.5261700966487
+2003,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",1514.0579628715357
+2004,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",1754.754809395358
+2005,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",1520.7331848095016
+2006,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",1707.0876760400993
+2007,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",2065.010232704681
+2008,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",2473.0510081609023
+2009,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",5279.020308790762
+2010,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",9592.339280695855
+2011,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",12447.228515633034
+2012,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",16437.804706731262
+2013,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",23829.280885239707
+2014,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",25128.43368531512
+2015,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",21250.567622567647
+2016,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",24400.69118893543
+2017,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",30026.803028101167
+2018,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",32658.75285879466
+2019,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",54028.14757690028
+2020,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",135454.53496427834
+2021,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",160504.37425142393
+2022,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",187929.84742573395
+2023,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",286577.24882281624
+2024,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",416271.4777356985
+2025,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",553552.2609214721
+2026,"2+ signal defensive mode, exit SPX > SMA20 and IG stops widening / cap_2x",673741.2131068236

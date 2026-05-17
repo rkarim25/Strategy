@@ -1,0 +1,94 @@
+{
+  "market_source": "Yahoo Finance ^GSPC and ^IRX via project data_manager.load_backtest_data",
+  "market_start": "1996-05-17",
+  "market_end": "2026-05-15",
+  "sessions": 7547,
+  "baseline": {
+    "strategy": "Baseline Guarded A5/B25/X40/Y15 Lead 0.75",
+    "trigger_a": 0.05,
+    "trigger_b": 0.25,
+    "lead_pct_below_sma20": 0.0075,
+    "x_return": 0.4,
+    "y_return": 0.15
+  },
+  "initial_capital": 100.0,
+  "annual_inflow_usd": 10.0,
+  "trading_cost_pct": 0.01,
+  "lag_policy": {
+    "daily_fred": "forward-filled to market sessions, shifted one market session before use",
+    "monthly_fred_and_shiller": "forward-filled to market sessions, shifted 21 market sessions before use"
+  },
+  "availability": {
+    "HY_OAS": {
+      "status": "available",
+      "source": "ICE BofA US High Yield OAS, FRED",
+      "raw_start": "2023-05-16",
+      "raw_end": "2026-05-14",
+      "lag": "1 market sessions"
+    },
+    "IG_OAS": {
+      "status": "available",
+      "source": "ICE BofA US Corporate OAS, FRED",
+      "raw_start": "2023-05-16",
+      "raw_end": "2026-05-14",
+      "lag": "1 market sessions"
+    },
+    "T10Y3M": {
+      "status": "available",
+      "source": "10-year Treasury minus 3-month Treasury, FRED",
+      "raw_start": "1982-01-04",
+      "raw_end": "2026-05-15",
+      "lag": "1 market sessions"
+    },
+    "T10Y2Y": {
+      "status": "available",
+      "source": "10-year Treasury minus 2-year Treasury, FRED",
+      "raw_start": "1976-06-01",
+      "raw_end": "2026-05-15",
+      "lag": "1 market sessions"
+    },
+    "DGS10": {
+      "status": "available",
+      "source": "10-year Treasury constant maturity, FRED",
+      "raw_start": "1962-01-02",
+      "raw_end": "2026-05-14",
+      "lag": "1 market sessions"
+    },
+    "UNRATE": {
+      "status": "available",
+      "source": "Civilian unemployment rate, FRED",
+      "raw_start": "1948-01-01",
+      "raw_end": "2026-04-01",
+      "lag": "21 market sessions"
+    },
+    "SAHM": {
+      "status": "available",
+      "source": "Real-time Sahm Rule recession indicator, FRED",
+      "raw_start": "1959-12-01",
+      "raw_end": "2026-04-01",
+      "lag": "21 market sessions"
+    },
+    "RECPROUSM156N": {
+      "status": "available",
+      "source": "Smoothed U.S. recession probabilities, FRED",
+      "raw_start": "1967-06-01",
+      "raw_end": "2026-03-01",
+      "lag": "21 market sessions"
+    },
+    "USREC": {
+      "status": "available",
+      "source": "NBER recession indicator, FRED",
+      "raw_start": "1900-01-01",
+      "raw_end": "2026-04-01",
+      "lag": "21 market sessions"
+    },
+    "CAPE": {
+      "status": "available",
+      "source": "Robert Shiller online data",
+      "raw_start": "1881-01-31",
+      "raw_end": "2026-05-31",
+      "lag": "21 market sessions"
+    }
+  },
+  "tested_overlay_count": 22
+}
