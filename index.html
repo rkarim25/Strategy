@@ -2100,8 +2100,12 @@
     const rect = svg.getBoundingClientRect();
     const chartWidth = equityChartPlot.width || 900;
     const chartHeight = equityChartPlot.height || 360;
-    const svgX = ((event.clientX - rect.left) / rect.width) * chartWidth;
-    const svgY = ((event.clientY - rect.top) / rect.height) * chartHeight;
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+    const cursor = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
+    const svgX = cursor.x;
+    const svgY = cursor.y;
     if (
       svgX < equityChartPlot.left ||
       svgX > equityChartPlot.right ||
