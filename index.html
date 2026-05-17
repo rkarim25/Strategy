@@ -1131,10 +1131,26 @@
   let equityChartRange = "full";
   let chartPoints = [];
   let equityChartPoints = [];
+  let equityChartPlot = null;
   let optimizerResults = [];
 
   const $ = (id) => document.getElementById(id);
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
+  const fmtWholeCurrency = (x) => Number.isFinite(x) ? "$" + Math.round(x).toLocaleString() : "-";
+  const fmtCompactCurrency = (x) => {
+    if (!Number.isFinite(x)) return "-";
+    const sign = x < 0 ? "-" : "";
+    const abs = Math.abs(x);
+    const units = [
+      { value: 1e12, suffix: "t" },
+      { value: 1e9, suffix: "b" },
+      { value: 1e6, suffix: "m" },
+      { value: 1e3, suffix: "k" },
+    ];
+    const unit = units.find((item) => abs >= item.value);
+    if (!unit) return `${sign}$${Math.round(abs).toLocaleString()}`;
+    return `${sign}$${Math.round(abs / unit.value).toLocaleString()}${unit.suffix}`;
+  };
   const fmtPct = (x) => Number.isFinite(x) ? (x * 100).toFixed(2) + "%" : "-";
   const fmtPctWhole = (x) => Number.isFinite(x) ? x.toFixed(2) + "%" : "-";
 
@@ -1183,7 +1199,7 @@
   });
   $("equityChart").addEventListener("mousemove", showEquityChartTooltip);
   $("equityChart").addEventListener("mouseleave", () => {
-    $("equityChartTooltip").style.display = "none";
+    hideEquityChartTooltip();
   });
   window.addEventListener("resize", () => {
     renderChart();
@@ -1938,77 +1954,187 @@
     return fullData.slice(-RANGE_SESSIONS[equityChartRange]);
   }
 
+  function equityLogTicks(logMin, logMax) {
+    const startExp = Math.floor(logMin);
+    const endExp = Math.ceil(logMax);
+    const powers = [];
+    for (let exp = startExp; exp <= endExp; exp++) {
+      const value = Math.pow(10, exp);
+      if (Math.log10(value) >= logMin && Math.log10(value) <= logMax) powers.push(value);
+    }
+    if (powers.length >= 4) return powers;
+
+    const ticks = [];
+    for (let exp = startExp; exp <= endExp; exp++) {
+      [1, 2, 5].forEach((multiple) => {
+        const value = multiple * Math.pow(10, exp);
+        const logValue = Math.log10(value);
+        if (logValue >= logMin && logValue <= logMax) ticks.push(value);
+      });
+    }
+    return ticks;
+  }
+
+  function equityDateTicks(data, xScale) {
+    const maxTicks = data.length > 2520 ? 10 : data.length > 1260 ? 9 : data.length > 252 ? 7 : 6;
+    const tickCount = Math.min(maxTicks, data.length);
+    const seen = new Set();
+    const ticks = [];
+    for (let i = 0; i < tickCount; i++) {
+      const index = Math.round((i / Math.max(tickCount - 1, 1)) * (data.length - 1));
+      if (seen.has(index)) continue;
+      seen.add(index);
+      const date = data[index].date;
+      const parsed = new Date(date + "T00:00:00Z");
+      const label = data.length > 1260
+        ? String(parsed.getUTCFullYear())
+        : parsed.toLocaleDateString(undefined, { month: "short", year: "2-digit", timeZone: "UTC" });
+      ticks.push({ index, date, label, x: xScale(index) });
+    }
+    return ticks;
+  }
+
+  function hideEquityChartTooltip() {
+    $("equityChartTooltip").style.display = "none";
+    const hoverLayer = $("equityHoverLayer");
+    if (hoverLayer) hoverLayer.style.display = "none";
+  }
+
   function renderBacktestEquityChart() {
     const svg = $("equityChart");
     if (!svg || !latestRows.length) return;
     const data = equityDataForRange();
     if (data.length < 2) {
       svg.innerHTML = "";
+      equityChartPoints = [];
+      equityChartPlot = null;
       $("equityChartMeta").textContent = "Refresh signal or choose a wider date range to draw the equity chart.";
       return;
     }
 
     const width = 900;
     const height = 360;
-    const pad = { left: 68, right: 18, top: 18, bottom: 38 };
+    const pad = { left: 76, right: 24, top: 24, bottom: 54 };
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
     const values = data.flatMap((point) => [point.strategy, point.spx]).filter(Number.isFinite);
     const minValue = Math.max(Math.min(...values), 1e-9);
     const maxValue = Math.max(...values);
-    const yMin = minValue * 0.9;
-    const yMax = maxValue * 1.1;
+    const yMin = minValue * 0.86;
+    const yMax = maxValue * 1.16;
     const logMin = Math.log10(yMin);
     const logMax = Math.log10(yMax);
-    const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * (width - pad.left - pad.right);
-    const yScale = (value) => pad.top + ((logMax - Math.log10(Math.max(value, 1e-9))) / (logMax - logMin)) * (height - pad.top - pad.bottom);
+    const logRange = Math.max(logMax - logMin, 1e-9);
+    const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * plotWidth;
+    const yScale = (value) => pad.top + ((logMax - Math.log10(Math.max(value, 1e-9))) / logRange) * plotHeight;
     const linePath = (selector) => data
       .map((point, index) => `${xScale(index).toFixed(2)},${yScale(selector(point)).toFixed(2)}`)
       .join(" ");
 
+    equityChartPlot = {
+      left: pad.left,
+      right: width - pad.right,
+      top: pad.top,
+      bottom: height - pad.bottom,
+    };
     equityChartPoints = data.map((point, index) => ({
       ...point,
       x: xScale(index),
+      strategyY: yScale(point.strategy),
+      spxY: yScale(point.spx),
     }));
 
-    const grid = [];
-    for (let i = 0; i <= 4; i++) {
-      const value = Math.pow(10, logMin + ((logMax - logMin) * i) / 4);
+    const yTicks = equityLogTicks(logMin, logMax);
+    const yGrid = yTicks.map((value) => {
       const y = yScale(value);
-      grid.push(`
+      return `
         <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
-        <text x="${pad.left - 10}" y="${(y + 4).toFixed(2)}" fill="#9aa4b2" font-size="12" text-anchor="end">$${fmtMoney(value)}</text>
-      `);
-    }
+        <text x="${pad.left - 12}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtCompactCurrency(value)}</text>
+      `;
+    });
+    const xTicks = equityDateTicks(data, xScale);
+    const xGrid = xTicks.map((tick, index) => {
+      const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
+      return `
+        <line x1="${tick.x.toFixed(2)}" y1="${pad.top}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom}" stroke="#eef0f3" stroke-width="1" />
+        <line x1="${tick.x.toFixed(2)}" y1="${height - pad.bottom}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom + 5}" stroke="#98a2b3" stroke-width="1" />
+        <text x="${tick.x.toFixed(2)}" y="${height - 18}" fill="#667085" font-size="12" font-weight="600" text-anchor="${anchor}">${tick.label}</text>
+      `;
+    });
 
     const startDate = data[0].date;
     const endDate = data[data.length - 1].date;
     svg.innerHTML = `
-      ${grid.join("")}
-      <text x="${pad.left}" y="${height - 12}" fill="#9aa4b2" font-size="12">${startDate}</text>
-      <text x="${width - pad.right}" y="${height - 12}" fill="#9aa4b2" font-size="12" text-anchor="end">${endDate}</text>
-      <polyline points="${linePath((point) => point.strategy)}" fill="none" stroke="#6aa6ff" stroke-width="2.4" />
-      <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#f0b84a" stroke-width="2" />
+      <defs>
+        <clipPath id="equityPlotClip"><rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" /></clipPath>
+      </defs>
+      <rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" rx="12" fill="#ffffff" stroke="#e5e7eb" />
+      ${xGrid.join("")}
+      ${yGrid.join("")}
+      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <g clip-path="url(#equityPlotClip)">
+        <polyline points="${linePath((point) => point.strategy)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      <g id="equityHoverLayer" style="display: none;">
+        <line id="equityHoverLine" x1="0" y1="${pad.top}" x2="0" y2="${height - pad.bottom}" stroke="#475467" stroke-width="1" stroke-dasharray="4 4" />
+        <circle id="equityHoverStrategy" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+        <circle id="equityHoverSpx" r="4" fill="#d97706" stroke="#ffffff" stroke-width="2" />
+      </g>
     `;
     const last = data[data.length - 1];
-    $("equityChartMeta").textContent = `${data.length} trading sessions shown on a log scale: ${startDate} to ${endDate}. Default strategy $${fmtMoney(last.strategy)} vs SPX $${fmtMoney(last.spx)}.`;
+    $("equityChartMeta").textContent = `${data.length} trading sessions shown on a log scale: ${startDate} to ${endDate}. Default strategy ${fmtWholeCurrency(last.strategy)} vs SPX ${fmtWholeCurrency(last.spx)}.`;
   }
 
   function showEquityChartTooltip(event) {
-    if (!equityChartPoints.length) return;
+    if (!equityChartPoints.length || !equityChartPlot) return;
     const svg = $("equityChart");
     const rect = svg.getBoundingClientRect();
     const svgX = ((event.clientX - rect.left) / rect.width) * 900;
-    const nearest = equityChartPoints.reduce((best, point) => (
-      Math.abs(point.x - svgX) < Math.abs(best.x - svgX) ? point : best
-    ), equityChartPoints[0]);
+    const svgY = ((event.clientY - rect.top) / rect.height) * 360;
+    if (
+      svgX < equityChartPlot.left ||
+      svgX > equityChartPlot.right ||
+      svgY < equityChartPlot.top ||
+      svgY > equityChartPlot.bottom
+    ) {
+      hideEquityChartTooltip();
+      return;
+    }
+
+    const ratio = (svgX - equityChartPlot.left) / (equityChartPlot.right - equityChartPlot.left);
+    const index = Math.max(0, Math.min(equityChartPoints.length - 1, Math.round(ratio * (equityChartPoints.length - 1))));
+    const nearest = equityChartPoints[index];
+    const hoverLayer = $("equityHoverLayer");
+    if (hoverLayer) {
+      hoverLayer.style.display = "block";
+      $("equityHoverLine").setAttribute("x1", nearest.x.toFixed(2));
+      $("equityHoverLine").setAttribute("x2", nearest.x.toFixed(2));
+      $("equityHoverStrategy").setAttribute("cx", nearest.x.toFixed(2));
+      $("equityHoverStrategy").setAttribute("cy", nearest.strategyY.toFixed(2));
+      $("equityHoverSpx").setAttribute("cx", nearest.x.toFixed(2));
+      $("equityHoverSpx").setAttribute("cy", nearest.spxY.toFixed(2));
+    }
+
     const tooltip = $("equityChartTooltip");
     tooltip.innerHTML = `
       <strong>${nearest.date}</strong><br>
-      Default strategy: $${fmtMoney(nearest.strategy)}<br>
-      SPX buy &amp; hold: $${fmtMoney(nearest.spx)}
+      Default strategy: ${fmtWholeCurrency(nearest.strategy)}<br>
+      SPX buy &amp; hold: ${fmtWholeCurrency(nearest.spx)}
     `;
     tooltip.style.display = "block";
-    tooltip.style.left = Math.min(event.clientX - rect.left + 14, rect.width - 210) + "px";
-    tooltip.style.top = Math.max(event.clientY - rect.top - 58, 10) + "px";
+    const tooltipWidth = Math.max(tooltip.offsetWidth, 220);
+    const tooltipHeight = Math.max(tooltip.offsetHeight, 64);
+    const plotLeftPx = (equityChartPlot.left / 900) * rect.width;
+    const plotRightPx = (equityChartPlot.right / 900) * rect.width;
+    const pointerX = (nearest.x / 900) * rect.width;
+    const pointerY = (Math.min(nearest.strategyY, nearest.spxY) / 360) * rect.height;
+    const openRight = pointerX + tooltipWidth + 18 < plotRightPx;
+    const left = openRight ? pointerX + 14 : Math.max(plotLeftPx, pointerX - tooltipWidth - 14);
+    const top = Math.max(10, Math.min(pointerY - tooltipHeight - 10, rect.height - tooltipHeight - 10));
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
   }
 
   function renderSignal(prefix, result) {
