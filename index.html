@@ -1197,7 +1197,6 @@
   $("priceChart").addEventListener("mouseleave", () => {
     $("chartTooltip").style.display = "none";
   });
-  $("equityChart").addEventListener("mousemove", showEquityChartTooltip);
   $("equityChart").addEventListener("mouseleave", () => {
     hideEquityChartTooltip();
   });
@@ -2086,6 +2085,11 @@
       </g>
       <rect id="equityHoverCapture" x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" fill="transparent" pointer-events="all" />
     `;
+    const hoverCapture = $("equityHoverCapture");
+    if (hoverCapture) {
+      hoverCapture.addEventListener("mousemove", showEquityChartTooltip);
+      hoverCapture.addEventListener("mouseleave", hideEquityChartTooltip);
+    }
     const last = data[data.length - 1];
     $("equityChartMeta").textContent = `${data.length} trading sessions shown on a log scale: ${startDate} to ${endDate}. Default strategy ${fmtWholeCurrency(last.strategy)} vs SPX ${fmtWholeCurrency(last.spx)}.`;
   }
