@@ -160,7 +160,8 @@
       min-height: 360px;
       margin-top: 12px;
     }
-    #priceChart {
+    #priceChart,
+    #equityChart {
       width: 100%;
       height: 360px;
       display: block;
@@ -398,7 +399,8 @@
       .form-grid { grid-template-columns: 1fr; }
       .stat-value { font-size: 28px; }
       .signal { font-size: 52px; }
-      #priceChart { height: 280px; }
+      #priceChart,
+      #equityChart { height: 280px; }
       .bar-row {
         grid-template-columns: 1fr;
         gap: 6px;
@@ -420,17 +422,17 @@
   </p>
 
   <nav class="site-nav" aria-label="Strategies">
-    <button type="button" class="active" data-strategy-target="guardedStrategy">Guarded A10/B20 SMA20 Leverage Signal</button>
+    <button type="button" class="active" data-strategy-target="guardedStrategy">Guarded A5/B25 SMA20 Lead Signal</button>
     <button type="button" data-strategy-target="momentumStrategy">Momentum Strategy Research</button>
   </nav>
 
   <section id="guardedStrategy" class="strategy active">
   <section class="card" style="margin-bottom: 18px;">
-    <h2>Guarded A10/B20 SMA20 Leverage Signal</h2>
+    <h2>Guarded A5/B25 SMA20 Lead Signal</h2>
     <p>
       Computes the strategy state from S&amp;P 500 daily closes: base exposure is 1x only when
-      close is above SMA20; drawdown of 10% arms 2x and drawdown of 20% arms 3x, but recovery
-      leverage is only allowed when price is above SMA20.
+      close is above SMA20; drawdown of 5% arms 2x and drawdown of 25% arms 3x. Recovery
+      leverage is allowed when price is within 0.75% below SMA20 or better.
     </p>
     <nav class="site-nav" aria-label="Guarded strategy sections">
       <button type="button" class="active" data-page-target="signalPage">Signal</button>
@@ -444,10 +446,10 @@
     <h2>Strategy Rules</h2>
     <ul>
       <li><strong>Base trend rule:</strong> hold <strong>1x</strong> S&amp;P exposure only when the SPX close is above the 20-day SMA. Otherwise hold cash/T-bills.</li>
-      <li><strong>2x recovery tier:</strong> if the S&amp;P is down <strong>10%</strong> or more from its closing high-water mark, the 2x tier is armed. It can only run when price is above SMA20.</li>
-      <li><strong>3x recovery tier:</strong> if the S&amp;P is down <strong>20%</strong> or more from its closing high-water mark, the 3x tier is armed. It can only run when price is above SMA20.</li>
-      <li><strong>Guard:</strong> if price falls back below SMA20, recovery leverage is blocked and the page falls back to the base rule.</li>
-      <li><strong>Exit recovery:</strong> 2x resets after the S&amp;P rises 25% from the tier entry close. 3x resets after the S&amp;P rises 33.33% from the tier entry close.</li>
+      <li><strong>2x recovery tier:</strong> if the S&amp;P is down <strong>5%</strong> or more from its closing high-water mark, the 2x tier is armed.</li>
+      <li><strong>3x recovery tier:</strong> if the S&amp;P is down <strong>25%</strong> or more from its closing high-water mark, the 3x tier is armed.</li>
+      <li><strong>Lead guard:</strong> recovery leverage can run when close is at least <strong>99.25%</strong> of SMA20, i.e. within 0.75% below SMA20 or above it.</li>
+      <li><strong>Exit recovery:</strong> 2x resets after the S&amp;P rises 40% from the tier entry close. 3x resets after the S&amp;P rises 15% from the tier entry close.</li>
     </ul>
     <p class="small">
       The official signal uses the latest completed daily close and matches the backtest logic.
@@ -530,11 +532,12 @@
       <tbody>
         <tr><th>Daily data through</th><td id="latestDate">-</td></tr>
         <tr><th>High-water close</th><td id="highWater">-</td></tr>
-        <tr><th>2x entry level (-10%)</th><td id="tier2Level">-</td></tr>
-        <tr><th>3x entry level (-20%)</th><td id="tier3Level">-</td></tr>
+        <tr><th>2x entry level (-5%)</th><td id="tier2Level">-</td></tr>
+        <tr><th>3x entry level (-25%)</th><td id="tier3Level">-</td></tr>
         <tr><th>EOD close above SMA20?</th><td id="aboveSma">-</td></tr>
-        <tr><th>2x trigger (A)</th><td>-10% drawdown from S&amp;P high-water close</td></tr>
-        <tr><th>3x trigger (B)</th><td>-20% drawdown from S&amp;P high-water close</td></tr>
+        <tr><th>Recovery lead level</th><td id="leadGuardLevel">-</td></tr>
+        <tr><th>2x trigger (A)</th><td>-5% drawdown from S&amp;P high-water close</td></tr>
+        <tr><th>3x trigger (B)</th><td>-25% drawdown from S&amp;P high-water close</td></tr>
       </tbody>
     </table>
   </section>
@@ -547,30 +550,34 @@
       where 2x is released, and Y is the upside from the 3x entry where 3x is released.
     </p>
     <p class="callout">
-      Default Guarded values: <strong>A = 10%</strong>, <strong>B = 20%</strong>,
-      <strong>X = 25%</strong>, and <strong>Y = 33.33%</strong>.
+      Default Guarded values: <strong>A = 5%</strong>, <strong>B = 25%</strong>,
+      <strong>X = 40%</strong>, <strong>Y = 15%</strong>, and recovery lead guard = <strong>0.75%</strong> below SMA20.
     </p>
     <div class="form-grid">
       <div class="field">
         <label for="calcTriggerA">A: start 2x after drawdown (%)</label>
-        <input id="calcTriggerA" type="number" min="1" max="80" step="0.5" value="10" />
+        <input id="calcTriggerA" type="number" min="1" max="80" step="0.5" value="5" />
       </div>
       <div class="field">
         <label for="calcTriggerB">B: start 3x after drawdown (%)</label>
-        <input id="calcTriggerB" type="number" min="1" max="90" step="0.5" value="20" />
+        <input id="calcTriggerB" type="number" min="1" max="90" step="0.5" value="25" />
       </div>
       <div class="field">
         <label for="calcHold2">X: hold 2x until upside from entry (%)</label>
-        <input id="calcHold2" type="number" min="1" max="200" step="1" value="25" />
+        <input id="calcHold2" type="number" min="1" max="200" step="1" value="40" />
       </div>
       <div class="field">
         <label for="calcHold3">Y: hold 3x until upside from entry (%)</label>
-        <input id="calcHold3" type="number" min="1" max="250" step="1" value="33.33" />
+        <input id="calcHold3" type="number" min="1" max="250" step="1" value="15" />
       </div>
     </div>
     <details class="advanced">
       <summary>Advanced assumptions</summary>
       <div class="form-grid">
+      <div class="field">
+        <label for="calcLeadPct">Recovery lead below SMA20 (%)</label>
+        <input id="calcLeadPct" type="number" min="0" max="5" step="0.05" value="0.75" />
+      </div>
       <div class="field">
         <label for="calcMaxHold2">Max 2x hold days (optional)</label>
         <input id="calcMaxHold2" type="number" min="1" max="2520" step="1" placeholder="No cap" />
@@ -673,22 +680,46 @@
     <section class="card">
       <h2>Back-test Overview</h2>
       <p>
-        These results use the project backtest engine over 1996-05-16 to 2026-05-15 with $100 starting capital,
-        $10 fixed annual inflows, 1.0% rebalance cost, and the engine funding-cost model. The core strategy is
-        <strong>Guarded A10/B20 SMA20</strong>: trend exposure is allowed only above SMA20, 2x recovery is armed
-        after a 10% market drawdown, and 3x recovery is armed after a 20% market drawdown.
+        These results use the project backtest engine over 1996-05-17 to 2026-05-15 with $100 starting capital,
+        $10 fixed annual inflows, 1.0% rebalance cost, and the engine funding-cost model. The default strategy is
+        <strong>Guarded A5/B25 SMA20 Lead</strong>: base 1x exposure is allowed only above SMA20, while recovery
+        2x/3x exposure can start when price is within 0.75% below SMA20.
       </p>
       <div class="kpi-grid">
-        <div class="metric-card"><span class="small">Guarded SMA20 CAGR</span><strong>29.39%</strong></div>
-        <div class="metric-card"><span class="small">Guarded SMA20 max DD</span><strong>-34.37%</strong></div>
-        <div class="metric-card"><span class="small">Guarded SMA20 Sharpe</span><strong>3.232</strong></div>
-        <div class="metric-card"><span class="small">Guarded SMA20 end value</span><strong>$224,918</strong></div>
+        <div class="metric-card"><span class="small">Default CAGR</span><strong>39.09%</strong></div>
+        <div class="metric-card"><span class="small">Default max DD</span><strong>-27.51%</strong></div>
+        <div class="metric-card"><span class="small">Default Sharpe</span><strong>3.164</strong></div>
+        <div class="metric-card"><span class="small">Default end value</span><strong>$1,965,783</strong></div>
       </div>
       <p class="callout">
-        The guarded strategy sits between pure SMA20 2x/cash and SMA20 3x/cash: it gave much more upside than
-        2x/cash, but avoided the full 3x/cash drawdown. The cost is complexity and slightly lower Sharpe than the
-        simple SMA20 fixed-leverage references.
+        The new default improved the historical result versus the original strict A10/B20 version: CAGR rose from
+        29.39% to 39.09%, while max drawdown improved from -34.37% to -27.51% in the project backtest.
       </p>
+    </section>
+
+    <section class="card section-gap">
+      <h2>SPX vs Default Strategy Equity</h2>
+      <p class="small">
+        Browser-side chart using the latest refreshed SPX daily closes. Both lines start at $100 and include $10
+        annual inflows. The strategy line uses the default A5/B25/X40/Y15 with 0.75% lead guard and the page's
+        calculator assumptions.
+      </p>
+      <div class="row range-controls">
+        <button type="button" data-equity-range="1y">1Y</button>
+        <button type="button" data-equity-range="5y">5Y</button>
+        <button type="button" data-equity-range="10y">10Y</button>
+        <button type="button" data-equity-range="20y">20Y</button>
+        <button type="button" data-equity-range="full" class="active">Full</button>
+      </div>
+      <div id="equityChartMeta" class="small" style="margin-top: 10px;">Refresh signal to draw the equity chart.</div>
+      <div class="chart-box">
+        <svg id="equityChart" viewBox="0 0 900 360" role="img" aria-label="SPX buy and hold versus default strategy equity chart"></svg>
+        <div id="equityChartTooltip" class="chart-tooltip"></div>
+      </div>
+      <div class="legend">
+        <span>Default strategy equity</span>
+        <span class="sma">SPX buy &amp; hold with inflows</span>
+      </div>
     </section>
 
     <section class="card section-gap">
@@ -706,15 +737,16 @@
             <tr><td>SMA20 1x/cash</td><td>16.05%</td><td>10.99%</td><td>3.913</td><td>-16.92%</td><td>$8,601</td><td>868</td><td>37.08%</td></tr>
             <tr><td>SMA20 2x/cash</td><td>26.23%</td><td>21.97%</td><td>3.794</td><td>-33.92%</td><td>$107,235</td><td>868</td><td>37.08%</td></tr>
             <tr><td>SMA20 3x/cash</td><td>35.76%</td><td>32.95%</td><td>3.754</td><td>-49.16%</td><td>$951,245</td><td>868</td><td>37.08%</td></tr>
-            <tr><td><strong>Guarded A10/B20 SMA20</strong></td><td><strong>29.39%</strong></td><td>26.65%</td><td>3.232</td><td><strong>-34.37%</strong></td><td><strong>$224,918</strong></td><td>878</td><td>37.08%</td></tr>
+            <tr><td><strong>Guarded A5/B25 SMA20 Lead</strong></td><td><strong>39.09%</strong></td><td>27.88%</td><td>3.164</td><td><strong>-27.51%</strong></td><td><strong>$1,965,783</strong></td><td>774</td><td>28.87%</td></tr>
+            <tr><td>Original Guarded A10/B20 SMA20</td><td>29.39%</td><td>26.65%</td><td>3.232</td><td>-34.37%</td><td>$224,918</td><td>878</td><td>37.08%</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
     <section class="card section-gap">
-      <h2>Guard SMA Sensitivity</h2>
-      <p class="small">Same A10/B20 tiering, different trend guards. SMA20 is the strongest version in this run.</p>
+      <h2>Legacy Guard SMA Sensitivity</h2>
+      <p class="small">Earlier A10/B20 tiering study kept for reference. The site default is now the A5/B25/X40/Y15 lead-guard version above.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -731,7 +763,7 @@
 
     <section class="card section-gap">
       <h2>Forward and Out-of-Sample Checks</h2>
-      <p class="small">Fixed strategy tested on later periods without changing parameters.</p>
+      <p class="small">Earlier A10/B20 strategy tested on later periods without changing parameters. Kept as historical reference.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -758,31 +790,30 @@
     <section class="card">
       <h2>Monte Carlo Validation</h2>
       <p>
-        The Monte Carlo run stress-tests the fixed <strong>Guarded A10/B20 SMA20</strong> strategy over 500 synthetic
+        The Monte Carlo run stress-tests the default <strong>Guarded A5/B25/X40/Y15 SMA20 Lead</strong> strategy over 200 synthetic
         10-year market paths. Paths are built with 21-trading-day blocks sampled from historical S&amp;P and T-bill
         data, preserving short-term clustering better than single-day random sampling.
       </p>
       <div class="kpi-grid">
-        <div class="metric-card"><span class="small">Simulations</span><strong>500</strong></div>
+        <div class="metric-card"><span class="small">Simulations</span><strong>200</strong></div>
         <div class="metric-card"><span class="small">Horizon</span><strong>10 years</strong></div>
-        <div class="metric-card"><span class="small">Median CAGR</span><strong>29.69%</strong></div>
-        <div class="metric-card"><span class="small">Median max DD</span><strong>-28.89%</strong></div>
+        <div class="metric-card"><span class="small">Median CAGR</span><strong>36.96%</strong></div>
+        <div class="metric-card"><span class="small">Median max DD</span><strong>-28.18%</strong></div>
       </div>
     </section>
 
     <section class="card section-gap">
-      <h2>Outcome Percentiles</h2>
-      <p class="small">Percentiles across the 500 simulated 10-year paths.</p>
+      <h2>Monte Carlo Comparison</h2>
+      <p class="small">Summary across 200 simulated 10-year paths for the final candidate and two reference versions.</p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Metric</th><th>P05</th><th>P10</th><th>P25</th><th>Median</th><th>P75</th><th>P90</th><th>P95</th></tr>
+            <tr><th>Strategy</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P10 / P90 max DD</th><th>Median Sharpe</th><th>Median end value</th><th>P(DD &lt; -40%)</th></tr>
           </thead>
           <tbody>
-            <tr><td>CAGR</td><td>17.74%</td><td>20.41%</td><td>24.58%</td><td>29.69%</td><td>34.24%</td><td>39.28%</td><td>43.03%</td></tr>
-            <tr><td>Max drawdown</td><td>-46.62%</td><td>-42.07%</td><td>-35.49%</td><td>-28.89%</td><td>-23.62%</td><td>-19.27%</td><td>-17.46%</td></tr>
-            <tr><td>Ending value</td><td>$479</td><td>$594</td><td>$825</td><td>$1,217</td><td>$1,698</td><td>$2,423</td><td>$3,130</td></tr>
-            <tr><td>Sharpe</td><td>3.136</td><td>3.239</td><td>3.362</td><td>3.531</td><td>3.689</td><td>3.812</td><td>3.905</td></tr>
+            <tr><td><strong>Lead 0.75 A5/B25 X40/Y15</strong></td><td><strong>36.96%</strong></td><td>26.46% / 50.02%</td><td><strong>-28.18%</strong></td><td>-39.72% / -18.86%</td><td>3.269</td><td><strong>$2,060</strong></td><td><strong>10.0%</strong></td></tr>
+            <tr><td>Lead 0.75 A10/B20 X40/Y15</td><td>34.39%</td><td>24.46% / 45.09%</td><td>-28.64%</td><td>-39.71% / -19.04%</td><td>3.220</td><td>$1,716</td><td>10.0%</td></tr>
+            <tr><td>Original strict A10/B20 X25/Y33</td><td>30.17%</td><td>20.63% / 41.38%</td><td>-28.96%</td><td>-42.77% / -18.74%</td><td>3.503</td><td>$1,261</td><td>16.5%</td></tr>
           </tbody>
         </table>
       </div>
@@ -796,12 +827,9 @@
             <tr><th>Question</th><th>Monte Carlo result</th></tr>
           </thead>
           <tbody>
-            <tr><td>Probability CAGR is positive</td><td>100.0%</td></tr>
-            <tr><td>Probability CAGR is above 20%</td><td>91.2%</td></tr>
-            <tr><td>Probability CAGR is above 30%</td><td>47.8%</td></tr>
-            <tr><td>Probability max drawdown is worse than -30%</td><td>44.8%</td></tr>
-            <tr><td>Probability max drawdown is worse than -40%</td><td>13.6%</td></tr>
-            <tr><td>Probability max drawdown is worse than -50%</td><td>2.8%</td></tr>
+            <tr><td>Probability max drawdown is worse than -35%</td><td>22.0%</td></tr>
+            <tr><td>Probability max drawdown is worse than -40%</td><td>10.0%</td></tr>
+            <tr><td>Probability max drawdown is worse than -50%</td><td>1.5%</td></tr>
             <tr><td>Probability ending below starting capital</td><td>0.0%</td></tr>
           </tbody>
         </table>
@@ -809,31 +837,26 @@
     </section>
 
     <section class="card section-gap">
-      <h2>Annual Path Percentiles</h2>
-      <p class="small">Equity starts at $100. Drawdown values below are positive drawdown magnitudes.</p>
+      <h2>Default Strategy Diagnostics</h2>
+      <p class="small">Full-sample diagnostics for the A5/B25/X40/Y15 lead-guard default.</p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Year</th><th>Equity P10</th><th>Equity median</th><th>Equity P90</th><th>DD P10</th><th>DD median</th><th>DD P90</th></tr>
+            <tr><th>Metric</th><th>Value</th><th>Metric</th><th>Value</th></tr>
           </thead>
           <tbody>
-            <tr><td>1</td><td>$97</td><td>$115</td><td>$138</td><td>4.88%</td><td>8.29%</td><td>16.04%</td></tr>
-            <tr><td>2</td><td>$115</td><td>$153</td><td>$213</td><td>5.73%</td><td>12.45%</td><td>23.96%</td></tr>
-            <tr><td>3</td><td>$139</td><td>$205</td><td>$314</td><td>6.14%</td><td>14.68%</td><td>28.46%</td></tr>
-            <tr><td>4</td><td>$177</td><td>$278</td><td>$432</td><td>6.77%</td><td>14.91%</td><td>28.91%</td></tr>
-            <tr><td>5</td><td>$228</td><td>$358</td><td>$586</td><td>7.14%</td><td>15.08%</td><td>29.26%</td></tr>
-            <tr><td>6</td><td>$263</td><td>$453</td><td>$851</td><td>6.63%</td><td>16.43%</td><td>30.39%</td></tr>
-            <tr><td>7</td><td>$331</td><td>$587</td><td>$1,151</td><td>7.03%</td><td>16.17%</td><td>31.60%</td></tr>
-            <tr><td>8</td><td>$417</td><td>$767</td><td>$1,594</td><td>6.50%</td><td>16.00%</td><td>31.11%</td></tr>
-            <tr><td>9</td><td>$517</td><td>$1,002</td><td>$2,067</td><td>6.77%</td><td>16.04%</td><td>31.70%</td></tr>
-            <tr><td>10</td><td>$594</td><td>$1,217</td><td>$2,423</td><td>5.74%</td><td>14.20%</td><td>28.70%</td></tr>
+            <tr><td>Cash days</td><td>28.87%</td><td>1x days</td><td>9.00%</td></tr>
+            <tr><td>2x days</td><td>48.51%</td><td>3x days</td><td>13.62%</td></tr>
+            <tr><td>2x entries</td><td>10</td><td>3x entries</td><td>4</td></tr>
+            <tr><td>Lead-only days</td><td>751</td><td>Rebalances</td><td>774</td></tr>
+            <tr><td>Total trading costs</td><td>$2,021,175</td><td>Total funding costs</td><td>$129,679</td></tr>
           </tbody>
         </table>
       </div>
       <p class="callout section-gap">
-        The Monte Carlo profile is attractive but not drawdown-free. A -30% drawdown is common enough to plan for,
-        while a -50% drawdown is uncommon in this simulation. Position sizing should assume the strategy can still
-        spend long periods underwater.
+        The Monte Carlo profile is attractive but not drawdown-free. A -35% drawdown remains plausible, while a
+        -50% drawdown was uncommon in this simulation. Position sizing should assume the strategy can still spend
+        long periods underwater.
       </p>
     </section>
   </section>
@@ -1082,12 +1105,25 @@
   const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040 };
+  const DEFAULT_GUARDED = {
+    triggerA: 0.05,
+    triggerB: 0.25,
+    hold2: 0.40,
+    hold3: 0.15,
+    leadPct: 0.0075,
+    tradingCost: 0.01,
+    cashRate: 0.04,
+    maxHold2: null,
+    maxHold3: null,
+  };
   const INITIAL_CAPITAL = 100;
   const ANNUAL_INFLOW = 10;
   const TRADING_DAYS = 252;
   let latestRows = [];
   let chartRange = "1y";
+  let equityChartRange = "full";
   let chartPoints = [];
+  let equityChartPoints = [];
   let optimizerResults = [];
 
   const $ = (id) => document.getElementById(id);
@@ -1111,6 +1147,13 @@
       renderChart();
     });
   });
+  document.querySelectorAll("[data-equity-range]").forEach((button) => {
+    button.addEventListener("click", () => {
+      equityChartRange = button.dataset.equityRange;
+      setActiveEquityRangeButton(equityChartRange);
+      renderBacktestEquityChart();
+    });
+  });
   $("applyCustomRange").addEventListener("click", () => {
     chartRange = "custom";
     setActiveRangeButton(chartRange);
@@ -1124,7 +1167,14 @@
   $("priceChart").addEventListener("mouseleave", () => {
     $("chartTooltip").style.display = "none";
   });
-  window.addEventListener("resize", renderChart);
+  $("equityChart").addEventListener("mousemove", showEquityChartTooltip);
+  $("equityChart").addEventListener("mouseleave", () => {
+    $("equityChartTooltip").style.display = "none";
+  });
+  window.addEventListener("resize", () => {
+    renderChart();
+    renderBacktestEquityChart();
+  });
 
   async function refresh() {
     try {
@@ -1147,6 +1197,7 @@
 
       render(eodResult, liveResult);
       renderChart();
+      renderBacktestEquityChart();
       runCalculator();
       setStatus(`Loaded ${rows.length} daily rows. Last completed close: ${eodResult.latest.date}.`);
     } catch (err) {
@@ -1182,6 +1233,7 @@
       button.classList.toggle("active", button.dataset.pageTarget === pageId);
     });
     if (pageId === "signalPage") renderChart();
+    if (pageId === "backtestPage") renderBacktestEquityChart();
   }
 
   function parseCsv(csv) {
@@ -1234,6 +1286,7 @@
   }
 
   function computeSignal(rows) {
+    const params = DEFAULT_GUARDED;
     const closes = rows.map((r) => r.close);
     let highWater = closes[0];
     let highWaterDate = rows[0].date;
@@ -1253,56 +1306,57 @@
 
       const dd = close / highWater - 1;
       const aboveSma = Number.isFinite(avg20) && close > avg20;
+      const recoveryOk = Number.isFinite(avg20) && close >= avg20 * (1 - params.leadPct);
       const baseLev = aboveSma ? 1 : 0;
 
       if (regime === "tier3") {
-        if (close / entryClose - 1 >= 1 / 3) {
+        if (close / entryClose - 1 >= params.hold3) {
           regime = "base";
           entryClose = null;
           entryDate = null;
         } else {
-          targetLeverage = aboveSma ? 3 : baseLev;
-          explanation = aboveSma
-            ? "3x recovery tier is active and price is above SMA20."
-            : "3x tier is armed, but guard failed; using base cash/1x rule.";
+          targetLeverage = recoveryOk ? 3 : baseLev;
+          explanation = recoveryOk
+            ? "3x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
+            : "3x tier is armed, but lead guard failed; using base cash/1x rule.";
           continue;
         }
       }
 
       if (regime === "tier2") {
-        if (dd <= -0.20 && aboveSma) {
+        if (dd <= -params.triggerB && recoveryOk) {
           regime = "tier3";
           entryClose = close;
           entryDate = rows[i].date;
           targetLeverage = 3;
-          explanation = "Drawdown hit B=-20% and guard passed; upgraded to 3x.";
+          explanation = "Drawdown hit B=-25% and lead guard passed; upgraded to 3x.";
           continue;
         }
-        if (close / entryClose - 1 >= 0.25) {
+        if (close / entryClose - 1 >= params.hold2) {
           regime = "base";
           entryClose = null;
           entryDate = null;
         } else {
-          targetLeverage = aboveSma ? 2 : baseLev;
-          explanation = aboveSma
-            ? "2x recovery tier is active and price is above SMA20."
-            : "2x tier is armed, but guard failed; using base cash/1x rule.";
+          targetLeverage = recoveryOk ? 2 : baseLev;
+          explanation = recoveryOk
+            ? "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
+            : "2x tier is armed, but lead guard failed; using base cash/1x rule.";
           continue;
         }
       }
 
-      if (dd <= -0.20 && aboveSma) {
+      if (dd <= -params.triggerB && recoveryOk) {
         regime = "tier3";
         entryClose = close;
         entryDate = rows[i].date;
         targetLeverage = 3;
-        explanation = "Drawdown is at/through -20% and price is above SMA20; enter 3x.";
-      } else if (dd <= -0.10 && aboveSma) {
+        explanation = "Drawdown is at/through -25% and price is inside the 0.75% SMA20 lead guard; enter 3x.";
+      } else if (dd <= -params.triggerA && recoveryOk) {
         regime = "tier2";
         entryClose = close;
         entryDate = rows[i].date;
         targetLeverage = 2;
-        explanation = "Drawdown is at/through -10% and price is above SMA20; enter 2x.";
+        explanation = "Drawdown is at/through -5% and price is inside the 0.75% SMA20 lead guard; enter 2x.";
       } else {
         targetLeverage = baseLev;
         explanation = aboveSma
@@ -1318,8 +1372,8 @@
     const recoveryTarget = entryClose == null
       ? null
       : regime === "tier3"
-        ? entryClose * (1 + 1 / 3)
-        : entryClose * 1.25;
+        ? entryClose * (1 + params.hold3)
+        : entryClose * (1 + params.hold2);
 
     return {
       latest,
@@ -1332,6 +1386,7 @@
       entryDate,
       recoveryTarget,
       aboveSma: latest.close > latestSma,
+      recoveryOk: latest.close >= latestSma * (1 - params.leadPct),
       targetLeverage,
       explanation
     };
@@ -1352,6 +1407,7 @@
     const triggerB = readNumber("calcTriggerB") / 100;
     const hold2 = readNumber("calcHold2") / 100;
     const hold3 = readNumber("calcHold3") / 100;
+    const leadPct = Math.max(readNumber("calcLeadPct", DEFAULT_GUARDED.leadPct * 100) / 100, 0);
     const tradingCost = Math.max(readNumber("calcTradingCost", 1) / 100, 0);
     const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
     const maxHold2 = readOptionalNumber("calcMaxHold2");
@@ -1359,7 +1415,7 @@
     if (!(triggerA > 0 && triggerB > triggerA && hold2 > 0 && hold3 > 0)) {
       throw new Error("Use positive values and keep B greater than A.");
     }
-    return { triggerA, triggerB, hold2, hold3, maxHold2, maxHold3, tradingCost, cashRate };
+    return { triggerA, triggerB, hold2, hold3, leadPct, maxHold2, maxHold3, tradingCost, cashRate };
   }
 
   function guardedLeverageForParams(rows, params) {
@@ -1379,6 +1435,7 @@
 
       const dd = close / highWater - 1;
       const aboveSma = Number.isFinite(avg20) && close > avg20;
+      const recoveryOk = Number.isFinite(avg20) && close >= avg20 * (1 - (params.leadPct ?? 0));
       const baseLev = aboveSma ? 1 : 0;
       let target = baseLev;
 
@@ -1390,7 +1447,7 @@
           entryClose = null;
           entryIndex = null;
         } else {
-          leverage.push(aboveSma ? 3 : baseLev);
+          leverage.push(recoveryOk ? 3 : baseLev);
           continue;
         }
       }
@@ -1398,7 +1455,7 @@
       if (regime === "tier2") {
         const hitGain = entryClose != null && close / entryClose - 1 >= params.hold2;
         const hitTime = params.maxHold2 != null && entryIndex != null && i - entryIndex >= params.maxHold2;
-        if (dd <= -params.triggerB && aboveSma) {
+        if (dd <= -params.triggerB && recoveryOk) {
           regime = "tier3";
           entryClose = close;
           entryIndex = i;
@@ -1411,18 +1468,18 @@
           entryClose = null;
           entryIndex = null;
         } else {
-          leverage.push(aboveSma ? 2 : baseLev);
+          leverage.push(recoveryOk ? 2 : baseLev);
           continue;
         }
       }
 
-      if (dd <= -params.triggerB && aboveSma) {
+      if (dd <= -params.triggerB && recoveryOk) {
         regime = "tier3";
         entryClose = close;
         entryIndex = i;
         tier3Entries += 1;
         target = 3;
-      } else if (dd <= -params.triggerA && aboveSma) {
+      } else if (dd <= -params.triggerA && recoveryOk) {
         regime = "tier2";
         entryClose = close;
         entryIndex = i;
@@ -1486,6 +1543,7 @@
       tradingCosts,
       rebalances,
       leverage,
+      equity,
       tier2Entries,
       tier3Entries,
     };
@@ -1543,10 +1601,11 @@
   }
 
   function resetCalculator() {
-    $("calcTriggerA").value = 10;
-    $("calcTriggerB").value = 20;
-    $("calcHold2").value = 25;
-    $("calcHold3").value = 33.33;
+    $("calcTriggerA").value = DEFAULT_GUARDED.triggerA * 100;
+    $("calcTriggerB").value = DEFAULT_GUARDED.triggerB * 100;
+    $("calcHold2").value = DEFAULT_GUARDED.hold2 * 100;
+    $("calcHold3").value = DEFAULT_GUARDED.hold3 * 100;
+    $("calcLeadPct").value = DEFAULT_GUARDED.leadPct * 100;
     $("calcMaxHold2").value = "";
     $("calcMaxHold3").value = "";
     $("calcTradingCost").value = 1;
@@ -1591,6 +1650,7 @@
       const objective = $("optObjective").value;
       const tradingCost = Math.max(readNumber("calcTradingCost", 1) / 100, 0);
       const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
+      const leadPct = Math.max(readNumber("calcLeadPct", DEFAULT_GUARDED.leadPct * 100) / 100, 0);
       const maxHold2 = readOptionalNumber("calcMaxHold2");
       const maxHold3 = readOptionalNumber("calcMaxHold3");
       optimizerResults = [];
@@ -1607,6 +1667,7 @@
                 hold3: hold3 / 100,
                 maxHold2,
                 maxHold3,
+                leadPct,
                 tradingCost,
                 cashRate,
               };
@@ -1718,14 +1779,23 @@
     renderSignal("live", live);
     $("latestDate").textContent = eod.latest.date;
     $("highWater").textContent = `${fmtMoney(eod.highWater)} (${eod.highWaterDate})`;
-    $("tier2Level").textContent = fmtMoney(eod.highWater * 0.90);
-    $("tier3Level").textContent = fmtMoney(eod.highWater * 0.80);
+    $("tier2Level").textContent = fmtMoney(eod.highWater * (1 - DEFAULT_GUARDED.triggerA));
+    $("tier3Level").textContent = fmtMoney(eod.highWater * (1 - DEFAULT_GUARDED.triggerB));
     $("aboveSma").textContent = eod.aboveSma ? "Yes" : "No";
+    $("leadGuardLevel").textContent = Number.isFinite(eod.latestSma)
+      ? fmtMoney(eod.latestSma * (1 - DEFAULT_GUARDED.leadPct))
+      : "-";
   }
 
   function setActiveRangeButton(range) {
     document.querySelectorAll("[data-range]").forEach((button) => {
       button.classList.toggle("active", button.dataset.range === range);
+    });
+  }
+
+  function setActiveEquityRangeButton(range) {
+    document.querySelectorAll("[data-equity-range]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.equityRange === range);
     });
   }
 
@@ -1820,6 +1890,105 @@
     tooltip.style.display = "block";
     tooltip.style.left = Math.min(event.clientX - rect.left + 14, rect.width - 190) + "px";
     tooltip.style.top = Math.max(event.clientY - rect.top - 56, 10) + "px";
+  }
+
+  function buyHoldWithInflows(rows) {
+    let value = INITIAL_CAPITAL;
+    let prevYear = new Date(rows[0].date).getUTCFullYear();
+    const equity = [];
+    for (let i = 0; i < rows.length; i++) {
+      const year = new Date(rows[i].date).getUTCFullYear();
+      if (i > 0 && year !== prevYear) value += ANNUAL_INFLOW;
+      if (i > 0) value *= rows[i].close / rows[i - 1].close;
+      equity.push(value);
+      prevYear = year;
+    }
+    return equity;
+  }
+
+  function equityDataForRange() {
+    if (!latestRows.length) return [];
+    const strategy = backtestParameterizedGuarded(latestRows, DEFAULT_GUARDED).equity;
+    const spx = buyHoldWithInflows(latestRows);
+    const fullData = latestRows.map((row, index) => ({
+      date: row.date,
+      strategy: strategy[index],
+      spx: spx[index],
+    }));
+    if (equityChartRange === "full") return fullData;
+    return fullData.slice(-RANGE_SESSIONS[equityChartRange]);
+  }
+
+  function renderBacktestEquityChart() {
+    const svg = $("equityChart");
+    if (!svg || !latestRows.length) return;
+    const data = equityDataForRange();
+    if (data.length < 2) {
+      svg.innerHTML = "";
+      $("equityChartMeta").textContent = "Refresh signal or choose a wider date range to draw the equity chart.";
+      return;
+    }
+
+    const width = 900;
+    const height = 360;
+    const pad = { left: 68, right: 18, top: 18, bottom: 38 };
+    const values = data.flatMap((point) => [point.strategy, point.spx]).filter(Number.isFinite);
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
+    const buffer = (maxValue - minValue) * 0.06 || maxValue * 0.02;
+    const yMin = Math.max(0, minValue - buffer);
+    const yMax = maxValue + buffer;
+    const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * (width - pad.left - pad.right);
+    const yScale = (value) => pad.top + ((yMax - value) / (yMax - yMin)) * (height - pad.top - pad.bottom);
+    const linePath = (selector) => data
+      .map((point, index) => `${xScale(index).toFixed(2)},${yScale(selector(point)).toFixed(2)}`)
+      .join(" ");
+
+    equityChartPoints = data.map((point, index) => ({
+      ...point,
+      x: xScale(index),
+    }));
+
+    const grid = [];
+    for (let i = 0; i <= 4; i++) {
+      const value = yMin + ((yMax - yMin) * i) / 4;
+      const y = yScale(value);
+      grid.push(`
+        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
+        <text x="${pad.left - 10}" y="${(y + 4).toFixed(2)}" fill="#9aa4b2" font-size="12" text-anchor="end">$${fmtMoney(value)}</text>
+      `);
+    }
+
+    const startDate = data[0].date;
+    const endDate = data[data.length - 1].date;
+    svg.innerHTML = `
+      ${grid.join("")}
+      <text x="${pad.left}" y="${height - 12}" fill="#9aa4b2" font-size="12">${startDate}</text>
+      <text x="${width - pad.right}" y="${height - 12}" fill="#9aa4b2" font-size="12" text-anchor="end">${endDate}</text>
+      <polyline points="${linePath((point) => point.strategy)}" fill="none" stroke="#6aa6ff" stroke-width="2.4" />
+      <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#f0b84a" stroke-width="2" />
+    `;
+    const last = data[data.length - 1];
+    $("equityChartMeta").textContent = `${data.length} trading sessions shown: ${startDate} to ${endDate}. Default strategy $${fmtMoney(last.strategy)} vs SPX $${fmtMoney(last.spx)}.`;
+  }
+
+  function showEquityChartTooltip(event) {
+    if (!equityChartPoints.length) return;
+    const svg = $("equityChart");
+    const rect = svg.getBoundingClientRect();
+    const svgX = ((event.clientX - rect.left) / rect.width) * 900;
+    const nearest = equityChartPoints.reduce((best, point) => (
+      Math.abs(point.x - svgX) < Math.abs(best.x - svgX) ? point : best
+    ), equityChartPoints[0]);
+    const tooltip = $("equityChartTooltip");
+    tooltip.innerHTML = `
+      <strong>${nearest.date}</strong><br>
+      Default strategy: $${fmtMoney(nearest.strategy)}<br>
+      SPX buy &amp; hold: $${fmtMoney(nearest.spx)}
+    `;
+    tooltip.style.display = "block";
+    tooltip.style.left = Math.min(event.clientX - rect.left + 14, rect.width - 210) + "px";
+    tooltip.style.top = Math.max(event.clientY - rect.top - 58, 10) + "px";
   }
 
   function renderSignal(prefix, result) {
