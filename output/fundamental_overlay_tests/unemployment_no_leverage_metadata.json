@@ -1,0 +1,56 @@
+{
+  "market_source": "Yahoo Finance ^GSPC and ^IRX via project data_manager.load_backtest_data",
+  "market_start": "1996-05-17",
+  "market_end": "2026-05-15",
+  "sessions": 7547,
+  "baseline": {
+    "strategy": "Baseline Guarded A5/B25/X40/Y15 Lead 0.75",
+    "trigger_a": 0.05,
+    "trigger_b": 0.25,
+    "lead_pct_below_sma20": 0.0075,
+    "x_return": 0.4,
+    "y_return": 0.15
+  },
+  "prior_cap_2x_comparison": {
+    "strategy": "Unemployment rising 3m cap max 2x (3x only)",
+    "cagr": 0.37225809997277,
+    "max_drawdown": -0.2330864206300392,
+    "cagr_retention_pct": 95.23092948938483,
+    "max_dd_improvement_pp": 4.19853128059694
+  },
+  "initial_capital": 100.0,
+  "annual_inflow_usd": 10.0,
+  "trading_cost_pct": 0.01,
+  "lag_policy": {
+    "unemployment": "FRED UNRATE monthly observations forward-filled to market sessions, then shifted 21 market sessions before use",
+    "spx_trend": "SPX SMA20/SMA50 trend computed from end-of-day close and shifted one market session before use"
+  },
+  "unemployment_signal_definitions": {
+    "UNRATE_RISING_3M": "Lagged UNRATE 63-session change >= 0.10 percentage points",
+    "UNRATE_RISING_6M": "Lagged UNRATE 126-session change >= 0.20 percentage points",
+    "UNRATE_RISING_3M_OR_6M": "Either 3m or 6m lagged UNRATE rising trigger is active"
+  },
+  "scope_definitions": {
+    "three_x_only": "Only baseline 3x exposure is reduced to 1x.",
+    "leveraged_tiers": "Baseline 2x and 3x exposure is reduced to 1x; cash and existing 1x are preserved.",
+    "all_risky_to_cash": "Severe comparison only: any baseline risky exposure is forced to cash."
+  },
+  "availability": {
+    "UNRATE": {
+      "status": "available",
+      "source": "Civilian unemployment rate, FRED",
+      "raw_start": "1948-01-01",
+      "raw_end": "2026-04-01",
+      "lag": "21 market sessions after monthly observation date"
+    },
+    "SPX_TREND": {
+      "status": "available",
+      "source": "Yahoo Finance ^GSPC via project data_manager.load_backtest_data",
+      "raw_start": "1996-05-17",
+      "raw_end": "2026-05-15",
+      "lag": "1 market session"
+    }
+  },
+  "tested_overlay_count": 15,
+  "ranking_policy": "practical score weights max drawdown improvement, CAGR retention, Sharpe delta, and modestly penalizes leverage churn"
+}
