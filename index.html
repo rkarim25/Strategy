@@ -710,6 +710,9 @@
         <button type="button" data-equity-range="10y">10Y</button>
         <button type="button" data-equity-range="20y">20Y</button>
         <button type="button" data-equity-range="full" class="active">Full</button>
+        <input id="equityChartStart" type="date" />
+        <input id="equityChartEnd" type="date" />
+        <button id="applyEquityCustomRange" type="button" class="secondary">Apply custom</button>
       </div>
       <div id="equityChartMeta" class="small" style="margin-top: 10px;">Refresh signal to draw the equity chart.</div>
       <div class="chart-box">
@@ -1150,6 +1153,8 @@
   document.querySelectorAll("[data-equity-range]").forEach((button) => {
     button.addEventListener("click", () => {
       equityChartRange = button.dataset.equityRange;
+      $("equityChartStart").value = "";
+      $("equityChartEnd").value = "";
       setActiveEquityRangeButton(equityChartRange);
       renderBacktestEquityChart();
     });
@@ -1158,6 +1163,11 @@
     chartRange = "custom";
     setActiveRangeButton(chartRange);
     renderChart();
+  });
+  $("applyEquityCustomRange").addEventListener("click", () => {
+    equityChartRange = "custom";
+    setActiveEquityRangeButton(equityChartRange);
+    renderBacktestEquityChart();
   });
   $("runCalculator").addEventListener("click", runCalculator);
   $("resetCalculator").addEventListener("click", resetCalculator);
@@ -1915,6 +1925,11 @@
       strategy: strategy[index],
       spx: spx[index],
     }));
+    if (equityChartRange === "custom") {
+      const start = $("equityChartStart").value;
+      const end = $("equityChartEnd").value;
+      return fullData.filter((row) => (!start || row.date >= start) && (!end || row.date <= end));
+    }
     if (equityChartRange === "full") return fullData;
     return fullData.slice(-RANGE_SESSIONS[equityChartRange]);
   }
