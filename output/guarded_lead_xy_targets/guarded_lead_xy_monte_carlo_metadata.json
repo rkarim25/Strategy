@@ -1,0 +1,14 @@
+{
+  "source": "Yahoo Finance ^GSPC and ^IRX via project data loader",
+  "market_history_start": "1996-05-17",
+  "market_history_end": "2026-05-15",
+  "lead_pct_below_sma20": 0.0075,
+  "selected_reason": "highest CAGR while preserving original CAGR and improving max drawdown",
+  "selected_x_return": 0.4,
+  "selected_y_return": 0.15,
+  "n_sims": 200,
+  "horizon_trading_days": 2520,
+  "horizon_years": 10.0,
+  "block_days": 21,
+  "seed": 20260517
+}

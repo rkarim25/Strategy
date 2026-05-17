@@ -701,8 +701,8 @@
       <h2>SPX vs Default Strategy Equity</h2>
       <p class="small">
         Browser-side chart using the latest refreshed SPX daily closes. Both lines start at $100 and include $10
-        annual inflows. The strategy line uses the default A5/B25/X40/Y15 with 0.75% lead guard and the page's
-        calculator assumptions.
+        annual inflows. The chart uses a log scale so the SPX buy-and-hold line remains visible beside the much
+        larger strategy result.
       </p>
       <div class="row range-controls">
         <button type="button" data-equity-range="1y">1Y</button>
@@ -1933,13 +1933,14 @@
     const height = 360;
     const pad = { left: 68, right: 18, top: 18, bottom: 38 };
     const values = data.flatMap((point) => [point.strategy, point.spx]).filter(Number.isFinite);
-    const minValue = Math.min(...values);
+    const minValue = Math.max(Math.min(...values), 1e-9);
     const maxValue = Math.max(...values);
-    const buffer = (maxValue - minValue) * 0.06 || maxValue * 0.02;
-    const yMin = Math.max(0, minValue - buffer);
-    const yMax = maxValue + buffer;
+    const yMin = minValue * 0.9;
+    const yMax = maxValue * 1.1;
+    const logMin = Math.log10(yMin);
+    const logMax = Math.log10(yMax);
     const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * (width - pad.left - pad.right);
-    const yScale = (value) => pad.top + ((yMax - value) / (yMax - yMin)) * (height - pad.top - pad.bottom);
+    const yScale = (value) => pad.top + ((logMax - Math.log10(Math.max(value, 1e-9))) / (logMax - logMin)) * (height - pad.top - pad.bottom);
     const linePath = (selector) => data
       .map((point, index) => `${xScale(index).toFixed(2)},${yScale(selector(point)).toFixed(2)}`)
       .join(" ");
@@ -1951,7 +1952,7 @@
 
     const grid = [];
     for (let i = 0; i <= 4; i++) {
-      const value = yMin + ((yMax - yMin) * i) / 4;
+      const value = Math.pow(10, logMin + ((logMax - logMin) * i) / 4);
       const y = yScale(value);
       grid.push(`
         <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
@@ -1969,7 +1970,7 @@
       <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#f0b84a" stroke-width="2" />
     `;
     const last = data[data.length - 1];
-    $("equityChartMeta").textContent = `${data.length} trading sessions shown: ${startDate} to ${endDate}. Default strategy $${fmtMoney(last.strategy)} vs SPX $${fmtMoney(last.spx)}.`;
+    $("equityChartMeta").textContent = `${data.length} trading sessions shown on a log scale: ${startDate} to ${endDate}. Default strategy $${fmtMoney(last.strategy)} vs SPX $${fmtMoney(last.spx)}.`;
   }
 
   function showEquityChartTooltip(event) {
