@@ -320,6 +320,17 @@
     .field select {
       width: 100%;
     }
+    .check-field {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .check-field input {
+      width: auto;
+    }
     .result-highlight {
       background: rgba(0, 113, 227, .08);
       border-radius: 18px;
@@ -596,30 +607,41 @@
     </div>
   </section>
 
-  <section class="card section-gap" hidden>
+  <section class="card section-gap">
     <h2>Goal Seek / Optimizer</h2>
     <p>
-      Search a grid of A, B, 2x hold target, and 3x hold target values. Use smaller ranges or larger steps for
-      faster searches. The optimizer enforces B &gt; A.
+      Tick any value you want to keep fixed. Unticked values are optimized across the ranges below. If A, B, X,
+      and Y are all unticked, the optimizer searches freely and returns the best combinations for the selected
+      objective: high CAGR, low drawdown, or high Sharpe.
     </p>
     <div class="form-grid">
-      <div class="field"><label for="optAStart">A start (%)</label><input id="optAStart" type="number" step="0.5" value="6" /></div>
-      <div class="field"><label for="optAEnd">A end (%)</label><input id="optAEnd" type="number" step="0.5" value="18" /></div>
-      <div class="field"><label for="optAStep">A step (%)</label><input id="optAStep" type="number" min="0.5" step="0.5" value="2" /></div>
-      <div class="field"><label for="optObjective">Objective</label><select id="optObjective"><option value="cagr">Maximize CAGR</option><option value="drawdown">Minimize max drawdown</option><option value="cagrWithDrawdown">Max CAGR with DD limit</option><option value="targetCagr">Closest to target CAGR</option></select></div>
-      <div class="field"><label for="optBStart">B start (%)</label><input id="optBStart" type="number" step="0.5" value="14" /></div>
-      <div class="field"><label for="optBEnd">B end (%)</label><input id="optBEnd" type="number" step="0.5" value="32" /></div>
-      <div class="field"><label for="optBStep">B step (%)</label><input id="optBStep" type="number" min="0.5" step="0.5" value="3" /></div>
-      <div class="field"><label for="optMaxDd">DD limit / target (%)</label><input id="optMaxDd" type="number" min="1" max="95" step="1" value="35" /></div>
-      <div class="field"><label for="optHold2Start">2x hold start (%)</label><input id="optHold2Start" type="number" step="1" value="10" /></div>
-      <div class="field"><label for="optHold2End">2x hold end (%)</label><input id="optHold2End" type="number" step="1" value="40" /></div>
-      <div class="field"><label for="optHold2Step">2x hold step (%)</label><input id="optHold2Step" type="number" min="1" step="1" value="5" /></div>
-      <div class="field"><label for="optTargetCagr">Target CAGR (%)</label><input id="optTargetCagr" type="number" min="0" max="100" step="1" value="30" /></div>
-      <div class="field"><label for="optHold3Start">3x hold start (%)</label><input id="optHold3Start" type="number" step="1" value="15" /></div>
-      <div class="field"><label for="optHold3End">3x hold end (%)</label><input id="optHold3End" type="number" step="1" value="60" /></div>
-      <div class="field"><label for="optHold3Step">3x hold step (%)</label><input id="optHold3Step" type="number" min="1" step="1" value="5" /></div>
+      <label class="check-field"><input id="optFixA" type="checkbox" /> Fix A at calculator value</label>
+      <label class="check-field"><input id="optFixB" type="checkbox" /> Fix B at calculator value</label>
+      <label class="check-field"><input id="optFixX" type="checkbox" /> Fix X at calculator value</label>
+      <label class="check-field"><input id="optFixY" type="checkbox" /> Fix Y at calculator value</label>
+      <div class="field"><label for="optObjective">Optimise for</label><select id="optObjective"><option value="cagr">Highest CAGR</option><option value="drawdown">Lowest drawdown</option><option value="sharpe">Highest Sharpe</option></select></div>
       <div class="field"><label for="optResultCount">Show top results</label><input id="optResultCount" type="number" min="3" max="25" step="1" value="10" /></div>
     </div>
+    <details class="advanced" open>
+      <summary>Search ranges for unfixed values</summary>
+      <div class="form-grid">
+        <div class="field"><label for="optAStart">A start (%)</label><input id="optAStart" type="number" step="0.5" value="6" /></div>
+        <div class="field"><label for="optAEnd">A end (%)</label><input id="optAEnd" type="number" step="0.5" value="18" /></div>
+        <div class="field"><label for="optAStep">A step (%)</label><input id="optAStep" type="number" min="0.5" step="0.5" value="2" /></div>
+        <div></div>
+        <div class="field"><label for="optBStart">B start (%)</label><input id="optBStart" type="number" step="0.5" value="14" /></div>
+        <div class="field"><label for="optBEnd">B end (%)</label><input id="optBEnd" type="number" step="0.5" value="32" /></div>
+        <div class="field"><label for="optBStep">B step (%)</label><input id="optBStep" type="number" min="0.5" step="0.5" value="3" /></div>
+        <div></div>
+        <div class="field"><label for="optHold2Start">X start (%)</label><input id="optHold2Start" type="number" step="1" value="10" /></div>
+        <div class="field"><label for="optHold2End">X end (%)</label><input id="optHold2End" type="number" step="1" value="40" /></div>
+        <div class="field"><label for="optHold2Step">X step (%)</label><input id="optHold2Step" type="number" min="1" step="1" value="5" /></div>
+        <div></div>
+        <div class="field"><label for="optHold3Start">Y start (%)</label><input id="optHold3Start" type="number" step="1" value="15" /></div>
+        <div class="field"><label for="optHold3End">Y end (%)</label><input id="optHold3End" type="number" step="1" value="60" /></div>
+        <div class="field"><label for="optHold3Step">Y step (%)</label><input id="optHold3Step" type="number" min="1" step="1" value="5" /></div>
+      </div>
+    </details>
     <div class="row">
       <button id="runOptimizer" type="button">Run optimizer</button>
       <button id="useBestOptimizer" type="button" class="secondary">Use best in calculator</button>
@@ -628,7 +650,7 @@
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Rank</th><th>A</th><th>B</th><th>2x hold</th><th>3x hold</th><th>CAGR</th><th>Max DD</th><th>Sharpe</th><th>End value</th><th>Trades</th></tr>
+          <tr><th>Rank</th><th>A</th><th>B</th><th>X</th><th>Y</th><th>CAGR</th><th>Max DD</th><th>Sharpe</th><th>End value</th><th>Trades</th></tr>
         </thead>
         <tbody id="optimizerRows">
           <tr><td colspan="10">No optimizer results yet.</td></tr>
@@ -1536,22 +1558,29 @@
     return values;
   }
 
+  function optimizerValues(fixId, calcId, startId, endId, stepId) {
+    if ($(fixId).checked) {
+      const fixed = readNumber(calcId);
+      if (!(Number.isFinite(fixed) && fixed > 0)) throw new Error(`Fixed value for ${calcId} is invalid.`);
+      return [fixed];
+    }
+    return rangeValues(startId, endId, stepId);
+  }
+
   function runOptimizer() {
     if (!latestRows.length) {
       $("optStatus").textContent = "Load data first with Refresh signal.";
       return;
     }
     try {
-      const aValues = rangeValues("optAStart", "optAEnd", "optAStep");
-      const bValues = rangeValues("optBStart", "optBEnd", "optBStep");
-      const hold2Values = rangeValues("optHold2Start", "optHold2End", "optHold2Step");
-      const hold3Values = rangeValues("optHold3Start", "optHold3End", "optHold3Step");
+      const aValues = optimizerValues("optFixA", "calcTriggerA", "optAStart", "optAEnd", "optAStep");
+      const bValues = optimizerValues("optFixB", "calcTriggerB", "optBStart", "optBEnd", "optBStep");
+      const hold2Values = optimizerValues("optFixX", "calcHold2", "optHold2Start", "optHold2End", "optHold2Step");
+      const hold3Values = optimizerValues("optFixY", "calcHold3", "optHold3Start", "optHold3End", "optHold3Step");
       const comboCount = aValues.length * bValues.length * hold2Values.length * hold3Values.length;
       if (comboCount > 7000) throw new Error(`Grid has ${comboCount.toLocaleString()} combinations. Narrow the range or increase step size.`);
 
       const objective = $("optObjective").value;
-      const ddLimit = readNumber("optMaxDd", 35) / 100;
-      const targetCagr = readNumber("optTargetCagr", 30) / 100;
       const tradingCost = Math.max(readNumber("calcTradingCost", 1) / 100, 0);
       const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
       const maxHold2 = readOptionalNumber("calcMaxHold2");
@@ -1574,8 +1603,7 @@
                 cashRate,
               };
               const result = backtestParameterizedGuarded(latestRows, params);
-              if (objective === "cagrWithDrawdown" && Math.abs(result.maxDrawdown) > ddLimit) continue;
-              optimizerResults.push({ params, result, score: optimizerScore(result, objective, ddLimit, targetCagr) });
+              optimizerResults.push({ params, result, score: optimizerScore(result, objective) });
             }
           }
         }
@@ -1583,7 +1611,8 @@
 
       optimizerResults.sort((a, b) => b.score - a.score);
       renderOptimizerResults();
-      $("optStatus").textContent = `Searched ${comboCount.toLocaleString()} combinations; ${optimizerResults.length.toLocaleString()} passed filters.`;
+      const objectiveLabel = $("optObjective").selectedOptions[0].textContent.toLowerCase();
+      $("optStatus").textContent = `Searched ${comboCount.toLocaleString()} combinations for ${objectiveLabel}; showing best ${Math.min(optimizerResults.length, readNumber("optResultCount", 10))}.`;
       $("optStatus").className = "small section-gap";
     } catch (err) {
       $("optStatus").textContent = "Optimizer error: " + err.message;
@@ -1591,10 +1620,9 @@
     }
   }
 
-  function optimizerScore(result, objective, ddLimit, targetCagr) {
+  function optimizerScore(result, objective) {
     if (objective === "drawdown") return result.maxDrawdown;
-    if (objective === "targetCagr") return -Math.abs(result.cagr - targetCagr) - Math.abs(result.maxDrawdown) * 0.001;
-    if (objective === "cagrWithDrawdown") return result.cagr;
+    if (objective === "sharpe") return Number.isFinite(result.sharpe) ? result.sharpe : -Infinity;
     return result.cagr;
   }
 
