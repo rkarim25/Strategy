@@ -1,0 +1,18 @@
+signal,status,source,series_or_ticker,raw_start,raw_end,lag,valid_market_days,first_valid_market_day,last_valid_market_day,active_days_any_derived,active_pct_any_derived,error
+INITIAL_CLAIMS_4W,available,"Initial claims 4-week moving average, FRED",IC4WSA,1967-02-18,2026-05-09,5 market sessions,7542,1996-05-24,2026-05-15,,,
+CONTINUING_CLAIMS_4W,available,"Continued claims 4-week moving average, FRED",CC4WSA,1967-02-18,2026-05-02,5 market sessions,7542,1996-05-24,2026-05-15,,,
+TEMP_HELP,available,"Temporary help services employment, FRED",TEMPHELPS,1990-01-01,2026-04-01,21 market sessions,7526,1996-06-18,2026-05-15,,,
+WEEKLY_HOURS,available,"Average weekly hours of all employees, total private, FRED",AWHAETP,2006-03-01,2026-04-01,21 market sessions,5064,2006-03-30,2026-05-15,,,
+JOLTS_OPENINGS,available,"JOLTS job openings, FRED",JTSJOL,2000-12-01,2026-03-01,21 market sessions,6379,2001-01-03,2026-05-15,,,
+JOLTS_QUITS,available,"JOLTS quits rate, FRED",JTSQUR,2000-12-01,2026-03-01,21 market sessions,6379,2001-01-03,2026-05-15,,,
+ISM_EMPLOYMENT,unavailable,Monthly ISM manufacturing employment diffusion index; tested only if FRED returns usable free data.,NAPMEI,,,,0,,,,,NAPMEI: HTTP Error 404: Not Found
+CONFERENCE_BOARD_LABOR_DIFFERENTIAL,unavailable,Conference Board Consumer Confidence labor differential,,,,,0,,,,,No free direct FRED series or project data source identified; generally requires Conference Board or vendor access.
+CHALLENGER_JOB_CUTS,unavailable,Challenger job-cut announcements,,,,,0,,,,,No free direct point-in-time series in existing project data/FRED access; direct history generally requires vendor or manual download access.
+CLAIMS_RISE_13W_10,derived,Derived from available lagged labor inputs,,,,inherits source lag,7547,1996-05-17,2026-05-15,537,7.115410096727176,
+CONT_CLAIMS_RISE_13W_5,derived,Derived from available lagged labor inputs,,,,inherits source lag,7547,1996-05-17,2026-05-15,1159,15.35709553464953,
+TEMPHELP_FALL_3M_0,derived,Derived from available lagged labor inputs,,,,inherits source lag,7547,1996-05-17,2026-05-15,2803,37.140585663177426,
+HOURS_FALL_3M_0,derived,Derived from available lagged labor inputs,,,,inherits source lag,7547,1996-05-17,2026-05-15,3745,49.622366503246326,
+JOLTS_OPENINGS_FALL_3M_0,derived,Derived from available lagged labor inputs,,,,inherits source lag,7547,1996-05-17,2026-05-15,2987,39.578640519411685,
+JOLTS_QUITS_FALL_3M_0,derived,Derived from available lagged labor inputs,,,,inherits source lag,7547,1996-05-17,2026-05-15,4409,58.42056446270041,
+LABOR_STRESS_2PLUS,derived,Derived from available lagged labor inputs,,,,inherits source lag,7547,1996-05-17,2026-05-15,4485,59.427587120710214,
+LABOR_STRESS_3PLUS,derived,Derived from available lagged labor inputs,,,,inherits source lag,7547,1996-05-17,2026-05-15,2774,36.75632701735789,
