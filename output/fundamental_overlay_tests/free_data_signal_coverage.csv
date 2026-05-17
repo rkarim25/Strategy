@@ -1,0 +1,21 @@
+signal,status,source,series_or_ticker,raw_start,raw_end,lag,valid_market_days,first_valid_market_day,last_valid_market_day,error
+AAA10Y,available,"Moody's Aaa yield minus 10Y Treasury, FRED",AAA10Y,1983-01-03,2026-05-14,1 market sessions,7546,1996-05-20,2026-05-15,
+ANFCI,available,"Chicago Fed Adjusted NFCI, FRED",ANFCI,1971-01-08,2026-05-08,5 market sessions,7542,1996-05-24,2026-05-15,
+BAA10Y,available,"Moody's Baa yield minus 10Y Treasury, FRED",BAA10Y,1986-01-02,2026-05-14,1 market sessions,7546,1996-05-20,2026-05-15,
+CAPE,available,Robert Shiller online data,,1881-01-31,2026-05-31,21 market sessions,7517,1996-07-01,2026-05-15,
+CPIAUCSL,available,"Consumer Price Index, monthly, FRED",CPIAUCSL,1947-01-01,2026-04-01,21 market sessions,7496,1996-07-31,2026-05-15,
+DFII10,available,"10-year TIPS real yield, FRED",DFII10,2003-01-02,2026-05-14,1 market sessions,5879,2003-01-03,2026-05-15,
+DGS10,available,"10-year Treasury constant maturity, FRED",DGS10,1962-01-02,2026-05-14,1 market sessions,7546,1996-05-20,2026-05-15,
+HY_OAS,available,"ICE BofA US High Yield OAS, FRED",BAMLH0A0HYM2,2023-05-16,2026-05-14,1 market sessions,752,2023-05-17,2026-05-15,
+IG_OAS,available,"ICE BofA US Corporate OAS, FRED",BAMLC0A0CM,2023-05-16,2026-05-14,1 market sessions,752,2023-05-17,2026-05-15,
+M2SL,available,"M2 money stock, monthly, FRED",M2SL,1959-01-01,2026-03-01,21 market sessions,7496,1996-07-31,2026-05-15,
+NFCI,available,"Chicago Fed National Financial Conditions Index, FRED",NFCI,1971-01-08,2026-05-08,5 market sessions,7542,1996-05-24,2026-05-15,
+RRPONTSYD,available,"Overnight reverse repo accepted bids, daily, FRED",RRPONTSYD,2003-02-07,2026-05-15,1 market sessions,5854,2003-02-10,2026-05-15,
+SPX_TREND,available,Yahoo Finance ^GSPC via project data_manager.load_backtest_data,,1996-05-17,2026-05-15,1 market session,7546,1996-05-20,2026-05-15,
+UNRATE,available,"Civilian unemployment rate, FRED",UNRATE,1948-01-01,2026-04-01,21 market sessions,7496,1996-07-31,2026-05-15,
+WALCL,available,"Federal Reserve total assets, weekly, FRED",WALCL,2002-12-18,2026-05-13,5 market sessions,5884,2002-12-26,2026-05-15,
+WRESBAL,available,"Reserve balances with Federal Reserve Banks, weekly, FRED",WRESBAL,2002-12-18,2026-05-13,5 market sessions,5884,2002-12-26,2026-05-15,
+BREADTH_NASDAQ_ADV_DEC,unavailable,Yahoo public Nasdaq advance/decline proxy,^NAAD,,,,0,,,No Yahoo data returned for ^NAAD
+BREADTH_NYSE_ADV_DEC,unavailable,Yahoo public NYSE advance/decline proxy,^NYAD,,,,0,,,No Yahoo data returned for ^NYAD
+BREADTH_SP500_ABOVE_200DMA,unavailable,Yahoo public S&P 500 % above 200DMA proxy,^S5TH,,,,0,,,No Yahoo data returned for ^S5TH
+BREADTH_SP500_ABOVE_50DMA,unavailable,Yahoo public S&P 500 % above 50DMA proxy,^S5FI,,,,0,,,No Yahoo data returned for ^S5FI
