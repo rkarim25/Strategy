@@ -1,0 +1,71 @@
+{
+  "recommendation": "keep as candidate but not default",
+  "rationale": "The rule improves drawdown consistently and does not appear to be a single-point spike, but the edge is path-dependent and the CAGR advantage is modest. Promote only after a separate forward/live-paper validation or an explicit governance choice to prioritize lower drawdown.",
+  "target_strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+  "baseline_strategy": "Baseline Guarded A5/B25/X40/Y15 Lead 0.75",
+  "source": "Yahoo Finance ^GSPC and ^IRX via project data_manager.load_backtest_data",
+  "market_start": "1996-05-17",
+  "market_end": "2026-05-15",
+  "sessions": 7547,
+  "assumptions": {
+    "baseline": {
+      "trigger_a": 0.05,
+      "trigger_b": 0.25,
+      "lead_pct_below_sma20": 0.0075,
+      "x_return": 0.4,
+      "y_return": 0.15
+    },
+    "initial_capital": 100.0,
+    "annual_inflow_usd": 10.0,
+    "default_trading_cost_pct": 0.01,
+    "subperiod_method": "Full-history state is preserved; metrics are computed on sliced realized equity/return windows.",
+    "trail_basis": "Current mechanics use baseline strategy equity as the trail basis, matching the prior mechanics pass.",
+    "monte_carlo": {
+      "n_sims": 500,
+      "horizon_trading_days": 2520,
+      "block_days": 21,
+      "seed": 20260517
+    }
+  },
+  "evidence": {
+    "target_full_sample": {
+      "cagr": 0.4022948684509575,
+      "max_drawdown": -0.23344233020574617,
+      "sharpe": 3.7600651541798715,
+      "cagr_delta_pp": 1.139445199091993,
+      "max_dd_improvement_pp": 4.162940323026243,
+      "overlay_active_days": 706
+    },
+    "monte_carlo_target": {
+      "n_sims": 500,
+      "median_cagr": 0.36575032902208215,
+      "median_max_drawdown": -0.24845459079391713,
+      "p10_cagr": 0.2606203277483512,
+      "p10_max_drawdown": -0.3449191939790962,
+      "prob_beats_baseline_cagr_by_sim": 0.552,
+      "prob_improves_baseline_dd_by_sim": 0.908,
+      "prob_max_dd_worse_30pct": 0.238,
+      "prob_max_dd_worse_35pct": 0.084,
+      "prob_max_dd_worse_40pct": 0.032,
+      "baseline_prob_max_dd_worse_30pct": 0.372,
+      "baseline_prob_max_dd_worse_35pct": 0.212,
+      "baseline_prob_max_dd_worse_40pct": 0.09
+    },
+    "stability": {
+      "stable_neighbor_count_3pct_7_5pct_10pct": 2,
+      "subperiod_dd_win_rate": 1.0,
+      "crisis_dd_win_rate": 1.0,
+      "positive_cagr_cost_cases_for_target": 3,
+      "tested_cost_cases": 4
+    }
+  },
+  "outputs": {
+    "sensitivity_csv": "output\\strategy_mechanics_tests\\trail_validation_sensitivity.csv",
+    "subperiods_csv": "output\\strategy_mechanics_tests\\trail_validation_subperiods.csv",
+    "crisis_windows_csv": "output\\strategy_mechanics_tests\\trail_validation_crisis_windows.csv",
+    "monte_carlo_summary_csv": "output\\strategy_mechanics_tests\\trail_validation_monte_carlo_summary.csv",
+    "monte_carlo_paths_csv": "output\\strategy_mechanics_tests\\trail_validation_monte_carlo_paths.csv",
+    "cost_sensitivity_csv": "output\\strategy_mechanics_tests\\trail_validation_cost_sensitivity.csv",
+    "annual_equity_csv": "output\\strategy_mechanics_tests\\trail_validation_annual_equity_selected.csv"
+  }
+}
