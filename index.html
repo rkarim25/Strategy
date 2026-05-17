@@ -2036,6 +2036,8 @@
       right: width - pad.right,
       top: pad.top,
       bottom: height - pad.bottom,
+      width,
+      height,
     };
     equityChartPoints = data.map((point, index) => ({
       ...point,
@@ -2082,6 +2084,7 @@
         <circle id="equityHoverStrategy" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
         <circle id="equityHoverSpx" r="4" fill="#d97706" stroke="#ffffff" stroke-width="2" />
       </g>
+      <rect id="equityHoverCapture" x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" fill="transparent" pointer-events="all" />
     `;
     const last = data[data.length - 1];
     $("equityChartMeta").textContent = `${data.length} trading sessions shown on a log scale: ${startDate} to ${endDate}. Default strategy ${fmtWholeCurrency(last.strategy)} vs SPX ${fmtWholeCurrency(last.spx)}.`;
@@ -2091,9 +2094,13 @@
     if (!equityChartPoints.length || !equityChartPlot) return;
     const svg = $("equityChart");
     const rect = svg.getBoundingClientRect();
-    const svgX = ((event.clientX - rect.left) / rect.width) * 900;
-    const svgY = ((event.clientY - rect.top) / rect.height) * 360;
+    const chartWidth = equityChartPlot.width || 900;
+    const chartHeight = equityChartPlot.height || 360;
+    const svgX = ((event.clientX - rect.left) / rect.width) * chartWidth;
+    const svgY = ((event.clientY - rect.top) / rect.height) * chartHeight;
     if (
+      svgX < equityChartPlot.left ||
+      svgX > equityChartPlot.right ||
       svgY < equityChartPlot.top ||
       svgY > equityChartPlot.bottom
     ) {
@@ -2101,11 +2108,10 @@
       return;
     }
 
-    const clampedX = Math.max(equityChartPlot.left, Math.min(equityChartPlot.right, svgX));
-    const ratio = (clampedX - equityChartPlot.left) / (equityChartPlot.right - equityChartPlot.left);
+    const ratio = (svgX - equityChartPlot.left) / (equityChartPlot.right - equityChartPlot.left);
     const index = Math.max(0, Math.min(equityChartPoints.length - 1, Math.round(ratio * (equityChartPoints.length - 1))));
     const nearest = equityChartPoints[index];
-    const nearestX = Math.max(equityChartPlot.left, Math.min(equityChartPlot.right, nearest.x));
+    const nearestX = nearest.x;
     const hoverLayer = $("equityHoverLayer");
     if (hoverLayer) {
       hoverLayer.style.display = "block";
@@ -2126,10 +2132,10 @@
     tooltip.style.display = "block";
     const tooltipWidth = Math.max(tooltip.offsetWidth, 220);
     const tooltipHeight = Math.max(tooltip.offsetHeight, 64);
-    const plotLeftPx = (equityChartPlot.left / 900) * rect.width;
-    const plotRightPx = (equityChartPlot.right / 900) * rect.width;
-    const pointerX = (nearestX / 900) * rect.width;
-    const pointerY = (Math.min(nearest.strategyY, nearest.spxY) / 360) * rect.height;
+    const plotLeftPx = (equityChartPlot.left / chartWidth) * rect.width;
+    const plotRightPx = (equityChartPlot.right / chartWidth) * rect.width;
+    const pointerX = (nearestX / chartWidth) * rect.width;
+    const pointerY = (Math.min(nearest.strategyY, nearest.spxY) / chartHeight) * rect.height;
     const openRight = pointerX + tooltipWidth + 18 < plotRightPx;
     const left = openRight ? pointerX + 14 : Math.max(plotLeftPx, pointerX - tooltipWidth - 14);
     const top = Math.max(10, Math.min(pointerY - tooltipHeight - 10, rect.height - tooltipHeight - 10));
