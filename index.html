@@ -647,6 +647,10 @@
       <button id="useBestOptimizer" type="button" class="secondary">Use best in calculator</button>
     </div>
     <div id="optStatus" class="small section-gap">Load data, then run a grid search.</div>
+    <p class="small">
+      Results show the best combinations, with extra variety across any unfixed inputs so you can see how A, B,
+      X, and Y behave across the search range.
+    </p>
     <div class="table-wrap">
       <table>
         <thead>
@@ -1612,7 +1616,13 @@
       optimizerResults.sort((a, b) => b.score - a.score);
       renderOptimizerResults();
       const objectiveLabel = $("optObjective").selectedOptions[0].textContent.toLowerCase();
-      $("optStatus").textContent = `Searched ${comboCount.toLocaleString()} combinations for ${objectiveLabel}; showing best ${Math.min(optimizerResults.length, readNumber("optResultCount", 10))}.`;
+      const searched = [
+        $("optFixA").checked ? `A fixed at ${fmtPctWhole(aValues[0])}` : `A searched ${aValues.length} values`,
+        $("optFixB").checked ? `B fixed at ${fmtPctWhole(bValues[0])}` : `B searched ${bValues.length} values`,
+        $("optFixX").checked ? `X fixed at ${fmtPctWhole(hold2Values[0])}` : `X searched ${hold2Values.length} values`,
+        $("optFixY").checked ? `Y fixed at ${fmtPctWhole(hold3Values[0])}` : `Y searched ${hold3Values.length} values`,
+      ].join("; ");
+      $("optStatus").textContent = `Searched ${comboCount.toLocaleString()} combinations for ${objectiveLabel}. ${searched}.`;
       $("optStatus").className = "small section-gap";
     } catch (err) {
       $("optStatus").textContent = "Optimizer error: " + err.message;
@@ -1628,7 +1638,8 @@
 
   function renderOptimizerResults() {
     const count = Math.max(3, Math.min(readNumber("optResultCount", 10), 25));
-    const rows = optimizerResults.slice(0, count).map((item, index) => {
+    const displayResults = diversifiedOptimizerResults(count);
+    const rows = displayResults.map((item, index) => {
       const p = item.params;
       const r = item.result;
       return `<tr>
@@ -1645,6 +1656,44 @@
       </tr>`;
     });
     $("optimizerRows").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="10">No combinations passed the selected filters.</td></tr>`;
+  }
+
+  function diversifiedOptimizerResults(count) {
+    const chosen = [];
+    const seenCombos = new Set();
+    const add = (item) => {
+      const key = [
+        item.params.triggerA,
+        item.params.triggerB,
+        item.params.hold2,
+        item.params.hold3,
+      ].map((x) => x.toFixed(6)).join("|");
+      if (seenCombos.has(key) || chosen.length >= count) return;
+      seenCombos.add(key);
+      chosen.push(item);
+    };
+
+    const diversifyBy = [
+      ["optFixX", (item) => item.params.hold2],
+      ["optFixY", (item) => item.params.hold3],
+      ["optFixA", (item) => item.params.triggerA],
+      ["optFixB", (item) => item.params.triggerB],
+    ];
+
+    for (const [fixId, selector] of diversifyBy) {
+      if ($(fixId).checked) continue;
+      const seenValues = new Set();
+      for (const item of optimizerResults) {
+        const valueKey = selector(item).toFixed(6);
+        if (seenValues.has(valueKey)) continue;
+        seenValues.add(valueKey);
+        add(item);
+        if (chosen.length >= count) return chosen;
+      }
+    }
+
+    for (const item of optimizerResults) add(item);
+    return chosen;
   }
 
   function useBestOptimizerResult() {
