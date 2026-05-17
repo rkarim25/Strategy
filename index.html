@@ -477,9 +477,11 @@
           <tr><th>Signal date</th><td id="eodDate">-</td></tr>
           <tr><th>Close</th><td id="eodClose">-</td></tr>
           <tr><th>SMA20</th><td id="eodSma20">-</td></tr>
+          <tr><th>Close vs SMA20</th><td id="eodSma20Gap">-</td></tr>
           <tr><th>Drawdown from high</th><td id="eodDrawdown">-</td></tr>
           <tr><th>Regime</th><td id="eodRegime">-</td></tr>
           <tr><th>Recovery target</th><td id="eodRecoveryTarget">-</td></tr>
+          <tr><th>Distance to recovery target</th><td id="eodRecoveryTargetGap">-</td></tr>
         </tbody>
       </table>
     </div>
@@ -493,9 +495,11 @@
           <tr><th>Signal timestamp</th><td id="liveDate">-</td></tr>
           <tr><th>Live / provisional price</th><td id="liveClose">-</td></tr>
           <tr><th>Provisional SMA20</th><td id="liveSma20">-</td></tr>
+          <tr><th>Price vs SMA20</th><td id="liveSma20Gap">-</td></tr>
           <tr><th>Drawdown from high</th><td id="liveDrawdown">-</td></tr>
           <tr><th>Regime</th><td id="liveRegime">-</td></tr>
           <tr><th>Recovery target</th><td id="liveRecoveryTarget">-</td></tr>
+          <tr><th>Distance to recovery target</th><td id="liveRecoveryTargetGap">-</td></tr>
         </tbody>
       </table>
     </div>
@@ -2016,9 +2020,15 @@
     $(prefix + "Date").textContent = result.latest.date;
     $(prefix + "Close").textContent = fmtMoney(result.latest.close);
     $(prefix + "Sma20").textContent = fmtMoney(result.latestSma);
+    $(prefix + "Sma20Gap").textContent = Number.isFinite(result.latestSma)
+      ? fmtPct(result.latest.close / result.latestSma - 1)
+      : "-";
     $(prefix + "Drawdown").textContent = fmtPct(result.latestDd);
     $(prefix + "Regime").textContent = result.regime;
     $(prefix + "RecoveryTarget").textContent = result.recoveryTarget == null ? "-" : fmtMoney(result.recoveryTarget);
+    $(prefix + "RecoveryTargetGap").textContent = result.recoveryTarget == null
+      ? "-"
+      : fmtPct(result.recoveryTarget / result.latest.close - 1);
   }
 
   refresh();
