@@ -325,6 +325,15 @@
       border-radius: 18px;
       padding: 14px;
     }
+    details.advanced {
+      margin: 14px 0;
+      color: var(--muted);
+    }
+    details.advanced summary {
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 650;
+    }
     @media (max-width: 850px) {
       main {
         width: min(100% - 28px, 760px);
@@ -522,27 +531,31 @@
   <section class="card section-gap">
     <h2>Guarded Strategy Calculator</h2>
     <p>
-      Change the drawdown trigger levels and recovery hold rules, then calculate historical stats using the
-      daily SPX history loaded by <strong>Refresh signal</strong>. The browser backtest uses the same SMA20 guard,
-      $100 starting capital, $10 annual inflow, 1.0% rebalance cost, and a 4.0% annual cash/funding-rate assumption.
+      Input A, B, X, and Y, then calculate the historical drawdown, CAGR, Sharpe ratio, and ending value.
+      A is the drawdown that starts 2x, B is the drawdown that starts 3x, X is the upside from the 2x entry
+      where 2x is released, and Y is the upside from the 3x entry where 3x is released.
     </p>
     <div class="form-grid">
       <div class="field">
-        <label for="calcTriggerA">A trigger: enter 2x after drawdown (%)</label>
+        <label for="calcTriggerA">A: start 2x after drawdown (%)</label>
         <input id="calcTriggerA" type="number" min="1" max="80" step="0.5" value="10" />
       </div>
       <div class="field">
-        <label for="calcTriggerB">B trigger: enter 3x after drawdown (%)</label>
+        <label for="calcTriggerB">B: start 3x after drawdown (%)</label>
         <input id="calcTriggerB" type="number" min="1" max="90" step="0.5" value="20" />
       </div>
       <div class="field">
-        <label for="calcHold2">Hold 2x until SPX recovers (%)</label>
+        <label for="calcHold2">X: hold 2x until upside from entry (%)</label>
         <input id="calcHold2" type="number" min="1" max="200" step="1" value="25" />
       </div>
       <div class="field">
-        <label for="calcHold3">Hold 3x until SPX recovers (%)</label>
+        <label for="calcHold3">Y: hold 3x until upside from entry (%)</label>
         <input id="calcHold3" type="number" min="1" max="250" step="1" value="33.33" />
       </div>
+    </div>
+    <details class="advanced">
+      <summary>Advanced assumptions</summary>
+      <div class="form-grid">
       <div class="field">
         <label for="calcMaxHold2">Max 2x hold days (optional)</label>
         <input id="calcMaxHold2" type="number" min="1" max="2520" step="1" placeholder="No cap" />
@@ -559,7 +572,8 @@
         <label for="calcCashRate">Cash / funding rate (%)</label>
         <input id="calcCashRate" type="number" min="0" max="20" step="0.25" value="4" />
       </div>
-    </div>
+      </div>
+    </details>
     <div class="row">
       <button id="runCalculator" type="button">Calculate stats</button>
       <button id="resetCalculator" type="button" class="secondary">Reset defaults</button>
@@ -582,7 +596,7 @@
     </div>
   </section>
 
-  <section class="card section-gap">
+  <section class="card section-gap" hidden>
     <h2>Goal Seek / Optimizer</h2>
     <p>
       Search a grid of A, B, 2x hold target, and 3x hold target values. Use smaller ranges or larger steps for
