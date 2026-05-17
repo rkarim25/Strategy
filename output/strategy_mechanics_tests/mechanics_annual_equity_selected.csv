@@ -1,0 +1,342 @@
+year,strategy,equity_$
+1996,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,125.44925502499585
+1997,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,214.85581631758603
+1998,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,391.945848671853
+1999,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,518.8211768407069
+2000,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,545.3622515079102
+2001,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,811.0885460578165
+2002,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,1250.82552715407
+2003,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2030.8566232079113
+2004,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2428.0405925887103
+2005,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2100.920317838704
+2006,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2354.1176838950873
+2007,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,2843.143816523109
+2008,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,3538.3940642250677
+2009,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,10270.196152247305
+2010,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,24490.42833286454
+2011,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,34426.95849969074
+2012,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,48068.020750598516
+2013,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,69654.56371229484
+2014,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,73431.80265746551
+2015,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,62083.42227015631
+2016,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,71264.43886991893
+2017,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,87672.38585425827
+2018,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,95336.29018389991
+2019,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,157685.3410729118
+2020,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,395286.47906864155
+2021,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,468364.7571184168
+2022,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,548372.0511251873
+2023,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,836192.1203398318
+2024,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,1214593.7886259286
+2025,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,1615125.1239300845
+2026,Baseline Guarded A5/B25/X40/Y15 Lead 0.75,1965782.6671866693
+1996,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",125.13957248751473
+1997,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",210.0732144028325
+1998,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",380.2619225369766
+1999,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",493.3974256999307
+2000,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",508.3683933835251
+2001,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",741.3535009353263
+2002,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",1149.242848938331
+2003,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",2093.136972110733
+2004,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",2569.7354234732384
+2005,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",2204.286369190285
+2006,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",2487.8772776392825
+2007,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",2945.4632815636683
+2008,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",3592.8964670875807
+2009,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",10222.609103378656
+2010,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",23895.78513245748
+2011,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",33182.04024217276
+2012,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",45511.022087655074
+2013,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",64645.13630628237
+2014,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",66801.44441399108
+2015,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",56079.14943914503
+2016,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",67245.31916463391
+2017,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",81097.43681154455
+2018,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",88473.9745319496
+2019,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",143442.95456552767
+2020,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",352459.3955074234
+2021,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",409355.664872507
+2022,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",474123.5826513137
+2023,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",708791.9955241221
+2024,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",1009182.6129589452
+2025,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",1315639.6689518546
+2026,"Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",1589524.6486112606
+1996,strategy_equity recovery trail 5%: cap recovery to 1x,125.44925502499585
+1997,strategy_equity recovery trail 5%: cap recovery to 1x,210.94983823931065
+1998,strategy_equity recovery trail 5%: cap recovery to 1x,400.4875279081221
+1999,strategy_equity recovery trail 5%: cap recovery to 1x,525.80135035639
+2000,strategy_equity recovery trail 5%: cap recovery to 1x,579.5280371261773
+2001,strategy_equity recovery trail 5%: cap recovery to 1x,898.5499973668741
+2002,strategy_equity recovery trail 5%: cap recovery to 1x,1508.5871818828803
+2003,strategy_equity recovery trail 5%: cap recovery to 1x,2256.9922155623976
+2004,strategy_equity recovery trail 5%: cap recovery to 1x,2890.874736489003
+2005,strategy_equity recovery trail 5%: cap recovery to 1x,2499.7560302815086
+2006,strategy_equity recovery trail 5%: cap recovery to 1x,2798.902925524586
+2007,strategy_equity recovery trail 5%: cap recovery to 1x,3320.8449897986397
+2008,strategy_equity recovery trail 5%: cap recovery to 1x,5025.219740975528
+2009,strategy_equity recovery trail 5%: cap recovery to 1x,13820.104197758477
+2010,strategy_equity recovery trail 5%: cap recovery to 1x,33988.58391226103
+2011,strategy_equity recovery trail 5%: cap recovery to 1x,48006.693074915835
+2012,strategy_equity recovery trail 5%: cap recovery to 1x,66413.90481441724
+2013,strategy_equity recovery trail 5%: cap recovery to 1x,97099.56206847665
+2014,strategy_equity recovery trail 5%: cap recovery to 1x,102360.93959355066
+2015,strategy_equity recovery trail 5%: cap recovery to 1x,87642.46597322308
+2016,strategy_equity recovery trail 5%: cap recovery to 1x,100598.47846635173
+2017,strategy_equity recovery trail 5%: cap recovery to 1x,123755.24078709411
+2018,strategy_equity recovery trail 5%: cap recovery to 1x,138526.46780154196
+2019,strategy_equity recovery trail 5%: cap recovery to 1x,229114.0025919052
+2020,strategy_equity recovery trail 5%: cap recovery to 1x,597723.7224432739
+2021,strategy_equity recovery trail 5%: cap recovery to 1x,708221.3593028672
+2022,strategy_equity recovery trail 5%: cap recovery to 1x,777318.2481489355
+2023,strategy_equity recovery trail 5%: cap recovery to 1x,1149469.1681095602
+2024,strategy_equity recovery trail 5%: cap recovery to 1x,1673483.5169835312
+2025,strategy_equity recovery trail 5%: cap recovery to 1x,2062916.8945185663
+2026,strategy_equity recovery trail 5%: cap recovery to 1x,2510790.5046670046
+1996,Require 3x confirmation: SPX above SMA50,125.44925502499585
+1997,Require 3x confirmation: SPX above SMA50,214.85581631758603
+1998,Require 3x confirmation: SPX above SMA50,391.945848671853
+1999,Require 3x confirmation: SPX above SMA50,518.8211768407069
+2000,Require 3x confirmation: SPX above SMA50,545.3622515079102
+2001,Require 3x confirmation: SPX above SMA50,764.0875938362643
+2002,Require 3x confirmation: SPX above SMA50,1059.5261700966487
+2003,Require 3x confirmation: SPX above SMA50,1514.0579628715357
+2004,Require 3x confirmation: SPX above SMA50,1754.754809395358
+2005,Require 3x confirmation: SPX above SMA50,1520.7331848095016
+2006,Require 3x confirmation: SPX above SMA50,1707.0876760400993
+2007,Require 3x confirmation: SPX above SMA50,2065.010232704681
+2008,Require 3x confirmation: SPX above SMA50,2473.0510081609023
+2009,Require 3x confirmation: SPX above SMA50,5279.020308790762
+2010,Require 3x confirmation: SPX above SMA50,9592.339280695855
+2011,Require 3x confirmation: SPX above SMA50,12447.228515633034
+2012,Require 3x confirmation: SPX above SMA50,16437.804706731262
+2013,Require 3x confirmation: SPX above SMA50,23829.280885239707
+2014,Require 3x confirmation: SPX above SMA50,25128.43368531512
+2015,Require 3x confirmation: SPX above SMA50,21250.567622567647
+2016,Require 3x confirmation: SPX above SMA50,24400.69118893543
+2017,Require 3x confirmation: SPX above SMA50,30026.803028101167
+2018,Require 3x confirmation: SPX above SMA50,32658.75285879466
+2019,Require 3x confirmation: SPX above SMA50,54028.14757690028
+2020,Require 3x confirmation: SPX above SMA50,135454.53496427834
+2021,Require 3x confirmation: SPX above SMA50,160504.37425142393
+2022,Require 3x confirmation: SPX above SMA50,187929.84742573395
+2023,Require 3x confirmation: SPX above SMA50,286577.24882281624
+2024,Require 3x confirmation: SPX above SMA50,416271.4777356985
+2025,Require 3x confirmation: SPX above SMA50,553552.2609214721
+2026,Require 3x confirmation: SPX above SMA50,673741.2131068236
+1996,Require 3x confirmation: RSP/SPY above relative SMA50,125.44925502499585
+1997,Require 3x confirmation: RSP/SPY above relative SMA50,214.85581631758603
+1998,Require 3x confirmation: RSP/SPY above relative SMA50,391.945848671853
+1999,Require 3x confirmation: RSP/SPY above relative SMA50,518.8211768407069
+2000,Require 3x confirmation: RSP/SPY above relative SMA50,545.3622515079102
+2001,Require 3x confirmation: RSP/SPY above relative SMA50,764.0875938362643
+2002,Require 3x confirmation: RSP/SPY above relative SMA50,1059.5261700966487
+2003,Require 3x confirmation: RSP/SPY above relative SMA50,1514.0579628715357
+2004,Require 3x confirmation: RSP/SPY above relative SMA50,1754.754809395358
+2005,Require 3x confirmation: RSP/SPY above relative SMA50,1520.7331848095016
+2006,Require 3x confirmation: RSP/SPY above relative SMA50,1707.0876760400993
+2007,Require 3x confirmation: RSP/SPY above relative SMA50,2065.010232704681
+2008,Require 3x confirmation: RSP/SPY above relative SMA50,2473.0510081609023
+2009,Require 3x confirmation: RSP/SPY above relative SMA50,5279.020308790762
+2010,Require 3x confirmation: RSP/SPY above relative SMA50,9592.339280695855
+2011,Require 3x confirmation: RSP/SPY above relative SMA50,12447.228515633034
+2012,Require 3x confirmation: RSP/SPY above relative SMA50,16437.804706731262
+2013,Require 3x confirmation: RSP/SPY above relative SMA50,23829.280885239707
+2014,Require 3x confirmation: RSP/SPY above relative SMA50,25128.43368531512
+2015,Require 3x confirmation: RSP/SPY above relative SMA50,21250.567622567647
+2016,Require 3x confirmation: RSP/SPY above relative SMA50,24400.69118893543
+2017,Require 3x confirmation: RSP/SPY above relative SMA50,30026.803028101167
+2018,Require 3x confirmation: RSP/SPY above relative SMA50,32658.75285879466
+2019,Require 3x confirmation: RSP/SPY above relative SMA50,54028.14757690028
+2020,Require 3x confirmation: RSP/SPY above relative SMA50,135454.53496427834
+2021,Require 3x confirmation: RSP/SPY above relative SMA50,160504.37425142393
+2022,Require 3x confirmation: RSP/SPY above relative SMA50,187929.84742573395
+2023,Require 3x confirmation: RSP/SPY above relative SMA50,286577.24882281624
+2024,Require 3x confirmation: RSP/SPY above relative SMA50,416271.4777356985
+2025,Require 3x confirmation: RSP/SPY above relative SMA50,553552.2609214721
+2026,Require 3x confirmation: RSP/SPY above relative SMA50,673741.2131068236
+1996,Require 3x confirmation: IWM/SPY above relative SMA50,125.44925502499585
+1997,Require 3x confirmation: IWM/SPY above relative SMA50,214.85581631758603
+1998,Require 3x confirmation: IWM/SPY above relative SMA50,391.945848671853
+1999,Require 3x confirmation: IWM/SPY above relative SMA50,518.8211768407069
+2000,Require 3x confirmation: IWM/SPY above relative SMA50,545.3622515079102
+2001,Require 3x confirmation: IWM/SPY above relative SMA50,764.0875938362643
+2002,Require 3x confirmation: IWM/SPY above relative SMA50,1059.5261700966487
+2003,Require 3x confirmation: IWM/SPY above relative SMA50,1514.0579628715357
+2004,Require 3x confirmation: IWM/SPY above relative SMA50,1754.754809395358
+2005,Require 3x confirmation: IWM/SPY above relative SMA50,1520.7331848095016
+2006,Require 3x confirmation: IWM/SPY above relative SMA50,1707.0876760400993
+2007,Require 3x confirmation: IWM/SPY above relative SMA50,2065.010232704681
+2008,Require 3x confirmation: IWM/SPY above relative SMA50,2473.0510081609023
+2009,Require 3x confirmation: IWM/SPY above relative SMA50,5279.020308790762
+2010,Require 3x confirmation: IWM/SPY above relative SMA50,9592.339280695855
+2011,Require 3x confirmation: IWM/SPY above relative SMA50,12447.228515633034
+2012,Require 3x confirmation: IWM/SPY above relative SMA50,16437.804706731262
+2013,Require 3x confirmation: IWM/SPY above relative SMA50,23829.280885239707
+2014,Require 3x confirmation: IWM/SPY above relative SMA50,25128.43368531512
+2015,Require 3x confirmation: IWM/SPY above relative SMA50,21250.567622567647
+2016,Require 3x confirmation: IWM/SPY above relative SMA50,24400.69118893543
+2017,Require 3x confirmation: IWM/SPY above relative SMA50,30026.803028101167
+2018,Require 3x confirmation: IWM/SPY above relative SMA50,32658.75285879466
+2019,Require 3x confirmation: IWM/SPY above relative SMA50,54028.14757690028
+2020,Require 3x confirmation: IWM/SPY above relative SMA50,135454.53496427834
+2021,Require 3x confirmation: IWM/SPY above relative SMA50,160504.37425142393
+2022,Require 3x confirmation: IWM/SPY above relative SMA50,187929.84742573395
+2023,Require 3x confirmation: IWM/SPY above relative SMA50,286577.24882281624
+2024,Require 3x confirmation: IWM/SPY above relative SMA50,416271.4777356985
+2025,Require 3x confirmation: IWM/SPY above relative SMA50,553552.2609214721
+2026,Require 3x confirmation: IWM/SPY above relative SMA50,673741.2131068236
+1996,Require 3x confirmation: IWM/SPY 63d relative return > 0,125.44925502499585
+1997,Require 3x confirmation: IWM/SPY 63d relative return > 0,214.85581631758603
+1998,Require 3x confirmation: IWM/SPY 63d relative return > 0,391.945848671853
+1999,Require 3x confirmation: IWM/SPY 63d relative return > 0,518.8211768407069
+2000,Require 3x confirmation: IWM/SPY 63d relative return > 0,545.3622515079102
+2001,Require 3x confirmation: IWM/SPY 63d relative return > 0,744.7042695816519
+2002,Require 3x confirmation: IWM/SPY 63d relative return > 0,899.7202862385469
+2003,Require 3x confirmation: IWM/SPY 63d relative return > 0,1135.839769627556
+2004,Require 3x confirmation: IWM/SPY 63d relative return > 0,1108.5862277950146
+2005,Require 3x confirmation: IWM/SPY 63d relative return > 0,963.9136199671738
+2006,Require 3x confirmation: IWM/SPY 63d relative return > 0,1086.117394378214
+2007,Require 3x confirmation: IWM/SPY 63d relative return > 0,1318.2166916814713
+2008,Require 3x confirmation: IWM/SPY 63d relative return > 0,1583.0030988027863
+2009,Require 3x confirmation: IWM/SPY 63d relative return > 0,2922.3919989376827
+2010,Require 3x confirmation: IWM/SPY 63d relative return > 0,5917.307131300504
+2011,Require 3x confirmation: IWM/SPY 63d relative return > 0,7312.538750451454
+2012,Require 3x confirmation: IWM/SPY 63d relative return > 0,10220.99395354335
+2013,Require 3x confirmation: IWM/SPY 63d relative return > 0,14822.478318605017
+2014,Require 3x confirmation: IWM/SPY 63d relative return > 0,15634.571764650478
+2015,Require 3x confirmation: IWM/SPY 63d relative return > 0,13225.009734994954
+2016,Require 3x confirmation: IWM/SPY 63d relative return > 0,15189.781907956602
+2017,Require 3x confirmation: IWM/SPY 63d relative return > 0,18696.760935109447
+2018,Require 3x confirmation: IWM/SPY 63d relative return > 0,20339.697323870525
+2019,Require 3x confirmation: IWM/SPY 63d relative return > 0,33654.68081721846
+2020,Require 3x confirmation: IWM/SPY 63d relative return > 0,84385.45526246846
+2021,Require 3x confirmation: IWM/SPY 63d relative return > 0,99995.46922106616
+2022,Require 3x confirmation: IWM/SPY 63d relative return > 0,117086.16539859318
+2023,Require 3x confirmation: IWM/SPY 63d relative return > 0,178552.3261153578
+2024,Require 3x confirmation: IWM/SPY 63d relative return > 0,259363.95867325837
+2025,Require 3x confirmation: IWM/SPY 63d relative return > 0,344903.7464474779
+2026,Require 3x confirmation: IWM/SPY 63d relative return > 0,419794.88551461906
+1996,Require 3x confirmation: RSP/SPY 63d relative return > 0,125.44925502499585
+1997,Require 3x confirmation: RSP/SPY 63d relative return > 0,214.85581631758603
+1998,Require 3x confirmation: RSP/SPY 63d relative return > 0,391.945848671853
+1999,Require 3x confirmation: RSP/SPY 63d relative return > 0,518.8211768407069
+2000,Require 3x confirmation: RSP/SPY 63d relative return > 0,545.3622515079102
+2001,Require 3x confirmation: RSP/SPY 63d relative return > 0,764.0875938362643
+2002,Require 3x confirmation: RSP/SPY 63d relative return > 0,1059.5261700966487
+2003,Require 3x confirmation: RSP/SPY 63d relative return > 0,1657.9383251852673
+2004,Require 3x confirmation: RSP/SPY 63d relative return > 0,1613.9840652482021
+2005,Require 3x confirmation: RSP/SPY 63d relative return > 0,1399.4275275390419
+2006,Require 3x confirmation: RSP/SPY 63d relative return > 0,1571.8064953514336
+2007,Require 3x confirmation: RSP/SPY 63d relative return > 0,1902.3178866395638
+2008,Require 3x confirmation: RSP/SPY 63d relative return > 0,2279.1500508957593
+2009,Require 3x confirmation: RSP/SPY 63d relative return > 0,5825.39006658371
+2010,Require 3x confirmation: RSP/SPY 63d relative return > 0,11259.335035128515
+2011,Require 3x confirmation: RSP/SPY 63d relative return > 0,14145.812929671096
+2012,Require 3x confirmation: RSP/SPY 63d relative return > 0,18783.677991451426
+2013,Require 3x confirmation: RSP/SPY 63d relative return > 0,27227.939515950467
+2014,Require 3x confirmation: RSP/SPY 63d relative return > 0,28710.881009626697
+2015,Require 3x confirmation: RSP/SPY 63d relative return > 0,24278.959927058837
+2016,Require 3x confirmation: RSP/SPY 63d relative return > 0,27876.368166741042
+2017,Require 3x confirmation: RSP/SPY 63d relative return > 0,34302.12105142609
+2018,Require 3x confirmation: RSP/SPY 63d relative return > 0,37307.268700706765
+2019,Require 3x confirmation: RSP/SPY 63d relative return > 0,61715.94334326887
+2020,Require 3x confirmation: RSP/SPY 63d relative return > 0,154725.1215244838
+2021,Require 3x confirmation: RSP/SPY 63d relative return > 0,183337.0177777851
+2022,Require 3x confirmation: RSP/SPY 63d relative return > 0,214662.25213557034
+2023,Require 3x confirmation: RSP/SPY 63d relative return > 0,327339.7539599468
+2024,Require 3x confirmation: RSP/SPY 63d relative return > 0,475479.51409928716
+2025,Require 3x confirmation: RSP/SPY 63d relative return > 0,632284.4268877764
+2026,Require 3x confirmation: RSP/SPY 63d relative return > 0,769566.2155561694
+1996,"5d SPX <= -3%, cap 2x 20d / cooldown",125.44925502499585
+1997,"5d SPX <= -3%, cap 2x 20d / cooldown",214.85581631758603
+1998,"5d SPX <= -3%, cap 2x 20d / cooldown",391.945848671853
+1999,"5d SPX <= -3%, cap 2x 20d / cooldown",518.8211768407069
+2000,"5d SPX <= -3%, cap 2x 20d / cooldown",545.3622515079102
+2001,"5d SPX <= -3%, cap 2x 20d / cooldown",769.8958022993901
+2002,"5d SPX <= -3%, cap 2x 20d / cooldown",971.940023094524
+2003,"5d SPX <= -3%, cap 2x 20d / cooldown",1450.571766908475
+2004,"5d SPX <= -3%, cap 2x 20d / cooldown",1627.1222714638723
+2005,"5d SPX <= -3%, cap 2x 20d / cooldown",1410.7490471488322
+2006,"5d SPX <= -3%, cap 2x 20d / cooldown",1584.4323577758696
+2007,"5d SPX <= -3%, cap 2x 20d / cooldown",1917.5020472779454
+2008,"5d SPX <= -3%, cap 2x 20d / cooldown",2297.246927327008
+2009,"5d SPX <= -3%, cap 2x 20d / cooldown",4893.025109778075
+2010,"5d SPX <= -3%, cap 2x 20d / cooldown",9698.894781348243
+2011,"5d SPX <= -3%, cap 2x 20d / cooldown",12782.653617149375
+2012,"5d SPX <= -3%, cap 2x 20d / cooldown",17261.954682465002
+2013,"5d SPX <= -3%, cap 2x 20d / cooldown",25023.294409444865
+2014,"5d SPX <= -3%, cap 2x 20d / cooldown",26387.01567890771
+2015,"5d SPX <= -3%, cap 2x 20d / cooldown",22314.49953249444
+2016,"5d SPX <= -3%, cap 2x 20d / cooldown",25621.762725737713
+2017,"5d SPX <= -3%, cap 2x 20d / cooldown",31528.80369801264
+2018,"5d SPX <= -3%, cap 2x 20d / cooldown",34291.86503210064
+2019,"5d SPX <= -3%, cap 2x 20d / cooldown",56729.01668844495
+2020,"5d SPX <= -3%, cap 2x 20d / cooldown",142224.65914336964
+2021,"5d SPX <= -3%, cap 2x 20d / cooldown",168525.91690283458
+2022,"5d SPX <= -3%, cap 2x 20d / cooldown",197321.45047455106
+2023,"5d SPX <= -3%, cap 2x 20d / cooldown",300897.8934366706
+2024,"5d SPX <= -3%, cap 2x 20d / cooldown",437072.38887191773
+2025,"5d SPX <= -3%, cap 2x 20d / cooldown",581212.3707378195
+2026,"5d SPX <= -3%, cap 2x 20d / cooldown",707406.3620122283
+1996,"5d SPX <= -5%, cap 1x 20d / cooldown",125.44925502499585
+1997,"5d SPX <= -5%, cap 1x 20d / cooldown",197.11265821165196
+1998,"5d SPX <= -5%, cap 1x 20d / cooldown",337.9108980040713
+1999,"5d SPX <= -5%, cap 1x 20d / cooldown",413.56854302170495
+2000,"5d SPX <= -5%, cap 1x 20d / cooldown",400.672552444691
+2001,"5d SPX <= -5%, cap 1x 20d / cooldown",479.480367373588
+2002,"5d SPX <= -5%, cap 1x 20d / cooldown",496.8716996341857
+2003,"5d SPX <= -5%, cap 1x 20d / cooldown",866.8384405955994
+2004,"5d SPX <= -5%, cap 1x 20d / cooldown",1043.1890720288998
+2005,"5d SPX <= -5%, cap 1x 20d / cooldown",907.559261596132
+2006,"5d SPX <= -5%, cap 1x 20d / cooldown",1023.2704974656573
+2007,"5d SPX <= -5%, cap 1x 20d / cooldown",1183.6460505798796
+2008,"5d SPX <= -5%, cap 1x 20d / cooldown",1306.206758318165
+2009,"5d SPX <= -5%, cap 1x 20d / cooldown",2978.2851630907016
+2010,"5d SPX <= -5%, cap 1x 20d / cooldown",5652.905368264733
+2011,"5d SPX <= -5%, cap 1x 20d / cooldown",6487.184029596825
+2012,"5d SPX <= -5%, cap 1x 20d / cooldown",9068.941926387683
+2013,"5d SPX <= -5%, cap 1x 20d / cooldown",13153.406254643338
+2014,"5d SPX <= -5%, cap 1x 20d / cooldown",13875.241570204842
+2015,"5d SPX <= -5%, cap 1x 20d / cooldown",12052.065692151704
+2016,"5d SPX <= -5%, cap 1x 20d / cooldown",13980.781725042601
+2017,"5d SPX <= -5%, cap 1x 20d / cooldown",17209.60884784076
+2018,"5d SPX <= -5%, cap 1x 20d / cooldown",18997.558781761032
+2019,"5d SPX <= -5%, cap 1x 20d / cooldown",29498.957123035263
+2020,"5d SPX <= -5%, cap 1x 20d / cooldown",57125.066692995715
+2021,"5d SPX <= -5%, cap 1x 20d / cooldown",67696.15478908087
+2022,"5d SPX <= -5%, cap 1x 20d / cooldown",75953.75868686863
+2023,"5d SPX <= -5%, cap 1x 20d / cooldown",115832.19457132691
+2024,"5d SPX <= -5%, cap 1x 20d / cooldown",167632.59851664572
+2025,"5d SPX <= -5%, cap 1x 20d / cooldown",210015.875882565
+2026,"5d SPX <= -5%, cap 1x 20d / cooldown",255622.71561900424
+1996,"10d SPX <= -5%, cap 1x 20d / cooldown",120.77611691063356
+1997,"10d SPX <= -5%, cap 1x 20d / cooldown",188.89809108534976
+1998,"10d SPX <= -5%, cap 1x 20d / cooldown",319.93411359610536
+1999,"10d SPX <= -5%, cap 1x 20d / cooldown",406.1436491469418
+2000,"10d SPX <= -5%, cap 1x 20d / cooldown",374.9526155165555
+2001,"10d SPX <= -5%, cap 1x 20d / cooldown",437.6726215550305
+2002,"10d SPX <= -5%, cap 1x 20d / cooldown",431.12330556002155
+2003,"10d SPX <= -5%, cap 1x 20d / cooldown",682.9301368963232
+2004,"10d SPX <= -5%, cap 1x 20d / cooldown",824.3903472100609
+2005,"10d SPX <= -5%, cap 1x 20d / cooldown",719.0149494602072
+2006,"10d SPX <= -5%, cap 1x 20d / cooldown",830.6310006145807
+2007,"10d SPX <= -5%, cap 1x 20d / cooldown",970.8891741598377
+2008,"10d SPX <= -5%, cap 1x 20d / cooldown",991.4903446373015
+2009,"10d SPX <= -5%, cap 1x 20d / cooldown",1769.1957332899503
+2010,"10d SPX <= -5%, cap 1x 20d / cooldown",3010.3688687004765
+2011,"10d SPX <= -5%, cap 1x 20d / cooldown",3383.09795676484
+2012,"10d SPX <= -5%, cap 1x 20d / cooldown",4453.028982105179
+2013,"10d SPX <= -5%, cap 1x 20d / cooldown",6465.955372757178
+2014,"10d SPX <= -5%, cap 1x 20d / cooldown",6458.254068057171
+2015,"10d SPX <= -5%, cap 1x 20d / cooldown",5614.293604299348
+2016,"10d SPX <= -5%, cap 1x 20d / cooldown",6343.798853464088
+2017,"10d SPX <= -5%, cap 1x 20d / cooldown",7815.6028101169595
+2018,"10d SPX <= -5%, cap 1x 20d / cooldown",8410.323809789183
+2019,"10d SPX <= -5%, cap 1x 20d / cooldown",12965.116950107273
+2020,"10d SPX <= -5%, cap 1x 20d / cooldown",25251.421681827927
+2021,"10d SPX <= -5%, cap 1x 20d / cooldown",29930.85002515469
+2022,"10d SPX <= -5%, cap 1x 20d / cooldown",31791.236568217173
+2023,"10d SPX <= -5%, cap 1x 20d / cooldown",45582.57989777307
+2024,"10d SPX <= -5%, cap 1x 20d / cooldown",64446.501538197954
+2025,"10d SPX <= -5%, cap 1x 20d / cooldown",79148.58276666976
+2026,"10d SPX <= -5%, cap 1x 20d / cooldown",88519.10580451431

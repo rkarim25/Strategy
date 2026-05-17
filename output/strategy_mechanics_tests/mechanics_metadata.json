@@ -1,0 +1,81 @@
+{
+  "source": "Yahoo Finance ^GSPC and ^IRX via project data_manager.load_backtest_data; optional RSP/SPY and IWM/SPY Yahoo proxies when available",
+  "market_start": "1996-05-17",
+  "market_end": "2026-05-15",
+  "sessions": 7547,
+  "baseline": {
+    "strategy": "Baseline Guarded A5/B25/X40/Y15 Lead 0.75",
+    "trigger_a": 0.05,
+    "trigger_b": 0.25,
+    "lead_pct_below_sma20": 0.0075,
+    "x_return": 0.4,
+    "y_return": 0.15
+  },
+  "initial_capital": 100.0,
+  "annual_inflow_usd": 10.0,
+  "trading_cost_pct": 0.01,
+  "tested_mechanics_count": 389,
+  "variant_specs_built": 374,
+  "signal_availability": {
+    "SPX": {
+      "status": "available",
+      "source": "Yahoo Finance ^GSPC via project data_manager.load_backtest_data",
+      "raw_start": "1996-05-17",
+      "raw_end": "2026-05-15",
+      "lag": "all trend/return/volatility signals shifted one session before use"
+    },
+    "RSP_SPY_REL": {
+      "status": "available",
+      "source": "Yahoo RSP/SPY equal-weight vs cap-weight relative strength",
+      "tickers": "RSP/SPY",
+      "raw_start": "2003-05-01",
+      "raw_end": "2026-05-15",
+      "lag": "1 market session"
+    },
+    "IWM_SPY_REL": {
+      "status": "available",
+      "source": "Yahoo IWM/SPY small-cap vs large-cap relative strength",
+      "tickers": "IWM/SPY",
+      "raw_start": "2000-05-26",
+      "raw_end": "2026-05-15",
+      "lag": "1 market session"
+    }
+  },
+  "leader_summary": {
+    "baseline": {
+      "cagr": 0.3909004164600376,
+      "max_drawdown": -0.2750717334360086,
+      "sharpe": 3.1644643024985406,
+      "end_$": 1965782.6671866693
+    },
+    "best_drawdown_with_95pct_cagr_retention": {
+      "strategy": "Synthetic quarterly hedge: protect 100% beyond -8%, cost 2%/yr",
+      "category": "Options/protection proxy",
+      "cagr": 0.3806237817102678,
+      "max_drawdown": -0.2244480251799023,
+      "sharpe": 1.3203516804487538,
+      "cagr_retention_pct": 97.37103509818839,
+      "max_dd_improvement_pp": 5.062370825610629
+    },
+    "best_cagr_with_dd_allowance": {
+      "strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+      "category": "Recovery-tier trailing stop",
+      "cagr": 0.4022948684509575,
+      "max_drawdown": -0.23344233020574617,
+      "sharpe": 3.7600651541798715,
+      "cagr_delta_pp": 1.139445199091993,
+      "max_dd_worse_pp": 0.0
+    }
+  },
+  "monte_carlo": {
+    "ran": true,
+    "selected_strategies": [
+      "strategy_equity recovery trail 5%: cap recovery to 1x"
+    ],
+    "n_sims": 120,
+    "horizon_trading_days": 2520,
+    "block_days": 21,
+    "seed": 20260517,
+    "note": "Block-bootstrap uses SPX/tbill history only; external breadth-relative variants are not MC-tested here."
+  }
+}
