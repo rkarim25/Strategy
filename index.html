@@ -480,6 +480,8 @@
           <tr><th>Close vs SMA20</th><td id="eodSma20Gap">-</td></tr>
           <tr><th>Drawdown from high</th><td id="eodDrawdown">-</td></tr>
           <tr><th>Regime</th><td id="eodRegime">-</td></tr>
+          <tr><th>Last entry level</th><td id="eodLastEntryLevel">-</td></tr>
+          <tr><th>P&amp;L from last entry</th><td id="eodLastEntryPnl">-</td></tr>
           <tr><th>Recovery target</th><td id="eodRecoveryTarget">-</td></tr>
           <tr><th>Distance to recovery target</th><td id="eodRecoveryTargetGap">-</td></tr>
         </tbody>
@@ -498,6 +500,8 @@
           <tr><th>Price vs SMA20</th><td id="liveSma20Gap">-</td></tr>
           <tr><th>Drawdown from high</th><td id="liveDrawdown">-</td></tr>
           <tr><th>Regime</th><td id="liveRegime">-</td></tr>
+          <tr><th>Last entry level</th><td id="liveLastEntryLevel">-</td></tr>
+          <tr><th>P&amp;L from last entry</th><td id="liveLastEntryPnl">-</td></tr>
           <tr><th>Recovery target</th><td id="liveRecoveryTarget">-</td></tr>
           <tr><th>Distance to recovery target</th><td id="liveRecoveryTargetGap">-</td></tr>
         </tbody>
@@ -1373,8 +1377,22 @@
     let regime = "base";
     let entryClose = null;
     let entryDate = null;
+    let baseEntryClose = null;
+    let baseEntryDate = null;
+    let previousTargetLeverage = 0;
     let targetLeverage = 0;
     let explanation = "";
+
+    const updateActiveEntryTracking = (close, date) => {
+      if (targetLeverage === 1 && previousTargetLeverage !== 1) {
+        baseEntryClose = close;
+        baseEntryDate = date;
+      } else if (targetLeverage === 0) {
+        baseEntryClose = null;
+        baseEntryDate = null;
+      }
+      previousTargetLeverage = targetLeverage;
+    };
 
     for (let i = 0; i < rows.length; i++) {
       const close = closes[i];
@@ -1399,6 +1417,7 @@
           explanation = recoveryOk
             ? "3x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
             : "3x tier is armed, but lead guard failed; using base cash/1x rule.";
+          updateActiveEntryTracking(close, rows[i].date);
           continue;
         }
       }
@@ -1410,6 +1429,7 @@
           entryDate = rows[i].date;
           targetLeverage = 3;
           explanation = "Drawdown hit B=-25% and lead guard passed; upgraded to 3x.";
+          updateActiveEntryTracking(close, rows[i].date);
           continue;
         }
         if (close / entryClose - 1 >= params.hold2) {
@@ -1421,6 +1441,7 @@
           explanation = recoveryOk
             ? "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
             : "2x tier is armed, but lead guard failed; using base cash/1x rule.";
+          updateActiveEntryTracking(close, rows[i].date);
           continue;
         }
       }
@@ -1443,6 +1464,7 @@
           ? "No recovery tier active; base rule says 1x because close is above SMA20."
           : "No recovery tier active; base rule says cash because close is below SMA20.";
       }
+      updateActiveEntryTracking(close, rows[i].date);
     }
 
     const lastIndex = rows.length - 1;
@@ -1454,6 +1476,18 @@
       : regime === "tier3"
         ? entryClose * (1 + params.hold3)
         : entryClose * (1 + params.hold2);
+    const activeEntryClose = targetLeverage <= 0
+      ? null
+      : targetLeverage >= 2
+        ? entryClose
+        : baseEntryClose;
+    const activeEntryDate = targetLeverage <= 0
+      ? null
+      : targetLeverage >= 2
+        ? entryDate
+        : baseEntryDate;
+    const activeEntryLeverage = activeEntryClose == null ? null : targetLeverage;
+    const activeEntryPnl = activeEntryClose == null ? null : latest.close / activeEntryClose - 1;
 
     return {
       latest,
@@ -1468,6 +1502,10 @@
       aboveSma: latest.close > latestSma,
       recoveryOk: latest.close >= latestSma * (1 - params.leadPct),
       targetLeverage,
+      activeEntryClose,
+      activeEntryDate,
+      activeEntryLeverage,
+      activeEntryPnl,
       explanation
     };
   }
@@ -2216,6 +2254,10 @@
       : "-";
     $(prefix + "Drawdown").textContent = fmtPct(result.latestDd);
     $(prefix + "Regime").textContent = result.regime;
+    $(prefix + "LastEntryLevel").textContent = result.activeEntryClose == null
+      ? "-"
+      : `${fmtMoney(result.activeEntryClose)} (${result.activeEntryLeverage.toFixed(0)}x, ${result.activeEntryDate})`;
+    $(prefix + "LastEntryPnl").textContent = fmtPct(result.activeEntryPnl);
     $(prefix + "RecoveryTarget").textContent = result.recoveryTarget == null ? "-" : fmtMoney(result.recoveryTarget);
     $(prefix + "RecoveryTargetGap").textContent = result.recoveryTarget == null
       ? "-"
