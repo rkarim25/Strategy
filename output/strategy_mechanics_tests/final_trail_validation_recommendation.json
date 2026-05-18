@@ -1,0 +1,365 @@
+{
+  "decision": "do not make default",
+  "rationale": "The rule improves full-sample and Monte Carlo drawdowns, but the final validation does not clear enough default-level robustness checks.",
+  "target_strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+  "baseline_strategy": "Baseline Guarded A5/B25/X40/Y15 Lead 0.75",
+  "source": "Yahoo Finance ^GSPC and ^IRX via project data_manager.load_backtest_data",
+  "market_start": "1996-05-20",
+  "market_end": "2026-05-15",
+  "sessions": 7546,
+  "created_by": "analyze_recovery_trail_final_validation.py",
+  "outputs": {
+    "walk_forward_csv": "output\\strategy_mechanics_tests\\final_trail_validation_walk_forward.csv",
+    "parameter_grid_csv": "output\\strategy_mechanics_tests\\final_trail_validation_parameter_grid.csv",
+    "monte_carlo_summary_csv": "output\\strategy_mechanics_tests\\final_trail_validation_monte_carlo_summary.csv",
+    "monte_carlo_paths_csv": "output\\strategy_mechanics_tests\\final_trail_validation_monte_carlo_paths.csv",
+    "cost_execution_csv": "output\\strategy_mechanics_tests\\final_trail_validation_cost_execution.csv",
+    "recommendation_json": "output\\strategy_mechanics_tests\\final_trail_validation_recommendation.json"
+  },
+  "criteria": {
+    "full_sample_drawdown_improves_at_least_3pp": true,
+    "full_sample_cagr_keeps_97pct_or_beats": true,
+    "monte_carlo_median_drawdown_improves": true,
+    "monte_carlo_p10_p5_drawdown_improves": true,
+    "nearby_7_5_or_10pct_still_acceptable": false,
+    "cost_1_5_to_2pct_not_unattractive": false,
+    "walk_forward_no_severe_overfit": false,
+    "execution_delay_not_fragile": false
+  },
+  "criteria_passed": 4,
+  "criteria_total": 8,
+  "hard_failures": [
+    "nearby_7_5_or_10pct_still_acceptable",
+    "cost_1_5_to_2pct_not_unattractive",
+    "walk_forward_no_severe_overfit"
+  ],
+  "target_full_sample": {
+    "cagr": 0.40241731617358956,
+    "max_drawdown": -0.23344183760785162,
+    "sharpe": 3.760298285117851,
+    "cagr_delta_pp": 1.1398495029592226,
+    "cagr_retention_pct": 102.9150758002502,
+    "max_dd_improvement_pp": 4.162989582815632,
+    "overlay_active_days": 706,
+    "turnover_notional": 278960461.8265774,
+    "rebalances": 838
+  },
+  "nearby_full_sample": [
+    {
+      "strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+      "trail_level": 0.05,
+      "cap": 1.0,
+      "cagr": 0.40241731617358956,
+      "max_drawdown": -0.23344183760785162,
+      "cagr_retention_pct": 102.9150758002502,
+      "max_dd_improvement_pp": 4.162989582815632,
+      "sharpe": 3.760298285117851
+    },
+    {
+      "strategy": "strategy_equity recovery trail 7.5%: cap recovery to 1x",
+      "trail_level": 0.075,
+      "cap": 1.0,
+      "cagr": 0.3943631711867812,
+      "max_drawdown": -0.2535948104290692,
+      "cagr_retention_pct": 100.85529132152753,
+      "max_dd_improvement_pp": 2.147692300693876,
+      "sharpe": 3.4876227762987386
+    },
+    {
+      "strategy": "strategy_equity recovery trail 10%: cap recovery to 1x",
+      "trail_level": 0.1,
+      "cap": 1.0,
+      "cagr": 0.3904404529408936,
+      "max_drawdown": -0.27507173343600855,
+      "cagr_retention_pct": 99.85208686338638,
+      "max_dd_improvement_pp": -6.106226635438361e-14,
+      "sharpe": 3.338351873402463
+    }
+  ],
+  "walk_forward": {
+    "selected_5pct_share": 1.0,
+    "selected_1x_share": 1.0,
+    "fixed_5pct_test_pass_rate": 0.0,
+    "fixed_5pct_mean_test_cagr_delta_pp": -0.298872946195744,
+    "fixed_5pct_mean_test_dd_improvement_pp": 0.5097845539807897,
+    "selected_train_choices": [
+      {
+        "split": "train 1996-2010 -> test 2011-2026",
+        "selected_train_strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+        "selected_train_trail_level": 0.05,
+        "selected_train_cap": 1.0,
+        "test_cagr_delta_pp": -0.7198196273912272,
+        "test_max_dd_improvement_pp": 1.0195691079615876
+      },
+      {
+        "split": "train 1996-2015 -> test 2016-2026",
+        "selected_train_strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+        "selected_train_trail_level": 0.05,
+        "selected_train_cap": 1.0,
+        "test_cagr_delta_pp": -1.4151447534287431,
+        "test_max_dd_improvement_pp": 0.0
+      },
+      {
+        "split": "train 1996-2005 -> test 2006-2015",
+        "selected_train_strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+        "selected_train_trail_level": 0.05,
+        "selected_train_cap": 1.0,
+        "test_cagr_delta_pp": 2.3546173494657374,
+        "test_max_dd_improvement_pp": 1.019569107961571
+      },
+      {
+        "split": "train 2006-2015 -> test 2016-2026",
+        "selected_train_strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+        "selected_train_trail_level": 0.05,
+        "selected_train_cap": 1.0,
+        "test_cagr_delta_pp": -1.4151447534287431,
+        "test_max_dd_improvement_pp": 0.0
+      }
+    ]
+  },
+  "monte_carlo": {
+    "n_sims": 1000,
+    "target": {
+      "strategy": "strategy_equity recovery trail 5%: cap recovery to 1x",
+      "category": "Recovery-tier trailing stop",
+      "trail_level": 0.05,
+      "cap": 1.0,
+      "n_sims": 1000,
+      "median_cagr": 0.37276173266409296,
+      "p10_cagr": 0.2671660815364293,
+      "p5_cagr": 0.2403110711462788,
+      "median_max_drawdown": -0.2422142556093691,
+      "p10_max_drawdown": -0.3398919236754517,
+      "p5_max_drawdown": -0.370681240318987,
+      "prob_max_dd_worse_30pct": 0.198,
+      "prob_max_dd_worse_35pct": 0.082,
+      "prob_max_dd_worse_40pct": 0.031,
+      "prob_beats_baseline_cagr_by_sim": 0.516,
+      "prob_improves_baseline_dd_by_sim": 0.888,
+      "prob_underperforms_cagr_materially_by_sim": 0.14,
+      "median_cagr_delta_pp_by_sim": 0.09095906562199829,
+      "median_dd_improvement_pp_by_sim": 2.111835115232158,
+      "p10_dd_improvement_pp_by_sim": 0.0,
+      "p5_dd_improvement_pp_by_sim": -0.08726231444558513
+    },
+    "baseline": {
+      "strategy": "Baseline Guarded A5/B25/X40/Y15 Lead 0.75",
+      "category": "Baseline",
+      "trail_level": NaN,
+      "cap": NaN,
+      "n_sims": 1000,
+      "median_cagr": 0.3699146508081149,
+      "p10_cagr": 0.26615199243990323,
+      "p5_cagr": 0.23264964673730573,
+      "median_max_drawdown": -0.2671580051675481,
+      "p10_max_drawdown": -0.3847743847772519,
+      "p5_max_drawdown": -0.42912617212199944,
+      "prob_max_dd_worse_30pct": 0.334,
+      "prob_max_dd_worse_35pct": 0.173,
+      "prob_max_dd_worse_40pct": 0.083,
+      "prob_beats_baseline_cagr_by_sim": NaN,
+      "prob_improves_baseline_dd_by_sim": NaN,
+      "prob_underperforms_cagr_materially_by_sim": NaN,
+      "median_cagr_delta_pp_by_sim": NaN,
+      "median_dd_improvement_pp_by_sim": NaN,
+      "p10_dd_improvement_pp_by_sim": NaN,
+      "p5_dd_improvement_pp_by_sim": NaN
+    }
+  },
+  "cost_execution": {
+    "target_daily_same_day": [
+      {
+        "trading_cost_pct": 0.01,
+        "cagr": 0.40241731617358956,
+        "max_drawdown": -0.23344183760785162,
+        "cagr_delta_pp": 1.1398495029592226,
+        "cagr_retention_pct": 102.9150758002502,
+        "max_dd_improvement_pp": 4.162989582815632,
+        "trading_cost_delta_$": 768748.6294086298,
+        "turnover_delta_$": 76874862.94086277,
+        "rebalance_delta": 64
+      },
+      {
+        "trading_cost_pct": 0.015,
+        "cagr": 0.10516823953341259,
+        "max_drawdown": -0.5875910630818545,
+        "cagr_delta_pp": 0.40897811066196166,
+        "cagr_retention_pct": 104.04614511368084,
+        "max_dd_improvement_pp": 2.8735747205662965,
+        "trading_cost_delta_$": 1856.3011466400203,
+        "turnover_delta_$": 123753.40977600263,
+        "rebalance_delta": 64
+      },
+      {
+        "trading_cost_pct": 0.02,
+        "cagr": 0.004499412087624721,
+        "max_drawdown": -0.9022364104747695,
+        "cagr_delta_pp": -0.30139656479128973,
+        "cagr_retention_pct": 59.8853437960785,
+        "max_dd_improvement_pp": 0.7680305919335328,
+        "trading_cost_delta_$": 69.51406349743047,
+        "turnover_delta_$": 3475.7031748715526,
+        "rebalance_delta": 64
+      }
+    ],
+    "target_delayed_execution": [
+      {
+        "trading_cost_pct": 0.01,
+        "execution": "daily next-day",
+        "cagr": 0.32972367223984533,
+        "max_drawdown": -0.25489792996068805,
+        "cagr_delta_pp": -6.1295148904152,
+        "cagr_retention_pct": 84.32424589567792,
+        "max_dd_improvement_pp": 2.0173803475319882
+      },
+      {
+        "trading_cost_pct": 0.01,
+        "execution": "daily delayed 2 sessions",
+        "cagr": 0.35679109024091504,
+        "max_drawdown": -0.2321782285496617,
+        "cagr_delta_pp": -3.4227730903082287,
+        "cagr_retention_pct": 91.24652598487644,
+        "max_dd_improvement_pp": 4.289350488634625
+      },
+      {
+        "trading_cost_pct": 0.01,
+        "execution": "daily delayed 5 sessions",
+        "cagr": 0.3442398656311365,
+        "max_drawdown": -0.23144253666936035,
+        "cagr_delta_pp": -4.677895551286082,
+        "cagr_retention_pct": 88.0366486257617,
+        "max_dd_improvement_pp": 4.362919676664759
+      },
+      {
+        "trading_cost_pct": 0.01,
+        "execution": "weekly same-day",
+        "cagr": 0.3506313647706423,
+        "max_drawdown": -0.23204683147213492,
+        "cagr_delta_pp": -4.038745637335506,
+        "cagr_retention_pct": 89.6712244553359,
+        "max_dd_improvement_pp": 4.302490196387302
+      },
+      {
+        "trading_cost_pct": 0.01,
+        "execution": "weekly next-day",
+        "cagr": 0.34525857635771096,
+        "max_drawdown": -0.2365668481812991,
+        "cagr_delta_pp": -4.5760244786286375,
+        "cagr_retention_pct": 88.29717591280993,
+        "max_dd_improvement_pp": 3.8504885254708827
+      },
+      {
+        "trading_cost_pct": 0.015,
+        "execution": "daily next-day",
+        "cagr": 0.07166714002702013,
+        "max_drawdown": -0.7311475068738771,
+        "cagr_delta_pp": -2.9411318399772846,
+        "cagr_retention_pct": 70.90248618989943,
+        "max_dd_improvement_pp": -11.482069658635963
+      },
+      {
+        "trading_cost_pct": 0.015,
+        "execution": "daily delayed 2 sessions",
+        "cagr": 0.08374984336477365,
+        "max_drawdown": -0.6272484262824962,
+        "cagr_delta_pp": -1.7328615062019326,
+        "cagr_retention_pct": 82.85627290747638,
+        "max_dd_improvement_pp": -1.0921615994978762
+      },
+      {
+        "trading_cost_pct": 0.015,
+        "execution": "daily delayed 5 sessions",
+        "cagr": 0.08062609958050437,
+        "max_drawdown": -0.6786413219698719,
+        "cagr_delta_pp": -2.04523588462886,
+        "cagr_retention_pct": 79.7658579635923,
+        "max_dd_improvement_pp": -6.231451168235447
+      },
+      {
+        "trading_cost_pct": 0.015,
+        "execution": "weekly same-day",
+        "cagr": 0.081708908822681,
+        "max_drawdown": -0.6515895805760237,
+        "cagr_delta_pp": -1.9369549604111969,
+        "cagr_retention_pct": 80.83711415312042,
+        "max_dd_improvement_pp": -3.5262770288506218
+      },
+      {
+        "trading_cost_pct": 0.015,
+        "execution": "weekly next-day",
+        "cagr": 0.08142478751659699,
+        "max_drawdown": -0.6656651777420867,
+        "cagr_delta_pp": -1.9653670910195986,
+        "cagr_retention_pct": 80.55602428441236,
+        "max_dd_improvement_pp": -4.9338367454569205
+      },
+      {
+        "trading_cost_pct": 0.02,
+        "execution": "daily next-day",
+        "cagr": -0.00032532625482684097,
+        "max_drawdown": -0.9211785951900695,
+        "cagr_delta_pp": -0.783870399036446,
+        "cagr_retention_pct": -4.329960056288349,
+        "max_dd_improvement_pp": -1.126187879596463
+      },
+      {
+        "trading_cost_pct": 0.02,
+        "execution": "daily delayed 2 sessions",
+        "cagr": 0.0011222559628027984,
+        "max_drawdown": -0.9068665368060324,
+        "cagr_delta_pp": -0.639112177273482,
+        "cagr_retention_pct": 14.93677014925825,
+        "max_dd_improvement_pp": 0.30501795880725213
+      },
+      {
+        "trading_cost_pct": 0.02,
+        "execution": "daily delayed 5 sessions",
+        "cagr": 0.002223205764997127,
+        "max_drawdown": -0.9141347404190592,
+        "cagr_delta_pp": -0.5290171970540491,
+        "cagr_retention_pct": 29.5899639716177,
+        "max_dd_improvement_pp": -0.42180240249543033
+      },
+      {
+        "trading_cost_pct": 0.02,
+        "execution": "weekly same-day",
+        "cagr": 0.0017567143142369623,
+        "max_drawdown": -0.9144265606188456,
+        "cagr_delta_pp": -0.5756663421300656,
+        "cagr_retention_pct": 23.38115260634185,
+        "max_dd_improvement_pp": -0.45098442247407666
+      },
+      {
+        "trading_cost_pct": 0.02,
+        "execution": "weekly next-day",
+        "cagr": 0.002411544054839121,
+        "max_drawdown": -0.9152595258604467,
+        "cagr_delta_pp": -0.5101833680698498,
+        "cagr_retention_pct": 32.096669962868084,
+        "max_dd_improvement_pp": -0.5342809466341802
+      }
+    ]
+  },
+  "assumptions": {
+    "baseline": {
+      "trigger_a": 0.05,
+      "trigger_b": 0.25,
+      "lead_pct_below_sma20": 0.0075,
+      "x_return": 0.4,
+      "y_return": 0.15
+    },
+    "candidate": "strategy_equity recovery trail 5%: cap recovery to 1x",
+    "initial_capital": 100.0,
+    "annual_inflow_usd": 10.0,
+    "default_trading_cost_pct": 0.01,
+    "monte_carlo": {
+      "n_sims": 1000,
+      "horizon_trading_days": 2520,
+      "block_days": 21,
+      "seed": 20260518,
+      "method": "Contiguous 21-trading-day block bootstrap of historical SPX returns and T-bill rates."
+    },
+    "walk_forward_selection": "Parameters are selected only on the train window from 3%, 5%, 7.5%, 10%, 12.5% trails and 1x/2x caps using drawdown-first score with a 97% CAGR retention eligibility preference, then evaluated on untouched later windows.",
+    "execution_realism": "Signal delays shift the cap state by 1/2/5 sessions. Weekly monitoring only updates the observed cap state on Friday sessions and holds the last observed state."
+  }
+}
