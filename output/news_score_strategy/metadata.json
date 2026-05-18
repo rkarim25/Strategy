@@ -1,0 +1,111 @@
+{
+  "status": "success",
+  "market_start": "2021-05-17",
+  "market_end": "2026-05-15",
+  "trading_days": 1256,
+  "assumptions": {
+    "initial_capital": 100.0,
+    "annual_inflow_usd": 10.0,
+    "trading_cost_pct": 0.01,
+    "cash_return": "13-week T-Bill rate from yfinance via engine",
+    "leverage_funding": "engine funding model: T-Bill + 0.6% spread on leverage above 1x",
+    "lookahead": "weekly GDELT windows are timestamped at window end and forward-filled to later trading days"
+  },
+  "score_coverage": {
+    "weekly_windows": 262,
+    "usable_weekly_windows": 257,
+    "median_articles_per_window": 111.0,
+    "median_scored_articles_per_window": 111.0,
+    "mean_score": 5.319066147859922
+  },
+  "best_news_strategy": {
+    "strategy": "news conservative tiers",
+    "detail": "Score <=4 cash, 5-6 1x, 7 2x, >=8 3x",
+    "cagr": 0.2030638588478484,
+    "ann_volatility": 0.1689387989618652,
+    "sharpe": 0.7689199898466529,
+    "sortino": 1.0589255193773193,
+    "calmar": 0.7986748758085744,
+    "max_drawdown": -0.2542509661923039,
+    "ending_value": 251.7380190946549,
+    "trades": 0,
+    "trading_costs_total": 0.0,
+    "funding_costs_total": 0.0,
+    "turnover_notional": 0.0,
+    "avg_leverage": 1.0,
+    "pct_days_cash": 0.0,
+    "pct_days_1x": 100.0,
+    "pct_days_2x": 0.0,
+    "pct_days_3x": 0.0,
+    "cagr_delta_pp_vs_buy_hold": 0.0,
+    "ending_value_delta_vs_buy_hold": 0.0
+  },
+  "buy_and_hold": {
+    "strategy": "buy and hold 1x",
+    "detail": "Always 1x SPX exposure",
+    "cagr": 0.2030638588478484,
+    "ann_volatility": 0.1689387989618652,
+    "sharpe": 0.7689199898466529,
+    "sortino": 1.0589255193773193,
+    "calmar": 0.7986748758085744,
+    "max_drawdown": -0.2542509661923039,
+    "ending_value": 251.7380190946549,
+    "trades": 0,
+    "trading_costs_total": 0.0,
+    "funding_costs_total": 0.0,
+    "turnover_notional": 0.0,
+    "avg_leverage": 1.0,
+    "pct_days_cash": 0.0,
+    "pct_days_1x": 100.0,
+    "pct_days_2x": 0.0,
+    "pct_days_3x": 0.0
+  },
+  "outperformed_buy_hold": false,
+  "score_metadata": {
+    "source": "GDELT 2.1 GKG static 15-minute files sampled weekly at 12:00 UTC",
+    "filter_terms": [
+      "ECON_STOCKMARKET",
+      "STOCK MARKET",
+      "WALL STREET",
+      "S&P",
+      "SP500",
+      "FEDERAL_RESERVE",
+      "FEDERAL RESERVE",
+      "CENTRALBANK",
+      "INTEREST_RATES",
+      "INFLATION",
+      "RECESSION"
+    ],
+    "window_days": 7,
+    "errors": [
+      {
+        "snapshot": "2021-06-21T12:00:00+00:00",
+        "error": "field larger than field limit (131072)"
+      },
+      {
+        "snapshot": "2025-06-16T12:00:00+00:00",
+        "error": "HTTP Error 404: Not Found"
+      },
+      {
+        "snapshot": "2025-06-23T12:00:00+00:00",
+        "error": "HTTP Error 404: Not Found"
+      },
+      {
+        "snapshot": "2025-06-30T12:00:00+00:00",
+        "error": "HTTP Error 404: Not Found"
+      },
+      {
+        "snapshot": "2026-03-02T12:00:00+00:00",
+        "error": "field larger than field limit (131072)"
+      }
+    ],
+    "error_count": 5,
+    "windows_requested": 262,
+    "cache_path": "output\\news_score_strategy\\gdelt_gkg_weekly_cache.jsonl"
+  },
+  "limitations": [
+    "GDELT article samples are not a point-in-time paid market news archive and can miss paywalled/vendor headlines.",
+    "The keyword score is transparent but crude; it does not understand sarcasm, article context, or duplicate story clusters perfectly.",
+    "Weekly sampling reduces API load but can dilute daily news timing."
+  ]
+}
