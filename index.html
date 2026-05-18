@@ -2380,6 +2380,15 @@
     return fullData.slice(-RANGE_SESSIONS[chartRange]);
   }
 
+  function tradeMarkerColor(trade) {
+    if (trade.type === "buy") return trade.to >= 2 ? "#2563eb" : "#15803d";
+    return trade.to <= 0 ? "#b42318" : "#b45309";
+  }
+
+  function tradePnlDetail(trade) {
+    return trade?.pnlLabel || "Trade P&L from matched entry unavailable";
+  }
+
   function renderChart() {
     const svg = $("priceChart");
     const data = chartDataForRange();
@@ -2422,10 +2431,6 @@
     };
     const visibleTradeCount = data.filter((point) => point.trade).length;
     const showTransitionLabels = visibleTradeCount > 0 && visibleTradeCount <= 25;
-    const tradeMarkerColor = (trade) => {
-      if (trade.type === "buy") return trade.to >= 2 ? "#2563eb" : "#15803d";
-      return trade.to <= 0 ? "#b42318" : "#b45309";
-    };
     const markerForPoint = (point, index) => {
       if (!point.trade) return "";
       const x = xScale(index).toFixed(2);
@@ -2595,6 +2600,7 @@
       close: active[0].close,
       leverage: active[0].leverage,
       dailyReturn: 0,
+      trade: active[0].trade,
     }];
 
     for (let i = 1; i < active.length; i++) {
@@ -2621,6 +2627,7 @@
         close: point.close,
         leverage: lev,
         dailyReturn,
+        trade: point.trade,
       });
     }
 
@@ -2692,6 +2699,33 @@
       strategyY: yScale(point.strategy),
       spxY: yScale(point.spx),
     }));
+    const visibleTradeCount = points.filter((point) => point.trade).length;
+    const showTransitionLabels = visibleTradeCount > 0 && visibleTradeCount <= 18;
+    const markerForPoint = (point, index) => {
+      if (!point.trade) return "";
+      const x = xScale(index).toFixed(2);
+      const y = yScale(point.strategy).toFixed(2);
+      const color = tradeMarkerColor(point.trade);
+      const shape = point.trade.type === "buy"
+        ? '<polygon points="0,-5.5 -4.5,4 4.5,4" />'
+        : '<polygon points="-4.5,-4 4.5,-4 0,5.5" />';
+      const labelY = point.trade.type === "buy" ? -11 : 18;
+      const compactLabel = fmtMarkerLeverageLabel(point.trade.to);
+      const label = showTransitionLabels
+        ? `<g transform="translate(0 ${labelY})">
+            <rect x="-10" y="-7" width="20" height="13" rx="6.5" fill="#ffffff" stroke="${color}" stroke-width="1" />
+            <text x="0" y="2.2" fill="${color}" stroke="none" font-size="8.5" font-weight="800" text-anchor="middle">${compactLabel}</text>
+          </g>`
+        : "";
+      const title = `${point.trade.action} on ${point.date}: strategy equity ${fmtWholeCurrency(point.strategy)}; ${point.trade.transition}; ${tradePnlDetail(point.trade)}. ${point.trade.reason}`;
+      return `
+        <g transform="translate(${x} ${y})" fill="${color}" stroke="#ffffff" stroke-width="1.4" aria-label="${escapeSvgText(title)}">
+          <title>${escapeSvgText(title)}</title>
+          ${shape}
+          ${label}
+        </g>
+      `;
+    };
 
     const yGrid = [];
     for (let i = 0; i <= 4; i++) {
@@ -2723,6 +2757,7 @@
       <g clip-path="url(#signalPnlPlotClip)">
         <polyline points="${linePath((point) => point.strategy)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
         <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        ${points.map(markerForPoint).join("")}
       </g>
       <g id="signalPnlHoverLayer" style="display: none;">
         <line id="signalPnlHoverLine" x1="0" y1="${pad.top}" x2="0" y2="${height - pad.bottom}" stroke="#475467" stroke-width="1" stroke-dasharray="4 4" />
@@ -2787,6 +2822,7 @@
       Strategy equity: ${fmtWholeCurrency(nearest.strategy)} (${fmtSignedPct(nearest.strategy / INITIAL_CAPITAL - 1)})<br>
       SPX buy &amp; hold: ${fmtWholeCurrency(nearest.spx)} (${fmtSignedPct(nearest.spx / INITIAL_CAPITAL - 1)})<br>
       Leverage: ${fmtLeverageLabel(nearest.leverage)}
+      ${nearest.trade ? `<br><span style="color: ${tradeMarkerColor(nearest.trade)}; font-weight: 700;">${nearest.trade.action}: ${nearest.trade.transition}</span><br>${tradePnlDetail(nearest.trade)}` : ""}
     `;
     tooltip.style.display = "block";
     const tooltipWidth = Math.max(tooltip.offsetWidth, 235);
