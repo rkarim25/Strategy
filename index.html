@@ -1160,6 +1160,7 @@
   let chartRange = "1y";
   let equityChartRange = "full";
   let chartPoints = [];
+  let chartPlot = null;
   let equityChartPoints = [];
   let equityChartPlot = null;
   let optimizerResults = [];
@@ -1237,7 +1238,7 @@
   $("useBestOptimizer").addEventListener("click", useBestOptimizerResult);
   $("priceChart").addEventListener("mousemove", showChartTooltip);
   $("priceChart").addEventListener("mouseleave", () => {
-    $("chartTooltip").style.display = "none";
+    hideChartTooltip();
   });
   $("equityChart").addEventListener("mouseleave", () => {
     hideEquityChartTooltip();
@@ -2130,13 +2131,14 @@
             closedLegs.push(leg);
           }
         }
-        const avgEntry = closedLegs.length
-          ? closedLegs.reduce((sum, leg) => sum + leg.entryClose, 0) / closedLegs.length
-          : null;
-        const pnl = avgEntry == null ? null : rows[index].close / avgEntry - 1;
-        trade.entryLabel = `${closedLegs.length > 1 ? "avg entry" : "entry"} ${fmtMoney(avgEntry)}`;
-        trade.exitLabel = `exit ${fmtMoney(rows[index].close)}`;
-        trade.pnlLabel = `SPX P&L ${fmtSignedPct(pnl)}`;
+        if (closedLegs.length) {
+          const totalEntry = closedLegs.reduce((sum, leg) => sum + leg.entryClose, 0);
+          const avgEntry = totalEntry / closedLegs.length;
+          const pnl = (rows[index].close * closedLegs.length) / totalEntry - 1;
+          trade.entryLabel = `${closedLegs.length > 1 ? "avg buy entry" : "buy entry"} ${fmtMoney(avgEntry)}`;
+          trade.exitLabel = `sell/reduce exit ${fmtMoney(rows[index].close)}`;
+          trade.pnlLabel = `${closedLegs.length > 1 ? "Weighted SPX P&L from entry" : "SPX P&L from entry"} ${fmtSignedPct(pnl)}`;
+        }
       }
       annotations[index] = trade;
     }
@@ -2188,6 +2190,8 @@
     if (!svg || !latestRows.length) return;
     if (data.length < 2) {
       svg.innerHTML = "";
+      chartPoints = [];
+      chartPlot = null;
       $("chartMeta").textContent = "Choose a wider date range to draw the chart.";
       return;
     }
@@ -2210,6 +2214,14 @@
       })
       .filter(Boolean)
       .join(" ");
+    chartPlot = {
+      left: pad.left,
+      right: width - pad.right,
+      top: pad.top,
+      bottom: height - pad.bottom,
+      width,
+      height,
+    };
     const markerForPoint = (point, index) => {
       if (!point.trade) return "";
       const x = xScale(index).toFixed(2);
@@ -2257,14 +2269,38 @@
     $("chartMeta").textContent = `${data.length} trading sessions shown: ${startDate} to ${endDate}. Latest close ${fmtMoney(data[data.length - 1].close)}, SMA20 ${fmtMoney(data[data.length - 1].sma)}.`;
   }
 
+  function hideChartTooltip() {
+    $("chartTooltip").style.display = "none";
+  }
+
   function showChartTooltip(event) {
-    if (!chartPoints.length) return;
+    if (!chartPoints.length || !chartPlot) return;
     const svg = $("priceChart");
     const rect = svg.getBoundingClientRect();
-    const svgX = ((event.clientX - rect.left) / rect.width) * 900;
-    const nearest = chartPoints.reduce((best, point) => (
-      Math.abs(point.x - svgX) < Math.abs(best.x - svgX) ? point : best
-    ), chartPoints[0]);
+    const ctm = svg.getScreenCTM();
+    if (!ctm) {
+      hideChartTooltip();
+      return;
+    }
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+    const cursor = svgPoint.matrixTransform(ctm.inverse());
+    const svgX = cursor.x;
+    const svgY = cursor.y;
+    if (
+      svgX < chartPlot.left ||
+      svgX > chartPlot.right ||
+      svgY < chartPlot.top ||
+      svgY > chartPlot.bottom
+    ) {
+      hideChartTooltip();
+      return;
+    }
+
+    const ratio = (svgX - chartPlot.left) / (chartPlot.right - chartPlot.left);
+    const index = Math.max(0, Math.min(chartPoints.length - 1, Math.round(ratio * (chartPoints.length - 1))));
+    const nearest = chartPoints[index];
     const tooltip = $("chartTooltip");
     tooltip.innerHTML = `
       <strong>${nearest.date}</strong><br>
@@ -2273,8 +2309,19 @@
       ${nearest.trade ? `<br><span style="color: ${nearest.trade.type === "buy" ? "#15803d" : "#b42318"}; font-weight: 700;">${nearest.trade.action}: ${nearest.trade.transition}</span><br>${nearest.trade.detail}<br>${nearest.trade.reason}` : ""}
     `;
     tooltip.style.display = "block";
-    tooltip.style.left = Math.min(event.clientX - rect.left + 14, rect.width - 190) + "px";
-    tooltip.style.top = Math.max(event.clientY - rect.top - 56, 10) + "px";
+    const tooltipWidth = Math.max(tooltip.offsetWidth, 190);
+    const tooltipHeight = Math.max(tooltip.offsetHeight, 64);
+    const chartWidth = chartPlot.width || 900;
+    const chartHeight = chartPlot.height || 360;
+    const plotLeftPx = (chartPlot.left / chartWidth) * rect.width;
+    const plotRightPx = (chartPlot.right / chartWidth) * rect.width;
+    const pointerX = (nearest.x / chartWidth) * rect.width;
+    const pointerY = (nearest.y / chartHeight) * rect.height;
+    const openRight = pointerX + tooltipWidth + 18 < plotRightPx;
+    const left = openRight ? pointerX + 14 : Math.max(plotLeftPx, pointerX - tooltipWidth - 14);
+    const top = Math.max(10, Math.min(pointerY - tooltipHeight - 10, rect.height - tooltipHeight - 10));
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
   }
 
   function buyHoldWithInflows(rows) {
