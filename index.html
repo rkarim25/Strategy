@@ -161,6 +161,7 @@
       margin-top: 12px;
     }
     #priceChart,
+    #signalPnlChart,
     #equityChart {
       width: 100%;
       height: 360px;
@@ -169,18 +170,31 @@
       border-radius: 22px;
       background: linear-gradient(180deg, #ffffff, #fbfbfd);
     }
+    #signalPnlChart {
+      height: 260px;
+    }
+    .chart-box.compact {
+      min-height: 260px;
+    }
+    .attached-chart {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
     .chart-tooltip {
       position: absolute;
       pointer-events: none;
       display: none;
-      min-width: 170px;
-      padding: 8px 10px;
+      min-width: 190px;
+      padding: 10px 12px;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, .96);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .98);
       color: var(--text);
       font-size: 12px;
+      line-height: 1.45;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
     }
     .legend {
       display: flex;
@@ -201,6 +215,8 @@
       background: var(--accent);
     }
     .legend .sma::before { background: var(--warn); }
+    .legend .strategy::before { background: #2563eb; }
+    .legend .spx::before { background: #d97706; }
     .legend .buy::before,
     .legend .sell::before {
       width: 9px;
@@ -369,6 +385,7 @@
         border-radius: 22px;
       }
       #priceChart { height: 320px; }
+      #signalPnlChart { height: 240px; }
     }
     @media (max-width: 520px) {
       main {
@@ -409,6 +426,7 @@
       .signal { font-size: 52px; }
       #priceChart,
       #equityChart { height: 280px; }
+      #signalPnlChart { height: 220px; }
       .bar-row {
         grid-template-columns: 1fr;
         gap: 6px;
@@ -544,6 +562,18 @@
       <span class="sma">20-day SMA</span>
       <span class="buy">Buy/add leverage</span>
       <span class="sell">Sell/reduce leverage</span>
+    </div>
+    <div class="attached-chart">
+      <h2>Selected Window Equity P&amp;L</h2>
+      <div id="signalPnlMeta" class="small">Load data to draw the selected-window equity chart.</div>
+      <div class="chart-box compact">
+        <svg id="signalPnlChart" viewBox="0 0 900 260" role="img" aria-label="Selected window strategy equity P&L chart"></svg>
+        <div id="signalPnlTooltip" class="chart-tooltip"></div>
+      </div>
+      <div class="legend">
+        <span class="strategy">Default strategy equity</span>
+        <span class="spx">SPX buy &amp; hold</span>
+      </div>
     </div>
   </section>
 
@@ -1161,6 +1191,8 @@
   let equityChartRange = "full";
   let chartPoints = [];
   let chartPlot = null;
+  let signalPnlPoints = [];
+  let signalPnlPlot = null;
   let equityChartPoints = [];
   let equityChartPlot = null;
   let optimizerResults = [];
@@ -1172,6 +1204,7 @@
 
   const $ = (id) => document.getElementById(id);
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
+  const fmtWholeNumber = (x) => Number.isFinite(x) ? Math.round(x).toLocaleString() : "-";
   const fmtWholeCurrency = (x) => Number.isFinite(x) ? "$" + Math.round(x).toLocaleString() : "-";
   const fmtCompactCurrency = (x) => {
     if (!Number.isFinite(x)) return "-";
@@ -1211,6 +1244,7 @@
       $("chartEnd").value = "";
       setActiveRangeButton(chartRange);
       renderChart();
+      renderSignalPnlChart();
     });
   });
   document.querySelectorAll("[data-equity-range]").forEach((button) => {
@@ -1226,6 +1260,7 @@
     chartRange = "custom";
     setActiveRangeButton(chartRange);
     renderChart();
+    renderSignalPnlChart();
   });
   $("applyEquityCustomRange").addEventListener("click", () => {
     equityChartRange = "custom";
@@ -1240,11 +1275,15 @@
   $("priceChart").addEventListener("mouseleave", () => {
     hideChartTooltip();
   });
+  $("signalPnlChart").addEventListener("mouseleave", () => {
+    hideSignalPnlTooltip();
+  });
   $("equityChart").addEventListener("mouseleave", () => {
     hideEquityChartTooltip();
   });
   window.addEventListener("resize", () => {
     renderChart();
+    renderSignalPnlChart();
     renderBacktestEquityChart();
   });
   window.addEventListener("focus", () => refreshIfStale("focus"));
@@ -1271,6 +1310,7 @@
       }
       render(eodResult, liveResult);
       renderChart();
+      renderSignalPnlChart();
       renderBacktestEquityChart();
       runCalculator();
       setStatus(`Preloaded static market data: ${rows.length} rows from ${rows[0].date} to ${rows[rows.length - 1].date}.${describeStaticSignalMetadata(signalMetadata)} Auto-refresh will check live data next.`);
@@ -1338,6 +1378,7 @@
 
         render(eodResult, liveResult);
         renderChart();
+        renderSignalPnlChart();
         renderBacktestEquityChart();
         runCalculator();
         const quoteStatus = livePriceInfo?.price == null
@@ -1349,6 +1390,8 @@
         console.error(err);
         if (latestRows.length && latestRowsSource === "static") {
           setStatus("Live refresh failed; static historical back-test data remains loaded. " + err.message, true);
+          renderChart();
+          renderSignalPnlChart();
           renderBacktestEquityChart();
         } else {
           setStatus("Error: " + err.message, true);
@@ -1468,7 +1511,10 @@
     scope.querySelectorAll("[data-page-target]").forEach((button) => {
       button.classList.toggle("active", button.dataset.pageTarget === pageId);
     });
-    if (pageId === "signalPage") renderChart();
+    if (pageId === "signalPage") {
+      renderChart();
+      renderSignalPnlChart();
+    }
     if (pageId === "backtestPage") renderBacktestEquityChart();
   }
 
@@ -2083,6 +2129,35 @@
     });
   }
 
+  function dateTickLimit(length) {
+    if (length <= 5) return length;
+    if (length <= 21) return Math.min(length, 5);
+    if (length <= 63) return 6;
+    if (length <= 252) return 7;
+    if (length <= 1260) return 9;
+    if (length <= 2520) return 11;
+    if (length <= 5040) return 13;
+    return 15;
+  }
+
+  function chartDateTicks(data, xScale) {
+    const tickCount = Math.min(dateTickLimit(data.length), data.length);
+    const seen = new Set();
+    const ticks = [];
+    for (let i = 0; i < tickCount; i++) {
+      const index = Math.round((i / Math.max(tickCount - 1, 1)) * (data.length - 1));
+      if (seen.has(index)) continue;
+      seen.add(index);
+      const date = data[index].date;
+      const parsed = new Date(date + "T00:00:00Z");
+      const label = data.length > 1260
+        ? String(parsed.getUTCFullYear())
+        : parsed.toLocaleDateString(undefined, { month: "short", year: "2-digit", timeZone: "UTC" });
+      ticks.push({ index, date, label, x: xScale(index) });
+    }
+    return ticks;
+  }
+
   function buildTradeAnnotations(rows, leverage) {
     const annotations = Array(rows.length).fill(null);
     const openLegs = [];
@@ -2171,9 +2246,12 @@
     const leverage = guardedLeverageForParams(latestRows, DEFAULT_GUARDED).leverage;
     const trades = buildTradeAnnotations(latestRows, leverage);
     const fullData = latestRows.map((row, index) => ({
+      index,
       date: row.date,
       close: row.close,
       sma: sma(closes, index, 20),
+      leverage: leverage[index],
+      prevLeverage: index > 0 ? leverage[index - 1] : 0,
       trade: trades[index]
     }));
     if (chartRange === "custom") {
@@ -2198,15 +2276,17 @@
 
     const width = 900;
     const height = 360;
-    const pad = { left: 58, right: 18, top: 18, bottom: 38 };
+    const pad = { left: 66, right: 24, top: 24, bottom: 54 };
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
     const values = data.flatMap((point) => Number.isFinite(point.sma) ? [point.close, point.sma] : [point.close]);
     const minValue = Math.min(...values);
     const maxValue = Math.max(...values);
     const buffer = (maxValue - minValue) * 0.06 || maxValue * 0.02;
     const yMin = minValue - buffer;
     const yMax = maxValue + buffer;
-    const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * (width - pad.left - pad.right);
-    const yScale = (value) => pad.top + ((yMax - value) / (yMax - yMin)) * (height - pad.top - pad.bottom);
+    const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * plotWidth;
+    const yScale = (value) => pad.top + ((yMax - value) / (yMax - yMin)) * plotHeight;
     const linePath = (selector) => data
       .map((point, index) => {
         const value = selector(point);
@@ -2228,11 +2308,11 @@
       const y = yScale(point.close).toFixed(2);
       const color = point.trade.type === "buy" ? "#15803d" : "#b42318";
       const shape = point.trade.type === "buy"
-        ? '<polygon points="0,-7 -6,5 6,5" />'
-        : '<polygon points="-6,-5 6,-5 0,7" />';
+        ? '<polygon points="0,-6 -5,4.5 5,4.5" />'
+        : '<polygon points="-5,-4.5 5,-4.5 0,6" />';
       const title = `${point.trade.action} on ${point.date}: ${point.trade.transition} at close ${fmtMoney(point.close)}. ${point.trade.detail}. ${point.trade.reason}`;
       return `
-        <g transform="translate(${x} ${y})" fill="${color}" stroke="#ffffff" stroke-width="1.4" aria-label="${escapeSvgText(title)}">
+        <g transform="translate(${x} ${y})" fill="${color}" stroke="#ffffff" stroke-width="1.6" aria-label="${escapeSvgText(title)}">
           <title>${escapeSvgText(title)}</title>
           ${shape}
         </g>
@@ -2250,21 +2330,36 @@
       const value = yMin + ((yMax - yMin) * i) / 4;
       const y = yScale(value);
       grid.push(`
-        <line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="#2a303a" stroke-width="1" />
-        <text x="${pad.left - 8}" y="${y + 4}" fill="#9aa4b2" font-size="12" text-anchor="end">${fmtMoney(value)}</text>
+        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
+        <text x="${pad.left - 10}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtWholeNumber(value)}</text>
       `);
     }
 
     const startDate = data[0].date;
     const endDate = data[data.length - 1].date;
+    const xTicks = chartDateTicks(data, xScale);
+    const xGrid = xTicks.map((tick, index) => {
+      const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
+      return `
+        <line x1="${tick.x.toFixed(2)}" y1="${pad.top}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom}" stroke="#eef0f3" stroke-width="1" />
+        <line x1="${tick.x.toFixed(2)}" y1="${height - pad.bottom}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom + 5}" stroke="#98a2b3" stroke-width="1" />
+        <text x="${tick.x.toFixed(2)}" y="${height - 18}" fill="#667085" font-size="12" font-weight="600" text-anchor="${anchor}">${tick.label}</text>
+      `;
+    });
     svg.innerHTML = `
+      <defs>
+        <clipPath id="pricePlotClip"><rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" /></clipPath>
+      </defs>
+      <rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" rx="12" fill="#ffffff" stroke="#e5e7eb" />
+      ${xGrid.join("")}
       ${grid.join("")}
-      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#2a303a" />
-      <text x="${pad.left}" y="${height - 12}" fill="#9aa4b2" font-size="12">${startDate}</text>
-      <text x="${width - pad.right}" y="${height - 12}" fill="#9aa4b2" font-size="12" text-anchor="end">${endDate}</text>
-      <polyline points="${linePath((point) => point.close)}" fill="none" stroke="#6aa6ff" stroke-width="2.2" />
-      <polyline points="${linePath((point) => point.sma)}" fill="none" stroke="#f0b84a" stroke-width="2" />
-      ${data.map(markerForPoint).join("")}
+      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <g clip-path="url(#pricePlotClip)">
+        <polyline points="${linePath((point) => point.close)}" fill="none" stroke="#2563eb" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.sma)}" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        ${data.map(markerForPoint).join("")}
+      </g>
     `;
     $("chartMeta").textContent = `${data.length} trading sessions shown: ${startDate} to ${endDate}. Latest close ${fmtMoney(data[data.length - 1].close)}, SMA20 ${fmtMoney(data[data.length - 1].sma)}.`;
   }
@@ -2317,6 +2412,256 @@
     const plotRightPx = (chartPlot.right / chartWidth) * rect.width;
     const pointerX = (nearest.x / chartWidth) * rect.width;
     const pointerY = (nearest.y / chartHeight) * rect.height;
+    const openRight = pointerX + tooltipWidth + 18 < plotRightPx;
+    const left = openRight ? pointerX + 14 : Math.max(plotLeftPx, pointerX - tooltipWidth - 14);
+    const top = Math.max(10, Math.min(pointerY - tooltipHeight - 10, rect.height - tooltipHeight - 10));
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
+  }
+
+  function selectedWindowPnlData() {
+    const selected = chartDataForRange();
+    if (selected.length < 2) {
+      return { points: [], meta: "Choose a wider date range to draw selected-window equity P&L." };
+    }
+
+    const entryOffset = selected.findIndex((point) => point.leverage > 0 && point.prevLeverage <= 0);
+    let startOffset = entryOffset;
+    let startReason = "first in-window entry";
+    if (startOffset < 0) {
+      startOffset = selected.findIndex((point) => point.leverage > 0);
+      startReason = "already active at first selected exposure";
+    }
+    if (startOffset < 0) {
+      const startDate = selected[0].date;
+      const endDate = selected[selected.length - 1].date;
+      return {
+        points: [],
+        meta: `No default strategy market exposure from ${startDate} to ${endDate}; widen the range or choose a period with leverage above cash.`,
+      };
+    }
+
+    const active = selected.slice(startOffset);
+    if (active.length < 2) {
+      return {
+        points: [],
+        meta: `Entry found on ${active[0].date} at ${fmtLeverageLabel(active[0].leverage)}, but at least one later session is needed to draw P&L.`,
+      };
+    }
+
+    let strategy = INITIAL_CAPITAL;
+    let spx = INITIAL_CAPITAL;
+    let prevLev = active[0].leverage;
+    let tradingCosts = 0;
+    let rebalances = 0;
+    const dailyCash = DEFAULT_GUARDED.cashRate / TRADING_DAYS;
+    const points = [{
+      date: active[0].date,
+      strategy,
+      spx,
+      close: active[0].close,
+      leverage: active[0].leverage,
+      dailyReturn: 0,
+    }];
+
+    for (let i = 1; i < active.length; i++) {
+      const point = active[i];
+      const prevPoint = active[i - 1];
+      const lev = point.leverage;
+      if (Math.abs(lev - prevLev) > 1e-9) {
+        const cost = Math.abs(lev - prevLev) * strategy * DEFAULT_GUARDED.tradingCost;
+        strategy -= cost;
+        tradingCosts += cost;
+        rebalances += 1;
+        prevLev = lev;
+      }
+
+      const spxReturn = point.close / prevPoint.close - 1;
+      const funding = lev > 1 ? (lev - 1) * DEFAULT_GUARDED.cashRate / TRADING_DAYS : 0;
+      const dailyReturn = lev <= 0 ? dailyCash : lev * spxReturn - funding;
+      strategy *= 1 + dailyReturn;
+      spx *= 1 + spxReturn;
+      points.push({
+        date: point.date,
+        strategy,
+        spx,
+        close: point.close,
+        leverage: lev,
+        dailyReturn,
+      });
+    }
+
+    const first = active[0];
+    const last = points[points.length - 1];
+    const transition = `${fmtLeverageLabel(first.prevLeverage)} -> ${fmtLeverageLabel(first.leverage)}`;
+    const entryLabel = entryOffset >= 0 ? transition : fmtLeverageLabel(first.leverage);
+    const windowReturn = last.strategy / INITIAL_CAPITAL - 1;
+    const costLabel = rebalances
+      ? `Includes ${fmtWholeCurrency(tradingCosts)} in subsequent rebalance costs`
+      : "No subsequent rebalance costs";
+    return {
+      points,
+      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); ${fmtWholeCurrency(INITIAL_CAPITAL)} to ${fmtWholeCurrency(last.strategy)} (${fmtSignedPct(windowReturn)}). ${costLabel}; applies ${fmtPct(DEFAULT_GUARDED.cashRate)} annual cash/funding and ${(DEFAULT_GUARDED.tradingCost * 100).toFixed(2)}% trading cost on later leverage changes.`,
+    };
+  }
+
+  function hideSignalPnlTooltip() {
+    $("signalPnlTooltip").style.display = "none";
+    const hoverLayer = $("signalPnlHoverLayer");
+    if (hoverLayer) hoverLayer.style.display = "none";
+  }
+
+  function renderSignalPnlChart() {
+    const svg = $("signalPnlChart");
+    if (!svg || !latestRows.length) return;
+    const { points, meta } = selectedWindowPnlData();
+    if (points.length < 2) {
+      svg.innerHTML = "";
+      signalPnlPoints = [];
+      signalPnlPlot = null;
+      $("signalPnlMeta").textContent = meta;
+      return;
+    }
+
+    const width = 900;
+    const height = 260;
+    const pad = { left: 64, right: 22, top: 18, bottom: 40 };
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
+    const values = points.flatMap((point) => [point.strategy, point.spx]).filter(Number.isFinite);
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
+    const buffer = Math.max((maxValue - minValue) * 0.12, maxValue * 0.015, 1);
+    const yMin = Math.max(0, minValue - buffer);
+    const yMax = maxValue + buffer;
+    const range = Math.max(yMax - yMin, 1e-9);
+    const xScale = (index) => pad.left + (index / Math.max(points.length - 1, 1)) * plotWidth;
+    const yScale = (value) => pad.top + ((yMax - value) / range) * plotHeight;
+    const linePath = (selector) => points
+      .map((point, index) => {
+        const value = selector(point);
+        return Number.isFinite(value) ? `${xScale(index).toFixed(2)},${yScale(value).toFixed(2)}` : null;
+      })
+      .filter(Boolean)
+      .join(" ");
+
+    signalPnlPlot = {
+      left: pad.left,
+      right: width - pad.right,
+      top: pad.top,
+      bottom: height - pad.bottom,
+      width,
+      height,
+    };
+    signalPnlPoints = points.map((point, index) => ({
+      ...point,
+      x: xScale(index),
+      strategyY: yScale(point.strategy),
+      spxY: yScale(point.spx),
+    }));
+
+    const yGrid = [];
+    for (let i = 0; i <= 4; i++) {
+      const value = yMin + (range * i) / 4;
+      const y = yScale(value);
+      yGrid.push(`
+        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
+        <text x="${pad.left - 10}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtWholeCurrency(value)}</text>
+      `);
+    }
+    const xTicks = chartDateTicks(points, xScale);
+    const xGrid = xTicks.map((tick, index) => {
+      const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
+      return `
+        <line x1="${tick.x.toFixed(2)}" y1="${pad.top}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom}" stroke="#eef0f3" stroke-width="1" />
+        <text x="${tick.x.toFixed(2)}" y="${height - 14}" fill="#667085" font-size="12" font-weight="600" text-anchor="${anchor}">${tick.label}</text>
+      `;
+    });
+
+    svg.innerHTML = `
+      <defs>
+        <clipPath id="signalPnlPlotClip"><rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" /></clipPath>
+      </defs>
+      <rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" rx="12" fill="#ffffff" stroke="#e5e7eb" />
+      ${xGrid.join("")}
+      ${yGrid.join("")}
+      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <g clip-path="url(#signalPnlPlotClip)">
+        <polyline points="${linePath((point) => point.strategy)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      <g id="signalPnlHoverLayer" style="display: none;">
+        <line id="signalPnlHoverLine" x1="0" y1="${pad.top}" x2="0" y2="${height - pad.bottom}" stroke="#475467" stroke-width="1" stroke-dasharray="4 4" />
+        <circle id="signalPnlHoverStrategy" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+        <circle id="signalPnlHoverSpx" r="4" fill="#d97706" stroke="#ffffff" stroke-width="2" />
+      </g>
+      <rect id="signalPnlHoverCapture" x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" fill="transparent" pointer-events="all" />
+    `;
+    const hoverCapture = $("signalPnlHoverCapture");
+    if (hoverCapture) {
+      hoverCapture.addEventListener("mousemove", showSignalPnlTooltip);
+      hoverCapture.addEventListener("mouseleave", hideSignalPnlTooltip);
+    }
+    $("signalPnlMeta").textContent = meta;
+  }
+
+  function showSignalPnlTooltip(event) {
+    if (!signalPnlPoints.length || !signalPnlPlot) return;
+    const svg = $("signalPnlChart");
+    const rect = svg.getBoundingClientRect();
+    const ctm = svg.getScreenCTM();
+    if (!ctm) {
+      hideSignalPnlTooltip();
+      return;
+    }
+    const chartWidth = signalPnlPlot.width || 900;
+    const chartHeight = signalPnlPlot.height || 260;
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+    const cursor = svgPoint.matrixTransform(ctm.inverse());
+    const svgX = cursor.x;
+    const svgY = cursor.y;
+    if (
+      svgX < signalPnlPlot.left ||
+      svgX > signalPnlPlot.right ||
+      svgY < signalPnlPlot.top ||
+      svgY > signalPnlPlot.bottom
+    ) {
+      hideSignalPnlTooltip();
+      return;
+    }
+
+    const ratio = (svgX - signalPnlPlot.left) / (signalPnlPlot.right - signalPnlPlot.left);
+    const index = Math.max(0, Math.min(signalPnlPoints.length - 1, Math.round(ratio * (signalPnlPoints.length - 1))));
+    const nearest = signalPnlPoints[index];
+    const nearestX = nearest.x;
+    const hoverLayer = $("signalPnlHoverLayer");
+    if (hoverLayer) {
+      hoverLayer.style.display = "block";
+      $("signalPnlHoverLine").setAttribute("x1", nearestX.toFixed(2));
+      $("signalPnlHoverLine").setAttribute("x2", nearestX.toFixed(2));
+      $("signalPnlHoverStrategy").setAttribute("cx", nearestX.toFixed(2));
+      $("signalPnlHoverStrategy").setAttribute("cy", nearest.strategyY.toFixed(2));
+      $("signalPnlHoverSpx").setAttribute("cx", nearestX.toFixed(2));
+      $("signalPnlHoverSpx").setAttribute("cy", nearest.spxY.toFixed(2));
+    }
+
+    const tooltip = $("signalPnlTooltip");
+    tooltip.innerHTML = `
+      <strong>${nearest.date}</strong><br>
+      Strategy equity: ${fmtWholeCurrency(nearest.strategy)} (${fmtSignedPct(nearest.strategy / INITIAL_CAPITAL - 1)})<br>
+      SPX buy &amp; hold: ${fmtWholeCurrency(nearest.spx)} (${fmtSignedPct(nearest.spx / INITIAL_CAPITAL - 1)})<br>
+      Leverage: ${fmtLeverageLabel(nearest.leverage)}
+    `;
+    tooltip.style.display = "block";
+    const tooltipWidth = Math.max(tooltip.offsetWidth, 235);
+    const tooltipHeight = Math.max(tooltip.offsetHeight, 78);
+    const plotLeftPx = (signalPnlPlot.left / chartWidth) * rect.width;
+    const plotRightPx = (signalPnlPlot.right / chartWidth) * rect.width;
+    const pointerX = (nearestX / chartWidth) * rect.width;
+    const pointerY = (Math.min(nearest.strategyY, nearest.spxY) / chartHeight) * rect.height;
     const openRight = pointerX + tooltipWidth + 18 < plotRightPx;
     const left = openRight ? pointerX + 14 : Math.max(plotLeftPx, pointerX - tooltipWidth - 14);
     const top = Math.max(10, Math.min(pointerY - tooltipHeight - 10, rect.height - tooltipHeight - 10));
@@ -2383,25 +2728,6 @@
     return ticks;
   }
 
-  function equityDateTicks(data, xScale) {
-    const maxTicks = data.length > 2520 ? 10 : data.length > 1260 ? 9 : data.length > 252 ? 7 : 6;
-    const tickCount = Math.min(maxTicks, data.length);
-    const seen = new Set();
-    const ticks = [];
-    for (let i = 0; i < tickCount; i++) {
-      const index = Math.round((i / Math.max(tickCount - 1, 1)) * (data.length - 1));
-      if (seen.has(index)) continue;
-      seen.add(index);
-      const date = data[index].date;
-      const parsed = new Date(date + "T00:00:00Z");
-      const label = data.length > 1260
-        ? String(parsed.getUTCFullYear())
-        : parsed.toLocaleDateString(undefined, { month: "short", year: "2-digit", timeZone: "UTC" });
-      ticks.push({ index, date, label, x: xScale(index) });
-    }
-    return ticks;
-  }
-
   function hideEquityChartTooltip() {
     $("equityChartTooltip").style.display = "none";
     const hoverLayer = $("equityHoverLayer");
@@ -2462,7 +2788,7 @@
         <text x="${pad.left - 12}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtCompactCurrency(value)}</text>
       `;
     });
-    const xTicks = equityDateTicks(data, xScale);
+    const xTicks = chartDateTicks(data, xScale);
     const xGrid = xTicks.map((tick, index) => {
       const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
       return `
