@@ -715,9 +715,9 @@
     <section class="card section-gap">
       <h2>SPX vs Default Strategy Equity</h2>
       <p class="small">
-        Browser-side chart using the latest refreshed SPX daily closes. Both lines start at $100 and include $10
-        annual inflows. The chart uses a log scale so the SPX buy-and-hold line remains visible beside the much
-        larger strategy result.
+        Browser-side chart preloaded from committed historical SPX daily closes, then updated by Refresh signal when
+        newer daily data is available. Both lines start at $100 and include $10 annual inflows. The chart uses a log
+        scale so the SPX buy-and-hold line remains visible beside the much larger strategy result.
       </p>
       <div class="row range-controls">
         <button type="button" data-equity-range="1y">1Y</button>
@@ -729,7 +729,7 @@
         <input id="equityChartEnd" type="date" />
         <button id="applyEquityCustomRange" type="button" class="secondary">Apply custom</button>
       </div>
-      <div id="equityChartMeta" class="small" style="margin-top: 10px;">Refresh signal to draw the equity chart.</div>
+      <div id="equityChartMeta" class="small" style="margin-top: 10px;">Loading static historical back-test data...</div>
       <div class="chart-box">
         <svg id="equityChart" viewBox="0 0 900 360" role="img" aria-label="SPX buy and hold versus default strategy equity chart"></svg>
         <div id="equityChartTooltip" class="chart-tooltip"></div>
@@ -1122,6 +1122,7 @@
 <script>
   const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
+  const STATIC_DAILY_URL = "spx_daily.csv";
   const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040 };
   const DEFAULT_GUARDED = {
     triggerA: 0.05,
@@ -1138,6 +1139,7 @@
   const ANNUAL_INFLOW = 10;
   const TRADING_DAYS = 252;
   let latestRows = [];
+  let latestRowsSource = "none";
   let chartRange = "1y";
   let equityChartRange = "full";
   let chartPoints = [];
@@ -1216,6 +1218,27 @@
     renderBacktestEquityChart();
   });
 
+  async function loadStaticHistoricalBacktest() {
+    try {
+      const { text: csv } = await fetchTextWithDiagnostics(STATIC_DAILY_URL, "Static historical back-test data");
+      const rows = parseCsv(csv);
+      if (rows.length < 260) throw new Error("Not enough static historical rows. Need at least ~260 rows.");
+
+      latestRows = rows;
+      latestRowsSource = "static";
+      const eodResult = computeSignal(rows);
+      render(eodResult, eodResult);
+      renderChart();
+      renderBacktestEquityChart();
+      runCalculator();
+      setStatus(`Loaded static historical back-test data: ${rows.length} rows from ${rows[0].date} to ${rows[rows.length - 1].date}. Refresh signal updates with newer daily data.`);
+    } catch (err) {
+      console.error(err);
+      $("equityChartMeta").textContent = "Static historical back-test data could not be loaded. Use Refresh signal to try live daily data.";
+      setStatus("Static historical data error: " + err.message, true);
+    }
+  }
+
   async function refresh() {
     try {
       setStatus("Fetching daily S&P data...");
@@ -1224,6 +1247,7 @@
       const rows = parseCsv(csv);
       if (rows.length < 260) throw new Error("Not enough daily data. Need at least ~260 rows.");
       latestRows = rows;
+      latestRowsSource = "live";
       const eodResult = computeSignal(rows);
 
       setStatus("Fetching live SPX quote...");
@@ -1254,7 +1278,12 @@
       setStatus(`Loaded ${rows.length} daily rows. Last completed close: ${eodResult.latest.date}. ${quoteStatus}`, livePriceInfo?.price == null);
     } catch (err) {
       console.error(err);
-      setStatus("Error: " + err.message, true);
+      if (latestRows.length && latestRowsSource === "static") {
+        setStatus("Live refresh failed; static historical back-test data remains loaded. " + err.message, true);
+        renderBacktestEquityChart();
+      } else {
+        setStatus("Error: " + err.message, true);
+      }
     }
   }
 
@@ -2024,6 +2053,12 @@
     return equity;
   }
 
+  function latestRowsSourceLabel() {
+    if (latestRowsSource === "static") return "Static historical back-test data loaded";
+    if (latestRowsSource === "live") return "Updated from refreshed daily data";
+    return "Historical data loaded";
+  }
+
   function equityDataForRange() {
     if (!latestRows.length) return [];
     const strategy = backtestParameterizedGuarded(latestRows, DEFAULT_GUARDED).equity;
@@ -2096,7 +2131,7 @@
       svg.innerHTML = "";
       equityChartPoints = [];
       equityChartPlot = null;
-      $("equityChartMeta").textContent = "Refresh signal or choose a wider date range to draw the equity chart.";
+      $("equityChartMeta").textContent = "Choose a wider date range to draw the equity chart.";
       return;
     }
 
@@ -2180,7 +2215,7 @@
       hoverCapture.addEventListener("mouseleave", hideEquityChartTooltip);
     }
     const last = data[data.length - 1];
-    $("equityChartMeta").textContent = `${data.length} trading sessions shown on a log scale: ${startDate} to ${endDate}. Default strategy ${fmtWholeCurrency(last.strategy)} vs SPX ${fmtWholeCurrency(last.spx)}.`;
+    $("equityChartMeta").textContent = `${latestRowsSourceLabel()}; Refresh signal updates with newer daily data. ${data.length} trading sessions shown on a log scale: ${startDate} to ${endDate}. Default strategy ${fmtWholeCurrency(last.strategy)} vs SPX ${fmtWholeCurrency(last.spx)}.`;
   }
 
   function showEquityChartTooltip(event) {
@@ -2264,7 +2299,7 @@
       : fmtPct(result.recoveryTarget / result.latest.close - 1);
   }
 
-  refresh();
+  loadStaticHistoricalBacktest().then(refresh);
 </script>
 </body>
 </html>
