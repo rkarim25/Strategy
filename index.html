@@ -1215,27 +1215,39 @@
   async function refresh() {
     try {
       setStatus("Fetching daily S&P data...");
-      const response = await fetch(WORKER_DAILY_URL, { cache: "no-store" });
-      if (!response.ok) throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
-      const csv = await response.text();
+      const { text: csv } = await fetchTextWithDiagnostics(WORKER_DAILY_URL, "Daily data");
 
       const rows = parseCsv(csv);
       if (rows.length < 260) throw new Error("Not enough daily data. Need at least ~260 rows.");
       latestRows = rows;
       const eodResult = computeSignal(rows);
 
-      const livePrice = await getLivePrice();
-      const liveRows = livePrice == null ? rows : appendIntradayRow(rows, livePrice);
+      setStatus("Fetching live SPX quote...");
+      let livePriceInfo = null;
+      let quoteWarning = "";
+      try {
+        livePriceInfo = await getLivePrice();
+      } catch (quoteErr) {
+        console.warn(quoteErr);
+        quoteWarning = quoteErr.message || String(quoteErr);
+      }
+
+      const liveRows = livePriceInfo?.price == null ? rows : appendIntradayRow(rows, livePriceInfo.price);
       const liveResult = computeSignal(liveRows);
-      if (livePrice == null) {
-        liveResult.explanation = "No intraday price provided; showing last completed close as placeholder.";
+      if (livePriceInfo?.price == null) {
+        liveResult.explanation = quoteWarning
+          ? `Live quote unavailable; showing last completed close as placeholder. ${quoteWarning}`
+          : "No intraday price provided; showing last completed close as placeholder.";
       }
 
       render(eodResult, liveResult);
       renderChart();
       renderBacktestEquityChart();
       runCalculator();
-      setStatus(`Loaded ${rows.length} daily rows. Last completed close: ${eodResult.latest.date}.`);
+      const quoteStatus = livePriceInfo?.price == null
+        ? `Live quote failed; using last completed close. ${quoteWarning}`
+        : `Live quote loaded from ${livePriceInfo.source}.`;
+      setStatus(`Loaded ${rows.length} daily rows. Last completed close: ${eodResult.latest.date}. ${quoteStatus}`, livePriceInfo?.price == null);
     } catch (err) {
       console.error(err);
       setStatus("Error: " + err.message, true);
@@ -1245,6 +1257,27 @@
   function setStatus(message, isError = false) {
     $("status").textContent = message;
     $("status").className = isError ? "small bad" : "small";
+  }
+
+  async function fetchTextWithDiagnostics(url, label) {
+    let response;
+    try {
+      response = await fetch(url, { cache: "no-store" });
+    } catch (err) {
+      throw new Error(`${label} request could not reach ${url}. ${networkFailureHint(err)}`);
+    }
+
+    const text = await response.text();
+    if (!response.ok) {
+      const body = text.trim().slice(0, 240);
+      throw new Error(`${label} request to ${url} failed: HTTP ${response.status} ${response.statusText}${body ? ` - ${body}` : ""}`);
+    }
+    return { response, text };
+  }
+
+  function networkFailureHint(err) {
+    const reason = err?.message ? `Browser error: ${err.message}. ` : "";
+    return `${reason}This usually means the network, DNS, proxy, TLS inspection, browser extension, or CORS policy blocked the request before the site received an HTTP status.`;
   }
 
   function showStrategy(strategyId) {
@@ -1290,20 +1323,31 @@
 
   async function getLivePrice() {
     const manual = Number($("manualIntradayPrice").value);
-    if (Number.isFinite(manual) && manual > 0) return manual;
-
-    const response = await fetch(WORKER_QUOTE_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error(`Intraday fetch failed: ${response.status} ${response.statusText}`);
-    const text = await response.text();
-    try {
-      const json = JSON.parse(text);
-      const price = Number(json.price ?? json.close ?? json.last ?? json.value);
-      if (Number.isFinite(price) && price > 0) return price;
-    } catch (_) {
-      const parsed = parseCsv(text);
-      if (parsed.length) return parsed[parsed.length - 1].close;
+    if (Number.isFinite(manual) && manual > 0) {
+      return { price: manual, source: "manual override" };
     }
-    throw new Error("Intraday source must return JSON with price/close/last or CSV with Date,Close.");
+
+    const { response, text } = await fetchTextWithDiagnostics(WORKER_QUOTE_URL, "Intraday quote");
+    let parsedJson = null;
+    try {
+      parsedJson = JSON.parse(text);
+    } catch (_) {
+      // Some proxies return CSV-compatible data; try that before reporting an invalid quote response.
+      try {
+        const parsed = parseCsv(text);
+        if (parsed.length) {
+          return { price: parsed[parsed.length - 1].close, source: `${WORKER_QUOTE_URL} (CSV fallback)` };
+        }
+      } catch (_) {
+        // Fall through to the endpoint-specific diagnostic below.
+      }
+    }
+
+    const price = Number(parsedJson?.price ?? parsedJson?.close ?? parsedJson?.last ?? parsedJson?.value);
+    if (Number.isFinite(price) && price > 0) {
+      return { price, source: `${WORKER_QUOTE_URL} (HTTP ${response.status})` };
+    }
+    throw new Error(`Intraday quote response from ${WORKER_QUOTE_URL} must return JSON with price/close/last or CSV with Date,Close.`);
   }
 
   function appendIntradayRow(rows, price) {
