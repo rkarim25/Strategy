@@ -372,6 +372,44 @@
       font-size: 13px;
       font-weight: 650;
     }
+    .news-score-card {
+      display: grid;
+      grid-template-columns: minmax(110px, .35fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .news-score-badge {
+      display: grid;
+      place-items: center;
+      min-height: 118px;
+      border-radius: 24px;
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .news-score-badge .score {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+    .news-score-badge .label {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .news-links {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .news-links a {
+      color: var(--accent);
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .news-links a:hover { text-decoration: underline; }
     @media (max-width: 850px) {
       main {
         width: min(100% - 28px, 760px);
@@ -380,6 +418,7 @@
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .news-score-card { grid-template-columns: 1fr; }
       .two-col { grid-template-columns: 1fr; }
       .signal { font-size: 46px; }
       .site-nav {
@@ -597,6 +636,23 @@
         <tr><th>3x trigger (B)</th><td>-25% drawdown from S&amp;P high-water close</td></tr>
       </tbody>
     </table>
+  </section>
+
+  <section class="card section-gap" aria-labelledby="newsScoreTitle">
+    <h2 id="newsScoreTitle">7-Day News Bullishness Score</h2>
+    <div class="news-score-card">
+      <div id="newsScoreBadge" class="news-score-badge">
+        <div>
+          <div id="newsScoreValue" class="score">-</div>
+          <div id="newsScoreLabel" class="label">Loading</div>
+        </div>
+      </div>
+      <div>
+        <p id="newsScoreExplanation">Loading headline-based score from the scheduled static refresh.</p>
+        <div id="newsScoreMeta" class="small">Headline heuristic only; not investment advice or part of the mechanical signal.</div>
+        <div id="newsScoreLinks" class="news-links"></div>
+      </div>
+    </div>
   </section>
 
   <section class="card section-gap">
@@ -1174,6 +1230,7 @@
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const STATIC_DAILY_URL = "spx_daily.csv";
   const STATIC_SIGNAL_URL = "latest_signal.json";
+  const STATIC_NEWS_SCORE_URL = "news_score.json";
   const AUTO_REFRESH_MS = 30 * 60 * 1000;
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
@@ -1461,6 +1518,59 @@
       parts.push(`static quote ${fmtMoney(Number(metadata.quote_price))}${quoteTime ? ` as of ${quoteTime}` : ""}`);
     }
     return parts.length ? ` Static refresh ${parts.join("; ")}.` : " Static signal metadata loaded.";
+  }
+
+  async function loadNewsScore() {
+    try {
+      const { text } = await fetchTextWithDiagnostics(STATIC_NEWS_SCORE_URL, "Static news score");
+      renderNewsScore(JSON.parse(text));
+    } catch (err) {
+      console.warn(err);
+      renderNewsScore(null);
+    }
+  }
+
+  function renderNewsScore(payload) {
+    const score = Number(payload?.score);
+    const hasScore = Number.isFinite(score);
+    const label = payload?.label || (hasScore ? "Available" : "Unavailable");
+    $("newsScoreValue").textContent = hasScore ? `${score}/10` : "-";
+    $("newsScoreLabel").textContent = label;
+    $("newsScoreBadge").className = "news-score-badge " + (
+      hasScore && score >= 7 ? "good" : hasScore && score <= 3 ? "bad" : hasScore ? "warn" : ""
+    );
+    $("newsScoreExplanation").textContent = payload?.explanation
+      || "News score is unavailable from the latest static refresh.";
+    const generated = payload?.generated_at_utc ? `Generated ${formatMetadataTime(payload.generated_at_utc)}.` : "";
+    $("newsScoreMeta").textContent = [
+      generated,
+      "Headline keyword heuristic only; not investment advice or part of the mechanical signal.",
+      "Free RSS feeds can be incomplete and delayed."
+    ].filter(Boolean).join(" ");
+
+    const links = $("newsScoreLinks");
+    links.innerHTML = "";
+    const articles = Array.isArray(payload?.articles) ? payload.articles.slice(0, 5) : [];
+    if (!articles.length) {
+      const empty = document.createElement("div");
+      empty.className = "small";
+      empty.textContent = "No article links available.";
+      links.appendChild(empty);
+      return;
+    }
+    articles.forEach((article) => {
+      const row = document.createElement("div");
+      const anchor = document.createElement("a");
+      anchor.href = article.url;
+      anchor.target = "_blank";
+      anchor.rel = "noopener noreferrer";
+      anchor.textContent = article.title || article.url;
+      const meta = document.createElement("span");
+      meta.className = "small";
+      meta.textContent = ` ${article.source ? `(${article.source}, ` : "("}${article.tone || "neutral"})`;
+      row.append(anchor, meta);
+      links.appendChild(row);
+    });
   }
 
   function startAutoRefresh() {
@@ -2934,6 +3044,7 @@
   }
 
   startAutoRefresh();
+  loadNewsScore();
   loadStaticHistoricalBacktest().then(() => refresh({ reason: "initial live", allowManualOverride: false, force: true }));
 </script>
 </body>

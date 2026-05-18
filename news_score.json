@@ -1,0 +1,83 @@
+{
+  "generated_at_utc": "2026-05-18T21:08:58Z",
+  "window_days": 7,
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: Jamie Dimon warns markets have 'too much exuberance,' joining forecasters like Michael Burry seeing a looming correction.",
+  "articles": [
+    {
+      "title": "Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPbTd1VVZCWkhFQ1hKbkhZbUg2cEgwMFpDWDM1bV94NmNaV3VpNzVyeDA4NmJMMTV1cGdsTEpBekk0Q180TXZoSWJIQTRsRGZzYV9Vdm96ekxEeGgtSi1ueVpyWXAwTXZHRU1kV3pHS2hET2lkNEFsN1lFWDlvQjZiUmJST3k5OElzRjNneU5UN2hIUUtWaGdTQkZCcUI0MWVVWFdkM196V3pZV2NyVTlJNTFLN3BtZXZVM0lOdFhVNUJ2VlBxcUE2VjV4Zw?oc=5",
+      "published": "2026-05-14T22:13:06Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNSlFWTVQ4ZlpZcDd2ZXIyT3hTblVucFl6UTFSaTlaLU5uVTZKT1BiWERJM3FlWHF1T1NldVRqNUFpdW5jN1JOMDNYcHFxajNhdUIwdnQ3b3FFUmVCMWJNUzRWTGFQYlItVmJocTdKbVlrTXVrbUQ5S2RhcTB2cGxteEMxTFo4TG41UkZhemZQOWhOaDNfdEVTdGZkSV91QQ?oc=5",
+      "published": "2026-05-14T23:03:53Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Tech Rally Rolls On as Cisco Highlights AI Fervor: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNV2RIMmx4X0JFY2dsYlVpR1BwYWZLZmpQeGZfcHdrSTBEX2pXdmxxcExEUHJfaW9IOGhMeEw1aWxjMThFNVRqcmFHT3h4Sk1hRzBVVVozbk1KaG1fWEE2cmkxRlYyVEN5ZlBHczlVWF9PRjI1dlZvWS10eV9CWW11b0lEc1NSb2w5WjB4OUtRSjMwYVNXZjFRSTRXSjBzOGN5R1BRQnVaWGlnRHJFQnV0Qml1bzY?oc=5",
+      "published": "2026-05-13T22:07:17Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street boosts S&P 500 targets as AI rally broadens - MSN",
+      "source": "MSN",
+      "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOd1h1S2FQUTZvOW9mUERYdmtCdHJQeTdacjViT0tVSTFuTmloS2FtTGxlbVNwWHRjeW1jbFlVcGR0dGRYUkl3U0Ztazktc0h1UHFweVhjcXpHTFJmODlYTUFGcGNKb0RhdjRiZWN0NjVVZ3RkUlM4c0ZYV3NxbVc2NTJ0eGp2SDB5b0ViWkFFa1h2S3pWYlpVeVlpdEhUVnlydzcxbVg3SU5OVXBOUzkwb1A1dkVQeGdFS1N4Vmc3dy05MnFHSWRQcVYtUExCUTdlYTU2T0NoaE1aeGZpSVIzMFNIcnMwcUtJWmstdGtn?oc=5",
+      "published": "2026-05-12T12:40:02Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Jamie Dimon warns markets have 'too much exuberance,' joining forecasters like Michael Burry seeing a looming correction",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jamie-dimon-warns-markets-too-192500481.html?.tsrc=rss",
+      "published": "2026-05-18T19:25:00Z",
+      "tone": "bearish"
+    }
+  ],
+  "data_source": {
+    "feeds": [
+      {
+        "url": "https://feeds.finance.yahoo.com/rss/2.0/headline?s=%5EGSPC&region=US&lang=en-US",
+        "ok": true,
+        "status": 200,
+        "name": "Yahoo Finance S&P 500",
+        "articles": 20
+      },
+      {
+        "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
+        "ok": true,
+        "status": 200,
+        "name": "MarketWatch MarketPulse",
+        "articles": 0
+      },
+      {
+        "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114",
+        "ok": true,
+        "status": 200,
+        "name": "CNBC Markets",
+        "articles": 30
+      },
+      {
+        "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
+        "ok": true,
+        "status": 200,
+        "name": "Google News market query",
+        "articles": 86
+      }
+    ],
+    "headline_count": 136,
+    "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
+  },
+  "limitations": [
+    "Headline-based keyword heuristic, not investment advice.",
+    "Not part of the mechanical default signal unless explicitly added later.",
+    "Free RSS feeds can be incomplete and delayed."
+  ]
+}

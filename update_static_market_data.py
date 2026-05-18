@@ -4,18 +4,22 @@
 from __future__ import annotations
 
 import csv
+import html
 import json
 import math
 import os
+import re
 import smtplib
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
+from email.utils import parsedate_to_datetime
 from pathlib import Path
+from xml.etree import ElementTree
 
 
 WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily"
@@ -24,6 +28,7 @@ YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC"
 ROOT = Path(__file__).resolve().parent
 DAILY_CSV = ROOT / "spx_daily.csv"
 LATEST_SIGNAL_JSON = ROOT / "latest_signal.json"
+NEWS_SCORE_JSON = ROOT / "news_score.json"
 TRADING_DAYS = 252
 SITE_URL = "https://rkarim25.github.io/Strategy/"
 DEFAULT_ALERT_EMAIL_TO = "rkarim88@gmail.com"
@@ -33,6 +38,86 @@ DEFAULT_GUARDED = {
     "hold2": 0.40,
     "hold3": 0.15,
     "leadPct": 0.0075,
+}
+NEWS_WINDOW_DAYS = 7
+NEWS_FEEDS = [
+    {
+        "name": "Yahoo Finance S&P 500",
+        "url": "https://feeds.finance.yahoo.com/rss/2.0/headline?s=%5EGSPC&region=US&lang=en-US",
+    },
+    {
+        "name": "MarketWatch MarketPulse",
+        "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
+    },
+    {
+        "name": "CNBC Markets",
+        "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114",
+    },
+    {
+        "name": "Google News market query",
+        "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
+    },
+]
+BULLISH_TERMS = {
+    "rally": 2.0,
+    "rallies": 2.0,
+    "record high": 2.0,
+    "all-time high": 2.0,
+    "gain": 1.0,
+    "gains": 1.0,
+    "higher": 1.0,
+    "rise": 1.0,
+    "rises": 1.0,
+    "surge": 1.5,
+    "jumps": 1.3,
+    "rebounds": 1.2,
+    "rebound": 1.2,
+    "optimism": 1.2,
+    "soft landing": 1.6,
+    "earnings beat": 1.6,
+    "beats": 1.0,
+    "rate cut": 1.5,
+    "rate cuts": 1.5,
+    "cooling inflation": 1.6,
+    "inflation cools": 1.6,
+    "jobs growth": 1.0,
+    "strong jobs": 1.0,
+    "ai": 0.6,
+    "buyback": 0.8,
+}
+BEARISH_TERMS = {
+    "selloff": 2.0,
+    "sell-off": 2.0,
+    "plunge": 2.0,
+    "falls": 1.2,
+    "fall": 1.2,
+    "drops": 1.2,
+    "drop": 1.2,
+    "slumps": 1.5,
+    "losses": 1.0,
+    "lower": 1.0,
+    "recession": 2.0,
+    "stagflation": 2.0,
+    "tariff": 1.4,
+    "tariffs": 1.4,
+    "trade war": 1.8,
+    "war": 1.5,
+    "geopolitical": 1.2,
+    "inflation": 0.9,
+    "hot inflation": 1.7,
+    "rate hike": 1.7,
+    "rate hikes": 1.7,
+    "higher yields": 1.5,
+    "yield spike": 1.5,
+    "earnings miss": 1.6,
+    "misses": 1.0,
+    "warning": 1.0,
+    "warns": 1.0,
+    "dangerous": 1.2,
+    "left behind": 1.0,
+    "extremes": 0.8,
+    "masking": 0.8,
+    "default": 1.8,
 }
 
 
@@ -192,6 +277,230 @@ def fetch_quote(sources: dict[str, object]) -> dict[str, object] | None:
     except Exception as exc:
         sources["quote_worker"] = source_result(WORKER_QUOTE_URL, False, error=str(exc))
         return None
+
+
+def local_name(tag: str) -> str:
+    return tag.rsplit("}", 1)[-1].lower()
+
+
+def child_text(element: ElementTree.Element, name: str) -> str:
+    for child in element:
+        if local_name(child.tag) == name:
+            return "".join(child.itertext()).strip()
+    return ""
+
+
+def parse_feed_datetime(value: str) -> datetime | None:
+    if not value:
+        return None
+    try:
+        parsed = parsedate_to_datetime(value)
+    except (TypeError, ValueError):
+        try:
+            parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def normalize_headline(value: str) -> str:
+    normalized = re.sub(r"\s+", " ", html.unescape(value)).strip().lower()
+    normalized = re.sub(r"\s+-\s+[^-]{2,80}$", "", normalized)
+    return re.sub(r"[^a-z0-9 ]+", "", normalized)
+
+
+def keyword_hits(text: str, terms: dict[str, float]) -> tuple[float, list[str]]:
+    lowered = text.lower()
+    score = 0.0
+    hits: list[str] = []
+    for term, weight in terms.items():
+        if re.search(rf"\b{re.escape(term)}\b", lowered):
+            score += weight
+            hits.append(term)
+    return score, hits
+
+
+def score_news_text(title: str, summary: str) -> tuple[float, str, list[str]]:
+    text = f"{title}. {summary}"
+    bullish, bullish_hits = keyword_hits(text, BULLISH_TERMS)
+    bearish, bearish_hits = keyword_hits(text, BEARISH_TERMS)
+    net = bullish - bearish
+    if net >= 1.0:
+        tone = "bullish"
+    elif net <= -1.0:
+        tone = "bearish"
+    else:
+        tone = "neutral"
+    return net, tone, bullish_hits[:3] + bearish_hits[:3]
+
+
+def article_source(item: ElementTree.Element, fallback: str) -> str:
+    source = child_text(item, "source")
+    if source:
+        return html.unescape(source)
+    creator = child_text(item, "creator")
+    return html.unescape(creator) if creator else fallback
+
+
+def parse_rss_articles(feed: dict[str, str], text: str, now: datetime) -> list[dict[str, object]]:
+    root = ElementTree.fromstring(text)
+    cutoff = now - timedelta(days=NEWS_WINDOW_DAYS)
+    articles: list[dict[str, object]] = []
+    for item in root.iter():
+        if local_name(item.tag) not in {"item", "entry"}:
+            continue
+        title = html.unescape(child_text(item, "title"))
+        url = child_text(item, "link")
+        if not url:
+            for child in item:
+                if local_name(child.tag) == "link":
+                    url = child.attrib.get("href", "")
+                    break
+        published = (
+            parse_feed_datetime(child_text(item, "pubdate"))
+            or parse_feed_datetime(child_text(item, "published"))
+            or parse_feed_datetime(child_text(item, "updated"))
+        )
+        if not title or not url or published is None or published < cutoff or published > now:
+            continue
+        summary = html.unescape(child_text(item, "description") or child_text(item, "summary"))
+        raw_score, tone, matched_terms = score_news_text(title, summary)
+        articles.append(
+            {
+                "title": re.sub(r"\s+", " ", title).strip(),
+                "source": article_source(item, feed["name"]),
+                "url": url,
+                "published": iso_utc(published),
+                "tone": tone,
+                "_raw_score": raw_score,
+                "_matched_terms": matched_terms,
+            }
+        )
+    return articles
+
+
+def fetch_news_articles() -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+    now = utc_now()
+    articles: list[dict[str, object]] = []
+    sources: list[dict[str, object]] = []
+    seen: set[str] = set()
+    for feed in NEWS_FEEDS:
+        url = feed["url"]
+        try:
+            status, text, _headers = fetch_url(url, accept="application/rss+xml,application/xml,text/xml", timeout=20)
+            parsed = parse_rss_articles(feed, text, now)
+            added = 0
+            for article in parsed:
+                key = normalize_headline(str(article["title"]))
+                if not key or key in seen:
+                    continue
+                seen.add(key)
+                articles.append(article)
+                added += 1
+            sources.append(source_result(url, True, status) | {"name": feed["name"], "articles": added})
+        except Exception as exc:
+            sources.append(source_result(url, False, error=str(exc)) | {"name": feed["name"]})
+    articles.sort(key=lambda item: str(item["published"]), reverse=True)
+    return articles, sources
+
+
+def news_label(score: int | None) -> str:
+    if score is None:
+        return "Unavailable"
+    if score <= 3:
+        return "Bearish"
+    if score <= 6:
+        return "Neutral"
+    return "Bullish"
+
+
+def concise_headline_list(articles: list[dict[str, object]], tone: str, limit: int = 2) -> list[str]:
+    return [str(item["title"]) for item in articles if item.get("tone") == tone][:limit]
+
+
+def build_news_explanation(articles: list[dict[str, object]], score: int) -> str:
+    bullish = concise_headline_list(articles, "bullish")
+    bearish = concise_headline_list(articles, "bearish")
+    parts = [f"{score}/10 is {news_label(score).lower()} from a 7-day headline keyword scan."]
+    if bullish:
+        parts.append("Bullish drivers: " + "; ".join(bullish) + ".")
+    if bearish:
+        parts.append("Bearish offsets: " + "; ".join(bearish) + ".")
+    if not bullish and not bearish:
+        parts.append("Most recent headlines were mixed or did not hit strong market sentiment keywords.")
+    return " ".join(parts)
+
+
+def build_unavailable_news_payload(error: str) -> dict[str, object]:
+    generated_at_utc = iso_utc(utc_now())
+    return {
+        "generated_at_utc": generated_at_utc,
+        "window_days": NEWS_WINDOW_DAYS,
+        "score": None,
+        "label": "Unavailable",
+        "explanation": "Headline score is unavailable because RSS feeds could not be fetched during the latest refresh.",
+        "articles": [],
+        "data_source": {
+            "feeds": NEWS_FEEDS,
+            "successful_feeds": 0,
+            "errors": [error],
+        },
+        "limitations": [
+            "Headline-based keyword heuristic, not investment advice.",
+            "Not part of the mechanical default signal unless explicitly added later.",
+            "Free RSS feeds can be incomplete and delayed.",
+        ],
+    }
+
+
+def write_news_score_json() -> None:
+    try:
+        articles, sources = fetch_news_articles()
+        if not articles:
+            raise ValueError("No dated market/S&P headlines were available from RSS feeds.")
+        raw_total = sum(float(article.get("_raw_score", 0.0)) for article in articles)
+        normalizer = max(3.0, math.sqrt(len(articles)) * 2.8)
+        score = int(round(max(1, min(10, 5.5 + raw_total / normalizer * 2.5))))
+        selected = sorted(
+            articles,
+            key=lambda article: (abs(float(article.get("_raw_score", 0.0))), str(article["published"])),
+            reverse=True,
+        )[:5]
+        payload_articles = [
+            {key: article[key] for key in ("title", "source", "url", "published", "tone")}
+            for article in selected
+        ]
+        payload = {
+            "generated_at_utc": iso_utc(utc_now()),
+            "window_days": NEWS_WINDOW_DAYS,
+            "score": score,
+            "label": news_label(score),
+            "explanation": build_news_explanation(selected, score),
+            "articles": payload_articles,
+            "data_source": {
+                "feeds": sources,
+                "headline_count": len(articles),
+                "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists.",
+            },
+            "limitations": [
+                "Headline-based keyword heuristic, not investment advice.",
+                "Not part of the mechanical default signal unless explicitly added later.",
+                "Free RSS feeds can be incomplete and delayed.",
+            ],
+        }
+        NEWS_SCORE_JSON.write_text(json.dumps(clean_for_json(payload), indent=2) + "\n", encoding="utf-8")
+        print(f"Wrote {NEWS_SCORE_JSON.name} with {len(articles)} headlines; score {score}/10")
+    except Exception as exc:
+        if NEWS_SCORE_JSON.exists():
+            print(f"News score refresh failed; keeping existing {NEWS_SCORE_JSON.name}: {exc}", file=sys.stderr)
+            return
+        NEWS_SCORE_JSON.write_text(
+            json.dumps(build_unavailable_news_payload(str(exc)), indent=2) + "\n",
+            encoding="utf-8",
+        )
+        print(f"Wrote unavailable {NEWS_SCORE_JSON.name}: {exc}", file=sys.stderr)
 
 
 def sma(values: list[float], end_index: int, window: int) -> float:
@@ -633,6 +942,7 @@ def main() -> int:
     quote = fetch_quote(sources)
     write_daily_csv(rows)
     write_signal_json(rows, quote, sources, previous_payload)
+    write_news_score_json()
     print(f"Wrote {DAILY_CSV.name} with {len(rows)} rows through {rows[-1]['date']}")
     if quote:
         print(f"Wrote {LATEST_SIGNAL_JSON.name} with quote {quote['quote_price']} from {quote.get('quote_source')}")
