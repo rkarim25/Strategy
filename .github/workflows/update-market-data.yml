@@ -23,6 +23,13 @@ jobs:
           python-version: "3.12"
 
       - name: Refresh static market data
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          ALERT_EMAIL_FROM: ${{ secrets.ALERT_EMAIL_FROM }}
         run: python update_static_market_data.py
 
       - name: Commit refreshed data
@@ -34,5 +41,5 @@ jobs:
             echo "No market data changes to commit."
           else
             git commit -m "Update static market data"
-            git push
+            git push || (git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push)
           fi

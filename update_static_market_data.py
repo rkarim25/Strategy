@@ -6,12 +6,15 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
+import smtplib
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
+from email.message import EmailMessage
 from pathlib import Path
 
 
@@ -22,6 +25,8 @@ ROOT = Path(__file__).resolve().parent
 DAILY_CSV = ROOT / "spx_daily.csv"
 LATEST_SIGNAL_JSON = ROOT / "latest_signal.json"
 TRADING_DAYS = 252
+SITE_URL = "https://rkarim25.github.io/Strategy/"
+DEFAULT_ALERT_EMAIL_TO = "rkarim88@gmail.com"
 DEFAULT_GUARDED = {
     "triggerA": 0.05,
     "triggerB": 0.25,
@@ -348,6 +353,216 @@ def clean_for_json(value: object) -> object:
     return value
 
 
+def load_previous_signal_payload() -> dict[str, object] | None:
+    try:
+        return json.loads(LATEST_SIGNAL_JSON.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return None
+    except json.JSONDecodeError as exc:
+        print(f"Could not parse existing {LATEST_SIGNAL_JSON.name}; skipping trade-alert comparison: {exc}")
+        return None
+
+
+def get_signal_target(payload: dict[str, object] | None) -> int | None:
+    if not isinstance(payload, dict):
+        return None
+
+    alert_state = payload.get("trade_alert_state")
+    if isinstance(alert_state, dict):
+        target = alert_state.get("last_observed_target_leverage")
+        if target is not None:
+            try:
+                return int(target)
+            except (TypeError, ValueError):
+                pass
+
+    official_signal = payload.get("official_signal")
+    if isinstance(official_signal, dict):
+        target = official_signal.get("targetLeverage")
+        if target is not None:
+            try:
+                return int(target)
+            except (TypeError, ValueError):
+                return None
+
+    return None
+
+
+def get_signal_asof(payload: dict[str, object] | None) -> str | None:
+    if not isinstance(payload, dict):
+        return None
+
+    alert_state = payload.get("trade_alert_state")
+    if isinstance(alert_state, dict):
+        asof = alert_state.get("last_observed_asof")
+        if asof:
+            return str(asof)
+
+    official_signal = payload.get("official_signal")
+    if isinstance(official_signal, dict):
+        latest = official_signal.get("latest")
+        if isinstance(latest, dict) and latest.get("date"):
+            return str(latest["date"])
+
+    asof = payload.get("data_asof")
+    return str(asof) if asof else None
+
+
+def leverage_label(leverage: int | None) -> str:
+    if leverage is None:
+        return "unknown"
+    if leverage == 0:
+        return "cash"
+    return f"{leverage}x"
+
+
+def format_optional_number(value: object, *, pct: bool = False) -> str:
+    if value is None:
+        return "n/a"
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return str(value)
+    if not math.isfinite(number):
+        return "n/a"
+    if pct:
+        return f"{number:.2%}"
+    return f"{number:,.2f}"
+
+
+def format_signed_pct(value: object) -> str:
+    if value is None:
+        return "n/a"
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return str(value)
+    if not math.isfinite(number):
+        return "n/a"
+    return f"{number:+.2%}"
+
+
+def trade_action(old_leverage: int, new_leverage: int) -> str:
+    if new_leverage == 0:
+        return "SELL/REDUCE exposure and move the strategy allocation to cash/T-bills."
+    if new_leverage > old_leverage:
+        return f"BUY/ADD exposure, increasing the strategy allocation from {leverage_label(old_leverage)} to {leverage_label(new_leverage)}."
+    if new_leverage < old_leverage:
+        return f"SELL/REDUCE exposure, lowering the strategy allocation from {leverage_label(old_leverage)} to {leverage_label(new_leverage)}."
+    return f"HOLD the current {leverage_label(new_leverage)} target exposure."
+
+
+def build_trade_transition(
+    previous_payload: dict[str, object] | None,
+    official_signal: dict[str, object],
+    generated_at_utc: str,
+) -> dict[str, object] | None:
+    previous_target = get_signal_target(previous_payload)
+    current_target = int(official_signal["targetLeverage"])
+    if previous_target is None or previous_target == current_target:
+        return None
+
+    latest = official_signal.get("latest") if isinstance(official_signal.get("latest"), dict) else {}
+    transition_id = f"{get_signal_asof(previous_payload) or 'unknown'}:{previous_target}->{latest.get('date') or 'unknown'}:{current_target}"
+    return {
+        "id": transition_id,
+        "detected_at_utc": generated_at_utc,
+        "previous_asof": get_signal_asof(previous_payload),
+        "current_asof": latest.get("date"),
+        "old_target_leverage": previous_target,
+        "new_target_leverage": current_target,
+        "old_target_label": leverage_label(previous_target),
+        "new_target_label": leverage_label(current_target),
+    }
+
+
+def build_alert_email_body(transition: dict[str, object], official_signal: dict[str, object]) -> str:
+    latest = official_signal.get("latest") if isinstance(official_signal.get("latest"), dict) else {}
+    old_leverage = int(transition["old_target_leverage"])
+    new_leverage = int(transition["new_target_leverage"])
+    close = latest.get("close")
+    sma20 = official_signal.get("latestSma")
+    close_vs_sma = None
+    recovery_lead_level = None
+    try:
+        close_value = float(close)
+        sma_value = float(sma20)
+        if math.isfinite(close_value) and math.isfinite(sma_value) and sma_value > 0:
+            close_vs_sma = close_value / sma_value - 1
+            recovery_lead_level = sma_value * (1 - DEFAULT_GUARDED["leadPct"])
+    except (TypeError, ValueError):
+        pass
+
+    lines = [
+        "Strategy Trade Alert",
+        "",
+        f"Recommendation: {trade_action(old_leverage, new_leverage)}",
+        f"Target leverage change: {transition['old_target_label']} -> {transition['new_target_label']}",
+        f"Official signal as of: {latest.get('date', transition.get('current_asof', 'n/a'))}",
+        "",
+        "Signal details:",
+        f"- SPX close: {format_optional_number(close)}",
+        f"- SMA20: {format_optional_number(sma20)}",
+        f"- Close vs SMA20: {format_signed_pct(close_vs_sma)}",
+        f"- Drawdown from high: {format_optional_number(official_signal.get('latestDd'), pct=True)}",
+        f"- Recovery lead level: {format_optional_number(recovery_lead_level)}",
+        f"- Recovery target: {format_optional_number(official_signal.get('recoveryTarget'))}",
+        f"- Regime: {official_signal.get('regime', 'n/a')}",
+        f"- Above SMA20: {official_signal.get('aboveSma', 'n/a')}",
+        f"- Recovery lead guard passed: {official_signal.get('recoveryOk', 'n/a')}",
+        "",
+        "Entry/P&L:",
+        f"- Active entry date: {official_signal.get('activeEntryDate') or 'n/a'}",
+        f"- Active entry level: {format_optional_number(official_signal.get('activeEntryClose'))}",
+        f"- P&L from active entry: {format_optional_number(official_signal.get('activeEntryPnl'), pct=True)}",
+        "",
+        f"Rule reason: {official_signal.get('explanation', 'n/a')}",
+        "",
+        "Practical note: This is generated from the scheduled static refresh; verify execution level before trading.",
+        f"Site: {SITE_URL}",
+    ]
+    return "\n".join(lines)
+
+
+def smtp_config_from_env() -> dict[str, object]:
+    return {
+        "host": os.environ.get("SMTP_HOST", "").strip(),
+        "port": int(os.environ.get("SMTP_PORT", "587") or "587"),
+        "username": os.environ.get("SMTP_USERNAME", "").strip(),
+        "password": os.environ.get("SMTP_PASSWORD", ""),
+        "to": os.environ.get("ALERT_EMAIL_TO", DEFAULT_ALERT_EMAIL_TO).strip() or DEFAULT_ALERT_EMAIL_TO,
+        "from": os.environ.get("ALERT_EMAIL_FROM", "").strip() or os.environ.get("SMTP_USERNAME", "").strip(),
+    }
+
+
+def send_trade_alert_email(transition: dict[str, object], official_signal: dict[str, object]) -> bool:
+    config = smtp_config_from_env()
+    missing = [key for key in ("host", "username", "password", "from") if not config.get(key)]
+    if missing:
+        print(
+            "Trade alert detected, but email was skipped because SMTP configuration is incomplete "
+            f"(missing: {', '.join(missing)})."
+        )
+        return False
+
+    msg = EmailMessage()
+    msg["Subject"] = (
+        f"Strategy trade alert: {transition['old_target_label']} -> "
+        f"{transition['new_target_label']} on {transition.get('current_asof', 'unknown date')}"
+    )
+    msg["From"] = str(config["from"])
+    msg["To"] = str(config["to"])
+    msg.set_content(build_alert_email_body(transition, official_signal))
+
+    with smtplib.SMTP(str(config["host"]), int(config["port"]), timeout=30) as smtp:
+        smtp.starttls()
+        smtp.login(str(config["username"]), str(config["password"]))
+        smtp.send_message(msg)
+
+    print(f"Sent trade alert email to {config['to']}: {transition['old_target_label']} -> {transition['new_target_label']}")
+    return True
+
+
 def write_daily_csv(rows: list[dict[str, object]]) -> None:
     with DAILY_CSV.open("w", newline="", encoding="utf-8") as fh:
         writer = csv.writer(fh)
@@ -356,11 +571,44 @@ def write_daily_csv(rows: list[dict[str, object]]) -> None:
             writer.writerow([row["date"], f"{float(row['close']):.12g}"])
 
 
-def write_signal_json(rows: list[dict[str, object]], quote: dict[str, object] | None, sources: dict[str, object]) -> None:
+def write_signal_json(
+    rows: list[dict[str, object]],
+    quote: dict[str, object] | None,
+    sources: dict[str, object],
+    previous_payload: dict[str, object] | None,
+) -> None:
+    generated_at_utc = iso_utc(utc_now())
     official_signal = compute_signal(rows)
     provisional_signal = compute_signal(append_quote_row(rows, quote)) if quote else None
+    transition = build_trade_transition(previous_payload, official_signal, generated_at_utc)
+    email_sent = False
+    email_error = None
+    if transition:
+        try:
+            email_sent = send_trade_alert_email(transition, official_signal)
+        except Exception as exc:
+            email_error = str(exc)
+            print(f"Trade alert email failed: {exc}", file=sys.stderr)
+
+    latest = official_signal.get("latest") if isinstance(official_signal.get("latest"), dict) else {}
+    alert_state: dict[str, object] = {
+        "last_observed_asof": latest.get("date"),
+        "last_observed_target_leverage": official_signal["targetLeverage"],
+        "last_observed_target_label": leverage_label(int(official_signal["targetLeverage"])),
+        "last_checked_at_utc": generated_at_utc,
+    }
+    if transition:
+        alert_state["last_transition"] = transition | {
+            "email_sent": email_sent,
+            "email_error": email_error,
+        }
+    elif isinstance(previous_payload, dict) and isinstance(previous_payload.get("trade_alert_state"), dict):
+        previous_transition = previous_payload["trade_alert_state"].get("last_transition")
+        if previous_transition:
+            alert_state["last_transition"] = previous_transition
+
     payload = {
-        "generated_at_utc": iso_utc(utc_now()),
+        "generated_at_utc": generated_at_utc,
         "data_asof": rows[-1]["date"],
         "daily_rows": len(rows),
         "quote_price": quote.get("quote_price") if quote else None,
@@ -373,16 +621,18 @@ def write_signal_json(rows: list[dict[str, object]], quote: dict[str, object] | 
         },
         "official_signal": official_signal,
         "provisional_signal": provisional_signal,
+        "trade_alert_state": alert_state,
     }
     LATEST_SIGNAL_JSON.write_text(json.dumps(clean_for_json(payload), indent=2) + "\n", encoding="utf-8")
 
 
 def main() -> int:
     sources: dict[str, object] = {}
+    previous_payload = load_previous_signal_payload()
     rows = fetch_daily_rows(sources)
     quote = fetch_quote(sources)
     write_daily_csv(rows)
-    write_signal_json(rows, quote, sources)
+    write_signal_json(rows, quote, sources, previous_payload)
     print(f"Wrote {DAILY_CSV.name} with {len(rows)} rows through {rows[-1]['date']}")
     if quote:
         print(f"Wrote {LATEST_SIGNAL_JSON.name} with quote {quote['quote_price']} from {quote.get('quote_source')}")
