@@ -224,6 +224,8 @@
       border-radius: 50%;
     }
     .legend .buy::before { background: var(--good); }
+    .legend .add::before { background: #2563eb; }
+    .legend .reduce::before { background: #b45309; }
     .legend .sell::before { background: var(--bad); }
     .site-nav {
       position: sticky;
@@ -548,6 +550,7 @@
       <button type="button" data-range="5y">5Y</button>
       <button type="button" data-range="10y">10Y</button>
       <button type="button" data-range="20y">20Y</button>
+      <button type="button" data-range="30y">30Y</button>
       <input id="chartStart" type="date" />
       <input id="chartEnd" type="date" />
       <button id="applyCustomRange" type="button" class="secondary">Apply custom</button>
@@ -560,9 +563,12 @@
     <div class="legend">
       <span>SPX close</span>
       <span class="sma">20-day SMA</span>
-      <span class="buy">Buy/add leverage</span>
-      <span class="sell">Sell/reduce leverage</span>
+      <span class="buy">Buy / 1x</span>
+      <span class="add">Add / 2x-3x</span>
+      <span class="reduce">Reduce</span>
+      <span class="sell">Cash exit</span>
     </div>
+    <div class="small" style="margin-top: 6px;">Markers show leverage transitions; hover for exact cash -&gt; 1x, 1x -&gt; 2x, trade P&amp;L, and rule context.</div>
     <div class="attached-chart">
       <h2>Selected Window Equity P&amp;L</h2>
       <div id="signalPnlMeta" class="small">Load data to draw the selected-window equity chart.</div>
@@ -571,8 +577,8 @@
         <div id="signalPnlTooltip" class="chart-tooltip"></div>
       </div>
       <div class="legend">
-        <span class="strategy">Default strategy equity</span>
-        <span class="spx">SPX buy &amp; hold</span>
+        <span class="strategy">Strategy equity (blue)</span>
+        <span class="spx">SPX reference (orange)</span>
       </div>
     </div>
   </section>
@@ -767,6 +773,7 @@
         <button type="button" data-equity-range="5y">5Y</button>
         <button type="button" data-equity-range="10y">10Y</button>
         <button type="button" data-equity-range="20y">20Y</button>
+        <button type="button" data-equity-range="30y">30Y</button>
         <button type="button" data-equity-range="full" class="active">Full</button>
         <input id="equityChartStart" type="date" />
         <input id="equityChartEnd" type="date" />
@@ -778,8 +785,8 @@
         <div id="equityChartTooltip" class="chart-tooltip"></div>
       </div>
       <div class="legend">
-        <span>Default strategy equity</span>
-        <span class="sma">SPX buy &amp; hold with inflows</span>
+        <span class="strategy">Strategy equity (blue)</span>
+        <span class="spx">SPX reference (orange)</span>
       </div>
     </section>
 
@@ -1170,7 +1177,7 @@
   const AUTO_REFRESH_MS = 30 * 60 * 1000;
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
-  const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040 };
+  const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040, "30y": 7560 };
   const DEFAULT_GUARDED = {
     triggerA: 0.05,
     triggerB: 0.25,
@@ -1224,6 +1231,7 @@
   const fmtSignedPct = (x) => Number.isFinite(x) ? `${x >= 0 ? "+" : ""}${fmtPct(x)}` : "-";
   const fmtPctWhole = (x) => Number.isFinite(x) ? x.toFixed(2) + "%" : "-";
   const fmtLeverageLabel = (x) => x === 0 ? "Cash" : `${x}x`;
+  const fmtMarkerLeverageLabel = (x) => x === 0 ? "0x" : `${x}x`;
   const escapeSvgText = (value) => String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -2302,19 +2310,34 @@
       width,
       height,
     };
+    const visibleTradeCount = data.filter((point) => point.trade).length;
+    const showTransitionLabels = visibleTradeCount > 0 && visibleTradeCount <= 25;
+    const tradeMarkerColor = (trade) => {
+      if (trade.type === "buy") return trade.to >= 2 ? "#2563eb" : "#15803d";
+      return trade.to <= 0 ? "#b42318" : "#b45309";
+    };
     const markerForPoint = (point, index) => {
       if (!point.trade) return "";
       const x = xScale(index).toFixed(2);
       const y = yScale(point.close).toFixed(2);
-      const color = point.trade.type === "buy" ? "#15803d" : "#b42318";
+      const color = tradeMarkerColor(point.trade);
       const shape = point.trade.type === "buy"
         ? '<polygon points="0,-6 -5,4.5 5,4.5" />'
         : '<polygon points="-5,-4.5 5,-4.5 0,6" />';
+      const labelY = point.trade.type === "buy" ? -12 : 20;
+      const compactLabel = fmtMarkerLeverageLabel(point.trade.to);
+      const label = showTransitionLabels
+        ? `<g transform="translate(0 ${labelY})">
+            <rect x="-11" y="-8" width="22" height="14" rx="7" fill="#ffffff" stroke="${color}" stroke-width="1.1" />
+            <text x="0" y="2.5" fill="${color}" stroke="none" font-size="9" font-weight="800" text-anchor="middle">${compactLabel}</text>
+          </g>`
+        : "";
       const title = `${point.trade.action} on ${point.date}: ${point.trade.transition} at close ${fmtMoney(point.close)}. ${point.trade.detail}. ${point.trade.reason}`;
       return `
         <g transform="translate(${x} ${y})" fill="${color}" stroke="#ffffff" stroke-width="1.6" aria-label="${escapeSvgText(title)}">
           <title>${escapeSvgText(title)}</title>
           ${shape}
+          ${label}
         </g>
       `;
     };
