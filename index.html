@@ -1126,6 +1126,7 @@
   const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const STATIC_DAILY_URL = "spx_daily.csv";
+  const STATIC_SIGNAL_URL = "latest_signal.json";
   const AUTO_REFRESH_MS = 30 * 60 * 1000;
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
@@ -1156,6 +1157,7 @@
   let lastRefreshAttemptAt = 0;
   let lastRefreshFinishedAt = null;
   let lastSuccessfulWorkerRefreshAt = null;
+  let staticSignalMetadata = null;
 
   const $ = (id) => document.getElementById(id);
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
@@ -1234,6 +1236,7 @@
 
   async function loadStaticHistoricalBacktest() {
     try {
+      const signalMetadata = await loadStaticSignalMetadata();
       const { text: csv } = await fetchTextWithDiagnostics(STATIC_DAILY_URL, "Static historical back-test data");
       const rows = parseCsv(csv);
       if (rows.length < 260) throw new Error("Not enough static historical rows. Need at least ~260 rows.");
@@ -1241,15 +1244,34 @@
       latestRows = rows;
       latestRowsSource = "static";
       const eodResult = computeSignal(rows);
-      render(eodResult, eodResult);
+      let liveResult = eodResult;
+      const staticQuotePrice = Number(signalMetadata?.quote_price);
+      if (Number.isFinite(staticQuotePrice) && staticQuotePrice > 0) {
+        liveResult = computeSignal(appendIntradayRow(rows, staticQuotePrice, signalMetadata.quote_timestamp || signalMetadata.generated_at_utc));
+        const quoteTime = formatMetadataTime(signalMetadata.quote_timestamp || signalMetadata.generated_at_utc);
+        liveResult.explanation = `Scheduled static quote fallback from ${signalMetadata.quote_source || "latest_signal.json"}${quoteTime ? ` (${quoteTime})` : ""}. This intraday signal remains provisional.`;
+      }
+      render(eodResult, liveResult);
       renderChart();
       renderBacktestEquityChart();
       runCalculator();
-      setStatus(`Preloaded official signal from static historical back-test data: ${rows.length} rows from ${rows[0].date} to ${rows[rows.length - 1].date}. Auto-refresh will check live data next.`);
+      setStatus(`Preloaded static market data: ${rows.length} rows from ${rows[0].date} to ${rows[rows.length - 1].date}.${describeStaticSignalMetadata(signalMetadata)} Auto-refresh will check live data next.`);
     } catch (err) {
       console.error(err);
       $("equityChartMeta").textContent = "Static historical back-test data could not be loaded. Use Refresh now to try live daily data.";
       setStatus("Static historical data error: " + err.message, true);
+    }
+  }
+
+  async function loadStaticSignalMetadata() {
+    try {
+      const { text } = await fetchTextWithDiagnostics(STATIC_SIGNAL_URL, "Static signal metadata");
+      staticSignalMetadata = JSON.parse(text);
+      return staticSignalMetadata;
+    } catch (err) {
+      console.warn(err);
+      staticSignalMetadata = null;
+      return null;
     }
   }
 
@@ -1333,6 +1355,12 @@
     if (prefix) parts.push(prefix);
     parts.push("Auto-refreshes every 30 minutes while this page is open.");
     parts.push("Enter a manual SPX level then click refresh to override the live quote.");
+    if (staticSignalMetadata?.generated_at_utc) parts.push(`Static data generated: ${formatMetadataTime(staticSignalMetadata.generated_at_utc)}.`);
+    if (staticSignalMetadata?.data_asof) parts.push(`Static daily data through: ${staticSignalMetadata.data_asof}.`);
+    if (staticSignalMetadata?.quote_price) {
+      const quoteTime = formatMetadataTime(staticSignalMetadata.quote_timestamp || staticSignalMetadata.generated_at_utc);
+      parts.push(`Static quote fallback: ${fmtMoney(Number(staticSignalMetadata.quote_price))}${quoteTime ? ` as of ${quoteTime}` : ""}.`);
+    }
     if (lastRefreshFinishedAt) parts.push(`Last refresh attempt: ${formatRefreshTime(lastRefreshFinishedAt)}.`);
     if (lastSuccessfulWorkerRefreshAt) parts.push(`Last successful worker refresh: ${formatRefreshTime(lastSuccessfulWorkerRefreshAt)}.`);
     $("autoRefreshStatus").textContent = parts.join(" ");
@@ -1345,6 +1373,25 @@
       day: "2-digit",
       month: "short"
     });
+  }
+
+  function formatMetadataTime(value) {
+    if (!value) return "";
+    const parsed = new Date(value);
+    if (Number.isFinite(parsed.getTime())) return formatRefreshTime(parsed);
+    return String(value);
+  }
+
+  function describeStaticSignalMetadata(metadata) {
+    if (!metadata) return " Static signal metadata was not available.";
+    const parts = [];
+    if (metadata.generated_at_utc) parts.push(`generated ${formatMetadataTime(metadata.generated_at_utc)}`);
+    if (metadata.data_asof) parts.push(`daily data through ${metadata.data_asof}`);
+    if (metadata.quote_price) {
+      const quoteTime = formatMetadataTime(metadata.quote_timestamp || metadata.generated_at_utc);
+      parts.push(`static quote ${fmtMoney(Number(metadata.quote_price))}${quoteTime ? ` as of ${quoteTime}` : ""}`);
+    }
+    return parts.length ? ` Static refresh ${parts.join("; ")}.` : " Static signal metadata loaded.";
   }
 
   function startAutoRefresh() {
@@ -1455,10 +1502,10 @@
     throw new Error(`Intraday quote response from ${WORKER_QUOTE_URL} must return JSON with price/close/last or CSV with Date,Close.`);
   }
 
-  function appendIntradayRow(rows, price) {
+  function appendIntradayRow(rows, price, timestamp = null) {
     const out = rows.slice();
     const now = new Date();
-    const stamp = now.toISOString().replace("T", " ").slice(0, 16) + " UTC";
+    const stamp = timestamp ? String(timestamp) : now.toISOString().replace("T", " ").slice(0, 16) + " UTC";
     out.push({ date: stamp, close: price });
     return out;
   }
