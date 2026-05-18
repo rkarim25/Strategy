@@ -1,0 +1,38 @@
+name: Update static market data
+
+on:
+  schedule:
+    - cron: "*/30 14-21 * * 1-5"
+    - cron: "0 22 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-static-market-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh static market data
+        run: python update_static_market_data.py
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add spx_daily.csv latest_signal.json
+          if git diff --cached --quiet; then
+            echo "No market data changes to commit."
+          else
+            git commit -m "Update static market data"
+            git push
+          fi

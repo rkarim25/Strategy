@@ -201,6 +201,14 @@
       background: var(--accent);
     }
     .legend .sma::before { background: var(--warn); }
+    .legend .buy::before,
+    .legend .sell::before {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .legend .buy::before { background: var(--good); }
+    .legend .sell::before { background: var(--bad); }
     .site-nav {
       position: sticky;
       top: 0;
@@ -534,6 +542,8 @@
     <div class="legend">
       <span>SPX close</span>
       <span class="sma">20-day SMA</span>
+      <span class="buy">Buy/add leverage</span>
+      <span class="sell">Sell/reduce leverage</span>
     </div>
   </section>
 
@@ -1178,6 +1188,12 @@
   };
   const fmtPct = (x) => Number.isFinite(x) ? (x * 100).toFixed(2) + "%" : "-";
   const fmtPctWhole = (x) => Number.isFinite(x) ? x.toFixed(2) + "%" : "-";
+  const fmtLeverageLabel = (x) => x === 0 ? "Cash" : `${x}x`;
+  const escapeSvgText = (value) => String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 
   document.querySelectorAll("[data-strategy-target]").forEach((button) => {
     button.addEventListener("click", () => showStrategy(button.dataset.strategyTarget));
@@ -2068,10 +2084,23 @@
   function chartDataForRange() {
     if (!latestRows.length) return [];
     const closes = latestRows.map((row) => row.close);
+    const leverage = guardedLeverageForParams(latestRows, DEFAULT_GUARDED).leverage;
     const fullData = latestRows.map((row, index) => ({
       date: row.date,
       close: row.close,
-      sma: sma(closes, index, 20)
+      sma: sma(closes, index, 20),
+      trade: index > 0 && leverage[index] !== leverage[index - 1]
+        ? {
+            type: leverage[index] > leverage[index - 1] ? "buy" : "sell",
+            action: leverage[index] > leverage[index - 1] ? "Buy/add" : "Sell/reduce",
+            from: leverage[index - 1],
+            to: leverage[index],
+            transition: `${fmtLeverageLabel(leverage[index - 1])} -> ${fmtLeverageLabel(leverage[index])}`,
+            reason: leverage[index] > leverage[index - 1]
+              ? "Target leverage increased under Guarded A5/B25/X40/Y15 lead-guard logic."
+              : "Target leverage decreased under Guarded A5/B25/X40/Y15 lead-guard logic."
+          }
+        : null
     }));
     if (chartRange === "custom") {
       const start = $("chartStart").value;
@@ -2109,6 +2138,22 @@
       })
       .filter(Boolean)
       .join(" ");
+    const markerForPoint = (point, index) => {
+      if (!point.trade) return "";
+      const x = xScale(index).toFixed(2);
+      const y = yScale(point.close).toFixed(2);
+      const color = point.trade.type === "buy" ? "#15803d" : "#b42318";
+      const shape = point.trade.type === "buy"
+        ? '<polygon points="0,-7 -6,5 6,5" />'
+        : '<polygon points="-6,-5 6,-5 0,7" />';
+      const title = `${point.trade.action} on ${point.date}: ${point.trade.transition} at close ${fmtMoney(point.close)}. ${point.trade.reason}`;
+      return `
+        <g transform="translate(${x} ${y})" fill="${color}" stroke="#ffffff" stroke-width="1.4" aria-label="${escapeSvgText(title)}">
+          <title>${escapeSvgText(title)}</title>
+          ${shape}
+        </g>
+      `;
+    };
 
     chartPoints = data.map((point, index) => ({
       ...point,
@@ -2135,6 +2180,7 @@
       <text x="${width - pad.right}" y="${height - 12}" fill="#9aa4b2" font-size="12" text-anchor="end">${endDate}</text>
       <polyline points="${linePath((point) => point.close)}" fill="none" stroke="#6aa6ff" stroke-width="2.2" />
       <polyline points="${linePath((point) => point.sma)}" fill="none" stroke="#f0b84a" stroke-width="2" />
+      ${data.map(markerForPoint).join("")}
     `;
     $("chartMeta").textContent = `${data.length} trading sessions shown: ${startDate} to ${endDate}. Latest close ${fmtMoney(data[data.length - 1].close)}, SMA20 ${fmtMoney(data[data.length - 1].sma)}.`;
   }
@@ -2152,6 +2198,7 @@
       <strong>${nearest.date}</strong><br>
       Close: ${fmtMoney(nearest.close)}<br>
       SMA20: ${fmtMoney(nearest.sma)}
+      ${nearest.trade ? `<br><span style="color: ${nearest.trade.type === "buy" ? "#15803d" : "#b42318"}; font-weight: 700;">${nearest.trade.action}: ${nearest.trade.transition}</span><br>${nearest.trade.reason}` : ""}
     `;
     tooltip.style.display = "block";
     tooltip.style.left = Math.min(event.clientX - rect.left + 14, rect.width - 190) + "px";
