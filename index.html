@@ -1187,6 +1187,7 @@
     return `${sign}$${Math.round(abs / unit.value).toLocaleString()}${unit.suffix}`;
   };
   const fmtPct = (x) => Number.isFinite(x) ? (x * 100).toFixed(2) + "%" : "-";
+  const fmtSignedPct = (x) => Number.isFinite(x) ? `${x >= 0 ? "+" : ""}${fmtPct(x)}` : "-";
   const fmtPctWhole = (x) => Number.isFinite(x) ? x.toFixed(2) + "%" : "-";
   const fmtLeverageLabel = (x) => x === 0 ? "Cash" : `${x}x`;
   const escapeSvgText = (value) => String(value)
@@ -2081,26 +2082,97 @@
     });
   }
 
+  function buildTradeAnnotations(rows, leverage) {
+    const annotations = Array(rows.length).fill(null);
+    const openLegs = [];
+    const latest = rows[rows.length - 1];
+    const createBaseTrade = (index, prevLev, nextLev) => {
+      const isBuy = nextLev > prevLev;
+      return {
+        type: isBuy ? "buy" : "sell",
+        action: isBuy ? "Buy/add" : "Sell/reduce",
+        from: prevLev,
+        to: nextLev,
+        transition: `${fmtLeverageLabel(prevLev)} -> ${fmtLeverageLabel(nextLev)}`,
+        reason: isBuy
+          ? "Target leverage increased under Guarded A5/B25/X40/Y15 lead-guard logic."
+          : "Target leverage decreased under Guarded A5/B25/X40/Y15 lead-guard logic.",
+        entryLabel: "",
+        exitLabel: "",
+        pnlLabel: "",
+        detail: "",
+      };
+    };
+
+    for (let unit = 1; unit <= (leverage[0] || 0); unit++) {
+      openLegs.push({ entryIndex: 0, entryDate: rows[0].date, entryClose: rows[0].close, unit });
+    }
+
+    for (let index = 1; index < rows.length; index++) {
+      const prevLev = leverage[index - 1];
+      const nextLev = leverage[index];
+      if (nextLev === prevLev) continue;
+
+      const trade = createBaseTrade(index, prevLev, nextLev);
+      if (nextLev > prevLev) {
+        for (let unit = prevLev + 1; unit <= nextLev; unit++) {
+          openLegs.push({ entryIndex: index, entryDate: rows[index].date, entryClose: rows[index].close, unit });
+        }
+        trade.entryLabel = `entry ${fmtMoney(rows[index].close)}`;
+      } else {
+        const closedLegs = [];
+        for (let count = 0; count < prevLev - nextLev; count++) {
+          const leg = openLegs.pop();
+          if (leg) {
+            leg.exitIndex = index;
+            leg.exitDate = rows[index].date;
+            leg.exitClose = rows[index].close;
+            closedLegs.push(leg);
+          }
+        }
+        const avgEntry = closedLegs.length
+          ? closedLegs.reduce((sum, leg) => sum + leg.entryClose, 0) / closedLegs.length
+          : null;
+        const pnl = avgEntry == null ? null : rows[index].close / avgEntry - 1;
+        trade.entryLabel = `${closedLegs.length > 1 ? "avg entry" : "entry"} ${fmtMoney(avgEntry)}`;
+        trade.exitLabel = `exit ${fmtMoney(rows[index].close)}`;
+        trade.pnlLabel = `SPX P&L ${fmtSignedPct(pnl)}`;
+      }
+      annotations[index] = trade;
+    }
+
+    annotations.forEach((trade, index) => {
+      if (!trade || trade.type !== "buy") return;
+      const nextSellIndex = annotations.findIndex((candidate, candidateIndex) => (
+        candidateIndex > index && candidate?.type === "sell"
+      ));
+      const exitRow = nextSellIndex >= 0 ? rows[nextSellIndex] : latest;
+      const pnl = exitRow.close / rows[index].close - 1;
+      trade.exitLabel = nextSellIndex >= 0
+        ? `next reduce ${exitRow.date} at ${fmtMoney(exitRow.close)}`
+        : `open to ${exitRow.date} at ${fmtMoney(exitRow.close)}`;
+      trade.pnlLabel = nextSellIndex >= 0
+        ? `SPX P&L to next reduce ${fmtSignedPct(pnl)}`
+        : `Open SPX P&L ${fmtSignedPct(pnl)}`;
+    });
+
+    annotations.forEach((trade) => {
+      if (!trade) return;
+      trade.detail = [trade.entryLabel, trade.exitLabel, trade.pnlLabel].filter(Boolean).join("; ");
+    });
+    return annotations;
+  }
+
   function chartDataForRange() {
     if (!latestRows.length) return [];
     const closes = latestRows.map((row) => row.close);
     const leverage = guardedLeverageForParams(latestRows, DEFAULT_GUARDED).leverage;
+    const trades = buildTradeAnnotations(latestRows, leverage);
     const fullData = latestRows.map((row, index) => ({
       date: row.date,
       close: row.close,
       sma: sma(closes, index, 20),
-      trade: index > 0 && leverage[index] !== leverage[index - 1]
-        ? {
-            type: leverage[index] > leverage[index - 1] ? "buy" : "sell",
-            action: leverage[index] > leverage[index - 1] ? "Buy/add" : "Sell/reduce",
-            from: leverage[index - 1],
-            to: leverage[index],
-            transition: `${fmtLeverageLabel(leverage[index - 1])} -> ${fmtLeverageLabel(leverage[index])}`,
-            reason: leverage[index] > leverage[index - 1]
-              ? "Target leverage increased under Guarded A5/B25/X40/Y15 lead-guard logic."
-              : "Target leverage decreased under Guarded A5/B25/X40/Y15 lead-guard logic."
-          }
-        : null
+      trade: trades[index]
     }));
     if (chartRange === "custom") {
       const start = $("chartStart").value;
@@ -2146,7 +2218,7 @@
       const shape = point.trade.type === "buy"
         ? '<polygon points="0,-7 -6,5 6,5" />'
         : '<polygon points="-6,-5 6,-5 0,7" />';
-      const title = `${point.trade.action} on ${point.date}: ${point.trade.transition} at close ${fmtMoney(point.close)}. ${point.trade.reason}`;
+      const title = `${point.trade.action} on ${point.date}: ${point.trade.transition} at close ${fmtMoney(point.close)}. ${point.trade.detail}. ${point.trade.reason}`;
       return `
         <g transform="translate(${x} ${y})" fill="${color}" stroke="#ffffff" stroke-width="1.4" aria-label="${escapeSvgText(title)}">
           <title>${escapeSvgText(title)}</title>
@@ -2198,7 +2270,7 @@
       <strong>${nearest.date}</strong><br>
       Close: ${fmtMoney(nearest.close)}<br>
       SMA20: ${fmtMoney(nearest.sma)}
-      ${nearest.trade ? `<br><span style="color: ${nearest.trade.type === "buy" ? "#15803d" : "#b42318"}; font-weight: 700;">${nearest.trade.action}: ${nearest.trade.transition}</span><br>${nearest.trade.reason}` : ""}
+      ${nearest.trade ? `<br><span style="color: ${nearest.trade.type === "buy" ? "#15803d" : "#b42318"}; font-weight: 700;">${nearest.trade.action}: ${nearest.trade.transition}</span><br>${nearest.trade.detail}<br>${nearest.trade.reason}` : ""}
     `;
     tooltip.style.display = "block";
     tooltip.style.left = Math.min(event.clientX - rect.left + 14, rect.width - 190) + "px";
