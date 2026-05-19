@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-05-19T16:52:39Z",
+  "generated_at_utc": "2026-05-19T19:07:21Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: S&P 500 opens muted as hot inflation data signals rates to stay on hold - The Standard (HK).",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: S&P 500 opens muted as hot inflation data signals rates to stay on hold - The Standard (HK); Oil ticks lower as investors weigh mixed signals from Trump on whether U.S. will resume Iran war.",
   "articles": [
     {
       "title": "Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com",
@@ -34,11 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock market today: S&P 500, Nasdaq surge to record highs on Nvidia rally, Chinese shares fall ahead of more Trump-Xi talks - Economy Middle East",
-      "source": "Economy Middle East",
-      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQLTFPX2h5OHV1VjJETExGbGJndWtJTktuMTNaaVFjaFRERWJFbVMxZ1ViWlNHLTQwSW5VQjRjTDVCdFAxVXRDTktPdHpkTm51ajB0cEpqc0ppajlseS1CT19QLV8tbE5KcFROOTJ6VnpEd0pMb1RzTjlJdHlnd1M4Yk9mZjdnaFFpeHVveXowdUhQQWt2TDhvMEhpdVIxTVE0MUZMMzdYaDgweERMUVhDdE92TmN2cy0yUUU5dmFYOWNqb0xjdlV0TVlVX3NSSnQzQ1JaRXBpT1cxVjdqY2FxMGNncE03bzdCMUVB?oc=5",
-      "published": "2026-05-15T05:33:03Z",
-      "tone": "bullish"
+      "title": "Oil ticks lower as investors weigh mixed signals from Trump on whether U.S. will resume Iran war",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/05/19/oil-today-brent-wti-iran-trump-hormuz-iea-supply-crude.html",
+      "published": "2026-05-19T18:44:29Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 85
+        "articles": 89
       }
     ],
-    "headline_count": 135,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
