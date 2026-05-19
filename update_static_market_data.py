@@ -22,12 +22,18 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 
-WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily"
-WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote"
+WORKER_BASE = "https://spx-quote-proxy.rkarim88.workers.dev/"
+WORKER_DAILY_URL = f"{WORKER_BASE}?mode=daily"
+WORKER_QUOTE_URL = f"{WORKER_BASE}?mode=quote"
+WORKER_DAILY_NDX_URL = f"{WORKER_BASE}?mode=daily&symbol=ndx"
+WORKER_QUOTE_NDX_URL = f"{WORKER_BASE}?mode=quote&symbol=ndx"
 YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC"
+YAHOO_NDX_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5ENDX"
 ROOT = Path(__file__).resolve().parent
 DAILY_CSV = ROOT / "spx_daily.csv"
 LATEST_SIGNAL_JSON = ROOT / "latest_signal.json"
+NDX_DAILY_CSV = ROOT / "ndx_daily.csv"
+LATEST_NDX_SIGNAL_JSON = ROOT / "latest_ndx_signal.json"
 NEWS_SCORE_JSON = ROOT / "news_score.json"
 TRADING_DAYS = 252
 SITE_URL = "https://rkarim25.github.io/Strategy/"
@@ -178,20 +184,30 @@ def parse_daily_csv(text: str) -> list[dict[str, object]]:
     return [deduped[key] for key in sorted(deduped)]
 
 
-def fetch_worker_daily(sources: dict[str, object]) -> list[dict[str, object]]:
+def fetch_worker_daily(
+    sources: dict[str, object],
+    *,
+    worker_daily_url: str = WORKER_DAILY_URL,
+    source_key: str = "daily_worker",
+) -> list[dict[str, object]]:
     try:
-        status, text, _headers = fetch_url(WORKER_DAILY_URL, accept="text/csv,application/json")
+        status, text, _headers = fetch_url(worker_daily_url, accept="text/csv,application/json")
         rows = parse_daily_csv(text)
         if len(rows) < 260:
             raise ValueError(f"worker daily returned only {len(rows)} rows")
-        sources["daily_worker"] = source_result(WORKER_DAILY_URL, True, status)
+        sources[source_key] = source_result(worker_daily_url, True, status)
         return rows
     except Exception as exc:
-        sources["daily_worker"] = source_result(WORKER_DAILY_URL, False, error=str(exc))
+        sources[source_key] = source_result(worker_daily_url, False, error=str(exc))
         raise
 
 
-def fetch_yahoo_daily(sources: dict[str, object]) -> list[dict[str, object]]:
+def fetch_yahoo_daily(
+    sources: dict[str, object],
+    *,
+    yahoo_chart_url: str = YAHOO_CHART_URL,
+    source_key: str = "daily_yahoo",
+) -> list[dict[str, object]]:
     period1 = 0
     period2 = int(time.time()) + 86400
     params = urllib.parse.urlencode(
@@ -203,7 +219,7 @@ def fetch_yahoo_daily(sources: dict[str, object]) -> list[dict[str, object]]:
             "includeAdjustedClose": "true",
         }
     )
-    url = f"{YAHOO_CHART_URL}?{params}"
+    url = f"{yahoo_chart_url}?{params}"
     try:
         status, text, _headers = fetch_url(url, accept="application/json")
         payload = json.loads(text)
@@ -221,18 +237,33 @@ def fetch_yahoo_daily(sources: dict[str, object]) -> list[dict[str, object]]:
                 rows.append({"date": date, "close": close_value})
         if len(rows) < 260:
             raise ValueError(f"Yahoo chart returned only {len(rows)} rows")
-        sources["daily_yahoo"] = source_result(url, True, status)
+        sources[source_key] = source_result(url, True, status)
         return rows
     except Exception as exc:
-        sources["daily_yahoo"] = source_result(url, False, error=str(exc))
+        sources[source_key] = source_result(url, False, error=str(exc))
         raise
 
 
-def fetch_daily_rows(sources: dict[str, object]) -> list[dict[str, object]]:
+def fetch_daily_rows(
+    sources: dict[str, object],
+    *,
+    worker_daily_url: str = WORKER_DAILY_URL,
+    yahoo_chart_url: str = YAHOO_CHART_URL,
+    worker_source_key: str = "daily_worker",
+    yahoo_source_key: str = "daily_yahoo",
+) -> list[dict[str, object]]:
     try:
-        return fetch_worker_daily(sources)
+        return fetch_worker_daily(
+            sources,
+            worker_daily_url=worker_daily_url,
+            source_key=worker_source_key,
+        )
     except Exception:
-        return fetch_yahoo_daily(sources)
+        return fetch_yahoo_daily(
+            sources,
+            yahoo_chart_url=yahoo_chart_url,
+            source_key=yahoo_source_key,
+        )
 
 
 def parse_quote_payload(text: str) -> dict[str, object]:
@@ -268,14 +299,19 @@ def parse_quote_payload(text: str) -> dict[str, object]:
     }
 
 
-def fetch_quote(sources: dict[str, object]) -> dict[str, object] | None:
+def fetch_quote(
+    sources: dict[str, object],
+    *,
+    worker_quote_url: str = WORKER_QUOTE_URL,
+    source_key: str = "quote_worker",
+) -> dict[str, object] | None:
     try:
-        status, text, _headers = fetch_url(WORKER_QUOTE_URL, accept="application/json,text/csv")
+        status, text, _headers = fetch_url(worker_quote_url, accept="application/json,text/csv")
         quote = parse_quote_payload(text)
-        sources["quote_worker"] = source_result(WORKER_QUOTE_URL, True, status)
+        sources[source_key] = source_result(worker_quote_url, True, status)
         return quote
     except Exception as exc:
-        sources["quote_worker"] = source_result(WORKER_QUOTE_URL, False, error=str(exc))
+        sources[source_key] = source_result(worker_quote_url, False, error=str(exc))
         return None
 
 
@@ -662,16 +698,6 @@ def clean_for_json(value: object) -> object:
     return value
 
 
-def load_previous_signal_payload() -> dict[str, object] | None:
-    try:
-        return json.loads(LATEST_SIGNAL_JSON.read_text(encoding="utf-8"))
-    except FileNotFoundError:
-        return None
-    except json.JSONDecodeError as exc:
-        print(f"Could not parse existing {LATEST_SIGNAL_JSON.name}; skipping trade-alert comparison: {exc}")
-        return None
-
-
 def get_signal_target(payload: dict[str, object] | None) -> int | None:
     if not isinstance(payload, dict):
         return None
@@ -872,8 +898,8 @@ def send_trade_alert_email(transition: dict[str, object], official_signal: dict[
     return True
 
 
-def write_daily_csv(rows: list[dict[str, object]]) -> None:
-    with DAILY_CSV.open("w", newline="", encoding="utf-8") as fh:
+def write_daily_csv(rows: list[dict[str, object]], path: Path = DAILY_CSV) -> None:
+    with path.open("w", newline="", encoding="utf-8") as fh:
         writer = csv.writer(fh)
         writer.writerow(["Date", "Close"])
         for row in rows:
@@ -885,6 +911,10 @@ def write_signal_json(
     quote: dict[str, object] | None,
     sources: dict[str, object],
     previous_payload: dict[str, object] | None,
+    *,
+    output_path: Path = LATEST_SIGNAL_JSON,
+    strategy_name: str = "Guarded A5/B25 SMA20 Lead Signal",
+    send_trade_alerts: bool = True,
 ) -> None:
     generated_at_utc = iso_utc(utc_now())
     official_signal = compute_signal(rows)
@@ -892,7 +922,7 @@ def write_signal_json(
     transition = build_trade_transition(previous_payload, official_signal, generated_at_utc)
     email_sent = False
     email_error = None
-    if transition:
+    if transition and send_trade_alerts:
         try:
             email_sent = send_trade_alert_email(transition, official_signal)
         except Exception as exc:
@@ -925,29 +955,89 @@ def write_signal_json(
         "quote_source": quote.get("quote_source") if quote else None,
         "sources": sources,
         "strategy": {
-            "name": "Guarded A5/B25 SMA20 Lead Signal",
+            "name": strategy_name,
             "parameters": DEFAULT_GUARDED,
         },
         "official_signal": official_signal,
         "provisional_signal": provisional_signal,
         "trade_alert_state": alert_state,
     }
-    LATEST_SIGNAL_JSON.write_text(json.dumps(clean_for_json(payload), indent=2) + "\n", encoding="utf-8")
+    output_path.write_text(json.dumps(clean_for_json(payload), indent=2) + "\n", encoding="utf-8")
+
+
+def load_previous_signal_payload(path: Path = LATEST_SIGNAL_JSON) -> dict[str, object] | None:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return None
+    except json.JSONDecodeError as exc:
+        print(f"Could not parse existing {path.name}; skipping trade-alert comparison: {exc}")
+        return None
+
+
+def refresh_instrument(
+    *,
+    label: str,
+    daily_csv: Path,
+    signal_json: Path,
+    worker_daily_url: str,
+    worker_quote_url: str,
+    yahoo_chart_url: str,
+    strategy_name: str,
+    send_trade_alerts: bool,
+) -> None:
+    sources: dict[str, object] = {}
+    previous_payload = load_previous_signal_payload(signal_json) if send_trade_alerts else None
+    rows = fetch_daily_rows(
+        sources,
+        worker_daily_url=worker_daily_url,
+        yahoo_chart_url=yahoo_chart_url,
+        worker_source_key="daily_worker",
+        yahoo_source_key="daily_yahoo",
+    )
+    quote = fetch_quote(sources, worker_quote_url=worker_quote_url, source_key="quote_worker")
+    write_daily_csv(rows, daily_csv)
+    write_signal_json(
+        rows,
+        quote,
+        sources,
+        previous_payload,
+        output_path=signal_json,
+        strategy_name=strategy_name,
+        send_trade_alerts=send_trade_alerts,
+    )
+    print(f"[{label}] Wrote {daily_csv.name} with {len(rows)} rows through {rows[-1]['date']}")
+    if quote:
+        print(
+            f"[{label}] Wrote {signal_json.name} with quote {quote['quote_price']} "
+            f"from {quote.get('quote_source')}"
+        )
+    else:
+        print(f"[{label}] Wrote {signal_json.name} without live quote; quote endpoint unavailable")
 
 
 def main() -> int:
-    sources: dict[str, object] = {}
-    previous_payload = load_previous_signal_payload()
-    rows = fetch_daily_rows(sources)
-    quote = fetch_quote(sources)
-    write_daily_csv(rows)
-    write_signal_json(rows, quote, sources, previous_payload)
+    refresh_instrument(
+        label="SPX",
+        daily_csv=DAILY_CSV,
+        signal_json=LATEST_SIGNAL_JSON,
+        worker_daily_url=WORKER_DAILY_URL,
+        worker_quote_url=WORKER_QUOTE_URL,
+        yahoo_chart_url=YAHOO_CHART_URL,
+        strategy_name="Guarded A5/B25 SMA20 Lead Signal",
+        send_trade_alerts=True,
+    )
+    refresh_instrument(
+        label="NDX",
+        daily_csv=NDX_DAILY_CSV,
+        signal_json=LATEST_NDX_SIGNAL_JSON,
+        worker_daily_url=WORKER_DAILY_NDX_URL,
+        worker_quote_url=WORKER_QUOTE_NDX_URL,
+        yahoo_chart_url=YAHOO_NDX_CHART_URL,
+        strategy_name="Guarded A5/B25 SMA20 Lead Signal (Nasdaq 100)",
+        send_trade_alerts=False,
+    )
     write_news_score_json()
-    print(f"Wrote {DAILY_CSV.name} with {len(rows)} rows through {rows[-1]['date']}")
-    if quote:
-        print(f"Wrote {LATEST_SIGNAL_JSON.name} with quote {quote['quote_price']} from {quote.get('quote_source')}")
-    else:
-        print(f"Wrote {LATEST_SIGNAL_JSON.name} without live quote; quote endpoint unavailable")
     return 0
 
 

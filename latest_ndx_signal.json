@@ -1,0 +1,80 @@
+{
+  "generated_at_utc": "2026-05-19T21:29:21Z",
+  "data_asof": "2026-05-19",
+  "daily_rows": 7548,
+  "quote_price": 28818.84375,
+  "quote_timestamp": "2026-05-19",
+  "quote_source": "Yahoo Finance chart endpoint",
+  "sources": {
+    "daily_worker": {
+      "url": "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily&symbol=ndx",
+      "ok": true,
+      "status": 200
+    },
+    "quote_worker": {
+      "url": "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=ndx",
+      "ok": true,
+      "status": 200
+    }
+  },
+  "strategy": {
+    "name": "Guarded A5/B25 SMA20 Lead Signal (Nasdaq 100)",
+    "parameters": {
+      "triggerA": 0.05,
+      "triggerB": 0.25,
+      "hold2": 0.4,
+      "hold3": 0.15,
+      "leadPct": 0.0075
+    }
+  },
+  "official_signal": {
+    "latest": {
+      "date": "2026-05-19",
+      "close": 28818.84375
+    },
+    "latestSma": 28202.1916015625,
+    "highWater": 29580.30078125,
+    "highWaterDate": "2026-05-14",
+    "latestDd": -0.025742031390453723,
+    "regime": "base",
+    "entryClose": null,
+    "entryDate": null,
+    "recoveryTarget": null,
+    "aboveSma": true,
+    "recoveryOk": true,
+    "targetLeverage": 1,
+    "activeEntryClose": 26672.4296875,
+    "activeEntryDate": "2026-04-17",
+    "activeEntryLeverage": 1,
+    "activeEntryPnl": 0.08047313603026995,
+    "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
+  },
+  "provisional_signal": {
+    "latest": {
+      "date": "2026-05-19",
+      "close": 28818.84375
+    },
+    "latestSma": 28296.26982421875,
+    "highWater": 29580.30078125,
+    "highWaterDate": "2026-05-14",
+    "latestDd": -0.025742031390453723,
+    "regime": "base",
+    "entryClose": null,
+    "entryDate": null,
+    "recoveryTarget": null,
+    "aboveSma": true,
+    "recoveryOk": true,
+    "targetLeverage": 1,
+    "activeEntryClose": 26672.4296875,
+    "activeEntryDate": "2026-04-17",
+    "activeEntryLeverage": 1,
+    "activeEntryPnl": 0.08047313603026995,
+    "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
+  },
+  "trade_alert_state": {
+    "last_observed_asof": "2026-05-19",
+    "last_observed_target_leverage": 1,
+    "last_observed_target_label": "1x",
+    "last_checked_at_utc": "2026-05-19T21:29:21Z"
+  }
+}

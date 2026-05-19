@@ -316,6 +316,21 @@
       background: rgba(255, 255, 255, .82);
       box-shadow: none;
     }
+    .site-nav a.site-nav-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 15px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 650;
+      text-decoration: none;
+      background: transparent;
+    }
+    .site-nav a.site-nav-link:hover {
+      background: rgba(255, 255, 255, .82);
+    }
     .page { display: none; }
     .page.active { display: block; }
     .kpi-grid {
@@ -510,7 +525,8 @@
   </p>
 
   <nav class="site-nav" aria-label="Strategies">
-    <button type="button" class="active" data-strategy-target="guardedStrategy">Guarded A5/B25 SMA20 Lead Signal</button>
+    <button type="button" class="active" data-strategy-target="guardedStrategy">Guarded A5/B25 SMA20 Lead (SPX)</button>
+    <a class="site-nav-link" href="ndx_guarded.html">Guarded A5/B25 (Nasdaq 100)</a>
     <button type="button" data-strategy-target="momentumStrategy">Momentum Strategy Research</button>
   </nav>
 
