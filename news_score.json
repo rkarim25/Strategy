@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-05-18T22:58:54Z",
+  "generated_at_utc": "2026-05-19T16:52:39Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com; Wall Street ends higher on tech rally; investors eye Beijing talks - Yahoo Finance. Bearish offsets: S&P 500 futures are flat after index posts second losing day amid tech selloff: Live updates.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: S&P 500 opens muted as hot inflation data signals rates to stay on hold - The Standard (HK).",
   "articles": [
     {
       "title": "Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com",
@@ -13,17 +13,10 @@
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 futures are flat after index posts second losing day amid tech selloff: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/18/stock-market-today-live-updates.html",
-      "published": "2026-05-18T22:24:32Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOZThzNFh0QThUVEdWa2g1dkp6dk5zSHloVUw2cWJzM3BOTEI1VmxZY0ZJb2dqUUJYajV1cHZHY3NEMUNrdUZtam5lSzd1ZFhjQVdzWXdxRy1TclpveWt6ZzdWS3hzajVGRzI5cGd0UVJvSzJjSnlDQmVyMmFKOXh0MzU0OVp6NmJvMlFtS2VNNi1mNHRQ?oc=5",
-      "published": "2026-05-14T20:21:11Z",
+      "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNSlFWTVQ4ZlpZcDd2ZXIyT3hTblVucFl6UTFSaTlaLU5uVTZKT1BiWERJM3FlWHF1T1NldVRqNUFpdW5jN1JOMDNYcHFxajNhdUIwdnQ3b3FFUmVCMWJNUzRWTGFQYlItVmJocTdKbVlrTXVrbUQ5S2RhcTB2cGxteEMxTFo4TG41UkZhemZQOWhOaDNfdEVTdGZkSV91QQ?oc=5",
+      "published": "2026-05-14T23:03:53Z",
       "tone": "bullish"
     },
     {
@@ -34,10 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street boosts S&P 500 targets as AI rally broadens - MSN",
-      "source": "MSN",
-      "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOd1h1S2FQUTZvOW9mUERYdmtCdHJQeTdacjViT0tVSTFuTmloS2FtTGxlbVNwWHRjeW1jbFlVcGR0dGRYUkl3U0Ztazktc0h1UHFweVhjcXpHTFJmODlYTUFGcGNKb0RhdjRiZWN0NjVVZ3RkUlM4c0ZYV3NxbVc2NTJ0eGp2SDB5b0ViWkFFa1h2S3pWYlpVeVlpdEhUVnlydzcxbVg3SU5OVXBOUzkwb1A1dkVQeGdFS1N4Vmc3dy05MnFHSWRQcVYtUExCUTdlYTU2T0NoaE1aeGZpSVIzMFNIcnMwcUtJWmstdGtn?oc=5",
-      "published": "2026-05-12T12:40:02Z",
+      "title": "S&P 500 opens muted as hot inflation data signals rates to stay on hold - The Standard (HK)",
+      "source": "The Standard (HK)",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQZ2k2SGZGejRWbXhLRkFTVXdGNXg4d2VwNGQtcVg3TC1GaUp6MHk4eHNsWDVzY2Fpa2dUZmhlUU1SbG4ySy04S3RtSkVxUzVSS1dTOW9YdUdGMkhTQ0JtN0pzZ2VLLWJYcTdwTzdiUXlyck5tUDRUdHlENTIyOW9SVVF5QjhXbWNWOTVNWE10X3ZjR1JES0JkakdTbDExRUJzRzVJeEt6SWZJTFpZSjh4NHR4ZmZwM2hlbTJKS1M5dzJRQQ?oc=5",
+      "published": "2026-05-13T13:35:04Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock market today: S&P 500, Nasdaq surge to record highs on Nvidia rally, Chinese shares fall ahead of more Trump-Xi talks - Economy Middle East",
+      "source": "Economy Middle East",
+      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQLTFPX2h5OHV1VjJETExGbGJndWtJTktuMTNaaVFjaFRERWJFbVMxZ1ViWlNHLTQwSW5VQjRjTDVCdFAxVXRDTktPdHpkTm51ajB0cEpqc0ppajlseS1CT19QLV8tbE5KcFROOTJ6VnpEd0pMb1RzTjlJdHlnd1M4Yk9mZjdnaFFpeHVveXowdUhQQWt2TDhvMEhpdVIxTVE0MUZMMzdYaDgweERMUVhDdE92TmN2cy0yUUU5dmFYOWNqb0xjdlV0TVlVX3NSSnQzQ1JaRXBpT1cxVjdqY2FxMGNncE03bzdCMUVB?oc=5",
+      "published": "2026-05-15T05:33:03Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 85
       }
     ],
-    "headline_count": 138,
+    "headline_count": 135,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
