@@ -154,6 +154,58 @@
       color: #fff;
       border-color: var(--accent);
     }
+    .range-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      align-items: flex-end;
+    }
+    .range-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 5px;
+    }
+    .range-unit > button[data-range],
+    .range-unit > button[data-equity-range] {
+      min-width: 46px;
+    }
+    .range-shift {
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+    }
+    .range-shift button.range-nudge {
+      width: 24px;
+      height: 22px;
+      min-width: 0;
+      padding: 0;
+      border-radius: 7px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .72);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1;
+      box-shadow: none;
+      opacity: .88;
+    }
+    .range-shift button.range-nudge:hover:not(:disabled) {
+      color: var(--text);
+      border-color: #c7cdd6;
+      background: #fff;
+      opacity: 1;
+    }
+    .range-shift button.range-nudge:disabled {
+      opacity: .28;
+      cursor: default;
+    }
+    .range-custom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-left: 4px;
+    }
     .chart-box {
       position: relative;
       width: 100%;
@@ -372,44 +424,6 @@
       font-size: 13px;
       font-weight: 650;
     }
-    .news-score-card {
-      display: grid;
-      grid-template-columns: minmax(110px, .35fr) minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
-    }
-    .news-score-badge {
-      display: grid;
-      place-items: center;
-      min-height: 118px;
-      border-radius: 24px;
-      background: var(--accent-soft);
-      border: 1px solid var(--line);
-      text-align: center;
-    }
-    .news-score-badge .score {
-      font-size: 46px;
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.045em;
-    }
-    .news-score-badge .label {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-    }
-    .news-links {
-      display: grid;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .news-links a {
-      color: var(--accent);
-      font-weight: 650;
-      text-decoration: none;
-    }
-    .news-links a:hover { text-decoration: underline; }
     @media (max-width: 850px) {
       main {
         width: min(100% - 28px, 760px);
@@ -418,7 +432,6 @@
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .news-score-card { grid-template-columns: 1fr; }
       .two-col { grid-template-columns: 1fr; }
       .signal { font-size: 46px; }
       .site-nav {
@@ -455,6 +468,14 @@
         width: auto;
         flex: 1 1 auto;
         padding: 9px 12px;
+      }
+      .range-unit > button[data-range],
+      .range-unit > button[data-equity-range] {
+        width: 100%;
+      }
+      .range-shift button.range-nudge {
+        flex: 1 1 auto;
+        width: auto;
       }
       .range-controls input,
       .range-controls button.secondary {
@@ -581,18 +602,20 @@
 
   <section class="card" style="margin-top: 18px;">
     <h2>SPX Close vs 20-Day SMA</h2>
-    <div class="row range-controls">
-      <button type="button" data-range="1w">1W</button>
-      <button type="button" data-range="1m">1M</button>
-      <button type="button" data-range="3m">3M</button>
-      <button type="button" data-range="1y" class="active">1Y</button>
-      <button type="button" data-range="5y">5Y</button>
-      <button type="button" data-range="10y">10Y</button>
-      <button type="button" data-range="20y">20Y</button>
-      <button type="button" data-range="30y">30Y</button>
-      <input id="chartStart" type="date" />
-      <input id="chartEnd" type="date" />
-      <button id="applyCustomRange" type="button" class="secondary">Apply custom</button>
+    <div class="range-controls range-toolbar" id="signalRangeToolbar">
+      <div class="range-unit"><button type="button" data-range="1w">1W</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1w" data-range-direction="back" aria-label="Pan 1W earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1w" data-range-direction="forward" aria-label="Pan 1W later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-range="1m">1M</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1m" data-range-direction="back" aria-label="Pan 1M earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1m" data-range-direction="forward" aria-label="Pan 1M later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-range="3m">3M</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="3m" data-range-direction="back" aria-label="Pan 3M earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="3m" data-range-direction="forward" aria-label="Pan 3M later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-range="1y" class="active">1Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1y" data-range-direction="back" aria-label="Pan 1Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1y" data-range-direction="forward" aria-label="Pan 1Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-range="5y">5Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="5y" data-range-direction="back" aria-label="Pan 5Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="5y" data-range-direction="forward" aria-label="Pan 5Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-range="10y">10Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="10y" data-range-direction="back" aria-label="Pan 10Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="10y" data-range-direction="forward" aria-label="Pan 10Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-range="20y">20Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="20y" data-range-direction="back" aria-label="Pan 20Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="20y" data-range-direction="forward" aria-label="Pan 20Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-range="30y">30Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="30y" data-range-direction="back" aria-label="Pan 30Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="30y" data-range-direction="forward" aria-label="Pan 30Y later">&#8250;</button></div></div>
+      <div class="range-custom">
+        <input id="chartStart" type="date" />
+        <input id="chartEnd" type="date" />
+        <button id="applyCustomRange" type="button" class="secondary">Apply custom</button>
+      </div>
     </div>
     <div id="chartMeta" class="small" style="margin-top: 10px;">Load data to draw the chart.</div>
     <div class="chart-box">
@@ -636,23 +659,6 @@
         <tr><th>3x trigger (B)</th><td>-25% drawdown from S&amp;P high-water close</td></tr>
       </tbody>
     </table>
-  </section>
-
-  <section class="card section-gap" aria-labelledby="newsScoreTitle">
-    <h2 id="newsScoreTitle">7-Day News Bullishness Score</h2>
-    <div class="news-score-card">
-      <div id="newsScoreBadge" class="news-score-badge">
-        <div>
-          <div id="newsScoreValue" class="score">-</div>
-          <div id="newsScoreLabel" class="label">Loading</div>
-        </div>
-      </div>
-      <div>
-        <p id="newsScoreExplanation">Loading headline-based score from the scheduled static refresh.</p>
-        <div id="newsScoreMeta" class="small">Headline heuristic only; not investment advice or part of the mechanical signal.</div>
-        <div id="newsScoreLinks" class="news-links"></div>
-      </div>
-    </div>
   </section>
 
   <section class="card section-gap">
@@ -816,6 +822,28 @@
         29.39% to 39.09%, while max drawdown improved from -34.37% to -27.51% in the project backtest.
       </p>
     </section>
+    <section class="card section-gap">
+      <h2>Top 20 Strategy Drawdowns</h2>
+      <p class="small">Largest peak-to-trough declines on default Guarded strategy equity over the full back-test sample.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Depth</th>
+              <th>Peak</th>
+              <th>Trough</th>
+              <th>Recovery</th>
+              <th>Period</th>
+              <th>Trading days</th>
+            </tr>
+          </thead>
+          <tbody id="topDrawdownsBody">
+            <tr><td colspan="7">Load historical data to compute drawdowns.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
     <section class="card section-gap">
       <h2>SPX vs Default Strategy Equity</h2>
@@ -824,16 +852,18 @@
         newer daily data is available. Both lines start at $100 and include $10 annual inflows. The chart uses a log
         scale so the SPX buy-and-hold line remains visible beside the much larger strategy result.
       </p>
-      <div class="row range-controls">
-        <button type="button" data-equity-range="1y">1Y</button>
-        <button type="button" data-equity-range="5y">5Y</button>
-        <button type="button" data-equity-range="10y">10Y</button>
-        <button type="button" data-equity-range="20y">20Y</button>
-        <button type="button" data-equity-range="30y">30Y</button>
-        <button type="button" data-equity-range="full" class="active">Full</button>
-        <input id="equityChartStart" type="date" />
-        <input id="equityChartEnd" type="date" />
-        <button id="applyEquityCustomRange" type="button" class="secondary">Apply custom</button>
+      <div class="range-controls range-toolbar" id="equityRangeToolbar">
+      <div class="range-unit"><button type="button" data-equity-range="1y">1Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="1y" data-range-direction="back" aria-label="Pan 1Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="1y" data-range-direction="forward" aria-label="Pan 1Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-equity-range="5y">5Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="5y" data-range-direction="back" aria-label="Pan 5Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="5y" data-range-direction="forward" aria-label="Pan 5Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-equity-range="10y">10Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="10y" data-range-direction="back" aria-label="Pan 10Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="10y" data-range-direction="forward" aria-label="Pan 10Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-equity-range="20y">20Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="20y" data-range-direction="back" aria-label="Pan 20Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="20y" data-range-direction="forward" aria-label="Pan 20Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-equity-range="30y">30Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="30y" data-range-direction="back" aria-label="Pan 30Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="30y" data-range-direction="forward" aria-label="Pan 30Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-equity-range="full" class="active">Full</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="1y" data-range-direction="back" aria-label="Pan 1 year earlier from end">&#8249;</button><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="1y" data-range-direction="forward" aria-label="Pan 1 year later toward end">&#8250;</button></div></div>
+        <div class="range-custom">
+          <input id="equityChartStart" type="date" />
+          <input id="equityChartEnd" type="date" />
+          <button id="applyEquityCustomRange" type="button" class="secondary">Apply custom</button>
+        </div>
       </div>
       <div id="equityChartMeta" class="small" style="margin-top: 10px;">Loading static historical back-test data...</div>
       <div class="chart-box">
@@ -1230,7 +1260,6 @@
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const STATIC_DAILY_URL = "spx_daily.csv";
   const STATIC_SIGNAL_URL = "latest_signal.json";
-  const STATIC_NEWS_SCORE_URL = "news_score.json";
   const AUTO_REFRESH_MS = 30 * 60 * 1000;
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
@@ -1252,7 +1281,9 @@
   let latestRows = [];
   let latestRowsSource = "none";
   let chartRange = "1y";
+  let chartRangeOffset = 0;
   let equityChartRange = "full";
+  let equityChartRangeOffset = 0;
   let chartPoints = [];
   let chartPlot = null;
   let signalPnlPoints = [];
@@ -1305,32 +1336,45 @@
   document.querySelectorAll("[data-range]").forEach((button) => {
     button.addEventListener("click", () => {
       chartRange = button.dataset.range;
+      chartRangeOffset = 0;
       $("chartStart").value = "";
       $("chartEnd").value = "";
       setActiveRangeButton(chartRange);
       renderChart();
       renderSignalPnlChart();
+      updateRangeNudgeStates();
     });
   });
   document.querySelectorAll("[data-equity-range]").forEach((button) => {
     button.addEventListener("click", () => {
       equityChartRange = button.dataset.equityRange;
+      equityChartRangeOffset = 0;
       $("equityChartStart").value = "";
       $("equityChartEnd").value = "";
       setActiveEquityRangeButton(equityChartRange);
       renderBacktestEquityChart();
+      updateRangeNudgeStates();
+    });
+  });
+  document.querySelectorAll(".range-nudge").forEach((button) => {
+    button.addEventListener("click", () => {
+      nudgeChartWindow(button.dataset.rangeChart, button.dataset.rangeStep, button.dataset.rangeDirection);
     });
   });
   $("applyCustomRange").addEventListener("click", () => {
     chartRange = "custom";
+    chartRangeOffset = 0;
     setActiveRangeButton(chartRange);
     renderChart();
     renderSignalPnlChart();
+    updateRangeNudgeStates();
   });
   $("applyEquityCustomRange").addEventListener("click", () => {
     equityChartRange = "custom";
+    equityChartRangeOffset = 0;
     setActiveEquityRangeButton(equityChartRange);
     renderBacktestEquityChart();
+    updateRangeNudgeStates();
   });
   $("runCalculator").addEventListener("click", runCalculator);
   $("resetCalculator").addEventListener("click", resetCalculator);
@@ -1377,6 +1421,8 @@
       renderChart();
       renderSignalPnlChart();
       renderBacktestEquityChart();
+      renderTopDrawdownsTable();
+      updateRangeNudgeStates();
       runCalculator();
       setStatus(`Preloaded static market data: ${rows.length} rows from ${rows[0].date} to ${rows[rows.length - 1].date}.${describeStaticSignalMetadata(signalMetadata)} Auto-refresh will check live data next.`);
     } catch (err) {
@@ -1445,6 +1491,8 @@
         renderChart();
         renderSignalPnlChart();
         renderBacktestEquityChart();
+        renderTopDrawdownsTable();
+        updateRangeNudgeStates();
         runCalculator();
         const quoteStatus = livePriceInfo?.price == null
           ? `Live quote failed; using last completed close. ${quoteWarning}`
@@ -1458,6 +1506,8 @@
           renderChart();
           renderSignalPnlChart();
           renderBacktestEquityChart();
+          renderTopDrawdownsTable();
+          updateRangeNudgeStates();
         } else {
           setStatus("Error: " + err.message, true);
         }
@@ -1520,59 +1570,6 @@
     return parts.length ? ` Static refresh ${parts.join("; ")}.` : " Static signal metadata loaded.";
   }
 
-  async function loadNewsScore() {
-    try {
-      const { text } = await fetchTextWithDiagnostics(STATIC_NEWS_SCORE_URL, "Static news score");
-      renderNewsScore(JSON.parse(text));
-    } catch (err) {
-      console.warn(err);
-      renderNewsScore(null);
-    }
-  }
-
-  function renderNewsScore(payload) {
-    const score = Number(payload?.score);
-    const hasScore = Number.isFinite(score);
-    const label = payload?.label || (hasScore ? "Available" : "Unavailable");
-    $("newsScoreValue").textContent = hasScore ? `${score}/10` : "-";
-    $("newsScoreLabel").textContent = label;
-    $("newsScoreBadge").className = "news-score-badge " + (
-      hasScore && score >= 7 ? "good" : hasScore && score <= 3 ? "bad" : hasScore ? "warn" : ""
-    );
-    $("newsScoreExplanation").textContent = payload?.explanation
-      || "News score is unavailable from the latest static refresh.";
-    const generated = payload?.generated_at_utc ? `Generated ${formatMetadataTime(payload.generated_at_utc)}.` : "";
-    $("newsScoreMeta").textContent = [
-      generated,
-      "Headline keyword heuristic only; not investment advice or part of the mechanical signal.",
-      "Free RSS feeds can be incomplete and delayed."
-    ].filter(Boolean).join(" ");
-
-    const links = $("newsScoreLinks");
-    links.innerHTML = "";
-    const articles = Array.isArray(payload?.articles) ? payload.articles.slice(0, 5) : [];
-    if (!articles.length) {
-      const empty = document.createElement("div");
-      empty.className = "small";
-      empty.textContent = "No article links available.";
-      links.appendChild(empty);
-      return;
-    }
-    articles.forEach((article) => {
-      const row = document.createElement("div");
-      const anchor = document.createElement("a");
-      anchor.href = article.url;
-      anchor.target = "_blank";
-      anchor.rel = "noopener noreferrer";
-      anchor.textContent = article.title || article.url;
-      const meta = document.createElement("span");
-      meta.className = "small";
-      meta.textContent = ` ${article.source ? `(${article.source}, ` : "("}${article.tone || "neutral"})`;
-      row.append(anchor, meta);
-      links.appendChild(row);
-    });
-  }
-
   function startAutoRefresh() {
     updateAutoRefreshStatus();
     window.setInterval(() => {
@@ -1633,7 +1630,10 @@
       renderChart();
       renderSignalPnlChart();
     }
-    if (pageId === "backtestPage") renderBacktestEquityChart();
+    if (pageId === "backtestPage") {
+      renderBacktestEquityChart();
+      renderTopDrawdownsTable();
+    }
   }
 
   function parseCsv(csv) {
@@ -2235,6 +2235,220 @@
       : "-";
   }
 
+
+  function rangeWindowLength(range) {
+    if (range === "full") return latestRows.length;
+    if (range === "custom") return null;
+    return RANGE_SESSIONS[range] || latestRows.length;
+  }
+
+  function maxRangeOffset(range) {
+    if (!latestRows.length || range === "custom") return 0;
+    const len = rangeWindowLength(range);
+    return Math.max(0, latestRows.length - len);
+  }
+
+  function updateRangeNudgeStates() {
+    document.querySelectorAll(".range-nudge").forEach((button) => {
+      const chartKind = button.dataset.rangeChart;
+      const stepKey = button.dataset.rangeStep;
+      const direction = button.dataset.rangeDirection;
+      const range = chartKind === "equity" ? equityChartRange : chartRange;
+      const offset = chartKind === "equity" ? equityChartRangeOffset : chartRangeOffset;
+      const step = RANGE_SESSIONS[stepKey];
+      if (!step) return;
+      if (direction === "forward") {
+        button.disabled = range === "custom" || offset === 0;
+        return;
+      }
+      if (range === "custom") {
+        button.disabled = false;
+        return;
+      }
+      const activeLen = range === stepKey ? rangeWindowLength(range) : step;
+      const projectedOffset = range === stepKey ? offset + step : step;
+      button.disabled = projectedOffset > maxRangeOffset(stepKey) && range !== "full";
+    });
+  }
+
+  function nudgeCustomRange(chartKind, step, direction) {
+    const startEl = chartKind === "equity" ? $("equityChartStart") : $("chartStart");
+    const endEl = chartKind === "equity" ? $("equityChartEnd") : $("chartEnd");
+    const startValue = startEl.value || latestRows[0].date;
+    const endValue = endEl.value || latestRows[latestRows.length - 1].date;
+    let startIdx = latestRows.findIndex((row) => row.date >= startValue);
+    let endIdx = latestRows.length - 1;
+    for (let i = latestRows.length - 1; i >= 0; i--) {
+      if (latestRows[i].date <= endValue) {
+        endIdx = i;
+        break;
+      }
+    }
+    if (startIdx < 0) startIdx = 0;
+    const delta = direction === "back" ? -step : step;
+    const newStartIdx = Math.max(0, Math.min(latestRows.length - 1, startIdx + delta));
+    const newEndIdx = Math.max(newStartIdx, Math.min(latestRows.length - 1, endIdx + delta));
+    startEl.value = latestRows[newStartIdx].date;
+    endEl.value = latestRows[newEndIdx].date;
+    if (chartKind === "equity") {
+      equityChartRange = "custom";
+      setActiveEquityRangeButton("custom");
+      renderBacktestEquityChart();
+    } else {
+      chartRange = "custom";
+      setActiveRangeButton("custom");
+      renderChart();
+      renderSignalPnlChart();
+    }
+    updateRangeNudgeStates();
+  }
+
+  function nudgeChartWindow(chartKind, stepKey, direction) {
+    if (!latestRows.length) return;
+    const step = RANGE_SESSIONS[stepKey];
+    if (!step) return;
+    let range = chartKind === "equity" ? equityChartRange : chartRange;
+    let offset = chartKind === "equity" ? equityChartRangeOffset : chartRangeOffset;
+
+    if (range === "custom") {
+      nudgeCustomRange(chartKind, step, direction);
+      return;
+    }
+
+    if (range === "full" && chartKind === "equity") {
+      range = stepKey;
+      offset = direction === "back" ? step : 0;
+    } else if (range !== stepKey) {
+      range = stepKey;
+      offset = direction === "back" ? step : 0;
+    } else {
+      offset = direction === "back"
+        ? Math.min(maxRangeOffset(stepKey), offset + step)
+        : Math.max(0, offset - step);
+    }
+
+    if (chartKind === "equity") {
+      equityChartRange = range;
+      equityChartRangeOffset = offset;
+      setActiveEquityRangeButton(range);
+      renderBacktestEquityChart();
+    } else {
+      chartRange = range;
+      chartRangeOffset = offset;
+      setActiveRangeButton(range);
+      renderChart();
+      renderSignalPnlChart();
+    }
+    updateRangeNudgeStates();
+  }
+
+  function sliceRowsByRange(range, offset, startInput, endInput) {
+    if (!latestRows.length) return [];
+    const n = latestRows.length;
+    if (range === "custom") {
+      const start = startInput?.value;
+      const end = endInput?.value;
+      return latestRows.filter((row) => (!start || row.date >= start) && (!end || row.date <= end));
+    }
+    if (range === "full") return latestRows.slice();
+    const len = RANGE_SESSIONS[range] || n;
+    const endExclusive = Math.max(1, n - offset);
+    const start = Math.max(0, endExclusive - len);
+    return latestRows.slice(start, endExclusive);
+  }
+
+  function computeStrategyDrawdownEpisodes() {
+    if (!latestRows.length) return [];
+    const equity = backtestParameterizedGuarded(latestRows, DEFAULT_GUARDED).equity;
+    const episodes = [];
+    let peakValue = equity[0];
+    let peakDate = latestRows[0].date;
+    let inEpisode = false;
+    let episodePeakDate = peakDate;
+    let episodePeakValue = peakValue;
+    let troughDate = peakDate;
+    let troughValue = peakValue;
+
+    for (let i = 0; i < latestRows.length; i++) {
+      const value = equity[i];
+      const date = latestRows[i].date;
+      if (value >= peakValue) {
+        if (inEpisode) {
+          const peakIdx = latestRows.findIndex((row) => row.date === episodePeakDate);
+          const troughIdx = latestRows.findIndex((row) => row.date === troughDate);
+          episodes.push({
+            peakDate: episodePeakDate,
+            troughDate,
+            recoveryDate: date,
+            depth: troughValue / episodePeakValue - 1,
+            tradingDays: Math.max(0, troughIdx - peakIdx),
+            periodStart: episodePeakDate,
+            periodEnd: date,
+          });
+          inEpisode = false;
+        }
+        peakValue = value;
+        peakDate = date;
+        continue;
+      }
+      if (!inEpisode) {
+        inEpisode = true;
+        episodePeakDate = peakDate;
+        episodePeakValue = peakValue;
+        troughDate = date;
+        troughValue = value;
+      } else if (value < troughValue) {
+        troughDate = date;
+        troughValue = value;
+      }
+    }
+
+    if (inEpisode) {
+      const lastDate = latestRows[latestRows.length - 1].date;
+      const peakIdx = latestRows.findIndex((row) => row.date === episodePeakDate);
+      const troughIdx = latestRows.findIndex((row) => row.date === troughDate);
+      episodes.push({
+        peakDate: episodePeakDate,
+        troughDate,
+        recoveryDate: null,
+        depth: troughValue / episodePeakValue - 1,
+        tradingDays: troughIdx - peakIdx,
+        periodStart: episodePeakDate,
+        periodEnd: lastDate,
+      });
+    }
+    return episodes;
+  }
+
+  function renderTopDrawdownsTable() {
+    const tbody = $("topDrawdownsBody");
+    if (!tbody) return;
+    if (!latestRows.length) {
+      tbody.innerHTML = '<tr><td colspan="7">Load historical data to compute drawdowns.</td></tr>';
+      return;
+    }
+    const top = computeStrategyDrawdownEpisodes()
+      .sort((a, b) => a.depth - b.depth)
+      .slice(0, 20);
+    if (!top.length) {
+      tbody.innerHTML = '<tr><td colspan="7">No drawdown episodes found.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = top.map((episode, index) => {
+      const recovery = episode.recoveryDate || "Open";
+      const period = `${episode.periodStart} to ${episode.periodEnd}`;
+      return `<tr>
+        <td>${index + 1}</td>
+        <td>${fmtPct(episode.depth)}</td>
+        <td>${episode.peakDate}</td>
+        <td>${episode.troughDate}</td>
+        <td>${recovery}</td>
+        <td>${period}</td>
+        <td>${episode.tradingDays}</td>
+      </tr>`;
+    }).join("");
+  }
+
   function setActiveRangeButton(range) {
     document.querySelectorAll("[data-range]").forEach((button) => {
       button.classList.toggle("active", button.dataset.range === range);
@@ -2372,12 +2586,9 @@
       prevLeverage: index > 0 ? leverage[index - 1] : 0,
       trade: trades[index]
     }));
-    if (chartRange === "custom") {
-      const start = $("chartStart").value;
-      const end = $("chartEnd").value;
-      return fullData.filter((row) => (!start || row.date >= start) && (!end || row.date <= end));
-    }
-    return fullData.slice(-RANGE_SESSIONS[chartRange]);
+    const rows = sliceRowsByRange(chartRange, chartRangeOffset, $("chartStart"), $("chartEnd"));
+    const allowed = new Set(rows.map((row) => row.date));
+    return fullData.filter((row) => allowed.has(row.date));
   }
 
   function tradeMarkerColor(trade) {
@@ -2867,13 +3078,9 @@
       strategy: strategy[index],
       spx: spx[index],
     }));
-    if (equityChartRange === "custom") {
-      const start = $("equityChartStart").value;
-      const end = $("equityChartEnd").value;
-      return fullData.filter((row) => (!start || row.date >= start) && (!end || row.date <= end));
-    }
-    if (equityChartRange === "full") return fullData;
-    return fullData.slice(-RANGE_SESSIONS[equityChartRange]);
+    const rows = sliceRowsByRange(equityChartRange, equityChartRangeOffset, $("equityChartStart"), $("equityChartEnd"));
+    const allowed = new Set(rows.map((row) => row.date));
+    return fullData.filter((row) => allowed.has(row.date));
   }
 
   function equityLogTicks(logMin, logMax) {
@@ -3080,7 +3287,7 @@
   }
 
   startAutoRefresh();
-  loadNewsScore();
+  updateRangeNudgeStates();
   loadStaticHistoricalBacktest().then(() => refresh({ reason: "initial live", allowManualOverride: false, force: true }));
 </script>
 </body>
