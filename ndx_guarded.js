@@ -209,11 +209,28 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     set("kpiDefaultSharpe", bt?.sharpe_fmt);
     set("kpiDefaultVol", bt?.ann_volatility_pct);
     set("kpiDefaultEnd", bt?.end_value_fmt);
+    set("kpiDefaultCalmar", bt?.calmar_fmt);
     set("kpiBhCagr", bh?.cagr_pct);
     set("kpiBhMaxDd", bh?.max_drawdown_pct);
     set("backtestSampleRange", sample ? `${sample.start_date} to ${sample.end_date}` : "-");
     set("mcMedianCagr", mc?.median_cagr_pct);
     set("mcMedianMaxDd", mc?.median_max_drawdown_pct);
+    if ($("backtestCallout") && bt && bh) {
+      const original = Array.isArray(data.comparison_table)
+        ? data.comparison_table.find((row) => String(row.strategy || "").includes("Original Guarded"))
+        : null;
+      if (original) {
+        $("backtestCallout").textContent =
+          `On ${data.asset_label || "^NDX"} (${sample?.start_date || "?"} to ${sample?.end_date || "?"}), ` +
+          `Guarded A5/B25 delivered ${bt.cagr_pct} CAGR and ${bt.max_drawdown_pct} max drawdown vs buy-and-hold ` +
+          `${bh.cagr_pct} / ${bh.max_drawdown_pct}. The original A10/B20 variant posted ${original.cagr_pct} CAGR ` +
+          `and ${original.max_drawdown_pct} max drawdown.`;
+      } else {
+        $("backtestCallout").textContent =
+          `On ${data.asset_label || "^NDX"}, Guarded A5/B25 delivered ${bt.cagr_pct} CAGR and ${bt.max_drawdown_pct} max drawdown ` +
+          `vs buy-and-hold ${bh.cagr_pct} / ${bh.max_drawdown_pct}.`;
+      }
+    }
     set("mcProbDd40", mc?.prob_max_dd_worse_40pct_fmt);
     set("mcProbDd35", mc?.prob_max_dd_worse_35pct_fmt);
     set("mcProbDd50", mc?.prob_max_dd_worse_50pct_fmt);
@@ -245,7 +262,33 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
         <tr><td>2x days</td><td>${bt.pct_days_2x?.toFixed(2)}%</td><td>3x days</td><td>${bt.pct_days_3x?.toFixed(2)}%</td></tr>
         <tr><td>2x entries</td><td>${bt.tier2_entries ?? "-"}</td><td>3x entries</td><td>${bt.tier3_entries ?? "-"}</td></tr>
         <tr><td>Lead-only days</td><td>${bt.lead_only_days ?? "-"}</td><td>Rebalances</td><td>${bt.rebalances ?? "-"}</td></tr>
+        <tr><td>Total trading costs</td><td>${bt.trading_costs_total != null ? fmtCompactCurrency(bt.trading_costs_total) : "-"}</td><td>Total funding costs</td><td>${bt.funding_costs_total != null ? fmtCompactCurrency(bt.funding_costs_total) : "-"}</td></tr>
       `;
+    }
+
+    const mcBody = $("mcComparisonBody");
+    if (mcBody && mc && Array.isArray(data.comparison_table)) {
+      const rows = data.comparison_table.filter((row) =>
+        /Guarded A5\/B25|Original Guarded/.test(String(row.strategy || ""))
+      );
+      if (rows.length) {
+        mcBody.innerHTML = rows.map((row) => {
+          const isDefault = row.strategy === bt?.strategy;
+          const strong = isDefault ? "<strong>" : "";
+          const strongEnd = isDefault ? "</strong>" : "";
+          const probDd40 = isDefault ? (mc.prob_max_dd_worse_40pct_fmt || "-") : "-";
+          return `<tr>
+            <td>${strong}${row.strategy}${strongEnd}</td>
+            <td>${isDefault ? strong + (mc.median_cagr_pct || "-") + strongEnd : "-"}</td>
+            <td>${isDefault ? `${mc.p10_cagr_pct || "-"} / ${mc.p90_cagr_pct || "-"}` : "-"}</td>
+            <td>${isDefault ? strong + (mc.median_max_drawdown_pct || "-") + strongEnd : row.max_drawdown_pct || "-"}</td>
+            <td>${isDefault ? `${mc.p10_max_drawdown_pct || "-"} / ${mc.p90_max_drawdown_pct || "-"}` : "-"}</td>
+            <td>${isDefault ? (mc.median_sharpe_fmt || "-") : row.sharpe_fmt || "-"}</td>
+            <td>${isDefault ? strong + (mc.median_end_value_fmt || "-") + strongEnd : row.end_value_fmt || "-"}</td>
+            <td>${probDd40}</td>
+          </tr>`;
+        }).join("");
+      }
     }
   }
 

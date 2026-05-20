@@ -662,7 +662,8 @@
     </table>
   </section>
 
-  
+  </section>
+
   <section id="backtestPage" class="page">
     <section class="card">
       <h2>Back-test Overview</h2>
@@ -677,18 +678,13 @@
         <div class="metric-card"><span class="small">Default max DD</span><strong id="kpiDefaultMaxDd">-</strong></div>
         <div class="metric-card"><span class="small">Default Sharpe</span><strong id="kpiDefaultSharpe">-</strong></div>
         <div class="metric-card"><span class="small">Annual volatility</span><strong id="kpiDefaultVol">-</strong></div>
-        <div class="metric-card"><span class="small">Calmar ratio</span><strong>1.42</strong></div>
+        <div class="metric-card"><span class="small">Calmar ratio</span><strong id="kpiDefaultCalmar">-</strong></div>
         <div class="metric-card"><span class="small">Default end value</span><strong id="kpiDefaultEnd">-</strong></div>
-        <div class="metric-card"><span class="small">Contribution NPV</span><strong>$273</strong><span class="small">Discounted at 4%; includes $100 initial capital and $10 annual inflows.</span></div>
-        <div class="metric-card"><span class="small">End / NPV multiple</span><strong>7,200x</strong></div>
       </div>
       <p class="small">
-        Calmar = CAGR / absolute max drawdown; multiple = end value divided by discounted contributions.
+        Calmar = CAGR / absolute max drawdown. Full comparison table and equity chart below use the same engine assumptions as the SPX dashboard.
       </p>
-      <p class="callout">
-        The new default improved the historical result versus the original strict A10/B20 version: CAGR rose from
-        29.39% to 39.09%, while max drawdown improved from -34.37% to -27.51% in the project backtest.
-      </p>
+      <p id="backtestCallout" class="callout">Loading back-test summary…</p>
     </section>
     <section class="card section-gap">
       <h2>Top 20 Strategy Drawdowns</h2>
@@ -823,10 +819,8 @@
           <thead>
             <tr><th>Strategy</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P10 / P90 max DD</th><th>Median Sharpe</th><th>Median end value</th><th>P(DD &lt; -40%)</th></tr>
           </thead>
-          <tbody>
-            <tr><td><strong>Lead 0.75 A5/B25 X40/Y15</strong></td><td><strong id="mcMedianCagr">-</strong></td><td>26.46% / 50.02%</td><td><strong id="mcMedianMaxDd">-</strong></td><td>-39.72% / -18.86%</td><td>3.269</td><td><strong>$2,060</strong></td><td><strong>10.0%</strong></td></tr>
-            <tr><td>Lead 0.75 A10/B20 X40/Y15</td><td>34.39%</td><td>24.46% / 45.09%</td><td>-28.64%</td><td>-39.71% / -19.04%</td><td>3.220</td><td>$1,716</td><td>10.0%</td></tr>
-            <tr><td>Original strict A10/B20 X25/Y33</td><td>30.17%</td><td>20.63% / 41.38%</td><td>-28.96%</td><td>-42.77% / -18.74%</td><td>3.503</td><td>$1,261</td><td>16.5%</td></tr>
+          <tbody id="mcComparisonBody">
+            <tr><td colspan="8">Loading Monte Carlo summary…</td></tr>
           </tbody>
         </table>
       </div>
@@ -866,7 +860,6 @@
         long periods underwater.
       </p>
     </section>
-  </section>
   </section>
 
 </main>

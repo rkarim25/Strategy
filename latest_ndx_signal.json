@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-05-20T19:31:56Z",
+  "generated_at_utc": "2026-05-20T20:37:37Z",
   "data_asof": "2026-05-20",
-  "daily_rows": 7549,
-  "quote_price": 29246.251953125,
+  "daily_rows": 7548,
+  "quote_price": 29297.697265625,
   "quote_timestamp": "2026-05-20",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-05-20",
-      "close": 29246.251953125
+      "close": 29297.697265625
     },
-    "latestSma": 28317.6400390625,
+    "latestSma": 28320.2123046875,
     "highWater": 29580.30078125,
     "highWaterDate": "2026-05-14",
-    "latestDd": -0.011292948999921726,
+    "latestDd": -0.009553774240325996,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -46,18 +46,18 @@
     "activeEntryClose": 26672.4296875,
     "activeEntryDate": "2026-04-17",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.09649748057377838,
+    "activeEntryPnl": 0.09842626295703871,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-05-20",
-      "close": 29246.251953125
+      "close": 29297.697265625
     },
-    "latestSma": 28440.82109375,
+    "latestSma": 28445.965625,
     "highWater": 29580.30078125,
     "highWaterDate": "2026-05-14",
-    "latestDd": -0.011292948999921726,
+    "latestDd": -0.009553774240325996,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -68,13 +68,13 @@
     "activeEntryClose": 26672.4296875,
     "activeEntryDate": "2026-04-17",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.09649748057377838,
+    "activeEntryPnl": 0.09842626295703871,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-05-20",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-05-20T19:31:56Z"
+    "last_checked_at_utc": "2026-05-20T20:37:37Z"
   }
 }
