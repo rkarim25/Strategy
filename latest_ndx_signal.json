@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-05-19T23:00:31Z",
-  "data_asof": "2026-05-19",
-  "daily_rows": 7548,
-  "quote_price": 28818.84375,
-  "quote_timestamp": "2026-05-19",
+  "generated_at_utc": "2026-05-20T16:57:15Z",
+  "data_asof": "2026-05-20",
+  "daily_rows": 7549,
+  "quote_price": 29157.130859375,
+  "quote_timestamp": "2026-05-20",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-05-19",
-      "close": 28818.84375
+      "date": "2026-05-20",
+      "close": 29157.130859375
     },
-    "latestSma": 28202.1916015625,
+    "latestSma": 28313.183984375,
     "highWater": 29580.30078125,
     "highWaterDate": "2026-05-14",
-    "latestDd": -0.025742031390453723,
+    "latestDd": -0.014305801857945721,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -46,18 +46,18 @@
     "activeEntryClose": 26672.4296875,
     "activeEntryDate": "2026-04-17",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.08047313603026995,
+    "activeEntryPnl": 0.09315616166154728,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-05-19",
-      "close": 28818.84375
+      "date": "2026-05-20",
+      "close": 29157.130859375
     },
-    "latestSma": 28296.26982421875,
+    "latestSma": 28431.908984375,
     "highWater": 29580.30078125,
     "highWaterDate": "2026-05-14",
-    "latestDd": -0.025742031390453723,
+    "latestDd": -0.014305801857945721,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -68,13 +68,13 @@
     "activeEntryClose": 26672.4296875,
     "activeEntryDate": "2026-04-17",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.08047313603026995,
+    "activeEntryPnl": 0.09315616166154728,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-05-19",
+    "last_observed_asof": "2026-05-20",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-05-19T23:00:31Z"
+    "last_checked_at_utc": "2026-05-20T16:57:15Z"
   }
 }
