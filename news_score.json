@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-05-20T19:31:57Z",
+  "generated_at_utc": "2026-05-20T22:01:41Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, May 20: Nvidia Climbs Ahead of Earnings as Investors Await AI Guidance; Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com. Bearish offsets: Fed officials see rate hike ahead if inflation stays elevated, minutes show; U.S. Stocks Fall as Bond Selloff Deepens - WSJ.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall St rises as chip stocks rally ahead of Nvidia results - Reuters; Dow's Rises Higher Ahead of Closing Bell. Bearish offsets: Fed officials see rate hike ahead if inflation stays elevated, minutes show; U.S. Stocks Fall as Bond Selloff Deepens - WSJ.",
   "articles": [
     {
       "title": "Fed officials see rate hike ahead if inflation stays elevated, minutes show",
@@ -11,20 +11,6 @@
       "url": "https://www.cnbc.com/2026/05/20/fed-officials-see-rate-hike-ahead-if-inflation-stays-elevated-minutes-show.html",
       "published": "2026-05-20T19:04:09Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Stock Market Today, May 20: Nvidia Climbs Ahead of Earnings as Investors Await AI Guidance",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/05/20/stock-market-today-may-20-nvidia-climbs-ahead-of-earnings-as-investors-await-ai-guidance/?.tsrc=rss",
-      "published": "2026-05-20T17:43:29Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Asian Stocks to Rise as AI Rally Spurs Wall Street: Markets Wrap - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPbTd1VVZCWkhFQ1hKbkhZbUg2cEgwMFpDWDM1bV94NmNaV3VpNzVyeDA4NmJMMTV1cGdsTEpBekk0Q180TXZoSWJIQTRsRGZzYV9Vdm96ekxEeGgtSi1ueVpyWXAwTXZHRU1kV3pHS2hET2lkNEFsN1lFWDlvQjZiUmJST3k5OElzRjNneU5UN2hIUUtWaGdTQkZCcUI0MWVVWFdkM196V3pZV2NyVTlJNTFLN3BtZXZVM0lOdFhVNUJ2VlBxcUE2VjV4Zw?oc=5",
-      "published": "2026-05-14T22:13:06Z",
-      "tone": "bullish"
     },
     {
       "title": "U.S. Stocks Fall as Bond Selloff Deepens - WSJ",
@@ -37,7 +23,21 @@
       "title": "Wall St rises as chip stocks rally ahead of Nvidia results - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPWVR5TjBBVTlmVVVNanRmaUZVaDVsMFNaR0FTMUE0MlByMXpCdlR5TW9aQ3ZHWVJ6c0l4REtMSkNrWndxc3NqT2FqaklnbVlvb3drZi14RjRiWjZjRU8tSlZTVlJpRXBjaXlnU2I4RE9IdmxPQklVQWVoVlZqbldLQW1Uem9xQ0VFOElmZGRuWlB6LTNnbTRnV2RTTDJ2b2d4UWZYUHM1MlFpT2hH?oc=5",
-      "published": "2026-05-20T18:56:44Z",
+      "published": "2026-05-20T20:01:12Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Dow's Rises Higher Ahead of Closing Bell",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/bdbc849f-1464-30ca-9bdb-27b0f8aa06a3/dow%27s-rises-higher-ahead-of.html?.tsrc=rss",
+      "published": "2026-05-20T18:42:40Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOZThzNFh0QThUVEdWa2g1dkp6dk5zSHloVUw2cWJzM3BOTEI1VmxZY0ZJb2dqUUJYajV1cHZHY3NEMUNrdUZtam5lSzd1ZFhjQVdzWXdxRy1TclpveWt6ZzdWS3hzajVGRzI5cGd0UVJvSzJjSnlDQmVyMmFKOXh0MzU0OVp6NmJvMlFtS2VNNi1mNHRQ?oc=5",
+      "published": "2026-05-14T20:21:11Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 89
       }
     ],
-    "headline_count": 138,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
