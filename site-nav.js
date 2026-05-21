@@ -4,6 +4,7 @@
     "signalPage",
     "backtestPage",
     "monteCarloPage",
+    "instrumentsPage",
     "momentumSignalPage",
     "momentumBacktestPage",
     "momentumMonteCarloPage",
@@ -14,6 +15,7 @@
     backtest: "backtestPage",
     "monte-carlo": "monteCarloPage",
     montecarlo: "monteCarloPage",
+    instruments: "instrumentsPage",
   };
   const STRATEGY_QUERY = {
     spx: "guardedStrategy",

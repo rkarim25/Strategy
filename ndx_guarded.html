@@ -363,6 +363,22 @@
       overflow-x: auto;
       margin-top: 10px;
     }
+    .instrument-toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 12px 0 8px;
+    }
+    .instrument-toolbar input[type="search"] {
+      flex: 1 1 240px;
+      min-width: 200px;
+    }
+    .instrument-filters button.secondary.active {
+      background: rgba(255, 255, 255, .92);
+      border-color: rgba(0, 113, 227, .35);
+      box-shadow: inset 0 -2px 0 rgba(0, 113, 227, .65);
+    }
     .callout {
       border-left: 4px solid var(--accent);
       background: var(--accent-soft);
@@ -550,6 +566,7 @@
       <button type="button" class="active" data-page-target="signalPage">Signal</button>
       <button type="button" data-page-target="backtestPage">Back-test</button>
       <button type="button" data-page-target="monteCarloPage">Monte Carlo</button>
+      <button type="button" data-page-target="instrumentsPage">Instruments</button>
     </nav>
   </section>
 
@@ -884,10 +901,56 @@
       </p>
     </section>
   </section>
+
+  <section id="instrumentsPage" class="page">
+    <section class="card">
+      <h2>S&amp;P 500 UCITS / ETP Instruments</h2>
+      <p>
+        Reference list of 1x, 2x, and 3x S&amp;P 500 products commonly used by UK and international (II) investors.
+        TER/OCF figures are indicative — confirm current charges and listings before trading.
+      </p>
+      <div class="instrument-toolbar">
+        <div class="row instrument-filters range-controls" aria-label="Leverage filter">
+          <button type="button" class="secondary active" data-instrument-leverage="all">All</button>
+          <button type="button" class="secondary" data-instrument-leverage="1x">1x</button>
+          <button type="button" class="secondary" data-instrument-leverage="2x">2x</button>
+          <button type="button" class="secondary" data-instrument-leverage="3x">3x</button>
+        </div>
+        <input id="instrumentsSearch" type="search" placeholder="Search name, ticker, ISIN, issuer…" aria-label="Search instruments" />
+      </div>
+      <p id="instrumentsCount" class="small">Loading instruments…</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Leverage</th>
+              <th>Ticker</th>
+              <th>Name</th>
+              <th>TER / OCF</th>
+              <th>Acc / Dist</th>
+              <th>Currency</th>
+              <th>ISIN</th>
+              <th>Issuer</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="instrumentsTableBody">
+            <tr><td colspan="9">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="callout section-gap">
+        Leveraged daily products (2x/3x) are for short-term tactical use; path dependency and compounding can diverge
+        from the underlying index over multi-month holds. This table is research reference only, not investment advice.
+      </p>
+    </section>
+  </section>
   </section>
 
 </main>
 <script src="site-nav.js"></script>
+<script src="instruments-data.js"></script>
+<script src="instruments-page.js"></script>
 <script src="ndx_guarded.js?v=20260521yaxis"></script>
 </body>
 </html>
