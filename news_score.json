@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-05-20T23:10:26Z",
+  "generated_at_utc": "2026-05-21T16:41:46Z",
   "window_days": 7,
-  "score": 5,
-  "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher on tech rally; investors eye Beijing talks - Yahoo Finance. Bearish offsets: Fed officials see rate hike ahead if inflation stays elevated, minutes show; War, inflation and Trump\u2019s tariffs have shaken the US. Why does the stock market keep going up? - The Guardian.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Rallies: S&P 500, Nasdaq, Dow Jones Close Higher - MEXC; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: Ubisoft shares fall after Assassin\u2019s Creed maker warns of further losses to come; CME Group (CME) Serves as a Volatility Shield.",
   "articles": [
     {
-      "title": "Fed officials see rate hike ahead if inflation stays elevated, minutes show",
+      "title": "Ubisoft shares fall after Assassin\u2019s Creed maker warns of further losses to come",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/20/fed-officials-see-rate-hike-ahead-if-inflation-stays-elevated-minutes-show.html",
-      "published": "2026-05-20T19:04:09Z",
+      "url": "https://www.cnbc.com/2026/05/21/ubisoft-fy-earnings-profit-loss-assassins-creed.html",
+      "published": "2026-05-21T16:02:57Z",
       "tone": "bearish"
     },
     {
-      "title": "War, inflation and Trump\u2019s tariffs have shaken the US. Why does the stock market keep going up? - The Guardian",
-      "source": "The Guardian",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPLWNBam1MNTNBbWdTdFZwNmF2eVZHb1U5bnFBTEdpU01DRzV0enRkN0FEdlprbjJ4Nmt0am1SdWdlZHpsb2ZqN2dnRmp1d2FBdE1RbU5fWnpNbHQ1OEhwanhzV0hFXzg0ZUZlS1lRVGhIUjZjZzFjTHRPUlZ4SDN2bnVKRXBqRXNRUzhBN2dHUVY5bEp2TE1ldTFOclVvY1g1YU42Y2piN0dzUlk?oc=5",
-      "published": "2026-05-15T07:45:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "U.S. Stocks Fall as Bond Selloff Deepens - WSJ",
-      "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNSzNmYy1uUXgtZ1pQTktZWnR5ZmxpT2ZpTWxfV0FBbFBEMHR0LW85c2o4YkE5eDNVcWFINnFmdDk5MzlabUhzdFRhdk5rcENpTEZPVWhNNkpYWTZBWktNZlU1U3hsU003cVhvZ3ZRZVY2RDAyc1NwUGhlcDRJcm9GMXMxNnotenQwYmtuejRJV3QxWWpTRHVLYjEwcl8?oc=5",
-      "published": "2026-05-19T20:48:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOZThzNFh0QThUVEdWa2g1dkp6dk5zSHloVUw2cWJzM3BOTEI1VmxZY0ZJb2dqUUJYajV1cHZHY3NEMUNrdUZtam5lSzd1ZFhjQVdzWXdxRy1TclpveWt6ZzdWS3hzajVGRzI5cGd0UVJvSzJjSnlDQmVyMmFKOXh0MzU0OVp6NmJvMlFtS2VNNi1mNHRQ?oc=5",
-      "published": "2026-05-14T20:21:11Z",
+      "title": "Wall Street Rallies: S&P 500, Nasdaq, Dow Jones Close Higher - MEXC",
+      "source": "MEXC",
+      "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE0zVjlaSzk4cnZ0cllPQnc5bktGOFQ5Z0JibnE0dUhjMUJBSnhsbUwyZUZ1SDFudFFNTUlCeHVqMzNCZzFMOUtCNA?oc=5",
+      "published": "2026-05-20T23:10:27Z",
       "tone": "bullish"
     },
     {
-      "title": "E.l.f. Beauty to walk back some tariff price increases amid high gas prices and consumer 'suffering'",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/20/elf-beauty-elf-earnings-q4-2026.html",
-      "published": "2026-05-20T21:36:26Z",
+      "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNSlFWTVQ4ZlpZcDd2ZXIyT3hTblVucFl6UTFSaTlaLU5uVTZKT1BiWERJM3FlWHF1T1NldVRqNUFpdW5jN1JOMDNYcHFxajNhdUIwdnQ3b3FFUmVCMWJNUzRWTGFQYlItVmJocTdKbVlrTXVrbUQ5S2RhcTB2cGxteEMxTFo4TG41UkZhemZQOWhOaDNfdEVTdGZkSV91QQ?oc=5",
+      "published": "2026-05-14T23:03:53Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "CME Group (CME) Serves as a Volatility Shield",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/options/articles/cme-group-cme-serves-volatility-150010960.html?.tsrc=rss",
+      "published": "2026-05-21T15:00:10Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Stock market today: S&P 500, Nasdaq surge to record highs on Nvidia rally, Chinese shares fall ahead of more Trump-Xi talks - Economy Middle East",
+      "source": "Economy Middle East",
+      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQLTFPX2h5OHV1VjJETExGbGJndWtJTktuMTNaaVFjaFRERWJFbVMxZ1ViWlNHLTQwSW5VQjRjTDVCdFAxVXRDTktPdHpkTm51ajB0cEpqc0ppajlseS1CT19QLV8tbE5KcFROOTJ6VnpEd0pMb1RzTjlJdHlnd1M4Yk9mZjdnaFFpeHVveXowdUhQQWt2TDhvMEhpdVIxTVE0MUZMMzdYaDgweERMUVhDdE92TmN2cy0yUUU5dmFYOWNqb0xjdlV0TVlVX3NSSnQzQ1JaRXBpT1cxVjdqY2FxMGNncE03bzdCMUVB?oc=5",
+      "published": "2026-05-15T05:33:03Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 90
       }
     ],
-    "headline_count": 143,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
