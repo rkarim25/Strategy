@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nasdaq 100 Guarded Strategy</title>
+  <title>Strategy — Nasdaq 100 Guarded</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <style>
     :root {
@@ -331,6 +331,14 @@
     .site-nav a.site-nav-link:hover {
       background: rgba(255, 255, 255, .82);
     }
+    .site-nav a.site-nav-link.active {
+      background: rgba(255, 255, 255, .92);
+      color: var(--text);
+      border-color: rgba(0, 0, 0, .06);
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, .08),
+        inset 0 -2px 0 rgba(0, 113, 227, .75);
+    }
     .page { display: none; }
     .page.active { display: block; }
     .kpi-grid {
@@ -518,18 +526,33 @@
 </head>
 <body>
 <main>
-  <p class="small"><a href="index.html">← All strategies</a></p>
-  <h1>Nasdaq 100 Guarded</h1>
+  <h1>Strategy</h1>
   <p>
-    Levered <strong>Guarded A5/B25/X40/Y15 SMA20 Lead</strong> on <code>^NDX</code> (Nasdaq 100), mirroring the SPX default parameters.
-    Buy-and-hold reference: <strong id="kpiBhCagr">-</strong> CAGR, <strong id="kpiBhMaxDd">-</strong> max drawdown.
+    A live dashboard and research library for systematic market strategies. Each strategy gets its own tab,
+    with signal, back-test, and Monte Carlo validation shown separately.
   </p>
-  <p id="siteDataGenerated" class="small"></p>
-  <nav class="site-nav" aria-label="NDX Guarded sections">
-    <button type="button" class="active" data-page-target="signalPage">Signal</button>
-    <button type="button" data-page-target="backtestPage">Back-test</button>
-    <button type="button" data-page-target="monteCarloPage">Monte Carlo</button>
+
+  <nav class="site-nav" aria-label="Strategies">
+    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>
+    <span class="site-nav-link active" role="status" aria-current="page">Guarded A5/B25 (Nasdaq 100)</span>
+    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>
   </nav>
+
+  <section id="guardedStrategy" class="strategy active">
+  <section class="card" style="margin-bottom: 18px;">
+    <h2>Guarded A5/B25 SMA20 Lead Signal (Nasdaq 100)</h2>
+    <p>
+      Levered <strong>Guarded A5/B25/X40/Y15 SMA20 Lead</strong> on <code>^NDX</code> (Nasdaq 100), mirroring the SPX default parameters.
+      Buy-and-hold reference: <strong id="kpiBhCagr">-</strong> CAGR, <strong id="kpiBhMaxDd">-</strong> max drawdown.
+    </p>
+    <p id="siteDataGenerated" class="small"></p>
+    <nav class="site-nav" aria-label="Guarded strategy sections">
+      <button type="button" class="active" data-page-target="signalPage">Signal</button>
+      <button type="button" data-page-target="backtestPage">Back-test</button>
+      <button type="button" data-page-target="monteCarloPage">Monte Carlo</button>
+    </nav>
+  </section>
+
   <section id="signalPage" class="page active">
   <section class="card" style="margin-bottom: 18px;">
     <h2>Strategy Rules</h2>
@@ -861,8 +884,10 @@
       </p>
     </section>
   </section>
+  </section>
 
 </main>
+<script src="site-nav.js"></script>
 <script src="ndx_guarded.js?v=20260521yaxis"></script>
 </body>
 </html>

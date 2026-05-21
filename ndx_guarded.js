@@ -70,8 +70,10 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
+  const pageScope = () => document.querySelector("main") || document;
+
   document.querySelectorAll("[data-page-target]").forEach((button) => {
-    button.addEventListener("click", () => showPage(button.dataset.pageTarget, document));
+    button.addEventListener("click", () => showPage(button.dataset.pageTarget, pageScope()));
   });
   if ($("refresh")) $("refresh").addEventListener("click", () => refresh({ reason: "manual", allowManualOverride: true, force: true }));
   document.querySelectorAll("[data-range]").forEach((button) => {
@@ -452,13 +454,16 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     return `${reason}This usually means the network, DNS, proxy, TLS inspection, browser extension, or CORS policy blocked the request before the site received an HTTP status.`;
   }
 
-  function showPage(pageId, scope = document) {
-    document.querySelectorAll(".page").forEach((page) => {
+  function showPage(pageId, scope = pageScope(), options = {}) {
+    scope.querySelectorAll(".page").forEach((page) => {
       page.classList.toggle("active", page.id === pageId);
     });
-    document.querySelectorAll("[data-page-target]").forEach((button) => {
+    scope.querySelectorAll("[data-page-target]").forEach((button) => {
       button.classList.toggle("active", button.dataset.pageTarget === pageId);
     });
+    if (options.updateHash !== false && window.SiteNav) {
+      SiteNav.setHash(pageId, { replace: options.replaceHash !== false });
+    }
     if (pageId === "signalPage") {
       renderChart();
       renderSignalPnlChart();
@@ -467,6 +472,17 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       renderBacktestEquityChart();
       renderTopDrawdownsTable();
     }
+  }
+
+  function applyRouteFromLocation() {
+    if (!window.SiteNav) return;
+    const pageId = SiteNav.pageFromLocation();
+    if (pageId && $(pageId)) showPage(pageId, pageScope(), { updateHash: false });
+  }
+
+  if (window.SiteNav) {
+    SiteNav.onRouteChange(() => applyRouteFromLocation());
+    applyRouteFromLocation();
   }
 
   function parseCsv(csv) {

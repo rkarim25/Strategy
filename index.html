@@ -331,6 +331,14 @@
     .site-nav a.site-nav-link:hover {
       background: rgba(255, 255, 255, .82);
     }
+    .site-nav a.site-nav-link.active {
+      background: rgba(255, 255, 255, .92);
+      color: var(--text);
+      border-color: rgba(0, 0, 0, .06);
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, .08),
+        inset 0 -2px 0 rgba(0, 113, 227, .75);
+    }
     .page { display: none; }
     .page.active { display: block; }
     .kpi-grid {
@@ -526,7 +534,7 @@
 
   <nav class="site-nav" aria-label="Strategies">
     <button type="button" class="active" data-strategy-target="guardedStrategy">Guarded A5/B25 SMA20 Lead (SPX)</button>
-    <a class="site-nav-link" href="ndx_guarded.html">Guarded A5/B25 (Nasdaq 100)</a>
+    <a class="site-nav-link" href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>
     <button type="button" data-strategy-target="momentumStrategy">Momentum Strategy Research</button>
   </nav>
 
@@ -1271,6 +1279,7 @@
 
 </main>
 
+<script src="site-nav.js"></script>
 <script>
   const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
@@ -1621,7 +1630,7 @@
     return `${reason}This usually means the network, DNS, proxy, TLS inspection, browser extension, or CORS policy blocked the request before the site received an HTTP status.`;
   }
 
-  function showStrategy(strategyId) {
+  function showStrategy(strategyId, options = {}) {
     document.querySelectorAll(".strategy").forEach((strategy) => {
       strategy.classList.toggle("active", strategy.id === strategyId);
     });
@@ -1630,18 +1639,22 @@
     });
 
     const strategy = $(strategyId);
-    const activePage = strategy.querySelector("[data-page-target].active")?.dataset.pageTarget
+    const activePage = options.pageId
+      ?? strategy.querySelector("[data-page-target].active")?.dataset.pageTarget
       ?? strategy.querySelector("[data-page-target]")?.dataset.pageTarget;
-    if (activePage) showPage(activePage, strategy);
+    if (activePage) showPage(activePage, strategy, options);
   }
 
-  function showPage(pageId, scope = document) {
+  function showPage(pageId, scope = document, options = {}) {
     scope.querySelectorAll(".page").forEach((page) => {
       page.classList.toggle("active", page.id === pageId);
     });
     scope.querySelectorAll("[data-page-target]").forEach((button) => {
       button.classList.toggle("active", button.dataset.pageTarget === pageId);
     });
+    if (options.updateHash !== false && window.SiteNav) {
+      SiteNav.setHash(pageId, { replace: options.replaceHash !== false });
+    }
     if (pageId === "signalPage") {
       renderChart();
       renderSignalPnlChart();
@@ -1651,6 +1664,19 @@
       renderTopDrawdownsTable();
     }
   }
+
+  function applyRouteFromLocation() {
+    if (!window.SiteNav) return;
+    const pageId = SiteNav.pageFromLocation();
+    const strategyId = SiteNav.strategyFromLocation()
+      || SiteNav.strategyForPage(pageId)
+      || "guardedStrategy";
+    if (!$(strategyId)) return;
+    showStrategy(strategyId, { pageId: pageId || undefined, updateHash: false });
+  }
+
+  SiteNav.onRouteChange(() => applyRouteFromLocation());
+  applyRouteFromLocation();
 
   function parseCsv(csv) {
     const lines = csv.trim().split(/\r?\n/);
