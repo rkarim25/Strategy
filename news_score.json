@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-05-21T22:50:07Z",
+  "generated_at_utc": "2026-05-21T23:01:34Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US stocks rebound, cybersecurity sector surges to record highs; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: Tech carries Wall Street to records, even as most stocks fall after discouraging inflation data - fox23.com.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters; The Furious Chip Rally Was Petering Out. Now Wall Street Turns to Nvidia. - WSJ. Bearish offsets: Tech carries Wall Street to records, even as most stocks fall after discouraging inflation data - fox23.com.",
   "articles": [
-    {
-      "title": "US stocks rebound, cybersecurity sector surges to record highs",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/us-stocks-rebound-cybersecurity-sector-surges-to-record-highs-200917094.html?.tsrc=rss",
-      "published": "2026-05-21T20:09:17Z",
-      "tone": "bullish"
-    },
     {
       "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters",
       "source": "Reuters",
@@ -27,6 +20,13 @@
       "tone": "bearish"
     },
     {
+      "title": "The Furious Chip Rally Was Petering Out. Now Wall Street Turns to Nvidia. - WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPMG5qSFAtRTczcEF0ODJjUUpsUHF5bHNOWldiclI1ZTNvMTN6VVFBTVNNU1Y0X25QOW9qeTlwYjRVanYtTTl4MmVPYVFXRjZ0SEhiZzVDTHRNUEdoMGtSbkpYX205TmozTXIxU0k0a0htVF81VWhwVFVzaGV3a3M1ZzR2djRoczBjQzhJVFNPQ1pzNl8tQXBkdnN4bXRJQ2lhU2pCcmhYeGdycGRPM1E?oc=5",
+      "published": "2026-05-20T21:31:00Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Earnings-Fueled Stock Rally Faces Key Test - WSJ",
       "source": "WSJ",
       "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQcVkwSHQtV1d4WXdiSE9rLTU0MTRUb1lycGJLaU1CcnBwR3FnaXM1TzJHZTZpUXVhYzUwbFFyNDZMTkVoeUZBSkR2MlN0M1RzMV9aMUxHMVg2TlVmWWZSbl9mdUhxTzVjcEZnM0xxcm5JQlF2VThMTlMxYVQ5aTJPT2J6X1RpT0ZkOXhiT013?oc=5",
@@ -34,10 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street rally masks rising number of oversold S&P 500 stocks - Seeking Alpha",
-      "source": "Seeking Alpha",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQUk1Nck5KM29iVGoxQVNlTEZPblVHdzBFd3dSTnRNd1JhTGdkcUN6SEVlQWJ6Y2R0amdHQ1kzRENacjQxS24yZHJ0MEVQMmt3UUdmZk9LcmtnNkpZSEtQUXN5aV96Q2tNUzFKXzRNLWdrb3RCLWRZTldmRnVNNnVQMmZKUmktaVBla0hTV29FcjhLdlhGczNzUUdtb1BKbl81WUd3WHd3UmI2QQ?oc=5",
-      "published": "2026-05-15T13:58:46Z",
+      "title": "Wall Street Sustains Rally Despite Rising Treasury Yields - Let's Data Science",
+      "source": "Let's Data Science",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPZ2FCal9IbXV1ZUVydWxsNllvbVVOeExWV0J3T1AyZVNXWndJSnpjaDRheEFsQk5pWE5TMTI4TUZqVDNkMVZZQWxDT3owdXFzUDJpdDFfbTRlYkx3NkZzOEtNMy1ya1BhUGJiZUM0MmcwUEV1Q2tLa2huVTh2UWpJYTdhLWNKYUFNWlZQVnlyWVNRMGlaa082aXJOdHc1cjIx?oc=5",
+      "published": "2026-05-18T16:16:21Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 83
       }
     ],
-    "headline_count": 145,
+    "headline_count": 133,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
