@@ -452,20 +452,6 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     return `${reason}This usually means the network, DNS, proxy, TLS inspection, browser extension, or CORS policy blocked the request before the site received an HTTP status.`;
   }
 
-  function showStrategy(strategyId) {
-    document.querySelectorAll(".strategy").forEach((strategy) => {
-      strategy.classList.toggle("active", strategy.id === strategyId);
-    });
-    document.querySelectorAll("[data-strategy-target-disabled]".forEach((button) => {
-      button.classList.toggle("active", button.dataset.strategyTarget === strategyId);
-    });
-
-    const strategy = $(strategyId);
-    const activePage = strategy.querySelector("[data-page-target].active")?.dataset.pageTarget
-      ?? strategy.querySelector("[data-page-target]")?.dataset.pageTarget;
-    if (activePage) showPage(activePage, strategy);
-  }
-
   function showPage(pageId, scope = document) {
     document.querySelectorAll(".page").forEach((page) => {
       page.classList.toggle("active", page.id === pageId);
