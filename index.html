@@ -294,50 +294,47 @@
       box-shadow: 0 10px 28px rgba(0, 0, 0, .045);
       backdrop-filter: blur(20px);
     }
-    .site-nav button {
+    .site-nav .site-nav-link,
+    .site-nav button[data-page-target] {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
+      margin: 0;
+      padding: 9px 15px;
+      border-radius: 999px;
+      border: 1px solid transparent;
       background: transparent;
       color: var(--text);
-      border: 1px solid transparent;
-      box-shadow: none;
-      padding: 9px 15px;
+      font: inherit;
+      font-size: 14px;
       font-weight: 650;
+      line-height: 1.2;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: none;
+      cursor: pointer;
+      transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
     }
-    .site-nav button.active {
-      background: rgba(255, 255, 255, .92);
-      color: var(--text);
-      border-color: rgba(0, 0, 0, .06);
-      box-shadow:
-        0 10px 22px rgba(0, 0, 0, .08),
-        inset 0 -2px 0 rgba(0, 113, 227, .75);
-    }
-    .site-nav button:hover {
+    .site-nav .site-nav-link:hover,
+    .site-nav button[data-page-target]:hover {
       transform: none;
       background: rgba(255, 255, 255, .82);
       box-shadow: none;
     }
-    .site-nav a.site-nav-link {
-      display: inline-flex;
-      align-items: center;
-      padding: 9px 15px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      color: var(--text);
-      font-size: 14px;
-      font-weight: 650;
-      text-decoration: none;
-      background: transparent;
-    }
-    .site-nav a.site-nav-link:hover {
-      background: rgba(255, 255, 255, .82);
-    }
-    .site-nav a.site-nav-link.active {
+    .site-nav .site-nav-link.active,
+    .site-nav button[data-page-target].active {
       background: rgba(255, 255, 255, .92);
       color: var(--text);
       border-color: rgba(0, 0, 0, .06);
       box-shadow:
         0 10px 22px rgba(0, 0, 0, .08),
         inset 0 -2px 0 rgba(0, 113, 227, .75);
+    }
+    .site-nav button.site-nav-link,
+    .site-nav button[data-page-target] {
+      appearance: none;
+      -webkit-appearance: none;
     }
     .page { display: none; }
     .page.active { display: block; }
@@ -502,7 +499,7 @@
         gap: 8px;
         padding: 8px;
       }
-      .site-nav button,
+      .site-nav .site-nav-link,
       .range-controls button {
         width: auto;
         flex: 1 1 auto;
@@ -549,9 +546,9 @@
   </p>
 
   <nav class="site-nav" aria-label="Strategies">
-    <button type="button" class="active" data-strategy-target="guardedStrategy">Guarded A5/B25 SMA20 Lead (SPX)</button>
+    <button type="button" class="site-nav-link active" data-strategy-target="guardedStrategy">Guarded A5/B25 SMA20 Lead (SPX)</button>
     <a class="site-nav-link" href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>
-    <button type="button" data-strategy-target="momentumStrategy">Momentum Strategy Research</button>
+    <button type="button" class="site-nav-link" data-strategy-target="momentumStrategy">Momentum Strategy Research</button>
   </nav>
 
   <section id="guardedStrategy" class="strategy active">

@@ -116,7 +116,7 @@ html = f"""<!doctype html>
 
   <nav class="site-nav" aria-label="Strategies">
     <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>
-    <span class="site-nav-link active" role="status" aria-current="page">Guarded A5/B25 (Nasdaq 100)</span>
+    <a class="site-nav-link active" href="ndx_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Nasdaq 100)</a>
     <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>
   </nav>
 
