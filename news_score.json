@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-05-21T21:14:32Z",
+  "generated_at_utc": "2026-05-21T22:50:07Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US stocks rebound, cybersecurity sector surges to record highs; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: War, inflation and Trump\u2019s tariffs have shaken the US. Why does the stock market keep going up? - The Guardian; Are investors more concerned with Iran than Nvidia's Q1 earnings?.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US stocks rebound, cybersecurity sector surges to record highs; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: Tech carries Wall Street to records, even as most stocks fall after discouraging inflation data - fox23.com.",
   "articles": [
     {
       "title": "US stocks rebound, cybersecurity sector surges to record highs",
@@ -13,13 +13,6 @@
       "tone": "bullish"
     },
     {
-      "title": "War, inflation and Trump\u2019s tariffs have shaken the US. Why does the stock market keep going up? - The Guardian",
-      "source": "The Guardian",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPLWNBam1MNTNBbWdTdFZwNmF2eVZHb1U5bnFBTEdpU01DRzV0enRkN0FEdlprbjJ4Nmt0am1SdWdlZHpsb2ZqN2dnRmp1d2FBdE1RbU5fWnpNbHQ1OEhwanhzV0hFXzg0ZUZlS1lRVGhIUjZjZzFjTHRPUlZ4SDN2bnVKRXBqRXNRUzhBN2dHUVY5bEp2TE1ldTFOclVvY1g1YU42Y2piN0dzUlk?oc=5",
-      "published": "2026-05-15T07:45:00Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNSlFWTVQ4ZlpZcDd2ZXIyT3hTblVucFl6UTFSaTlaLU5uVTZKT1BiWERJM3FlWHF1T1NldVRqNUFpdW5jN1JOMDNYcHFxajNhdUIwdnQ3b3FFUmVCMWJNUzRWTGFQYlItVmJocTdKbVlrTXVrbUQ5S2RhcTB2cGxteEMxTFo4TG41UkZhemZQOWhOaDNfdEVTdGZkSV91QQ?oc=5",
@@ -27,18 +20,25 @@
       "tone": "bullish"
     },
     {
-      "title": "Tech Rally Rolls On as Cisco Highlights AI Fervor: Markets Wrap - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNV2RIMmx4X0JFY2dsYlVpR1BwYWZLZmpQeGZfcHdrSTBEX2pXdmxxcExEUHJfaW9IOGhMeEw1aWxjMThFNVRqcmFHT3h4Sk1hRzBVVVozbk1KaG1fWEE2cmkxRlYyVEN5ZlBHczlVWF9PRjI1dlZvWS10eV9CWW11b0lEc1NSb2w5WjB4OUtRSjMwYVNXZjFRSTRXSjBzOGN5R1BRQnVaWGlnRHJFQnV0Qml1bzY?oc=5",
-      "published": "2026-05-14T21:25:30Z",
+      "title": "Tech carries Wall Street to records, even as most stocks fall after discouraging inflation data - fox23.com",
+      "source": "fox23.com",
+      "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxPcmdYV3IxcDBzTjQtNWIyazB3amlfajhza1JqaW90VFJsZEVmN3FzSEpUOGNTRXh0Y3kyTXg5Y1VKcnpFU2tqcm9RSW5hbV83ZzZPblNHQzczekFJTVZsQkpJVTFxbkxSdG9CRG9NRG5fdnBHM0YzRTcyenpvQzJKdWM3NHQ3NmpSRnBzajR4TU53anVQUTFNbk5NU0x0dllMeWRBVGVjMDZCLTdUNEJoUjgzWjVzajVPdmt1NjU2SENwQ3ZEb3BCbzN0VU12LVoxZEpDMEphRWhJZ0t2alZvZHRqYWFRMHdMSloyYnRyU1I2NE0xQ3BjeHFoMUwweVVy?oc=5",
+      "published": "2026-05-18T15:00:02Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Earnings-Fueled Stock Rally Faces Key Test - WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQcVkwSHQtV1d4WXdiSE9rLTU0MTRUb1lycGJLaU1CcnBwR3FnaXM1TzJHZTZpUXVhYzUwbFFyNDZMTkVoeUZBSkR2MlN0M1RzMV9aMUxHMVg2TlVmWWZSbl9mdUhxTzVjcEZnM0xxcm5JQlF2VThMTlMxYVQ5aTJPT2J6X1RpT0ZkOXhiT013?oc=5",
+      "published": "2026-05-18T20:48:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Are investors more concerned with Iran than Nvidia's Q1 earnings?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/are-investors-more-concerned-with-iran-than-nvidias-q1-earnings-193135672.html?.tsrc=rss",
-      "published": "2026-05-21T19:31:35Z",
-      "tone": "bearish"
+      "title": "Wall Street rally masks rising number of oversold S&P 500 stocks - Seeking Alpha",
+      "source": "Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQUk1Nck5KM29iVGoxQVNlTEZPblVHdzBFd3dSTnRNd1JhTGdkcUN6SEVlQWJ6Y2R0amdHQ1kzRENacjQxS24yZHJ0MEVQMmt3UUdmZk9LcmtnNkpZSEtQUXN5aV96Q2tNUzFKXzRNLWdrb3RCLWRZTldmRnVNNnVQMmZKUmktaVBla0hTV29FcjhLdlhGczNzUUdtb1BKbl81WUd3WHd3UmI2QQ?oc=5",
+      "published": "2026-05-15T13:58:46Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 95
       }
     ],
-    "headline_count": 142,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
