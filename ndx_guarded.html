@@ -640,8 +640,8 @@
         <div id="signalPnlTooltip" class="chart-tooltip"></div>
       </div>
       <div class="legend">
-        <span class="strategy">Strategy equity (blue)</span>
-        <span class="spx">NDX reference (orange)</span>
+        <span class="strategy">Strategy return % (blue)</span>
+        <span class="spx">NDX return % (orange)</span>
       </div>
     </div>
   </section>
@@ -729,14 +729,14 @@
           <button id="applyEquityCustomRange" type="button" class="secondary">Apply custom</button>
         </div>
       </div>
-      <div id="equityChartMeta" class="small" style="margin-top: 10px;">Loading static historical back-test data...</div>
+      <div id="equityChartMeta" class="small" style="margin-top: 10px;">Loading static historical back-test data. Chart shows cumulative return (%) from 0% at the start of the selected range.</div>
       <div class="chart-box">
         <svg id="equityChart" viewBox="0 0 900 360" role="img" aria-label="NDX buy and hold versus default strategy equity chart"></svg>
         <div id="equityChartTooltip" class="chart-tooltip"></div>
       </div>
       <div class="legend">
-        <span class="strategy">Strategy equity (blue)</span>
-        <span class="spx">NDX reference (orange)</span>
+        <span class="strategy">Strategy return % (blue)</span>
+        <span class="spx">NDX return % (orange)</span>
       </div>
     </section>
 
@@ -863,6 +863,6 @@
   </section>
 
 </main>
-<script src="ndx_guarded.js?v=20260520"></script>
+<script src="ndx_guarded.js?v=20260521pct"></script>
 </body>
 </html>

@@ -1678,13 +1678,14 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     const last = points[points.length - 1];
     const transition = `${fmtLeverageLabel(first.prevLeverage)} -> ${fmtLeverageLabel(first.leverage)}`;
     const entryLabel = entryOffset >= 0 ? transition : fmtLeverageLabel(first.leverage);
-    const windowReturn = last.strategy / INITIAL_CAPITAL - 1;
+    const windowReturn = last.strategy / active[0].strategy - 1;
+    const benchmarkReturn = last.spx / active[0].spx - 1;
     const costLabel = rebalances
       ? `Includes ${fmtWholeCurrency(tradingCosts)} in subsequent rebalance costs`
       : "No subsequent rebalance costs";
     return {
       points,
-      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); ${fmtWholeCurrency(INITIAL_CAPITAL)} to ${fmtWholeCurrency(last.strategy)} (${fmtSignedPct(windowReturn)}). ${costLabel}; applies ${fmtPct(DEFAULT_GUARDED.cashRate)} annual cash/funding and ${(DEFAULT_GUARDED.tradingCost * 100).toFixed(2)}% trading cost on later leverage changes.`,
+      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); chart rebased to 0% at window start. Strategy ${fmtSignedPct(windowReturn)} vs NDX ${fmtSignedPct(benchmarkReturn)} through ${last.date}. ${costLabel}.`,
     };
   }
 
@@ -1706,21 +1707,30 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       return;
     }
 
+    const rebased = rebaseEquityToReturns(points.map((point) => ({
+      date: point.date,
+      strategy: point.strategy,
+      spx: point.spx,
+    }))).map((point, index) => ({
+      ...points[index],
+      ...point,
+    }));
+
     const width = 900;
     const height = 260;
     const pad = { left: 64, right: 22, top: 18, bottom: 40 };
     const plotWidth = width - pad.left - pad.right;
     const plotHeight = height - pad.top - pad.bottom;
-    const values = points.flatMap((point) => [point.strategy, point.spx]).filter(Number.isFinite);
-    const minValue = Math.min(...values);
-    const maxValue = Math.max(...values);
-    const buffer = Math.max((maxValue - minValue) * 0.12, maxValue * 0.015, 1);
-    const yMin = Math.max(0, minValue - buffer);
-    const yMax = maxValue + buffer;
-    const range = Math.max(yMax - yMin, 1e-9);
-    const xScale = (index) => pad.left + (index / Math.max(points.length - 1, 1)) * plotWidth;
-    const yScale = (value) => pad.top + ((yMax - value) / range) * plotHeight;
-    const linePath = (selector) => points
+    const returns = rebased.flatMap((point) => [point.strategyReturn, point.spxReturn]).filter(Number.isFinite);
+    let yMin = Math.min(...returns, 0);
+    let yMax = Math.max(...returns, 0);
+    const buffer = Math.max((yMax - yMin) * 0.1, 0.02);
+    yMin -= buffer;
+    yMax += buffer;
+    const returnRange = Math.max(yMax - yMin, 1e-9);
+    const xScale = (index) => pad.left + (index / Math.max(rebased.length - 1, 1)) * plotWidth;
+    const yScale = (ratio) => pad.top + ((yMax - ratio) / returnRange) * plotHeight;
+    const linePath = (selector) => rebased
       .map((point, index) => {
         const value = selector(point);
         return Number.isFinite(value) ? `${xScale(index).toFixed(2)},${yScale(value).toFixed(2)}` : null;
@@ -1736,18 +1746,18 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       width,
       height,
     };
-    signalPnlPoints = points.map((point, index) => ({
+    signalPnlPoints = rebased.map((point, index) => ({
       ...point,
       x: xScale(index),
-      strategyY: yScale(point.strategy),
-      spxY: yScale(point.spx),
+      strategyY: yScale(point.strategyReturn),
+      spxY: yScale(point.spxReturn),
     }));
     const visibleTradeCount = points.filter((point) => point.trade).length;
     const showTransitionLabels = visibleTradeCount > 0 && visibleTradeCount <= 18;
     const markerForPoint = (point, index) => {
       if (!point.trade) return "";
       const x = xScale(index).toFixed(2);
-      const y = yScale(point.strategy).toFixed(2);
+      const y = yScale(point.strategyReturn).toFixed(2);
       const color = tradeMarkerColor(point.trade);
       const shape = point.trade.type === "buy"
         ? '<polygon points="0,-5.5 -4.5,4 4.5,4" />'
@@ -1770,16 +1780,19 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       `;
     };
 
-    const yGrid = [];
-    for (let i = 0; i <= 4; i++) {
-      const value = yMin + (range * i) / 4;
+    const yTicks = returnAxisTicks(yMin, yMax);
+    const zeroLine = yMin <= 0 && yMax >= 0
+      ? `<line x1="${pad.left}" y1="${yScale(0).toFixed(2)}" x2="${width - pad.right}" y2="${yScale(0).toFixed(2)}" stroke="#98a2b3" stroke-width="1.2" stroke-dasharray="5 4" />`
+      : "";
+    const yGrid = yTicks.map((value) => {
       const y = yScale(value);
-      yGrid.push(`
-        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
-        <text x="${pad.left - 10}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtWholeCurrency(value)}</text>
-      `);
-    }
-    const xTicks = chartDateTicks(points, xScale);
+      const isZero = Math.abs(value) < 1e-9;
+      return `
+        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="${isZero ? "#d0d5dd" : "#e5e7eb"}" stroke-width="1" />
+        <text x="${pad.left - 10}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtReturnAxis(value)}</text>
+      `;
+    });
+    const xTicks = chartDateTicks(rebased, xScale);
     const xGrid = xTicks.map((tick, index) => {
       const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
       return `
@@ -1795,12 +1808,13 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       <rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" rx="12" fill="#ffffff" stroke="#e5e7eb" />
       ${xGrid.join("")}
       ${yGrid.join("")}
+      ${zeroLine}
       <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
       <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
       <g clip-path="url(#signalPnlPlotClip)">
-        <polyline points="${linePath((point) => point.strategy)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
-        <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        ${points.map(markerForPoint).join("")}
+        <polyline points="${linePath((point) => point.strategyReturn)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.spxReturn)}" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        ${rebased.map(markerForPoint).join("")}
       </g>
       <g id="signalPnlHoverLayer" style="display: none;">
         <line id="signalPnlHoverLine" x1="0" y1="${pad.top}" x2="0" y2="${height - pad.bottom}" stroke="#475467" stroke-width="1" stroke-dasharray="4 4" />
@@ -1862,8 +1876,8 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     const tooltip = $("signalPnlTooltip");
     tooltip.innerHTML = `
       <strong>${nearest.date}</strong><br>
-      Strategy equity: ${fmtWholeCurrency(nearest.strategy)} (${fmtSignedPct(nearest.strategy / INITIAL_CAPITAL - 1)})<br>
-      NDX buy &amp; hold: ${fmtWholeCurrency(nearest.spx)} (${fmtSignedPct(nearest.spx / INITIAL_CAPITAL - 1)})<br>
+      Strategy: ${fmtSignedPct(nearest.strategyReturn)}<br>
+      NDX buy &amp; hold: ${fmtSignedPct(nearest.spxReturn)}<br>
       Leverage: ${fmtLeverageLabel(nearest.leverage)}
       ${nearest.trade ? `<br><span style="color: ${tradeMarkerColor(nearest.trade)}; font-weight: 700;">${nearest.trade.action}: ${nearest.trade.transition}</span><br>${tradePnlDetail(nearest.trade)}` : ""}
     `;
@@ -1915,25 +1929,39 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     return fullData.filter((row) => allowed.has(row.date));
   }
 
-  function equityLogTicks(logMin, logMax) {
-    const startExp = Math.floor(logMin);
-    const endExp = Math.ceil(logMax);
-    const powers = [];
-    for (let exp = startExp; exp <= endExp; exp++) {
-      const value = Math.pow(10, exp);
-      if (Math.log10(value) >= logMin && Math.log10(value) <= logMax) powers.push(value);
-    }
-    if (powers.length >= 4) return powers;
+  function rebaseEquityToReturns(data) {
+    if (!data.length) return [];
+    const baseStrategy = data[0].strategy;
+    const baseSpx = data[0].spx;
+    return data.map((point) => ({
+      ...point,
+      strategyReturn: baseStrategy > 0 ? point.strategy / baseStrategy - 1 : 0,
+      spxReturn: baseSpx > 0 ? point.spx / baseSpx - 1 : 0,
+    }));
+  }
 
+  function returnAxisTicks(minReturn, maxReturn) {
+    const minPct = minReturn * 100;
+    const maxPct = maxReturn * 100;
+    const span = Math.max(maxPct - minPct, 1);
+    const step = [1, 2, 5, 10, 15, 20, 25, 50, 100, 200, 500, 1000, 2000, 5000]
+      .find((candidate) => span / candidate <= 6) ?? 5000;
     const ticks = [];
-    for (let exp = startExp; exp <= endExp; exp++) {
-      [1, 2, 5].forEach((multiple) => {
-        const value = multiple * Math.pow(10, exp);
-        const logValue = Math.log10(value);
-        if (logValue >= logMin && logValue <= logMax) ticks.push(value);
-      });
+    const start = Math.floor(minPct / step) * step;
+    for (let pct = start; pct <= maxPct + step * 0.01; pct += step) {
+      ticks.push(pct / 100);
     }
-    return ticks;
+    if (minReturn <= 0 && maxReturn >= 0 && !ticks.some((tick) => Math.abs(tick) < 1e-9)) {
+      ticks.push(0);
+    }
+    return [...new Set(ticks)].sort((a, b) => a - b);
+  }
+
+  function fmtReturnAxis(ratio) {
+    const pct = ratio * 100;
+    if (Math.abs(pct) < 0.05) return "0%";
+    const digits = Math.abs(pct) >= 100 ? 0 : Math.abs(pct) >= 10 ? 1 : 2;
+    return `${pct >= 0 ? "+" : ""}${pct.toFixed(digits)}%`;
   }
 
   function hideEquityChartTooltip() {
@@ -1945,7 +1973,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
   function renderBacktestEquityChart() {
     const svg = $("equityChart");
     if (!svg || !latestRows.length) return;
-    const data = equityDataForRange();
+    const data = rebaseEquityToReturns(equityDataForRange());
     if (data.length < 2) {
       svg.innerHTML = "";
       equityChartPoints = [];
@@ -1959,16 +1987,15 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     const pad = { left: 76, right: 24, top: 24, bottom: 54 };
     const plotWidth = width - pad.left - pad.right;
     const plotHeight = height - pad.top - pad.bottom;
-    const values = data.flatMap((point) => [point.strategy, point.spx]).filter(Number.isFinite);
-    const minValue = Math.max(Math.min(...values), 1e-9);
-    const maxValue = Math.max(...values);
-    const yMin = minValue * 0.86;
-    const yMax = maxValue * 1.16;
-    const logMin = Math.log10(yMin);
-    const logMax = Math.log10(yMax);
-    const logRange = Math.max(logMax - logMin, 1e-9);
+    const returns = data.flatMap((point) => [point.strategyReturn, point.spxReturn]).filter(Number.isFinite);
+    let yMin = Math.min(...returns, 0);
+    let yMax = Math.max(...returns, 0);
+    const buffer = Math.max((yMax - yMin) * 0.1, 0.02);
+    yMin -= buffer;
+    yMax += buffer;
+    const returnRange = Math.max(yMax - yMin, 1e-9);
     const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * plotWidth;
-    const yScale = (value) => pad.top + ((logMax - Math.log10(Math.max(value, 1e-9))) / logRange) * plotHeight;
+    const yScale = (ratio) => pad.top + ((yMax - ratio) / returnRange) * plotHeight;
     const linePath = (selector) => data
       .map((point, index) => `${xScale(index).toFixed(2)},${yScale(selector(point)).toFixed(2)}`)
       .join(" ");
@@ -1984,16 +2011,20 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     equityChartPoints = data.map((point, index) => ({
       ...point,
       x: xScale(index),
-      strategyY: yScale(point.strategy),
-      spxY: yScale(point.spx),
+      strategyY: yScale(point.strategyReturn),
+      spxY: yScale(point.spxReturn),
     }));
 
-    const yTicks = equityLogTicks(logMin, logMax);
+    const yTicks = returnAxisTicks(yMin, yMax);
+    const zeroLine = yMin <= 0 && yMax >= 0
+      ? `<line x1="${pad.left}" y1="${yScale(0).toFixed(2)}" x2="${width - pad.right}" y2="${yScale(0).toFixed(2)}" stroke="#98a2b3" stroke-width="1.2" stroke-dasharray="5 4" />`
+      : "";
     const yGrid = yTicks.map((value) => {
       const y = yScale(value);
+      const isZero = Math.abs(value) < 1e-9;
       return `
-        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
-        <text x="${pad.left - 12}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtCompactCurrency(value)}</text>
+        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="${isZero ? "#d0d5dd" : "#e5e7eb"}" stroke-width="1" />
+        <text x="${pad.left - 12}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtReturnAxis(value)}</text>
       `;
     });
     const xTicks = chartDateTicks(data, xScale);
@@ -2015,11 +2046,12 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       <rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" rx="12" fill="#ffffff" stroke="#e5e7eb" />
       ${xGrid.join("")}
       ${yGrid.join("")}
+      ${zeroLine}
       <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
       <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
       <g clip-path="url(#equityPlotClip)">
-        <polyline points="${linePath((point) => point.strategy)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
-        <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.strategyReturn)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.spxReturn)}" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
       </g>
       <g id="equityHoverLayer" style="display: none;">
         <line id="equityHoverLine" x1="0" y1="${pad.top}" x2="0" y2="${height - pad.bottom}" stroke="#475467" stroke-width="1" stroke-dasharray="4 4" />
@@ -2034,7 +2066,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       hoverCapture.addEventListener("mouseleave", hideEquityChartTooltip);
     }
     const last = data[data.length - 1];
-    $("equityChartMeta").textContent = `${latestRowsSourceLabel()}; Refresh signal updates with newer daily data. ${data.length} trading sessions shown on a log scale: ${startDate} to ${endDate}. Default strategy ${fmtWholeCurrency(last.strategy)} vs NDX buy &amp; hold ${fmtWholeCurrency(last.spx)}.`;
+    $("equityChartMeta").textContent = `${latestRowsSourceLabel()}; ${data.length} trading sessions from ${startDate} to ${endDate}. Cumulative return rebased to 0% at range start: strategy ${fmtSignedPct(last.strategyReturn)} vs NDX buy &amp; hold ${fmtSignedPct(last.spxReturn)}.`;
   }
 
   function showEquityChartTooltip(event) {
@@ -2077,8 +2109,8 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     const tooltip = $("equityChartTooltip");
     tooltip.innerHTML = `
       <strong>${nearest.date}</strong><br>
-      Default strategy: ${fmtWholeCurrency(nearest.strategy)}<br>
-      NDX buy &amp; hold: ${fmtWholeCurrency(nearest.spx)}
+      Default strategy: ${fmtSignedPct(nearest.strategyReturn)}<br>
+      NDX buy &amp; hold: ${fmtSignedPct(nearest.spxReturn)}
     `;
     tooltip.style.display = "block";
     const tooltipWidth = Math.max(tooltip.offsetWidth, 220);
