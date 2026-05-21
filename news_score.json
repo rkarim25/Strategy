@@ -1,10 +1,24 @@
 {
-  "generated_at_utc": "2026-05-21T19:04:00Z",
+  "generated_at_utc": "2026-05-21T21:14:32Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters; Tech Rally Rolls On as Cisco Highlights AI Fervor: Markets Wrap - Bloomberg.com. Bearish offsets: Tech carries Wall Street to records, even as most stocks fall after discouraging inflation data - fox23.com.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US stocks rebound, cybersecurity sector surges to record highs; Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters. Bearish offsets: War, inflation and Trump\u2019s tariffs have shaken the US. Why does the stock market keep going up? - The Guardian; Are investors more concerned with Iran than Nvidia's Q1 earnings?.",
   "articles": [
+    {
+      "title": "US stocks rebound, cybersecurity sector surges to record highs",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/us-stocks-rebound-cybersecurity-sector-surges-to-record-highs-200917094.html?.tsrc=rss",
+      "published": "2026-05-21T20:09:17Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "War, inflation and Trump\u2019s tariffs have shaken the US. Why does the stock market keep going up? - The Guardian",
+      "source": "The Guardian",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPLWNBam1MNTNBbWdTdFZwNmF2eVZHb1U5bnFBTEdpU01DRzV0enRkN0FEdlprbjJ4Nmt0am1SdWdlZHpsb2ZqN2dnRmp1d2FBdE1RbU5fWnpNbHQ1OEhwanhzV0hFXzg0ZUZlS1lRVGhIUjZjZzFjTHRPUlZ4SDN2bnVKRXBqRXNRUzhBN2dHUVY5bEp2TE1ldTFOclVvY1g1YU42Y2piN0dzUlk?oc=5",
+      "published": "2026-05-15T07:45:00Z",
+      "tone": "bearish"
+    },
     {
       "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters",
       "source": "Reuters",
@@ -20,24 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Dow Jumps 790, Nasdaq Climbs 219, S&P 500 Rises 73 - TV News Check",
-      "source": "TV News Check",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNdEJZS0Z3UnQwZ2FTOEJDV2hGUnNBZ05rTlFQM3d0MW1TUlo4Q0xRVmNEX0w3YWJYZVhCZGdjQVltZmRUMHh2M29tdzZ2akRILUJSamVmXzhTVUhyWnI3VERIcVAxVDFGeW5kNFBzdlAxX05qOUhjT0lhbVN4RGpiOHVKaEJYM0dscWpsS2RUemhJcnc?oc=5",
-      "published": "2026-05-18T13:24:10Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock market today: S&P 500, Nasdaq surge to record highs on Nvidia rally, Chinese shares fall ahead of more Trump-Xi talks - Economy Middle East",
-      "source": "Economy Middle East",
-      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQLTFPX2h5OHV1VjJETExGbGJndWtJTktuMTNaaVFjaFRERWJFbVMxZ1ViWlNHLTQwSW5VQjRjTDVCdFAxVXRDTktPdHpkTm51ajB0cEpqc0ppajlseS1CT19QLV8tbE5KcFROOTJ6VnpEd0pMb1RzTjlJdHlnd1M4Yk9mZjdnaFFpeHVveXowdUhQQWt2TDhvMEhpdVIxTVE0MUZMMzdYaDgweERMUVhDdE92TmN2cy0yUUU5dmFYOWNqb0xjdlV0TVlVX3NSSnQzQ1JaRXBpT1cxVjdqY2FxMGNncE03bzdCMUVB?oc=5",
-      "published": "2026-05-15T05:33:03Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Tech carries Wall Street to records, even as most stocks fall after discouraging inflation data - fox23.com",
-      "source": "fox23.com",
-      "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxPcmdYV3IxcDBzTjQtNWIyazB3amlfajhza1JqaW90VFJsZEVmN3FzSEpUOGNTRXh0Y3kyTXg5Y1VKcnpFU2tqcm9RSW5hbV83ZzZPblNHQzczekFJTVZsQkpJVTFxbkxSdG9CRG9NRG5fdnBHM0YzRTcyenpvQzJKdWM3NHQ3NmpSRnBzajR4TU53anVQUTFNbk5NU0x0dllMeWRBVGVjMDZCLTdUNEJoUjgzWjVzajVPdmt1NjU2SENwQ3ZEb3BCbzN0VU12LVoxZEpDMEphRWhJZ0t2alZvZHRqYWFRMHdMSloyYnRyU1I2NE0xQ3BjeHFoMUwweVVy?oc=5",
-      "published": "2026-05-18T15:00:02Z",
+      "title": "Are investors more concerned with Iran than Nvidia's Q1 earnings?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/are-investors-more-concerned-with-iran-than-nvidias-q1-earnings-193135672.html?.tsrc=rss",
+      "published": "2026-05-21T19:31:35Z",
       "tone": "bearish"
     }
   ],
