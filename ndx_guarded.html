@@ -284,15 +284,21 @@
       top: 0;
       z-index: 5;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
       margin: 18px 0;
-      padding: 6px;
-      border: 1px solid var(--line);
+      padding: 5px;
+      border: 1px solid rgba(0, 0, 0, .07);
       border-radius: 999px;
-      background: rgba(255, 255, 255, .58);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, .045);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, .72);
+      backdrop-filter: blur(18px);
+    }
+    .site-nav[aria-label="Strategies"] {
+      gap: 4px;
+      padding: 4px;
+      background: rgba(0, 0, 0, .04);
+      border-color: rgba(0, 0, 0, .06);
+      box-shadow: none;
     }
     .site-nav .site-nav-link,
     .site-nav button[data-page-target] {
@@ -305,36 +311,84 @@
       border-radius: 999px;
       border: 1px solid transparent;
       background: transparent;
-      color: var(--text);
+      color: var(--muted);
       font: inherit;
-      font-size: 14px;
-      font-weight: 650;
-      line-height: 1.2;
+      font-size: 13px;
+      font-weight: 560;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
       text-decoration: none;
       white-space: nowrap;
       box-shadow: none;
       cursor: pointer;
-      transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      transition: background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .site-nav[aria-label="Strategies"] .site-nav-link {
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+    .site-nav[aria-label="Strategies"] a.site-nav-link:link,
+    .site-nav[aria-label="Strategies"] a.site-nav-link:visited,
+    .site-nav[aria-label="Strategies"] a.site-nav-link:hover,
+    .site-nav[aria-label="Strategies"] a.site-nav-link:active {
+      color: var(--muted);
+      text-decoration: none;
     }
     .site-nav .site-nav-link:hover,
     .site-nav button[data-page-target]:hover {
       transform: none;
-      background: rgba(255, 255, 255, .82);
+      background: rgba(255, 255, 255, .55);
+      color: var(--text);
       box-shadow: none;
+    }
+    .site-nav[aria-label="Strategies"] .site-nav-link:hover {
+      background: rgba(255, 255, 255, .45);
     }
     .site-nav .site-nav-link.active,
     .site-nav button[data-page-target].active {
-      background: rgba(255, 255, 255, .92);
+      background: var(--panel-solid);
       color: var(--text);
-      border-color: rgba(0, 0, 0, .06);
+      font-weight: 700;
+      border-color: rgba(0, 0, 0, .08);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .07);
+    }
+    .site-nav[aria-label="Strategies"] .site-nav-link.active {
+      background: #ffffff;
+      color: var(--text);
+      border-color: rgba(0, 0, 0, .1);
       box-shadow:
-        0 10px 22px rgba(0, 0, 0, .08),
-        inset 0 -2px 0 rgba(0, 113, 227, .75);
+        0 1px 3px rgba(0, 0, 0, .08),
+        0 0 0 1px rgba(255, 255, 255, .9) inset;
+    }
+    .site-nav[aria-label="Strategies"] a.site-nav-link.active,
+    .site-nav[aria-label="Strategies"] a.site-nav-link.active:visited {
+      color: var(--text);
     }
     .site-nav button.site-nav-link,
     .site-nav button[data-page-target] {
       appearance: none;
       -webkit-appearance: none;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-weight: 560;
+      box-shadow: none;
+      transform: none;
+    }
+    .site-nav button.site-nav-link:hover,
+    .site-nav button[data-page-target]:hover {
+      transform: none;
+      background: rgba(255, 255, 255, .55);
+      color: var(--text);
+      box-shadow: none;
+    }
+    .site-nav button.site-nav-link.active,
+    .site-nav button[data-page-target].active {
+      background: var(--panel-solid);
+      color: var(--text);
+      font-weight: 700;
+      border-color: rgba(0, 0, 0, .08);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .07);
     }
     .page { display: none; }
     .page.active { display: block; }
