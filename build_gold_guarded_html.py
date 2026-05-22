@@ -9,11 +9,15 @@ DST = ROOT / "gold_guarded.html"
 
 REPLACEMENTS = [
     ("Strategy — Nasdaq 100 Guarded", "Strategy — Gold Guarded (max 1x)"),
-    ('href="ndx_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Nasdaq 100)</a>',
-     'href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>'),
-    ('href="index.html#momentumSignalPage">Momentum Strategy Research</a>',
-     'href="gold_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Gold, max 1x)</a>\n'
-     '    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>'),
+    (
+        '<a class="site-nav-link active" href="ndx_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Nasdaq 100)</a>',
+        '<a class="site-nav-link" href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>',
+    ),
+    (
+        '<a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>',
+        '<a class="site-nav-link active" href="gold_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Gold, max 1x)</a>\n'
+        '    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>',
+    ),
     ("Guarded A5/B25 SMA20 Lead Signal (Nasdaq 100)", "Guarded A5/B25 SMA20 Lead Signal (Gold, max 1x)"),
     (
         "Levered <strong>Guarded A5/B25/X40/Y15 SMA20 Lead</strong> on <code>^NDX</code> (Nasdaq 100), mirroring the SPX default parameters.",
