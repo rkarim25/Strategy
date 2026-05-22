@@ -1,0 +1,296 @@
+"""Generate guarded asset HTML/JS pages from gold_guarded templates."""
+
+from __future__ import annotations
+
+import json
+import re
+from pathlib import Path
+
+from guarded_asset_registry import ASSETS, GuardedAssetSpec
+
+ROOT = Path(__file__).resolve().parent
+GOLD_HTML = ROOT / "gold_guarded.html"
+GOLD_JS = ROOT / "gold_guarded.js"
+
+
+def nav_links(active_spec: GuardedAssetSpec) -> str:
+    lines = [
+        '    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>',
+        '    <a class="site-nav-link" href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>',
+        '    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>',
+    ]
+    for spec in ASSETS:
+        href = f"{spec.slug}_guarded.html#signalPage"
+        if spec.slug == active_spec.slug:
+            lines.append(
+                f'    <a class="site-nav-link active" href="{href}" aria-current="page">{spec.nav_label}</a>'
+            )
+        else:
+            lines.append(f'    <a class="site-nav-link" href="{href}">{spec.nav_label}</a>')
+    lines.append(
+        '    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>'
+    )
+    return "\n".join(lines)
+
+
+def build_html(spec: GuardedAssetSpec) -> str:
+    html = GOLD_HTML.read_text(encoding="utf-8")
+    nav_pattern = re.compile(
+        r'<nav class="site-nav" aria-label="Strategies">.*?</nav>',
+        re.DOTALL,
+    )
+    html = nav_pattern.sub(
+        f'<nav class="site-nav" aria-label="Strategies">\n{nav_links(spec)}\n  </nav>',
+        html,
+        count=1,
+    )
+
+    replacements = [
+        ("Strategy — Gold Guarded (max 1x)", f"Strategy — {spec.title_short} Guarded (max 1x)"),
+        (
+            "Guarded A5/B25 SMA20 Lead Signal (Gold, max 1x)",
+            f"Guarded A5/B25 SMA20 Lead Signal ({spec.title_short}, max 1x)",
+        ),
+        (
+            "Guarded <strong>A5/B25/X40/Y15 SMA20 Lead</strong> on <code>GC=F</code> (COMEX gold continuous futures). "
+            "Recovery tiers still arm at -5% / -25%, but <strong>max leverage is capped at 1x</strong> on this tab "
+            "(no 2x/3x exposure). Price history is a rolled futures series, not a spot ETF.",
+            f"Guarded <strong>A5/B25/X40/Y15 SMA20 Lead</strong> on <code>{spec.yahoo_ticker}</code> ({spec.asset_label}). "
+            "Recovery tiers still arm at -5% / -25%, but <strong>max leverage is capped at 1x</strong> on this tab "
+            "(no 2x/3x exposure).",
+        ),
+        (
+            "hold <strong>1x</strong> gold exposure only when the GC=F close is above the 20-day SMA",
+            spec.hold_exposure_line,
+        ),
+        ("if gold is down", spec.drawdown_line),
+        ("from its GC=F closing high-water mark", f"from its {spec.price_name} closing high-water mark"),
+        ("after gold rises", spec.recovery_line),
+        ("delayed gold quote", f"delayed {spec.price_name} quote"),
+        ("Optional GC=F live", spec.manual_price_hint),
+        ("manual gold level", f"manual {spec.price_name.lower()} level"),
+        ("Gold (GC=F) Close vs 20-Day SMA", f"{spec.price_name} Close vs 20-Day SMA"),
+        ('aria-label="GC=F close and 20-day SMA chart"', spec.chart_aria_price),
+        (
+            'aria-label="Gold buy and hold versus default strategy equity chart"',
+            spec.chart_aria_equity,
+        ),
+        ("GC=F close", f"{spec.yahoo_ticker} close"),
+        ("Gold return % (orange)", f"{spec.index_label} return % (orange)"),
+        (
+            "2x trigger (A)</th><td>-5% drawdown from GC=F high-water close",
+            f"2x trigger (A)</th><td>-5% drawdown from {spec.price_name} high-water close",
+        ),
+        (
+            "3x trigger (B)</th><td>-25% drawdown from GC=F high-water close",
+            f"3x trigger (B)</th><td>-25% drawdown from {spec.price_name} high-water close",
+        ),
+        ("Gold vs Default Strategy Equity", spec.equity_compare_label),
+        ("historical GC=F daily closes", f"historical {spec.yahoo_ticker} daily closes"),
+        ("Gold buy-and-hold", f"{spec.index_label} buy-and-hold"),
+        ("gold (GC=F) and T-bill", f"{spec.yahoo_ticker} and T-bill"),
+        ("Gold &amp; Related Instruments", spec.instruments_title),
+        (
+            "Reference list of gold ETFs/ETCs for UK and international investors. Back-test and signal use "
+            "<code>GC=F</code> futures; listed products track spot bullion with fees and roll differences.",
+            spec.instruments_blurb,
+        ),
+        ("gold_guarded.js?v=20260522gold", f"{spec.slug}_guarded.js?v=20260523{spec.slug}"),
+    ]
+    for old, new in replacements:
+        if old not in html:
+            raise SystemExit(f"{spec.slug} HTML: missing pattern: {old!r}")
+        html = html.replace(old, new)
+
+    html = html.replace(
+        "<li><strong>2x recovery tier (capped at 1x on site):</strong>",
+        "<li><strong>2x recovery tier (capped at 1x on site):</strong>",
+    )
+    return html
+
+
+def build_js(spec: GuardedAssetSpec) -> str:
+    js = GOLD_JS.read_text(encoding="utf-8")
+    signal_file = f"latest_{spec.slug}_signal.json"
+
+    worker_refresh = """        setStatus(`${reason === "manual" ? "Manual refresh" : "Auto-refresh"}: fetching daily Gold (GC=F) data...`);
+        const { text: csv } = await fetchTextWithDiagnostics(WORKER_DAILY_URL, "Daily Gold data");
+
+        const rows = parseCsv(csv);
+        if (rows.length < 260) throw new Error("Not enough daily data. Need at least ~260 rows.");
+        const lastClose = rows[rows.length - 1]?.close;
+        if (Number.isFinite(lastClose) && lastClose > 5000) {
+          throw new Error("Live feed looks like SPX, not gold (GC=F). Using static gold_daily.csv instead.");
+        }
+        latestRows = rows;
+        latestRowsSource = "live";
+        const eodResult = computeSignal(rows);
+
+        setStatus(`${reason === "manual" ? "Manual refresh" : "Auto-refresh"}: fetching live gold quote...`);
+        let livePriceInfo = null;
+        let quoteWarning = "";
+        try {
+          livePriceInfo = await getLivePrice({ allowManualOverride });
+        } catch (quoteErr) {
+          console.warn(quoteErr);
+          quoteWarning = quoteErr.message || String(quoteErr);
+        }
+
+        const liveRows = livePriceInfo?.price == null ? rows : appendIntradayRow(rows, livePriceInfo.price);
+        const liveResult = computeSignal(liveRows);
+        if (livePriceInfo?.price == null) {
+          liveResult.explanation = quoteWarning
+            ? `Live quote unavailable; showing last completed close as placeholder. ${quoteWarning}`
+            : "No intraday price provided; showing last completed close as placeholder.";
+        }
+
+        render(eodResult, liveResult);
+        renderChart();
+        renderSignalPnlChart();
+        renderBacktestEquityChart();
+        renderTopDrawdownsTable();
+        updateRangeNudgeStates();
+        const quoteStatus = livePriceInfo?.price == null
+          ? `Live quote failed; using last completed close. ${quoteWarning}`
+          : `Live quote loaded from ${livePriceInfo.source}.`;
+        lastSuccessfulWorkerRefreshAt = new Date();
+        setStatus(`Loaded ${rows.length} daily rows. Last completed close: ${eodResult.latest.date}. ${quoteStatus}`, livePriceInfo?.price == null);"""
+
+    static_refresh = f"""        setStatus(`${{reason === "manual" ? "Manual refresh" : "Auto-refresh"}}: reloading static ${{ASSET_LABEL}} data...`);
+        const {{ text: csv }} = await fetchTextWithDiagnostics(STATIC_DAILY_URL, "Daily ${{ASSET_LABEL}} CSV");
+        const rows = parseCsv(csv);
+        if (rows.length < 260) throw new Error("Not enough daily data. Need at least ~260 rows.");
+        latestRows = rows;
+        latestRowsSource = "static";
+        const eodResult = computeSignal(rows);
+        let livePriceInfo = null;
+        let quoteWarning = "";
+        if ($("manualPrice")?.value) {{
+          try {{
+            livePriceInfo = await getLivePrice({{ allowManualOverride: true }});
+          }} catch (quoteErr) {{
+            quoteWarning = quoteErr.message || String(quoteErr);
+          }}
+        }}
+        const liveRows = livePriceInfo?.price == null ? rows : appendIntradayRow(rows, livePriceInfo.price);
+        const liveResult = computeSignal(liveRows);
+        if (livePriceInfo?.price == null) {{
+          liveResult.explanation = "Showing last completed close from static daily CSV. Use manual price + Refresh for intraday override.";
+        }} else {{
+          liveResult.explanation = `Manual intraday price applied (${{livePriceInfo.source}}).`;
+        }}
+        render(eodResult, liveResult);
+        renderChart();
+        renderSignalPnlChart();
+        renderBacktestEquityChart();
+        renderTopDrawdownsTable();
+        updateRangeNudgeStates();
+        setStatus(`Loaded ${{rows.length}} static daily rows through ${{eodResult.latest.date}}.${{quoteWarning ? " " + quoteWarning : ""}}`, !!quoteWarning);"""
+
+    if worker_refresh not in js:
+        raise SystemExit(f"{spec.slug} JS: worker refresh block not found")
+    js = js.replace(worker_refresh, static_refresh)
+
+    replacements = [
+        (
+            'const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily&symbol=gold";',
+            "const USE_WORKER_LIVE = false;",
+        ),
+        (
+            'const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=gold";',
+            f"const ASSET_LABEL = {json_escape(spec.price_name)};",
+        ),
+        ('const STATIC_DAILY_URL = "gold_daily.csv";', f'const STATIC_DAILY_URL = "{spec.slug}_daily.csv";'),
+        (
+            'const STATIC_SIGNAL_URL = "latest_gold_signal.json";',
+            f'const STATIC_SIGNAL_URL = "{signal_file}";',
+        ),
+        (
+            'const STATIC_SITE_DATA_URL = "gold_guarded_site_data.json";',
+            f'const STATIC_SITE_DATA_URL = "{spec.slug}_guarded_site_data.json";',
+        ),
+        ("latest_gold_signal.json", signal_file),
+        ('GC=F', spec.yahoo_ticker),
+        ("Gold (GC=F)", spec.asset_label),
+        ("Gold (GC=F) data", f"{spec.price_name} data"),
+        ("daily Gold (GC=F) data", f"daily {spec.price_name} data"),
+        ("Daily Gold data", f"Daily {spec.price_name} data"),
+        ("live gold quote", f"live {spec.price_name} quote"),
+        ("Intraday gold quote", f"Intraday {spec.price_name} quote"),
+        ("gold_daily.csv", f"{spec.slug}_daily.csv"),
+        ("not gold (GC=F)", f"not {spec.yahoo_ticker}"),
+        ("Live feed looks like SPX, not gold", "Live feed rejected"),
+        ("Enter a manual NDX level", f"Enter a manual {spec.price_name} level"),
+        ("Gold return %", f"{spec.index_label} return %"),
+    ]
+    for old, new in replacements:
+        js = js.replace(old, new)
+
+    return js
+
+
+def json_escape(s: str) -> str:
+    return json.dumps(s)
+
+
+def patch_shared_nav_files() -> None:
+    """Update index / ndx / gold strategy nav with new asset links."""
+    nav_extra = "\n".join(
+        f'    <a class="site-nav-link" href="{s.slug}_guarded.html#signalPage">{s.nav_label}</a>'
+        for s in ASSETS
+    )
+    for path in (ROOT / "index.html", ROOT / "ndx_guarded.html"):
+        text = path.read_text(encoding="utf-8")
+        if "ftse250_guarded.html" in text:
+            continue
+        anchor = '    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>'
+        if anchor not in text:
+            raise SystemExit(f"nav anchor missing in {path.name}")
+        text = text.replace(anchor, anchor + "\n" + nav_extra)
+        path.write_text(text, encoding="utf-8")
+        print(f"Patched nav in {path.name}")
+
+    gold_path = ROOT / "gold_guarded.html"
+    gold_text = gold_path.read_text(encoding="utf-8")
+    if "ftse250_guarded.html" not in gold_text:
+        gold_nav = nav_links(ASSETS[0])  # placeholder active wrong - use gold inactive nav
+        # Rebuild gold nav without active on ftse250
+        lines = [
+            '    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>',
+            '    <a class="site-nav-link" href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>',
+            '    <a class="site-nav-link active" href="gold_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Gold, max 1x)</a>',
+        ]
+        for s in ASSETS:
+            lines.append(
+                f'    <a class="site-nav-link" href="{s.slug}_guarded.html#signalPage">{s.nav_label}</a>'
+            )
+        lines.append(
+            '    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>'
+        )
+        nav_pattern = re.compile(
+            r'<nav class="site-nav" aria-label="Strategies">.*?</nav>',
+            re.DOTALL,
+        )
+        gold_text = nav_pattern.sub(
+            f'<nav class="site-nav" aria-label="Strategies">\n' + "\n".join(lines) + "\n  </nav>",
+            gold_text,
+            count=1,
+        )
+        gold_path.write_text(gold_text, encoding="utf-8")
+        print("Patched nav in gold_guarded.html")
+
+
+def main() -> int:
+    for spec in ASSETS:
+        html_path = ROOT / f"{spec.slug}_guarded.html"
+        js_path = ROOT / f"{spec.slug}_guarded.js"
+        html_path.write_text(build_html(spec), encoding="utf-8")
+        js_path.write_text(build_js(spec), encoding="utf-8")
+        print(f"Wrote {html_path.name} ({len(html_path.read_text())} bytes)")
+        print(f"Wrote {js_path.name}")
+    patch_shared_nav_files()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

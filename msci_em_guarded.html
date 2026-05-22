@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Strategy — Gold Guarded (max 1x)</title>
+  <title>Strategy — MSCI EM Guarded (max 1x)</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <style>
     :root {
@@ -602,9 +602,9 @@
   <nav class="site-nav" aria-label="Strategies">
     <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>
     <a class="site-nav-link" href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>
-    <a class="site-nav-link active" href="gold_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Gold, max 1x)</a>
+    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>
     <a class="site-nav-link" href="ftse250_guarded.html#signalPage">Guarded A5/B25 (FTSE 250, max 1x)</a>
-    <a class="site-nav-link" href="msci_em_guarded.html#signalPage">Guarded A5/B25 (MSCI EM, max 1x)</a>
+    <a class="site-nav-link active" href="msci_em_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (MSCI EM, max 1x)</a>
     <a class="site-nav-link" href="dax_guarded.html#signalPage">Guarded A5/B25 (DAX, max 1x)</a>
     <a class="site-nav-link" href="msci_world_guarded.html#signalPage">Guarded A5/B25 (MSCI World, max 1x)</a>
     <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>
@@ -612,9 +612,9 @@
 
   <section id="guardedStrategy" class="strategy active">
   <section class="card" style="margin-bottom: 18px;">
-    <h2>Guarded A5/B25 SMA20 Lead Signal (Gold, max 1x)</h2>
+    <h2>Guarded A5/B25 SMA20 Lead Signal (MSCI EM, max 1x)</h2>
     <p>
-      Guarded <strong>A5/B25/X40/Y15 SMA20 Lead</strong> on <code>GC=F</code> (COMEX gold continuous futures). Recovery tiers still arm at -5% / -25%, but <strong>max leverage is capped at 1x</strong> on this tab (no 2x/3x exposure). Price history is a rolled futures series, not a spot ETF.
+      Guarded <strong>A5/B25/X40/Y15 SMA20 Lead</strong> on <code>EEM</code> (MSCI EM (EEM)). Recovery tiers still arm at -5% / -25%, but <strong>max leverage is capped at 1x</strong> on this tab (no 2x/3x exposure).
       Buy-and-hold reference: <strong id="kpiBhCagr">-</strong> CAGR, <strong id="kpiBhMaxDd">-</strong> max drawdown.
     </p>
     <p id="siteDataGenerated" class="small"></p>
@@ -630,15 +630,15 @@
   <section class="card" style="margin-bottom: 18px;">
     <h2>Strategy Rules</h2>
     <ul>
-      <li><strong>Base trend rule:</strong> hold <strong>1x</strong> gold exposure only when the GC=F close is above the 20-day SMA. Otherwise hold cash/T-bills.</li>
-      <li><strong>2x recovery tier (capped at 1x on site):</strong> if gold is down <strong>5%</strong> or more from its GC=F closing high-water mark, the 2x tier is armed.</li>
-      <li><strong>3x recovery tier (capped at 1x on site):</strong> if gold is down <strong>25%</strong> or more from its GC=F closing high-water mark, the 3x tier is armed.</li>
+      <li><strong>Base trend rule:</strong> hold <strong>1x</strong> MSCI EM exposure only when the EEM close is above the 20-day SMA. Otherwise hold cash/T-bills.</li>
+      <li><strong>2x recovery tier (capped at 1x on site):</strong> if MSCI EM (EEM) is down <strong>5%</strong> or more from its MSCI EM (EEM) closing high-water mark, the 2x tier is armed.</li>
+      <li><strong>3x recovery tier (capped at 1x on site):</strong> if MSCI EM (EEM) is down <strong>25%</strong> or more from its MSCI EM (EEM) closing high-water mark, the 3x tier is armed.</li>
       <li><strong>Lead guard:</strong> recovery leverage can run when close is at least <strong>99.25%</strong> of SMA20, i.e. within 0.75% below SMA20 or above it.</li>
-      <li><strong>Exit recovery:</strong> 2x resets after gold rises 40% from the tier entry close. 3x resets after gold rises 15% from the tier entry close.</li>
+      <li><strong>Exit recovery:</strong> 2x resets after MSCI EM rises 40% from the tier entry close. 3x resets after MSCI EM rises 15% from the tier entry close.</li>
     </ul>
     <p class="small">
       The official signal uses the latest completed daily close and matches the backtest logic.
-      The intraday signal is provisional and can use a delayed gold quote through an API/proxy or a manually entered price.
+      The intraday signal is provisional and can use a delayed MSCI EM (EEM) quote through an API/proxy or a manually entered price.
     </p>
   </section>
 
@@ -646,11 +646,11 @@
     <h2>Data Source</h2>
     <div class="row">
       <button id="refresh">Refresh now / apply manual level</button>
-      <input id="manualIntradayPrice" placeholder="Optional GC=F live price override, e.g. 7408.50" style="min-width: 280px;" />
+      <input id="manualIntradayPrice" placeholder="Optional EEM level price override, e.g. 7408.50" style="min-width: 280px;" />
     </div>
     <div id="status" class="small">Ready.</div>
     <div id="autoRefreshStatus" class="small">
-      Auto-refreshes every 30 minutes while open; enter a manual gold level then click refresh to override the live quote.
+      Auto-refreshes every 30 minutes while open; enter a manual msci em (eem) level then click refresh to override the live quote.
     </div>
   </div>
 
@@ -698,7 +698,7 @@
   </section>
 
   <section class="card" style="margin-top: 18px;">
-    <h2>Gold (GC=F) Close vs 20-Day SMA</h2>
+    <h2>MSCI EM (EEM) Close vs 20-Day SMA</h2>
     <div class="range-controls range-toolbar" id="signalRangeToolbar">
       <div class="range-unit"><button type="button" data-range="1w">1W</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1w" data-range-direction="back" aria-label="Pan 1W earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1w" data-range-direction="forward" aria-label="Pan 1W later">&#8250;</button></div></div>
       <div class="range-unit"><button type="button" data-range="1m">1M</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1m" data-range-direction="back" aria-label="Pan 1M earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1m" data-range-direction="forward" aria-label="Pan 1M later">&#8250;</button></div></div>
@@ -716,11 +716,11 @@
     </div>
     <div id="chartMeta" class="small" style="margin-top: 10px;">Load data to draw the chart.</div>
     <div class="chart-box">
-      <svg id="priceChart" viewBox="0 0 900 360" role="img" aria-label="GC=F close and 20-day SMA chart"></svg>
+      <svg id="priceChart" viewBox="0 0 900 360" role="img" aria-label="MSCI EM close and 20-day SMA chart"></svg>
       <div id="chartTooltip" class="chart-tooltip"></div>
     </div>
     <div class="legend">
-      <span>GC=F close</span>
+      <span>EEM close</span>
       <span class="sma">20-day SMA</span>
       <span class="buy">Buy / 1x</span>
       <span class="add">Add / 2x-3x</span>
@@ -737,7 +737,7 @@
       </div>
       <div class="legend">
         <span class="strategy">Strategy return % (blue)</span>
-        <span class="spx">Gold return % (orange)</span>
+        <span class="spx">MSCI Emerging Markets return % (orange)</span>
       </div>
     </div>
   </section>
@@ -752,8 +752,8 @@
         <tr><th>3x entry level (-25%)</th><td id="tier3Level">-</td></tr>
         <tr><th>EOD close above SMA20?</th><td id="aboveSma">-</td></tr>
         <tr><th>Recovery lead level</th><td id="leadGuardLevel">-</td></tr>
-        <tr><th>2x trigger (A)</th><td>-5% drawdown from GC=F high-water close</td></tr>
-        <tr><th>3x trigger (B)</th><td>-25% drawdown from GC=F high-water close</td></tr>
+        <tr><th>2x trigger (A)</th><td>-5% drawdown from MSCI EM (EEM) high-water close</td></tr>
+        <tr><th>3x trigger (B)</th><td>-25% drawdown from MSCI EM (EEM) high-water close</td></tr>
       </tbody>
     </table>
   </section>
@@ -806,11 +806,11 @@
     </section>
 
     <section class="card section-gap">
-      <h2>Gold vs Default Strategy Equity</h2>
+      <h2>MSCI EM vs Default Strategy Equity</h2>
       <p class="small">
-        Browser-side chart preloaded from committed historical GC=F daily closes, then updated by Refresh signal when
+        Browser-side chart preloaded from committed historical EEM daily closes, then updated by Refresh signal when
         newer daily data is available. Both lines start at $100 and include $10 annual inflows. The chart uses a log
-        scale so the Gold buy-and-hold line remains visible beside the much larger strategy result.
+        scale so the MSCI Emerging Markets buy-and-hold line remains visible beside the much larger strategy result.
       </p>
       <div class="range-controls range-toolbar" id="equityRangeToolbar">
       <div class="range-unit"><button type="button" data-equity-range="1y">1Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="1y" data-range-direction="back" aria-label="Pan 1Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="equity" data-range-step="1y" data-range-direction="forward" aria-label="Pan 1Y later">&#8250;</button></div></div>
@@ -827,12 +827,12 @@
       </div>
       <div id="equityChartMeta" class="small" style="margin-top: 10px;">Loading static historical back-test data. Chart shows cumulative return (%) from 0% at the start of the selected range.</div>
       <div class="chart-box">
-        <svg id="equityChart" viewBox="0 0 900 360" role="img" aria-label="Gold buy and hold versus default strategy equity chart"></svg>
+        <svg id="equityChart" viewBox="0 0 900 360" role="img" aria-label="MSCI EM buy and hold versus default strategy equity chart"></svg>
         <div id="equityChartTooltip" class="chart-tooltip"></div>
       </div>
       <div class="legend">
         <span class="strategy">Strategy return % (blue)</span>
-        <span class="spx">Gold return % (orange)</span>
+        <span class="spx">MSCI Emerging Markets return % (orange)</span>
       </div>
     </section>
 
@@ -896,7 +896,7 @@
       <h2>Monte Carlo Validation</h2>
       <p>
         The Monte Carlo run stress-tests the default <strong>Guarded A5/B25/X40/Y15 SMA20 Lead</strong> strategy over 200 synthetic
-        10-year market paths. Paths are built with 21-trading-day blocks sampled from historical gold (GC=F) and T-bill
+        10-year market paths. Paths are built with 21-trading-day blocks sampled from historical EEM and T-bill
         data, preserving short-term clustering better than single-day random sampling.
       </p>
       <div class="kpi-grid">
@@ -960,9 +960,9 @@
 
   <section id="instrumentsPage" class="page">
     <section class="card">
-      <h2>Gold &amp; Related Instruments</h2>
+      <h2>Emerging Markets UCITS / ETF Instruments</h2>
       <p>
-        Reference list of gold ETFs/ETCs for UK and international investors. Back-test and signal use <code>GC=F</code> futures; listed products track spot bullion with fees and roll differences.
+        Reference list of emerging-market equity ETFs for UK / II investors. Back-test and signal use <code>EEM</code> (US-listed proxy); II lines include <code>EIMI</code> / <code>VFEM</code>.
         TER/OCF figures are indicative — confirm current charges and listings before trading.
       </p>
       <div class="instrument-toolbar">
@@ -1007,6 +1007,6 @@
 <script src="site-nav.js"></script>
 <script src="instruments-data.js"></script>
 <script src="instruments-page.js"></script>
-<script src="gold_guarded.js?v=20260522gold"></script>
+<script src="msci_em_guarded.js?v=20260523msci_em"></script>
 </body>
 </html>

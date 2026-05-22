@@ -32,6 +32,10 @@ WORKER_QUOTE_GOLD_URL = f"{WORKER_BASE}?mode=quote&symbol=gold"
 YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC"
 YAHOO_NDX_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5ENDX"
 YAHOO_GOLD_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF"
+YAHOO_FTSE250_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5EFTMC"
+YAHOO_DAX_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGDAXI"
+YAHOO_EM_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/EEM"
+YAHOO_WORLD_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L"
 ROOT = Path(__file__).resolve().parent
 DAILY_CSV = ROOT / "spx_daily.csv"
 LATEST_SIGNAL_JSON = ROOT / "latest_signal.json"
@@ -39,6 +43,14 @@ NDX_DAILY_CSV = ROOT / "ndx_daily.csv"
 LATEST_NDX_SIGNAL_JSON = ROOT / "latest_ndx_signal.json"
 GOLD_DAILY_CSV = ROOT / "gold_daily.csv"
 LATEST_GOLD_SIGNAL_JSON = ROOT / "latest_gold_signal.json"
+FTSE250_DAILY_CSV = ROOT / "ftse250_daily.csv"
+LATEST_FTSE250_SIGNAL_JSON = ROOT / "latest_ftse250_signal.json"
+EM_DAILY_CSV = ROOT / "msci_em_daily.csv"
+LATEST_EM_SIGNAL_JSON = ROOT / "latest_msci_em_signal.json"
+DAX_DAILY_CSV = ROOT / "dax_daily.csv"
+LATEST_DAX_SIGNAL_JSON = ROOT / "latest_dax_signal.json"
+WORLD_DAILY_CSV = ROOT / "msci_world_daily.csv"
+LATEST_WORLD_SIGNAL_JSON = ROOT / "latest_msci_world_signal.json"
 NEWS_SCORE_JSON = ROOT / "news_score.json"
 TRADING_DAYS = 252
 SITE_URL = "https://rkarim25.github.io/Strategy/"
@@ -1008,6 +1020,46 @@ def load_previous_signal_payload(path: Path = LATEST_SIGNAL_JSON) -> dict[str, o
         return None
 
 
+def yahoo_quote_from_rows(rows: list[dict[str, object]]) -> dict[str, object]:
+    latest = rows[-1]
+    return {
+        "quote_price": latest["close"],
+        "quote_timestamp": latest["date"],
+        "quote_source": "Yahoo Finance chart endpoint",
+    }
+
+
+def refresh_yahoo_only(
+    *,
+    label: str,
+    daily_csv: Path,
+    signal_json: Path,
+    yahoo_chart_url: str,
+    strategy_name: str,
+    max_leverage: float = 1.0,
+) -> None:
+    sources: dict[str, object] = {}
+    rows = fetch_yahoo_daily(
+        sources,
+        yahoo_chart_url=yahoo_chart_url,
+        source_key="daily_yahoo",
+    )
+    quote = yahoo_quote_from_rows(rows)
+    write_daily_csv(rows, daily_csv)
+    write_signal_json(
+        rows,
+        quote,
+        sources,
+        load_previous_signal_payload(signal_json),
+        output_path=signal_json,
+        strategy_name=strategy_name,
+        send_trade_alerts=False,
+        max_leverage=max_leverage,
+    )
+    print(f"[{label}] Wrote {daily_csv.name} with {len(rows)} rows through {rows[-1]['date']}")
+    print(f"[{label}] Wrote {signal_json.name} with quote {quote['quote_price']}")
+
+
 def refresh_gold_static_data() -> None:
     """Gold uses Yahoo GC=F; worker ?symbol=gold currently mirrors SPX and is not trusted."""
     sources: dict[str, object] = {}
@@ -1060,6 +1112,7 @@ def refresh_instrument(
     yahoo_chart_url: str,
     strategy_name: str,
     send_trade_alerts: bool,
+    max_leverage: float | None = None,
 ) -> None:
     sources: dict[str, object] = {}
     previous_payload = load_previous_signal_payload(signal_json) if send_trade_alerts else None
@@ -1080,6 +1133,7 @@ def refresh_instrument(
         output_path=signal_json,
         strategy_name=strategy_name,
         send_trade_alerts=send_trade_alerts,
+        max_leverage=max_leverage,
     )
     print(f"[{label}] Wrote {daily_csv.name} with {len(rows)} rows through {rows[-1]['date']}")
     if quote:
@@ -1113,6 +1167,47 @@ def main() -> int:
         send_trade_alerts=False,
     )
     refresh_gold_static_data()
+    for label, daily_csv, signal_json, yahoo_url, strategy_name in (
+        (
+            "FTSE250",
+            FTSE250_DAILY_CSV,
+            LATEST_FTSE250_SIGNAL_JSON,
+            YAHOO_FTSE250_CHART_URL,
+            "Guarded A5/B25 SMA20 Lead (FTSE 250, max 1x)",
+        ),
+        (
+            "MSCI_EM",
+            EM_DAILY_CSV,
+            LATEST_EM_SIGNAL_JSON,
+            YAHOO_EM_CHART_URL,
+            "Guarded A5/B25 SMA20 Lead (MSCI EM, max 1x)",
+        ),
+        (
+            "DAX",
+            DAX_DAILY_CSV,
+            LATEST_DAX_SIGNAL_JSON,
+            YAHOO_DAX_CHART_URL,
+            "Guarded A5/B25 SMA20 Lead (DAX, max 1x)",
+        ),
+        (
+            "MSCI_WORLD",
+            WORLD_DAILY_CSV,
+            LATEST_WORLD_SIGNAL_JSON,
+            YAHOO_WORLD_CHART_URL,
+            "Guarded A5/B25 SMA20 Lead (MSCI World, max 1x)",
+        ),
+    ):
+        try:
+            refresh_yahoo_only(
+                label=label,
+                daily_csv=daily_csv,
+                signal_json=signal_json,
+                yahoo_chart_url=yahoo_url,
+                strategy_name=strategy_name,
+                max_leverage=1.0,
+            )
+        except Exception as exc:
+            print(f"[{label}] refresh failed: {exc}", file=sys.stderr)
     write_news_score_json()
     return 0
 

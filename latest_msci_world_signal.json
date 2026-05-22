@@ -1,0 +1,76 @@
+{
+  "generated_at_utc": "2026-05-22T12:09:38Z",
+  "data_asof": "2026-05-22",
+  "daily_rows": 4206,
+  "quote_price": 10580.0,
+  "quote_timestamp": "2026-05-22",
+  "quote_source": "Yahoo Finance chart endpoint",
+  "sources": {
+    "daily_yahoo": {
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L?period1=0&period2=1779538178&interval=1d&events=history&includeAdjustedClose=true",
+      "ok": true,
+      "status": 200
+    }
+  },
+  "strategy": {
+    "name": "Guarded A5/B25 SMA20 Lead (MSCI World, max 1x)",
+    "parameters": {
+      "triggerA": 0.05,
+      "triggerB": 0.25,
+      "hold2": 0.4,
+      "hold3": 0.15,
+      "leadPct": 0.0075,
+      "maxLeverage": 1.0
+    }
+  },
+  "official_signal": {
+    "latest": {
+      "date": "2026-05-22",
+      "close": 10580.0
+    },
+    "latestSma": 10328.2,
+    "highWater": 12837.8095703125,
+    "highWaterDate": "2025-10-24",
+    "latestDd": -0.17587186956984435,
+    "regime": "tier3",
+    "entryClose": 9613.0,
+    "entryDate": "2026-04-01",
+    "recoveryTarget": 11054.949999999999,
+    "aboveSma": true,
+    "recoveryOk": true,
+    "targetLeverage": 1,
+    "activeEntryClose": 9613.0,
+    "activeEntryDate": "2026-04-01",
+    "activeEntryLeverage": 1,
+    "activeEntryPnl": 0.10059294705086863,
+    "explanation": "Recovery tier3 armed at 1x max (lead guard passed)."
+  },
+  "provisional_signal": {
+    "latest": {
+      "date": "2026-05-22",
+      "close": 10580.0
+    },
+    "latestSma": 10351.1,
+    "highWater": 12837.8095703125,
+    "highWaterDate": "2025-10-24",
+    "latestDd": -0.17587186956984435,
+    "regime": "tier3",
+    "entryClose": 9613.0,
+    "entryDate": "2026-04-01",
+    "recoveryTarget": 11054.949999999999,
+    "aboveSma": true,
+    "recoveryOk": true,
+    "targetLeverage": 1,
+    "activeEntryClose": 9613.0,
+    "activeEntryDate": "2026-04-01",
+    "activeEntryLeverage": 1,
+    "activeEntryPnl": 0.10059294705086863,
+    "explanation": "Recovery tier3 armed at 1x max (lead guard passed)."
+  },
+  "trade_alert_state": {
+    "last_observed_asof": "2026-05-22",
+    "last_observed_target_leverage": 1,
+    "last_observed_target_label": "1x",
+    "last_checked_at_utc": "2026-05-22T12:09:38Z"
+  }
+}

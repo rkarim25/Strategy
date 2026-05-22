@@ -36,7 +36,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add spx_daily.csv latest_signal.json ndx_daily.csv latest_ndx_signal.json ndx_guarded_site_data.json news_score.json
+          git add spx_daily.csv latest_signal.json ndx_daily.csv latest_ndx_signal.json ndx_guarded_site_data.json \
+            gold_daily.csv latest_gold_signal.json gold_guarded_site_data.json \
+            ftse250_daily.csv latest_ftse250_signal.json ftse250_guarded_site_data.json \
+            msci_em_daily.csv latest_msci_em_signal.json msci_em_guarded_site_data.json \
+            dax_daily.csv latest_dax_signal.json dax_guarded_site_data.json \
+            msci_world_daily.csv latest_msci_world_signal.json msci_world_guarded_site_data.json \
+            news_score.json
           if git diff --cached --quiet; then
             echo "No market data changes to commit."
           else
