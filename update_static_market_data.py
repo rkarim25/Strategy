@@ -27,13 +27,18 @@ WORKER_DAILY_URL = f"{WORKER_BASE}?mode=daily"
 WORKER_QUOTE_URL = f"{WORKER_BASE}?mode=quote"
 WORKER_DAILY_NDX_URL = f"{WORKER_BASE}?mode=daily&symbol=ndx"
 WORKER_QUOTE_NDX_URL = f"{WORKER_BASE}?mode=quote&symbol=ndx"
+WORKER_DAILY_GOLD_URL = f"{WORKER_BASE}?mode=daily&symbol=gold"
+WORKER_QUOTE_GOLD_URL = f"{WORKER_BASE}?mode=quote&symbol=gold"
 YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC"
 YAHOO_NDX_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5ENDX"
+YAHOO_GOLD_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF"
 ROOT = Path(__file__).resolve().parent
 DAILY_CSV = ROOT / "spx_daily.csv"
 LATEST_SIGNAL_JSON = ROOT / "latest_signal.json"
 NDX_DAILY_CSV = ROOT / "ndx_daily.csv"
 LATEST_NDX_SIGNAL_JSON = ROOT / "latest_ndx_signal.json"
+GOLD_DAILY_CSV = ROOT / "gold_daily.csv"
+LATEST_GOLD_SIGNAL_JSON = ROOT / "latest_gold_signal.json"
 NEWS_SCORE_JSON = ROOT / "news_score.json"
 TRADING_DAYS = 252
 SITE_URL = "https://rkarim25.github.io/Strategy/"
@@ -545,8 +550,13 @@ def sma(values: list[float], end_index: int, window: int) -> float:
     return sum(values[end_index - window + 1 : end_index + 1]) / window
 
 
-def compute_signal(rows: list[dict[str, object]]) -> dict[str, object]:
+def compute_signal(rows: list[dict[str, object]], *, max_leverage: float | None = None) -> dict[str, object]:
     params = DEFAULT_GUARDED
+
+    def cap_lev(lev: int) -> int:
+        if max_leverage is None or max_leverage <= 0:
+            return lev
+        return int(min(lev, max_leverage))
     closes = [float(row["close"]) for row in rows]
     high_water = closes[0]
     high_water_date = str(rows[0]["date"])
@@ -588,9 +598,11 @@ def compute_signal(rows: list[dict[str, object]]) -> dict[str, object]:
                 entry_close = None
                 entry_date = None
             else:
-                target_leverage = 3 if recovery_ok else base_lev
+                target_leverage = cap_lev(3 if recovery_ok else base_lev)
                 explanation = (
-                    "3x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
+                    "Recovery tier3 armed at 1x max (lead guard passed)."
+                    if recovery_ok and max_leverage == 1
+                    else "3x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
                     if recovery_ok
                     else "3x tier is armed, but lead guard failed; using base cash/1x rule."
                 )
@@ -602,8 +614,12 @@ def compute_signal(rows: list[dict[str, object]]) -> dict[str, object]:
                 regime = "tier3"
                 entry_close = close
                 entry_date = date
-                target_leverage = 3
-                explanation = "Drawdown hit B=-25% and lead guard passed; upgraded to 3x."
+                target_leverage = cap_lev(3)
+                explanation = (
+                    "Drawdown hit B=-25%; tier3 armed at 1x max."
+                    if max_leverage == 1
+                    else "Drawdown hit B=-25% and lead guard passed; upgraded to 3x."
+                )
                 update_active_entry_tracking(close, date)
                 continue
             if entry_close is not None and close / entry_close - 1 >= params["hold2"]:
@@ -611,9 +627,11 @@ def compute_signal(rows: list[dict[str, object]]) -> dict[str, object]:
                 entry_close = None
                 entry_date = None
             else:
-                target_leverage = 2 if recovery_ok else base_lev
+                target_leverage = cap_lev(2 if recovery_ok else base_lev)
                 explanation = (
-                    "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
+                    "Recovery tier2 armed at 1x max (lead guard passed)."
+                    if recovery_ok and max_leverage == 1
+                    else "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
                     if recovery_ok
                     else "2x tier is armed, but lead guard failed; using base cash/1x rule."
                 )
@@ -624,16 +642,24 @@ def compute_signal(rows: list[dict[str, object]]) -> dict[str, object]:
             regime = "tier3"
             entry_close = close
             entry_date = date
-            target_leverage = 3
-            explanation = "Drawdown is at/through -25% and price is inside the 0.75% SMA20 lead guard; enter 3x."
+            target_leverage = cap_lev(3)
+            explanation = (
+                "Drawdown at/through -25%; tier3 armed at 1x max."
+                if max_leverage == 1
+                else "Drawdown is at/through -25% and price is inside the 0.75% SMA20 lead guard; enter 3x."
+            )
         elif dd <= -params["triggerA"] and recovery_ok:
             regime = "tier2"
             entry_close = close
             entry_date = date
-            target_leverage = 2
-            explanation = "Drawdown is at/through -5% and price is inside the 0.75% SMA20 lead guard; enter 2x."
+            target_leverage = cap_lev(2)
+            explanation = (
+                "Drawdown at/through -5%; tier2 armed at 1x max."
+                if max_leverage == 1
+                else "Drawdown is at/through -5% and price is inside the 0.75% SMA20 lead guard; enter 2x."
+            )
         else:
-            target_leverage = base_lev
+            target_leverage = cap_lev(base_lev)
             explanation = (
                 "No recovery tier active; base rule says 1x because close is above SMA20."
                 if above_sma
@@ -915,10 +941,13 @@ def write_signal_json(
     output_path: Path = LATEST_SIGNAL_JSON,
     strategy_name: str = "Guarded A5/B25 SMA20 Lead Signal",
     send_trade_alerts: bool = True,
+    max_leverage: float | None = None,
 ) -> None:
     generated_at_utc = iso_utc(utc_now())
-    official_signal = compute_signal(rows)
-    provisional_signal = compute_signal(append_quote_row(rows, quote)) if quote else None
+    official_signal = compute_signal(rows, max_leverage=max_leverage)
+    provisional_signal = (
+        compute_signal(append_quote_row(rows, quote), max_leverage=max_leverage) if quote else None
+    )
     transition = build_trade_transition(previous_payload, official_signal, generated_at_utc)
     email_sent = False
     email_error = None
@@ -946,6 +975,10 @@ def write_signal_json(
         if previous_transition:
             alert_state["last_transition"] = previous_transition
 
+    strategy_params = dict(DEFAULT_GUARDED)
+    if max_leverage is not None:
+        strategy_params["maxLeverage"] = max_leverage
+
     payload = {
         "generated_at_utc": generated_at_utc,
         "data_asof": rows[-1]["date"],
@@ -956,7 +989,7 @@ def write_signal_json(
         "sources": sources,
         "strategy": {
             "name": strategy_name,
-            "parameters": DEFAULT_GUARDED,
+            "parameters": strategy_params,
         },
         "official_signal": official_signal,
         "provisional_signal": provisional_signal,
@@ -973,6 +1006,48 @@ def load_previous_signal_payload(path: Path = LATEST_SIGNAL_JSON) -> dict[str, o
     except json.JSONDecodeError as exc:
         print(f"Could not parse existing {path.name}; skipping trade-alert comparison: {exc}")
         return None
+
+
+def refresh_gold_static_data() -> None:
+    """Gold uses Yahoo GC=F; worker ?symbol=gold currently mirrors SPX and is not trusted."""
+    sources: dict[str, object] = {}
+    try:
+        rows = fetch_yahoo_daily(
+            sources,
+            yahoo_chart_url=YAHOO_GOLD_CHART_URL,
+            source_key="daily_yahoo_gold",
+        )
+    except Exception as exc:
+        print(f"[Gold] Daily refresh failed; skipping signal JSON: {exc}", file=sys.stderr)
+        return
+    quote = fetch_quote(
+        sources,
+        worker_quote_url=WORKER_QUOTE_GOLD_URL,
+        source_key="quote_worker_gold",
+    )
+    if quote and float(quote["quote_price"]) > 5000:
+        sources["quote_worker_gold"] = source_result(
+            WORKER_QUOTE_GOLD_URL,
+            False,
+            error="quote looked like SPX not gold; discarded",
+        )
+        quote = None
+    write_daily_csv(rows, GOLD_DAILY_CSV)
+    write_signal_json(
+        rows,
+        quote,
+        sources,
+        None,
+        output_path=LATEST_GOLD_SIGNAL_JSON,
+        strategy_name="Guarded A5/B25 SMA20 Lead (Gold, max 1x)",
+        send_trade_alerts=False,
+        max_leverage=1.0,
+    )
+    print(f"[Gold] Wrote {GOLD_DAILY_CSV.name} with {len(rows)} rows through {rows[-1]['date']}")
+    if quote:
+        print(f"[Gold] Wrote {LATEST_GOLD_SIGNAL_JSON.name} with quote {quote['quote_price']}")
+    else:
+        print(f"[Gold] Wrote {LATEST_GOLD_SIGNAL_JSON.name} without live quote")
 
 
 def refresh_instrument(
@@ -1037,6 +1112,7 @@ def main() -> int:
         strategy_name="Guarded A5/B25 SMA20 Lead Signal (Nasdaq 100)",
         send_trade_alerts=False,
     )
+    refresh_gold_static_data()
     write_news_score_json()
     return 0
 
