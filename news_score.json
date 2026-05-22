@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-05-22T18:57:41Z",
+  "generated_at_utc": "2026-05-22T20:44:51Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dominic Chu: The Trump Bull Market\u2019s AI Rally Is Powering the S&P 500 Toward an 8th Straight Winning Week; Arm shares extend weekly rally to almost 50%, and Starbucks pulls the plug on an AI project. Bearish offsets: Trump said he'd 'remember' companies that didn't apply for tariff refunds. Many of them are anyway.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dominic Chu: The Trump Bull Market\u2019s AI Rally Is Powering the S&P 500 Toward an 8th Straight Winning Week; Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters. Bearish offsets: Trump said he'd 'remember' companies that didn't apply for tariff refunds. Many of them are anyway.",
   "articles": [
     {
       "title": "Dominic Chu: The Trump Bull Market\u2019s AI Rally Is Powering the S&P 500 Toward an 8th Straight Winning Week",
@@ -13,17 +13,17 @@
       "tone": "bullish"
     },
     {
+      "title": "Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPcjM1c2ozQWFpSmVwbjV3TDhFQkJFQmVjUk5OalcwOHRHbjNwZFRFcG0xd3JaRmZOSDNmMXlxdjZ4eGp2UXFKSkVJakZMeWMyQ045N3N5WDhvYVdyVWY0UkRwc0hBTGlJX0JvRk90NWIxS3QtTFZtcG9zbjBCOVRwdUR2WW45TGlfeTlHT0s5MFluXzEwdHJGVnJ3UFpORWhWMktV?oc=5",
+      "published": "2026-05-22T20:01:15Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Arm shares extend weekly rally to almost 50%, and Starbucks pulls the plug on an AI project",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/05/22/arm-shares-extend-weekly-rally-to-almost-50percent-and-starbucks-pulls-the-plug-on-an-ai-project.html",
       "published": "2026-05-22T17:32:52Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Dell Stock Leads the S&P 500 Today. Next Week\u2019s Earnings Could Send It Higher.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/4790f25e-27d5-3880-8c96-e11805bcd783/dell-stock-leads-the-s%26p-500.html?.tsrc=rss",
-      "published": "2026-05-22T17:24:00Z",
       "tone": "bullish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 92
       }
     ],
-    "headline_count": 140,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
