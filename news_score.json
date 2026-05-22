@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-05-22T20:44:51Z",
+  "generated_at_utc": "2026-05-22T22:13:09Z",
   "window_days": 7,
-  "score": 8,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dominic Chu: The Trump Bull Market\u2019s AI Rally Is Powering the S&P 500 Toward an 8th Straight Winning Week; Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters. Bearish offsets: Trump said he'd 'remember' companies that didn't apply for tariff refunds. Many of them are anyway.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: S&P 500, Nasdaq Score Weekly Wins As Dow Logs Record High; S&P 500 Clocks Best Weekly Rally Since 2023, Dow Hits Fresh Record As US-Iran Peace Hope Boosts Risk Sentiment - UBER, GILD, RDDT, FJET, AMD In Focus.",
   "articles": [
     {
-      "title": "Dominic Chu: The Trump Bull Market\u2019s AI Rally Is Powering the S&P 500 Toward an 8th Straight Winning Week",
+      "title": "Stock Market Today: S&P 500, Nasdaq Score Weekly Wins As Dow Logs Record High",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/05/22/dominic-chu-the-trump-bull-markets-ai-rally-is-powering-the-sp-500-toward-an-8th-straight-winning-week/?.tsrc=rss",
-      "published": "2026-05-22T18:45:23Z",
+      "url": "https://finance.yahoo.com/m/516024ad-d294-3dad-b22d-f5dd551580a2/stock-market-today%3A-s%26p-500%2C.html?.tsrc=rss",
+      "published": "2026-05-22T20:43:55Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 Clocks Best Weekly Rally Since 2023, Dow Hits Fresh Record As US-Iran Peace Hope Boosts Risk Sentiment - UBER, GILD, RDDT, FJET, AMD In Focus",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-clocks-best-weekly-rally-since-2023-dow-hits-fresh-record-as-us-iran-peace-hope-boosts-risk-sentiment-uber-gild-rddt-fjet-amd-in-focus/cZgRnCmReY4?.tsrc=rss",
+      "published": "2026-05-22T21:03:43Z",
       "tone": "bullish"
     },
     {
       "title": "Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPcjM1c2ozQWFpSmVwbjV3TDhFQkJFQmVjUk5OalcwOHRHbjNwZFRFcG0xd3JaRmZOSDNmMXlxdjZ4eGp2UXFKSkVJakZMeWMyQ045N3N5WDhvYVdyVWY0UkRwc0hBTGlJX0JvRk90NWIxS3QtTFZtcG9zbjBCOVRwdUR2WW45TGlfeTlHT0s5MFluXzEwdHJGVnJ3UFpORWhWMktV?oc=5",
-      "published": "2026-05-22T20:01:15Z",
+      "published": "2026-05-22T20:31:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Arm shares extend weekly rally to almost 50%, and Starbucks pulls the plug on an AI project",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/22/arm-shares-extend-weekly-rally-to-almost-50percent-and-starbucks-pulls-the-plug-on-an-ai-project.html",
-      "published": "2026-05-22T17:32:52Z",
+      "title": "Dow Jones Futures: Stock Market Rebounds To Highs; Tesla, These Five AI Plays Are At Buy Points",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures%3A-stock.html?.tsrc=rss",
+      "published": "2026-05-22T21:24:41Z",
       "tone": "bullish"
     },
     {
-      "title": "Trump said he'd 'remember' companies that didn't apply for tariff refunds. Many of them are anyway",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/22/trump-tariff-refunds-walmart-home-depot-target-apply.html",
-      "published": "2026-05-22T16:56:12Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Bullish sentiment on Wall Street continues to surge! Following Morgan Stanley, UBS Group has also raised its year-end target for the S&P 500, citing AI-driven earnings growth and resilient consumer spending as key supports for its bullish outlook. - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOUjdBZkNMaE14cjJlNS0zUUhGa25Kbk0wSC1Ub1FjTjZEMllMaWpDU0F4LWR6dDREMWgtRzlGMEtWN0owUGkxelZUT1hjakVzdDN6c2JkSWJ4c3N4US1CVnRVODlEVFI0RDJJWEVUWVU4REFDbFEzMzZyOE1GMnJYUG9IUFk5YWZKR0RKRlA3UHFrMURfSmdhZ251b0wxVUVqSkFYb2oyY004N0VYYVFR?oc=5",
-      "published": "2026-05-22T11:28:13Z",
+      "title": "Wall Street rises as Middle East hopes lift sentiment",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/wall-street-rises-middle-east-215643096.html?.tsrc=rss",
+      "published": "2026-05-22T21:56:43Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 94
       }
     ],
-    "headline_count": 142,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
