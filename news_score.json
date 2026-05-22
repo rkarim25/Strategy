@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-05-21T23:01:34Z",
+  "generated_at_utc": "2026-05-22T16:30:27Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters; The Furious Chip Rally Was Petering Out. Now Wall Street Turns to Nvidia. - WSJ. Bearish offsets: Tech carries Wall Street to records, even as most stocks fall after discouraging inflation data - fox23.com.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: AI Boom Powers Technology Stocks To 225% Gains Since 2022, Fueling Wall Street Rally - Benzinga; Stock Market Rises, Dow Jones Hits New High; Nvidia, Walmart, SpaceX In Focus: Weekly Review. Bearish offsets: U.S. Stocks Fall as Bond Selloff Deepens - WSJ; Trump said he'd 'remember' companies that didn't apply for tariff refunds. Many of them are anyway.",
   "articles": [
     {
-      "title": "Wall Street ends higher on tech rally; investors eye Beijing talks - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNSlFWTVQ4ZlpZcDd2ZXIyT3hTblVucFl6UTFSaTlaLU5uVTZKT1BiWERJM3FlWHF1T1NldVRqNUFpdW5jN1JOMDNYcHFxajNhdUIwdnQ3b3FFUmVCMWJNUzRWTGFQYlItVmJocTdKbVlrTXVrbUQ5S2RhcTB2cGxteEMxTFo4TG41UkZhemZQOWhOaDNfdEVTdGZkSV91QQ?oc=5",
-      "published": "2026-05-14T23:03:53Z",
+      "title": "AI Boom Powers Technology Stocks To 225% Gains Since 2022, Fueling Wall Street Rally - Benzinga",
+      "source": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxORTczN3hyU0djZHVSQ1g4b0tmQzNhMENiaG1keUJ2NU85TDl6SXhhWGJXOG9FMVpRZTZJankxT2x1T21PeVpQV3BlVWI0dXpaNjIzb3ZaRVFpbWd4aWlYX19HNkU0bFNoa3R4amh4cF9keEc3cjZteXdZX3liOTMzTEc0X2dnU19YaGVoUG9obmRmSnVubm5rdGpRdjRfSnB3eTczaEhUUVkyUURYblVIMmJEVGVXOG9MU1h3cWk1bXFWRnlpQWJ0UjkxMXE1Sm5tc0VoTjBB?oc=5",
+      "published": "2026-05-22T10:21:09Z",
       "tone": "bullish"
     },
     {
-      "title": "Tech carries Wall Street to records, even as most stocks fall after discouraging inflation data - fox23.com",
-      "source": "fox23.com",
-      "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxPcmdYV3IxcDBzTjQtNWIyazB3amlfajhza1JqaW90VFJsZEVmN3FzSEpUOGNTRXh0Y3kyTXg5Y1VKcnpFU2tqcm9RSW5hbV83ZzZPblNHQzczekFJTVZsQkpJVTFxbkxSdG9CRG9NRG5fdnBHM0YzRTcyenpvQzJKdWM3NHQ3NmpSRnBzajR4TU53anVQUTFNbk5NU0x0dllMeWRBVGVjMDZCLTdUNEJoUjgzWjVzajVPdmt1NjU2SENwQ3ZEb3BCbzN0VU12LVoxZEpDMEphRWhJZ0t2alZvZHRqYWFRMHdMSloyYnRyU1I2NE0xQ3BjeHFoMUwweVVy?oc=5",
-      "published": "2026-05-18T15:00:02Z",
+      "title": "U.S. Stocks Fall as Bond Selloff Deepens - WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNSzNmYy1uUXgtZ1pQTktZWnR5ZmxpT2ZpTWxfV0FBbFBEMHR0LW85c2o4YkE5eDNVcWFINnFmdDk5MzlabUhzdFRhdk5rcENpTEZPVWhNNkpYWTZBWktNZlU1U3hsU003cVhvZ3ZRZVY2RDAyc1NwUGhlcDRJcm9GMXMxNnotenQwYmtuejRJV3QxWWpTRHVLYjEwcl8?oc=5",
+      "published": "2026-05-19T20:48:00Z",
       "tone": "bearish"
     },
     {
-      "title": "The Furious Chip Rally Was Petering Out. Now Wall Street Turns to Nvidia. - WSJ",
-      "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPMG5qSFAtRTczcEF0ODJjUUpsUHF5bHNOWldiclI1ZTNvMTN6VVFBTVNNU1Y0X25QOW9qeTlwYjRVanYtTTl4MmVPYVFXRjZ0SEhiZzVDTHRNUEdoMGtSbkpYX205TmozTXIxU0k0a0htVF81VWhwVFVzaGV3a3M1ZzR2djRoczBjQzhJVFNPQ1pzNl8tQXBkdnN4bXRJQ2lhU2pCcmhYeGdycGRPM1E?oc=5",
-      "published": "2026-05-20T21:31:00Z",
+      "title": "Stock Market Rises, Dow Jones Hits New High; Nvidia, Walmart, SpaceX In Focus: Weekly Review",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/c284f401-a59c-32e1-a9ca-267320ba2793/stock-market-rises%2C-dow-jones.html?.tsrc=rss",
+      "published": "2026-05-22T14:36:58Z",
       "tone": "bullish"
     },
     {
-      "title": "Earnings-Fueled Stock Rally Faces Key Test - WSJ",
-      "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQcVkwSHQtV1d4WXdiSE9rLTU0MTRUb1lycGJLaU1CcnBwR3FnaXM1TzJHZTZpUXVhYzUwbFFyNDZMTkVoeUZBSkR2MlN0M1RzMV9aMUxHMVg2TlVmWWZSbl9mdUhxTzVjcEZnM0xxcm5JQlF2VThMTlMxYVQ5aTJPT2J6X1RpT0ZkOXhiT013?oc=5",
-      "published": "2026-05-18T20:48:00Z",
-      "tone": "bullish"
+      "title": "Trump said he'd 'remember' companies that didn't apply for tariff refunds. Many of them are anyway",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/05/22/trump-tariff-refunds-walmart-home-depot-target-apply.html",
+      "published": "2026-05-22T11:23:45Z",
+      "tone": "bearish"
     },
     {
-      "title": "Wall Street Sustains Rally Despite Rising Treasury Yields - Let's Data Science",
-      "source": "Let's Data Science",
-      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPZ2FCal9IbXV1ZUVydWxsNllvbVVOeExWV0J3T1AyZVNXWndJSnpjaDRheEFsQk5pWE5TMTI4TUZqVDNkMVZZQWxDT3owdXFzUDJpdDFfbTRlYkx3NkZzOEtNMy1ya1BhUGJiZUM0MmcwUEV1Q2tLa2huVTh2UWpJYTdhLWNKYUFNWlZQVnlyWVNRMGlaa082aXJOdHc1cjIx?oc=5",
-      "published": "2026-05-18T16:16:21Z",
+      "title": "Bullish sentiment on Wall Street continues to surge! Following Morgan Stanley, UBS Group has also raised its year-end target for the S&P 500, citing AI-driven earnings growth and resilient consumer spending as key supports for its bullish outlook. - Moomoo",
+      "source": "Moomoo",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOUjdBZkNMaE14cjJlNS0zUUhGa25Kbk0wSC1Ub1FjTjZEMllMaWpDU0F4LWR6dDREMWgtRzlGMEtWN0owUGkxelZUT1hjakVzdDN6c2JkSWJ4c3N4US1CVnRVODlEVFI0RDJJWEVUWVU4REFDbFEzMzZyOE1GMnJYUG9IUFk5YWZKR0RKRlA3UHFrMURfSmdhZ251b0wxVUVqSkFYb2oyY004N0VYYVFR?oc=5",
+      "published": "2026-05-22T11:28:13Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 83
+        "articles": 91
       }
     ],
-    "headline_count": 133,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
