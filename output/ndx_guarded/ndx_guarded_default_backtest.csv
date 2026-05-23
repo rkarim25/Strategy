@@ -1,0 +1,2 @@
+strategy,cagr,ann_volatility,sharpe,max_drawdown,calmar,end_$,rebalances,trading_costs_total,funding_costs_total,pct_days_cash,pct_days_1x,pct_days_2x,pct_days_3x,tier2_entries,tier3_entries,lead_only_days
+Guarded A5/B25 SMA20 Lead,0.8994780559223472,0.4401315725930008,3.1957327715691712,-0.3551050411675638,2.53299151418667,22569364237.957912,825,25090407437.571365,0.0,31.319554848966614,5.140434552199258,31.465288818229997,32.07472178060413,13,3,559

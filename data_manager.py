@@ -9,6 +9,7 @@ import yfinance as yf
 
 SPX_TICKER = "^GSPC"
 TBILL_TICKER = "^IRX"
+VIX_TICKER = "^VIX"
 YEARS_OF_HISTORY = 30
 
 
@@ -25,7 +26,7 @@ def download_market_data(
     start = end - timedelta(days=int(years * 365.25))
 
     raw = yf.download(
-        [SPX_TICKER, TBILL_TICKER],
+        [SPX_TICKER, TBILL_TICKER, VIX_TICKER],
         start=start.strftime("%Y-%m-%d"),
         end=end.strftime("%Y-%m-%d"),
         auto_adjust=True,
@@ -45,6 +46,7 @@ def download_market_data(
         columns={
             SPX_TICKER: "spx_close",
             TBILL_TICKER: "tbill_rate",
+            VIX_TICKER: "vix",
         }
     )
 

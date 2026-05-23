@@ -3,6 +3,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
   const STATIC_DAILY_URL = "ndx_daily.csv";
   const STATIC_SIGNAL_URL = "latest_ndx_signal.json";
   const STATIC_SITE_DATA_URL = "ndx_guarded_site_data.json";
+  const STATIC_ETP_URL = "ndx_etp_returns.json";
   const AUTO_REFRESH_MS = 30 * 60 * 1000;
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
@@ -143,6 +144,11 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     try {
       const signalMetadata = await loadStaticSignalMetadata();
       const siteData = await loadStaticSiteData();
+      try {
+        await EtpLeverage.load(STATIC_ETP_URL);
+      } catch (etpErr) {
+        console.warn("ETP return series not loaded; using synthetic 2x/3x fallback.", etpErr);
+      }
       const { text: csv } = await fetchTextWithDiagnostics(STATIC_DAILY_URL, "Static historical back-test data");
       const rows = parseCsv(csv);
       if (rows.length < 260) throw new Error("Not enough static historical rows. Need at least ~260 rows.");
@@ -822,8 +828,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
         if (lev <= 0) {
           ret = dailyCash;
         } else {
-          const funding = lev > 1 ? (lev - 1) * params.cashRate / TRADING_DAYS : 0;
-          ret = lev * spxRet - funding;
+          ret = EtpLeverage.dailyReturn(lev, spxRet, params.cashRate, rows[i].date);
         }
         aum *= 1 + ret;
       }
@@ -1675,8 +1680,9 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       }
 
       const spxReturn = point.close / prevPoint.close - 1;
-      const funding = lev > 1 ? (lev - 1) * DEFAULT_GUARDED.cashRate / TRADING_DAYS : 0;
-      const dailyReturn = lev <= 0 ? dailyCash : lev * spxReturn - funding;
+      const dailyReturn = lev <= 0
+        ? dailyCash
+        : EtpLeverage.dailyReturn(lev, spxReturn, DEFAULT_GUARDED.cashRate, point.date);
       strategy *= 1 + dailyReturn;
       spx *= 1 + spxReturn;
       points.push({

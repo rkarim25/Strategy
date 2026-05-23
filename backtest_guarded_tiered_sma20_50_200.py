@@ -9,6 +9,7 @@ import pandas as pd
 
 from data_manager import load_backtest_data
 from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from etp_leverage import SPX_ETP, build_etp_return_panel
 from metrics import comprehensive_stats
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 
@@ -117,9 +118,10 @@ def add_row(
     strategy: str,
     sma_window: int | str,
     lev: pd.Series,
+    etp_returns: pd.DataFrame | None,
     extra: dict | None = None,
 ) -> None:
-    res = engine.run(prices, lev, name=strategy)
+    res = engine.run(prices, lev, name=strategy, etp_returns=etp_returns)
     stats = comprehensive_stats(res.equity, res.daily_returns)
     row = {
         "strategy": strategy,
@@ -146,16 +148,17 @@ def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     prices = load_backtest_data()
     engine = make_engine()
+    etp_panel = build_etp_return_panel(prices, SPX_ETP)
     rows: list[dict] = []
 
     for lev_value in LEVERAGES:
         lev = pd.Series(lev_value, index=prices.index)
-        add_row(rows, prices, engine, f"Buy & hold {lev_value:.0f}x", "n/a", lev)
+        add_row(rows, prices, engine, f"Buy & hold {lev_value:.0f}x", "n/a", lev, etp_panel)
 
     for window in SMA_WINDOWS:
         for lev_value in LEVERAGES:
             lev = sma_cash_leverage(prices, window, lev_value)
-            add_row(rows, prices, engine, f"SMA{window} {lev_value:.0f}x/cash", window, lev)
+            add_row(rows, prices, engine, f"SMA{window} {lev_value:.0f}x/cash", window, lev, etp_panel)
 
         lev, counts = guarded_tiered_leverage(prices, window)
         add_row(
@@ -165,6 +168,7 @@ def main() -> int:
             f"Guarded A10/B20 SMA{window}",
             window,
             lev,
+            etp_panel,
             counts,
         )
 

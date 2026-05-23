@@ -1,8 +1,7 @@
-"""Backtest and Monte Carlo for Nasdaq 100 Guarded A5/B25/X40/Y15 (full 2x/3x leverage).
+"""Backtest and Monte Carlo for S&P 500 Guarded A5/B25/X40/Y15 (full 2x/3x leverage).
 
-Mirrors test_guarded_balanced_candidate.py and the SPX GitHub Pages dashboard assumptions:
-$100 start, $10/year inflow, 1% rebalance cost, same DEFAULT_GUARDED parameters.
-Writes ndx_daily.csv and ndx_guarded_site_data.json for ndx_guarded.html.
+Mirrors test_guarded_balanced_candidate.py and index.html assumptions.
+Writes spx_guarded_site_data.json and spx_etp_returns.json for the website.
 """
 
 from __future__ import annotations
@@ -20,7 +19,7 @@ import yfinance as yf
 from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
 from etp_leverage import (
     MC_ETP_METHOD,
-    NDX_ETP,
+    SPX_ETP,
     bootstrap_etp_paths,
     build_etp_return_panel,
     etp_coverage_summary,
@@ -31,12 +30,12 @@ from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW, sma_cash_leverage
 
 ROOT = Path(__file__).resolve().parent
-NDX_TICKER = "^NDX"
+SPX_TICKER = "^GSPC"
 TBILL_TICKER = "^IRX"
 YEARS = 30
-OUTPUT_DIR = ROOT / "output" / "ndx_guarded"
-NDX_DAILY_CSV = ROOT / "ndx_daily.csv"
-SITE_DATA_JSON = ROOT / "ndx_guarded_site_data.json"
+OUTPUT_DIR = ROOT / "output" / "spx_guarded"
+SITE_DATA_JSON = ROOT / "spx_guarded_site_data.json"
+ETP_JSON = ROOT / "spx_etp_returns.json"
 
 DEFAULT_SPEC = {
     "strategy": "Guarded A5/B25 SMA20 Lead",
@@ -53,11 +52,11 @@ BLOCK_DAYS = 21
 SEED = 20260519
 
 
-def download_ndx_panel(years: int = YEARS) -> pd.DataFrame:
+def download_spx_panel(years: int = YEARS) -> pd.DataFrame:
     end = datetime.today()
     start = end - timedelta(days=int(years * 365.25))
     raw = yf.download(
-        [NDX_TICKER, TBILL_TICKER],
+        [SPX_TICKER, TBILL_TICKER],
         start=start.strftime("%Y-%m-%d"),
         end=end.strftime("%Y-%m-%d"),
         auto_adjust=True,
@@ -69,26 +68,18 @@ def download_ndx_panel(years: int = YEARS) -> pd.DataFrame:
     if isinstance(raw.columns, pd.MultiIndex):
         closes = raw["Close"].copy()
     else:
-        closes = raw.rename(columns={"Close": NDX_TICKER})
+        closes = raw.rename(columns={"Close": SPX_TICKER})
 
     panel = pd.DataFrame(
         {
-            "spx_close": closes[NDX_TICKER].astype(float),
+            "spx_close": closes[SPX_TICKER].astype(float),
             "tbill_rate": closes[TBILL_TICKER].astype(float) / 100.0,
         }
     )
     panel = panel.sort_index().ffill().dropna(how="any")
     if len(panel) < 260:
-        raise ValueError(f"Not enough NDX rows: {len(panel)}")
+        raise ValueError(f"Not enough SPX rows: {len(panel)}")
     return panel
-
-
-def write_ndx_daily_csv(prices: pd.DataFrame) -> None:
-    with NDX_DAILY_CSV.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Date", "Close"])
-        for dt, row in prices.iterrows():
-            writer.writerow([dt.strftime("%Y-%m-%d"), f"{float(row['spx_close']):.9g}"])
 
 
 def make_engine() -> PortfolioEngine:
@@ -121,7 +112,7 @@ def run_strategy(
         if etp_returns is not None:
             run_kw["etp_returns"] = etp_returns
         else:
-            run_kw["etp_bundle"] = NDX_ETP
+            run_kw["etp_bundle"] = SPX_ETP
     result = make_engine().run(prices, lev, **run_kw)
     stats = comprehensive_stats(result.equity, result.daily_returns)
     return {
@@ -156,7 +147,7 @@ def buy_hold_row(
     if leverage > 0 and etp_returns is not None:
         run_kw["etp_returns"] = etp_returns
     elif leverage > 1.0:
-        run_kw["etp_bundle"] = NDX_ETP
+        run_kw["etp_bundle"] = SPX_ETP
     result = make_engine().run(prices, lev, **run_kw)
     stats = comprehensive_stats(result.equity, result.daily_returns)
     return {
@@ -225,9 +216,13 @@ def build_site_payload(
     etp_panel: pd.DataFrame,
 ) -> dict:
     bh = next(r for r in comparison if r["strategy"] == "Buy & hold 1x")
+    original_row = next(
+        (r for r in comparison if r["strategy"] == "Original Guarded A10/B20 SMA20"),
+        None,
+    )
     return {
-        "ticker": NDX_TICKER,
-        "asset_label": "Nasdaq 100",
+        "ticker": SPX_TICKER,
+        "asset_label": "S&P 500",
         "guarded_params": DEFAULT_SPEC,
         "sample": {
             "start_date": prices.index[0].date().isoformat(),
@@ -282,25 +277,25 @@ def build_site_payload(
         },
         "generated_at_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "levered_pnl_model": (
-            "Listed 2x/3x ETP daily returns (QQQ/LQQ/LQQ3); "
+            "Listed 2x/3x ETP daily returns (SPY/XS2D/3USL); "
             "VIX-linked synthetic daily-reset before ETP inception. "
             f"Monte Carlo: {MC_ETP_METHOD}"
         ),
         "etp_coverage": etp_coverage_summary(etp_panel),
+        "original_guarded": original_row,
+        "monte_carlo_variants": [],
     }
 
 
 def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    print("Downloading Nasdaq 100 and T-bill data...", flush=True)
-    prices = download_ndx_panel()
+    print("Downloading S&P 500 and T-bill data...", flush=True)
+    prices = download_spx_panel()
     print(f"Loaded {len(prices)} sessions: {prices.index[0].date()} -> {prices.index[-1].date()}", flush=True)
 
-    write_ndx_daily_csv(prices)
-    print(f"Wrote {NDX_DAILY_CSV.name}", flush=True)
-
-    print("Building Nasdaq ETP return panel (EQQQ/LQQ/LQQ3)...", flush=True)
-    etp_panel = build_etp_return_panel(prices, NDX_ETP)
+    print("Building S&P ETP return panel (SPYL/XS2D/3USL)...", flush=True)
+    etp_panel = build_etp_return_panel(prices, SPX_ETP)
+    export_etp_returns_json(etp_panel, SPX_ETP, ETP_JSON)
 
     comparison = [
         buy_hold_row(prices, 1.0, "Buy & hold 1x", etp_panel),
@@ -373,26 +368,25 @@ def main() -> int:
         )
     )
 
-    pd.DataFrame(comparison).to_csv(OUTPUT_DIR / "ndx_guarded_comparison.csv", index=False)
-    pd.DataFrame([default_row]).to_csv(OUTPUT_DIR / "ndx_guarded_default_backtest.csv", index=False)
+    pd.DataFrame(comparison).to_csv(OUTPUT_DIR / "spx_guarded_comparison.csv", index=False)
+    pd.DataFrame([default_row]).to_csv(OUTPUT_DIR / "spx_guarded_default_backtest.csv", index=False)
 
     print("\nRunning Monte Carlo...", flush=True)
     mc_paths, mc_summary = monte_carlo(prices, etp_panel)
-    mc_paths.to_csv(OUTPUT_DIR / "ndx_guarded_monte_carlo_paths.csv", index=False)
+    mc_paths.to_csv(OUTPUT_DIR / "spx_guarded_monte_carlo_paths.csv", index=False)
 
-    export_etp_returns_json(etp_panel, NDX_ETP, ROOT / "ndx_etp_returns.json")
     payload = build_site_payload(prices, comparison, default_row, mc_summary, etp_panel)
     SITE_DATA_JSON.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    (OUTPUT_DIR / "ndx_guarded_site_data.json").write_text(
+    (OUTPUT_DIR / "spx_guarded_site_data.json").write_text(
         json.dumps(payload, indent=2) + "\n", encoding="utf-8"
     )
 
     bh_row = comparison[0]
-    print("\n=== Nasdaq 100 Guarded (full leverage) ===")
+    print("\n=== S&P 500 Guarded (ETP-based 2x/3x) ===")
     print(f"CAGR: {pct(default_row['cagr'])}  Max DD: {pct(default_row['max_drawdown'])}  Sharpe: {default_row['sharpe']:.3f}")
     print(f"End value: {money(default_row['end_$'])}  vs buy-hold CAGR {pct(bh_row['cagr'])} / DD {pct(bh_row['max_drawdown'])}")
     print(f"\nMonte Carlo median CAGR: {pct(mc_summary['median_cagr'])}  median max DD: {pct(mc_summary['median_max_drawdown'])}")
-    print(f"\nWrote {SITE_DATA_JSON.name} and {NDX_DAILY_CSV.name}")
+    print(f"\nWrote {SITE_DATA_JSON.name} and {ETP_JSON.name}")
     return 0
 
 

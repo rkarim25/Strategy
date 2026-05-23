@@ -896,27 +896,23 @@
     <section class="card">
       <h2>Back-test Overview</h2>
       <p>
-        These results use the project backtest engine over 1996-05-17 to 2026-05-15 with $100 starting capital,
-        $10 fixed annual inflows, 1.0% rebalance cost, and the engine funding-cost model. The default strategy is
-        <strong>Guarded A5/B25 SMA20 Lead</strong>: base 1x exposure is allowed only above SMA20, while recovery
-        2x/3x exposure can start when price is within 0.75% below SMA20.
+        These results use the project backtest engine with <strong>listed 2x/3x ETP daily returns</strong> (SPYL/XS2D/3USL) when available, synthetic daily-reset fill before ETP inception, $100 starting capital, $10 fixed annual inflows, and 1.0% rebalance cost on leverage changes.
       </p>
       <div class="kpi-grid">
-        <div class="metric-card"><span class="small">Default CAGR</span><strong>39.09%</strong></div>
-        <div class="metric-card"><span class="small">Default max DD</span><strong>-27.51%</strong></div>
-        <div class="metric-card"><span class="small">Default Sharpe</span><strong>3.164</strong></div>
-        <div class="metric-card"><span class="small">Annual volatility</span><strong>27.88%</strong></div>
-        <div class="metric-card"><span class="small">Calmar ratio</span><strong>1.42</strong></div>
-        <div class="metric-card"><span class="small">Default end value</span><strong>$1,965,783</strong></div>
+        <div class="metric-card"><span class="small">Default CAGR</span><strong id="kpiDefaultCagr">37.09%</strong></div>
+        <div class="metric-card"><span class="small">Default max DD</span><strong id="kpiDefaultMaxDd">-27.89%</strong></div>
+        <div class="metric-card"><span class="small">Default Sharpe</span><strong id="kpiDefaultSharpe">3.130</strong></div>
+        <div class="metric-card"><span class="small">Annual volatility</span><strong id="kpiDefaultVol">27.69%</strong></div>
+        <div class="metric-card"><span class="small">Calmar ratio</span><strong id="kpiDefaultCalmar">1.33</strong></div>
+        <div class="metric-card"><span class="small">Default end value</span><strong id="kpiDefaultEnd">$1,274,755</strong></div>
         <div class="metric-card"><span class="small">Contribution NPV</span><strong>$273</strong><span class="small">Discounted at 4%; includes $100 initial capital and $10 annual inflows.</span></div>
         <div class="metric-card"><span class="small">End / NPV multiple</span><strong>7,200x</strong></div>
       </div>
       <p class="small">
         Calmar = CAGR / absolute max drawdown; multiple = end value divided by discounted contributions.
       </p>
-      <p class="callout">
-        The new default improved the historical result versus the original strict A10/B20 version: CAGR rose from
-        29.39% to 39.09%, while max drawdown improved from -34.37% to -27.51% in the project backtest.
+      <p id="backtestCallout" class="callout">
+        The new default improved the historical result versus the original strict A10/B20 version: CAGR rose from 28.11% to 37.09%, while max drawdown improved from -38.65% to -27.89% (2x/3x P&amp;L uses listed ETP daily returns when history exists).
       </p>
     </section>
     <section class="card section-gap">
@@ -975,21 +971,21 @@
 
     <section class="card section-gap">
       <h2>Full-Sample Strategy Comparison</h2>
-      <p class="small">Full sample: 1996-05-16 to 2026-05-15. Cash time is percent of sessions with zero risky exposure.</p>
+      <p class="small">Full sample: <span id="backtestSampleRange">-</span>. Cash time is percent of sessions with zero risky exposure.</p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th></tr>
           </thead>
-          <tbody>
-            <tr><td>Buy &amp; hold 1x</td><td>11.38%</td><td>19.12%</td><td>0.517</td><td>-53.67%</td><td>$2,533</td><td>0</td><td>0.00%</td></tr>
-            <tr><td>Buy &amp; hold 2x</td><td>13.47%</td><td>38.24%</td><td>0.442</td><td>-85.66%</td><td>$4,382</td><td>1</td><td>0.00%</td></tr>
-            <tr><td>Buy &amp; hold 3x</td><td>13.16%</td><td>57.35%</td><td>0.417</td><td>-97.32%</td><td>$3,994</td><td>1</td><td>0.00%</td></tr>
-            <tr><td>SMA20 1x/cash</td><td>16.05%</td><td>10.99%</td><td>3.913</td><td>-16.92%</td><td>$8,601</td><td>868</td><td>37.08%</td></tr>
-            <tr><td>SMA20 2x/cash</td><td>26.23%</td><td>21.97%</td><td>3.794</td><td>-33.92%</td><td>$107,235</td><td>868</td><td>37.08%</td></tr>
-            <tr><td>SMA20 3x/cash</td><td>35.76%</td><td>32.95%</td><td>3.754</td><td>-49.16%</td><td>$951,245</td><td>868</td><td>37.08%</td></tr>
-            <tr><td><strong>Guarded A5/B25 SMA20 Lead</strong></td><td><strong>39.09%</strong></td><td>27.88%</td><td>3.164</td><td><strong>-27.51%</strong></td><td><strong>$1,965,783</strong></td><td>774</td><td>28.87%</td></tr>
-            <tr><td>Original Guarded A10/B20 SMA20</td><td>29.39%</td><td>26.65%</td><td>3.232</td><td>-34.37%</td><td>$224,918</td><td>878</td><td>37.08%</td></tr>
+          <tbody id="comparisonTableBody">
+            <tr><td>Buy & hold 1x</td><td>12.93%</td><td>19.30%</td><td>0.600</td><td>-52.43%</td><td>$3,833</td><td>0</td><td>0.00%</td></tr>
+            <tr><td>Buy & hold 2x</td><td>13.42%</td><td>36.84%</td><td>0.413</td><td>-89.66%</td><td>$4,331</td><td>1</td><td>0.00%</td></tr>
+            <tr><td>Buy & hold 3x</td><td>12.29%</td><td>55.62%</td><td>0.290</td><td>-98.41%</td><td>$3,169</td><td>1</td><td>0.00%</td></tr>
+            <tr><td>SMA20 1x/cash</td><td>16.08%</td><td>10.99%</td><td>3.914</td><td>-16.92%</td><td>$8,671</td><td>868</td><td>37.02%</td></tr>
+            <tr><td>SMA20 2x/cash</td><td>27.05%</td><td>21.80%</td><td>3.848</td><td>-41.90%</td><td>$130,161</td><td>868</td><td>37.02%</td></tr>
+            <tr><td>SMA20 3x/cash</td><td>32.96%</td><td>32.47%</td><td>3.735</td><td>-62.59%</td><td>$508,540</td><td>868</td><td>37.02%</td></tr>
+            <tr><td><strong>Guarded A5/B25 SMA20 Lead</strong></td><td><strong>37.09%</strong></td><td>27.69%</td><td>3.130</td><td>-27.89%</td><td><strong>$1,274,755</strong></td><td>774</td><td>28.82%</td></tr>
+            <tr><td>Original Guarded A10/B20 SMA20</td><td>28.11%</td><td>26.35%</td><td>3.225</td><td>-38.65%</td><td>$166,815</td><td>878</td><td>37.02%</td></tr>
           </tbody>
         </table>
       </div>
@@ -1004,9 +1000,9 @@
             <tr><th>Strategy</th><th>CAGR</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Cash</th><th>1x</th><th>2x</th><th>3x</th><th>Tier entries</th></tr>
           </thead>
           <tbody>
-            <tr><td>Guarded A10/B20 SMA20</td><td>29.39%</td><td>3.232</td><td>-34.37%</td><td>$224,918</td><td>37.08%</td><td>26.15%</td><td>10.31%</td><td>26.46%</td><td>8 / 5</td></tr>
-            <tr><td>Guarded A10/B20 SMA50</td><td>20.41%</td><td>2.163</td><td>-46.31%</td><td>$26,007</td><td>33.97%</td><td>31.97%</td><td>6.47%</td><td>27.60%</td><td>5 / 2</td></tr>
-            <tr><td>Guarded A10/B20 SMA200</td><td>17.88%</td><td>1.408</td><td>-35.47%</td><td>$13,765</td><td>28.22%</td><td>33.92%</td><td>19.91%</td><td>17.95%</td><td>6 / 2</td></tr>
+            <tr><td>Guarded A10/B20 SMA20</td><td>28.11%</td><td>3.225</td><td>-38.65%</td><td>$166,816</td><td>37.02%</td><td>26.22%</td><td>10.31%</td><td>26.46%</td><td>8 / 5</td></tr>
+            <tr><td>Guarded A10/B20 SMA50</td><td>18.52%</td><td>2.111</td><td>-49.00%</td><td>$16,200</td><td>33.90%</td><td>32.03%</td><td>6.47%</td><td>27.60%</td><td>5 / 2</td></tr>
+            <tr><td>Guarded A10/B20 SMA200</td><td>17.14%</td><td>1.365</td><td>-40.84%</td><td>$11,375</td><td>28.22%</td><td>33.92%</td><td>19.91%</td><td>17.95%</td><td>6 / 2</td></tr>
           </tbody>
         </table>
       </div>
@@ -1048,8 +1044,8 @@
       <div class="kpi-grid">
         <div class="metric-card"><span class="small">Simulations</span><strong>200</strong></div>
         <div class="metric-card"><span class="small">Horizon</span><strong>10 years</strong></div>
-        <div class="metric-card"><span class="small">Median CAGR</span><strong>36.96%</strong></div>
-        <div class="metric-card"><span class="small">Median max DD</span><strong>-28.18%</strong></div>
+        <div class="metric-card"><span class="small">Median CAGR</span><strong id="mcMedianCagr">34.27%</strong></div>
+        <div class="metric-card"><span class="small">Median max DD</span><strong id="mcMedianMaxDd">-29.71%</strong></div>
       </div>
     </section>
 
@@ -1062,9 +1058,9 @@
             <tr><th>Strategy</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P10 / P90 max DD</th><th>Median Sharpe</th><th>Median end value</th><th>P(DD &lt; -40%)</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>Lead 0.75 A5/B25 X40/Y15</strong></td><td><strong>36.96%</strong></td><td>26.46% / 50.02%</td><td><strong>-28.18%</strong></td><td>-39.72% / -18.86%</td><td>3.269</td><td><strong>$2,060</strong></td><td><strong>10.0%</strong></td></tr>
-            <tr><td>Lead 0.75 A10/B20 X40/Y15</td><td>34.39%</td><td>24.46% / 45.09%</td><td>-28.64%</td><td>-39.71% / -19.04%</td><td>3.220</td><td>$1,716</td><td>10.0%</td></tr>
-            <tr><td>Original strict A10/B20 X25/Y33</td><td>30.17%</td><td>20.63% / 41.38%</td><td>-28.96%</td><td>-42.77% / -18.74%</td><td>3.503</td><td>$1,261</td><td>16.5%</td></tr>
+            <tr><td>Lead 0.75 A10/B20 X40/Y15</td><td>32.36%</td><td>22.76% / 42.82%</td><td>-29.49%</td><td>-46.87% / -20.56%</td><td>3.152</td><td>$1,481</td><td>18.00%</td></tr>
+            <tr><td><strong>Lead 0.75 A5/B25 X40/Y15</strong></td><td><strong>34.45%</strong></td><td>23.41% / 46.05%</td><td><strong>-28.27%</strong></td><td>-44.27% / -21.88%</td><td>3.209</td><td><strong>$1,723</strong></td><td>16.50%</td></tr>
+            <tr><td>Original strict SMA20 A10/B20 X25/Y33</td><td>27.92%</td><td>18.99% / 38.87%</td><td>-31.04%</td><td>-46.33% / -20.70%</td><td>3.496</td><td>$1,066</td><td>24.00%</td></tr>
           </tbody>
         </table>
       </div>
@@ -1078,10 +1074,10 @@
             <tr><th>Question</th><th>Monte Carlo result</th></tr>
           </thead>
           <tbody>
-            <tr><td>Probability max drawdown is worse than -35%</td><td>22.0%</td></tr>
-            <tr><td>Probability max drawdown is worse than -40%</td><td>10.0%</td></tr>
-            <tr><td>Probability max drawdown is worse than -50%</td><td>1.5%</td></tr>
-            <tr><td>Probability ending below starting capital</td><td>0.0%</td></tr>
+            <tr><td>Probability max drawdown is worse than -35%</td><td id="mcProbDd35">29.00%</td></tr>
+            <tr><td>Probability max drawdown is worse than -40%</td><td id="mcProbDd40">13.50%</td></tr>
+            <tr><td>Probability max drawdown is worse than -50%</td><td id="mcProbDd50">3.50%</td></tr>
+            <tr><td>Probability ending below starting capital</td><td id="mcProbBelowStart">0.00%</td></tr>
           </tbody>
         </table>
       </div>
@@ -1095,12 +1091,12 @@
           <thead>
             <tr><th>Metric</th><th>Value</th><th>Metric</th><th>Value</th></tr>
           </thead>
-          <tbody>
-            <tr><td>Cash days</td><td>28.87%</td><td>1x days</td><td>9.00%</td></tr>
-            <tr><td>2x days</td><td>48.51%</td><td>3x days</td><td>13.62%</td></tr>
+          <tbody id="diagnosticsBody">
+            <tr><td>Cash days</td><td>28.82%</td><td>1x days</td><td>9.00%</td></tr>
+            <tr><td>2x days</td><td>48.57%</td><td>3x days</td><td>13.62%</td></tr>
             <tr><td>2x entries</td><td>10</td><td>3x entries</td><td>4</td></tr>
             <tr><td>Lead-only days</td><td>751</td><td>Rebalances</td><td>774</td></tr>
-            <tr><td>Total trading costs</td><td>$2,021,175</td><td>Total funding costs</td><td>$129,679</td></tr>
+            <tr><td>Total trading costs</td><td>$1,182,105</td><td>Funding (in ETP)</td><td>embedded in ETP returns</td></tr>
           </tbody>
         </table>
       </div>
@@ -1162,7 +1158,7 @@
       <h2>Momentum Strategy Research</h2>
       <p>
         This strategy tab collects the momentum leverage tests run over the same 30-year S&amp;P 500 history:
-        $100 starting capital, $10 fixed annual inflow, 1.0% rebalance cost, and the project funding-cost model.
+        $100 starting capital, $10 fixed annual inflow, 1.0% rebalance cost, and listed 2x/3x ETP daily returns (XS2D/3USL) when history exists.
         It includes both faster daily momentum triggers and slower long-hold momentum rules designed to stay in
         2x/3x for longer.
       </p>
@@ -1248,7 +1244,7 @@
           <div class="metric-card"><span class="small">Most 3x exposure</span><strong>60.39%</strong></div>
         </div>
         <div class="bar-list" aria-label="Historical CAGR comparison">
-          <div class="bar-row"><span>SMA20 3x/cash reference</span><div class="bar-track"><div class="bar-fill alt" style="width: 100%;"></div></div><strong>35.76%</strong></div>
+          <div class="bar-row"><span>SMA20 3x/cash reference</span><div class="bar-track"><div class="bar-fill alt" style="width: 100%;"></div></div><strong>32.96%</strong></div>
           <div class="bar-row"><span>Guarded A10/B20 reference</span><div class="bar-track"><div class="bar-fill alt" style="width: 82%;"></div></div><strong>29.39%</strong></div>
           <div class="bar-row"><span>Keltner trend channel</span><div class="bar-track"><div class="bar-fill" style="width: 60%;"></div></div><strong>21.46%</strong></div>
           <div class="bar-row"><span>Donchian breakout momentum</span><div class="bar-track"><div class="bar-fill" style="width: 52%;"></div></div><strong>18.48%</strong></div>
@@ -1266,13 +1262,13 @@
               <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th><th>1x</th><th>2x</th><th>3x</th></tr>
             </thead>
             <tbody>
-              <tr><td>Donchian breakout momentum</td><td>18.48%</td><td>23.59%</td><td>1.512</td><td>-34.28%</td><td>$16,041</td><td>379</td><td>26.68%</td><td>29.98%</td><td>4.69%</td><td>38.65%</td></tr>
-              <tr><td>SMA stack momentum</td><td>15.66%</td><td>23.44%</td><td>2.298</td><td>-46.12%</td><td>$7,773</td><td>1,047</td><td>28.22%</td><td>19.94%</td><td>14.93%</td><td>36.91%</td></tr>
-              <tr><td>Vol-adjusted SMA stack</td><td>14.29%</td><td>23.02%</td><td>2.234</td><td>-45.87%</td><td>$5,435</td><td>1,022</td><td>29.45%</td><td>19.08%</td><td>14.75%</td><td>36.72%</td></tr>
-              <tr><td>SMA slope momentum</td><td>13.27%</td><td>23.94%</td><td>2.067</td><td>-42.00%</td><td>$4,153</td><td>1,009</td><td>24.18%</td><td>20.88%</td><td>24.09%</td><td>30.86%</td></tr>
-              <tr><td>MACD momentum</td><td>1.77%</td><td>19.46%</td><td>2.576</td><td>-64.66%</td><td>$167</td><td>1,204</td><td>28.22%</td><td>34.33%</td><td>21.71%</td><td>15.74%</td></tr>
-              <tr><td>RSI momentum</td><td>1.63%</td><td>25.68%</td><td>3.217</td><td>-90.04%</td><td>$161</td><td>1,987</td><td>37.64%</td><td>13.71%</td><td>9.90%</td><td>38.75%</td></tr>
-            </tbody>
+              <tr><td>Donchian breakout momentum</td><td>19.23%</td><td>23.38%</td><td>1.542</td><td>-34.43%</td><td>$19,366</td><td>379</td><td>26.62%</td><td>29.98%</td><td>4.78%</td><td>38.62%</td></tr>
+              <tr><td>SMA stack momentum</td><td>15.08%</td><td>23.45%</td><td>2.260</td><td>-48.55%</td><td>$6,693</td><td>1044</td><td>28.22%</td><td>19.94%</td><td>14.88%</td><td>36.96%</td></tr>
+              <tr><td>Vol-adjusted SMA stack</td><td>13.59%</td><td>23.01%</td><td>2.187</td><td>-48.19%</td><td>$4,528</td><td>1019</td><td>29.45%</td><td>19.08%</td><td>14.69%</td><td>36.78%</td></tr>
+              <tr><td>SMA slope momentum</td><td>12.52%</td><td>23.67%</td><td>2.041</td><td>-47.90%</td><td>$3,405</td><td>1007</td><td>24.11%</td><td>20.88%</td><td>24.10%</td><td>30.91%</td></tr>
+              <tr><td>MACD momentum</td><td>4.39%</td><td>19.80%</td><td>2.689</td><td>-64.75%</td><td>$360</td><td>1205</td><td>28.22%</td><td>34.33%</td><td>21.71%</td><td>15.74%</td></tr>
+              <tr><td>RSI momentum</td><td>2.01%</td><td>25.38%</td><td>3.223</td><td>-87.78%</td><td>$180</td><td>1985</td><td>37.60%</td><td>13.69%</td><td>9.90%</td><td>38.82%</td></tr>
+          </tbody>
           </table>
         </div>
       </section>
@@ -1286,13 +1282,13 @@
               <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th><th>1x</th><th>2x</th><th>3x</th></tr>
             </thead>
             <tbody>
-              <tr><td>Keltner trend channel</td><td>21.46%</td><td>29.10%</td><td>2.152</td><td>-47.94%</td><td>$33,757</td><td>768</td><td>30.62%</td><td>4.94%</td><td>8.88%</td><td>55.56%</td></tr>
-              <tr><td>Long-hold 3/6/12m momentum</td><td>17.80%</td><td>32.59%</td><td>0.957</td><td>-38.41%</td><td>$13,479</td><td>259</td><td>24.92%</td><td>9.08%</td><td>5.98%</td><td>60.03%</td></tr>
-              <tr><td>SMA stack hysteresis</td><td>10.99%</td><td>29.11%</td><td>1.109</td><td>-51.06%</td><td>$2,259</td><td>557</td><td>28.22%</td><td>7.09%</td><td>14.48%</td><td>50.21%</td></tr>
-              <tr><td>ADX trend strength</td><td>8.90%</td><td>25.57%</td><td>1.396</td><td>-63.87%</td><td>$1,278</td><td>539</td><td>28.22%</td><td>25.83%</td><td>5.02%</td><td>40.92%</td></tr>
-              <tr><td>Monthly momentum regime</td><td>8.52%</td><td>32.41%</td><td>0.471</td><td>-64.00%</td><td>$1,150</td><td>87</td><td>32.42%</td><td>3.88%</td><td>8.90%</td><td>54.80%</td></tr>
-              <tr><td>Absolute momentum trailing stop</td><td>3.67%</td><td>30.17%</td><td>1.648</td><td>-87.31%</td><td>$292</td><td>765</td><td>33.04%</td><td>6.57%</td><td>0.00%</td><td>60.39%</td></tr>
-            </tbody>
+              <tr><td>Keltner trend channel</td><td>21.57%</td><td>28.89%</td><td>2.154</td><td>-49.76%</td><td>$34,645</td><td>768</td><td>30.62%</td><td>4.94%</td><td>8.88%</td><td>55.56%</td></tr>
+              <tr><td>Long-hold 3/6/12m momentum</td><td>16.78%</td><td>32.26%</td><td>0.916</td><td>-39.52%</td><td>$10,390</td><td>259</td><td>24.92%</td><td>9.08%</td><td>5.98%</td><td>60.03%</td></tr>
+              <tr><td>SMA stack hysteresis</td><td>12.81%</td><td>29.09%</td><td>1.144</td><td>-53.16%</td><td>$3,682</td><td>556</td><td>28.22%</td><td>7.09%</td><td>14.44%</td><td>50.25%</td></tr>
+              <tr><td>ADX trend strength</td><td>10.39%</td><td>25.78%</td><td>1.432</td><td>-41.65%</td><td>$1,918</td><td>538</td><td>28.22%</td><td>25.87%</td><td>5.02%</td><td>40.89%</td></tr>
+              <tr><td>Monthly momentum regime</td><td>8.70%</td><td>31.96%</td><td>0.451</td><td>-62.52%</td><td>$1,210</td><td>87</td><td>32.35%</td><td>3.88%</td><td>8.90%</td><td>54.86%</td></tr>
+              <tr><td>Absolute momentum trailing stop</td><td>2.93%</td><td>30.03%</td><td>1.545</td><td>-88.69%</td><td>$236</td><td>765</td><td>33.04%</td><td>6.57%</td><td>0.00%</td><td>60.39%</td></tr>
+          </tbody>
           </table>
         </div>
       </section>
@@ -1399,11 +1395,14 @@
 <script src="site-nav.js"></script>
 <script src="instruments-data.js"></script>
 <script src="instruments-page.js"></script>
+<script src="etp-leverage.js"></script>
 <script>
   const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily";
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const STATIC_DAILY_URL = "spx_daily.csv";
   const STATIC_SIGNAL_URL = "latest_signal.json";
+  const STATIC_SITE_DATA_URL = "spx_guarded_site_data.json";
+  const STATIC_ETP_URL = "spx_etp_returns.json";
   const AUTO_REFRESH_MS = 30 * 60 * 1000;
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
@@ -1440,6 +1439,7 @@
   let lastRefreshFinishedAt = null;
   let lastSuccessfulWorkerRefreshAt = null;
   let staticSignalMetadata = null;
+  let staticSiteData = null;
 
   const $ = (id) => document.getElementById(id);
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
@@ -1541,9 +1541,87 @@
     if (!document.hidden) refreshIfStale("tab visible");
   });
 
+  async function loadStaticSiteData() {
+    try {
+      const { text } = await fetchTextWithDiagnostics(STATIC_SITE_DATA_URL, "SPX site data");
+      staticSiteData = JSON.parse(text);
+      applySiteData(staticSiteData);
+      return staticSiteData;
+    } catch (err) {
+      console.warn(err);
+      staticSiteData = null;
+      return null;
+    }
+  }
+
+  function applySiteData(data) {
+    if (!data) return;
+    const bt = data.default_backtest;
+    const bh = data.buy_and_hold_1x;
+    const mc = data.monte_carlo;
+    const sample = data.sample;
+    const orig = data.original_guarded;
+    const set = (id, value) => {
+      const el = $(id);
+      if (el && value != null) el.textContent = value;
+    };
+    set("kpiDefaultCagr", bt?.cagr_pct);
+    set("kpiDefaultMaxDd", bt?.max_drawdown_pct);
+    set("kpiDefaultSharpe", bt?.sharpe_fmt);
+    set("kpiDefaultVol", bt?.ann_volatility_pct);
+    set("kpiDefaultEnd", bt?.end_value_fmt);
+    set("kpiDefaultCalmar", bt?.calmar_fmt);
+    set("backtestSampleRange", sample ? `${sample.start_date} to ${sample.end_date}` : "-");
+    set("mcMedianCagr", mc?.median_cagr_pct);
+    set("mcMedianMaxDd", mc?.median_max_drawdown_pct);
+    set("mcProbDd35", mc?.prob_max_dd_worse_35pct_fmt);
+    set("mcProbDd40", mc?.prob_max_dd_worse_40pct_fmt);
+    set("mcProbDd50", mc?.prob_max_dd_worse_50pct_fmt);
+    set("mcProbBelowStart", mc?.prob_end_below_start_fmt);
+    if ($("backtestCallout") && bt && orig) {
+      const origCagr = orig.cagr_pct || (Number.isFinite(orig.cagr) ? (orig.cagr * 100).toFixed(2) + "%" : "-");
+      const origDd = orig.max_drawdown_pct || (Number.isFinite(orig.max_drawdown) ? (orig.max_drawdown * 100).toFixed(2) + "%" : "-");
+      $("backtestCallout").textContent =
+        `The new default improved the historical result versus the original strict A10/B20 version: CAGR rose from ${origCagr} to ${bt.cagr_pct}, while max drawdown improved from ${origDd} to ${bt.max_drawdown_pct} (2x/3x P&L uses listed ETP daily returns when history exists).`;
+    }
+    const comparisonBody = $("comparisonTableBody");
+    if (comparisonBody && Array.isArray(data.comparison_table)) {
+      comparisonBody.innerHTML = data.comparison_table.map((row) => {
+        const strong = row.strategy === bt?.strategy ? "<strong>" : "";
+        const strongEnd = row.strategy === bt?.strategy ? "</strong>" : "";
+        return `<tr>
+          <td>${strong}${row.strategy}${strongEnd}</td>
+          <td>${strong}${row.cagr_pct || "-"}${strongEnd}</td>
+          <td>${row.ann_volatility_pct || "-"}</td>
+          <td>${row.sharpe_fmt || "-"}</td>
+          <td>${row.max_drawdown_pct || "-"}</td>
+          <td>${strong}${row.end_value_fmt || "-"}${strongEnd}</td>
+          <td>${row.rebalances ?? "-"}</td>
+          <td>${row.cash_pct || "-"}</td>
+        </tr>`;
+      }).join("");
+    }
+    const diag = $("diagnosticsBody");
+    if (diag && bt) {
+      diag.innerHTML = `
+        <tr><td>Cash days</td><td>${bt.pct_days_cash?.toFixed(2)}%</td><td>1x days</td><td>${bt.pct_days_1x?.toFixed(2)}%</td></tr>
+        <tr><td>2x days</td><td>${bt.pct_days_2x?.toFixed(2)}%</td><td>3x days</td><td>${bt.pct_days_3x?.toFixed(2)}%</td></tr>
+        <tr><td>2x entries</td><td>${bt.tier2_entries ?? "-"}</td><td>3x entries</td><td>${bt.tier3_entries ?? "-"}</td></tr>
+        <tr><td>Lead-only days</td><td>${bt.lead_only_days ?? "-"}</td><td>Rebalances</td><td>${bt.rebalances ?? "-"}</td></tr>
+        <tr><td>Total trading costs</td><td>${bt.trading_costs_total != null ? fmtCompactCurrency(bt.trading_costs_total) : "-"}</td><td>Funding (in ETP)</td><td>embedded in ETP returns</td></tr>
+      `;
+    }
+  }
+
   async function loadStaticHistoricalBacktest() {
     try {
       const signalMetadata = await loadStaticSignalMetadata();
+      await loadStaticSiteData();
+      try {
+        await EtpLeverage.load(STATIC_ETP_URL);
+      } catch (etpErr) {
+        console.warn("ETP return series not loaded; using synthetic 2x/3x fallback.", etpErr);
+      }
       const { text: csv } = await fetchTextWithDiagnostics(STATIC_DAILY_URL, "Static historical back-test data");
       const rows = parseCsv(csv);
       if (rows.length < 260) throw new Error("Not enough static historical rows. Need at least ~260 rows.");
@@ -2133,8 +2211,7 @@
         if (lev <= 0) {
           ret = dailyCash;
         } else {
-          const funding = lev > 1 ? (lev - 1) * params.cashRate / TRADING_DAYS : 0;
-          ret = lev * spxRet - funding;
+          ret = EtpLeverage.dailyReturn(lev, spxRet, params.cashRate, rows[i].date);
         }
         aum *= 1 + ret;
       }
@@ -2986,8 +3063,9 @@
       }
 
       const spxReturn = point.close / prevPoint.close - 1;
-      const funding = lev > 1 ? (lev - 1) * DEFAULT_GUARDED.cashRate / TRADING_DAYS : 0;
-      const dailyReturn = lev <= 0 ? dailyCash : lev * spxReturn - funding;
+      const dailyReturn = lev <= 0
+        ? dailyCash
+        : EtpLeverage.dailyReturn(lev, spxReturn, DEFAULT_GUARDED.cashRate, point.date);
       strategy *= 1 + dailyReturn;
       spx *= 1 + spxReturn;
       points.push({

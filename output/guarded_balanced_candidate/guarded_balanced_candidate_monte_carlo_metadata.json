@@ -1,9 +1,10 @@
 {
-  "market_history_start": "1996-05-17",
-  "market_history_end": "2026-05-15",
+  "market_history_start": "1996-05-23",
+  "market_history_end": "2026-05-22",
   "n_sims": 200,
   "horizon_trading_days": 2520,
   "horizon_years": 10.0,
   "block_days": 21,
-  "seed": 20260517
+  "seed": 20260517,
+  "method": "Block-bootstrap of joint historical segments (index return, ret_0\u2013ret_3, T-bill); listed ETP where available with VIX-linked synthetic daily-reset pre-inception."
 }

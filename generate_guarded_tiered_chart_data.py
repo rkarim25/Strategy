@@ -15,6 +15,7 @@ from backtest_guarded_tiered_sma20_50_200 import (
     sma_cash_leverage,
 )
 from data_manager import load_backtest_data
+from etp_leverage import SPX_ETP, build_etp_return_panel
 
 CHART_JSON = OUTPUT_DIR / "guarded_tiered_sma20_50_200_chart_data.json"
 
@@ -32,6 +33,7 @@ def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     prices = load_backtest_data()
     engine = make_engine()
+    etp_panel = build_etp_return_panel(prices, SPX_ETP)
 
     equity_series = {}
     drawdown_series = {}
@@ -40,7 +42,8 @@ def main() -> int:
             lev = sma_cash_leverage(prices, window, 3.0)
         else:
             lev, _ = guarded_tiered_leverage(prices, window)
-        res = engine.run(prices, lev, name=name)
+        etp_kw = {"etp_returns": etp_panel} if kind == "sma3" or "Guarded" in name else {}
+        res = engine.run(prices, lev, name=name, **etp_kw)
         annual_equity = res.equity.resample("YE").last()
         annual_dd = (res.equity / res.equity.cummax() - 1.0).resample("YE").min()
         equity_series[name] = [round(float(v), 2) for v in annual_equity]

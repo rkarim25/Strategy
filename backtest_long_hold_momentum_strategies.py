@@ -14,6 +14,7 @@ import yfinance as yf
 from backtest_guarded_tiered_sma20_50_200 import guarded_tiered_leverage, sma_cash_leverage
 from data_manager import SPX_TICKER, TBILL_TICKER
 from engine import TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from etp_leverage import SPX_ETP, build_etp_return_panel
 from metrics import comprehensive_stats
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 
@@ -250,8 +251,9 @@ def add_row(
     group: str,
     lev: pd.Series,
     description: str,
+    etp_returns: pd.DataFrame | None,
 ) -> None:
-    result = engine.run(prices, lev, name=strategy)
+    result = engine.run(prices, lev, name=strategy, etp_returns=etp_returns)
     stats = comprehensive_stats(
         result.equity,
         result.daily_returns,
@@ -296,6 +298,7 @@ def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     prices = load_ohlc_data(years=30)
     engine = make_engine()
+    etp_panel = build_etp_return_panel(prices, SPX_ETP)
     rows: list[dict] = []
     equity_curves: dict[str, pd.Series] = {}
 
@@ -318,6 +321,7 @@ def main() -> int:
             "Reference",
             pd.Series(lev_value, index=prices.index),
             f"Constant {lev_value:.0f}x exposure.",
+            etp_panel,
         )
 
     for lev_value in (1.0, 2.0, 3.0):
@@ -330,6 +334,7 @@ def main() -> int:
             "Reference",
             sma_cash_leverage(prices, 20, lev_value),
             f"{lev_value:.0f}x when close is above SMA20, otherwise cash/T-bills.",
+            etp_panel,
         )
 
     guarded_lev, _ = guarded_tiered_leverage(prices, 20)
@@ -342,10 +347,11 @@ def main() -> int:
         "Reference",
         guarded_lev,
         "Drawdown-triggered recovery leverage reference from the current website strategy.",
+        etp_panel,
     )
 
     for name, lev, description in strategies:
-        add_row(rows, equity_curves, prices, engine, name, "Long-hold momentum", lev, description)
+        add_row(rows, equity_curves, prices, engine, name, "Long-hold momentum", lev, description, etp_panel)
 
     results = pd.DataFrame(rows).sort_values(["group", "cagr"], ascending=[True, False])
     results_path = OUTPUT_DIR / "long_hold_momentum_results.csv"

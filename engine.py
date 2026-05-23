@@ -3,12 +3,21 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
 
+if TYPE_CHECKING:
+    from etp_leverage import EtpBundle
+
 TRADING_DAYS = 252
 FUNDING_SPREAD = 0.006
+VIX_SPREAD_BASE = 0.006
+VIX_STRESS_THRESHOLD = 15.0
+VIX_SPREAD_BPS_PER_10 = 0.003
+VIX_SPREAD_CAP = 0.026
+VIX_3X_SPREAD_BUMP = 0.002
 INITIAL_CAPITAL = 100.0
 ANNUAL_CASH_INFLOW_PCT = 0.10
 DEFAULT_MAX_DRAWDOWN = 0.20
@@ -18,22 +27,81 @@ TRADING_COST_FROM_MID_PCT = 0.01
 DEFAULT_DD_PAUSE_TRADING_DAYS = 5
 
 
-def funding_cost_daily(leverage: float, tbill_rate: float) -> float:
+def vix_linked_spread_annual(vix: float, leverage: float) -> float:
+    """Annual borrow spread: 0.6% base + VIX stress above 15 (+30bp/10pts, cap ~2.6%), +20bp at 3x."""
+    spread = VIX_SPREAD_BASE + max(
+        0.0, (float(vix) - VIX_STRESS_THRESHOLD) / 10.0 * VIX_SPREAD_BPS_PER_10
+    )
+    if leverage >= 2.5:
+        spread += VIX_3X_SPREAD_BUMP
+    return min(spread, VIX_SPREAD_CAP)
+
+
+def funding_cost_daily(
+    leverage: float,
+    tbill_rate: float,
+    vix: float | None = None,
+) -> float:
     if leverage <= 1.0:
         return 0.0
-    return ((leverage - 1.0) * (tbill_rate + FUNDING_SPREAD)) / TRADING_DAYS
+    spread = (
+        vix_linked_spread_annual(vix, leverage)
+        if vix is not None
+        else FUNDING_SPREAD
+    )
+    return ((leverage - 1.0) * (tbill_rate + spread)) / TRADING_DAYS
 
 
 def levered_return(
     spx_return: float,
     leverage: float,
     tbill_rate: float,
+    vix: float | None = None,
 ) -> float:
     if leverage <= 0.0:
         return tbill_rate / TRADING_DAYS
     gross = leverage * spx_return
-    funding = funding_cost_daily(leverage, tbill_rate)
+    funding = funding_cost_daily(leverage, tbill_rate, vix=vix)
     return gross - funding
+
+
+def block_bootstrap_paths(
+    prices: pd.DataFrame,
+    *,
+    n_sims: int,
+    horizon_days: int,
+    block_days: int,
+    seed: int,
+    start_date: str = "2000-01-03",
+) -> list[pd.DataFrame]:
+    """Block-bootstrap index returns (and VIX when present) for Monte Carlo paths."""
+    rng = np.random.default_rng(seed)
+    spx_ret = prices["spx_close"].pct_change().fillna(0.0).to_numpy(dtype=float)
+    tbill = prices["tbill_rate"].ffill().fillna(0.0).to_numpy(dtype=float)
+    vix_arr = None
+    if "vix" in prices.columns:
+        vix_arr = prices["vix"].ffill().fillna(VIX_STRESS_THRESHOLD).to_numpy(dtype=float)
+
+    block_starts = np.arange(1, len(prices) - block_days + 1)
+    if len(block_starts) == 0:
+        raise ValueError("prices too short for block bootstrap")
+
+    paths: list[pd.DataFrame] = []
+    for _ in range(n_sims):
+        chunks: list[np.ndarray] = []
+        while sum(len(x) for x in chunks) < horizon_days:
+            start = int(rng.choice(block_starts))
+            chunks.append(np.arange(start, start + block_days))
+        idx = np.concatenate(chunks)[:horizon_days]
+        index = pd.bdate_range(start_date, periods=horizon_days)
+        data: dict[str, np.ndarray | pd.Series] = {
+            "spx_close": 1000.0 * np.cumprod(1.0 + spx_ret[idx]),
+            "tbill_rate": tbill[idx],
+        }
+        if vix_arr is not None:
+            data["vix"] = vix_arr[idx]
+        paths.append(pd.DataFrame(data, index=index))
+    return paths
 
 
 def trading_cost(notional_traded: float) -> float:
@@ -50,6 +118,8 @@ class BacktestResult:
     funding_costs_total: float = 0.0
     turnover_notional: float = 0.0
     rebalance_count: int = 0
+    etp_mode: bool = False
+    etp_coverage: dict[str, float] | None = None
 
 
 class PortfolioEngine:
@@ -80,6 +150,9 @@ class PortfolioEngine:
         prices: pd.DataFrame,
         leverage: pd.Series | float,
         name: str = "strategy",
+        *,
+        etp_returns: pd.DataFrame | None = None,
+        etp_bundle: "EtpBundle | None" = None,
     ) -> BacktestResult:
         df = prices.copy()
         spx_ret = df["spx_close"].pct_change()
@@ -90,8 +163,20 @@ class PortfolioEngine:
         else:
             lev_series = leverage.reindex(df.index).ffill().fillna(1.0)
 
+        etp_panel = etp_returns
+        etp_cov: dict[str, float] | None = None
+        if etp_panel is None and etp_bundle is not None:
+            from etp_leverage import build_etp_return_panel, etp_coverage_summary
+
+            etp_panel = build_etp_return_panel(df, etp_bundle)
+            etp_cov = etp_coverage_summary(etp_panel)
+        elif etp_panel is not None:
+            from etp_leverage import etp_coverage_summary
+
+            etp_cov = etp_coverage_summary(etp_panel)
+
         equity, port_ret, applied, risk_off_days, tc, fc, turnover, rebal = self._simulate(
-            df.index, spx_ret, tbill, lev_series
+            df.index, spx_ret, tbill, lev_series, etp_panel, df.get("vix")
         )
         equity.name = name
         return BacktestResult(
@@ -103,6 +188,8 @@ class PortfolioEngine:
             funding_costs_total=fc,
             turnover_notional=turnover,
             rebalance_count=rebal,
+            etp_mode=etp_panel is not None,
+            etp_coverage=etp_cov,
         )
 
     def _simulate(
@@ -111,7 +198,12 @@ class PortfolioEngine:
         spx_ret: pd.Series,
         tbill: pd.Series,
         target_leverage: pd.Series,
+        etp_returns: pd.DataFrame | None = None,
+        vix: pd.Series | None = None,
     ) -> tuple[pd.Series, pd.Series, pd.Series, int, float, float, float, int]:
+        from etp_leverage import daily_return_for_leverage
+
+        use_etp = etp_returns is not None
         equity = pd.Series(index=index, dtype=float)
         port_ret = pd.Series(0.0, index=index)
         applied = pd.Series(1.0, index=index)
@@ -180,10 +272,20 @@ class PortfolioEngine:
 
             if i > 0 and not pd.isna(spx_ret.iloc[i]):
                 tb = float(tbill.iloc[i]) if not pd.isna(tbill.iloc[i]) else 0.0
-                if lev > 1.0:
-                    daily_funding = funding_cost_daily(lev, tb)
-                    funding_costs_total += aum * daily_funding
-                r = levered_return(float(spx_ret.iloc[i]), lev, tb)
+                idx_r = float(spx_ret.iloc[i])
+                vix_val = None
+                if vix is not None:
+                    raw_vix = vix.iloc[i]
+                    if not pd.isna(raw_vix):
+                        vix_val = float(raw_vix)
+                if use_etp:
+                    row = etp_returns.iloc[i]
+                    r = daily_return_for_leverage(lev, idx_r, tb, row)
+                else:
+                    if lev > 1.0:
+                        daily_funding = funding_cost_daily(lev, tb, vix=vix_val)
+                        funding_costs_total += aum * daily_funding
+                    r = levered_return(idx_r, lev, tb, vix=vix_val)
                 aum *= 1.0 + r
                 port_ret.iloc[i] = r
 

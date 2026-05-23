@@ -6,11 +6,11 @@ import json
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 from data_manager import load_backtest_data
 from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from etp_leverage import MC_ETP_METHOD, SPX_ETP, bootstrap_etp_paths, build_etp_return_panel
 from metrics import comprehensive_stats
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 
@@ -118,7 +118,13 @@ def guarded_strategy_leverage(
     }
 
 
-def run_strategy(prices: pd.DataFrame, spec: dict[str, float | str]) -> dict[str, float | int | str]:
+def run_strategy(
+    prices: pd.DataFrame,
+    spec: dict[str, float | str],
+    *,
+    etp_returns: pd.DataFrame | None = None,
+    use_etp: bool = True,
+) -> dict[str, float | int | str]:
     lev, counts = guarded_strategy_leverage(
         prices,
         trigger_a=float(spec["trigger_a"]),
@@ -127,7 +133,13 @@ def run_strategy(prices: pd.DataFrame, spec: dict[str, float | str]) -> dict[str
         x_return=float(spec["x_return"]),
         y_return=float(spec["y_return"]),
     )
-    result = make_engine().run(prices, lev, name=str(spec["strategy"]))
+    run_kw: dict = {"name": str(spec["strategy"])}
+    if use_etp:
+        if etp_returns is not None:
+            run_kw["etp_returns"] = etp_returns
+        else:
+            run_kw["etp_bundle"] = SPX_ETP
+    result = make_engine().run(prices, lev, **run_kw)
     stats = comprehensive_stats(result.equity, result.daily_returns)
     return {
         **spec,
@@ -172,40 +184,22 @@ def strategy_specs() -> list[dict[str, float | str]]:
     ]
 
 
-def synthetic_market_paths(prices: pd.DataFrame) -> list[pd.DataFrame]:
-    rng = np.random.default_rng(SEED)
-    spx_ret = prices["spx_close"].pct_change().fillna(0.0).to_numpy(dtype=float)
-    tbill = prices["tbill_rate"].ffill().fillna(0.0).to_numpy(dtype=float)
-    block_starts = np.arange(1, len(prices) - BLOCK_DAYS + 1)
-    paths: list[pd.DataFrame] = []
-    for _ in range(N_SIMS):
-        sampled_idx: list[np.ndarray] = []
-        while sum(len(x) for x in sampled_idx) < HORIZON_DAYS:
-            start = int(rng.choice(block_starts))
-            sampled_idx.append(np.arange(start, start + BLOCK_DAYS))
-        idx = np.concatenate(sampled_idx)[:HORIZON_DAYS]
-        returns = spx_ret[idx]
-        index = pd.bdate_range("2000-01-03", periods=HORIZON_DAYS)
-        paths.append(
-            pd.DataFrame(
-                {
-                    "spx_close": 1000.0 * np.cumprod(1.0 + returns),
-                    "tbill_rate": tbill[idx],
-                },
-                index=index,
-            )
-        )
-    return paths
-
-
-def monte_carlo(prices: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def monte_carlo(prices: pd.DataFrame, etp_panel: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     rows: list[dict[str, float | int | str]] = []
     specs = strategy_specs()
-    for sim, path in enumerate(synthetic_market_paths(prices)):
+    paths = bootstrap_etp_paths(
+        prices,
+        etp_panel,
+        n_sims=N_SIMS,
+        horizon_days=HORIZON_DAYS,
+        block_days=BLOCK_DAYS,
+        seed=SEED,
+    )
+    for sim, (path, path_etp) in enumerate(paths):
         if sim % 25 == 0:
             print(f"Monte Carlo path {sim + 1}/{N_SIMS}", flush=True)
         for spec in specs:
-            row = run_strategy(path, spec)
+            row = run_strategy(path, spec, etp_returns=path_etp)
             row["simulation"] = sim
             rows.append(row)
     paths_df = pd.DataFrame(rows)
@@ -256,7 +250,10 @@ def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     prices = load_backtest_data()
     print(f"Loaded {len(prices)} sessions: {prices.index[0].date()} -> {prices.index[-1].date()}", flush=True)
-    backtest_df = pd.DataFrame([run_strategy(prices, spec) for spec in strategy_specs()])
+    etp_panel = build_etp_return_panel(prices, SPX_ETP)
+    backtest_df = pd.DataFrame(
+        [run_strategy(prices, spec, etp_returns=etp_panel) for spec in strategy_specs()]
+    )
     backtest_df.to_csv(BACKTEST_CSV, index=False)
     print("\nFull-sample backtest:")
     print_formatted(
@@ -279,7 +276,7 @@ def main() -> int:
     )
 
     print("\nRunning Monte Carlo...", flush=True)
-    paths_df, summary_df = monte_carlo(prices)
+    paths_df, summary_df = monte_carlo(prices, etp_panel)
     paths_df.to_csv(MC_PATHS_CSV, index=False)
     summary_df.to_csv(MC_SUMMARY_CSV, index=False)
     with MC_METADATA_JSON.open("w", encoding="utf-8") as f:
@@ -292,6 +289,7 @@ def main() -> int:
                 "horizon_years": HORIZON_DAYS / 252.0,
                 "block_days": BLOCK_DAYS,
                 "seed": SEED,
+                "method": MC_ETP_METHOD,
             },
             f,
             indent=2,
