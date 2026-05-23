@@ -483,7 +483,8 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
   function applyRouteFromLocation() {
     if (!window.SiteNav) return;
     const pageId = SiteNav.pageFromLocation();
-    if (pageId && $(pageId)) showPage(pageId, pageScope(), { updateHash: false });
+    const target = pageId && $(pageId) ? pageId : "signalPage";
+    showPage(target, pageScope(), { updateHash: false });
   }
 
   if (window.SiteNav) {

@@ -71,11 +71,10 @@ for kid in (
 ):
     backtest_inner = placeholder_strong(backtest_inner, kid)
 backtest_inner = re.sub(
-    r"<tbody>\s*<tr><td>Buy.*?</tbody>",
+    r'<tbody id="comparisonTableBody">[\s\S]*?</tbody>',
     '<tbody id="comparisonTableBody"><tr><td colspan="8">Loading…</td></tr></tbody>',
     backtest_inner,
     count=1,
-    flags=re.S,
 )
 backtest_inner = re.sub(
     r"Full sample: <span id=\"backtestSampleRange\">[^<]*</span>",
