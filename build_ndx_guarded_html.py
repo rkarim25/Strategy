@@ -19,12 +19,18 @@ def extract(start_marker: str, end_marker: str) -> str:
 
 
 signal_inner = extract('id="signalPage"', 'id="backtestPage"')
+signal_truncated = False
 for marker in (
     '<section class="card section-gap">\n    <h2>Guarded Strategy Calculator</h2>',
     '<section class="card section-gap">\n    <h2>Parameter Optimizer</h2>',
 ):
     if marker in signal_inner:
         signal_inner = signal_inner[: signal_inner.index(marker)]
+        signal_truncated = True
+# Truncating before calculator/optimizer removes index.html's closing </section> for signalPage.
+# Without it, backtest/monte-carlo nest inside signalPage and stay hidden (.page { display: none }).
+if signal_truncated:
+    signal_inner = signal_inner.rstrip() + "\n\n  </section>\n"
 
 replacements = [
     ("SPX", "NDX"),
@@ -66,6 +72,9 @@ backtest_inner = backtest_inner.replace(
 )
 
 mc_inner = extract('id="monteCarloPage"', 'id="momentumStrategy"')
+instruments_marker = '<section id="instrumentsPage"'
+if instruments_marker in mc_inner:
+    mc_inner = mc_inner[: mc_inner.index(instruments_marker)].rstrip() + "\n"
 mc_inner = mc_inner.replace("S&amp;P and T-bill", "Nasdaq 100 and T-bill")
 mc_inner = mc_inner.replace("<strong>36.96%</strong>", '<strong id="mcMedianCagr">-</strong>')
 mc_inner = mc_inner.replace("<strong>-28.18%</strong>", '<strong id="mcMedianMaxDd">-</strong>')
