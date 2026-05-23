@@ -13,24 +13,7 @@ GOLD_HTML = ROOT / "gold_guarded.html"
 GOLD_JS = ROOT / "gold_guarded.js"
 
 
-def nav_links(active_spec: GuardedAssetSpec) -> str:
-    lines = [
-        '    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>',
-        '    <a class="site-nav-link" href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>',
-        '    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>',
-    ]
-    for spec in ASSETS:
-        href = f"{spec.slug}_guarded.html#signalPage"
-        if spec.slug == active_spec.slug:
-            lines.append(
-                f'    <a class="site-nav-link active" href="{href}" aria-current="page">{spec.nav_label}</a>'
-            )
-        else:
-            lines.append(f'    <a class="site-nav-link" href="{href}">{spec.nav_label}</a>')
-    lines.append(
-        '    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>'
-    )
-    return "\n".join(lines)
+STRATEGIES_NAV = '<nav class="site-nav" aria-label="Strategies"></nav>'
 
 
 def build_html(spec: GuardedAssetSpec) -> str:
@@ -39,11 +22,7 @@ def build_html(spec: GuardedAssetSpec) -> str:
         r'<nav class="site-nav" aria-label="Strategies">.*?</nav>',
         re.DOTALL,
     )
-    html = nav_pattern.sub(
-        f'<nav class="site-nav" aria-label="Strategies">\n{nav_links(spec)}\n  </nav>',
-        html,
-        count=1,
-    )
+    html = nav_pattern.sub(STRATEGIES_NAV, html, count=1)
 
     replacements = [
         ("Strategy — Gold Guarded (max 1x)", f"Strategy — {spec.title_short} Guarded (max 1x)"),
@@ -233,53 +212,6 @@ def json_escape(s: str) -> str:
     return json.dumps(s)
 
 
-def patch_shared_nav_files() -> None:
-    """Update index / ndx / gold strategy nav with new asset links."""
-    nav_extra = "\n".join(
-        f'    <a class="site-nav-link" href="{s.slug}_guarded.html#signalPage">{s.nav_label}</a>'
-        for s in ASSETS
-    )
-    for path in (ROOT / "index.html", ROOT / "ndx_guarded.html"):
-        text = path.read_text(encoding="utf-8")
-        if "ftse250_guarded.html" in text:
-            continue
-        anchor = '    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>'
-        if anchor not in text:
-            raise SystemExit(f"nav anchor missing in {path.name}")
-        text = text.replace(anchor, anchor + "\n" + nav_extra)
-        path.write_text(text, encoding="utf-8")
-        print(f"Patched nav in {path.name}")
-
-    gold_path = ROOT / "gold_guarded.html"
-    gold_text = gold_path.read_text(encoding="utf-8")
-    if "ftse250_guarded.html" not in gold_text:
-        gold_nav = nav_links(ASSETS[0])  # placeholder active wrong - use gold inactive nav
-        # Rebuild gold nav without active on ftse250
-        lines = [
-            '    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>',
-            '    <a class="site-nav-link" href="ndx_guarded.html#signalPage">Guarded A5/B25 (Nasdaq 100)</a>',
-            '    <a class="site-nav-link active" href="gold_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Gold, max 1x)</a>',
-        ]
-        for s in ASSETS:
-            lines.append(
-                f'    <a class="site-nav-link" href="{s.slug}_guarded.html#signalPage">{s.nav_label}</a>'
-            )
-        lines.append(
-            '    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>'
-        )
-        nav_pattern = re.compile(
-            r'<nav class="site-nav" aria-label="Strategies">.*?</nav>',
-            re.DOTALL,
-        )
-        gold_text = nav_pattern.sub(
-            f'<nav class="site-nav" aria-label="Strategies">\n' + "\n".join(lines) + "\n  </nav>",
-            gold_text,
-            count=1,
-        )
-        gold_path.write_text(gold_text, encoding="utf-8")
-        print("Patched nav in gold_guarded.html")
-
-
 def main() -> int:
     for spec in ASSETS:
         html_path = ROOT / f"{spec.slug}_guarded.html"
@@ -288,7 +220,6 @@ def main() -> int:
         js_path.write_text(build_js(spec), encoding="utf-8")
         print(f"Wrote {html_path.name} ({len(html_path.read_text())} bytes)")
         print(f"Wrote {js_path.name}")
-    patch_shared_nav_files()
     return 0
 
 

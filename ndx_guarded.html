@@ -599,10 +599,14 @@
     with signal, back-test, and Monte Carlo validation shown separately.
   </p>
 
-  <nav class="site-nav" aria-label="Strategies">
+<nav class="site-nav" aria-label="Strategies">
     <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>
     <a class="site-nav-link active" href="ndx_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Nasdaq 100)</a>
     <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>
+    <a class="site-nav-link" href="ftse250_guarded.html#signalPage">Guarded A5/B25 (FTSE 250, max 1x)</a>
+    <a class="site-nav-link" href="msci_em_guarded.html#signalPage">Guarded A5/B25 (MSCI EM, max 1x)</a>
+    <a class="site-nav-link" href="dax_guarded.html#signalPage">Guarded A5/B25 (DAX, max 1x)</a>
+    <a class="site-nav-link" href="msci_world_guarded.html#signalPage">Guarded A5/B25 (MSCI World, max 1x)</a>
     <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>
   </nav>
 
@@ -758,24 +762,22 @@
     <section class="card">
       <h2>Back-test Overview</h2>
       <p>
-        These results use the project backtest engine with <strong>listed 2x/3x ETP daily returns</strong> (SPYL/XS2D/3USL) when available, synthetic daily-reset fill before ETP inception, $100 starting capital, $10 fixed annual inflows, and 1.0% rebalance cost on leverage changes.
+        These results use the project backtest engine with <strong>listed 2x/3x ETP daily returns</strong> (QQQ/LQQ/LQQ3 or listed Nasdaq 100 ETPs) when available, synthetic daily-reset fill before ETP inception, $100 starting capital, $10 fixed annual inflows, and 1.0% rebalance cost on leverage changes.
       </p>
       <div class="kpi-grid">
-        <div class="metric-card"><span class="small">Default CAGR</span><strong id="kpiDefaultCagr">37.09%</strong></div>
-        <div class="metric-card"><span class="small">Default max DD</span><strong id="kpiDefaultMaxDd">-27.89%</strong></div>
-        <div class="metric-card"><span class="small">Default Sharpe</span><strong id="kpiDefaultSharpe">3.130</strong></div>
-        <div class="metric-card"><span class="small">Annual volatility</span><strong id="kpiDefaultVol">27.69%</strong></div>
-        <div class="metric-card"><span class="small">Calmar ratio</span><strong id="kpiDefaultCalmar">1.33</strong></div>
-        <div class="metric-card"><span class="small">Default end value</span><strong id="kpiDefaultEnd">$1,274,755</strong></div>
+        <div class="metric-card"><span class="small">Default CAGR</span><strong id="kpiDefaultCagr">-</strong></div>
+        <div class="metric-card"><span class="small">Default max DD</span><strong id="kpiDefaultMaxDd">-</strong></div>
+        <div class="metric-card"><span class="small">Default Sharpe</span><strong id="kpiDefaultSharpe">-</strong></div>
+        <div class="metric-card"><span class="small">Annual volatility</span><strong id="kpiDefaultVol">-</strong></div>
+        <div class="metric-card"><span class="small">Calmar ratio</span><strong id="kpiDefaultCalmar">-</strong></div>
+        <div class="metric-card"><span class="small">Default end value</span><strong id="kpiDefaultEnd">-</strong></div>
         <div class="metric-card"><span class="small">Contribution NPV</span><strong>$273</strong><span class="small">Discounted at 4%; includes $100 initial capital and $10 annual inflows.</span></div>
         <div class="metric-card"><span class="small">End / NPV multiple</span><strong>7,200x</strong></div>
       </div>
       <p class="small">
         Calmar = CAGR / absolute max drawdown; multiple = end value divided by discounted contributions.
       </p>
-      <p id="backtestCallout" class="callout">
-        The new default improved the historical result versus the original strict A10/B20 version: CAGR rose from 28.11% to 37.09%, while max drawdown improved from -38.65% to -27.89% (2x/3x P&amp;L uses listed ETP daily returns when history exists).
-      </p>
+      <p id="backtestCallout" class="callout">Loading back-test summary…</p>
     </section>
     <section class="card section-gap">
       <h2>Top 20 Strategy Drawdowns</h2>
@@ -906,8 +908,8 @@
       <div class="kpi-grid">
         <div class="metric-card"><span class="small">Simulations</span><strong>200</strong></div>
         <div class="metric-card"><span class="small">Horizon</span><strong>10 years</strong></div>
-        <div class="metric-card"><span class="small">Median CAGR</span><strong id="mcMedianCagr">34.27%</strong></div>
-        <div class="metric-card"><span class="small">Median max DD</span><strong id="mcMedianMaxDd">-29.71%</strong></div>
+        <div class="metric-card"><span class="small">Median CAGR</span><strong id="mcMedianCagr">-</strong></div>
+        <div class="metric-card"><span class="small">Median max DD</span><strong id="mcMedianMaxDd">-</strong></div>
       </div>
     </section>
 
@@ -919,11 +921,7 @@
           <thead>
             <tr><th>Strategy</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P10 / P90 max DD</th><th>Median Sharpe</th><th>Median end value</th><th>P(DD &lt; -40%)</th></tr>
           </thead>
-          <tbody>
-            <tr><td>Lead 0.75 A10/B20 X40/Y15</td><td>32.36%</td><td>22.76% / 42.82%</td><td>-29.49%</td><td>-46.87% / -20.56%</td><td>3.152</td><td>$1,481</td><td>18.00%</td></tr>
-            <tr><td><strong>Lead 0.75 A5/B25 X40/Y15</strong></td><td><strong>34.45%</strong></td><td>23.41% / 46.05%</td><td><strong>-28.27%</strong></td><td>-44.27% / -21.88%</td><td>3.209</td><td><strong>$1,723</strong></td><td>16.50%</td></tr>
-            <tr><td>Original strict SMA20 A10/B20 X25/Y33</td><td>27.92%</td><td>18.99% / 38.87%</td><td>-31.04%</td><td>-46.33% / -20.70%</td><td>3.496</td><td>$1,066</td><td>24.00%</td></tr>
-          </tbody>
+          <tbody id="mcComparisonBody"><tr><td colspan="8">Loading Monte Carlo summary…</td></tr></tbody>
         </table>
       </div>
     </section>

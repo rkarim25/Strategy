@@ -18,6 +18,15 @@ def extract(start_marker: str, end_marker: str) -> str:
     return "\n".join(lines[start:end])
 
 
+def placeholder_strong(html: str, element_id: str, fallback: str = "-") -> str:
+    return re.sub(
+        rf'(<strong id="{re.escape(element_id)}">)[^<]*(</strong>)',
+        rf"\1{fallback}\2",
+        html,
+        count=1,
+    )
+
+
 signal_inner = extract('id="signalPage"', 'id="backtestPage"')
 signal_truncated = False
 for marker in (
@@ -48,11 +57,19 @@ for old, new in replacements:
 
 backtest_inner = extract('id="backtestPage"', 'id="monteCarloPage"')
 backtest_inner = backtest_inner.replace("SPX", "NDX").replace("S&amp;P", "Nasdaq 100")
-backtest_inner = backtest_inner.replace("<strong>39.09%</strong>", '<strong id="kpiDefaultCagr">-</strong>')
-backtest_inner = backtest_inner.replace("<strong>-27.51%</strong>", '<strong id="kpiDefaultMaxDd">-</strong>')
-backtest_inner = backtest_inner.replace("<strong>3.164</strong>", '<strong id="kpiDefaultSharpe">-</strong>')
-backtest_inner = backtest_inner.replace("<strong>27.88%</strong>", '<strong id="kpiDefaultVol">-</strong>')
-backtest_inner = backtest_inner.replace("<strong>$1,965,783</strong>", '<strong id="kpiDefaultEnd">-</strong>')
+backtest_inner = backtest_inner.replace(
+    "(SPYL/XS2D/3USL)",
+    "(QQQ/LQQ/LQQ3 or listed Nasdaq 100 ETPs)",
+)
+for kid in (
+    "kpiDefaultCagr",
+    "kpiDefaultMaxDd",
+    "kpiDefaultSharpe",
+    "kpiDefaultVol",
+    "kpiDefaultCalmar",
+    "kpiDefaultEnd",
+):
+    backtest_inner = placeholder_strong(backtest_inner, kid)
 backtest_inner = re.sub(
     r"<tbody>\s*<tr><td>Buy.*?</tbody>",
     '<tbody id="comparisonTableBody"><tr><td colspan="8">Loading…</td></tr></tbody>',
@@ -60,43 +77,56 @@ backtest_inner = re.sub(
     count=1,
     flags=re.S,
 )
-backtest_inner = backtest_inner.replace(
-    "1996-05-17 to 2026-05-15",
-    '<span id="backtestSampleRange">-</span>',
+backtest_inner = re.sub(
+    r"Full sample: <span id=\"backtestSampleRange\">[^<]*</span>",
+    'Full sample: <span id="backtestSampleRange">-</span>',
+    backtest_inner,
+    count=1,
 )
 backtest_inner = backtest_inner.replace("SPX vs Default Strategy Equity", "NDX vs Default Strategy Equity")
 backtest_inner = backtest_inner.replace("SPX buy-and-hold", "NDX buy-and-hold")
-backtest_inner = backtest_inner.replace(
-    '<span class="spx">SPX reference (orange)</span>',
-    '<span class="spx">NDX buy &amp; hold (orange)</span>',
+backtest_inner = re.sub(
+    r'<p id="backtestCallout" class="callout">.*?</p>',
+    '<p id="backtestCallout" class="callout">Loading back-test summary…</p>',
+    backtest_inner,
+    count=1,
+    flags=re.S,
 )
 
-mc_inner = extract('id="monteCarloPage"', 'id="momentumStrategy"')
-instruments_marker = '<section id="instrumentsPage"'
-if instruments_marker in mc_inner:
-    mc_inner = mc_inner[: mc_inner.index(instruments_marker)].rstrip() + "\n"
+mc_inner = extract('id="monteCarloPage"', 'id="instrumentsPage"')
 mc_inner = mc_inner.replace("S&amp;P and T-bill", "Nasdaq 100 and T-bill")
-mc_inner = mc_inner.replace("<strong>36.96%</strong>", '<strong id="mcMedianCagr">-</strong>')
-mc_inner = mc_inner.replace("<strong>-28.18%</strong>", '<strong id="mcMedianMaxDd">-</strong>')
+for kid in ("mcMedianCagr", "mcMedianMaxDd"):
+    mc_inner = placeholder_strong(mc_inner, kid)
 mc_inner = re.sub(
-    r"<tr><td>Probability max drawdown is worse than -35%</td><td>22.0%</td></tr>",
+    r"<tr><td>Probability max drawdown is worse than -35%</td><td>[^<]*</td></tr>",
     '<tr><td>Probability max drawdown is worse than -35%</td><td id="mcProbDd35">-</td></tr>',
     mc_inner,
+    count=1,
 )
 mc_inner = re.sub(
-    r"<tr><td>Probability max drawdown is worse than -40%</td><td>10.0%</td></tr>",
+    r"<tr><td>Probability max drawdown is worse than -40%</td><td>[^<]*</td></tr>",
     '<tr><td>Probability max drawdown is worse than -40%</td><td id="mcProbDd40">-</td></tr>',
     mc_inner,
+    count=1,
 )
 mc_inner = re.sub(
-    r"<tr><td>Probability max drawdown is worse than -50%</td><td>1.5%</td></tr>",
+    r"<tr><td>Probability max drawdown is worse than -50%</td><td>[^<]*</td></tr>",
     '<tr><td>Probability max drawdown is worse than -50%</td><td id="mcProbDd50">-</td></tr>',
     mc_inner,
+    count=1,
 )
 mc_inner = re.sub(
-    r"<tr><td>Probability ending below starting capital</td><td>0.0%</td></tr>",
+    r"<tr><td>Probability ending below starting capital</td><td>[^<]*</td></tr>",
     '<tr><td>Probability ending below starting capital</td><td id="mcProbBelowStart">-</td></tr>',
     mc_inner,
+    count=1,
+)
+mc_inner = re.sub(
+    r"<tbody>\s*<tr><td>Lead 0\.75.*?</tbody>",
+    '<tbody id="mcComparisonBody"><tr><td colspan="8">Loading Monte Carlo summary…</td></tr></tbody>',
+    mc_inner,
+    count=1,
+    flags=re.S,
 )
 mc_inner = re.sub(
     r"<tbody>\s*<tr><td>Cash days</td>.*?</tbody>",
@@ -105,6 +135,19 @@ mc_inner = re.sub(
     count=1,
     flags=re.S,
 )
+
+strategy_nav = """
+  <nav class="site-nav" aria-label="Strategies">
+    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>
+    <a class="site-nav-link active" href="ndx_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Nasdaq 100)</a>
+    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>
+    <a class="site-nav-link" href="ftse250_guarded.html#signalPage">Guarded A5/B25 (FTSE 250, max 1x)</a>
+    <a class="site-nav-link" href="msci_em_guarded.html#signalPage">Guarded A5/B25 (MSCI EM, max 1x)</a>
+    <a class="site-nav-link" href="dax_guarded.html#signalPage">Guarded A5/B25 (DAX, max 1x)</a>
+    <a class="site-nav-link" href="msci_world_guarded.html#signalPage">Guarded A5/B25 (MSCI World, max 1x)</a>
+    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>
+  </nav>
+""".strip()
 
 html = f"""<!doctype html>
 <html lang="en">
@@ -123,12 +166,7 @@ html = f"""<!doctype html>
     with signal, back-test, and Monte Carlo validation shown separately.
   </p>
 
-  <nav class="site-nav" aria-label="Strategies">
-    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>
-    <a class="site-nav-link active" href="ndx_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Nasdaq 100)</a>
-    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>
-    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>
-  </nav>
+{strategy_nav}
 
   <section id="guardedStrategy" class="strategy active">
   <section class="card" style="margin-bottom: 18px;">
