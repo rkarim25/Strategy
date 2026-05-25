@@ -195,6 +195,15 @@ def build_js(spec: GuardedAssetSpec) -> str:
         ("Live feed looks like SPX, not gold", "Live feed rejected"),
         ("Enter a manual NDX level", f"Enter a manual {spec.price_name} level"),
         ("Gold return %", f"{spec.index_label} return %"),
+        # Chart meta labels (gold_guarded.js master uses "vs Gold ..." / "vs Gold buy & hold ...").
+        (
+            "Strategy ${fmtSignedPct(windowReturn)} vs Gold ${fmtSignedPct(benchmarkReturn)}",
+            f"Strategy ${{fmtSignedPct(windowReturn)}} vs {spec.title_short} ${{fmtSignedPct(benchmarkReturn)}}",
+        ),
+        (
+            "vs Gold buy &amp; hold ${fmtSignedPct(last.spxReturn)}",
+            f"vs {spec.title_short} buy &amp; hold ${{fmtSignedPct(last.spxReturn)}}",
+        ),
     ]
     for old, new in replacements:
         js = js.replace(old, new)

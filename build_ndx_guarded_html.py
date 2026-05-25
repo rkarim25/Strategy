@@ -183,7 +183,8 @@ html = f"""<!doctype html>
 {mc_inner}
 </main>
 <script src="site-nav.js?v=20260525"></script>
-<script src="ndx_guarded.js"></script>
+<script src="etp-leverage.js?v=20260525"></script>
+<script src="ndx_guarded.js?v=20260525ndx"></script>
 </body>
 </html>
 """

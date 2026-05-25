@@ -1712,7 +1712,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       : "No subsequent rebalance costs";
     return {
       points,
-      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); chart rebased to 0% at window start. Strategy ${fmtSignedPct(windowReturn)} vs NDX ${fmtSignedPct(benchmarkReturn)} through ${last.date}. ${costLabel}.`,
+      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); chart rebased to 0% at window start. Strategy ${fmtSignedPct(windowReturn)} vs Gold ${fmtSignedPct(benchmarkReturn)} through ${last.date}. ${costLabel}.`,
     };
   }
 

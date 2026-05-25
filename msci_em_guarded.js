@@ -1700,7 +1700,7 @@ const USE_WORKER_LIVE = false;
       : "No subsequent rebalance costs";
     return {
       points,
-      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); chart rebased to 0% at window start. Strategy ${fmtSignedPct(windowReturn)} vs NDX ${fmtSignedPct(benchmarkReturn)} through ${last.date}. ${costLabel}.`,
+      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); chart rebased to 0% at window start. Strategy ${fmtSignedPct(windowReturn)} vs MSCI EM ${fmtSignedPct(benchmarkReturn)} through ${last.date}. ${costLabel}.`,
     };
   }
 
@@ -2098,7 +2098,7 @@ const USE_WORKER_LIVE = false;
       hoverCapture.addEventListener("mouseleave", hideEquityChartTooltip);
     }
     const last = data[data.length - 1];
-    $("equityChartMeta").textContent = `${latestRowsSourceLabel()}; ${data.length} trading sessions from ${startDate} to ${endDate}. Cumulative return rebased to 0% at range start: strategy ${fmtSignedPct(last.strategyReturn)} vs Gold buy &amp; hold ${fmtSignedPct(last.spxReturn)}.`;
+    $("equityChartMeta").textContent = `${latestRowsSourceLabel()}; ${data.length} trading sessions from ${startDate} to ${endDate}. Cumulative return rebased to 0% at range start: strategy ${fmtSignedPct(last.strategyReturn)} vs MSCI EM buy &amp; hold ${fmtSignedPct(last.spxReturn)}.`;
   }
 
   function showEquityChartTooltip(event) {
