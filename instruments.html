@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instruments — Conventional vs Halal</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f5f7;
+      --panel: rgba(255, 255, 255, .78);
+      --panel-solid: #ffffff;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --line: rgba(0, 0, 0, .10);
+      --accent: #0071e3;
+      --accent-soft: rgba(0, 113, 227, .10);
+      --good: #248a3d;
+      --warn: #b26a00;
+      --bad: #d70015;
+      --shadow: 0 18px 45px rgba(0, 0, 0, .08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(0, 113, 227, .12), transparent 32rem),
+        linear-gradient(180deg, #fbfbfd 0%, var(--bg) 42%, #ffffff 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      width: min(1180px, calc(100vw - 40px));
+      margin: 48px auto 72px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1;
+      letter-spacing: -0.052em;
+      font-weight: 800;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+    p { color: var(--muted); line-height: 1.58; }
+    button, input, select {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .72);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 14px;
+      transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    button {
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      border: 0;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(0, 113, 227, .24);
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(0, 113, 227, .26);
+    }
+    button.secondary {
+      background: rgba(255, 255, 255, .72);
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      padding: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.045em;
+    }
+    .signal {
+      font-size: 72px;
+      line-height: 1;
+    }
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+    th { color: var(--muted); font-weight: 600; }
+    ul { color: var(--muted); line-height: 1.55; }
+    code {
+      color: var(--text);
+      background: rgba(0, 0, 0, .05);
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+    .small { font-size: 13px; color: var(--muted); }
+    .wide { grid-column: 1 / -1; }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .range-controls button {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      box-shadow: none;
+    }
+    .range-controls button.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .range-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      align-items: flex-end;
+    }
+    .range-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 5px;
+    }
+    .range-unit > button[data-range],
+    .range-unit > button[data-equity-range] {
+      min-width: 46px;
+    }
+    .range-shift {
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+    }
+    .range-shift button.range-nudge {
+      width: 24px;
+      height: 22px;
+      min-width: 0;
+      padding: 0;
+      border-radius: 7px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .72);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1;
+      box-shadow: none;
+      opacity: .88;
+    }
+    .range-shift button.range-nudge:hover:not(:disabled) {
+      color: var(--text);
+      border-color: #c7cdd6;
+      background: #fff;
+      opacity: 1;
+    }
+    .range-shift button.range-nudge:disabled {
+      opacity: .28;
+      cursor: default;
+    }
+    .range-custom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-left: 4px;
+    }
+    .chart-box {
+      position: relative;
+      width: 100%;
+      min-height: 360px;
+      margin-top: 12px;
+    }
+    #priceChart,
+    #signalPnlChart,
+    #equityChart {
+      width: 100%;
+      height: 360px;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+    }
+    #signalPnlChart {
+      height: 260px;
+    }
+    .chart-box.compact {
+      min-height: 260px;
+    }
+    .attached-chart {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+    .chart-tooltip {
+      position: absolute;
+      pointer-events: none;
+      display: none;
+      min-width: 190px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .98);
+      color: var(--text);
+      font-size: 12px;
+      line-height: 1.45;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .legend span::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 3px;
+      margin-right: 6px;
+      vertical-align: middle;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .legend .sma::before { background: var(--warn); }
+    .legend .strategy::before { background: #2563eb; }
+    .legend .spx::before { background: #d97706; }
+    .legend .buy::before,
+    .legend .sell::before {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .legend .buy::before { background: var(--good); }
+    .legend .add::before { background: #2563eb; }
+    .legend .reduce::before { background: #b45309; }
+    .legend .sell::before { background: var(--bad); }
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+      padding: 5px;
+      border: 1px solid rgba(0, 0, 0, .07);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .72);
+      backdrop-filter: blur(18px);
+    }
+    .site-nav[aria-label="Strategies"] {
+      gap: 4px;
+      padding: 4px;
+      background: rgba(0, 0, 0, .04);
+      border-color: rgba(0, 0, 0, .06);
+      box-shadow: none;
+    }
+    .site-nav .site-nav-link,
+    .site-nav button[data-page-target] {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 0;
+      padding: 9px 15px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 560;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: none;
+      cursor: pointer;
+      transition: background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .site-nav[aria-label="Strategies"] .site-nav-link {
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+    .site-nav[aria-label="Strategies"] a.site-nav-link:link,
+    .site-nav[aria-label="Strategies"] a.site-nav-link:visited,
+    .site-nav[aria-label="Strategies"] a.site-nav-link:hover,
+    .site-nav[aria-label="Strategies"] a.site-nav-link:active {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .site-nav .site-nav-link:hover,
+    .site-nav button[data-page-target]:hover {
+      transform: none;
+      background: rgba(255, 255, 255, .55);
+      color: var(--text);
+      box-shadow: none;
+    }
+    .site-nav[aria-label="Strategies"] .site-nav-link:hover {
+      background: rgba(255, 255, 255, .45);
+    }
+    .site-nav .site-nav-link.active,
+    .site-nav button[data-page-target].active {
+      background: var(--panel-solid);
+      color: var(--text);
+      font-weight: 700;
+      border-color: rgba(0, 0, 0, .08);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .07);
+    }
+    .site-nav[aria-label="Strategies"] .site-nav-link.active {
+      background: #ffffff;
+      color: var(--text);
+      border-color: rgba(0, 0, 0, .1);
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, .08),
+        0 0 0 1px rgba(255, 255, 255, .9) inset;
+    }
+    .site-nav[aria-label="Strategies"] a.site-nav-link.active,
+    .site-nav[aria-label="Strategies"] a.site-nav-link.active:visited {
+      color: var(--text);
+    }
+    .site-nav button.site-nav-link,
+    .site-nav button[data-page-target] {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-weight: 560;
+      box-shadow: none;
+      transform: none;
+    }
+    .site-nav button.site-nav-link:hover,
+    .site-nav button[data-page-target]:hover {
+      transform: none;
+      background: rgba(255, 255, 255, .55);
+      color: var(--text);
+      box-shadow: none;
+    }
+    .site-nav button.site-nav-link.active,
+    .site-nav button[data-page-target].active {
+      background: var(--panel-solid);
+      color: var(--text);
+      font-weight: 700;
+      border-color: rgba(0, 0, 0, .08);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .07);
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .70);
+      padding: 18px;
+    }
+    .metric-card strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    .instrument-toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 12px 0 8px;
+    }
+    .instrument-toolbar input[type="search"] {
+      flex: 1 1 240px;
+      min-width: 200px;
+    }
+    .instrument-filters button.secondary.active {
+      background: rgba(255, 255, 255, .92);
+      border-color: rgba(0, 113, 227, .35);
+      box-shadow: inset 0 -2px 0 rgba(0, 113, 227, .65);
+    }
+    .comparison-table .group-row td {
+      background: rgba(0, 113, 227, .07);
+      font-weight: 700;
+      color: var(--text);
+      border-bottom-color: rgba(0, 113, 227, .14);
+      padding-top: 16px;
+    }
+    .comparison-table .group-row .badge { vertical-align: middle; margin-right: 10px; }
+    .comparison-table tbody tr:not(.group-row):hover td {
+      background: rgba(0, 113, 227, .04);
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .badge-conventional { background: rgba(110, 110, 115, .14); color: var(--muted); }
+    .badge-halal { background: rgba(36, 138, 61, .14); color: var(--good); }
+    .badge-levered { background: rgba(178, 106, 0, .14); color: var(--warn); }
+    .badge-none { background: rgba(215, 0, 21, .10); color: var(--bad); }
+    .ter-cell { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .ter-low { color: var(--good); font-weight: 700; }
+    .ter-mid { color: var(--text); font-weight: 600; }
+    .ter-high { color: var(--warn); font-weight: 700; }
+    .instruments-intro { max-width: 72ch; }
+    h3.instruments-subhead {
+      margin: 28px 0 10px;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      padding: 16px 18px;
+      border-radius: 18px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .section-gap { margin-top: 18px; }
+    .strategy { display: none; }
+    .strategy.active { display: block; }
+    .bar-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(170px, 1.1fr) minmax(120px, 2fr) 72px;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .06);
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #64d2ff);
+    }
+    .bar-fill.alt { background: linear-gradient(90deg, #34c759, #9be15d); }
+    .bar-fill.warn { background: linear-gradient(90deg, #ff9f0a, #ffd60a); }
+    .bar-row strong {
+      color: var(--text);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .field label {
+      display: block;
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .field input,
+    .field select {
+      width: 100%;
+    }
+    .check-field {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .check-field input {
+      width: auto;
+    }
+    .result-highlight {
+      background: rgba(0, 113, 227, .08);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    details.advanced {
+      margin: 14px 0;
+      color: var(--muted);
+    }
+    details.advanced summary {
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 650;
+    }
+    @media (max-width: 850px) {
+      main {
+        width: min(100% - 28px, 760px);
+        margin: 28px auto 48px;
+      }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .two-col { grid-template-columns: 1fr; }
+      .signal { font-size: 46px; }
+      .site-nav {
+        position: static;
+        border-radius: 22px;
+      }
+      #priceChart { height: 320px; }
+      #signalPnlChart { height: 240px; }
+    }
+    @media (max-width: 520px) {
+      main {
+        width: calc(100% - 22px);
+        margin-top: 20px;
+      }
+      h1 {
+        font-size: 34px;
+        letter-spacing: -0.04em;
+      }
+      h2 { font-size: 19px; }
+      .card {
+        border-radius: 22px;
+        padding: 18px;
+      }
+      button, input, select {
+        width: 100%;
+        min-width: 0 !important;
+      }
+      .site-nav {
+        gap: 8px;
+        padding: 8px;
+      }
+      .site-nav .site-nav-link,
+      .range-controls button {
+        width: auto;
+        flex: 1 1 auto;
+        padding: 9px 12px;
+      }
+      .range-unit > button[data-range],
+      .range-unit > button[data-equity-range] {
+        width: 100%;
+      }
+      .range-shift button.range-nudge {
+        flex: 1 1 auto;
+        width: auto;
+      }
+      .range-controls input,
+      .range-controls button.secondary {
+        flex-basis: 100%;
+      }
+      .grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .stat-value { font-size: 28px; }
+      .signal { font-size: 52px; }
+      #priceChart,
+      #equityChart { height: 280px; }
+      #signalPnlChart { height: 220px; }
+      .bar-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .bar-row strong { text-align: left; }
+      th, td {
+        padding: 10px 8px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Strategy</h1>
+  <p>
+    A live dashboard and research library for systematic market strategies. Each strategy gets its own tab,
+    with signal, back-test, and Monte Carlo validation shown separately.
+  </p>
+
+  <nav class="site-nav" aria-label="Strategies"></nav>
+
+<section class="instruments-standalone">
+    <section class="card">
+      <h2>UK Instruments: Conventional vs Halal</h2>
+      <p class="instruments-intro">
+        Reference comparison of TERs and Shariah screening rules for UK and Interactive Investor (II) investors
+        on LSE-listed UCITS and ETPs. Figures are indicative — confirm current charges, listings, and
+        Shariah certification before trading.
+      </p>
+
+      <h3 class="instruments-subhead">Fund fees (TER)</h3>
+      <p class="small">
+        Halal US equity funds typically cost <strong>4–17×</strong> the cheapest conventional S&amp;P 500 trackers;
+        levered conventional ETPs have no halal equivalent on LSE.
+      </p>
+      <div class="table-wrap">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Product type</th>
+              <th>Ticker</th>
+              <th>TER</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="feesComparisonBody">
+            <tr><td colspan="4">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="instruments-subhead">Shariah screening exclusions</h3>
+      <p class="small">
+        Halal index products apply business-activity and financial-ratio screens (commonly AAOIFI-based).
+        This creates structural tracking difference versus conventional broad-market indices.
+      </p>
+      <div class="table-wrap">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Conventional</th>
+              <th>Halal</th>
+            </tr>
+          </thead>
+          <tbody id="screeningComparisonBody">
+            <tr><td colspan="3">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="callout section-gap">
+        This page is a research reference for product selection and fee awareness only. It is not investment advice,
+        and Shariah compliance should be confirmed with your own scholars or certification bodies.
+      </p>
+    </section>
+  </section>
+  </section>
+
+
+</main>
+<script src="site-nav.js?v=20260525"></script>
+<script src="halal-comparison-data.js"></script>
+<script src="instruments-page.js"></script>
+</body>
+</html>

@@ -1,4 +1,12 @@
-"""Assemble ndx_guarded.html from index.html sections."""
+"""Assemble ndx_guarded.html from index.html sections.
+
+Note: the Instruments comparison content is no longer duplicated on each asset
+page. It lives only on the dedicated `instruments.html` (linked from the top
+central strategy nav via `site-nav.js`). This script therefore does not
+extract or inject the Instruments section into ndx_guarded.html, and does not
+regenerate instruments.html — that file is maintained manually as the single
+source of truth.
+"""
 from __future__ import annotations
 
 import re
@@ -92,7 +100,9 @@ backtest_inner = re.sub(
     flags=re.S,
 )
 
-mc_inner = extract('id="monteCarloPage"', 'id="instrumentsPage"')
+# Instruments section was removed from index.html (now lives only in instruments.html),
+# so the Monte Carlo section now ends just before the momentumStrategy block.
+mc_inner = extract('id="monteCarloPage"', 'id="momentumStrategy"')
 mc_inner = mc_inner.replace("S&amp;P and T-bill", "Nasdaq 100 and T-bill")
 for kid in ("mcMedianCagr", "mcMedianMaxDd"):
     mc_inner = placeholder_strong(mc_inner, kid)
@@ -135,19 +145,6 @@ mc_inner = re.sub(
     flags=re.S,
 )
 
-strategy_nav = """
-  <nav class="site-nav" aria-label="Strategies">
-    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>
-    <a class="site-nav-link active" href="ndx_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Nasdaq 100)</a>
-    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>
-    <a class="site-nav-link" href="ftse250_guarded.html#signalPage">Guarded A5/B25 (FTSE 250, max 1x)</a>
-    <a class="site-nav-link" href="msci_em_guarded.html#signalPage">Guarded A5/B25 (MSCI EM, max 1x)</a>
-    <a class="site-nav-link" href="dax_guarded.html#signalPage">Guarded A5/B25 (DAX, max 1x)</a>
-    <a class="site-nav-link" href="msci_world_guarded.html#signalPage">Guarded A5/B25 (MSCI World, max 1x)</a>
-    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>
-  </nav>
-""".strip()
-
 html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -165,7 +162,7 @@ html = f"""<!doctype html>
     with signal, back-test, and Monte Carlo validation shown separately.
   </p>
 
-{strategy_nav}
+  <nav class="site-nav" aria-label="Strategies"></nav>
 
   <section id="guardedStrategy" class="strategy active">
   <section class="card" style="margin-bottom: 18px;">
@@ -184,9 +181,8 @@ html = f"""<!doctype html>
 {signal_inner}
 {backtest_inner}
 {mc_inner}
-  </section>
 </main>
-<script src="site-nav.js"></script>
+<script src="site-nav.js?v=20260525"></script>
 <script src="ndx_guarded.js"></script>
 </body>
 </html>

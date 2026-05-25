@@ -430,6 +430,41 @@
       border-color: rgba(0, 113, 227, .35);
       box-shadow: inset 0 -2px 0 rgba(0, 113, 227, .65);
     }
+    .comparison-table .group-row td {
+      background: rgba(0, 113, 227, .07);
+      font-weight: 700;
+      color: var(--text);
+      border-bottom-color: rgba(0, 113, 227, .14);
+      padding-top: 16px;
+    }
+    .comparison-table .group-row .badge { vertical-align: middle; margin-right: 10px; }
+    .comparison-table tbody tr:not(.group-row):hover td {
+      background: rgba(0, 113, 227, .04);
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .badge-conventional { background: rgba(110, 110, 115, .14); color: var(--muted); }
+    .badge-halal { background: rgba(36, 138, 61, .14); color: var(--good); }
+    .badge-levered { background: rgba(178, 106, 0, .14); color: var(--warn); }
+    .badge-none { background: rgba(215, 0, 21, .10); color: var(--bad); }
+    .ter-cell { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .ter-low { color: var(--good); font-weight: 700; }
+    .ter-mid { color: var(--text); font-weight: 600; }
+    .ter-high { color: var(--warn); font-weight: 700; }
+    .instruments-intro { max-width: 72ch; }
+    h3.instruments-subhead {
+      margin: 28px 0 10px;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
     .callout {
       border-left: 4px solid var(--accent);
       background: var(--accent-soft);
@@ -613,7 +648,6 @@
       <button type="button" class="active" data-page-target="signalPage">Signal</button>
       <button type="button" data-page-target="backtestPage">Back-test</button>
       <button type="button" data-page-target="monteCarloPage">Monte Carlo</button>
-      <button type="button" data-page-target="instrumentsPage">Instruments</button>
     </nav>
   </section>
 
@@ -949,55 +983,10 @@
     </section>
   </section>
 
-  <section id="instrumentsPage" class="page">
-    <section class="card">
-      <h2>MSCI World UCITS / ETF Instruments</h2>
-      <p>
-        Reference list of global equity trackers for UK / II investors. Back-test and signal use <code>SWDA.L</code> (iShares MSCI World); sibling <code>IWDA</code> is widely used on II.
-        TER/OCF figures are indicative — confirm current charges and listings before trading.
-      </p>
-      <div class="instrument-toolbar">
-        <div class="row instrument-filters range-controls" aria-label="Leverage filter">
-          <button type="button" class="secondary active" data-instrument-leverage="all">All</button>
-          <button type="button" class="secondary" data-instrument-leverage="1x">1x</button>
-          <button type="button" class="secondary" data-instrument-leverage="2x">2x</button>
-          <button type="button" class="secondary" data-instrument-leverage="3x">3x</button>
-        </div>
-        <input id="instrumentsSearch" type="search" placeholder="Search name, ticker, ISIN, issuer…" aria-label="Search instruments" />
-      </div>
-      <p id="instrumentsCount" class="small">Loading instruments…</p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Leverage</th>
-              <th>Ticker</th>
-              <th>Name</th>
-              <th>TER / OCF</th>
-              <th>Acc / Dist</th>
-              <th>Currency</th>
-              <th>ISIN</th>
-              <th>Issuer</th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody id="instrumentsTableBody">
-            <tr><td colspan="9">Loading…</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="callout section-gap">
-        Leveraged daily products (2x/3x) are for short-term tactical use; path dependency and compounding can diverge
-        from the underlying index over multi-month holds. This table is research reference only, not investment advice.
-      </p>
-    </section>
-  </section>
   </section>
 
 </main>
-<script src="site-nav.js"></script>
-<script src="instruments-data.js"></script>
-<script src="instruments-page.js"></script>
+<script src="site-nav.js?v=20260525"></script>
 <script src="msci_world_guarded.js?v=20260523msci_world"></script>
 </body>
 </html>

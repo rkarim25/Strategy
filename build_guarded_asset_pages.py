@@ -68,12 +68,6 @@ def build_html(spec: GuardedAssetSpec) -> str:
         ("historical GC=F daily closes", f"historical {spec.yahoo_ticker} daily closes"),
         ("Gold buy-and-hold", f"{spec.index_label} buy-and-hold"),
         ("gold (GC=F) and T-bill", f"{spec.yahoo_ticker} and T-bill"),
-        ("Gold &amp; Related Instruments", spec.instruments_title),
-        (
-            "Reference list of gold ETFs/ETCs for UK and international investors. Back-test and signal use "
-            "<code>GC=F</code> futures; listed products track spot bullion with fees and roll differences.",
-            spec.instruments_blurb,
-        ),
         ("gold_guarded.js?v=20260522gold", f"{spec.slug}_guarded.js?v=20260523{spec.slug}"),
     ]
     for old, new in replacements:

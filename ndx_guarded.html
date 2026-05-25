@@ -430,6 +430,41 @@
       border-color: rgba(0, 113, 227, .35);
       box-shadow: inset 0 -2px 0 rgba(0, 113, 227, .65);
     }
+    .comparison-table .group-row td {
+      background: rgba(0, 113, 227, .07);
+      font-weight: 700;
+      color: var(--text);
+      border-bottom-color: rgba(0, 113, 227, .14);
+      padding-top: 16px;
+    }
+    .comparison-table .group-row .badge { vertical-align: middle; margin-right: 10px; }
+    .comparison-table tbody tr:not(.group-row):hover td {
+      background: rgba(0, 113, 227, .04);
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .badge-conventional { background: rgba(110, 110, 115, .14); color: var(--muted); }
+    .badge-halal { background: rgba(36, 138, 61, .14); color: var(--good); }
+    .badge-levered { background: rgba(178, 106, 0, .14); color: var(--warn); }
+    .badge-none { background: rgba(215, 0, 21, .10); color: var(--bad); }
+    .ter-cell { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .ter-low { color: var(--good); font-weight: 700; }
+    .ter-mid { color: var(--text); font-weight: 600; }
+    .ter-high { color: var(--warn); font-weight: 700; }
+    .instruments-intro { max-width: 72ch; }
+    h3.instruments-subhead {
+      margin: 28px 0 10px;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
     .callout {
       border-left: 4px solid var(--accent);
       background: var(--accent-soft);
@@ -599,16 +634,7 @@
     with signal, back-test, and Monte Carlo validation shown separately.
   </p>
 
-<nav class="site-nav" aria-label="Strategies">
-    <a class="site-nav-link" href="index.html#signalPage">Guarded A5/B25 SMA20 Lead (SPX)</a>
-    <a class="site-nav-link active" href="ndx_guarded.html#signalPage" aria-current="page">Guarded A5/B25 (Nasdaq 100)</a>
-    <a class="site-nav-link" href="gold_guarded.html#signalPage">Guarded A5/B25 (Gold, max 1x)</a>
-    <a class="site-nav-link" href="ftse250_guarded.html#signalPage">Guarded A5/B25 (FTSE 250, max 1x)</a>
-    <a class="site-nav-link" href="msci_em_guarded.html#signalPage">Guarded A5/B25 (MSCI EM, max 1x)</a>
-    <a class="site-nav-link" href="dax_guarded.html#signalPage">Guarded A5/B25 (DAX, max 1x)</a>
-    <a class="site-nav-link" href="msci_world_guarded.html#signalPage">Guarded A5/B25 (MSCI World, max 1x)</a>
-    <a class="site-nav-link" href="index.html#momentumSignalPage">Momentum Strategy Research</a>
-  </nav>
+  <nav class="site-nav" aria-label="Strategies"></nav>
 
   <section id="guardedStrategy" class="strategy active">
   <section class="card" style="margin-bottom: 18px;">
@@ -960,9 +986,9 @@
   </section>
 
   </section>
+
 </main>
-<script src="site-nav.js"></script>
-<script src="etp-leverage.js"></script>
+<script src="site-nav.js?v=20260525"></script>
 <script src="ndx_guarded.js"></script>
 </body>
 </html>

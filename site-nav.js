@@ -69,6 +69,12 @@
       indexHref: "#momentumSignalPage",
       strategyNav: "momentum",
     },
+    {
+      id: "instruments",
+      label: "Instruments",
+      href: "instruments.html",
+      secondary: true,
+    },
   ];
 
   function hashId(loc = location) {
@@ -131,6 +137,7 @@
 
   function activeNavId(loc = location) {
     const page = currentPageFile(loc);
+    if (page === "instruments.html") return "instruments";
     if (page !== "index.html") {
       const match = STRATEGY_NAV_ITEMS.find((item) => navItemPageFile(item) === page);
       return match ? match.id : null;
@@ -152,6 +159,7 @@
     for (const item of STRATEGY_NAV_ITEMS) {
       const link = document.createElement("a");
       link.className = "site-nav-link";
+      if (item.secondary) link.classList.add("secondary");
       link.textContent = item.label;
 
       if (onIndex && item.indexHref) {
@@ -161,7 +169,7 @@
         link.href = item.href;
       }
 
-      if (!onIndex && item.id === activeId) {
+      if (item.id === activeId) {
         link.classList.add("active");
         link.setAttribute("aria-current", "page");
       }
@@ -170,7 +178,41 @@
     }
   }
 
+  /**
+   * Inject the small bit of CSS needed to visually separate the "secondary"
+   * Instruments tab from the guarded/momentum strategy tabs. Kept here so all
+   * 8 pages get the same styling without each one having to be edited.
+   */
+  function ensureSecondaryNavStyles() {
+    if (document.getElementById("site-nav-secondary-styles")) return;
+    const style = document.createElement("style");
+    style.id = "site-nav-secondary-styles";
+    style.textContent = `
+      .site-nav[aria-label="Strategies"] .site-nav-link.secondary {
+        margin-left: 10px;
+        padding-left: 18px;
+        border-left: 1px solid rgba(0, 0, 0, .14);
+        border-radius: 0 999px 999px 0;
+      }
+      .site-nav[aria-label="Strategies"] .site-nav-link.secondary.active {
+        border-left: 1px solid rgba(0, 0, 0, .14);
+      }
+      @media (max-width: 720px) {
+        .site-nav[aria-label="Strategies"] .site-nav-link.secondary {
+          margin-left: 0;
+          padding-left: 12px;
+          border-left: none;
+          border-top: 1px solid rgba(0, 0, 0, .1);
+          border-radius: 999px;
+          width: 100%;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   function initStrategyNav() {
+    ensureSecondaryNavStyles();
     renderStrategyNav();
   }
 

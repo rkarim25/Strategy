@@ -1,5 +1,12 @@
-/** Filterable instruments table for Strategy site Instruments tab. */
+/** Halal vs conventional instruments comparison tables (Instruments tab). */
 (function () {
+  const BADGE_CLASS = {
+    conventional: "badge-conventional",
+    halal: "badge-halal",
+    levered: "badge-levered",
+    none: "badge-none",
+  };
+
   function escapeHtml(value) {
     return String(value)
       .replace(/&/g, "&amp;")
@@ -8,76 +15,57 @@
       .replace(/"/g, "&quot;");
   }
 
-  function initInstrumentsPage(root = document) {
-    const tableBody = root.querySelector("#instrumentsTableBody");
-    const searchInput = root.querySelector("#instrumentsSearch");
-    const countEl = root.querySelector("#instrumentsCount");
-    const filterButtons = root.querySelectorAll("[data-instrument-leverage]");
-    if (!tableBody || !window.INSTRUMENTS_DATA) return;
+  function badgeHtml(kind) {
+    const label =
+      kind === "halal"
+        ? "Halal"
+        : kind === "levered"
+          ? "Levered"
+          : kind === "none"
+            ? "None"
+            : "Conventional";
+    const cls = BADGE_CLASS[kind] || BADGE_CLASS.conventional;
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
 
-    let leverageFilter = "all";
+  function renderFeesTable(tbody) {
+    if (!tbody || !window.HALAL_FEES_DATA) return;
 
-    function rowMatchesSearch(row, query) {
-      if (!query) return true;
-      const haystack = [
-        row.ticker,
-        row.name,
-        row.isin,
-        row.issuer,
-        row.notes,
-        row.currency,
-      ]
-        .join(" ")
-        .toLowerCase();
-      return haystack.includes(query);
-    }
-
-    function render() {
-      const query = (searchInput?.value || "").trim().toLowerCase();
-      const rows = window.INSTRUMENTS_DATA.filter((row) => {
-        const levOk = leverageFilter === "all" || row.leverage === leverageFilter;
-        return levOk && rowMatchesSearch(row, query);
-      });
-
-      tableBody.innerHTML = rows.length
-        ? rows
-            .map(
-              (row) => `<tr>
-          <td><strong>${escapeHtml(row.leverage)}</strong></td>
-          <td><code>${escapeHtml(row.ticker)}</code></td>
-          <td>${escapeHtml(row.name)}</td>
-          <td>${escapeHtml(row.ter)}</td>
-          <td>${escapeHtml(row.accDist)}</td>
-          <td>${escapeHtml(row.currency)}</td>
-          <td><code>${escapeHtml(row.isin)}</code></td>
-          <td>${escapeHtml(row.issuer)}</td>
-          <td class="small">${escapeHtml(row.notes)}</td>
-        </tr>`
-            )
-            .join("")
-        : `<tr><td colspan="9">No instruments match the current filters.</td></tr>`;
-
-      if (countEl) {
-        const total = window.INSTRUMENTS_DATA.length;
-        countEl.textContent =
-          rows.length === total
-            ? `Showing ${total} instruments`
-            : `Showing ${rows.length} of ${total} instruments`;
-      }
-    }
-
-    filterButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        leverageFilter = button.dataset.instrumentLeverage || "all";
-        filterButtons.forEach((btn) => {
-          btn.classList.toggle("active", btn === button);
-        });
-        render();
-      });
+    const rows = window.HALAL_FEES_DATA.flatMap((group) => {
+      const header = `<tr class="group-row">
+        <td colspan="4">${badgeHtml(group.badge)}${escapeHtml(group.group)}</td>
+      </tr>`;
+      const body = group.rows
+        .map(
+          (row) => `<tr>
+        <td>${escapeHtml(row.productType)}</td>
+        <td><code>${escapeHtml(row.ticker)}</code></td>
+        <td class="ter-cell ${escapeHtml(row.terClass || "")}">${escapeHtml(row.ter)}</td>
+        <td class="small">${escapeHtml(row.notes)}</td>
+      </tr>`
+        )
+        .join("");
+      return header + body;
     });
 
-    searchInput?.addEventListener("input", render);
-    render();
+    tbody.innerHTML = rows.join("");
+  }
+
+  function renderScreeningTable(tbody) {
+    if (!tbody || !window.HALAL_SCREENING_DATA) return;
+
+    tbody.innerHTML = window.HALAL_SCREENING_DATA.map(
+      (row) => `<tr>
+      <td><strong>${escapeHtml(row.category)}</strong></td>
+      <td>${escapeHtml(row.conventional)}</td>
+      <td>${escapeHtml(row.halal)}</td>
+    </tr>`
+    ).join("");
+  }
+
+  function initInstrumentsPage(root = document) {
+    renderFeesTable(root.querySelector("#feesComparisonBody"));
+    renderScreeningTable(root.querySelector("#screeningComparisonBody"));
   }
 
   window.initInstrumentsPage = initInstrumentsPage;
