@@ -430,6 +430,65 @@
       border-color: rgba(0, 113, 227, .35);
       box-shadow: inset 0 -2px 0 rgba(0, 113, 227, .65);
     }
+    .browser-toolbar select { min-width: 150px; flex: 0 1 auto; }
+    .browser-toolbar input[type="search"] { flex: 1 1 260px; }
+    .instruments-count {
+      margin: 14px 0 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .instruments-count strong {
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    .instruments-browser-table th.sortable {
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .instruments-browser-table th.sortable::after {
+      content: " ↕";
+      color: rgba(0, 0, 0, .22);
+      font-size: 11px;
+    }
+    .instruments-browser-table th.sortable.sort-asc::after { content: " ↑"; color: var(--accent); }
+    .instruments-browser-table th.sortable.sort-desc::after { content: " ↓"; color: var(--accent); }
+    .instruments-browser-table td { white-space: nowrap; vertical-align: top; }
+    .instruments-browser-table td.notes-cell {
+      white-space: normal;
+      min-width: 220px;
+      max-width: 340px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+    .instruments-browser-table tbody tr:hover td {
+      background: rgba(0, 113, 227, .04);
+    }
+    .instruments-browser-table tbody tr.row-halal td {
+      background: rgba(36, 138, 61, .035);
+    }
+    .instruments-browser-table tbody tr.row-halal:hover td {
+      background: rgba(36, 138, 61, .07);
+    }
+    .lev-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      background: rgba(0, 0, 0, .05);
+      color: var(--text);
+    }
+    .lev-pill.lev-2x { background: rgba(178, 106, 0, .14); color: var(--warn); }
+    .lev-pill.lev-3x { background: rgba(215, 0, 21, .12); color: var(--bad); }
+    .instruments-empty {
+      text-align: center;
+      padding: 28px 12px;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
     .comparison-table .group-row td {
       background: rgba(0, 113, 227, .07);
       font-weight: 700;
@@ -691,13 +750,76 @@
         and Shariah compliance should be confirmed with your own scholars or certification bodies.
       </p>
     </section>
-  </section>
+
+    <section class="card section-gap" id="instrumentsBrowserCard">
+      <h2>Instrument browser — 1× / 2× / 3× across asset classes</h2>
+      <p class="instruments-intro">
+        Search and filter LSE-listed UCITS funds and ETPs available on Interactive Investor across S&amp;P 500,
+        Nasdaq 100, FTSE 100 &amp; 250, DAX, gold, MSCI World, MSCI EM and Shariah-screened equity. TERs and ISINs
+        are best-effort references from issuer factsheets — confirm at your broker before trading.
+      </p>
+
+      <div class="instrument-toolbar browser-toolbar">
+        <input
+          type="search"
+          id="instrumentsSearch"
+          placeholder="Search ticker, name or ISIN…"
+          aria-label="Search instruments"
+          autocomplete="off"
+        />
+        <select id="filterAssetClass" aria-label="Filter by asset class">
+          <option value="all">All asset classes</option>
+        </select>
+        <select id="filterLeverage" aria-label="Filter by leverage">
+          <option value="all">All leverage</option>
+          <option value="1x">1× only</option>
+          <option value="2x">2× only</option>
+          <option value="3x">3× only</option>
+        </select>
+        <select id="filterHalal" aria-label="Filter by Shariah screening">
+          <option value="all">Conventional + Halal</option>
+          <option value="Conventional">Conventional only</option>
+          <option value="Halal">Halal only</option>
+        </select>
+        <select id="filterCurrency" aria-label="Filter by currency">
+          <option value="all">All currencies</option>
+        </select>
+        <button type="button" class="secondary" id="instrumentsReset">Reset</button>
+      </div>
+
+      <p class="instruments-count" id="instrumentsCount" aria-live="polite">Loading instruments…</p>
+
+      <div class="table-wrap">
+        <table class="comparison-table instruments-browser-table">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="ticker">Ticker</th>
+              <th class="sortable" data-sort="name">Name</th>
+              <th>Asset class</th>
+              <th>Lev.</th>
+              <th>Halal</th>
+              <th class="sortable" data-sort="terNum">TER</th>
+              <th>Ccy</th>
+              <th>Acc/Dist</th>
+              <th>ISIN</th>
+              <th>Issuer</th>
+              <th>Structure</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="instrumentsBrowserBody">
+            <tr><td colspan="12">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </section>
 
 
 </main>
 <script src="site-nav.js?v=20260525"></script>
-<script src="halal-comparison-data.js"></script>
-<script src="instruments-page.js"></script>
+<script src="halal-comparison-data.js?v=20260525"></script>
+<script src="all-instruments-data.js?v=20260525"></script>
+<script src="instruments-page.js?v=20260525"></script>
 </body>
 </html>
