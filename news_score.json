@@ -1,22 +1,29 @@
 {
-  "generated_at_utc": "2026-05-22T22:56:13Z",
+  "generated_at_utc": "2026-05-25T16:27:07Z",
   "window_days": 7,
-  "score": 9,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: S&P 500, Nasdaq Score Weekly Wins As Dow Logs Record High; S&P 500 Clocks Best Weekly Rally Since 2023, Dow Hits Fresh Record As US-Iran Peace Hope Boosts Risk Sentiment - UBER, GILD, RDDT, FJET, AMD In Focus.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Review: S&P 500 Rallies for 8th Week, Dow Hits New Record High - mb.ntd.com; Stock market gains on Wall Street close: S&P 500 adds 27.75 points, Dow hits record high - eciks.org. Bearish offsets: U.S. Stocks Fall as Bond Selloff Deepens - WSJ.",
   "articles": [
     {
-      "title": "Stock Market Today: S&P 500, Nasdaq Score Weekly Wins As Dow Logs Record High",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/516024ad-d294-3dad-b22d-f5dd551580a2/stock-market-today%3A-s%26p-500%2C.html?.tsrc=rss",
-      "published": "2026-05-22T20:43:55Z",
+      "title": "Wall Street Review: S&P 500 Rallies for 8th Week, Dow Hits New Record High - mb.ntd.com",
+      "source": "mb.ntd.com",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOakdKNkNOamJNY0JTOTVGWUl4dHowNHZuTUl1Qk56MnU5UU1QdVktUTJBR1JiSTlFS0F5UU5nM1dILXg3blNrUUpyQkowS2Z5WWVWVmd6YjVibVFwVl9sT01zTVd5RTZrc1VfZWRPcjJJcnlDQlgzZUlLM3NZRnd4b2FOYmpadlRIcUxFWUtJa29zV2JUTWN3a2REMVpNaV9JWGlHU0dR?oc=5",
+      "published": "2026-05-23T15:13:28Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 Clocks Best Weekly Rally Since 2023, Dow Hits Fresh Record As US-Iran Peace Hope Boosts Risk Sentiment - UBER, GILD, RDDT, FJET, AMD In Focus",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-clocks-best-weekly-rally-since-2023-dow-hits-fresh-record-as-us-iran-peace-hope-boosts-risk-sentiment-uber-gild-rddt-fjet-amd-in-focus/cZgRnCmReY4?.tsrc=rss",
-      "published": "2026-05-22T21:03:43Z",
+      "title": "U.S. Stocks Fall as Bond Selloff Deepens - WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNSzNmYy1uUXgtZ1pQTktZWnR5ZmxpT2ZpTWxfV0FBbFBEMHR0LW85c2o4YkE5eDNVcWFINnFmdDk5MzlabUhzdFRhdk5rcENpTEZPVWhNNkpYWTZBWktNZlU1U3hsU003cVhvZ3ZRZVY2RDAyc1NwUGhlcDRJcm9GMXMxNnotenQwYmtuejRJV3QxWWpTRHVLYjEwcl8?oc=5",
+      "published": "2026-05-19T20:48:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock market gains on Wall Street close: S&P 500 adds 27.75 points, Dow hits record high - eciks.org",
+      "source": "eciks.org",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQQXlGUGc3VmFtVlgtY1ItTnZwdHJhU3BoRGpjTUZTdmpZcHhXV1Nla1J5dm9WQjZpZzc2cUJmY3RDOEZTaV9nandLZVh5d0c4LUJXaUE5TkV4TXRDYjdfNnh2U2hpZngxaXNycHNlUWxUWHQ2Z0ZQV1lVYlFnM3d1MjFpLUxGa0hILUtNTDh1cFpMT0ZFWjVfcjk2UnBxSWdTZ1VwOFYwLXc0RlRHX3c?oc=5",
+      "published": "2026-05-23T11:02:02Z",
       "tone": "bullish"
     },
     {
@@ -27,17 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Dow Jones Futures: Stock Market Rebounds To Highs; Tesla, These Five AI Plays Are At Buy Points",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures%3A-stock.html?.tsrc=rss",
-      "published": "2026-05-22T21:24:41Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street rises as Middle East hopes lift sentiment",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/wall-street-rises-middle-east-215643096.html?.tsrc=rss",
-      "published": "2026-05-22T21:56:43Z",
+      "title": "Wall Street Rallies: S&P 500, Nasdaq, Dow Jones Close Higher - CryptoRank",
+      "source": "CryptoRank",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPd2gzSEtqWmxwdHhLT1pjZWFzQUVZSWs2NXY3MmNfZVBYd2hta2VaUXNFbkpsUGNMclFPTlRWTEp2UHVNWWxBREliYzFHWTRrbzdvNXVGRDVWV25MaFF6aThvaHgtdWY0enpoR0p0OXRGa04zSVNia3g3RzlZRnplRw?oc=5",
+      "published": "2026-05-21T00:30:13Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 94
       }
     ],
-    "headline_count": 143,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
