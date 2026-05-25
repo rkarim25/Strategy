@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-05-25T20:11:02Z",
+  "generated_at_utc": "2026-05-25T21:46:11Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Review: S&P 500 Rallies for 8th Week, Dow Hits New Record High - mb.ntd.com; Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters. Bearish offsets: U.S. Stocks Fall as Bond Selloff Deepens - WSJ.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Review: S&P 500 Rallies for 8th Week, Dow Hits New Record High - mb.ntd.com; 10 of 11 Sectors Higher: Why the S&P\u2019s Rally Looks Healthier Than the Headlines Suggest - 24/7 Wall St.. Bearish offsets: U.S. Stocks Fall as Bond Selloff Deepens - WSJ.",
   "articles": [
     {
       "title": "Wall Street Review: S&P 500 Rallies for 8th Week, Dow Hits New Record High - mb.ntd.com",
@@ -20,6 +20,13 @@
       "tone": "bearish"
     },
     {
+      "title": "10 of 11 Sectors Higher: Why the S&P\u2019s Rally Looks Healthier Than the Headlines Suggest - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNNGpqN1M1cWp1LWVjRFlYS0VORk1yLTFoWmtqTGR4Y0lLNmY1ODk2aGFBRGg3WlVjOTRHcmtyMElWUHNCRlllY3JWUHFtTnF3b0RSVVpsU21GLWIwQmptVEhWTGtGTllLYldOTEg5UXN2TUZFTEdPaEVTSEl4Z1ozMG40bWpUMW9nRllSNFV0ZzNVV3hQdmYtYV9RSXlqU1cyUTdlclZiOGI3a3Z5Wk1QNWlSR19GdzJ2cEF2dXdlc1RvR1BMYnVj?oc=5",
+      "published": "2026-05-25T19:50:30Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPcjM1c2ozQWFpSmVwbjV3TDhFQkJFQmVjUk5OalcwOHRHbjNwZFRFcG0xd3JaRmZOSDNmMXlxdjZ4eGp2UXFKSkVJakZMeWMyQ045N3N5WDhvYVdyVWY0UkRwc0hBTGlJX0JvRk90NWIxS3QtTFZtcG9zbjBCOVRwdUR2WW45TGlfeTlHT0s5MFluXzEwdHJGVnJ3UFpORWhWMktV?oc=5",
@@ -31,13 +38,6 @@
       "source": "CryptoRank",
       "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPd2gzSEtqWmxwdHhLT1pjZWFzQUVZSWs2NXY3MmNfZVBYd2hta2VaUXNFbkpsUGNMclFPTlRWTEp2UHVNWWxBREliYzFHWTRrbzdvNXVGRDVWV25MaFF6aThvaHgtdWY0enpoR0p0OXRGa04zSVNia3g3RzlZRnplRw?oc=5",
       "published": "2026-05-21T00:30:13Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Dominic Chu: The Trump Bull Market\u2019s AI Rally Is Powering the S&P 500 Toward an 8th Straight Winning Week - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNRmcxRWpzZDBvMHNKQTVRYkxBT3JTT2JySkJMamFTNzBQX3hCb09SY290ZldiRkhXYk9WaEc3R3JuRXNVeEVzTTNkU18yUFd3VVFNclgxdmVOTmtsQ2hXTll0ZjFFaG5aRFZ2SzNtaHZUMlNSX0U1N1UwMVR6UjZRZ1hvb2VPdzdoWUNwTDhZRFBlc3B6OExoaXB3?oc=5",
-      "published": "2026-05-22T18:45:23Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 93
       }
     ],
-    "headline_count": 144,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
