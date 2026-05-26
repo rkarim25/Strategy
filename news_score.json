@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-05-26T19:35:01Z",
+  "generated_at_utc": "2026-05-26T21:52:03Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Palantir Rally Takes a Pause; Stock Market Today, May 26: Micron Surges After UBS Lifts Price Target on AI Optimism.",
+  "score": 9,
+  "label": "Bullish",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 jumps to a new record close as Micron shares lead tech rally: Live updates; Tech Rally Leads S&P 500, Nasdaq Higher - WSJ.",
   "articles": [
     {
-      "title": "Palantir Rally Takes a Pause",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/palantir-rally-takes-pause-165804384.html?.tsrc=rss",
-      "published": "2026-05-26T16:58:04Z",
+      "title": "S&P 500 jumps to a new record close as Micron shares lead tech rally: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/05/25/stock-futures-today-live-updates.html",
+      "published": "2026-05-26T20:15:33Z",
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today, May 26: Micron Surges After UBS Lifts Price Target on AI Optimism",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/05/26/stock-market-today-may-26-micron-surges-after-ubs-lifts-price-target-on-ai-optimism/?.tsrc=rss",
-      "published": "2026-05-26T17:27:21Z",
+      "title": "Tech Rally Leads S&P 500, Nasdaq Higher - WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNc1ZnSlY4cWtXR2dtUF9yMWtLYmtBMUxETkphQXZub2R3X09JRy0xNnZOVG9DRkJQOUIwNW10aUFrNnctNU9ObTZQWUNITzd1SmhtekZLY2VBTkZ6UTRiUGZDZXVtXzIyc2FBNElxZ1NLRzNhRF9CRDlwd0hSTlhDcWN5SVRMNTJxV2ZUTkU1dEZ6cVlWenMxRWl6ZmMtNUVvSU1raTRkOWFwZW9ITmc?oc=5",
+      "published": "2026-05-26T20:18:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Stocks Rise Toward Record as Iran Peace Hopes Hold: Markets Wrap",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-futures-extend-gains-085825269.html?.tsrc=rss",
-      "published": "2026-05-26T18:52:57Z",
+      "title": "Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPcjM1c2ozQWFpSmVwbjV3TDhFQkJFQmVjUk5OalcwOHRHbjNwZFRFcG0xd3JaRmZOSDNmMXlxdjZ4eGp2UXFKSkVJakZMeWMyQ045N3N5WDhvYVdyVWY0UkRwc0hBTGlJX0JvRk90NWIxS3QtTFZtcG9zbjBCOVRwdUR2WW45TGlfeTlHT0s5MFluXzEwdHJGVnJ3UFpORWhWMktV?oc=5",
+      "published": "2026-05-22T22:01:53Z",
       "tone": "bullish"
     },
     {
-      "title": "Dow Jones Leader Amazon, AI Stock Quanta, Monster Beverage In Or Near Buy Zones",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/b9f59cf9-d3e7-3729-9042-e7fb69459b47/dow-jones-leader-amazon%2C-ai.html?.tsrc=rss",
-      "published": "2026-05-26T17:25:19Z",
+      "title": "Wall Street Rallies: S&P 500, Nasdaq, Dow Jones Close Higher - CryptoRank",
+      "source": "CryptoRank",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPd2gzSEtqWmxwdHhLT1pjZWFzQUVZSWs2NXY3MmNfZVBYd2hta2VaUXNFbkpsUGNMclFPTlRWTEp2UHVNWWxBREliYzFHWTRrbzdvNXVGRDVWV25MaFF6aThvaHgtdWY0enpoR0p0OXRGa04zSVNia3g3RzlZRnplRw?oc=5",
+      "published": "2026-05-21T00:30:13Z",
       "tone": "bullish"
     },
     {
-      "title": "Dow Hits Fresh Record High as Iran Easing Hopes Lift Stocks",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/dow-hits-fresh-record-high-164749641.html?.tsrc=rss",
-      "published": "2026-05-26T16:47:49Z",
+      "title": "Wall Street rises as AI optimism outweighs Middle East risks - New Orleans CityBusiness",
+      "source": "New Orleans CityBusiness",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPZC1WZHRqZDZYcENHdllfaVpoMGZROHpRYjFPeFctaGF3WTdLNHRMTWh4UzJ5VHZCdkhZRkVzbnVZMUM3bE9KTHNaRkpDVG5iaFVFbFBSZDBrLU1tTkNSaXZaUXplMGU1bVFadC16dTdRa1hmNnJ6bjYzR2hDZ3htdVRkSE5OODBpVExwMmEwaGkyZw?oc=5",
+      "published": "2026-05-26T15:54:07Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 0
+        "articles": 94
       }
     ],
-    "headline_count": 50,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
