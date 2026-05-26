@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-05-26T21:52:03Z",
+  "generated_at_utc": "2026-05-26T23:07:59Z",
   "window_days": 7,
   "score": 9,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 jumps to a new record close as Micron shares lead tech rally: Live updates; Tech Rally Leads S&P 500, Nasdaq Higher - WSJ.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq, hit record closing highs on AI optimism; Tech Rally Leads S&P 500, Nasdaq Higher - WSJ.",
   "articles": [
     {
-      "title": "S&P 500 jumps to a new record close as Micron shares lead tech rally: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/25/stock-futures-today-live-updates.html",
-      "published": "2026-05-26T20:15:33Z",
+      "title": "S&P 500, Nasdaq, hit record closing highs on AI optimism",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/p-500-nasdaq-hit-record-225144244.html?.tsrc=rss",
+      "published": "2026-05-26T22:51:44Z",
       "tone": "bullish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 95
       }
     ],
-    "headline_count": 144,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
