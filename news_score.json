@@ -1,29 +1,22 @@
 {
-  "generated_at_utc": "2026-05-25T22:58:45Z",
+  "generated_at_utc": "2026-05-26T17:29:49Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Review: S&P 500 Rallies for 8th Week, Dow Hits New Record High - mb.ntd.com; 10 of 11 Sectors Higher: Why the S&P\u2019s Rally Looks Healthier Than the Headlines Suggest - 24/7 Wall St.. Bearish offsets: U.S. Stocks Fall as Bond Selloff Deepens - WSJ.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Palantir Rally Takes a Pause; Tech Rally Leads Stocks Higher - WSJ.",
   "articles": [
     {
-      "title": "Wall Street Review: S&P 500 Rallies for 8th Week, Dow Hits New Record High - mb.ntd.com",
-      "source": "mb.ntd.com",
-      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOakdKNkNOamJNY0JTOTVGWUl4dHowNHZuTUl1Qk56MnU5UU1QdVktUTJBR1JiSTlFS0F5UU5nM1dILXg3blNrUUpyQkowS2Z5WWVWVmd6YjVibVFwVl9sT01zTVd5RTZrc1VfZWRPcjJJcnlDQlgzZUlLM3NZRnd4b2FOYmpadlRIcUxFWUtJa29zV2JUTWN3a2REMVpNaV9JWGlHU0dR?oc=5",
-      "published": "2026-05-23T15:13:28Z",
+      "title": "Palantir Rally Takes a Pause",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/palantir-rally-takes-pause-165804384.html?.tsrc=rss",
+      "published": "2026-05-26T16:58:04Z",
       "tone": "bullish"
     },
     {
-      "title": "U.S. Stocks Fall as Bond Selloff Deepens - WSJ",
+      "title": "Tech Rally Leads Stocks Higher - WSJ",
       "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNSzNmYy1uUXgtZ1pQTktZWnR5ZmxpT2ZpTWxfV0FBbFBEMHR0LW85c2o4YkE5eDNVcWFINnFmdDk5MzlabUhzdFRhdk5rcENpTEZPVWhNNkpYWTZBWktNZlU1U3hsU003cVhvZ3ZRZVY2RDAyc1NwUGhlcDRJcm9GMXMxNnotenQwYmtuejRJV3QxWWpTRHVLYjEwcl8?oc=5",
-      "published": "2026-05-19T20:48:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "10 of 11 Sectors Higher: Why the S&P\u2019s Rally Looks Healthier Than the Headlines Suggest - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNNGpqN1M1cWp1LWVjRFlYS0VORk1yLTFoWmtqTGR4Y0lLNmY1ODk2aGFBRGg3WlVjOTRHcmtyMElWUHNCRlllY3JWUHFtTnF3b0RSVVpsU21GLWIwQmptVEhWTGtGTllLYldOTEg5UXN2TUZFTEdPaEVTSEl4Z1ozMG40bWpUMW9nRllSNFV0ZzNVV3hQdmYtYV9RSXlqU1cyUTdlclZiOGI3a3Z5Wk1QNWlSR19GdzJ2cEF2dXdlc1RvR1BMYnVj?oc=5",
-      "published": "2026-05-25T19:50:30Z",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNc1ZnSlY4cWtXR2dtUF9yMWtLYmtBMUxETkphQXZub2R3X09JRy0xNnZOVG9DRkJQOUIwNW10aUFrNnctNU9ObTZQWUNITzd1SmhtekZLY2VBTkZ6UTRiUGZDZXVtXzIyc2FBNElxZ1NLRzNhRF9CRDlwd0hSTlhDcWN5SVRMNTJxV2ZUTkU1dEZ6cVlWenMxRWl6ZmMtNUVvSU1raTRkOWFwZW9ITmc?oc=5",
+      "published": "2026-05-26T16:42:00Z",
       "tone": "bullish"
     },
     {
@@ -38,6 +31,13 @@
       "source": "CryptoRank",
       "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPd2gzSEtqWmxwdHhLT1pjZWFzQUVZSWs2NXY3MmNfZVBYd2hta2VaUXNFbkpsUGNMclFPTlRWTEp2UHVNWWxBREliYzFHWTRrbzdvNXVGRDVWV25MaFF6aThvaHgtdWY0enpoR0p0OXRGa04zSVNia3g3RzlZRnplRw?oc=5",
       "published": "2026-05-21T00:30:13Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500, Nasdaq rise as AI optimism outweighs Middle East risks - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPVWRWWDF6RVpndmREd3hkYTZ4Q1YyNmVLN09uSGlUaGdJaTdXM3kxM3lwNXRWdU9vX3NUSS1HR040RzVKQU5YZGFtU1BvSjBnTDBZWExDY0ZLLUcyamhXV0FGWVliZUxfWjFVYlFVckEyRmlsMmVaVEgzTHVOcFZLM0wtU0tHaWU3emFJdmprT0NSdUtq?oc=5",
+      "published": "2026-05-26T15:41:19Z",
       "tone": "bullish"
     }
   ],
