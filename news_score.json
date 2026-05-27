@@ -1,22 +1,22 @@
 {
-  "generated_at_utc": "2026-05-27T22:02:19Z",
+  "generated_at_utc": "2026-05-27T23:14:37Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Snowflake Stock Jumps 34%. How Amazon and an Earnings Beat Are Fueling the Gains.; Dow rises nearly 200 points to new record close as oil retreats on Iran truce optimism: Live updates.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, May 27: Micron Extends Rally on AI Chip Momentum, U.S. Markets Inch Higher; Wall St posts record closing highs despite pause in AI rally.",
   "articles": [
     {
-      "title": "Snowflake Stock Jumps 34%. How Amazon and an Earnings Beat Are Fueling the Gains.",
+      "title": "Stock Market Today, May 27: Micron Extends Rally on AI Chip Momentum, U.S. Markets Inch Higher",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/09032fd4-c156-338f-ae57-d662c999c974/snowflake-stock-jumps-34%25..html?.tsrc=rss",
-      "published": "2026-05-27T20:55:00Z",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/05/27/stock-market-today-may-27-micron-extends-rally-on-ai-chip-momentum-u-s-markets-inch-higher/?.tsrc=rss",
+      "published": "2026-05-27T22:09:47Z",
       "tone": "bullish"
     },
     {
-      "title": "Dow rises nearly 200 points to new record close as oil retreats on Iran truce optimism: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/26/stock-market-today-live-updates.html",
-      "published": "2026-05-27T20:10:57Z",
+      "title": "Wall St posts record closing highs despite pause in AI rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/wall-st-posts-record-closing-225347299.html?.tsrc=rss",
+      "published": "2026-05-27T22:53:47Z",
       "tone": "bullish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 95
       }
     ],
-    "headline_count": 146,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
