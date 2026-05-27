@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-05-26T23:07:56Z",
-  "data_asof": "2026-05-26",
-  "daily_rows": 7547,
-  "quote_price": 30001.318359375,
-  "quote_timestamp": "2026-05-26",
+  "generated_at_utc": "2026-05-27T17:24:29Z",
+  "data_asof": "2026-05-27",
+  "daily_rows": 7548,
+  "quote_price": 29892.513671875,
+  "quote_timestamp": "2026-05-27",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-05-26",
-      "close": 30001.318359375
+      "date": "2026-05-27",
+      "close": 29892.513671875
     },
-    "latestSma": 28692.6248046875,
-    "highWater": 30001.318359375,
+    "latestSma": 28835.80009765625,
+    "highWater": 30001.3203125,
     "highWaterDate": "2026-05-26",
-    "latestDd": 0.0,
+    "latestDd": -0.0036267284070049532,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -46,18 +46,18 @@
     "activeEntryClose": 26672.4296875,
     "activeEntryDate": "2026-04-17",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.12480635288486974,
+    "activeEntryPnl": 0.12072705869327272,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-05-26",
-      "close": 30001.318359375
+      "date": "2026-05-27",
+      "close": 29892.513671875
     },
-    "latestSma": 28841.240234375,
-    "highWater": 30001.318359375,
+    "latestSma": 28971.0767578125,
+    "highWater": 30001.3203125,
     "highWaterDate": "2026-05-26",
-    "latestDd": 0.0,
+    "latestDd": -0.0036267284070049532,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -68,13 +68,13 @@
     "activeEntryClose": 26672.4296875,
     "activeEntryDate": "2026-04-17",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.12480635288486974,
+    "activeEntryPnl": 0.12072705869327272,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-05-26",
+    "last_observed_asof": "2026-05-27",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-05-26T23:07:56Z"
+    "last_checked_at_utc": "2026-05-27T17:24:29Z"
   }
 }

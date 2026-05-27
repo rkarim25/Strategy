@@ -1,15 +1,36 @@
 {
-  "generated_at_utc": "2026-05-26T23:07:59Z",
+  "generated_at_utc": "2026-05-27T17:24:32Z",
   "window_days": 7,
   "score": 9,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq, hit record closing highs on AI optimism; Tech Rally Leads S&P 500, Nasdaq Higher - WSJ.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Bank of America says prepare for a 'summer correction\u2019 after rally to record highs; Stock Market Today: Dow Jones, S&P 500 Futures Rise Following Tech Rally\u2014Zscaler, United Microelectronics - Benzinga. Bearish offsets: Top Midday Stories: White House Refutes Iran Report of Interim Peace Deal; Zscaler Shares Plunge After Fiscal Q4 Revenue Guidance Misses Estimates.",
   "articles": [
     {
-      "title": "S&P 500, Nasdaq, hit record closing highs on AI optimism",
+      "title": "Bank of America says prepare for a 'summer correction\u2019 after rally to record highs",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/05/27/bank-of-america-says-prepare-for-a-summer-correction-after-rally-to-record-highs.html",
+      "published": "2026-05-27T16:44:20Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Top Midday Stories: White House Refutes Iran Report of Interim Peace Deal; Zscaler Shares Plunge After Fiscal Q4 Revenue Guidance Misses Estimates",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/p-500-nasdaq-hit-record-225144244.html?.tsrc=rss",
-      "published": "2026-05-26T22:51:44Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/top-midday-stories-white-house-155135831.html?.tsrc=rss",
+      "published": "2026-05-27T15:51:35Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock Market Today: Dow Jones, S&P 500 Futures Rise Following Tech Rally\u2014Zscaler, United Microelectronics - Benzinga",
+      "source": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNdWh1WE9xbE5zWnpyZ0Y2ZjNLWHNQNDh4enhkdHRTVHQ2UWRKSEJKQzZPMDZZdXJPdjE4YU1Ed0lERHk3d2xzODFvVkJ4MVpPdk90RkphbG1KRVNWbmxSakJFdnhYWU5UcHJEWVNTa0pSOTh2cW9YeTdILVNHMUpqYUpsQ0l2UGs2ZG5nTlRYVkZLaGR2YWQzMFhQazh3MEgwTWp4dTNGWDdmVUJGekt3VVVMNzg0VlFiS2pOcGhqZDZxemVZLUR5MHpkVTBEQ3BLaTctOVQ0Z09BQ2tkeGV3ZlVUc3cya09XSUwyekhLUWJfYnd0dkNJdjliYmZSUmtiblE1Rw?oc=5",
+      "published": "2026-05-27T09:33:48Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock index futures rise after tech rally lifts Nasdaq, S&P 500 (SPX:) - Seeking Alpha",
+      "source": "Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPUHd6U3Ezb3prSzRvR2hEZ3RmSnIxM3NDN1BIZ1hlU2k2RlNIVy1jUmhFNFBoYTZIZmFkRmswZVk3U0FPblgtNHlKeWxqMjAwS3dsQW1uVmg1VS1RcXVBUU5ISXJzWS1QbFdmZUlQbm9vLURCTkVObjZLMW52bTJrVEpIbWs5Q0hn?oc=5",
+      "published": "2026-05-27T09:12:03Z",
       "tone": "bullish"
     },
     {
@@ -17,27 +38,6 @@
       "source": "WSJ",
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNc1ZnSlY4cWtXR2dtUF9yMWtLYmtBMUxETkphQXZub2R3X09JRy0xNnZOVG9DRkJQOUIwNW10aUFrNnctNU9ObTZQWUNITzd1SmhtekZLY2VBTkZ6UTRiUGZDZXVtXzIyc2FBNElxZ1NLRzNhRF9CRDlwd0hSTlhDcWN5SVRMNTJxV2ZUTkU1dEZ6cVlWenMxRWl6ZmMtNUVvSU1raTRkOWFwZW9ITmc?oc=5",
       "published": "2026-05-26T20:18:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPcjM1c2ozQWFpSmVwbjV3TDhFQkJFQmVjUk5OalcwOHRHbjNwZFRFcG0xd3JaRmZOSDNmMXlxdjZ4eGp2UXFKSkVJakZMeWMyQ045N3N5WDhvYVdyVWY0UkRwc0hBTGlJX0JvRk90NWIxS3QtTFZtcG9zbjBCOVRwdUR2WW45TGlfeTlHT0s5MFluXzEwdHJGVnJ3UFpORWhWMktV?oc=5",
-      "published": "2026-05-22T22:01:53Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street Rallies: S&P 500, Nasdaq, Dow Jones Close Higher - CryptoRank",
-      "source": "CryptoRank",
-      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPd2gzSEtqWmxwdHhLT1pjZWFzQUVZSWs2NXY3MmNfZVBYd2hta2VaUXNFbkpsUGNMclFPTlRWTEp2UHVNWWxBREliYzFHWTRrbzdvNXVGRDVWV25MaFF6aThvaHgtdWY0enpoR0p0OXRGa04zSVNia3g3RzlZRnplRw?oc=5",
-      "published": "2026-05-21T00:30:13Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street rises as AI optimism outweighs Middle East risks - New Orleans CityBusiness",
-      "source": "New Orleans CityBusiness",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPZC1WZHRqZDZYcENHdllfaVpoMGZROHpRYjFPeFctaGF3WTdLNHRMTWh4UzJ5VHZCdkhZRkVzbnVZMUM3bE9KTHNaRkpDVG5iaFVFbFBSZDBrLU1tTkNSaXZaUXplMGU1bVFadC16dTdRa1hmNnJ6bjYzR2hDZ3htdVRkSE5OODBpVExwMmEwaGkyZw?oc=5",
-      "published": "2026-05-26T15:54:07Z",
       "tone": "bullish"
     }
   ],
