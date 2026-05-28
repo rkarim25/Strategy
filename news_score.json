@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-05-28T20:32:11Z",
+  "generated_at_utc": "2026-05-28T22:43:06Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock index futures rise after tech rally lifts Nasdaq, S&P 500 (SPX:) - Seeking Alpha; Tech Rally Leads S&P 500, Nasdaq Higher - WSJ.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, May 28: Inflation Isn't Stopping This Stock Market Rally; Stock index futures rise after tech rally lifts Nasdaq, S&P 500 (SPX:) - Seeking Alpha.",
   "articles": [
+    {
+      "title": "Stock Market Today, May 28: Inflation Isn't Stopping This Stock Market Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/05/28/stock-market-today-may-28-inflation-isn-t-stopping-this-stock-market-rally/?.tsrc=rss",
+      "published": "2026-05-28T21:50:56Z",
+      "tone": "bullish"
+    },
     {
       "title": "Stock index futures rise after tech rally lifts Nasdaq, S&P 500 (SPX:) - Seeking Alpha",
       "source": "Seeking Alpha",
@@ -27,17 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today, May 28: Tech Stocks Rise as Snowflake Surges After $6 Billion Amazon Deal and Strong Earnings",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/05/28/stock-market-today-may-28-tech-stocks-rise-as-snowflake-surges-after-usd6-billion-amazon-deal-and-strong-earnings/?.tsrc=rss",
-      "published": "2026-05-28T18:26:10Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street indexes post closing record highs, AI rally pauses By Reuters - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQNjUzRkxJZ0Vqc2J0NWxHZDNndXkzNUVIVnFOMjNsTDdXbWQ1bjVGVEJIaEV4WTEyQVUyZmhQSUd3R1YtM0hHNlpybDh0YXlFT29JU0RuaEt1cnM3YzlNUk9DMjgtd1I5dGdYT0xsRlpQTjBwYnNxWWZPZ1pvUm5hOVhvTDFSWDNFbG9FcDg1QnFPaUFiMERFbEtYRlVfM21uZ0piQzFaT3hKanF6Nl9MWUpacE9OVWU1eXRIWVg0U2ExekN3RXVuQ0Rn?oc=5",
-      "published": "2026-05-27T21:40:30Z",
+      "title": "Snowflake surges 36% for best day ever on AI frenzy, fueling software rally",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/05/28/snowflake-snow-software-stock-rally.html",
+      "published": "2026-05-28T20:37:19Z",
       "tone": "bullish"
     }
   ],
