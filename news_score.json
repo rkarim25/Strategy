@@ -1,15 +1,36 @@
 {
-  "generated_at_utc": "2026-05-29T17:37:43Z",
+  "generated_at_utc": "2026-05-29T20:34:04Z",
   "window_days": 7,
-  "score": 9,
+  "score": 10,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stocks add to May gains Friday with tech leading the way again. The Nasdaq is up 8% for month: Live updates; Stock Market Today: S&P 500, Nasdaq, Dow Futures Rise Following Tech Rally\u2014Zscaler, United Microelectroni - Benzinga.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dell Jumps 30% As AI Rally Pushes Stocks Higher; Why Is The US Stock Market Up Today?.",
   "articles": [
     {
-      "title": "Stocks add to May gains Friday with tech leading the way again. The Nasdaq is up 8% for month: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/28/stock-market-today-live-updates.html",
-      "published": "2026-05-29T17:29:52Z",
+      "title": "Dell Jumps 30% As AI Rally Pushes Stocks Higher",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/dell-jumps-30-ai-rally-192220088.html?.tsrc=rss",
+      "published": "2026-05-29T19:22:20Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Why Is The US Stock Market Up Today?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://beincrypto.com/why-us-stock-market-is-up-today/?.tsrc=rss",
+      "published": "2026-05-29T17:33:57Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Dow rises 140 points as AI rally pushes S&P 500, Nasdaq toward records - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQS2xZak1NVE5Fc0hsekRfTXdyS3ItNmFYM2syRndGNVFuM1dOdWRlcmxuM1ZvTm83WG43YmNGLUhJVXhYTW9wQ3JObzFGQ01vRHFMZ1ZoZnU4UXRmdEVSX2d2SHhWRzExdkFFd2VyMTBFblVXbDlib3c4TzZBY0R6RVJyUlVFRzExaXZQb2RBdU1NMjc2V3FPYVBGemdUSjdoT3VNNjNISTFwLTlGQkNqaDNaTjU3QTQ0QW1RazMtOEpzckdr?oc=5",
+      "published": "2026-05-27T13:42:14Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Rally Stalls as Oil Rises on US-Iran Clashes: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPR21yOEp1UkNRMnlST1ZWWEZDcWZtSl8zeXp4QmI0S1ZWeU9UZi1jN0ViM3VzSllDMzkyVy1GczZIdjhaNHRhUHA0SGtHVm5GaFZKWDZreDUxNHJSRWhoNllBQTJodjZJMWhOdEs4TjBFeklfaXZ4aVR4cU41TkFGWlNMYWJMWHE0V0ROdGdfYXAxY1hqV3FuN0RuYTFIR2VMQ1ROQmQ1Qy1rR3phNzNxSw?oc=5",
+      "published": "2026-05-27T22:14:47Z",
       "tone": "bullish"
     },
     {
@@ -17,27 +38,6 @@
       "source": "Benzinga",
       "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNdWh1WE9xbE5zWnpyZ0Y2ZjNLWHNQNDh4enhkdHRTVHQ2UWRKSEJKQzZPMDZZdXJPdjE4YU1Ed0lERHk3d2xzODFvVkJ4MVpPdk90RkphbG1KRVNWbmxSakJFdnhYWU5UcHJEWVNTa0pSOTh2cW9YeTdILVNHMUpqYUpsQ0l2UGs2ZG5nTlRYVkZLaGR2YWQzMFhQazh3MEgwTWp4dTNGWDdmVUJGekt3VVVMNzg0VlFiS2pOcGhqZDZxemVZLUR5MHpkVTBEQ3BLaTctOVQ0Z09BQ2tkeGV3ZlVUc3cya09XSUwyekhLUWJfYnd0dkNJdjliYmZSUmtiblE1Rw?oc=5",
       "published": "2026-05-27T12:45:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock index futures rise after tech rally lifts Nasdaq, S&P 500 (SPX:) - Seeking Alpha",
-      "source": "Seeking Alpha",
-      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPUHd6U3Ezb3prSzRvR2hEZ3RmSnIxM3NDN1BIZ1hlU2k2RlNIVy1jUmhFNFBoYTZIZmFkRmswZVk3U0FPblgtNHlKeWxqMjAwS3dsQW1uVmg1VS1RcXVBUU5ISXJzWS1QbFdmZUlQbm9vLURCTkVObjZLMW52bTJrVEpIbWs5Q0hn?oc=5",
-      "published": "2026-05-27T09:12:03Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Tech Rally Leads S&P 500, Nasdaq Higher - WSJ",
-      "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNc1ZnSlY4cWtXR2dtUF9yMWtLYmtBMUxETkphQXZub2R3X09JRy0xNnZOVG9DRkJQOUIwNW10aUFrNnctNU9ObTZQWUNITzd1SmhtekZLY2VBTkZ6UTRiUGZDZXVtXzIyc2FBNElxZ1NLRzNhRF9CRDlwd0hSTlhDcWN5SVRMNTJxV2ZUTkU1dEZ6cVlWenMxRWl6ZmMtNUVvSU1raTRkOWFwZW9ITmc?oc=5",
-      "published": "2026-05-26T20:18:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street rises, Dow hits record high as Middle East hopes lift sentiment - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPcjM1c2ozQWFpSmVwbjV3TDhFQkJFQmVjUk5OalcwOHRHbjNwZFRFcG0xd3JaRmZOSDNmMXlxdjZ4eGp2UXFKSkVJakZMeWMyQ045N3N5WDhvYVdyVWY0UkRwc0hBTGlJX0JvRk90NWIxS3QtTFZtcG9zbjBCOVRwdUR2WW45TGlfeTlHT0s5MFluXzEwdHJGVnJ3UFpORWhWMktV?oc=5",
-      "published": "2026-05-22T22:01:53Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 98
       }
     ],
-    "headline_count": 143,
+    "headline_count": 148,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
