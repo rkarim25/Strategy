@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-05-29T22:39:49Z",
+  "generated_at_utc": "2026-05-29T23:09:36Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
@@ -34,10 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Tech Rally Leads S&P 500, Nasdaq Higher - WSJ",
+      "title": "U.S. Stock Futures Rise as Chip Rally Rolls On - WSJ",
       "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNc1ZnSlY4cWtXR2dtUF9yMWtLYmtBMUxETkphQXZub2R3X09JRy0xNnZOVG9DRkJQOUIwNW10aUFrNnctNU9ObTZQWUNITzd1SmhtekZLY2VBTkZ6UTRiUGZDZXVtXzIyc2FBNElxZ1NLRzNhRF9CRDlwd0hSTlhDcWN5SVRMNTJxV2ZUTkU1dEZ6cVlWenMxRWl6ZmMtNUVvSU1raTRkOWFwZW9ITmc?oc=5",
-      "published": "2026-05-26T20:18:00Z",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPd1o5ZVZRcDFsdlNsWU90MHpDWkZjakxlaDFYNE9ETUxkM3ZpN2xxSUFkbWZZRU9CUGE0U2NPa3k0NU1rLUFja0hkQ2t1bjV5amFvbmZFNzNhNDZFQVFfWjZfSnU0elRPQlRuNXg0bVJBRm5hSWpSU3hrZFI2UzFvMi1FR2xDVU9oYnpoMFVtVUFFczJLdGxBbXVfdXVVeDFMY1ZwX0FwNU1IM05fUmo4U1VvdkR4UE4wMlFFdUFvMFBKdw?oc=5",
+      "published": "2026-05-27T11:02:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 98
+        "articles": 97
       }
     ],
-    "headline_count": 148,
+    "headline_count": 147,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
