@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-05-28T23:13:29Z",
+  "generated_at_utc": "2026-05-29T17:37:43Z",
   "window_days": 7,
-  "score": 10,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, May 28: Inflation Isn't Stopping This Stock Market Rally; Stock index futures rise after tech rally lifts Nasdaq, S&P 500 (SPX:) - Seeking Alpha.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stocks add to May gains Friday with tech leading the way again. The Nasdaq is up 8% for month: Live updates; Stock Market Today: S&P 500, Nasdaq, Dow Futures Rise Following Tech Rally\u2014Zscaler, United Microelectroni - Benzinga.",
   "articles": [
     {
-      "title": "Stock Market Today, May 28: Inflation Isn't Stopping This Stock Market Rally",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/05/28/stock-market-today-may-28-inflation-isn-t-stopping-this-stock-market-rally/?.tsrc=rss",
-      "published": "2026-05-28T21:50:56Z",
+      "title": "Stocks add to May gains Friday with tech leading the way again. The Nasdaq is up 8% for month: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/05/28/stock-market-today-live-updates.html",
+      "published": "2026-05-29T17:29:52Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Market Today: S&P 500, Nasdaq, Dow Futures Rise Following Tech Rally\u2014Zscaler, United Microelectroni - Benzinga",
+      "source": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNdWh1WE9xbE5zWnpyZ0Y2ZjNLWHNQNDh4enhkdHRTVHQ2UWRKSEJKQzZPMDZZdXJPdjE4YU1Ed0lERHk3d2xzODFvVkJ4MVpPdk90RkphbG1KRVNWbmxSakJFdnhYWU5UcHJEWVNTa0pSOTh2cW9YeTdILVNHMUpqYUpsQ0l2UGs2ZG5nTlRYVkZLaGR2YWQzMFhQazh3MEgwTWp4dTNGWDdmVUJGekt3VVVMNzg0VlFiS2pOcGhqZDZxemVZLUR5MHpkVTBEQ3BLaTctOVQ0Z09BQ2tkeGV3ZlVUc3cya09XSUwyekhLUWJfYnd0dkNJdjliYmZSUmtiblE1Rw?oc=5",
+      "published": "2026-05-27T12:45:00Z",
       "tone": "bullish"
     },
     {
@@ -31,13 +38,6 @@
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPcjM1c2ozQWFpSmVwbjV3TDhFQkJFQmVjUk5OalcwOHRHbjNwZFRFcG0xd3JaRmZOSDNmMXlxdjZ4eGp2UXFKSkVJakZMeWMyQ045N3N5WDhvYVdyVWY0UkRwc0hBTGlJX0JvRk90NWIxS3QtTFZtcG9zbjBCOVRwdUR2WW45TGlfeTlHT0s5MFluXzEwdHJGVnJ3UFpORWhWMktV?oc=5",
       "published": "2026-05-22T22:01:53Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Snowflake surges 36% for best day ever on AI frenzy, fueling software rally",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/05/28/snowflake-snow-software-stock-rally.html",
-      "published": "2026-05-28T20:37:19Z",
       "tone": "bullish"
     }
   ],
@@ -62,7 +62,7 @@
         "ok": true,
         "status": 200,
         "name": "CNBC Markets",
-        "articles": 29
+        "articles": 30
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
@@ -72,7 +72,7 @@
         "articles": 93
       }
     ],
-    "headline_count": 142,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
