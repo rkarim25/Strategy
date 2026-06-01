@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-05-29T23:09:34Z",
-  "data_asof": "2026-05-29",
-  "daily_rows": 6460,
+  "generated_at_utc": "2026-06-01T19:22:29Z",
+  "data_asof": "2026-06-01",
+  "daily_rows": 6461,
   "quote_price": null,
   "quote_timestamp": null,
   "quote_source": null,
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1780182573&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1780428149&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -30,31 +30,31 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-05-29",
-      "close": 4569.89990234375
+      "date": "2026-06-01",
+      "close": 4516.2998046875
     },
-    "latestSma": 4590.159936523438,
+    "latestSma": 4584.009936523437,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.14073781846869882,
+    "latestDd": -0.15081605602895243,
     "regime": "tier2",
     "entryClose": 4087.699951171875,
     "entryDate": "2025-10-21",
     "recoveryTarget": 5722.779931640624,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 4569.89990234375,
-    "activeEntryDate": "2026-05-29",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.0,
-    "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "provisional_signal": null,
   "trade_alert_state": {
-    "last_observed_asof": "2026-05-29",
-    "last_observed_target_leverage": 1,
-    "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-05-29T23:09:34Z"
+    "last_observed_asof": "2026-06-01",
+    "last_observed_target_leverage": 0,
+    "last_observed_target_label": "cash",
+    "last_checked_at_utc": "2026-06-01T19:22:29Z"
   }
 }

@@ -1,22 +1,29 @@
 {
-  "generated_at_utc": "2026-05-29T23:09:36Z",
+  "generated_at_utc": "2026-06-01T19:22:33Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, May 29: Markets Extend Gains as Dell Soars 33%; S&P 500 logs strong May gain as tech stocks lead rally (SP500:) - Seeking Alpha.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Equities Mostly Rise Intraday Amid Nvidia Rally; Oil Jumps; Wall Street Hits Record High on Tech Stock Rally - Gotrade.",
   "articles": [
     {
-      "title": "Stock Market Today, May 29: Markets Extend Gains as Dell Soars 33%",
+      "title": "Equities Mostly Rise Intraday Amid Nvidia Rally; Oil Jumps",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/05/29/stock-market-today-may-29-markets-extend-gains-as-dell-soars-33/?.tsrc=rss",
-      "published": "2026-05-29T21:38:16Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-mostly-rise-intraday-amid-181823413.html?.tsrc=rss",
+      "published": "2026-06-01T18:18:23Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 logs strong May gain as tech stocks lead rally (SP500:) - Seeking Alpha",
-      "source": "Seeking Alpha",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcl9Ed19nODJVQWdFeGFfcU95ZTJPQXAwUGx0SUp3LWdmaE9fd2J3MHpRRXZMeUdvMkdLOGExT1RtMTR4d2JkMEU0YnBxUkR2YXJhUm1KMjB2LVNqNDZvdG9PRUFfSzI4MzYwYzN2LV9qLUVKTHVuQm0tbTlzeWZCVWpQcWlwd1lkZmlpSHpzVUN2WGVkbG93anpWM1I?oc=5",
-      "published": "2026-05-29T20:13:53Z",
+      "title": "Wall Street Hits Record High on Tech Stock Rally - Gotrade",
+      "source": "Gotrade",
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNbnJqSl9VQS1ZSzBmMHFlUXlKYTBUT1lKQ2xrVzV0WTNoZVljcHhaS0tvTUZ2QzNQb2c1TzR1ckszY0gyM2R6TG1UVkJYVVl2WXd5ZG5mREhmUWg3blgwdnlxZm4ycTBIc1pOdmYyN3BWREozZ2wxTmlzYllaeVRiLThR?oc=5",
+      "published": "2026-06-01T03:16:30Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Micron's $1T surge fuels rare 9-week S&P 500 rally - MSN",
+      "source": "MSN",
+      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxQeEZlejhkZjVxSm9ITUlFX0NERzNQX3hzMkJDcXBWajE2YkNsWDhmTS03OEdKVnA3cmc2eGhpRDBQOHJERzJuQjRqcGN0TGw4TDhwRURadmZveUVsVHYwLXE3am9Wd1FfU3dSeUFzaHJkU191b1B6T2VNMERQN1ZrNkw5UWVDaUlSb3ZUa0UtLTQ3SW1RWjdkMWpaVUZjMnRoZ19yQlZ1eFRhZXhHYl91YWZ3bkN6STBrU3Azd21fM1c2ZUtZeDFxTDRMeFp2U01jN2JWLUZoWHVrcjJtcWYxSVpIcG9wSVE?oc=5",
+      "published": "2026-05-29T21:06:15Z",
       "tone": "bullish"
     },
     {
@@ -27,17 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today: S&P 500, Nasdaq, Dow Futures Rise Following Tech Rally\u2014Zscaler, United Microelectroni - Benzinga",
-      "source": "Benzinga",
-      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNdWh1WE9xbE5zWnpyZ0Y2ZjNLWHNQNDh4enhkdHRTVHQ2UWRKSEJKQzZPMDZZdXJPdjE4YU1Ed0lERHk3d2xzODFvVkJ4MVpPdk90RkphbG1KRVNWbmxSakJFdnhYWU5UcHJEWVNTa0pSOTh2cW9YeTdILVNHMUpqYUpsQ0l2UGs2ZG5nTlRYVkZLaGR2YWQzMFhQazh3MEgwTWp4dTNGWDdmVUJGekt3VVVMNzg0VlFiS2pOcGhqZDZxemVZLUR5MHpkVTBEQ3BLaTctOVQ0Z09BQ2tkeGV3ZlVUc3cya09XSUwyekhLUWJfYnd0dkNJdjliYmZSUmtiblE1Rw?oc=5",
-      "published": "2026-05-27T12:45:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "U.S. Stock Futures Rise as Chip Rally Rolls On - WSJ",
-      "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPd1o5ZVZRcDFsdlNsWU90MHpDWkZjakxlaDFYNE9ETUxkM3ZpN2xxSUFkbWZZRU9CUGE0U2NPa3k0NU1rLUFja0hkQ2t1bjV5amFvbmZFNzNhNDZFQVFfWjZfSnU0elRPQlRuNXg0bVJBRm5hSWpSU3hrZFI2UzFvMi1FR2xDVU9oYnpoMFVtVUFFczJLdGxBbXVfdXVVeDFMY1ZwX0FwNU1IM05fUmo4U1VvdkR4UE4wMlFFdUFvMFBKdw?oc=5",
-      "published": "2026-05-27T11:02:00Z",
+      "title": "Wall Street opens higher day after tech rally lifts Nasdaq, S&P 500 - MSN",
+      "source": "MSN",
+      "url": "https://news.google.com/rss/articles/CBMiggNBVV95cUxQOVRkUDN2dFdEMWR5U2JrNlczS2VGM1Z6cUJoeTU1cUhhcXcwY0JhNkRNdUE1TFMwSW8xcnkzUUpsZTFnbDV4cGY0d3dYemI0Zk5Bby01UWt0R0dPM2lTNDcwclBrTFhySi1vZTQ1R2dhSnduV3o4TlB0a2plZU12bzNnTVVOS3JvQjRucGdnMHdYaHNROXN2OUF6cllGX2pWTlR4NkE1R1d6V0FrUVRfaFpiWkU4RlRua3hacW9VaDB3TWJTNXI1bzNmTEJZSnFZTUQ5eV9zRFNLYzhXS2p0ZmoxdmUtTFN0UHdNZ1RVZ2wzbjNob0pJRVdPdDIyYjczWjRvcXFJN3RpSE9oQjUwV2NmcFBOWVUyWkJ2X1VjY09YcC1lRWNmQnpfOGhycmVhN0pJaWNsczFrV1Awb1FhSDg4NXdMX1dJS2hBcXNBZzZFQS1mN1pCb1NaUGlyQmktYWZWOFRKRVR2NWpOSTNnXzZMSFZhaW9yTk92SDlac2dIdw?oc=5",
+      "published": "2026-05-27T13:32:57Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 97
+        "articles": 86
       }
     ],
-    "headline_count": 147,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
