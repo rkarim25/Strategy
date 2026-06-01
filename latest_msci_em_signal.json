@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-01T19:22:31Z",
+  "generated_at_utc": "2026-06-01T22:21:56Z",
   "data_asof": "2026-06-01",
   "daily_rows": 5820,
-  "quote_price": 70.2300033569336,
+  "quote_price": 70.08000183105469,
   "quote_timestamp": "2026-06-01",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1780428150&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1780438915&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,10 +26,10 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-01",
-      "close": 70.2300033569336
+      "close": 70.08000183105469
     },
-    "latestSma": 66.78599967956544,
-    "highWater": 70.2300033569336,
+    "latestSma": 66.77849960327148,
+    "highWater": 70.08000183105469,
     "highWaterDate": "2026-06-01",
     "latestDd": 0.0,
     "regime": "base",
@@ -42,16 +42,16 @@
     "activeEntryClose": 65.45999908447266,
     "activeEntryDate": "2026-05-20",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.07286899387678725,
+    "activeEntryPnl": 0.07057749482428433,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-06-01",
-      "close": 70.2300033569336
+      "close": 70.08000183105469
     },
-    "latestSma": 67.09249992370606,
-    "highWater": 70.2300033569336,
+    "latestSma": 67.07749977111817,
+    "highWater": 70.08000183105469,
     "highWaterDate": "2026-06-01",
     "latestDd": 0.0,
     "regime": "base",
@@ -64,13 +64,13 @@
     "activeEntryClose": 65.45999908447266,
     "activeEntryDate": "2026-05-20",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.07286899387678725,
+    "activeEntryPnl": 0.07057749482428433,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-06-01",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-01T19:22:31Z"
+    "last_checked_at_utc": "2026-06-01T22:21:56Z"
   }
 }
