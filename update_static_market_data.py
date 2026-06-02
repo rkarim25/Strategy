@@ -915,6 +915,155 @@ def already_sent_trade_alert_today(previous_payload: dict[str, object] | None, t
     return alert_state.get("last_email_sent_on") == today
 
 
+def _signal_float(official_signal: dict[str, object], key: str) -> float | None:
+    try:
+        value = float(official_signal.get(key))
+    except (TypeError, ValueError):
+        return None
+    return value if math.isfinite(value) else None
+
+
+def _latest_close(official_signal: dict[str, object]) -> float | None:
+    latest = official_signal.get("latest")
+    if not isinstance(latest, dict):
+        return None
+    try:
+        value = float(latest.get("close"))
+    except (TypeError, ValueError):
+        return None
+    return value if math.isfinite(value) else None
+
+
+def build_trigger_and_watch_sections(
+    official_signal: dict[str, object],
+    transition: dict[str, object],
+    *,
+    params: dict[str, float] | None = None,
+) -> tuple[list[str], list[str]]:
+    """Plain-text blocks: levels that fired this alert, and levels to watch for the next change."""
+    p = params or DEFAULT_GUARDED
+    trigger_a = float(p["triggerA"])
+    trigger_b = float(p["triggerB"])
+    hold2 = float(p["hold2"])
+    hold3 = float(p["hold3"])
+    lead_pct = float(p["leadPct"])
+
+    close = _latest_close(official_signal)
+    sma20 = _signal_float(official_signal, "latestSma")
+    high_water = _signal_float(official_signal, "highWater")
+    dd = _signal_float(official_signal, "latestDd")
+    entry_close = _signal_float(official_signal, "entryClose")
+    recovery_target = _signal_float(official_signal, "recoveryTarget")
+    regime = str(official_signal.get("regime", "n/a"))
+    above_sma = official_signal.get("aboveSma")
+    recovery_ok = official_signal.get("recoveryOk")
+    high_water_date = official_signal.get("highWaterDate", "n/a")
+
+    old_lev = int(transition["old_target_leverage"])
+    new_lev = int(transition["new_target_leverage"])
+
+    lead_floor = sma20 * (1.0 - lead_pct) if sma20 is not None and sma20 > 0 else None
+    dd_a_price = high_water * (1.0 - trigger_a) if high_water is not None else None
+    dd_b_price = high_water * (1.0 - trigger_b) if high_water is not None else None
+
+    triggered: list[str] = [
+        f"- Leverage change: {leverage_label(old_lev)} -> {leverage_label(new_lev)} (this email)",
+        f"- Regime after change: {regime}",
+    ]
+    if close is not None:
+        triggered.append(f"- Index close: {format_optional_number(close)}")
+    if high_water is not None:
+        triggered.append(
+            f"- High water: {format_optional_number(high_water)} (date {high_water_date})"
+        )
+    if dd is not None:
+        triggered.append(f"- Drawdown from high: {format_signed_pct(dd)}")
+    if sma20 is not None:
+        triggered.append(f"- SMA20: {format_optional_number(sma20)}")
+    if lead_floor is not None:
+        triggered.append(
+            f"- Recovery lead floor (SMA20 - {lead_pct:.2%}): {format_optional_number(lead_floor)}"
+        )
+    triggered.append(f"- Above SMA20: {above_sma} | Lead guard passed: {recovery_ok}")
+
+    if new_lev == 0:
+        triggered.append(
+            "- Trigger: base rule - close below SMA20 (trend off); move to cash."
+        )
+    elif new_lev == 1 and old_lev == 0:
+        triggered.append(
+            "- Trigger: base rule - close back above SMA20 / inside lead guard; move to 1x."
+        )
+    elif new_lev == 2:
+        triggered.append(
+            f"- Trigger: drawdown reached A = -{trigger_a:.0%} from high water "
+            f"(<= {format_optional_number(dd_a_price)} at current peak) with lead guard passed."
+        )
+        if entry_close is not None:
+            triggered.append(f"- Tier-2 entry level: {format_optional_number(entry_close)}")
+    elif new_lev == 3:
+        triggered.append(
+            f"- Trigger: drawdown reached B = -{trigger_b:.0%} from high water "
+            f"(<= {format_optional_number(dd_b_price)} at current peak) with lead guard passed."
+        )
+        if entry_close is not None:
+            triggered.append(f"- Tier-3 entry level: {format_optional_number(entry_close)}")
+    if recovery_target is not None and new_lev >= 2:
+        triggered.append(
+            f"- Active recovery exit target (tier step-down): {format_optional_number(recovery_target)}"
+        )
+
+    watch: list[str] = [
+        f"Current target: {leverage_label(new_lev)}. Thresholds use Guarded "
+        f"A={trigger_a:.0%}, B={trigger_b:.0%}, lead={lead_pct:.2%}, "
+        f"hold2=+{hold2:.0%}, hold3=+{hold3:.0%} from tier entry.",
+    ]
+
+    if new_lev == 0:
+        watch.extend(
+            [
+                f"- BUY / move to 1x if: close rises above SMA20 ({format_optional_number(sma20)}) "
+                f"and stays inside the lead guard (>= {format_optional_number(lead_floor)}).",
+                f"- Arm 2x later if: drawdown hits -{trigger_a:.0%} from high "
+                f"(<= {format_optional_number(dd_a_price)}) with lead guard still passed.",
+            ]
+        )
+    elif new_lev == 1:
+        watch.extend(
+            [
+                f"- SELL to cash if: close falls below SMA20 ({format_optional_number(sma20)}).",
+                f"- BUY / add 2x (XS2D / LQQ) if: drawdown reaches -{trigger_a:.0%} from high "
+                f"(<= {format_optional_number(dd_a_price)}) while close >= lead floor "
+                f"({format_optional_number(lead_floor)}).",
+                f"- At current high water, -{trigger_a:.0%} DD ~ {format_optional_number(dd_a_price)}.",
+            ]
+        )
+    elif new_lev == 2:
+        tier2_exit = entry_close * (1.0 + hold2) if entry_close is not None else None
+        watch.extend(
+            [
+                f"- SELL / reduce toward 1x or cash if: close < SMA20 ({format_optional_number(sma20)}) -> cash, "
+                f"or lead guard fails (close < {format_optional_number(lead_floor)}).",
+                f"- Step down from tier-2 recovery if: close rallies +{hold2:.0%} from tier entry "
+                f"({format_optional_number(entry_close)} -> target {format_optional_number(tier2_exit)}).",
+                f"- BUY / add 3x if: drawdown reaches -{trigger_b:.0%} from high "
+                f"(<= {format_optional_number(dd_b_price)}) with lead guard still passed.",
+            ]
+        )
+    elif new_lev == 3:
+        tier3_exit = entry_close * (1.0 + hold3) if entry_close is not None else None
+        watch.extend(
+            [
+                f"- SELL / reduce if: close < lead floor ({format_optional_number(lead_floor)}) "
+                f"or below SMA20 ({format_optional_number(sma20)}) per base rules.",
+                f"- Step down from tier-3 recovery if: close rallies +{hold3:.0%} from tier entry "
+                f"({format_optional_number(entry_close)} -> target {format_optional_number(tier3_exit)}).",
+            ]
+        )
+
+    return triggered, watch
+
+
 def build_trade_transition(
     previous_payload: dict[str, object] | None,
     official_signal: dict[str, object],
@@ -963,6 +1112,10 @@ def build_alert_email_body(
     except (TypeError, ValueError):
         pass
 
+    triggered_lines, watch_lines = build_trigger_and_watch_sections(
+        official_signal, transition
+    )
+
     lines = [
         "Strategy Trade Alert",
         "",
@@ -975,6 +1128,12 @@ def build_alert_email_body(
         "",
         "What to trade (Interactive Investor / LSE):",
         instrument_guidance(profile, new_leverage),
+        "",
+        "Levels that triggered this alert:",
+        *triggered_lines,
+        "",
+        "Watch next - cross these to change target (buy / sell / step leverage):",
+        *watch_lines,
         "",
         "Signal details:",
         f"- {profile.get('close_label', 'Index close')}: {format_optional_number(close)}",
@@ -1079,7 +1238,7 @@ def send_test_alert_email() -> bool:
                 "If you received this message, GitHub Actions can send trade alerts to this inbox.",
                 "",
                 "Real alerts are sent when official target leverage changes (cash / 1x / 2x / 3x),",
-                "at most once per asset per UK calendar day (Europe/London).",
+                "with trigger levels and next cross levels, at most once per asset per UK day.",
                 "",
                 "S&P 500 instruments: SPYL (1x), XS2D (2x), 3USL (3x).",
                 "Nasdaq 100 instruments: EQQQ (1x), LQQ (2x), LQQ3 (3x).",
