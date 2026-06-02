@@ -15,7 +15,7 @@ The GitHub Pages site is **static** — it cannot send email from the browser. T
 ## When is email sent?
 
 1. **Official** end-of-day signal leverage **changes** vs the previous run (e.g. 1x → 2x).
-2. **At most one email per asset per calendar day (UTC).** If leverage changes again later the same day (e.g. 2x → 3x), no second email is sent for that asset.
+2. **At most one email per asset per UK calendar day** (`Europe/London`, GMT/BST). If leverage changes again later the same UK day (e.g. 2x → 3x), no second email is sent for that asset.
 3. Unchanged signals never email (state is stored in `trade_alert_state` inside each `latest_*.json`).
 
 The Action runs **every 30 minutes** on **weekdays** (see `.github/workflows/update-market-data.yml`), aligned with the site’s data refresh — not on every browser refresh.
