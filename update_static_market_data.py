@@ -55,6 +55,53 @@ NEWS_SCORE_JSON = ROOT / "news_score.json"
 TRADING_DAYS = 252
 SITE_URL = "https://rkarim25.github.io/Strategy/"
 DEFAULT_ALERT_EMAIL_TO = "rkarim88@gmail.com"
+
+# II tickers per leverage tier (see PORTFOLIO.md).
+ALERT_PROFILES: dict[str, dict[str, object]] = {
+    "spx": {
+        "asset_id": "SPX",
+        "close_label": "S&P 500 close",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down SPYL, XS2D, and 3USL "
+                "(State Street S&P 500 1x / 2x / 3x UCITS on LSE)."
+            ),
+            1: (
+                "Target 1x: buy or hold SPYL (or CSP1/VUAG). Reduce XS2D and 3USL if you hold them."
+            ),
+            2: (
+                "Target 2x: buy or add XS2D (Xtrackers S&P 500 2x Daily Swap UCITS). "
+                "Trim SPYL and exit 3USL toward a 2x allocation."
+            ),
+            3: (
+                "Target 3x: buy or add 3USL (WisdomTree S&P 500 3x Daily Leveraged). "
+                "Trim SPYL and XS2D toward a 3x allocation."
+            ),
+        },
+    },
+    "ndx": {
+        "asset_id": "NDX",
+        "close_label": "Nasdaq 100 close",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down EQQQ, LQQ, and LQQ3 "
+                "(Nasdaq 100 1x / 2x / 3x UCITS on LSE)."
+            ),
+            1: (
+                "Target 1x: buy or hold EQQQ (or CNDX). Reduce LQQ and LQQ3 if you hold them."
+            ),
+            2: (
+                "Target 2x: buy or add LQQ (Amundi Nasdaq-100 Daily 2x Leveraged). "
+                "Trim EQQQ and exit LQQ3 toward a 2x allocation."
+            ),
+            3: (
+                "Target 3x: buy or add LQQ3 / QQQ3 (WisdomTree Nasdaq 100 3x Daily Leveraged). "
+                "Trim EQQQ and LQQ toward a 3x allocation."
+            ),
+        },
+    },
+}
+
 DEFAULT_GUARDED = {
     "triggerA": 0.05,
     "triggerB": 0.25,
@@ -825,6 +872,43 @@ def trade_action(old_leverage: int, new_leverage: int) -> str:
     return f"HOLD the current {leverage_label(new_leverage)} target exposure."
 
 
+def alert_profile_or_default(alert_profile: str | None) -> dict[str, object]:
+    if alert_profile and alert_profile in ALERT_PROFILES:
+        return ALERT_PROFILES[alert_profile]
+    return {
+        "asset_id": "Strategy",
+        "close_label": "Index close",
+        "instruments": {
+            0: "Move allocation to cash / T-bills.",
+            1: "Target 1x index exposure per your sleeve policy.",
+            2: "Target 2x index exposure per your sleeve policy.",
+            3: "Target 3x index exposure per your sleeve policy.",
+        },
+    }
+
+
+def instrument_guidance(profile: dict[str, object], new_leverage: int) -> str:
+    instruments = profile.get("instruments")
+    if isinstance(instruments, dict):
+        text = instruments.get(new_leverage) or instruments.get(int(new_leverage))
+        if text:
+            return str(text)
+    return f"Apply {leverage_label(new_leverage)} exposure for this sleeve."
+
+
+def utc_calendar_date(iso_timestamp: str) -> str:
+    return str(iso_timestamp)[:10]
+
+
+def already_sent_trade_alert_today(previous_payload: dict[str, object] | None, today: str) -> bool:
+    if not isinstance(previous_payload, dict):
+        return False
+    alert_state = previous_payload.get("trade_alert_state")
+    if not isinstance(alert_state, dict):
+        return False
+    return alert_state.get("last_email_sent_on") == today
+
+
 def build_trade_transition(
     previous_payload: dict[str, object] | None,
     official_signal: dict[str, object],
@@ -849,10 +933,17 @@ def build_trade_transition(
     }
 
 
-def build_alert_email_body(transition: dict[str, object], official_signal: dict[str, object]) -> str:
+def build_alert_email_body(
+    transition: dict[str, object],
+    official_signal: dict[str, object],
+    *,
+    strategy_name: str,
+    alert_profile: str | None,
+) -> str:
     latest = official_signal.get("latest") if isinstance(official_signal.get("latest"), dict) else {}
     old_leverage = int(transition["old_target_leverage"])
     new_leverage = int(transition["new_target_leverage"])
+    profile = alert_profile_or_default(alert_profile)
     close = latest.get("close")
     sma20 = official_signal.get("latestSma")
     close_vs_sma = None
@@ -869,12 +960,18 @@ def build_alert_email_body(transition: dict[str, object], official_signal: dict[
     lines = [
         "Strategy Trade Alert",
         "",
+        f"Strategy: {strategy_name}",
+        f"Asset: {profile.get('asset_id', 'n/a')}",
+        "",
         f"Recommendation: {trade_action(old_leverage, new_leverage)}",
         f"Target leverage change: {transition['old_target_label']} -> {transition['new_target_label']}",
         f"Official signal as of: {latest.get('date', transition.get('current_asof', 'n/a'))}",
         "",
+        "What to trade (Interactive Investor / LSE):",
+        instrument_guidance(profile, new_leverage),
+        "",
         "Signal details:",
-        f"- SPX close: {format_optional_number(close)}",
+        f"- {profile.get('close_label', 'Index close')}: {format_optional_number(close)}",
         f"- SMA20: {format_optional_number(sma20)}",
         f"- Close vs SMA20: {format_signed_pct(close_vs_sma)}",
         f"- Drawdown from high: {format_optional_number(official_signal.get('latestDd'), pct=True)}",
@@ -891,7 +988,10 @@ def build_alert_email_body(transition: dict[str, object], official_signal: dict[
         "",
         f"Rule reason: {official_signal.get('explanation', 'n/a')}",
         "",
-        "Practical note: This is generated from the scheduled static refresh; verify execution level before trading.",
+        "Note: At most one alert email per asset per calendar day (UTC). "
+        "Later leverage steps the same day are not emailed again.",
+        "",
+        "Practical note: Generated by the scheduled data refresh; verify prices before trading.",
         f"Site: {SITE_URL}",
     ]
     return "\n".join(lines)
@@ -908,7 +1008,13 @@ def smtp_config_from_env() -> dict[str, object]:
     }
 
 
-def send_trade_alert_email(transition: dict[str, object], official_signal: dict[str, object]) -> bool:
+def send_trade_alert_email(
+    transition: dict[str, object],
+    official_signal: dict[str, object],
+    *,
+    strategy_name: str,
+    alert_profile: str | None,
+) -> bool:
     config = smtp_config_from_env()
     missing = [key for key in ("host", "username", "password", "from") if not config.get(key)]
     if missing:
@@ -918,14 +1024,22 @@ def send_trade_alert_email(transition: dict[str, object], official_signal: dict[
         )
         return False
 
+    profile = alert_profile_or_default(alert_profile)
     msg = EmailMessage()
     msg["Subject"] = (
-        f"Strategy trade alert: {transition['old_target_label']} -> "
-        f"{transition['new_target_label']} on {transition.get('current_asof', 'unknown date')}"
+        f"[{profile.get('asset_id', 'Guarded')}] {transition['old_target_label']} -> "
+        f"{transition['new_target_label']} ({transition.get('current_asof', 'unknown date')})"
     )
     msg["From"] = str(config["from"])
     msg["To"] = str(config["to"])
-    msg.set_content(build_alert_email_body(transition, official_signal))
+    msg.set_content(
+        build_alert_email_body(
+            transition,
+            official_signal,
+            strategy_name=strategy_name,
+            alert_profile=alert_profile,
+        )
+    )
 
     with smtplib.SMTP(str(config["host"]), int(config["port"]), timeout=30) as smtp:
         smtp.starttls()
@@ -933,6 +1047,48 @@ def send_trade_alert_email(transition: dict[str, object], official_signal: dict[
         smtp.send_message(msg)
 
     print(f"Sent trade alert email to {config['to']}: {transition['old_target_label']} -> {transition['new_target_label']}")
+    return True
+
+
+def send_test_alert_email() -> bool:
+    """Send a one-off SMTP test message (uses env / GitHub secrets)."""
+    config = smtp_config_from_env()
+    missing = [key for key in ("host", "username", "password", "from") if not config.get(key)]
+    if missing:
+        print(
+            "Test email skipped: SMTP configuration incomplete "
+            f"(missing: {', '.join(missing)})."
+        )
+        return False
+
+    msg = EmailMessage()
+    msg["Subject"] = "[Guarded] SMTP test — trade alerts are configured"
+    msg["From"] = str(config["from"])
+    msg["To"] = str(config["to"])
+    msg.set_content(
+        "\n".join(
+            [
+                "Strategy trade alert — SMTP test",
+                "",
+                "If you received this message, GitHub Actions can send trade alerts to this inbox.",
+                "",
+                "Real alerts are sent when official target leverage changes (cash / 1x / 2x / 3x),",
+                "at most once per asset per UTC calendar day.",
+                "",
+                "S&P 500 instruments: SPYL (1x), XS2D (2x), 3USL (3x).",
+                "Nasdaq 100 instruments: EQQQ (1x), LQQ (2x), LQQ3 (3x).",
+                "",
+                f"Site: {SITE_URL}",
+            ]
+        )
+    )
+
+    with smtplib.SMTP(str(config["host"]), int(config["port"]), timeout=30) as smtp:
+        smtp.starttls()
+        smtp.login(str(config["username"]), str(config["password"]))
+        smtp.send_message(msg)
+
+    print(f"Sent test alert email to {config['to']}")
     return True
 
 
@@ -954,8 +1110,10 @@ def write_signal_json(
     strategy_name: str = "Guarded A5/B25 SMA20 Lead Signal",
     send_trade_alerts: bool = True,
     max_leverage: float | None = None,
+    alert_profile: str | None = None,
 ) -> None:
     generated_at_utc = iso_utc(utc_now())
+    today_utc = utc_calendar_date(generated_at_utc)
     official_signal = compute_signal(rows, max_leverage=max_leverage)
     provisional_signal = (
         compute_signal(append_quote_row(rows, quote), max_leverage=max_leverage) if quote else None
@@ -963,12 +1121,25 @@ def write_signal_json(
     transition = build_trade_transition(previous_payload, official_signal, generated_at_utc)
     email_sent = False
     email_error = None
+    email_skipped_reason = None
     if transition and send_trade_alerts:
-        try:
-            email_sent = send_trade_alert_email(transition, official_signal)
-        except Exception as exc:
-            email_error = str(exc)
-            print(f"Trade alert email failed: {exc}", file=sys.stderr)
+        if already_sent_trade_alert_today(previous_payload, today_utc):
+            email_skipped_reason = (
+                f"Signal changed ({transition['old_target_label']} -> {transition['new_target_label']}) "
+                f"but an alert email was already sent today ({today_utc} UTC)."
+            )
+            print(email_skipped_reason)
+        else:
+            try:
+                email_sent = send_trade_alert_email(
+                    transition,
+                    official_signal,
+                    strategy_name=strategy_name,
+                    alert_profile=alert_profile,
+                )
+            except Exception as exc:
+                email_error = str(exc)
+                print(f"Trade alert email failed: {exc}", file=sys.stderr)
 
     latest = official_signal.get("latest") if isinstance(official_signal.get("latest"), dict) else {}
     alert_state: dict[str, object] = {
@@ -977,10 +1148,17 @@ def write_signal_json(
         "last_observed_target_label": leverage_label(int(official_signal["targetLeverage"])),
         "last_checked_at_utc": generated_at_utc,
     }
+    if email_sent:
+        alert_state["last_email_sent_on"] = today_utc
+    elif isinstance(previous_payload, dict):
+        prev_state = previous_payload.get("trade_alert_state")
+        if isinstance(prev_state, dict) and prev_state.get("last_email_sent_on"):
+            alert_state["last_email_sent_on"] = prev_state["last_email_sent_on"]
     if transition:
         alert_state["last_transition"] = transition | {
             "email_sent": email_sent,
             "email_error": email_error,
+            "email_skipped_reason": email_skipped_reason,
         }
     elif isinstance(previous_payload, dict) and isinstance(previous_payload.get("trade_alert_state"), dict):
         previous_transition = previous_payload["trade_alert_state"].get("last_transition")
@@ -1113,6 +1291,7 @@ def refresh_instrument(
     strategy_name: str,
     send_trade_alerts: bool,
     max_leverage: float | None = None,
+    alert_profile: str | None = None,
 ) -> None:
     sources: dict[str, object] = {}
     previous_payload = load_previous_signal_payload(signal_json) if send_trade_alerts else None
@@ -1134,6 +1313,7 @@ def refresh_instrument(
         strategy_name=strategy_name,
         send_trade_alerts=send_trade_alerts,
         max_leverage=max_leverage,
+        alert_profile=alert_profile,
     )
     print(f"[{label}] Wrote {daily_csv.name} with {len(rows)} rows through {rows[-1]['date']}")
     if quote:
@@ -1146,6 +1326,10 @@ def refresh_instrument(
 
 
 def main() -> int:
+    if "--test-email" in sys.argv:
+        ok = send_test_alert_email()
+        return 0 if ok else 1
+
     refresh_instrument(
         label="SPX",
         daily_csv=DAILY_CSV,
@@ -1155,6 +1339,7 @@ def main() -> int:
         yahoo_chart_url=YAHOO_CHART_URL,
         strategy_name="Guarded A5/B25 SMA20 Lead Signal",
         send_trade_alerts=True,
+        alert_profile="spx",
     )
     refresh_instrument(
         label="NDX",
@@ -1164,7 +1349,8 @@ def main() -> int:
         worker_quote_url=WORKER_QUOTE_NDX_URL,
         yahoo_chart_url=YAHOO_NDX_CHART_URL,
         strategy_name="Guarded A5/B25 SMA20 Lead Signal (Nasdaq 100)",
-        send_trade_alerts=False,
+        send_trade_alerts=True,
+        alert_profile="ndx",
     )
     refresh_gold_static_data()
     for label, daily_csv, signal_json, yahoo_url, strategy_name in (

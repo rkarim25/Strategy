@@ -5,6 +5,12 @@ on:
     - cron: "*/30 14-21 * * 1-5"
     - cron: "0 22 * * 1-5"
   workflow_dispatch:
+    inputs:
+      test_email:
+        description: "Send a test trade-alert email only (skip full data refresh)"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -22,7 +28,19 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Send test trade-alert email
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.test_email }}
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          ALERT_EMAIL_FROM: ${{ secrets.ALERT_EMAIL_FROM }}
+        run: python update_static_market_data.py --test-email
+
       - name: Refresh static market data
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.test_email) }}
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
