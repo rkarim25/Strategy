@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-02T18:07:41Z",
+  "generated_at_utc": "2026-06-02T21:33:44Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Hits Record High on Tech Stock Rally - Gotrade; This AI server name is surging on big earnings beat. Loop Capital sees more upside ahead.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Hits Record High on Tech Stock Rally - Gotrade; Dow, S&P 500, and Nasdaq Hit Records for 5th Day.",
   "articles": [
     {
       "title": "Wall Street Hits Record High on Tech Stock Rally - Gotrade",
@@ -13,17 +13,10 @@
       "tone": "bullish"
     },
     {
-      "title": "This AI server name is surging on big earnings beat. Loop Capital sees more upside ahead",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/02/hewlett-packard-is-surging-on-big-beat-loop-capital-sees-more-upside.html",
-      "published": "2026-06-02T14:47:02Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "US Equity Indexes Rise as Investors Assess Middle East Developments While Technology Extends Gains",
+      "title": "Dow, S&P 500, and Nasdaq Hit Records for 5th Day",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-rise-investors-164042722.html?.tsrc=rss",
-      "published": "2026-06-02T16:40:42Z",
+      "url": "https://finance.yahoo.com/m/11637586-1c40-35a0-b064-63abb11bfeb6/dow%2C-s%26p-500%2C-and-nasdaq-hit.html?.tsrc=rss",
+      "published": "2026-06-02T20:01:54Z",
       "tone": "bullish"
     },
     {
@@ -34,10 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Tech Rally Leads S&P 500, Nasdaq Higher - WSJ",
-      "source": "WSJ",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNc1ZnSlY4cWtXR2dtUF9yMWtLYmtBMUxETkphQXZub2R3X09JRy0xNnZOVG9DRkJQOUIwNW10aUFrNnctNU9ObTZQWUNITzd1SmhtekZLY2VBTkZ6UTRiUGZDZXVtXzIyc2FBNElxZ1NLRzNhRF9CRDlwd0hSTlhDcWN5SVRMNTJxV2ZUTkU1dEZ6cVlWenMxRWl6ZmMtNUVvSU1raTRkOWFwZW9ITmc?oc=5",
-      "published": "2026-05-26T20:18:00Z",
+      "title": "Dow Jones AI Giant Caterpillar, Nvidia Chipmaker TSMC In Or Near Buy Zones",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/18d891fe-aea9-39aa-9eb3-3a4370e8a5bb/dow-jones-ai-giant.html?.tsrc=rss",
+      "published": "2026-06-02T19:19:30Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "AI is carrying the S&P 500 rally: Chart of the Day - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOUWZIOVc0S003TUttNEJ0WlpScTdJZVdLaUVWOUdQSTRRMXlzV1JWcTJBbkJGeUZzRzVHcF8zQjhMb2lLdkt6Si16dzlwZ3NmRGc2MHNrVm5QdVBHcnJMeDBMOHF1Uy1DOFN4d2cteENxZkpVWHlRQ2V4YzA4RDBZYnJrMGJlbTFFSTBhNGh5OW95RktPTnF2RThyZ3Zaenp5cU51em5KZ1E?oc=5",
+      "published": "2026-06-02T10:00:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 84
+        "articles": 83
       }
     ],
-    "headline_count": 134,
+    "headline_count": 133,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
