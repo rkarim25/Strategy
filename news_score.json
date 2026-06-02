@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-02T21:33:44Z",
+  "generated_at_utc": "2026-06-02T23:43:52Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Hits Record High on Tech Stock Rally - Gotrade; Dow, S&P 500, and Nasdaq Hit Records for 5th Day.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Hits Record High on Tech Stock Rally - Gotrade; Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com.",
   "articles": [
     {
       "title": "Wall Street Hits Record High on Tech Stock Rally - Gotrade",
@@ -13,10 +13,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Dow, S&P 500, and Nasdaq Hit Records for 5th Day",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/11637586-1c40-35a0-b064-63abb11bfeb6/dow%2C-s%26p-500%2C-and-nasdaq-hit.html?.tsrc=rss",
-      "published": "2026-06-02T20:01:54Z",
+      "title": "Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxORVhrNDd0THFBNmNndFQ1U2xtVVEzbVlidVhoOEItcTdMd2p1d2JmSjNubHozRjNTOTVYQk5WWlZKNFlzRHFmeTZWQ1FwcEgzUTU5eW00NjBxVzlhUWs3VXRwQ0hfY3lNc0ZlaHdJd2s0ZW1zdFZ2c2hYX2R2LUc5NExqNGNaVlhoNHIzUnBfb0plWjY0TXpzcUs1QWVCR2ZFV3N4aFVvZmstRFVGVkJQTVgtSXdpTGNJRmxJSEoxaC1reEdCUUZhbU1ZZjhPUQ?oc=5",
+      "published": "2026-06-02T22:08:52Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Dow jumps more than 200 points, S&P 500 posts first close above 7,600: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/01/stock-market-today-live-updates.html",
+      "published": "2026-06-02T20:21:56Z",
       "tone": "bullish"
     },
     {
@@ -27,17 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Dow Jones AI Giant Caterpillar, Nvidia Chipmaker TSMC In Or Near Buy Zones",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/18d891fe-aea9-39aa-9eb3-3a4370e8a5bb/dow-jones-ai-giant.html?.tsrc=rss",
-      "published": "2026-06-02T19:19:30Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "AI is carrying the S&P 500 rally: Chart of the Day - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOUWZIOVc0S003TUttNEJ0WlpScTdJZVdLaUVWOUdQSTRRMXlzV1JWcTJBbkJGeUZzRzVHcF8zQjhMb2lLdkt6Si16dzlwZ3NmRGc2MHNrVm5QdVBHcnJMeDBMOHF1Uy1DOFN4d2cteENxZkpVWHlRQ2V4YzA4RDBZYnJrMGJlbTFFSTBhNGh5OW95RktPTnF2RThyZ3Zaenp5cU51em5KZ1E?oc=5",
-      "published": "2026-06-02T10:00:00Z",
+      "title": "Stock Market Today: S&P 500, Nasdaq, Dow Futures Rise Following Tech Rally\u2014Zscaler, United Microelectroni - Benzinga",
+      "source": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNdWh1WE9xbE5zWnpyZ0Y2ZjNLWHNQNDh4enhkdHRTVHQ2UWRKSEJKQzZPMDZZdXJPdjE4YU1Ed0lERHk3d2xzODFvVkJ4MVpPdk90RkphbG1KRVNWbmxSakJFdnhYWU5UcHJEWVNTa0pSOTh2cW9YeTdILVNHMUpqYUpsQ0l2UGs2ZG5nTlRYVkZLaGR2YWQzMFhQazh3MEgwTWp4dTNGWDdmVUJGekt3VVVMNzg0VlFiS2pOcGhqZDZxemVZLUR5MHpkVTBEQ3BLaTctOVQ0Z09BQ2tkeGV3ZlVUc3cya09XSUwyekhLUWJfYnd0dkNJdjliYmZSUmtiblE1Rw?oc=5",
+      "published": "2026-05-27T12:45:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 83
+        "articles": 84
       }
     ],
-    "headline_count": 133,
+    "headline_count": 134,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
