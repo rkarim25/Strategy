@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-06-02T23:43:52Z",
+  "generated_at_utc": "2026-06-03T18:25:11Z",
   "window_days": 7,
-  "score": 10,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Hits Record High on Tech Stock Rally - Gotrade; Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com; S&P 500 logs strong May gain as tech stocks lead rally (SP500:) - Seeking Alpha. Bearish offsets: Stock Market Today: Dow Drops Amid War Jitters As Fed Data Nears; GameStop Shares Jump (Live Coverage).",
   "articles": [
-    {
-      "title": "Wall Street Hits Record High on Tech Stock Rally - Gotrade",
-      "source": "Gotrade",
-      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNbnJqSl9VQS1ZSzBmMHFlUXlKYTBUT1lKQ2xrVzV0WTNoZVljcHhaS0tvTUZ2QzNQb2c1TzR1ckszY0gyM2R6TG1UVkJYVVl2WXd5ZG5mREhmUWg3blgwdnlxZm4ycTBIc1pOdmYyN3BWREozZ2wxTmlzYllaeVRiLThR?oc=5",
-      "published": "2026-06-01T10:02:36Z",
-      "tone": "bullish"
-    },
     {
       "title": "Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com",
       "source": "Bloomberg.com",
@@ -20,10 +13,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Dow jumps more than 200 points, S&P 500 posts first close above 7,600: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/01/stock-market-today-live-updates.html",
-      "published": "2026-06-02T20:21:56Z",
+      "title": "S&P 500 logs strong May gain as tech stocks lead rally (SP500:) - Seeking Alpha",
+      "source": "Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcl9Ed19nODJVQWdFeGFfcU95ZTJPQXAwUGx0SUp3LWdmaE9fd2J3MHpRRXZMeUdvMkdLOGExT1RtMTR4d2JkMEU0YnBxUkR2YXJhUm1KMjB2LVNqNDZvdG9PRUFfSzI4MzYwYzN2LV9qLUVKTHVuQm0tbTlzeWZCVWpQcWlwd1lkZmlpSHpzVUN2WGVkbG93anpWM1I?oc=5",
+      "published": "2026-05-29T20:13:53Z",
       "tone": "bullish"
     },
     {
@@ -34,10 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today: S&P 500, Nasdaq, Dow Futures Rise Following Tech Rally\u2014Zscaler, United Microelectroni - Benzinga",
-      "source": "Benzinga",
-      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNdWh1WE9xbE5zWnpyZ0Y2ZjNLWHNQNDh4enhkdHRTVHQ2UWRKSEJKQzZPMDZZdXJPdjE4YU1Ed0lERHk3d2xzODFvVkJ4MVpPdk90RkphbG1KRVNWbmxSakJFdnhYWU5UcHJEWVNTa0pSOTh2cW9YeTdILVNHMUpqYUpsQ0l2UGs2ZG5nTlRYVkZLaGR2YWQzMFhQazh3MEgwTWp4dTNGWDdmVUJGekt3VVVMNzg0VlFiS2pOcGhqZDZxemVZLUR5MHpkVTBEQ3BLaTctOVQ0Z09BQ2tkeGV3ZlVUc3cya09XSUwyekhLUWJfYnd0dkNJdjliYmZSUmtiblE1Rw?oc=5",
-      "published": "2026-05-27T12:45:00Z",
+      "title": "Stock Market Today: Dow Drops Amid War Jitters As Fed Data Nears; GameStop Shares Jump (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/6a4aefd8-5876-379b-b5b8-c8fc62051b1a/stock-market-today%3A-dow-drops.html?.tsrc=rss",
+      "published": "2026-06-03T18:04:28Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street Hits Record as AI Rally Lifts Chip Stocks - Gotrade",
+      "source": "Gotrade",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNMGNheXZOVU50bVU3S3VFTUJyMkJJWTdtMlRWcEp2VXZVMjA0aENubDZpd0p3MWgxOXNQb1gyVmNXcU15QXBxZzRHR2FuOExZdm9qYm0ySXY1TWxzSW1FR2lZUXFiT2RnZS1uRW10akN0WXBDOWFpQnNxb01oRk5HWWNVc1c4Q3J6?oc=5",
+      "published": "2026-06-03T01:43:33Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 84
+        "articles": 92
       }
     ],
-    "headline_count": 134,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

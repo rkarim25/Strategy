@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-02T23:43:48Z",
-  "data_asof": "2026-06-02",
-  "daily_rows": 7548,
-  "quote_price": 7609.77978515625,
-  "quote_timestamp": "2026-06-02",
+  "generated_at_utc": "2026-06-03T18:25:06Z",
+  "data_asof": "2026-06-03",
+  "daily_rows": 7549,
+  "quote_price": 7572.85986328125,
+  "quote_timestamp": "2026-06-03",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-02",
-      "close": 7609.77978515625
+      "date": "2026-06-03",
+      "close": 7573.169921875
     },
-    "latestSma": 7451.49501953125,
+    "latestSma": 7467.1925048828125,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": 0.0,
+    "latestDd": -0.004810896545608512,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -46,18 +46,18 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.15732466079099194,
+    "activeEntryPnl": 0.151756891578245,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-06-02",
-      "close": 7609.77978515625
+      "date": "2026-06-03",
+      "close": 7572.85986328125
     },
-    "latestSma": 7469.022998046875,
+    "latestSma": 7477.5794921875,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": 0.0,
+    "latestDd": -0.004851641298085463,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -68,13 +68,13 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.15732466079099194,
+    "activeEntryPnl": 0.15170973667140575,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-02",
+    "last_observed_asof": "2026-06-03",
     "last_observed_target_leverage": 2,
     "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-06-02T23:43:48Z"
+    "last_checked_at_utc": "2026-06-03T18:25:06Z"
   }
 }
