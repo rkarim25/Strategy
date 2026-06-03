@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-06-03T18:25:06Z",
+  "generated_at_utc": "2026-06-03T21:35:59Z",
   "data_asof": "2026-06-03",
-  "daily_rows": 7549,
-  "quote_price": 7572.85986328125,
+  "daily_rows": 7548,
+  "quote_price": 7553.68017578125,
   "quote_timestamp": "2026-06-03",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-03",
-      "close": 7573.169921875
+      "close": 7553.68017578125
     },
-    "latestSma": 7467.1925048828125,
+    "latestSma": 7466.218017578125,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.004810896545608512,
+    "latestDd": -0.007372041104846239,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -46,18 +46,18 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.151756891578245,
+    "activeEntryPnl": 0.1487928158199885,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-06-03",
-      "close": 7572.85986328125
+      "close": 7553.68017578125
     },
-    "latestSma": 7477.5794921875,
+    "latestSma": 7475.646020507813,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.004851641298085463,
+    "latestDd": -0.007372041104846239,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -68,13 +68,13 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.15170973667140575,
+    "activeEntryPnl": 0.1487928158199885,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-06-03",
     "last_observed_target_leverage": 2,
     "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-06-03T18:25:06Z"
+    "last_checked_at_utc": "2026-06-03T21:35:59Z"
   }
 }

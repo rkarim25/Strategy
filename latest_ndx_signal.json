@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-06-03T18:25:07Z",
+  "generated_at_utc": "2026-06-03T21:35:59Z",
   "data_asof": "2026-06-03",
-  "daily_rows": 7549,
-  "quote_price": 30606.162109375,
+  "daily_rows": 7548,
+  "quote_price": 30571.236328125,
   "quote_timestamp": "2026-06-03",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-03",
-      "close": 30608.626953125
+      "close": 30571.236328125
     },
-    "latestSma": 29556.04375,
+    "latestSma": 29554.17421875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.0016950958856690734,
+    "latestDd": -0.002914596661138913,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -46,18 +46,18 @@
     "activeEntryClose": 26672.4296875,
     "activeEntryDate": "2026-04-17",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.147575504434442,
+    "activeEntryPnl": 0.1461736589543685,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-06-03",
-      "close": 30606.162109375
+      "close": 30571.236328125
     },
-    "latestSma": 29656.393359375,
+    "latestSma": 29652.7775390625,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.0017754871298523156,
+    "latestDd": -0.002914596661138913,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -68,13 +68,13 @@
     "activeEntryClose": 26672.4296875,
     "activeEntryDate": "2026-04-17",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.14748309276520621,
+    "activeEntryPnl": 0.1461736589543685,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-06-03",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-03T18:25:07Z"
+    "last_checked_at_utc": "2026-06-03T21:35:59Z"
   }
 }
