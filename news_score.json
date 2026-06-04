@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-06-03T23:41:00Z",
+  "generated_at_utc": "2026-06-04T16:57:04Z",
   "window_days": 7,
-  "score": 9,
+  "score": 10,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com; Marvell Stock Closes at a Record High. The Next Big Catalyst Is in Sight.. Bearish offsets: Bitcoin set to slump to new lows for 2026 after recent sell-off, traders forecast.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dow Climbs More Than 800 Points in Broad Rally; Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com. Bearish offsets: Oil prices fall 3% on report Trump reluctant to restart Iran war; Michael Burry drops rare technical warning on Palantir stock.",
   "articles": [
+    {
+      "title": "Dow Climbs More Than 800 Points in Broad Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/46908f5f-425d-3ff9-bef0-efe540aa5971/dow-climbs-more-than-800.html?.tsrc=rss",
+      "published": "2026-06-04T15:47:06Z",
+      "tone": "bullish"
+    },
     {
       "title": "Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com",
       "source": "Bloomberg.com",
@@ -13,31 +20,24 @@
       "tone": "bullish"
     },
     {
-      "title": "Marvell Stock Closes at a Record High. The Next Big Catalyst Is in Sight.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/dff80836-a338-3d49-b526-1bc0a9e4f8e0/marvell-stock-closes-at-a.html?.tsrc=rss",
-      "published": "2026-06-03T22:12:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 logs strong May gain as tech stocks lead rally (SP500:) - Seeking Alpha",
-      "source": "Seeking Alpha",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcl9Ed19nODJVQWdFeGFfcU95ZTJPQXAwUGx0SUp3LWdmaE9fd2J3MHpRRXZMeUdvMkdLOGExT1RtMTR4d2JkMEU0YnBxUkR2YXJhUm1KMjB2LVNqNDZvdG9PRUFfSzI4MzYwYzN2LV9qLUVKTHVuQm0tbTlzeWZCVWpQcWlwd1lkZmlpSHpzVUN2WGVkbG93anpWM1I?oc=5",
-      "published": "2026-05-29T20:13:53Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street ends lower as Middle East tensions escalate",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/wall-street-ends-lower-middle-230740370.html?.tsrc=rss",
-      "published": "2026-06-03T23:07:40Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Bitcoin set to slump to new lows for 2026 after recent sell-off, traders forecast",
+      "title": "Oil prices fall 3% on report Trump reluctant to restart Iran war",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/03/bitcoin-to-slump-to-new-lows-after-recent-sell-off-traders-predict.html",
-      "published": "2026-06-03T20:06:54Z",
+      "url": "https://www.cnbc.com/2026/06/04/oil-price-today-iran-war-hormuz-trump-israel-lebanon.html",
+      "published": "2026-06-04T14:00:53Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street Hits Record as AI Rally Lifts Chip Stocks - Gotrade",
+      "source": "Gotrade",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNMGNheXZOVU50bVU3S3VFTUJyMkJJWTdtMlRWcEp2VXZVMjA0aENubDZpd0p3MWgxOXNQb1gyVmNXcU15QXBxZzRHR2FuOExZdm9qYm0ySXY1TWxzSW1FR2lZUXFiT2RnZS1uRW10akN0WXBDOWFpQnNxb01oRk5HWWNVc1c4Q3J6?oc=5",
+      "published": "2026-06-03T08:00:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Michael Burry drops rare technical warning on Palantir stock",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.thestreet.com/investing/stocks/michael-burry-drops-a-rare-technical-warning-on-palantir-stock-reiterates-short-position-from-head-and-shoulders-pattern?.tsrc=rss",
+      "published": "2026-06-04T16:17:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 84
       }
     ],
-    "headline_count": 145,
+    "headline_count": 134,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
