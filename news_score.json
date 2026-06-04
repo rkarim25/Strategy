@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-06-04T22:53:51Z",
+  "generated_at_utc": "2026-06-04T23:07:04Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Hits Record High on Tech Stock Rally - Gotrade; Morgan Stanley makes bold new call on Micron stock. Bearish offsets: Stock Market Today, June 4: Broadcom Shares Plunge After AI Outlook Misses High Investor Expectations; Oil prices fall 3% on report Trump reluctant to restart Iran war.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Hits Record High on Tech Stock Rally - Gotrade; Morgan Stanley makes bold new call on Micron stock. Bearish offsets: Oil prices fall 3% on report Trump reluctant to restart Iran war.",
   "articles": [
-    {
-      "title": "Stock Market Today, June 4: Broadcom Shares Plunge After AI Outlook Misses High Investor Expectations",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/06/04/stock-market-today-june-4-broadcom-shares-plunge-after-ai-outlook-misses-high-investor-expectations/?.tsrc=rss",
-      "published": "2026-06-04T21:23:39Z",
-      "tone": "bearish"
-    },
     {
       "title": "Wall Street Hits Record High on Tech Stock Rally - Gotrade",
       "source": "Gotrade",
@@ -34,10 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "The Dow leaps to a record as oil prices ease and U.S. stocks outside of AI rally - Pittsburgh Post-Gazette",
-      "source": "Pittsburgh Post-Gazette",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPdXFGNU4tUDdlbmd5dGtweThjbUxiMExnZnJPVFZrV3ZWdnNaZTV2eGV1MXNEdWpjVGZqOEFnOV9Cb2szcmNhQ0s0MUFNNjNFQWRBazdfZlZWVmZWSUNFclpNaGFZYjdTZHVhWmltNGlIZ3loNEJ2NWtwQWt0eVRpMWRpd0JxSEdLUVhkczhIVVVuckpzMGlRb19XR1lUbnlPcjFjRVdxZF8zUQ?oc=5",
-      "published": "2026-06-04T21:32:31Z",
+      "title": "The Dow leaps to a record as oil prices ease and US stocks outside of AI rally - Boston Herald",
+      "source": "Boston Herald",
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE0ydHpMcjZweldxWFhPMXBvRnVVU0lEUG9tUXJZeTYyT0V3bm1FVVNpanNXZFB2YV9QamIwN2Y3a1dSNmQwMlBqbFdDcXBpOXk3aDFVZy15bmxKYlVPRVBvczVIWk9JWUFJR1BXa0xn?oc=5",
+      "published": "2026-06-04T19:31:22Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Market Today, June 4: Nu Holdings Jumps After Board Approves $1 Billion Share Buyback",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/06/04/stock-market-today-june-4-nu-holdings-jumps-after-board-approves-usd1-billion-share-buyback/?.tsrc=rss",
+      "published": "2026-06-04T21:51:55Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 84
+        "articles": 82
       }
     ],
-    "headline_count": 134,
+    "headline_count": 132,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
