@@ -1,29 +1,36 @@
 {
-  "generated_at_utc": "2026-06-04T19:28:41Z",
+  "generated_at_utc": "2026-06-04T21:15:51Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq Ticks Higher. Dow Climbs More Than 800 Points in Broad Rally.; Wall Street Hits Record High on Tech Stock Rally - Gotrade. Bearish offsets: Oil prices fall 3% on report Trump reluctant to restart Iran war; Intel Stock Drops After It Scores AI Partnership With Apple Supplier Foxconn.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: The Dow Jumps 875 Points as Oil Prices Ease and Stocks Outside of AI Rally - U.S. News & World Report; Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com. Bearish offsets: Oil prices fall 3% on report Trump reluctant to restart Iran war.",
   "articles": [
     {
-      "title": "Nasdaq Ticks Higher. Dow Climbs More Than 800 Points in Broad Rally.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/46908f5f-425d-3ff9-bef0-efe540aa5971/nasdaq-ticks-higher.-dow.html?.tsrc=rss",
-      "published": "2026-06-04T18:03:29Z",
+      "title": "The Dow Jumps 875 Points as Oil Prices Ease and Stocks Outside of AI Rally - U.S. News & World Report",
+      "source": "U.S. News & World Report",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNWjlra0Vkc1E3UnkwbUdPWC1jT2Jfd3dIc0I4b3RiMGlNNFNlamI0V2g2eEtnbUNjaXBYdkVpc25LQW5hbFYzZFhCeVNWN3lYUlpzSHRNWHNuZzdCeTA2Rm1hQzVwUGI1R3luRW5BcUlUNUJHV1lkc0drN2hUTjQwdjhQdFJHWW15enBHT2Q3VmRqR0s2SjQ3V0E2YlpRcVotNFdVRWxqcDhWNmRXYjJZTV9aOUxKX2RCYnhhaXl3WTdoRWFMWHRteF9IQUpLR2diSmNlZ3VZZHl3dllBWWx1bkJGTVY?oc=5",
+      "published": "2026-06-04T03:23:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall Street Hits Record High on Tech Stock Rally - Gotrade",
-      "source": "Gotrade",
-      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNbnJqSl9VQS1ZSzBmMHFlUXlKYTBUT1lKQ2xrVzV0WTNoZVljcHhaS0tvTUZ2QzNQb2c1TzR1ckszY0gyM2R6TG1UVkJYVVl2WXd5ZG5mREhmUWg3blgwdnlxZm4ycTBIc1pOdmYyN3BWREozZ2wxTmlzYllaeVRiLThR?oc=5",
-      "published": "2026-06-01T10:02:36Z",
+      "title": "Asian Stocks Poised to Gain as AI Rally Extends: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxORVhrNDd0THFBNmNndFQ1U2xtVVEzbVlidVhoOEItcTdMd2p1d2JmSjNubHozRjNTOTVYQk5WWlZKNFlzRHFmeTZWQ1FwcEgzUTU5eW00NjBxVzlhUWs3VXRwQ0hfY3lNc0ZlaHdJd2s0ZW1zdFZ2c2hYX2R2LUc5NExqNGNaVlhoNHIzUnBfb0plWjY0TXpzcUs1QWVCR2ZFV3N4aFVvZmstRFVGVkJQTVgtSXdpTGNJRmxJSEoxaC1reEdCUUZhbU1ZZjhPUQ?oc=5",
+      "published": "2026-06-02T22:08:52Z",
       "tone": "bullish"
     },
     {
-      "title": "US Equity Indexes Rise as Treasury Yields Decline With Crude Oil",
+      "title": "US Equity Indexes Rise Amid Broad-Based Rally in Final Leg of Trading",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-rise-treasury-180146849.html?.tsrc=rss",
-      "published": "2026-06-04T18:01:46Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-rise-amid-195019544.html?.tsrc=rss",
+      "published": "2026-06-04T19:50:19Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 logs strong May gain as tech stocks lead rally (SP500:) - Seeking Alpha",
+      "source": "Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcl9Ed19nODJVQWdFeGFfcU95ZTJPQXAwUGx0SUp3LWdmaE9fd2J3MHpRRXZMeUdvMkdLOGExT1RtMTR4d2JkMEU0YnBxUkR2YXJhUm1KMjB2LVNqNDZvdG9PRUFfSzI4MzYwYzN2LV9qLUVKTHVuQm0tbTlzeWZCVWpQcWlwd1lkZmlpSHpzVUN2WGVkbG93anpWM1I?oc=5",
+      "published": "2026-05-29T20:13:53Z",
       "tone": "bullish"
     },
     {
@@ -31,13 +38,6 @@
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/04/oil-price-today-iran-war-hormuz-trump-israel-lebanon.html",
       "published": "2026-06-04T19:25:55Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Intel Stock Drops After It Scores AI Partnership With Apple Supplier Foxconn",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/dc72d029-d991-3481-b892-4a38ecf948b3/intel-stock-drops-after-it.html?.tsrc=rss",
-      "published": "2026-06-04T18:02:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 84
+        "articles": 91
       }
     ],
-    "headline_count": 134,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
