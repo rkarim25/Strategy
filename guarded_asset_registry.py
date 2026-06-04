@@ -128,6 +128,33 @@ ASSETS: list[GuardedAssetSpec] = [
         manual_price_hint="Optional MSCI World level",
         etf_1x="IWDA / SWDA",
     ),
+    GuardedAssetSpec(
+        slug="lqq3",
+        title_short="LQQ3 3x Nasdaq",
+        nav_label="Guarded A5/B25 (LQQ3 3x, max 1x)",
+        index_label="LQQ3 3x ETP",
+        yahoo_ticker="LQQ3.L",
+        yahoo_chart_path="LQQ3.L",
+        asset_label="LQQ3.L (WisdomTree 3x Daily Leveraged Nasdaq 100, GBX)",
+        price_name="LQQ3",
+        instruments_title="Nasdaq 100 Leveraged ETP Instruments",
+        instruments_blurb=(
+            "WisdomTree 3x Daily Leveraged Nasdaq 100 on London (<code>LQQ3.L</code>, GBX). "
+            "Same ISIN as 3QQQ (IE00BLRPRL42). Back-test uses adjusted close from listing (2012-12-13). "
+            "Max 1x on this tab = cash vs fully in the 3x ETP, not economic 1x Nasdaq beta."
+        ),
+        hold_exposure_line=(
+            "toggle between <strong>cash (T-bills)</strong> and <strong>fully invested in LQQ3</strong> "
+            "(3x daily Nasdaq ETP) when Guarded signals permit re-entry above the 20-day SMA"
+        ),
+        drawdown_line="if LQQ3 is down",
+        recovery_line="after LQQ3 rises",
+        chart_aria_price='aria-label="LQQ3 close and 20-day SMA chart"',
+        chart_aria_equity='aria-label="LQQ3 buy and hold versus default strategy equity chart"',
+        equity_compare_label="LQQ3 vs Default Strategy Equity",
+        manual_price_hint="Optional LQQ3 level (GBX)",
+        etf_1x="EQQQ (1x) / LQQ (2x) / LQQ3 (3x)",
+    ),
 ]
 
 

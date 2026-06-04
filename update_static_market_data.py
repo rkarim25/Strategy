@@ -37,6 +37,7 @@ YAHOO_FTSE250_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5E
 YAHOO_DAX_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGDAXI"
 YAHOO_EM_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/EEM"
 YAHOO_WORLD_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L"
+YAHOO_LQQ3_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L"
 ROOT = Path(__file__).resolve().parent
 DAILY_CSV = ROOT / "spx_daily.csv"
 LATEST_SIGNAL_JSON = ROOT / "latest_signal.json"
@@ -52,6 +53,8 @@ DAX_DAILY_CSV = ROOT / "dax_daily.csv"
 LATEST_DAX_SIGNAL_JSON = ROOT / "latest_dax_signal.json"
 WORLD_DAILY_CSV = ROOT / "msci_world_daily.csv"
 LATEST_WORLD_SIGNAL_JSON = ROOT / "latest_msci_world_signal.json"
+LQQ3_DAILY_CSV = ROOT / "lqq3_daily.csv"
+LATEST_LQQ3_SIGNAL_JSON = ROOT / "latest_lqq3_signal.json"
 NEWS_SCORE_JSON = ROOT / "news_score.json"
 TRADING_DAYS = 252
 SITE_URL = "https://rkarim25.github.io/Strategy/"
@@ -1547,6 +1550,13 @@ def main() -> int:
             LATEST_WORLD_SIGNAL_JSON,
             YAHOO_WORLD_CHART_URL,
             "Guarded A5/B25 SMA20 Lead (MSCI World, max 1x)",
+        ),
+        (
+            "LQQ3",
+            LQQ3_DAILY_CSV,
+            LATEST_LQQ3_SIGNAL_JSON,
+            YAHOO_LQQ3_CHART_URL,
+            "Guarded A5/B25 SMA20 Lead (LQQ3 3x, max 1x)",
         ),
     ):
         try:

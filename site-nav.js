@@ -63,6 +63,11 @@
       href: "msci_world_guarded.html#signalPage",
     },
     {
+      id: "lqq3",
+      label: "Guarded A5/B25 (LQQ3 3x, max 1x)",
+      href: "lqq3_guarded.html#signalPage",
+    },
+    {
       id: "momentum",
       label: "Momentum Strategy Research",
       href: "index.html#momentumSignalPage",
