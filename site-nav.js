@@ -40,6 +40,13 @@
       href: "lqq3_guarded.html#signalPage",
     },
     {
+      id: "3bal",
+      asset: "3BAL 3x EU Banks",
+      strategy: "SMA20 1x/cash",
+      group: "leveraged",
+      href: "3bal_guarded.html#signalPage",
+    },
+    {
       id: "ndx",
       asset: "Nasdaq 100",
       strategy: "Guarded A5/B25",

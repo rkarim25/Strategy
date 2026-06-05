@@ -38,6 +38,7 @@ YAHOO_DAX_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/%5EGDAX
 YAHOO_EM_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/EEM"
 YAHOO_WORLD_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L"
 YAHOO_LQQ3_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L"
+YAHOO_3BAL_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L"
 ROOT = Path(__file__).resolve().parent
 DAILY_CSV = ROOT / "spx_daily.csv"
 LATEST_SIGNAL_JSON = ROOT / "latest_signal.json"
@@ -55,6 +56,8 @@ WORLD_DAILY_CSV = ROOT / "msci_world_daily.csv"
 LATEST_WORLD_SIGNAL_JSON = ROOT / "latest_msci_world_signal.json"
 LQQ3_DAILY_CSV = ROOT / "lqq3_daily.csv"
 LATEST_LQQ3_SIGNAL_JSON = ROOT / "latest_lqq3_signal.json"
+BAL3_DAILY_CSV = ROOT / "3bal_daily.csv"
+LATEST_3BAL_SIGNAL_JSON = ROOT / "latest_3bal_signal.json"
 NEWS_SCORE_JSON = ROOT / "news_score.json"
 TRADING_DAYS = 252
 SITE_URL = "https://rkarim25.github.io/Strategy/"
@@ -787,6 +790,67 @@ def compute_signal(rows: list[dict[str, object]], *, max_leverage: float | None 
     }
 
 
+def compute_sma20_cash_signal(rows: list[dict[str, object]]) -> dict[str, object]:
+    closes = [float(row["close"]) for row in rows]
+    high_water = closes[0]
+    high_water_date = str(rows[0]["date"])
+    base_entry_close: float | None = None
+    base_entry_date: str | None = None
+    previous_target_leverage = 0
+    target_leverage = 0
+    explanation = ""
+
+    for i, row in enumerate(rows):
+        close = closes[i]
+        date = str(row["date"])
+        avg20 = sma(closes, i, 20)
+        if close >= high_water:
+            high_water = close
+            high_water_date = date
+        above_sma = math.isfinite(avg20) and close > avg20
+        target_leverage = 1 if above_sma else 0
+        if target_leverage == 1 and previous_target_leverage != 1:
+            base_entry_close = close
+            base_entry_date = date
+        elif target_leverage == 0:
+            base_entry_close = None
+            base_entry_date = None
+        previous_target_leverage = target_leverage
+        explanation = (
+            "Close is above SMA20; hold 1x (fully in 3BAL)."
+            if above_sma
+            else "Close is below SMA20; hold cash."
+        )
+
+    latest_index = len(rows) - 1
+    latest = rows[latest_index]
+    latest_close = float(latest["close"])
+    latest_sma = sma(closes, latest_index, 20)
+    latest_dd = latest_close / high_water - 1
+    active_entry_close = base_entry_close if target_leverage > 0 else None
+    active_entry_date = base_entry_date if target_leverage > 0 else None
+
+    return {
+        "latest": {"date": latest["date"], "close": latest_close},
+        "latestSma": latest_sma,
+        "highWater": high_water,
+        "highWaterDate": high_water_date,
+        "latestDd": latest_dd,
+        "regime": "sma20",
+        "entryClose": None,
+        "entryDate": None,
+        "recoveryTarget": None,
+        "aboveSma": latest_close > latest_sma if math.isfinite(latest_sma) else False,
+        "recoveryOk": latest_close > latest_sma if math.isfinite(latest_sma) else False,
+        "targetLeverage": target_leverage,
+        "activeEntryClose": active_entry_close,
+        "activeEntryDate": active_entry_date,
+        "activeEntryLeverage": target_leverage if active_entry_close is not None else None,
+        "activeEntryPnl": latest_close / active_entry_close - 1 if active_entry_close else None,
+        "explanation": explanation,
+    }
+
+
 def append_quote_row(rows: list[dict[str, object]], quote: dict[str, object]) -> list[dict[str, object]]:
     stamp = quote.get("quote_timestamp") or iso_utc(utc_now())
     out = list(rows)
@@ -1295,13 +1359,18 @@ def write_signal_json(
     send_trade_alerts: bool = True,
     max_leverage: float | None = None,
     alert_profile: str | None = None,
+    signal_fn=compute_signal,
 ) -> None:
     generated_at_utc = iso_utc(utc_now())
     today_uk = uk_calendar_date(generated_at_utc)
-    official_signal = compute_signal(rows, max_leverage=max_leverage)
-    provisional_signal = (
-        compute_signal(append_quote_row(rows, quote), max_leverage=max_leverage) if quote else None
-    )
+    if signal_fn is compute_sma20_cash_signal:
+        official_signal = signal_fn(rows)
+        provisional_signal = signal_fn(append_quote_row(rows, quote)) if quote else None
+    else:
+        official_signal = signal_fn(rows, max_leverage=max_leverage)
+        provisional_signal = (
+            signal_fn(append_quote_row(rows, quote), max_leverage=max_leverage) if quote else None
+        )
     transition = build_trade_transition(previous_payload, official_signal, generated_at_utc)
     email_sent = False
     email_error = None
@@ -1402,6 +1471,7 @@ def refresh_yahoo_only(
     max_leverage: float = 1.0,
     send_trade_alerts: bool = False,
     alert_profile: str | None = None,
+    signal_fn=compute_signal,
 ) -> None:
     sources: dict[str, object] = {}
     rows = fetch_yahoo_daily(
@@ -1421,6 +1491,7 @@ def refresh_yahoo_only(
         send_trade_alerts=send_trade_alerts,
         max_leverage=max_leverage,
         alert_profile=alert_profile,
+        signal_fn=signal_fn,
     )
     print(f"[{label}] Wrote {daily_csv.name} with {len(rows)} rows through {rows[-1]['date']}")
     print(f"[{label}] Wrote {signal_json.name} with quote {quote['quote_price']}")
@@ -1577,6 +1648,13 @@ def main() -> int:
             YAHOO_LQQ3_CHART_URL,
             "Guarded A5/B25 SMA20 Lead (LQQ3 3x, max 1x)",
         ),
+        (
+            "3BAL",
+            BAL3_DAILY_CSV,
+            LATEST_3BAL_SIGNAL_JSON,
+            YAHOO_3BAL_CHART_URL,
+            "SMA20 1x/cash (3BAL 3x EU Banks, max 1x)",
+        ),
     ):
         try:
             refresh_yahoo_only(
@@ -1588,6 +1666,7 @@ def main() -> int:
                 max_leverage=1.0,
                 send_trade_alerts=(label == "LQQ3"),
                 alert_profile=("lqq3" if label == "LQQ3" else None),
+                signal_fn=compute_sma20_cash_signal if label == "3BAL" else compute_signal,
             )
         except Exception as exc:
             print(f"[{label}] refresh failed: {exc}", file=sys.stderr)

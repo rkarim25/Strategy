@@ -1,0 +1,159 @@
+{
+  "generated_at_utc": "2026-06-05T15:51:33Z",
+  "asset": {
+    "ticker": "3BAL.L",
+    "name": "WisdomTree EURO STOXX Banks 3x Daily Leveraged",
+    "isin": "IE00BLS09N40",
+    "currency": "GBX (LSE)",
+    "inception": "2014-12-08"
+  },
+  "default_strategy": "SMA20 1x/cash",
+  "guarded_params": {
+    "strategy": "Guarded A5/B25 SMA20 Lead (max 1x)",
+    "trigger_a": 0.05,
+    "trigger_b": 0.25,
+    "lead_pct_below_sma20": 0.0075,
+    "x_return": 0.4,
+    "y_return": 0.15,
+    "max_leverage": 1.0
+  },
+  "leverage_note": "Max 1x on this tab means the portfolio toggles between cash (T-bills) and fully invested in 3BAL (3x daily EURO STOXX Banks ETP). The default SMA20 rule is above SMA20 = 1x in 3BAL, below SMA20 = cash. Guarded A5/B25 recovery tiers still arm at -5% / -25% but exposure stays at 0 or 100% of the 3x product.",
+  "assumptions": {
+    "initial_capital": 100.0,
+    "annual_inflow_usd": 10.0,
+    "trading_cost_pct": 0.01,
+    "signal_and_pnl": "Rules on 3BAL price; max 1x = cash vs fully in 3x ETP"
+  },
+  "sample": {
+    "start_date": "2014-12-08",
+    "end_date": "2026-06-04",
+    "trading_days": 2954
+  },
+  "strategies": [
+    {
+      "asset": "3BAL.L (3x EURO STOXX Banks ETP)",
+      "ticker": "3BAL.L",
+      "strategy": "Buy & hold (always in 3BAL)",
+      "start_date": "2014-12-08",
+      "end_date": "2026-06-04",
+      "trading_days": 2954,
+      "cagr": 0.20565409827124936,
+      "ann_volatility": 0.8594529792799487,
+      "sharpe": 0.3892740221842759,
+      "max_drawdown": -0.9754238057694905,
+      "calmar": 0.21083563580756914,
+      "end_$": 857.212437763348,
+      "rebalances": 0,
+      "trading_costs_total": 0.0,
+      "pct_cash": 0.0,
+      "pct_invested": 100.0
+    },
+    {
+      "asset": "3BAL.L (3x EURO STOXX Banks ETP)",
+      "ticker": "3BAL.L",
+      "strategy": "SMA20 1x/cash",
+      "start_date": "2014-12-08",
+      "end_date": "2026-06-04",
+      "trading_days": 2954,
+      "cagr": 3.8078576092662866,
+      "ann_volatility": 0.5123639520840253,
+      "sharpe": 3.8690676989393475,
+      "max_drawdown": -0.3394478141899584,
+      "calmar": 11.217799762102375,
+      "end_$": 6759430043.607031,
+      "rebalances": 376,
+      "trading_costs_total": 1355947906.3068898,
+      "pct_cash": 46.9532836831415,
+      "pct_invested": 53.0467163168585,
+      "pct_days_cash": 46.95328368314151
+    },
+    {
+      "asset": "3BAL.L (3x EURO STOXX Banks ETP)",
+      "ticker": "3BAL.L",
+      "strategy": "Guarded A5/B25 SMA20 Lead (max 1x)",
+      "start_date": "2014-12-08",
+      "end_date": "2026-06-04",
+      "trading_days": 2954,
+      "cagr": 3.608421848382376,
+      "ann_volatility": 0.523989028847974,
+      "sharpe": 3.721226810674932,
+      "max_drawdown": -0.3394478141899585,
+      "calmar": 10.63026980154029,
+      "end_$": 4154681261.909638,
+      "rebalances": 380,
+      "trading_costs_total": 758467763.9151675,
+      "pct_cash": 43.39878131347326,
+      "pct_invested": 56.60121868652674,
+      "pct_days_cash": 43.39878131347326,
+      "pct_days_1x": 56.60121868652674,
+      "tier2_entries": 3,
+      "tier3_entries": 2,
+      "lead_only_days": 105,
+      "guard_blocked_days": 1281
+    }
+  ],
+  "site_strategies": [
+    {
+      "strategy": "Buy & hold (always in 3BAL)",
+      "cagr": 0.20565409827124936,
+      "ann_volatility": 0.8594529792799487,
+      "sharpe": 0.3892740221842759,
+      "max_drawdown": -0.9754238057694905,
+      "end_$": 857.212437763348,
+      "rebalances": 0,
+      "pct_days_cash": 0.0
+    },
+    {
+      "strategy": "SMA20 1x/cash",
+      "cagr": 3.8078576092662866,
+      "ann_volatility": 0.5123639520840253,
+      "sharpe": 3.8690676989393475,
+      "max_drawdown": -0.3394478141899584,
+      "end_$": 6759430043.607031,
+      "rebalances": 376,
+      "pct_days_cash": 46.95328368314151
+    },
+    {
+      "strategy": "Guarded A5/B25 SMA20 Lead (max 1x)",
+      "cagr": 3.608421848382376,
+      "ann_volatility": 0.523989028847974,
+      "sharpe": 3.721226810674932,
+      "max_drawdown": -0.3394478141899585,
+      "calmar": 10.63026980154029,
+      "end_$": 4154681261.909638,
+      "rebalances": 380,
+      "trading_costs_total": 758467763.9151675,
+      "funding_costs_total": 0.0,
+      "pct_days_cash": 43.39878131347326,
+      "pct_days_1x": 56.60121868652674,
+      "pct_days_2x": 0.0,
+      "pct_days_3x": 0.0,
+      "tier2_entries": 3,
+      "tier3_entries": 2,
+      "lead_only_days": 105,
+      "guard_blocked_days": 1281,
+      "pct_cash": 43.39878131347326
+    }
+  ],
+  "monte_carlo": {
+    "strategy": "SMA20 1x/cash",
+    "median_cagr": 4.02123730631525,
+    "p10_cagr": 3.210000410517053,
+    "p90_cagr": 5.071981727865738,
+    "median_max_drawdown": -0.27459529531456384,
+    "p10_max_drawdown": -0.33944781418995856,
+    "p90_max_drawdown": -0.18046735376752493,
+    "median_sharpe": 3.7654367838476253,
+    "median_end_$": 574291566.0805963,
+    "prob_max_dd_worse_35pct": 0.005,
+    "prob_max_dd_worse_40pct": 0.0,
+    "prob_max_dd_worse_50pct": 0.0,
+    "prob_end_below_start": 0.0
+  },
+  "default_vs_buy_hold": {
+    "cagr_delta_pp": 360.2203510995037,
+    "sharpe_delta": 3.4797936767550715,
+    "max_dd_delta_pp": 63.59759915795321,
+    "end_value_ratio": 7885361.604462763
+  }
+}

@@ -62,6 +62,7 @@ jobs:
             dax_daily.csv latest_dax_signal.json dax_guarded_site_data.json \
             msci_world_daily.csv latest_msci_world_signal.json msci_world_guarded_site_data.json \
             lqq3_daily.csv latest_lqq3_signal.json lqq3_guarded_site_data.json \
+            3bal_daily.csv latest_3bal_signal.json 3bal_guarded_site_data.json \
             news_score.json
           if git diff --cached --quiet; then
             echo "No market data changes to commit."
