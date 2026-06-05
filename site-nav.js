@@ -154,7 +154,11 @@
     return null;
   }
 
-  function setHash(id, { replace = true } = {}) {
+  function scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
+  function setHash(id, { replace = true, scroll = true } = {}) {
     if (!id) return;
     const url = new URL(location.href);
     url.hash = id;
@@ -163,6 +167,7 @@
     const state = { siteTab: id };
     if (replace) history.replaceState(state, "", url);
     else history.pushState(state, "", url);
+    if (scroll) scrollToTop();
   }
 
   function onRouteChange(handler) {
@@ -467,10 +472,20 @@
     document.head.appendChild(style);
   }
 
+  function initTabScroll() {
+    window.addEventListener("hashchange", scrollToTop);
+    window.addEventListener("popstate", scrollToTop);
+    document.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-page-target]");
+      if (target) scrollToTop();
+    });
+  }
+
   function initStrategyNav() {
     ensureSidebarStyles();
     renderStrategyNav();
     onRouteChange(() => renderStrategyNav());
+    initTabScroll();
   }
 
   if (document.readyState === "loading") {
@@ -488,6 +503,7 @@
     strategyFromLocation,
     strategyForPage,
     setHash,
+    scrollToTop,
     onRouteChange,
     renderStrategyNav,
     activeNavId,
