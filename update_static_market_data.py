@@ -105,6 +105,22 @@ ALERT_PROFILES: dict[str, dict[str, object]] = {
             ),
         },
     },
+    "lqq3": {
+        "asset_id": "LQQ3",
+        "close_label": "LQQ3 close (GBX)",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down LQQ3 "
+                "(WisdomTree Nasdaq 100 3x Daily Leveraged, LSE: LQQ3.L, ISIN IE00BLRPRL42)."
+            ),
+            1: (
+                "Target 1x (max 1x tab): buy or hold LQQ3. Note: this is a 3x daily ETP; "
+                "‘1x’ here means 100% allocation to the ETP, not 1x Nasdaq beta."
+            ),
+            2: "N/A on the max 1x LQQ3 tab (signal is capped at 1x).",
+            3: "N/A on the max 1x LQQ3 tab (signal is capped at 1x).",
+        },
+    },
 }
 
 DEFAULT_GUARDED = {
@@ -1384,6 +1400,8 @@ def refresh_yahoo_only(
     yahoo_chart_url: str,
     strategy_name: str,
     max_leverage: float = 1.0,
+    send_trade_alerts: bool = False,
+    alert_profile: str | None = None,
 ) -> None:
     sources: dict[str, object] = {}
     rows = fetch_yahoo_daily(
@@ -1397,11 +1415,12 @@ def refresh_yahoo_only(
         rows,
         quote,
         sources,
-        load_previous_signal_payload(signal_json),
+        load_previous_signal_payload(signal_json) if send_trade_alerts else None,
         output_path=signal_json,
         strategy_name=strategy_name,
-        send_trade_alerts=False,
+        send_trade_alerts=send_trade_alerts,
         max_leverage=max_leverage,
+        alert_profile=alert_profile,
     )
     print(f"[{label}] Wrote {daily_csv.name} with {len(rows)} rows through {rows[-1]['date']}")
     print(f"[{label}] Wrote {signal_json.name} with quote {quote['quote_price']}")
@@ -1567,6 +1586,8 @@ def main() -> int:
                 yahoo_chart_url=yahoo_url,
                 strategy_name=strategy_name,
                 max_leverage=1.0,
+                send_trade_alerts=(label == "LQQ3"),
+                alert_profile=("lqq3" if label == "LQQ3" else None),
             )
         except Exception as exc:
             print(f"[{label}] refresh failed: {exc}", file=sys.stderr)
