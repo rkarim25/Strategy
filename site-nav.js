@@ -484,15 +484,58 @@
     document.head.appendChild(style);
   }
 
+  function initInitialScroll() {
+    scrollToTop();
+    window.addEventListener(
+      "load",
+      () => {
+        scrollToTop();
+        requestAnimationFrame(() => {
+          scrollToTop();
+          requestAnimationFrame(scrollToTop);
+        });
+        setTimeout(scrollToTop, 0);
+        setTimeout(scrollToTop, 50);
+        setTimeout(scrollToTop, 150);
+      },
+      { once: true },
+    );
+    window.addEventListener("pageshow", () => {
+      scrollToTop();
+      setTimeout(scrollToTop, 0);
+    });
+    try {
+      if (sessionStorage.getItem("siteNavScrollTop")) {
+        sessionStorage.removeItem("siteNavScrollTop");
+        setTimeout(scrollToTop, 0);
+        setTimeout(scrollToTop, 100);
+      }
+    } catch (_) {
+      /* ignore private browsing */
+    }
+  }
+
   function initTabScroll() {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
+    initInitialScroll();
     window.addEventListener("hashchange", scrollToTop);
     window.addEventListener("popstate", scrollToTop);
     document.addEventListener(
       "click",
       (event) => {
+        const sidebarLink = event.target.closest("a.site-nav-item, a.site-nav-brand");
+        if (sidebarLink?.href) {
+          try {
+            const dest = new URL(sidebarLink.href, location.href);
+            if (dest.pathname !== location.pathname) {
+              sessionStorage.setItem("siteNavScrollTop", "1");
+            }
+          } catch (_) {
+            /* ignore malformed href */
+          }
+        }
         const target = event.target.closest("[data-page-target], [data-strategy-nav]");
         if (!target) return;
         scrollToTop();
