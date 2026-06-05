@@ -155,7 +155,16 @@
   }
 
   function scrollToTop() {
-    window.scrollTo(0, 0);
+    const scroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+    scroll();
+    requestAnimationFrame(() => {
+      scroll();
+      requestAnimationFrame(scroll);
+    });
   }
 
   function setHash(id, { replace = true, scroll = true } = {}) {
@@ -167,7 +176,10 @@
     const state = { siteTab: id };
     if (replace) history.replaceState(state, "", url);
     else history.pushState(state, "", url);
-    if (scroll) scrollToTop();
+    if (scroll) {
+      scrollToTop();
+      setTimeout(scrollToTop, 0);
+    }
   }
 
   function onRouteChange(handler) {
@@ -473,12 +485,21 @@
   }
 
   function initTabScroll() {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
     window.addEventListener("hashchange", scrollToTop);
     window.addEventListener("popstate", scrollToTop);
-    document.addEventListener("click", (event) => {
-      const target = event.target.closest("[data-page-target]");
-      if (target) scrollToTop();
-    });
+    document.addEventListener(
+      "click",
+      (event) => {
+        const target = event.target.closest("[data-page-target], [data-strategy-nav]");
+        if (!target) return;
+        scrollToTop();
+        setTimeout(scrollToTop, 0);
+      },
+      true,
+    );
   }
 
   function initStrategyNav() {
