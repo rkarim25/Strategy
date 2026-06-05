@@ -26,57 +26,57 @@
   /** Single source of truth for top-level strategy/asset tabs. */
   const STRATEGY_NAV_ITEMS = [
     {
+      id: "lqq3",
+      label: "LQQ3 3x Nasdaq — Guarded A5/B25 (max 1x)",
+      href: "lqq3_guarded.html#signalPage",
+    },
+    {
+      id: "ndx",
+      label: "Nasdaq 100 — Guarded A5/B25",
+      href: "ndx_guarded.html#signalPage",
+    },
+    {
       id: "spx",
-      label: "Guarded A5/B25 SMA20 Lead (SPX)",
+      label: "S&P 500 — Guarded A5/B25 SMA20 Lead",
       href: "index.html#signalPage",
       indexHref: "#signalPage",
       strategyNav: "guarded",
     },
     {
-      id: "ndx",
-      label: "Guarded A5/B25 (Nasdaq 100)",
-      href: "ndx_guarded.html#signalPage",
-    },
-    {
       id: "gold",
-      label: "Guarded A5/B25 (Gold, max 1x)",
+      label: "Gold — Guarded A5/B25 (max 1x)",
       href: "gold_guarded.html#signalPage",
     },
     {
       id: "ftse250",
-      label: "Guarded A5/B25 (FTSE 250, max 1x)",
+      label: "FTSE 250 — Guarded A5/B25 (max 1x)",
       href: "ftse250_guarded.html#signalPage",
     },
     {
       id: "msci_em",
-      label: "Guarded A5/B25 (MSCI EM, max 1x)",
+      label: "MSCI EM — Guarded A5/B25 (max 1x)",
       href: "msci_em_guarded.html#signalPage",
     },
     {
       id: "dax",
-      label: "Guarded A5/B25 (DAX, max 1x)",
+      label: "DAX — Guarded A5/B25 (max 1x)",
       href: "dax_guarded.html#signalPage",
     },
     {
       id: "msci_world",
-      label: "Guarded A5/B25 (MSCI World, max 1x)",
+      label: "MSCI World — Guarded A5/B25 (max 1x)",
       href: "msci_world_guarded.html#signalPage",
     },
     {
-      id: "lqq3",
-      label: "Guarded A5/B25 (LQQ3 3x, max 1x)",
-      href: "lqq3_guarded.html#signalPage",
-    },
-    {
       id: "momentum",
-      label: "Momentum Strategy Research",
+      label: "Research — Momentum strategy",
       href: "index.html#momentumSignalPage",
       indexHref: "#momentumSignalPage",
       strategyNav: "momentum",
     },
     {
       id: "instruments",
-      label: "Instruments",
+      label: "Tools — Instruments",
       href: "instruments.html",
       secondary: true,
     },
@@ -159,28 +159,60 @@
     const page = currentPageFile(loc);
     const onIndex = page === "index.html";
     const activeId = activeNavId(loc);
+    const currentPageId = pageFromLocation(loc) || "signalPage";
+
+    function hrefForItem(item) {
+      // UX improvement: preserve the current section (signal/backtest/monte-carlo/instruments)
+      // when switching assets, so the user doesn't get bounced back to Signal every time.
+      const raw = onIndex && item.indexHref ? item.indexHref : item.href;
+      const [file, hash = ""] = String(raw).split("#");
+
+      const targetHash =
+        item.id === "instruments"
+          ? "" // instruments.html has no internal hash routing
+          : item.id === "momentum"
+            ? currentPageId && currentPageId.startsWith("momentum") ? currentPageId : "momentumSignalPage"
+            : PAGE_IDS.has(currentPageId) ? currentPageId : "signalPage";
+
+      if (!file) return `#${targetHash}`;
+      return targetHash ? `${file}#${targetHash}` : file;
+    }
 
     nav.replaceChildren();
+
+    const shell = document.createElement("div");
+    shell.className = "site-nav-sidebar";
+
+    const title = document.createElement("div");
+    title.className = "site-nav-sidebar-title";
+    title.textContent = "Strategy";
+
+    const select = document.createElement("select");
+    select.className = "site-nav-select";
+    select.setAttribute("aria-label", "Select strategy tab");
+
     for (const item of STRATEGY_NAV_ITEMS) {
-      const link = document.createElement("a");
-      link.className = "site-nav-link";
-      if (item.secondary) link.classList.add("secondary");
-      link.textContent = item.label;
-
-      if (onIndex && item.indexHref) {
-        link.href = item.indexHref;
-        if (item.strategyNav) link.dataset.strategyNav = item.strategyNav;
-      } else {
-        link.href = item.href;
-      }
-
-      if (item.id === activeId) {
-        link.classList.add("active");
-        link.setAttribute("aria-current", "page");
-      }
-
-      nav.appendChild(link);
+      const opt = document.createElement("option");
+      opt.value = hrefForItem(item);
+      opt.textContent = item.label;
+      if (item.id === activeId) opt.selected = true;
+      select.appendChild(opt);
     }
+    select.addEventListener("change", () => {
+      const next = select.value;
+      if (next) location.href = next;
+    });
+
+    const helper = document.createElement("div");
+    helper.className = "site-nav-sidebar-helper";
+    helper.textContent = onIndex
+      ? "Switch between assets and research tabs."
+      : "Switch assets; section stays the same.";
+
+    shell.appendChild(title);
+    shell.appendChild(select);
+    shell.appendChild(helper);
+    nav.appendChild(shell);
   }
 
   /**
@@ -193,24 +225,78 @@
     const style = document.createElement("style");
     style.id = "site-nav-secondary-styles";
     style.textContent = `
-      .site-nav[aria-label="Strategies"] .site-nav-link.secondary {
-        margin-left: 10px;
-        padding-left: 18px;
-        border-left: 1px solid rgba(0, 0, 0, .14);
-        border-radius: 0 999px 999px 0;
+      :root { --siteSidebarW: 278px; }
+
+      /* Side dropdown wrapper replaces the old pill-tab layout. */
+      .site-nav[aria-label="Strategies"] {
+        position: fixed;
+        top: 18px;
+        left: 18px;
+        width: var(--siteSidebarW);
+        z-index: 20;
+        display: block;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        backdrop-filter: none;
       }
-      .site-nav[aria-label="Strategies"] .site-nav-link.secondary.active {
-        border-left: 1px solid rgba(0, 0, 0, .14);
+
+      .site-nav-sidebar {
+        border: 1px solid rgba(0, 0, 0, .10);
+        border-radius: 18px;
+        padding: 14px;
+        background: rgba(255, 255, 255, .78);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, .08);
       }
-      @media (max-width: 720px) {
-        .site-nav[aria-label="Strategies"] .site-nav-link.secondary {
-          margin-left: 0;
-          padding-left: 12px;
-          border-left: none;
-          border-top: 1px solid rgba(0, 0, 0, .1);
-          border-radius: 999px;
-          width: 100%;
+      .site-nav-sidebar-title {
+        font-size: 12px;
+        letter-spacing: .02em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, .60);
+        font-weight: 700;
+        margin: 0 0 10px;
+      }
+      .site-nav-select {
+        width: 100%;
+        border-radius: 14px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, .92);
+        border: 1px solid rgba(0, 0, 0, .12);
+        font-weight: 650;
+      }
+      .site-nav-sidebar-helper {
+        margin-top: 10px;
+        font-size: 12px;
+        line-height: 1.35;
+        color: rgba(0, 0, 0, .55);
+      }
+
+      /* Make room for the sidebar on desktop. */
+      body { padding-left: calc(var(--siteSidebarW) + 36px); }
+      main { width: min(1180px, calc(100vw - 40px - var(--siteSidebarW) - 36px)); }
+
+      /* Mobile: sidebar becomes a normal top dropdown bar. */
+      @media (max-width: 980px) {
+        body { padding-left: 0; }
+        .site-nav[aria-label="Strategies"] {
+          position: sticky;
+          top: 0;
+          left: 0;
+          width: auto;
+          margin: 14px 0;
+          padding: 5px;
+          border: 1px solid rgba(0, 0, 0, .07);
+          border-radius: 18px;
+          background: rgba(255, 255, 255, .72);
+          backdrop-filter: blur(18px);
         }
+        .site-nav-sidebar { box-shadow: none; border: none; padding: 0; background: transparent; }
+        .site-nav-sidebar-title { display: none; }
+        .site-nav-sidebar-helper { display: none; }
+        .site-nav-select { border-radius: 999px; }
+        main { width: min(1180px, calc(100vw - 40px)); }
       }
     `;
     document.head.appendChild(style);
