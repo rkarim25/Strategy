@@ -1,10 +1,31 @@
 {
-  "generated_at_utc": "2026-06-05T16:32:25Z",
+  "generated_at_utc": "2026-06-05T19:00:31Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: The Dow leaps to a record as oil prices ease and US stocks outside of AI rally - WSLS; Wall Street poised to open with gains, oil jumps again after the US and Iran trade strikes - ABC News - Breaking News, Latest News and Videos. Bearish offsets: Stock Market Today: Nasdaq Slides 2% As Chips Drop, Yields Rise; AMD, Intel Lead Semis Sell-Off (Live Coverage); Jim Cramer's top 10 things to watch in the stock market Friday.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Taiwan Semiconductor CEO Says Rivals Have Years To Catch Up; The Dow leaps to a record as oil prices ease and US stocks outside of AI rally - WSLS. Bearish offsets: Equities Fall, Yields Jump Intraday After Jobs Report; Tech Leads Sell-Off; Tech Stocks Fall. Why Broadcom, Google, AI IPOs May Have Triggered Sell-Off..",
   "articles": [
+    {
+      "title": "Equities Fall, Yields Jump Intraday After Jobs Report; Tech Leads Sell-Off",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-fall-yields-jump-intraday-182133710.html?.tsrc=rss",
+      "published": "2026-06-05T18:21:33Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Tech Stocks Fall. Why Broadcom, Google, AI IPOs May Have Triggered Sell-Off.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/b453613a-84e8-306d-b9d5-7142e47b39cd/tech-stocks-fall.-why.html?.tsrc=rss",
+      "published": "2026-06-05T18:25:39Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Taiwan Semiconductor CEO Says Rivals Have Years To Catch Up",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-ceo-says-rivals-173111530.html?.tsrc=rss",
+      "published": "2026-06-05T17:31:11Z",
+      "tone": "bullish"
+    },
     {
       "title": "The Dow leaps to a record as oil prices ease and US stocks outside of AI rally - WSLS",
       "source": "WSLS",
@@ -17,27 +38,6 @@
       "source": "ABC News - Breaking News, Latest News and Videos",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNZ2liMVVkNVlxall2NkFvRUowVTlfM3BzVm5Ib3luS25qQXdfeFlxbGRPZm11LWFZN21ScWp6T3N6Mk1waElVLVpzcnJhRmlWWm1ZVy0tTS0wZXNUT0NVSHU0ZUw2WWFTanROcGhIUEYxOV9Odmd4Rnh0NFBxb1FZU2p2OFlRMEI5Y1JWLXNnVV9nbnPSAZgBQVVfeXFMTWxyd0FiQlZ4dFJqUlVhLWxwcThMWVB6UkVraU9GaWNhcWlpdjF5S3lpSk9tQkM0eW02WmYwdzU1TE5hcFRYM20ySE9NNlVtWWNPQlMwaGQwNktvbloyVkRxYWpITEs1cnJMR1REc3JCTExkVDlVNjhibmlxQkdmN1RuX2ppM3FvWGhGWi1jSXo4bnkyVm1XS1g?oc=5",
       "published": "2026-06-01T06:27:54Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today: Nasdaq Slides 2% As Chips Drop, Yields Rise; AMD, Intel Lead Semis Sell-Off (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/97143289-0961-30c2-81ff-4ddc8d2fe02e/stock-market-today%3A-nasdaq.html?.tsrc=rss",
-      "published": "2026-06-05T15:37:10Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Jim Cramer's top 10 things to watch in the stock market Friday",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/05/jim-cramers-top-10-things-to-watch-in-the-stock-market-friday.html",
-      "published": "2026-06-05T13:22:07Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "The Tech Rally Is Running Out of Gas. Where the S&P 500 Goes From Here. - Barron's",
-      "source": "Barron's",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOb2pvaTFIMVljd1laUUZScHoxaTJxeHRHM2VKbmpCejNhSTZtUnZEMGRpd3FHb0RDZVJFaWNVY0ppenRjWkR3dlJlTkF3VmhrQ01nTU00cFZVNmFUcjljc3Rfb21ZLU4tMlBrdVhaNDNkM21rWlhNLV9JaHhtOGVZVFZDbkk4cTV2NWlhSXViRDJMWDVZSzlWclBYNGI?oc=5",
-      "published": "2026-06-04T11:44:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 91
       }
     ],
-    "headline_count": 140,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
