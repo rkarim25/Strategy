@@ -552,6 +552,37 @@
     initTabScroll();
   }
 
+  const AUTO_REFRESH_HOURS_LABEL =
+    "Auto-refreshes every 30 minutes during UK LSE hours (Mon-Fri 08:00-16:30 London) while this page is open.";
+
+  function londonParts(date = new Date()) {
+    const map = {};
+    for (const part of new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Europe/London",
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }).formatToParts(date)) {
+      if (part.type !== "literal") map[part.type] = part.value;
+    }
+    return map;
+  }
+
+  /** Mon–Fri 08:00–16:30 Europe/London (regular LSE session, II tradable window). */
+  function isUkLseTradingHours(date = new Date()) {
+    const { weekday, hour, minute } = londonParts(date);
+    if (weekday === "Sat" || weekday === "Sun") return false;
+    const mins = Number(hour) * 60 + Number(minute);
+    return mins >= 8 * 60 && mins < 16 * 60 + 30;
+  }
+
+  function registerAutoRefresh(callback, intervalMs) {
+    window.setInterval(() => {
+      if (!document.hidden && isUkLseTradingHours()) callback();
+    }, intervalMs);
+  }
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initStrategyNav);
   } else {
@@ -571,5 +602,8 @@
     onRouteChange,
     renderStrategyNav,
     activeNavId,
+    AUTO_REFRESH_HOURS_LABEL,
+    isUkLseTradingHours,
+    registerAutoRefresh,
   };
 })();

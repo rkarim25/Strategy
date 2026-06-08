@@ -384,7 +384,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
   function updateAutoRefreshStatus(prefix = "") {
     const parts = [];
     if (prefix) parts.push(prefix);
-    parts.push("Auto-refreshes every 30 minutes while this page is open.");
+    parts.push(window.SiteNav?.AUTO_REFRESH_HOURS_LABEL || "Auto-refreshes every 30 minutes during UK LSE hours while this page is open.");
     parts.push("Enter a manual NDX level then click refresh to override the live quote.");
     if (staticSignalMetadata?.generated_at_utc) parts.push(`Static data generated: ${formatMetadataTime(staticSignalMetadata.generated_at_utc)}.`);
     if (staticSignalMetadata?.data_asof) parts.push(`Static daily data through: ${staticSignalMetadata.data_asof}.`);
@@ -427,12 +427,16 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
 
   function startAutoRefresh() {
     updateAutoRefreshStatus();
-    window.setInterval(() => {
+    window.SiteNav?.registerAutoRefresh?.(
+      () => refresh({ reason: "scheduled", allowManualOverride: false }),
+      AUTO_REFRESH_MS
+    ) ?? window.setInterval(() => {
       if (!document.hidden) refresh({ reason: "scheduled", allowManualOverride: false });
     }, AUTO_REFRESH_MS);
   }
 
   function refreshIfStale(reason) {
+    if (window.SiteNav?.isUkLseTradingHours && !window.SiteNav.isUkLseTradingHours()) return;
     const referenceTime = lastRefreshFinishedAt?.getTime() ?? lastRefreshAttemptAt;
     if (!referenceTime || Date.now() - referenceTime >= FOCUS_STALE_MS) {
       refresh({ reason, allowManualOverride: false });
