@@ -124,6 +124,87 @@ ALERT_PROFILES: dict[str, dict[str, object]] = {
             3: "N/A on the max 1x LQQ3 tab (signal is capped at 1x).",
         },
     },
+    "3bal": {
+        "asset_id": "3BAL",
+        "close_label": "3BAL close (GBX)",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down 3BAL "
+                "(WisdomTree EURO STOXX Banks 3x Daily Leveraged, LSE: 3BAL.L, ISIN IE00BLS09N40)."
+            ),
+            1: (
+                "Target 1x (max 1x tab): buy or hold 3BAL. Note: this is a 3x daily ETP; "
+                "‘1x’ here means 100% allocation to the ETP, not 1x EU banks beta."
+            ),
+            2: "N/A on the max 1x 3BAL tab (signal is capped at 1x).",
+            3: "N/A on the max 1x 3BAL tab (signal is capped at 1x).",
+        },
+    },
+    "ftse250": {
+        "asset_id": "FTSE 250",
+        "close_label": "FTSE 250 close",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down MIDD or VMID "
+                "(FTSE 250 UCITS on LSE)."
+            ),
+            1: "Target 1x: buy or hold MIDD (iShares FTSE 250) or VMID.",
+            2: "N/A on the max 1x FTSE 250 sleeve (signal is capped at 1x).",
+            3: "N/A on the max 1x FTSE 250 sleeve (signal is capped at 1x).",
+        },
+    },
+    "msci_em": {
+        "asset_id": "MSCI EM",
+        "close_label": "MSCI EM (EEM) close",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down EIMI or VFEM "
+                "(MSCI Emerging Markets UCITS on LSE)."
+            ),
+            1: "Target 1x: buy or hold EIMI (iShares Core MSCI EM IMI) or VFEM.",
+            2: "N/A on the max 1x MSCI EM sleeve (signal is capped at 1x).",
+            3: "N/A on the max 1x MSCI EM sleeve (signal is capped at 1x).",
+        },
+    },
+    "dax": {
+        "asset_id": "DAX",
+        "close_label": "DAX close",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down EXS1 or XDAX "
+                "(DAX UCITS on LSE)."
+            ),
+            1: "Target 1x: buy or hold EXS1 (iShares Core DAX) or XDAX.",
+            2: "N/A on the max 1x DAX sleeve (signal is capped at 1x).",
+            3: "N/A on the max 1x DAX sleeve (signal is capped at 1x).",
+        },
+    },
+    "msci_world": {
+        "asset_id": "MSCI World",
+        "close_label": "MSCI World close",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down IWDA or SWDA "
+                "(MSCI World UCITS on LSE)."
+            ),
+            1: "Target 1x: buy or hold IWDA (iShares Core MSCI World) or SWDA.",
+            2: "N/A on the max 1x MSCI World sleeve (signal is capped at 1x).",
+            3: "N/A on the max 1x MSCI World sleeve (signal is capped at 1x).",
+        },
+    },
+    "gold": {
+        "asset_id": "Gold",
+        "close_label": "Gold (GC=F) close",
+        "instruments": {
+            0: (
+                "Move sleeve to cash / T-bills. Sell or wind down SGLN or PHGP "
+                "(physical gold ETPs on LSE)."
+            ),
+            1: "Target 1x: buy or hold SGLN (iShares Physical Gold) or PHGP.",
+            2: "N/A on the max 1x gold sleeve (signal is capped at 1x).",
+            3: "N/A on the max 1x gold sleeve (signal is capped at 1x).",
+        },
+    },
 }
 
 DEFAULT_GUARDED = {
@@ -1323,8 +1404,10 @@ def send_test_alert_email() -> bool:
                 "Real alerts are sent when official target leverage changes (cash / 1x / 2x / 3x),",
                 "with trigger levels and next cross levels, at most once per asset per UK day.",
                 "",
-                "S&P 500 instruments: SPYL (1x), XS2D (2x), 3USL (3x).",
-                "Nasdaq 100 instruments: EQQQ (1x), LQQ (2x), LQQ3 (3x).",
+                "S&P 500: SPYL (1x), XS2D (2x), 3USL (3x).",
+                "Nasdaq 100: EQQQ (1x), LQQ (2x), LQQ3 (3x).",
+                "FTSE 250 / EM / Gold: MIDD, EIMI, SGLN (1x or cash).",
+                "DAX / MSCI World / LQQ3 / 3BAL: XDAX, IWDA, LQQ3, 3BAL (max 1x or cash).",
                 "",
                 f"Site: {SITE_URL}",
             ]
@@ -1338,6 +1421,51 @@ def send_test_alert_email() -> bool:
 
     print(f"Sent test alert email to {config['to']}")
     return True
+
+
+def preview_alert_emails() -> None:
+    """Print sample alert bodies for every ALERT_PROFILE (dry run, no SMTP)."""
+    generated_at_utc = iso_utc(utc_now())
+    sample_signal: dict[str, object] = {
+        "latest": {"date": "2026-06-06", "close": 1000.0},
+        "latestSma": 990.0,
+        "latestDd": -0.02,
+        "highWater": 1020.0,
+        "highWaterDate": "2026-06-01",
+        "regime": "base",
+        "entryClose": None,
+        "entryDate": None,
+        "recoveryTarget": None,
+        "aboveSma": True,
+        "recoveryOk": True,
+        "targetLeverage": 1,
+        "activeEntryClose": 980.0,
+        "activeEntryDate": "2026-06-05",
+        "activeEntryLeverage": 1,
+        "activeEntryPnl": 0.0204,
+        "explanation": "Sample signal for alert preview.",
+    }
+    transition: dict[str, object] = {
+        "id": "preview:0->2026-06-06:1",
+        "detected_at_utc": generated_at_utc,
+        "previous_asof": "2026-06-05",
+        "current_asof": "2026-06-06",
+        "old_target_leverage": 0,
+        "new_target_leverage": 1,
+        "old_target_label": "cash",
+        "new_target_label": "1x",
+    }
+    for profile_key in ALERT_PROFILES:
+        profile = ALERT_PROFILES[profile_key]
+        print(f"\n{'=' * 72}\nPreview: {profile.get('asset_id')} ({profile_key})\n{'=' * 72}")
+        print(
+            build_alert_email_body(
+                transition,
+                sample_signal,
+                strategy_name=f"Preview — {profile.get('asset_id')}",
+                alert_profile=profile_key,
+            )
+        )
 
 
 def write_daily_csv(rows: list[dict[str, object]], path: Path = DAILY_CSV) -> None:
@@ -1526,11 +1654,12 @@ def refresh_gold_static_data() -> None:
         rows,
         quote,
         sources,
-        None,
+        load_previous_signal_payload(LATEST_GOLD_SIGNAL_JSON),
         output_path=LATEST_GOLD_SIGNAL_JSON,
         strategy_name="Guarded A5/B25 SMA20 Lead (Gold, max 1x)",
-        send_trade_alerts=False,
+        send_trade_alerts=True,
         max_leverage=1.0,
+        alert_profile="gold",
     )
     print(f"[Gold] Wrote {GOLD_DAILY_CSV.name} with {len(rows)} rows through {rows[-1]['date']}")
     if quote:
@@ -1588,6 +1717,9 @@ def main() -> int:
     if "--test-email" in sys.argv:
         ok = send_test_alert_email()
         return 0 if ok else 1
+    if "--preview-alerts" in sys.argv:
+        preview_alert_emails()
+        return 0
 
     refresh_instrument(
         label="SPX",
@@ -1612,13 +1744,15 @@ def main() -> int:
         alert_profile="ndx",
     )
     refresh_gold_static_data()
-    for label, daily_csv, signal_json, yahoo_url, strategy_name in (
+    for label, daily_csv, signal_json, yahoo_url, strategy_name, alert_profile, signal_fn in (
         (
             "FTSE250",
             FTSE250_DAILY_CSV,
             LATEST_FTSE250_SIGNAL_JSON,
             YAHOO_FTSE250_CHART_URL,
             "Guarded A5/B25 SMA20 Lead (FTSE 250, max 1x)",
+            "ftse250",
+            compute_signal,
         ),
         (
             "MSCI_EM",
@@ -1626,6 +1760,8 @@ def main() -> int:
             LATEST_EM_SIGNAL_JSON,
             YAHOO_EM_CHART_URL,
             "Guarded A5/B25 SMA20 Lead (MSCI EM, max 1x)",
+            "msci_em",
+            compute_signal,
         ),
         (
             "DAX",
@@ -1633,6 +1769,8 @@ def main() -> int:
             LATEST_DAX_SIGNAL_JSON,
             YAHOO_DAX_CHART_URL,
             "Guarded A5/B25 SMA20 Lead (DAX, max 1x)",
+            "dax",
+            compute_signal,
         ),
         (
             "MSCI_WORLD",
@@ -1640,6 +1778,8 @@ def main() -> int:
             LATEST_WORLD_SIGNAL_JSON,
             YAHOO_WORLD_CHART_URL,
             "Guarded A5/B25 SMA20 Lead (MSCI World, max 1x)",
+            "msci_world",
+            compute_signal,
         ),
         (
             "LQQ3",
@@ -1647,6 +1787,8 @@ def main() -> int:
             LATEST_LQQ3_SIGNAL_JSON,
             YAHOO_LQQ3_CHART_URL,
             "Guarded A5/B25 SMA20 Lead (LQQ3 3x, max 1x)",
+            "lqq3",
+            compute_signal,
         ),
         (
             "3BAL",
@@ -1654,6 +1796,8 @@ def main() -> int:
             LATEST_3BAL_SIGNAL_JSON,
             YAHOO_3BAL_CHART_URL,
             "SMA20 1x/cash (3BAL 3x EU Banks, max 1x)",
+            "3bal",
+            compute_sma20_cash_signal,
         ),
     ):
         try:
@@ -1664,9 +1808,9 @@ def main() -> int:
                 yahoo_chart_url=yahoo_url,
                 strategy_name=strategy_name,
                 max_leverage=1.0,
-                send_trade_alerts=(label == "LQQ3"),
-                alert_profile=("lqq3" if label == "LQQ3" else None),
-                signal_fn=compute_sma20_cash_signal if label == "3BAL" else compute_signal,
+                send_trade_alerts=True,
+                alert_profile=alert_profile,
+                signal_fn=signal_fn,
             )
         except Exception as exc:
             print(f"[{label}] refresh failed: {exc}", file=sys.stderr)
