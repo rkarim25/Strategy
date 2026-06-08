@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-06-05T23:06:07Z",
+  "generated_at_utc": "2026-06-08T17:25:52Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street Hits Record High on Tech Stock Rally - Gotrade. Bearish offsets: Wall Street ends sharply lower as jobs data fuels rate hike fears; S&P 500, Nasdaq Fall as Chip Sell-Off Deepens - Rolling Out.",
+  "score": 8,
+  "label": "Bullish",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Nasdaq Leads Rally After Iran Pauses Strikes; Chip Stocks Stage A Comeback (Live Coverage); 1 Services Stock with Impressive Fundamentals and 2 We Question. Bearish offsets: S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record: What investors need to know about Friday\u2019s selloff - MarketWatch; Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears By Reuters - Investing.com.",
   "articles": [
     {
-      "title": "Wall Street ends sharply lower as jobs data fuels rate hike fears",
+      "title": "Stock Market Today: Nasdaq Leads Rally After Iran Pauses Strikes; Chip Stocks Stage A Comeback (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/wall-street-ends-sharply-lower-223301488.html?.tsrc=rss",
-      "published": "2026-06-05T22:33:01Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street Hits Record High on Tech Stock Rally - Gotrade",
-      "source": "Gotrade",
-      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNbnJqSl9VQS1ZSzBmMHFlUXlKYTBUT1lKQ2xrVzV0WTNoZVljcHhaS0tvTUZ2QzNQb2c1TzR1ckszY0gyM2R6TG1UVkJYVVl2WXd5ZG5mREhmUWg3blgwdnlxZm4ycTBIc1pOdmYyN3BWREozZ2wxTmlzYllaeVRiLThR?oc=5",
-      "published": "2026-06-01T10:02:36Z",
+      "url": "https://finance.yahoo.com/m/4666804e-2154-3599-9b27-c294f072946f/stock-market-today%3A-nasdaq.html?.tsrc=rss",
+      "published": "2026-06-08T16:59:36Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500, Nasdaq Fall as Chip Sell-Off Deepens - Rolling Out",
-      "source": "Rolling Out",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9iZWF3QjN3d0pzNjE4Q0k1b2lkcE1CaTFOaG04Mkt6cUlOLWRxSlRRZUhQazFEWGFiOWJ1SjI0LXp4WlRsQjBqNzBieGxBeTBSdURKM05Pd0trNGJ4bEdjQU1IREN6akRtYWxfbTlEY0hyRm1PVzlyQ0VUQzhjUnc?oc=5",
-      "published": "2026-06-05T15:29:55Z",
+      "title": "S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record: What investors need to know about Friday\u2019s selloff - MarketWatch",
+      "source": "MarketWatch",
+      "url": "https://news.google.com/rss/articles/CBMihwJBVV95cUxQc28wR2dwbzFTclNERDI2LU4yVVN2TG5hdklKbWtzZVBQdE1vbEVvb0MwVEVudmpCbHlWeW05Vnhlc0tXblNhbFU3V01YUWxNVlh5SllEamdoN1ROeVBBZkFldGxNeTFlbllLWVNHYXlZVzVLVGxUX2FhRTlraElKZzFDeTlFZEhEQk9ReXlVTThURXBVenhLN0M0QlRkaTlEZENWNVg4SEpHQ254eUxpRU9oRHhyV296VWZZOGZIaHFzeXVpT3Q3bDBmdkQwcXZuWHpEbl9zRlJaYS1OT1MxUXFuUTFrelJHYTBPbzRtOVduZ2Zma093cmhXXzM0aFk1aGRrRnRKNA?oc=5",
+      "published": "2026-06-05T22:27:00Z",
       "tone": "bearish"
     },
     {
-      "title": "Nasdaq Posts Worst Drop Since April 2025, S&P 500 And Dow Drop As Strong Jobs Data Ignites Rate Hike Bets \u2014 TSLA, GME, META, BA, MSTR, GOOGL In Focus",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://stocktwits.com/news-articles/markets/equity/nasdaq-posts-worst-drop-since-april-2025-s-and-p-500-and-dow-drop-as-strong-jobs-data-ignites-rate-hike-bets-tsla-gme-meta-ba-mstr-in-focus/cZ0FUXKReCv?.tsrc=rss",
-      "published": "2026-06-05T21:53:17Z",
+      "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOamVKYU9sRWFHY2F5OTNBb283a2RaamtKMVdWWjFMdHRNV3JhdXNVcnMzYURsaVVsYmNfa3BBak9HbHlQZUVySUdkdFhobUZSM1RkVzFnSDJYdFdsVG4zRkZkaWpsR0tuVVFEUHNHdkxGdXFPbXRVcTloWEQ3MkJTSkJLSzB5czhqdUY2VVBVdFYwUjFxaTFCanRkNWE5NkFxbHRsYXk5OUxpT28zVGptb1RnWlNFZ2VvTDRpTg?oc=5",
+      "published": "2026-06-05T21:59:41Z",
       "tone": "bearish"
     },
     {
       "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQZzdPM20tT2tIYkJrWFRJSmRaUDk5M1Z0ZHJRbEZ0dFpmSkpFWVAtTEZGdjFwa1YyN2hhU2NEbkx5NVJ2c0JCYzlZclV6NVh6SHhqbVk3V2h5V2J5azlCQ3MyN0ZsUmhvd1RYLXo1Ti1qNlJUOVhBaHVRQkNWckRJQ000UEZIWk9SLVk5QmZ6ZmpDUzhxbWRDZ2JSVER5VDZEbmtSWg?oc=5",
-      "published": "2026-06-05T21:39:47Z",
+      "published": "2026-06-05T10:05:00Z",
       "tone": "bearish"
+    },
+    {
+      "title": "1 Services Stock with Impressive Fundamentals and 2 We Question",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-services-stock-impressive-fundamentals-153350963.html?.tsrc=rss",
+      "published": "2026-06-08T15:33:50Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 82
+        "articles": 96
       }
     ],
-    "headline_count": 132,
+    "headline_count": 146,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
