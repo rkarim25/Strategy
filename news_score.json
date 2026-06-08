@@ -1,30 +1,23 @@
 {
-  "generated_at_utc": "2026-06-08T17:25:52Z",
+  "generated_at_utc": "2026-06-08T19:40:29Z",
   "window_days": 7,
-  "score": 8,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Nasdaq Leads Rally After Iran Pauses Strikes; Chip Stocks Stage A Comeback (Live Coverage); 1 Services Stock with Impressive Fundamentals and 2 We Question. Bearish offsets: S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record: What investors need to know about Friday\u2019s selloff - MarketWatch; Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears By Reuters - Investing.com.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Equities Mostly Rise Intraday as Tech Jumps, Markets Monitor Middle East Developments; Marvell Stock Is Surging. It\u2019s About More Than the Chip Rebound.. Bearish offsets: Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears - Reuters.",
   "articles": [
     {
-      "title": "Stock Market Today: Nasdaq Leads Rally After Iran Pauses Strikes; Chip Stocks Stage A Comeback (Live Coverage)",
+      "title": "Equities Mostly Rise Intraday as Tech Jumps, Markets Monitor Middle East Developments",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/4666804e-2154-3599-9b27-c294f072946f/stock-market-today%3A-nasdaq.html?.tsrc=rss",
-      "published": "2026-06-08T16:59:36Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-mostly-rise-intraday-tech-182425284.html?.tsrc=rss",
+      "published": "2026-06-08T18:24:25Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record: What investors need to know about Friday\u2019s selloff - MarketWatch",
-      "source": "MarketWatch",
-      "url": "https://news.google.com/rss/articles/CBMihwJBVV95cUxQc28wR2dwbzFTclNERDI2LU4yVVN2TG5hdklKbWtzZVBQdE1vbEVvb0MwVEVudmpCbHlWeW05Vnhlc0tXblNhbFU3V01YUWxNVlh5SllEamdoN1ROeVBBZkFldGxNeTFlbllLWVNHYXlZVzVLVGxUX2FhRTlraElKZzFDeTlFZEhEQk9ReXlVTThURXBVenhLN0M0QlRkaTlEZENWNVg4SEpHQ254eUxpRU9oRHhyV296VWZZOGZIaHFzeXVpT3Q3bDBmdkQwcXZuWHpEbl9zRlJaYS1OT1MxUXFuUTFrelJHYTBPbzRtOVduZ2Zma093cmhXXzM0aFk1aGRrRnRKNA?oc=5",
-      "published": "2026-06-05T22:27:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears By Reuters - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOamVKYU9sRWFHY2F5OTNBb283a2RaamtKMVdWWjFMdHRNV3JhdXNVcnMzYURsaVVsYmNfa3BBak9HbHlQZUVySUdkdFhobUZSM1RkVzFnSDJYdFdsVG4zRkZkaWpsR0tuVVFEUHNHdkxGdXFPbXRVcTloWEQ3MkJTSkJLSzB5czhqdUY2VVBVdFYwUjFxaTFCanRkNWE5NkFxbHRsYXk5OUxpT28zVGptb1RnWlNFZ2VvTDRpTg?oc=5",
-      "published": "2026-06-05T21:59:41Z",
-      "tone": "bearish"
+      "title": "Marvell Stock Is Surging. It\u2019s About More Than the Chip Rebound.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/cb8f074a-4984-34a0-86e5-d763a8262622/marvell-stock-is-surging..html?.tsrc=rss",
+      "published": "2026-06-08T17:59:00Z",
+      "tone": "bullish"
     },
     {
       "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears - Reuters",
@@ -34,10 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "1 Services Stock with Impressive Fundamentals and 2 We Question",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/1-services-stock-impressive-fundamentals-153350963.html?.tsrc=rss",
-      "published": "2026-06-08T15:33:50Z",
+      "title": "The Dow leaps to a record as oil prices ease and US stocks outside of AI rally - seMissourian",
+      "source": "seMissourian",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOWmdRaUM3Y21Dc1J0TUxxcjhabGVCeWhDQjlCVk5ENk4zRnNUZ2RJdG9OSnhGUndNU0pLMHVjLVE4V01ZUzJpenhNYnh0cHJLUlhyVFcxYTJTdDgzR1JlT1BCWlNUTWd6TmV4SXRfRGZ0YV9zM3Q5a0lrVGlhblZpSjV3NGF2ZFROZ0Jkd1dHdllRbDR3TmlFdEFMNVhXellhZ1Q0eWwyXzlIY2w3ZnlXMm82RWdGMUxrS05kNHdFM1RvQ1dieWFWU0tlaUtoMHdxczVR?oc=5",
+      "published": "2026-06-04T03:33:52Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Dow Jumps 645, Nasdaq Gains 400, S&P 500 Adds 79 - TV News Check",
+      "source": "TV News Check",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNT01hYXlIMGZDSjRMX3NBLWJQbWZCemJkcjNMbW4zLTV4X1VCZjRZUFF2OFhyVkhBV2J3Y2szN0hSSlZaRFBiQTZWQkZyVmJNZUc0M1k3b1NncDJWckhkS1ZLYjhlUmlxQ1A1cUFfc3V2R2NXR1JYdlREMzJMTnhpSlVjTkdMQmJPNnd4a05OVUc?oc=5",
+      "published": "2026-06-04T21:10:10Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 93
       }
     ],
-    "headline_count": 146,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
