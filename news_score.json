@@ -1,22 +1,22 @@
 {
-  "generated_at_utc": "2026-06-09T18:31:32Z",
+  "generated_at_utc": "2026-06-09T22:17:53Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Equities Markets Fall Intraday Amid Tech Sell-Off; S&P 500, Nasdaq fall to one-month lows as tech selloff resumes - Reuters.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Micron Selloff Was a \u2018Buying Opportunity\u2019\u2014But the Stock Continues to Fall; S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record: What investors need to know about Friday\u2019s selloff - MarketWatch.",
   "articles": [
     {
-      "title": "Equities Markets Fall Intraday Amid Tech Sell-Off",
+      "title": "Micron Selloff Was a \u2018Buying Opportunity\u2019\u2014But the Stock Continues to Fall",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-markets-fall-intraday-amid-181706956.html?.tsrc=rss",
-      "published": "2026-06-09T18:17:06Z",
+      "url": "https://finance.yahoo.com/m/b7437d7f-ab98-335e-a90c-282fb428339e/micron-selloff-was-a-%E2%80%98buying.html?.tsrc=rss",
+      "published": "2026-06-09T20:52:00Z",
       "tone": "bearish"
     },
     {
-      "title": "S&P 500, Nasdaq fall to one-month lows as tech selloff resumes - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQWGJ1bl83a1ZCa082M2NZNkdvamdjX2pNODlzalRUN0NiaEMtbXl4QTdlNkhGZTE0T3QzVmxHcjJ4OE9YZnFPbm0xWDdIckNobWVFN0oyZUoxTXNUeUhrdUtWQnFNQ1NCcjJ0MGprRm80eG9lM2NzMUpPcWdKNlJDNmNqLU5jZlBrVjdsUEtSeWhqVEdzdTRnSmtFWFBhb3RTemVV?oc=5",
-      "published": "2026-06-09T16:40:55Z",
+      "title": "S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record: What investors need to know about Friday\u2019s selloff - MarketWatch",
+      "source": "MarketWatch",
+      "url": "https://news.google.com/rss/articles/CBMihwJBVV95cUxQc28wR2dwbzFTclNERDI2LU4yVVN2TG5hdklKbWtzZVBQdE1vbEVvb0MwVEVudmpCbHlWeW05Vnhlc0tXblNhbFU3V01YUWxNVlh5SllEamdoN1ROeVBBZkFldGxNeTFlbllLWVNHYXlZVzVLVGxUX2FhRTlraElKZzFDeTlFZEhEQk9ReXlVTThURXBVenhLN0M0QlRkaTlEZENWNVg4SEpHQ254eUxpRU9oRHhyV296VWZZOGZIaHFzeXVpT3Q3bDBmdkQwcXZuWHpEbl9zRlJaYS1OT1MxUXFuUTFrelJHYTBPbzRtOVduZ2Zma093cmhXXzM0aFk1aGRrRnRKNA?oc=5",
+      "published": "2026-06-05T22:27:00Z",
       "tone": "bearish"
     },
     {
@@ -27,17 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPanFWWEpvdDgwaWMxV2NqeS1WWnpZTG1KcHIxX1NPelQ1eWt0bXNVd0RLbEw2UmZMdko1SEZUTzI2Q0owZU12eVYwYzB4dUM0UmlUVHEtV3d6ekVNa1BqN0JhSkpGZmQ1Vk51MmN6cUszWFRsWU9zcXJTVzlOTklveW0za0haaHNkTkw5VEJtelRfdUh4TzBpajBqdkhqX1ZYaWJyZXBacw?oc=5",
-      "published": "2026-06-05T20:34:13Z",
+      "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOamVKYU9sRWFHY2F5OTNBb283a2RaamtKMVdWWjFMdHRNV3JhdXNVcnMzYURsaVVsYmNfa3BBak9HbHlQZUVySUdkdFhobUZSM1RkVzFnSDJYdFdsVG4zRkZkaWpsR0tuVVFEUHNHdkxGdXFPbXRVcTloWEQ3MkJTSkJLSzB5czhqdUY2VVBVdFYwUjFxaTFCanRkNWE5NkFxbHRsYXk5OUxpT28zVGptb1RnWlNFZ2VvTDRpTg?oc=5",
+      "published": "2026-06-05T21:59:41Z",
       "tone": "bearish"
     },
     {
-      "title": "Wall Street falls sharply as AI stocks resume their sell-off - mariettatimes.com",
-      "source": "mariettatimes.com",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPYm1tZUhzWHB3d0l4XzRXNXhRRDg5UXVUamtSbkY2aGlRVnA5NjJzVnE3cjVYN0RVQTBydF9GWk84ZFJ6RHM3UjZucEhXTmNtUUV2SWpkLW5ETUpUWUh4dmZDZUkyZE5ZQW9reEoxNS1mUFNkc19yTHd6WHlwemJlbWliQlJHMDJjWVdqeGV5Q3FCV09qVXA2SGltQmw5LURaRDdxN1FqakpBMVpSNDVDTjJkSQ?oc=5",
-      "published": "2026-06-09T17:11:16Z",
+      "title": "Wall Street falls sharply as AI stocks resume their sell-off - News and Sentinel",
+      "source": "News and Sentinel",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOZjVyNG00NWttQjYzdDZYUEdBWEJRa1NIOWVHd3djM0NEb1ZLN2p1WFBac0x4WjVMeGFzSGN3cHZsdi1tZm5HWFFuclFCRUhhaHV3Qzk3RklndFJ0Qi02WFJ4SlU1UG9KQ3p5b2Y5ZFJXeWFYWklHNTlEZ1Q4TENkNG5hTGM1UFhfMGprTktTYU5ZZjJlUzhHdXFhUmtqeWxCZkRjVFBJOXJHWWhMVG5USi1aSG9iQQ?oc=5",
+      "published": "2026-06-09T18:15:10Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 97
+        "articles": 96
       }
     ],
-    "headline_count": 147,
+    "headline_count": 146,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
