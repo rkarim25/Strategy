@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-09T23:16:02Z",
-  "data_asof": "2026-06-08",
-  "daily_rows": 9718,
-  "quote_price": 24616.220703125,
-  "quote_timestamp": "2026-06-08",
+  "generated_at_utc": "2026-06-10T10:52:18Z",
+  "data_asof": "2026-06-10",
+  "daily_rows": 9719,
+  "quote_price": 24241.7109375,
+  "quote_timestamp": "2026-06-10",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGDAXI?period1=0&period2=1781133361&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGDAXI?period1=0&period2=1781175137&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -25,66 +25,67 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-08",
-      "close": 24616.220703125
+      "date": "2026-06-10",
+      "close": 24241.7109375
     },
-    "latestSma": 24731.591015625,
+    "latestSma": 24745.930078125,
     "highWater": 25420.66015625,
     "highWaterDate": "2026-01-13",
-    "latestDd": -0.03164510473687354,
+    "latestDd": -0.04637760040469052,
     "regime": "tier2",
     "entryClose": 21961.970703125,
     "entryDate": "2025-04-23",
     "recoveryTarget": 30746.758984375,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 24307.919921875,
-    "activeEntryDate": "2026-05-18",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.012683141224788974,
-    "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-06-08",
-      "close": 24616.220703125
+      "date": "2026-06-10",
+      "close": 24241.7109375
     },
-    "latestSma": 24764.65556640625,
+    "latestSma": 24751.17509765625,
     "highWater": 25420.66015625,
     "highWaterDate": "2026-01-13",
-    "latestDd": -0.03164510473687354,
+    "latestDd": -0.04637760040469052,
     "regime": "tier2",
     "entryClose": 21961.970703125,
     "entryDate": "2025-04-23",
     "recoveryTarget": 30746.758984375,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 24307.919921875,
-    "activeEntryDate": "2026-05-18",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.012683141224788974,
-    "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-08",
-    "last_observed_target_leverage": 1,
-    "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-09T23:16:02Z",
-    "last_email_sent_on": "2026-06-09",
+    "last_observed_asof": "2026-06-10",
+    "last_observed_target_leverage": 0,
+    "last_observed_target_label": "cash",
+    "last_checked_at_utc": "2026-06-10T10:52:18Z",
+    "last_email_sent_on": "2026-06-10",
+    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
-      "id": "2026-06-09:0->2026-06-08:1",
-      "detected_at_utc": "2026-06-09T22:17:51Z",
-      "previous_asof": "2026-06-09",
-      "current_asof": "2026-06-08",
-      "old_target_leverage": 0,
-      "new_target_leverage": 1,
-      "old_target_label": "cash",
-      "new_target_label": "1x",
-      "email_sent": false,
+      "id": "2026-06-08:1->2026-06-10:0",
+      "detected_at_utc": "2026-06-10T10:52:18Z",
+      "previous_asof": "2026-06-08",
+      "current_asof": "2026-06-10",
+      "old_target_leverage": 1,
+      "new_target_leverage": 0,
+      "old_target_label": "1x",
+      "new_target_label": "cash",
+      "email_sent": true,
       "email_error": null,
-      "email_skipped_reason": "Signal changed (cash -> 1x) but an alert email was already sent today (2026-06-09 UK)."
+      "email_skipped_reason": null
     }
   }
 }

@@ -1,7 +1,7 @@
 {
-  "generated_at_utc": "2026-06-09T23:16:01Z",
-  "data_asof": "2026-06-09",
-  "daily_rows": 7548,
+  "generated_at_utc": "2026-06-10T10:52:15Z",
+  "data_asof": "2026-06-08",
+  "daily_rows": 7547,
   "quote_price": 29084.5,
   "quote_timestamp": "2026-06-09",
   "quote_source": "Yahoo Finance chart endpoint",
@@ -29,6 +29,28 @@
   },
   "official_signal": {
     "latest": {
+      "date": "2026-06-08",
+      "close": 29414.259765625
+    },
+    "latestSma": 29673.25244140625,
+    "highWater": 30660.599609375,
+    "highWaterDate": "2026-06-02",
+    "latestDd": -0.04064955870494169,
+    "regime": "base",
+    "entryClose": null,
+    "entryDate": null,
+    "recoveryTarget": null,
+    "aboveSma": false,
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "No recovery tier active; base rule says cash because close is below SMA20."
+  },
+  "provisional_signal": {
+    "latest": {
       "date": "2026-06-09",
       "close": 29084.5
     },
@@ -49,33 +71,11 @@
     "activeEntryPnl": null,
     "explanation": "No recovery tier active; base rule says cash because close is below SMA20."
   },
-  "provisional_signal": {
-    "latest": {
-      "date": "2026-06-09",
-      "close": 29084.5
-    },
-    "latestSma": 29662.42939453125,
-    "highWater": 30660.599609375,
-    "highWaterDate": "2026-06-02",
-    "latestDd": -0.05140472232947069,
-    "regime": "base",
-    "entryClose": null,
-    "entryDate": null,
-    "recoveryTarget": null,
-    "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "No recovery tier active; base rule says cash because close is below SMA20."
-  },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-09",
+    "last_observed_asof": "2026-06-08",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-09T23:16:01Z",
+    "last_checked_at_utc": "2026-06-10T10:52:15Z",
     "last_email_sent_on": "2026-06-05",
     "last_transition": {
       "id": "2026-06-04:1->2026-06-05:0",

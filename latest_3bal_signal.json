@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-09T23:16:03Z",
-  "data_asof": "2026-06-08",
-  "daily_rows": 2891,
-  "quote_price": 5291.0,
-  "quote_timestamp": "2026-06-08",
+  "generated_at_utc": "2026-06-10T10:52:20Z",
+  "data_asof": "2026-06-10",
+  "daily_rows": 2893,
+  "quote_price": 5263.0,
+  "quote_timestamp": "2026-06-10",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L?period1=0&period2=1781133363&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L?period1=0&period2=1781175140&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -25,52 +25,67 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-08",
-      "close": 5291.0
+      "date": "2026-06-10",
+      "close": 5263.0
     },
-    "latestSma": 5255.225,
+    "latestSma": 5287.075,
     "highWater": 13014.4912109375,
     "highWaterDate": "2015-04-13",
-    "latestDd": -0.593453181208237,
+    "latestDd": -0.595604629124731,
     "regime": "sma20",
     "entryClose": null,
     "entryDate": null,
     "recoveryTarget": null,
-    "aboveSma": true,
-    "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 5248.0,
-    "activeEntryDate": "2026-05-20",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.008193597560975707,
-    "explanation": "Close is above SMA20; hold 1x (fully in 3BAL)."
+    "aboveSma": false,
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "Close is below SMA20; hold cash."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-06-08",
-      "close": 5291.0
+      "date": "2026-06-10",
+      "close": 5263.0
     },
-    "latestSma": 5267.125,
+    "latestSma": 5304.175,
     "highWater": 13014.4912109375,
     "highWaterDate": "2015-04-13",
-    "latestDd": -0.593453181208237,
+    "latestDd": -0.595604629124731,
     "regime": "sma20",
     "entryClose": null,
     "entryDate": null,
     "recoveryTarget": null,
-    "aboveSma": true,
-    "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 5248.0,
-    "activeEntryDate": "2026-05-20",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.008193597560975707,
-    "explanation": "Close is above SMA20; hold 1x (fully in 3BAL)."
+    "aboveSma": false,
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "Close is below SMA20; hold cash."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-08",
-    "last_observed_target_leverage": 1,
-    "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-09T23:16:03Z"
+    "last_observed_asof": "2026-06-10",
+    "last_observed_target_leverage": 0,
+    "last_observed_target_label": "cash",
+    "last_checked_at_utc": "2026-06-10T10:52:20Z",
+    "last_email_sent_on": "2026-06-10",
+    "last_email_sent_timezone": "Europe/London",
+    "last_transition": {
+      "id": "2026-06-08:1->2026-06-10:0",
+      "detected_at_utc": "2026-06-10T10:52:20Z",
+      "previous_asof": "2026-06-08",
+      "current_asof": "2026-06-10",
+      "old_target_leverage": 1,
+      "new_target_leverage": 0,
+      "old_target_label": "1x",
+      "new_target_label": "cash",
+      "email_sent": true,
+      "email_error": null,
+      "email_skipped_reason": null
+    }
   }
 }
