@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-06-10T22:47:17Z",
+  "generated_at_utc": "2026-06-10T23:23:26Z",
   "window_days": 7,
-  "score": 2,
+  "score": 3,
   "label": "Bearish",
-  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bearish offsets: US Equity Indexes Slide as Semiconductors Lead Technology Lower, Trump Warns of Iran Attack; Trump says 'I love the inflation' after consumer price index hits 3-year high.",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: S&P 500, Nasdaq, Dow Drop As US-Iran War Jitters, Inflation Risk Spur Tech Selloffs \u2014 SMCI, AMZN, OPEN, SEGG, TSLA In Focus; Trump says 'I love the inflation' after consumer price index hits 3-year high.",
   "articles": [
     {
-      "title": "US Equity Indexes Slide as Semiconductors Lead Technology Lower, Trump Warns of Iran Attack",
+      "title": "S&P 500, Nasdaq, Dow Drop As US-Iran War Jitters, Inflation Risk Spur Tech Selloffs \u2014 SMCI, AMZN, OPEN, SEGG, TSLA In Focus",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-slide-semiconductors-205107081.html?.tsrc=rss",
-      "published": "2026-06-10T20:51:07Z",
+      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-nasdaq-dow-drop-as-us-iran-war-jitters-inflation-risk-spur-tech-selloffs-smci-amzn-open-segg-tsla-in-focus/cZ06yd5R7cQ?.tsrc=rss",
+      "published": "2026-06-10T22:31:59Z",
       "tone": "bearish"
     },
     {
@@ -20,24 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Nasdaq Drops 2%, Dow Falls 950 Points As Chips Slide; Robinhood Pops",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/10570e89-0a46-392e-a220-4dc8a69e55aa/stock-market-today%3A-nasdaq.html?.tsrc=rss",
-      "published": "2026-06-10T21:07:24Z",
+      "title": "Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQUxUT1NqQm1KUFlpbmdjN0VuSm4wU2VIODFBNF81YU54bFBsWUptZVV0bU41ZXl0MHQxWE1UamxBaHlkUWhvWUY3MHFJZVJhYmJKdDZtMlkyLWlEbjdpOXZubnJLZFlZREdyOVhfMU5QM1l0ZGNoQnpIdHlYVjFVSHU2eXI3WGk3ek9aNXR4ZUJaQmp3dzF2dUxybmhWczI1ZEt3M1hCVmdNdmQ2bDJ3R3NOTkhzUVlRVE52WjF4cw?oc=5",
+      "published": "2026-06-10T22:58:16Z",
       "tone": "bearish"
     },
     {
-      "title": "How major US stock indexes fared Wednesday 6/10/2026",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201754534.html?.tsrc=rss",
-      "published": "2026-06-10T20:17:54Z",
+      "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOamVKYU9sRWFHY2F5OTNBb283a2RaamtKMVdWWjFMdHRNV3JhdXNVcnMzYURsaVVsYmNfa3BBak9HbHlQZUVySUdkdFhobUZSM1RkVzFnSDJYdFdsVG4zRkZkaWpsR0tuVVFEUHNHdkxGdXFPbXRVcTloWEQ3MkJTSkJLSzB5czhqdUY2VVBVdFYwUjFxaTFCanRkNWE5NkFxbHRsYXk5OUxpT28zVGptb1RnWlNFZ2VvTDRpTg?oc=5",
+      "published": "2026-06-05T21:59:41Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today, June 10: Super Micro Computer, Nvidia, Micron Fall as Risk-Off Mood Intensifies",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/06/10/stock-market-today-june-10-super-micro-computer-nvidia-micron-fall-as-risk-off-mood-intensifies/?.tsrc=rss",
-      "published": "2026-06-10T21:20:03Z",
+      "title": "Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - Boston Herald",
+      "source": "Boston Herald",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbnVuTEQwTk1ScFlIQnNTQUZuZ1pXTmFrYVhCaTNGOEh2aGxaZEwxZnR2ZHEtM2xDdjRQY2g3aTZlblQ2UE0ybkVLRlJrSXpoMW56VTc4Y2ZaejV5NFlmM291YmVyM0ZuMHA4QkF0VzRwZ01xVENXbUo5OTlZZ005UUVLVGFKcjVBUks5TFVHeUZSamdWcHpvMi1YOENkOGxaVV9zTUN2aGYxN0I0aG44ZndHNDRMM0Y1bVpWZmNESEcxd1BIUzJCNA?oc=5",
+      "published": "2026-06-10T20:09:42Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 94
       }
     ],
-    "headline_count": 146,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
