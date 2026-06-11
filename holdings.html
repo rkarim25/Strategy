@@ -2074,6 +2074,7 @@
     const allInputs = document.querySelectorAll('.alloc-table input, .card input');
     allInputs.forEach(input => {
       input.addEventListener('input', () => {
+        if (input.id === 'txtPasscode') return;
         updateAllocation();
       });
     });

@@ -326,9 +326,9 @@ const USE_WORKER_LIVE = false;
         const eodResult = computeSignal(rows);
         let livePriceInfo = null;
         let quoteWarning = "";
-        if (allowManualOverride && $("manualIntradayPrice")?.value?.trim()) {
+        if ($("manualPrice")?.value) {
           try {
-            livePriceInfo = await getLivePrice({ allowManualOverride });
+            livePriceInfo = await getLivePrice({ allowManualOverride: true });
           } catch (quoteErr) {
             quoteWarning = quoteErr.message || String(quoteErr);
           }

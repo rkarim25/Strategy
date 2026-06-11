@@ -134,6 +134,7 @@ class PortfolioEngine:
         dd_pause_trigger: float | None = None,
         dd_pause_trading_days: int = DEFAULT_DD_PAUSE_TRADING_DAYS,
         dd_pause_reset_peak_on_reentry: bool = True,
+        signal_delay_days: int = 1,
     ) -> None:
         self.initial_capital = initial_capital
         self.annual_inflow_pct = annual_inflow_pct
@@ -144,6 +145,11 @@ class PortfolioEngine:
         self.dd_pause_trigger = dd_pause_trigger
         self.dd_pause_trading_days = dd_pause_trading_days
         self.dd_pause_reset_peak_on_reentry = dd_pause_reset_peak_on_reentry
+        # A close-based signal cannot be acted on until the NEXT session: the
+        # leverage decided from close[i] earns return[i+1] onward, not return[i].
+        # signal_delay_days=1 enforces this (no look-ahead). Use 0 only to
+        # reproduce the legacy same-bar convention for comparison.
+        self.signal_delay_days = signal_delay_days
 
     def run(
         self,
@@ -162,6 +168,10 @@ class PortfolioEngine:
             lev_series = pd.Series(float(leverage), index=df.index)
         else:
             lev_series = leverage.reindex(df.index).ffill().fillna(1.0)
+
+        # Honest execution: hold cash until the first actionable (lagged) signal.
+        if self.signal_delay_days > 0:
+            lev_series = lev_series.shift(self.signal_delay_days).fillna(0.0)
 
         etp_panel = etp_returns
         etp_cov: dict[str, float] | None = None
