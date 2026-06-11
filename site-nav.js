@@ -114,6 +114,14 @@
       href: "instruments.html",
       secondary: true,
     },
+    {
+      id: "allocator",
+      asset: "Optimizer",
+      strategy: "Asset allocator",
+      group: "tools",
+      href: "holdings.html",
+      secondary: true,
+    },
   ];
 
   /** Back-compat label for anything still reading .label */
