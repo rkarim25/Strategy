@@ -392,6 +392,68 @@
         overflow-x: auto;
       }
     }
+    /* Accounts Tabs */
+    .tabs-container {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1.5px solid var(--line);
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      border-radius: 0;
+      padding: 10px 18px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13.5px;
+      box-shadow: none;
+      transition: color .2s, border-color .2s;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      transform: none;
+      box-shadow: none;
+      background: rgba(0,0,0,0.02);
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      background: transparent;
+    }
+    .btn-delete-holding {
+      background: transparent;
+      color: var(--muted);
+      border: 0;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 4px 8px;
+      box-shadow: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-delete-holding:hover {
+      color: var(--bad);
+      background: rgba(215, 0, 21, 0.08);
+      transform: none;
+      box-shadow: none;
+    }
+    .holding-input {
+      width: 100%;
+      border-radius: 6px;
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      background: rgba(255,255,255,0.8);
+    }
+    .holding-input:focus {
+      border-color: var(--accent);
+      outline: none;
+      background: #fff;
+    }
   </style>
 </head>
 <body>
@@ -630,23 +692,80 @@
     </div>
   </section>
 
-  <!-- CURRENT HOLDINGS MATRIX -->
+  <!-- DYNAMIC HOLDINGS PLANNER BY ACCOUNT TAB -->
   <section class="card">
-    <h2>4. Current Holdings Matrix</h2>
-    <p class="small" id="lblMatrixDesc">
-      Enter the current GBP value of assets in each account. 
-      Total balances per account and consolidated values are calculated dynamically.
+    <h2>4. Current Portfolio Positions</h2>
+    <p class="small">
+      Manage your individual positions (units and prices in pence) under each wrapper. 
+      Their values and unrealised gains/losses are updated dynamically.
+    </p>
+
+    <!-- Tabs Container for Accounts -->
+    <div class="tabs-container" id="accountsTabs">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- Active Account Details Card -->
+    <div class="card" style="background: rgba(0, 0, 0, 0.015); border-radius: 20px; box-shadow: none; border: 1px solid var(--line); padding: 20px; margin-bottom: 8px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+        <h3 id="lblActiveAccountName" style="margin: 0; font-size: 18px; font-weight: 700;">Account Name</h3>
+        <span id="lblActiveAccountBadge" class="badge badge-active">Wrapper Type</span>
+      </div>
+
+      <!-- Holdings Table -->
+      <div class="table-wrap">
+        <table style="font-size: 13.5px; width: 100%;">
+          <thead>
+            <tr>
+              <th style="width: 26%;">Position / Fund Name</th>
+              <th style="width: 11%;">Ticker</th>
+              <th style="text-align: right; width: 12%;">Units Held</th>
+              <th style="text-align: right; width: 12%;">Price (pence)</th>
+              <th style="text-align: right; width: 12%;">Current Value (£)</th>
+              <th style="text-align: right; width: 11%;">Cost (£)</th>
+              <th style="text-align: right; width: 11%;">Unrealised G/L</th>
+              <th style="width: 16%;">Mapped Sleeve</th>
+              <th style="width: 5%; text-align: center;"></th>
+            </tr>
+          </thead>
+          <tbody id="holdingsTableBody">
+            <!-- Positions will be rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Add Position Button & Totals Summary -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; flex-wrap: wrap; gap: 16px;">
+        <button type="button" class="secondary" id="btnAddHolding" style="padding: 8px 16px; font-size: 13px;">➕ Add Custom Holding</button>
+        
+        <div style="display: flex; gap: 20px; text-align: right; font-size: 13.5px;">
+          <div>
+            <span style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;">Total Cost</span>
+            <strong id="lblAccountTotalCost">£0</strong>
+          </div>
+          <div>
+            <span style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;">Total Value</span>
+            <strong id="lblAccountTotalVal">£0</strong>
+          </div>
+          <div>
+            <span style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;">Unrealised Gain/Loss</span>
+            <strong id="lblAccountTotalGain" class="good">£0 (0.0%)</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGGREGATED PORTFOLIO LOCATION MATRIX -->
+  <section class="card">
+    <h2>5. Aggregated Asset Location Matrix</h2>
+    <p class="small">
+      This read-only grid summarizes how your individual holdings roll up into each asset class and wrapper account. 
+      Use the tabs above to modify balances.
     </p>
 
     <div class="row" style="margin-bottom: 18px; gap: 14px; align-items: flex-end;">
-      <div class="field" style="margin: 0; min-width: 220px;">
-        <label for="inputMode">Matrix Entry Mode</label>
-        <select id="inputMode" onchange="toggleInputMode()">
-          <option value="value" selected>Total GBP Value (£)</option>
-          <option value="quantity">Share Quantities &amp; Tickers</option>
-        </select>
-      </div>
-      <button type="button" id="btnFetchPrices" style="display: none; height: 38px;">Fetch Live Ticker Prices</button>
+      <button type="button" id="btnFetchPrices" style="height: 38px;">Fetch Live Ticker Prices</button>
       <span id="lblFetchStatus" class="small" style="align-self: center; margin-left: 8px;"></span>
     </div>
 
@@ -655,114 +774,28 @@
         <thead>
           <tr>
             <th>Asset Class</th>
-            <th style="text-align: right; width: 14.5%;">General Inv. (GIA)<br><span class="badge badge-passive">Taxable</span></th>
-            <th style="text-align: right; width: 14.5%;">Pension (SIPP)<br><span class="badge badge-active">Tax Free</span></th>
-            <th style="text-align: right; width: 14.5%;">Self ISA<br><span class="badge badge-active">Tax Free</span></th>
-            <th style="text-align: right; width: 14.5%;">Wife ISA<br><span class="badge badge-active">Tax Free</span></th>
-            <th style="text-align: right; width: 14.5%;">Child 1 JISA<br><span class="badge badge-active">Tax Free</span></th>
-            <th style="text-align: right; width: 14.5%;">Child 2 JISA<br><span class="badge badge-active">Tax Free</span></th>
+            <th style="text-align: right; width: 13%;">General Inv. (GIA)</th>
+            <th style="text-align: right; width: 13%;">Reza HL SIPP</th>
+            <th style="text-align: right; width: 13%;">Self ISA</th>
+            <th style="text-align: right; width: 13%;">Wife ISA</th>
+            <th style="text-align: right; width: 13%;">Child 1 JISA</th>
+            <th style="text-align: right; width: 13%;">Child 2 JISA</th>
+            <th style="text-align: right; width: 13%; font-weight: bold; background: rgba(0,0,0,0.025);">Sleeve Total</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-              <span class="color-dot dot-spx"></span><strong>S&amp;P 500</strong>
-              <div class="ticker-input-wrap" style="margin-top: 5px; display: none;">
-                <input type="text" id="t_spx" value="VUAG.L" style="font-size: 11px; padding: 4px 6px; border-radius: 6px; width: 84px; text-transform: uppercase;" onchange="updateAllocation()" />
-                <span id="p_spx" style="font-size: 11px; font-weight: bold; margin-left: 4px; color: var(--muted);">£92.50</span>
-              </div>
-            </td>
-            <td><input type="number" id="h_gia_spx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sipp_spx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sisa_spx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_wisa_spx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa1_spx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa2_spx" value="0" min="0" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td>
-              <span class="color-dot dot-ndx"></span><strong>Nasdaq 100</strong>
-              <div class="ticker-input-wrap" style="margin-top: 5px; display: none;">
-                <input type="text" id="t_ndx" value="LQQ3.L" style="font-size: 11px; padding: 4px 6px; border-radius: 6px; width: 84px; text-transform: uppercase;" onchange="updateAllocation()" />
-                <span id="p_ndx" style="font-size: 11px; font-weight: bold; margin-left: 4px; color: var(--muted);">£285.40</span>
-              </div>
-            </td>
-            <td><input type="number" id="h_gia_ndx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sipp_ndx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sisa_ndx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_wisa_ndx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa1_ndx" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa2_ndx" value="0" min="0" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td>
-              <span class="color-dot dot-ftse"></span><strong>FTSE 250</strong>
-              <div class="ticker-input-wrap" style="margin-top: 5px; display: none;">
-                <input type="text" id="t_ftse" value="MIDD.L" style="font-size: 11px; padding: 4px 6px; border-radius: 6px; width: 84px; text-transform: uppercase;" onchange="updateAllocation()" />
-                <span id="p_ftse" style="font-size: 11px; font-weight: bold; margin-left: 4px; color: var(--muted);">£21.30</span>
-              </div>
-            </td>
-            <td><input type="number" id="h_gia_ftse" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sipp_ftse" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sisa_ftse" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_wisa_ftse" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa1_ftse" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa2_ftse" value="0" min="0" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td>
-              <span class="color-dot dot-em"></span><strong>MSCI EM</strong>
-              <div class="ticker-input-wrap" style="margin-top: 5px; display: none;">
-                <input type="text" id="t_em" value="EIMI.L" style="font-size: 11px; padding: 4px 6px; border-radius: 6px; width: 84px; text-transform: uppercase;" onchange="updateAllocation()" />
-                <span id="p_em" style="font-size: 11px; font-weight: bold; margin-left: 4px; color: var(--muted);">£30.10</span>
-              </div>
-            </td>
-            <td><input type="number" id="h_gia_em" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sipp_em" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sisa_em" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_wisa_em" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa1_em" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa2_em" value="0" min="0" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td>
-              <span class="color-dot dot-gold"></span><strong>Gold</strong>
-              <div class="ticker-input-wrap" style="margin-top: 5px; display: none;">
-                <input type="text" id="t_gold" value="SGLN.L" style="font-size: 11px; padding: 4px 6px; border-radius: 6px; width: 84px; text-transform: uppercase;" onchange="updateAllocation()" />
-                <span id="p_gold" style="font-size: 11px; font-weight: bold; margin-left: 4px; color: var(--muted);">£42.60</span>
-              </div>
-            </td>
-            <td><input type="number" id="h_gia_gold" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sipp_gold" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sisa_gold" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_wisa_gold" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa1_gold" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa2_gold" value="0" min="0" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td>
-              <span class="color-dot dot-cash"></span><strong>Cash</strong>
-              <div class="ticker-input-wrap" style="margin-top: 5px; display: none;">
-                <span style="font-size: 11px; font-weight: bold; color: var(--muted);">Fixed £1.00</span>
-              </div>
-            </td>
-            <td><input type="number" id="h_gia_cash" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sipp_cash" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_sisa_cash" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_wisa_cash" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa1_cash" value="0" min="0" onchange="updateAllocation()" /></td>
-            <td><input type="number" id="h_jisa2_cash" value="0" min="0" onchange="updateAllocation()" /></td>
-          </tr>
+        <tbody id="matrixRollupBody">
+          <!-- Injected by JS -->
         </tbody>
         <tfoot>
-          <tr style="font-weight: bold; background: rgba(0,0,0,0.02);">
+          <tr style="font-weight: bold; background: rgba(0,0,0,0.025);">
             <td>Account Total</td>
-            <td id="tot_gia" style="text-align: right; padding-right: 12px;">£0</td>
-            <td id="tot_sipp" style="text-align: right; padding-right: 12px;">£0</td>
-            <td id="tot_sisa" style="text-align: right; padding-right: 12px;">£0</td>
-            <td id="tot_wisa" style="text-align: right; padding-right: 12px;">£0</td>
-            <td id="tot_jisa1" style="text-align: right; padding-right: 12px;">£0</td>
-            <td id="tot_jisa2" style="text-align: right; padding-right: 12px;">£0</td>
+            <td id="tot_gia" style="text-align: right; padding-right: 10px;">£0</td>
+            <td id="tot_sipp" style="text-align: right; padding-right: 10px;">£0</td>
+            <td id="tot_sisa" style="text-align: right; padding-right: 10px;">£0</td>
+            <td id="tot_wisa" style="text-align: right; padding-right: 10px;">£0</td>
+            <td id="tot_jisa1" style="text-align: right; padding-right: 10px;">£0</td>
+            <td id="tot_jisa2" style="text-align: right; padding-right: 10px;">£0</td>
+            <td id="tot_all_portfolio" style="text-align: right; padding-right: 10px; font-size: 15px;">£0</td>
           </tr>
         </tfoot>
       </table>
@@ -890,8 +923,79 @@
   const ACTIVE_SHELTER_ORDER = ['ndx', 'ftse', 'em', 'gold', 'spx', 'cash'];
 
   // Global state
+  // Default accounts structure pre-populated with SIPP holdings from your HL screenshot
+  const DEFAULT_ACCOUNTS = {
+    sipp: {
+      name: "Reza HL SIPP",
+      holdings: [
+        { name: "Amundi Euro Stoxx 50 (DR) UCITS ETF Acc", ticker: "MSE.PA", units: 889, pricePence: 5912.28, cost: 44716.54, sleeve: "other" },
+        { name: "Ark Artificial Intelligence & Robotics UCITS ETF", ticker: "ARKA.L", units: 2490, pricePence: 774.80, cost: 15999.62, sleeve: "ndx" },
+        { name: "HL Growth Fund Accumulation (GBP)", ticker: "", units: 1058.246, pricePence: 140.81, cost: 1172.20, sleeve: "other" },
+        { name: "Pictet Robotics Class I - Accumulation (GBP)", ticker: "", units: 61.47982, pricePence: 43769.00, cost: 20000.00, sleeve: "ndx" },
+        { name: "SPDR MSCI Emerging Markets UCITS ETF", ticker: "EMIM.L", units: 270, pricePence: 7597.70, cost: 14486.51, sleeve: "em" },
+        { name: "Vanguard FTSE Developed Europe ex-UK Equity Index Acc (GBP)", ticker: "", units: 37.3993, pricePence: 51038.34, cost: 13061.26, sleeve: "other" },
+        { name: "Vanguard FTSE UK All Share Index Acc (GBP)", ticker: "", units: 81.3924, pricePence: 36225.39, cost: 19499.94, sleeve: "ftse" },
+        { name: "Vanguard US 500 Stock Index Institutional - Acc (USD)", ticker: "", units: 172.55, pricePence: 6602.97, cost: 8999.88, sleeve: "spx" },
+        { name: "WisdomTree Gold 2x Daily Leveraged", ticker: "4GOL.L", units: 90, pricePence: 12895.14, cost: 8995.62, sleeve: "gold" },
+        { name: "Xtrackers S&P 500 2x Leveraged Daily UCITS ETF", ticker: "XS2D.L", units: 709, pricePence: 24485.12, cost: 102334.03, sleeve: "spx" },
+        { name: "Cash (HL Account Balance)", ticker: "CASH", units: 7318.05, pricePence: 100.0, cost: 7318.05, sleeve: "cash" }
+      ]
+    },
+    gia: {
+      name: "General Investment Account (GIA)",
+      holdings: [
+        { name: "Vanguard S&P 500 UCITS ETF (VUAG)", ticker: "VUAG.L", units: 562, pricePence: 9250.00, cost: 48000.0, sleeve: "spx" },
+        { name: "Cash Balance", ticker: "CASH", units: 1500, pricePence: 100.00, cost: 1500.0, sleeve: "cash" }
+      ]
+    },
+    sisa: {
+      name: "Self ISA",
+      holdings: [
+        { name: "Vanguard S&P 500 UCITS ETF (VUAG)", ticker: "VUAG.L", units: 195, pricePence: 9250.00, cost: 16000.0, sleeve: "spx" },
+        { name: "LQQ3 3x Nasdaq ETF", ticker: "LQQ3.L", units: 28, pricePence: 28540.00, cost: 7000.0, sleeve: "ndx" },
+        { name: "Vanguard FTSE UK All Share Index Acc", ticker: "MIDD.L", units: 188, pricePence: 2130.00, cost: 3800.0, sleeve: "ftse" },
+        { name: "MSCI EM ETF (EIMI)", ticker: "EIMI.L", units: 199, pricePence: 3010.00, cost: 5500.0, sleeve: "em" },
+        { name: "Physical Gold ETC (SGLN)", ticker: "SGLN.L", units: 47, pricePence: 4260.00, cost: 1800.0, sleeve: "gold" },
+        { name: "Cash Balance", ticker: "CASH", units: 1000, pricePence: 100.00, cost: 1000.0, sleeve: "cash" }
+      ]
+    },
+    wisa: {
+      name: "Wife ISA",
+      holdings: [
+        { name: "Vanguard S&P 500 UCITS ETF (VUAG)", ticker: "VUAG.L", units: 151, pricePence: 9250.00, cost: 12500.0, sleeve: "spx" },
+        { name: "LQQ3 3x Nasdaq ETF", ticker: "LQQ3.L", units: 26, pricePence: 28540.00, cost: 6500.0, sleeve: "ndx" },
+        { name: "Vanguard FTSE UK All Share Index Acc", ticker: "MIDD.L", units: 141, pricePence: 2130.00, cost: 2800.0, sleeve: "ftse" },
+        { name: "MSCI EM ETF (EIMI)", ticker: "EIMI.L", units: 166, pricePence: 3010.00, cost: 4500.0, sleeve: "em" },
+        { name: "Physical Gold ETC (SGLN)", ticker: "SGLN.L", units: 59, pricePence: 4260.00, cost: 2200.0, sleeve: "gold" },
+        { name: "Cash Balance", ticker: "CASH", units: 500, pricePence: 100.00, cost: 500.0, sleeve: "cash" }
+      ]
+    },
+    jisa1: {
+      name: "Child 1 JISA",
+      holdings: [
+        { name: "Vanguard S&P 500 UCITS ETF (VUAG)", ticker: "VUAG.L", units: 52, pricePence: 9250.00, cost: 4200.0, sleeve: "spx" },
+        { name: "LQQ3 3x Nasdaq ETF", ticker: "LQQ3.L", units: 4, pricePence: 28540.00, cost: 1000.0, sleeve: "ndx" },
+        { name: "Vanguard FTSE UK All Share Index Acc", ticker: "MIDD.L", units: 23, pricePence: 2130.00, cost: 450.0, sleeve: "ftse" },
+        { name: "MSCI EM ETF (EIMI)", ticker: "EIMI.L", units: 17, pricePence: 3010.00, cost: 450.0, sleeve: "em" },
+        { name: "Physical Gold ETC (SGLN)", ticker: "SGLN.L", units: 12, pricePence: 4260.00, cost: 450.0, sleeve: "gold" }
+      ]
+    },
+    jisa2: {
+      name: "Child 2 JISA",
+      holdings: [
+        { name: "Vanguard S&P 500 UCITS ETF (VUAG)", ticker: "VUAG.L", units: 53, pricePence: 9250.00, cost: 4300.0, sleeve: "spx" },
+        { name: "LQQ3 3x Nasdaq ETF", ticker: "LQQ3.L", units: 4, pricePence: 28540.00, cost: 1000.0, sleeve: "ndx" },
+        { name: "Vanguard FTSE UK All Share Index Acc", ticker: "MIDD.L", units: 28, pricePence: 2130.00, cost: 500.0, sleeve: "ftse" },
+        { name: "MSCI EM ETF (EIMI)", ticker: "EIMI.L", units: 13, pricePence: 3010.00, cost: 350.0, sleeve: "em" },
+        { name: "Physical Gold ETC (SGLN)", ticker: "SGLN.L", units: 12, pricePence: 4260.00, cost: 450.0, sleeve: "gold" }
+      ]
+    }
+  };
+
+  // Global state
   let state = {
     targets: { spx: 40, ndx: 15, ftse: 16, em: 14, gold: 15, cash: 0 },
+    accounts: JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS)),
     holdings: {
       gia: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
       sipp: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
@@ -911,33 +1015,34 @@
     prices: { spx: 92.50, ndx: 285.40, ftse: 21.30, em: 30.10, gold: 42.60, cash: 1.0 },
     tickers: { spx: 'VUAG.L', ndx: 'LQQ3.L', ftse: 'MIDD.L', em: 'EIMI.L', gold: 'SGLN.L', cash: '' },
     settings: {
-      strategy: 'optimized', // 'optimized' or 'mirrored'
+      strategy: 'optimized',
       poolISAs: true,
       simplifyJISAs: true,
       minTradeSize: 500,
       minDrift: 1.5,
-      inputMode: 'value' // 'value' or 'quantity'
+      inputMode: 'value'
     }
   };
 
   // Realistic mock data
   const MOCK_DATA = {
     targets: { spx: 40, ndx: 15, ftse: 16, em: 14, gold: 15, cash: 0 },
+    accounts: JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS)),
     holdings: {
-      gia: { spx: 52000, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 1500 }, // £53.5k GIA
-      sipp: { spx: 15000, ndx: 22000, ftse: 35000, em: 20000, gold: 20000, cash: 8000 }, // £120k SIPP
-      sisa: { spx: 18000, ndx: 8000, ftse: 4000, em: 6000, gold: 2000, cash: 1000 },  // £39k Self ISA
-      wisa: { spx: 14000, ndx: 7500, ftse: 3000, em: 5000, gold: 2500, cash: 500 },   // £32.5k Wife ISA
-      jisa1: { spx: 4800, ndx: 1200, ftse: 500, em: 500, gold: 500, cash: 0 },        // £7.5k Child 1
-      jisa2: { spx: 4900, ndx: 1100, ftse: 600, em: 400, gold: 500, cash: 0 }         // £7.5k Child 2
+      gia: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      sipp: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      sisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      wisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      jisa1: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      jisa2: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 }
     },
     quantities: {
-      gia: { spx: 562, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 1500 },
-      sipp: { spx: 162, ndx: 77, ftse: 1643, em: 664, gold: 469, cash: 8000 },
-      sisa: { spx: 195, ndx: 28, ftse: 188, em: 199, gold: 47, cash: 1000 },
-      wisa: { spx: 151, ndx: 26, ftse: 141, em: 166, gold: 59, cash: 500 },
-      jisa1: { spx: 52, ndx: 4, ftse: 23, em: 17, gold: 12, cash: 0 },
-      jisa2: { spx: 53, ndx: 4, ftse: 28, em: 13, gold: 12, cash: 0 }
+      gia: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      sipp: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      sisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      wisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      jisa1: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
+      jisa2: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 }
     },
     prices: { spx: 92.50, ndx: 285.40, ftse: 21.30, em: 30.10, gold: 42.60, cash: 1.0 },
     tickers: { spx: 'VUAG.L', ndx: 'LQQ3.L', ftse: 'MIDD.L', em: 'EIMI.L', gold: 'SGLN.L', cash: '' },
@@ -1044,28 +1149,70 @@
     }
   }
 
+  // Converts old matrix grid balances to holdings positions rows so no user data is lost
+  function migrateLegacyHoldingsToAccounts(oldHoldings, oldQuantities, prices, tickers) {
+    const accounts = {};
+    for (const acct in ACCOUNTS) {
+      accounts[acct] = {
+        name: ACCOUNTS[acct].name,
+        holdings: []
+      };
+      
+      // If SIPP, populate with your HL SIPP screenshot assets
+      if (acct === 'sipp') {
+        accounts[acct].holdings = JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS.sipp.holdings));
+        continue;
+      }
+      
+      // For other wrappers, create mock holding positions from legacy numbers
+      for (const asset in ASSETS) {
+        const val = oldHoldings?.[acct]?.[asset] || 0;
+        if (val > 0) {
+          const price = prices[asset] || 1.0;
+          const units = oldQuantities?.[acct]?.[asset] || (val / price);
+          const name = `${ASSETS[asset].name} Index Fund`;
+          const ticker = tickers[asset] || "";
+          
+          accounts[acct].holdings.push({
+            name: name,
+            ticker: ticker,
+            units: parseFloat(units.toFixed(4)),
+            pricePence: price * 100.0,
+            cost: val * 0.9, // assume 90% cost basis
+            sleeve: asset
+          });
+        }
+      }
+    }
+    return accounts;
+  }
+
   async function loadState() {
     const ciphertext = localStorage.getItem('holdings_ciphertext');
     const salt = localStorage.getItem('holdings_salt');
     const iv = localStorage.getItem('holdings_iv');
 
     if (!ciphertext || !salt || !iv) {
-      // First-time setup mode
       showSetupScreen();
       return;
     }
 
     if (!sessionPasscode) {
-      // Show passcode unlock dialog
       showUnlockScreen();
       return;
     }
 
     try {
       const decrypted = await decryptState(ciphertext, sessionPasscode, salt, iv);
-      state = JSON.parse(decrypted);
+      const parsed = JSON.parse(decrypted);
       
-      // Hide lock screen and unlock main content
+      // Auto-migrate schema if needed
+      if (!parsed.accounts) {
+        parsed.accounts = migrateLegacyHoldingsToAccounts(parsed.holdings, parsed.quantities, parsed.prices, parsed.tickers);
+      }
+      
+      state = parsed;
+      
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('appContainer').style.display = 'block';
       
@@ -1127,7 +1274,7 @@
       // First-time setup: encrypt empty/default state
       sessionPasscode = passcode;
       sessionStorage.setItem('holdings_master_passcode', passcode);
-      state = JSON.parse(JSON.stringify(MOCK_DATA)); // Pre-fill mock data for first-time use
+      state = JSON.parse(JSON.stringify(MOCK_DATA));
       await saveState();
       loadState();
     } else {
@@ -1137,9 +1284,13 @@
       
       try {
         const decrypted = await decryptState(ciphertext, passcode, salt, iv);
+        const parsed = JSON.parse(decrypted);
+        if (!parsed.accounts) {
+          parsed.accounts = migrateLegacyHoldingsToAccounts(parsed.holdings, parsed.quantities, parsed.prices, parsed.tickers);
+        }
         sessionPasscode = passcode;
         sessionStorage.setItem('holdings_master_passcode', passcode);
-        state = JSON.parse(decrypted);
+        state = parsed;
         
         document.getElementById('lockScreen').style.display = 'none';
         document.getElementById('appContainer').style.display = 'block';
@@ -1153,57 +1304,183 @@
     }
   }
 
+  // --- HOLDINGS INTERACTION UTILITIES ---
+  let activeAccountTab = 'sipp';
+
+  window.switchAccountTab = function (acct) {
+    activeAccountTab = acct;
+    syncStateToDOM();
+  };
+
+  window.updateHoldingField = function (acct, index, field, value) {
+    const holding = state.accounts[acct]?.holdings[index];
+    if (!holding) return;
+
+    if (field === 'units') {
+      holding.units = parseFloat(value) || 0;
+    } else if (field === 'pricePence') {
+      holding.pricePence = parseFloat(value) || 0;
+    } else if (field === 'cost') {
+      holding.cost = parseFloat(value) || 0;
+    } else {
+      holding[field] = value;
+    }
+
+    // Reactively update calculated row cells in DOM to keep cursor focus fluid
+    const row = document.getElementById(`holding-row-${acct}-${index}`);
+    if (row) {
+      const currentVal = holding.units * (holding.pricePence / 100.0);
+      const gain = currentVal - holding.cost;
+      const gainPct = holding.cost > 0 ? (gain / holding.cost) * 100 : 0;
+      
+      row.querySelector('.holding-value-cell').textContent = formatGBP(currentVal);
+      
+      const gainCell = row.querySelector('.holding-gain-cell');
+      gainCell.textContent = `${gain >= 0 ? '+' : ''}${formatGBP(gain)} (${gainPct.toFixed(1)}%)`;
+      gainCell.className = `holding-gain-cell ${gain >= 0 ? 'good' : 'bad'}`;
+    }
+
+    updateAccountTotalsInDOM(acct);
+    
+    // Save background state & update matrices/charts
+    saveState();
+    
+    // Aggregate in background and update targets
+    const { totalPortfolioVal, capacities, proposed } = calculateAllocation();
+    const trades = generateTrades(proposed);
+    
+    document.getElementById('lblTotalVal').textContent = formatGBP(totalPortfolioVal);
+    renderSummaryMatrixDOM();
+    updateAllocationKPIs(totalPortfolioVal, capacities, proposed, trades);
+  };
+
+  window.deleteHolding = function (acct, index) {
+    state.accounts[acct].holdings.splice(index, 1);
+    saveState();
+    syncStateToDOM();
+    updateAllocation();
+  };
+
+  window.addHolding = function (acct) {
+    state.accounts[acct].holdings.push({
+      name: "New Position",
+      ticker: "",
+      units: 0,
+      pricePence: 0,
+      cost: 0,
+      sleeve: "spx"
+    });
+    saveState();
+    syncStateToDOM();
+    updateAllocation();
+  };
+
+  function updateAccountTotalsInDOM(acct) {
+    let totalVal = 0;
+    let totalCost = 0;
+    
+    for (const h of state.accounts[acct].holdings) {
+      totalVal += h.units * (h.pricePence / 100.0);
+      totalCost += h.cost;
+    }
+    
+    const totalGain = totalVal - totalCost;
+    const totalGainPct = totalCost > 0 ? (totalGain / totalCost) * 100 : 0;
+    
+    document.getElementById('lblAccountTotalCost').textContent = formatGBP(totalCost);
+    document.getElementById('lblAccountTotalVal').textContent = formatGBP(totalVal);
+    
+    const gainEl = document.getElementById('lblAccountTotalGain');
+    gainEl.textContent = `${totalGain >= 0 ? '+' : ''}${formatGBP(totalGain)} (${totalGainPct.toFixed(1)}%)`;
+    gainEl.className = `holding-gain-cell ${totalGain >= 0 ? 'good' : 'bad'}`;
+  }
+
   // Sync state variables to inputs
   function syncStateToDOM() {
+    // Targets weights inputs
     for (const key in state.targets) {
       const el = document.getElementById(`tgt_${key}`);
       if (el) el.value = state.targets[key];
     }
 
-    const mode = state.settings.inputMode || 'value';
-    document.getElementById('inputMode').value = mode;
-
-    const tickerWraps = document.querySelectorAll('.ticker-input-wrap');
-    tickerWraps.forEach(el => {
-      el.style.display = mode === 'quantity' ? 'block' : 'none';
-    });
-    document.getElementById('btnFetchPrices').style.display = mode === 'quantity' ? 'block' : 'none';
-
-    const descEl = document.getElementById('lblMatrixDesc');
-    if (mode === 'quantity') {
-      descEl.innerHTML = `Enter your <strong>share quantities</strong> in the table. Enter the tickers in the left column and click <strong>Fetch Live Ticker Prices</strong> to calculate holdings value in GBP automatically.`;
-    } else {
-      descEl.innerHTML = `Enter the current <strong>GBP value</strong> of assets in each account. Total balances per account and consolidated values are calculated dynamically.`;
+    // Accounts tabs
+    const tabsContainer = document.getElementById('accountsTabs');
+    if (tabsContainer) {
+      tabsContainer.innerHTML = '';
+      for (const acct in ACCOUNTS) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `tab-btn ${activeAccountTab === acct ? 'active' : ''}`;
+        btn.textContent = state.accounts[acct]?.name || ACCOUNTS[acct].name;
+        btn.addEventListener('click', () => switchAccountTab(acct));
+        tabsContainer.appendChild(btn);
+      }
     }
 
-    for (const asset in ASSETS) {
-      if (asset !== 'cash') {
-        const tEl = document.getElementById(`t_${asset}`);
-        if (tEl && state.tickers[asset]) tEl.value = state.tickers[asset];
+    // Active tab positions table
+    const activeAcctData = state.accounts[activeAccountTab];
+    if (activeAcctData) {
+      document.getElementById('lblActiveAccountName').textContent = activeAcctData.name;
+      document.getElementById('lblActiveAccountBadge').textContent = ACCOUNTS[activeAccountTab].taxable ? "Taxable (GIA)" : "Tax Free";
+      document.getElementById('lblActiveAccountBadge').className = `badge ${ACCOUNTS[activeAccountTab].taxable ? 'badge-passive' : 'badge-active'}`;
+      
+      const tbody = document.getElementById('holdingsTableBody');
+      tbody.innerHTML = '';
+      
+      activeAcctData.holdings.forEach((h, index) => {
+        const val = h.units * (h.pricePence / 100.0);
+        const gain = val - h.cost;
+        const gainPct = h.cost > 0 ? (gain / h.cost) * 100 : 0;
         
-        const pEl = document.getElementById(`p_${asset}`);
-        if (pEl && state.prices[asset] !== undefined) {
-          pEl.textContent = '£' + state.prices[asset].toFixed(2);
-        }
-      }
+        const tr = document.createElement('tr');
+        tr.id = `holding-row-${activeAccountTab}-${index}`;
+        tr.innerHTML = `
+          <td>
+            <input type="text" class="holding-input" value="${h.name}" placeholder="Fund/Stock Name" onchange="updateHoldingField('${activeAccountTab}', ${index}, 'name', this.value)" style="font-weight: 600;" />
+          </td>
+          <td>
+            <input type="text" class="holding-input" value="${h.ticker}" placeholder="Ticker" onchange="updateHoldingField('${activeAccountTab}', ${index}, 'ticker', this.value)" style="text-transform: uppercase;" />
+          </td>
+          <td>
+            <input type="number" class="holding-input" value="${h.units}" step="any" oninput="updateHoldingField('${activeAccountTab}', ${index}, 'units', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
+          </td>
+          <td>
+            <input type="number" class="holding-input" value="${h.pricePence}" step="any" oninput="updateHoldingField('${activeAccountTab}', ${index}, 'pricePence', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
+          </td>
+          <td class="holding-value-cell" style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums;">
+            ${formatGBP(val)}
+          </td>
+          <td>
+            <input type="number" class="holding-input" value="${h.cost}" step="any" oninput="updateHoldingField('${activeAccountTab}', ${index}, 'cost', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
+          </td>
+          <td class="holding-gain-cell ${gain >= 0 ? 'good' : 'bad'}" style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums;">
+            ${gain >= 0 ? '+' : ''}${formatGBP(gain)} (${gainPct.toFixed(1)}%)
+          </td>
+          <td>
+            <select class="holding-input" onchange="updateHoldingField('${activeAccountTab}', ${index}, 'sleeve', this.value)" style="padding: 4px 6px;">
+              <option value="spx" ${h.sleeve === 'spx' ? 'selected' : ''}>S&P 500</option>
+              <option value="ndx" ${h.sleeve === 'ndx' ? 'selected' : ''}>Nasdaq 100</option>
+              <option value="ftse" ${h.sleeve === 'ftse' ? 'selected' : ''}>FTSE 250</option>
+              <option value="em" ${h.sleeve === 'em' ? 'selected' : ''}>MSCI EM</option>
+              <option value="gold" ${h.sleeve === 'gold' ? 'selected' : ''}>Gold</option>
+              <option value="cash" ${h.sleeve === 'cash' ? 'selected' : ''}>Cash</option>
+              <option value="other" ${h.sleeve === 'other' ? 'selected' : ''}>Other / Unmanaged</option>
+            </select>
+          </td>
+          <td style="text-align: center;">
+            <button type="button" class="btn-delete-holding" onclick="deleteHolding('${activeAccountTab}', ${index})" title="Delete Position">✕</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      
+      updateAccountTotalsInDOM(activeAccountTab);
+      
+      const addBtn = document.getElementById('btnAddHolding');
+      addBtn.onclick = () => addHolding(activeAccountTab);
     }
 
-    for (const acct in state.holdings) {
-      for (const asset in state.holdings[acct]) {
-        const el = document.getElementById(`h_${acct}_${asset}`);
-        if (el) {
-          if (mode === 'quantity') {
-            el.value = state.quantities[acct][asset] || 0;
-            el.placeholder = "Shares";
-            el.step = "1";
-          } else {
-            el.value = state.holdings[acct][asset] || 0;
-            el.placeholder = "Value (£)";
-            el.step = "100";
-          }
-        }
-      }
-    }
+    renderSummaryMatrixDOM();
 
     document.getElementById('optStrategy').value = state.settings.strategy;
     document.getElementById('chkPoolISAs').checked = state.settings.poolISAs;
@@ -1214,6 +1491,78 @@
     
     document.getElementById('rngMinDrift').value = state.settings.minDrift;
     document.getElementById('lblMinDriftVal').textContent = state.settings.minDrift + '%';
+  }
+
+  function renderSummaryMatrixDOM() {
+    const tbody = document.getElementById('matrixRollupBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    const assetTotals = { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0, other: 0 };
+    const acctTotals = { gia: 0, sipp: 0, sisa: 0, wisa: 0, jisa1: 0, jisa2: 0 };
+    
+    const aggregated = {};
+    for (const key in ASSETS) {
+      aggregated[key] = { gia: 0, sipp: 0, sisa: 0, wisa: 0, jisa1: 0, jisa2: 0 };
+    }
+    aggregated['other'] = { gia: 0, sipp: 0, sisa: 0, wisa: 0, jisa1: 0, jisa2: 0 };
+    
+    for (const acct in state.accounts) {
+      for (const h of state.accounts[acct].holdings) {
+        const sleeve = h.sleeve || 'other';
+        const val = h.units * (h.pricePence / 100.0);
+        
+        if (aggregated[sleeve]) {
+          aggregated[sleeve][acct] += val;
+        }
+        acctTotals[acct] += val;
+        if (assetTotals[sleeve] !== undefined) {
+          assetTotals[sleeve] += val;
+        }
+      }
+    }
+    
+    let totalPortfolioVal = Object.values(acctTotals).reduce((a, b) => a + b, 0);
+
+    for (const asset in ASSETS) {
+      const tr = document.createElement('tr');
+      const valAll = Object.values(aggregated[asset]).reduce((a,b)=>a+b,0);
+      
+      tr.innerHTML = `
+        <td><span class="color-dot ${ASSETS[asset].class}"></span><strong>${ASSETS[asset].name}</strong></td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].gia)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].sipp)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].sisa)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].wisa)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].jisa1)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].jisa2)}</td>
+        <td style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums; background: rgba(0,0,0,0.025);">${formatGBP(valAll)}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+    
+    const valOtherAll = Object.values(aggregated['other']).reduce((a,b)=>a+b,0);
+    if (valOtherAll > 0) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><span class="color-dot dot-cash" style="background: repeating-linear-gradient(45deg, #a1a1aa, #a1a1aa 2px, #e4e4e7 2px, #e4e4e7 4px);"></span><strong>Other / Unmanaged</strong> <span class="small">(Excluded)</span></td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].gia)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].sipp)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].sisa)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].wisa)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].jisa1)}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].jisa2)}</td>
+        <td style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums; background: rgba(0,0,0,0.025); color: var(--muted);">${formatGBP(valOtherAll)}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+    
+    for (const acct in acctTotals) {
+      const el = document.getElementById(`tot_${acct}`);
+      if (el) el.textContent = formatGBP(acctTotals[acct]);
+    }
+    document.getElementById('tot_all_portfolio').textContent = formatGBP(totalPortfolioVal);
   }
 
   function readDOMToState() {
@@ -1245,30 +1594,6 @@
     state.settings.simplifyJISAs = document.getElementById('chkSimplifyJISAs').checked;
     state.settings.minTradeSize = parseInt(document.getElementById('rngMinTrade').value) || 0;
     state.settings.minDrift = parseFloat(document.getElementById('rngMinDrift').value) || 0;
-    
-    const mode = document.getElementById('inputMode').value;
-    state.settings.inputMode = mode;
-
-    for (const asset in ASSETS) {
-      if (asset !== 'cash') {
-        const el = document.getElementById(`t_${asset}`);
-        if (el) state.tickers[asset] = el.value.trim().toUpperCase();
-      }
-    }
-
-    for (const acct in state.holdings) {
-      for (const asset in state.holdings[acct]) {
-        const el = document.getElementById(`h_${acct}_${asset}`);
-        if (el) {
-          const val = parseFloat(el.value) || 0;
-          if (mode === 'quantity') {
-            state.quantities[acct][asset] = val;
-          } else {
-            state.holdings[acct][asset] = val;
-          }
-        }
-      }
-    }
   }
 
   function loadMockData() {
@@ -1278,11 +1603,8 @@
   }
 
   function clearHoldings() {
-    for (const acct in state.holdings) {
-      for (const asset in state.holdings[acct]) {
-        state.holdings[acct][asset] = 0;
-        state.quantities[acct][asset] = 0;
-      }
+    for (const acct in state.accounts) {
+      state.accounts[acct].holdings = [];
     }
     syncStateToDOM();
     updateAllocation();
@@ -1290,12 +1612,29 @@
 
   // Core allocation engine
   function calculateAllocation() {
-    if (state.settings.inputMode === 'quantity') {
-      for (const acct in ACCOUNTS) {
-        for (const asset in ASSETS) {
-          const qty = state.quantities[acct][asset] || 0;
-          const price = state.prices[asset] || 0;
-          state.holdings[acct][asset] = qty * price;
+    // Reset core matrix in memory
+    for (const acct in ACCOUNTS) {
+      for (const asset in ASSETS) {
+        state.holdings[acct][asset] = 0;
+        state.quantities[acct][asset] = 0;
+      }
+      state.holdings[acct]['other'] = 0;
+    }
+
+    // Roll up positions values
+    for (const acct in state.accounts) {
+      for (const h of state.accounts[acct].holdings) {
+        const sleeve = h.sleeve || 'other';
+        const val = h.units * (h.pricePence / 100.0);
+        
+        if (state.holdings[acct][sleeve] !== undefined) {
+          state.holdings[acct][sleeve] += val;
+        } else {
+          state.holdings[acct]['other'] += val;
+        }
+        
+        if (state.quantities[acct][sleeve] !== undefined) {
+          state.quantities[acct][sleeve] += h.units;
         }
       }
     }
@@ -1306,7 +1645,8 @@
     for (const acct in state.holdings) {
       let cap = 0;
       for (const asset in state.holdings[acct]) {
-        cap += state.holdings[acct][asset];
+        // Exclude unmanaged 'other' holdings from target allocation calculations
+        if (asset !== 'other') cap += state.holdings[acct][asset];
       }
       capacities[acct] = cap;
       totalPortfolioVal += cap;
@@ -1497,16 +1837,16 @@
     const trades = generateTrades(proposed);
 
     document.getElementById('lblTotalVal').textContent = formatGBP(totalPortfolioVal);
-    
+    renderSummaryMatrixDOM();
+    updateAllocationKPIs(totalPortfolioVal, capacities, proposed, trades);
+  }
+
+  function updateAllocationKPIs(totalPortfolioVal, capacities, proposed, trades) {
     let activeAccts = 0;
     for (const acct in capacities) {
       if (capacities[acct] > 0) activeAccts++;
     }
     document.getElementById('lblAccountCount').textContent = `${activeAccts} accounts active`;
-
-    for (const acct in capacities) {
-      document.getElementById(`tot_${acct}`).textContent = formatGBP(capacities[acct]);
-    }
 
     let maxDrift = 0;
     let totalTaxScore = 100;
@@ -1638,11 +1978,17 @@
     const cy = 110;
     const circumference = 2 * Math.PI * r;
 
+    // Sum active sleeves only
+    let activeTotal = 0;
+    for (const key in ASSETS) {
+      for (const acct in ACCOUNTS) activeTotal += state.holdings[acct][key];
+    }
+
     for (const key in ASSETS) {
       let currentVal = 0;
       for (const acct in ACCOUNTS) currentVal += state.holdings[acct][key];
       
-      const pct = totalVal > 0 ? currentVal / totalVal : 0;
+      const pct = activeTotal > 0 ? currentVal / activeTotal : 0;
       if (pct > 0) {
         const strokeDash = pct * circumference;
         const strokeOffset = circumference - (accumPct * circumference);
@@ -1662,9 +2008,10 @@
         accumPct += pct;
       }
 
+      const displayPct = totalVal > 0 ? currentVal / totalVal : 0;
       const item = document.createElement('div');
       item.className = 'chart-legend-item';
-      item.innerHTML = `<span class="color-dot ${ASSETS[key].class}"></span> ${ASSETS[key].name} (${(pct * 100).toFixed(1)}%)`;
+      item.innerHTML = `<span class="color-dot ${ASSETS[key].class}"></span> ${ASSETS[key].name} (${(displayPct * 100).toFixed(1)}%)`;
       legend.appendChild(item);
     }
 
@@ -1682,7 +2029,7 @@
     txt.setAttribute('font-size', '11');
     txt.setAttribute('fill', 'var(--muted)');
     txt.setAttribute('font-weight', '600');
-    txt.textContent = 'PORTFOLIO';
+    txt.textContent = 'ACTIVE';
     svg.appendChild(txt);
 
     const valTxt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -1691,7 +2038,7 @@
     valTxt.setAttribute('text-anchor', 'middle');
     valTxt.setAttribute('font-size', '16');
     valTxt.setAttribute('font-weight', '800');
-    valTxt.textContent = formatGBP(totalVal);
+    valTxt.textContent = formatGBP(activeTotal);
     svg.appendChild(valTxt);
   }
 
@@ -1706,7 +2053,7 @@
       const item = document.createElement('div');
       item.innerHTML = `
         <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
-          <strong>${ACCOUNTS[acct].name}</strong>
+          <strong>${state.accounts[acct]?.name || ACCOUNTS[acct].name}</strong>
           <span>${formatGBP(cap)}</span>
         </div>
         <div class="progress-bar-container" style="display: flex;"></div>
@@ -1751,7 +2098,7 @@
       const header = document.createElement('h4');
       header.style.margin = '0 0 8px 0';
       header.style.fontSize = '14px';
-      header.textContent = ACCOUNTS[acct].name;
+      header.textContent = state.accounts[acct]?.name || ACCOUNTS[acct].name;
       acctCard.appendChild(header);
 
       const list = document.createElement('ul');
@@ -1787,14 +2134,40 @@
     if (trades.length === 0) return;
 
     for (const trade of trades) {
-      const mode = state.settings.inputMode;
-      if (mode === 'quantity') {
+      const matchingHoldings = state.accounts[trade.acct].holdings.filter(h => h.sleeve === trade.asset);
+      
+      if (matchingHoldings.length > 0) {
+        if (trade.current > 0) {
+          const scaleFactor = trade.target / trade.current;
+          for (const h of matchingHoldings) {
+            h.units *= scaleFactor;
+            h.cost *= scaleFactor;
+          }
+        } else {
+          // Fallback evenly
+          const share = trade.target / matchingHoldings.length;
+          for (const h of matchingHoldings) {
+            h.units = share / (h.pricePence / 100.0);
+            h.cost = share;
+          }
+        }
+      } else if (trade.target > 0) {
+        // Create a new default holding position
+        const assetName = ASSETS[trade.asset]?.name || trade.asset;
         const price = state.prices[trade.asset] || 1.0;
-        state.quantities[trade.acct][trade.asset] = Math.round(trade.target / price);
-      } else {
-        state.holdings[trade.acct][trade.asset] = Math.round(trade.target);
+        const defaultTickers = { spx: "VUAG.L", ndx: "LQQ3.L", ftse: "MIDD.L", em: "EIMI.L", gold: "SGLN.L", cash: "CASH" };
+        
+        state.accounts[trade.acct].holdings.push({
+          name: `${assetName} Index Position`,
+          ticker: defaultTickers[trade.asset] || "",
+          units: parseFloat((trade.target / price).toFixed(4)),
+          pricePence: price * 100.0,
+          cost: trade.target,
+          sleeve: trade.asset
+        });
       }
     }
+    
     syncStateToDOM();
     updateAllocation();
   }
@@ -1944,7 +2317,7 @@
         <td><strong>${h.rawName}</strong></td>
         <td><span class="lev-pill">${h.rawTicker}</span></td>
         <td style="text-align: right; font-variant-numeric: tabular-nums; font-weight: bold;">${formatGBP(h.value)}</td>
-        <td><span class="badge badge-active">${ACCOUNTS[h.acctKey]?.name || h.acctKey}</span></td>
+        <td><span class="badge badge-active">${state.accounts[h.acctKey]?.name || h.acctKey}</span></td>
         <td>
           ${h.assetKey 
             ? `<span class="color-dot ${ASSETS[h.assetKey].class}"></span><strong>${ASSETS[h.assetKey].name}</strong>` 
@@ -1964,23 +2337,23 @@
     if (tempImportedHoldings.length === 0) return;
 
     const accountsInImport = new Set(tempImportedHoldings.map(h => h.acctKey));
-    const mode = state.settings.inputMode;
 
     for (const acct of accountsInImport) {
-      for (const asset in ASSETS) {
-        state.holdings[acct][asset] = 0;
-        state.quantities[acct][asset] = 0;
-      }
+      state.accounts[acct].holdings = []; // Clear old positions
     }
 
     for (const h of tempImportedHoldings) {
-      if (h.assetKey) {
-        const val = Math.round(h.value);
-        state.holdings[h.acctKey][h.assetKey] += val;
-        
-        const price = state.prices[h.assetKey] || 1.0;
-        state.quantities[h.acctKey][h.assetKey] += Math.round(val / price);
-      }
+      const sleeve = h.assetKey || 'other';
+      const price = state.prices[sleeve] || 1.0;
+      
+      state.accounts[h.acctKey].holdings.push({
+        name: h.rawName,
+        ticker: h.rawTicker === 'N/A' ? "" : h.rawTicker,
+        units: parseFloat((h.value / price).toFixed(4)),
+        pricePence: price * 100.0,
+        cost: h.value * 0.9, // assume 90% cost basis
+        sleeve: sleeve
+      });
     }
 
     document.getElementById('csvPreviewContainer').style.display = 'none';
@@ -1999,38 +2372,37 @@
     reader.readAsText(file);
   }
 
-  function toggleInputMode() {
-    readDOMToState();
-    saveState();
-    syncStateToDOM();
-    updateAllocation();
-  }
-
   async function fetchLivePrices() {
     const btn = document.getElementById('btnFetchPrices');
     const statusEl = document.getElementById('lblFetchStatus');
     
     btn.disabled = true;
     statusEl.className = 'small';
-    statusEl.textContent = 'Fetching prices...';
+    statusEl.textContent = 'Fetching live prices for all positions...';
 
-    const assetsToFetch = ['spx', 'ndx', 'ftse', 'em', 'gold'];
+    const uniqueTickers = new Set();
+    for (const acct in state.accounts) {
+      for (const h of state.accounts[acct].holdings) {
+        if (h.ticker && h.ticker.trim() && h.ticker.trim().toUpperCase() !== 'CASH') {
+          uniqueTickers.add(h.ticker.trim().toUpperCase());
+        }
+      }
+    }
+
     let successCount = 0;
+    const priceMap = {};
 
-    for (const key of assetsToFetch) {
-      const ticker = state.tickers[key];
-      if (!ticker) continue;
-
+    for (const ticker of uniqueTickers) {
       try {
         const url = `https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=${encodeURIComponent(ticker)}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         
         const data = await res.json();
-        const price = parseFloat(data.price);
+        let price = parseFloat(data.price);
         
         if (Number.isFinite(price) && price > 0) {
-          state.prices[key] = price;
+          priceMap[ticker] = price;
           successCount++;
         }
       } catch (err) {
@@ -2038,16 +2410,34 @@
       }
     }
 
+    for (const acct in state.accounts) {
+      for (const h of state.accounts[acct].holdings) {
+        const t = h.ticker ? h.ticker.trim().toUpperCase() : "";
+        if (t && priceMap[t] !== undefined) {
+          h.pricePence = priceMap[t];
+          
+          if (h.sleeve === 'spx' && t === 'VUAG.L') state.prices.spx = priceMap[t] / 100.0;
+          if (h.sleeve === 'ndx' && t === 'LQQ3.L') state.prices.ndx = priceMap[t] / 100.0;
+          if (h.sleeve === 'ftse' && t === 'MIDD.L') state.prices.ftse = priceMap[t] / 100.0;
+          if (h.sleeve === 'em' && t === 'EIMI.L') state.prices.em = priceMap[t] / 100.0;
+          if (h.sleeve === 'gold' && t === 'SGLN.L') state.prices.gold = priceMap[t] / 100.0;
+        }
+      }
+    }
+
     btn.disabled = false;
-    if (successCount === assetsToFetch.length) {
+    if (successCount === uniqueTickers.size && uniqueTickers.size > 0) {
       statusEl.className = 'small good';
-      statusEl.textContent = `Successfully updated all ${successCount} prices!`;
+      statusEl.textContent = `Successfully updated all ${successCount} ticker prices!`;
     } else if (successCount > 0) {
       statusEl.className = 'small warn';
-      statusEl.textContent = `Updated ${successCount} of ${assetsToFetch.length} prices.`;
+      statusEl.textContent = `Updated ${successCount} of ${uniqueTickers.size} ticker prices.`;
+    } else if (uniqueTickers.size === 0) {
+      statusEl.className = 'small warn';
+      statusEl.textContent = `No tickers defined to fetch.`;
     } else {
       statusEl.className = 'small bad';
-      statusEl.textContent = `Failed to fetch prices. Quote worker offline.`;
+      statusEl.textContent = `Failed to fetch live prices. Quote proxy offline.`;
     }
 
     saveState();
