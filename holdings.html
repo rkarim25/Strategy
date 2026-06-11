@@ -932,11 +932,11 @@
         { name: "Ark Artificial Intelligence & Robotics UCITS ETF", ticker: "ARKA.L", units: 2490, pricePence: 774.80, cost: 15999.62, sleeve: "ndx" },
         { name: "HL Growth Fund Accumulation (GBP)", ticker: "", units: 1058.246, pricePence: 140.81, cost: 1172.20, sleeve: "other" },
         { name: "Pictet Robotics Class I - Accumulation (GBP)", ticker: "", units: 61.47982, pricePence: 43769.00, cost: 20000.00, sleeve: "ndx" },
-        { name: "SPDR MSCI Emerging Markets UCITS ETF", ticker: "EMIM.L", units: 270, pricePence: 7597.70, cost: 14486.51, sleeve: "em" },
+        { name: "SPDR MSCI Emerging Markets UCITS ETF", ticker: "EMRD.L", units: 270, pricePence: 7597.70, cost: 14486.51, sleeve: "em" },
         { name: "Vanguard FTSE Developed Europe ex-UK Equity Index Acc (GBP)", ticker: "", units: 37.3993, pricePence: 51038.34, cost: 13061.26, sleeve: "other" },
         { name: "Vanguard FTSE UK All Share Index Acc (GBP)", ticker: "", units: 81.3924, pricePence: 36225.39, cost: 19499.94, sleeve: "ftse" },
         { name: "Vanguard US 500 Stock Index Institutional - Acc (USD)", ticker: "", units: 172.55, pricePence: 6602.97, cost: 8999.88, sleeve: "spx" },
-        { name: "WisdomTree Gold 2x Daily Leveraged", ticker: "4GOL.L", units: 90, pricePence: 12895.14, cost: 8995.62, sleeve: "gold" },
+        { name: "WisdomTree Gold 2x Daily Leveraged", ticker: "LBUL.L", units: 90, pricePence: 12895.14, cost: 8995.62, sleeve: "gold" },
         { name: "Xtrackers S&P 500 2x Leveraged Daily UCITS ETF", ticker: "XS2D.L", units: 709, pricePence: 24485.12, cost: 102334.03, sleeve: "spx" },
         { name: "Cash (HL Account Balance)", ticker: "CASH", units: 7318.05, pricePence: 100.0, cost: 7318.05, sleeve: "cash" }
       ]
@@ -1218,6 +1218,7 @@
       
       syncStateToDOM();
       updateAllocation();
+      fetchLivePrices();
     } catch (e) {
       console.error("Decryption failed", e);
       sessionStorage.removeItem('holdings_master_passcode');
@@ -1297,6 +1298,7 @@
         
         syncStateToDOM();
         updateAllocation();
+        fetchLivePrices();
       } catch (err) {
         errEl.textContent = "Incorrect passcode. Decryption failed.";
         errEl.style.display = 'block';
@@ -2378,66 +2380,65 @@
     
     btn.disabled = true;
     statusEl.className = 'small';
-    statusEl.textContent = 'Fetching live prices for all positions...';
+    statusEl.textContent = 'Fetching latest prices...';
 
-    const uniqueTickers = new Set();
-    for (const acct in state.accounts) {
-      for (const h of state.accounts[acct].holdings) {
-        if (h.ticker && h.ticker.trim() && h.ticker.trim().toUpperCase() !== 'CASH') {
-          uniqueTickers.add(h.ticker.trim().toUpperCase());
+    try {
+      const url = `https://rkarim25.github.io/Strategy/holdings_prices.json?v=${Date.now()}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      
+      const payload = await res.json();
+      const priceMap = payload.prices || {};
+      
+      let successCount = 0;
+      let totalTickers = 0;
+      const uniqueTickers = new Set();
+      
+      for (const acct in state.accounts) {
+        for (const h of state.accounts[acct].holdings) {
+          if (h.ticker && h.ticker.trim() && h.ticker.trim().toUpperCase() !== 'CASH') {
+            uniqueTickers.add(h.ticker.trim().toUpperCase());
+          }
         }
       }
-    }
+      
+      totalTickers = uniqueTickers.size;
 
-    let successCount = 0;
-    const priceMap = {};
-
-    for (const ticker of uniqueTickers) {
-      try {
-        const url = `https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=${encodeURIComponent(ticker)}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        
-        const data = await res.json();
-        let price = parseFloat(data.price);
-        
-        if (Number.isFinite(price) && price > 0) {
-          priceMap[ticker] = price;
-          successCount++;
-        }
-      } catch (err) {
-        console.warn(`Failed to fetch price for ${ticker}:`, err);
-      }
-    }
-
-    for (const acct in state.accounts) {
-      for (const h of state.accounts[acct].holdings) {
-        const t = h.ticker ? h.ticker.trim().toUpperCase() : "";
-        if (t && priceMap[t] !== undefined) {
-          h.pricePence = priceMap[t];
-          
-          if (h.sleeve === 'spx' && t === 'VUAG.L') state.prices.spx = priceMap[t] / 100.0;
-          if (h.sleeve === 'ndx' && t === 'LQQ3.L') state.prices.ndx = priceMap[t] / 100.0;
-          if (h.sleeve === 'ftse' && t === 'MIDD.L') state.prices.ftse = priceMap[t] / 100.0;
-          if (h.sleeve === 'em' && t === 'EIMI.L') state.prices.em = priceMap[t] / 100.0;
-          if (h.sleeve === 'gold' && t === 'SGLN.L') state.prices.gold = priceMap[t] / 100.0;
+      for (const acct in state.accounts) {
+        for (const h of state.accounts[acct].holdings) {
+          const t = h.ticker ? h.ticker.trim().toUpperCase() : "";
+          if (t && priceMap[t] !== undefined) {
+            h.pricePence = priceMap[t];
+            
+            // Map the sleeve pricing for the rebalancing optimizer
+            if (h.sleeve === 'spx' && (t === 'VUAG.L' || t === 'XS2D.L')) state.prices.spx = priceMap[t] / 100.0;
+            if (h.sleeve === 'ndx' && t === 'LQQ3.L') state.prices.ndx = priceMap[t] / 100.0;
+            if (h.sleeve === 'ftse' && t === 'MIDD.L') state.prices.ftse = priceMap[t] / 100.0;
+            if (h.sleeve === 'em' && (t === 'EIMI.L' || t === 'EMRD.L')) state.prices.em = priceMap[t] / 100.0;
+            if (h.sleeve === 'gold' && (t === 'SGLN.L' || t === 'LBUL.L')) state.prices.gold = priceMap[t] / 100.0;
+            
+            if (uniqueTickers.has(t)) {
+              uniqueTickers.delete(t);
+              successCount++;
+            }
+          }
         }
       }
-    }
 
-    btn.disabled = false;
-    if (successCount === uniqueTickers.size && uniqueTickers.size > 0) {
-      statusEl.className = 'small good';
-      statusEl.textContent = `Successfully updated all ${successCount} ticker prices!`;
-    } else if (successCount > 0) {
-      statusEl.className = 'small warn';
-      statusEl.textContent = `Updated ${successCount} of ${uniqueTickers.size} ticker prices.`;
-    } else if (uniqueTickers.size === 0) {
-      statusEl.className = 'small warn';
-      statusEl.textContent = `No tickers defined to fetch.`;
-    } else {
+      btn.disabled = false;
+      const dateStr = payload.generated_at_utc ? new Date(payload.generated_at_utc).toLocaleTimeString() : 'recently';
+      if (successCount > 0) {
+        statusEl.className = 'small good';
+        statusEl.textContent = `Successfully updated ${successCount} of ${totalTickers} ticker prices (refreshed at ${dateStr})`;
+      } else {
+        statusEl.className = 'small warn';
+        statusEl.textContent = `No matching tickers found to update.`;
+      }
+    } catch (err) {
+      console.warn("Failed to fetch price list:", err);
       statusEl.className = 'small bad';
-      statusEl.textContent = `Failed to fetch live prices. Quote proxy offline.`;
+      statusEl.textContent = `Failed to fetch prices: ${err.message}`;
+      btn.disabled = false;
     }
 
     saveState();
