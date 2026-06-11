@@ -1,22 +1,15 @@
 {
-  "generated_at_utc": "2026-06-10T23:23:26Z",
+  "generated_at_utc": "2026-06-11T11:20:00Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: S&P 500, Nasdaq, Dow Drop As US-Iran War Jitters, Inflation Risk Spur Tech Selloffs \u2014 SMCI, AMZN, OPEN, SEGG, TSLA In Focus; Trump says 'I love the inflation' after consumer price index hits 3-year high.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: 1 Services Stock to Keep an Eye On and 2 That Underwhelm. Bearish offsets: US Stock Market Today: S&P 500 Futures Fall As Inflation Concerns And VIX Spike; Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters.",
   "articles": [
     {
-      "title": "S&P 500, Nasdaq, Dow Drop As US-Iran War Jitters, Inflation Risk Spur Tech Selloffs \u2014 SMCI, AMZN, OPEN, SEGG, TSLA In Focus",
+      "title": "US Stock Market Today: S&P 500 Futures Fall As Inflation Concerns And VIX Spike",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-nasdaq-dow-drop-as-us-iran-war-jitters-inflation-risk-spur-tech-selloffs-smci-amzn-open-segg-tsla-in-focus/cZ06yd5R7cQ?.tsrc=rss",
-      "published": "2026-06-10T22:31:59Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Trump says 'I love the inflation' after consumer price index hits 3-year high",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/10/trump-inflation-cpi-iran-oil.html",
-      "published": "2026-06-10T18:54:13Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-080844506.html?.tsrc=rss",
+      "published": "2026-06-11T08:08:44Z",
       "tone": "bearish"
     },
     {
@@ -34,10 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - Boston Herald",
-      "source": "Boston Herald",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbnVuTEQwTk1ScFlIQnNTQUZuZ1pXTmFrYVhCaTNGOEh2aGxaZEwxZnR2ZHEtM2xDdjRQY2g3aTZlblQ2UE0ybkVLRlJrSXpoMW56VTc4Y2ZaejV5NFlmM291YmVyM0ZuMHA4QkF0VzRwZ01xVENXbUo5OTlZZ005UUVLVGFKcjVBUks5TFVHeUZSamdWcHpvMi1YOENkOGxaVV9zTUN2aGYxN0I0aG44ZndHNDRMM0Y1bVpWZmNESEcxd1BIUzJCNA?oc=5",
-      "published": "2026-06-10T20:09:42Z",
+      "title": "1 Services Stock to Keep an Eye On and 2 That Underwhelm",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-services-stock-keep-eye-102537193.html?.tsrc=rss",
+      "published": "2026-06-11T10:25:37Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Uh-Oh! The Probability of an FOMC Rate Hike Within the Next Year Is Soaring.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/investing/2026/06/11/uh-oh-probability-of-an-fomc-rate-hike-is-soaring/?.tsrc=rss",
+      "published": "2026-06-11T08:26:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 93
       }
     ],
-    "headline_count": 144,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
