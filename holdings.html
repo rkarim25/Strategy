@@ -1,28 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="site-scroll-init.js?v=20260610"></script>
-  <title>Holdings &amp; Tax Optimizer</title>
+  <title>Holdings Portfolio Tracker</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       color-scheme: light;
       --bg: #f5f5f7;
-      --panel: rgba(255, 255, 255, .78);
+      --panel: rgba(255, 255, 255, 0.78);
       --panel-solid: #ffffff;
       --text: #1d1d1f;
-      --muted: #6e6e73;
-      --line: rgba(0, 0, 0, .10);
+      --muted: #86868b;
+      --line: rgba(0, 0, 0, 0.08);
       --accent: #0071e3;
-      --accent-soft: rgba(0, 113, 227, .10);
+      --accent-soft: rgba(0, 113, 227, 0.08);
       --good: #248a3d;
-      --warn: #b26a00;
+      --good-soft: rgba(36, 138, 61, 0.08);
       --bad: #d70015;
-      --shadow: 0 18px 45px rgba(0, 0, 0, .08);
+      --bad-soft: rgba(215, 0, 21, 0.08);
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+      --border-radius: 20px;
       
-      /* Asset Colors */
+      /* Sleeve Colors */
       --color-spx: #0071e3;
       --color-ndx: #86198f;
       --color-ftse: #d97706;
@@ -30,187 +36,209 @@
       --color-gold: #eab308;
       --color-cash: #6b7280;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: auto; }
-    body {
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(0, 113, 227, .12), transparent 32rem),
-        linear-gradient(180deg, #fbfbfd 0%, var(--bg) 42%, #ffffff 100%);
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top left, rgba(0, 113, 227, 0.06), transparent 40rem),
+                  linear-gradient(180deg, #fbfbfd 0%, var(--bg) 100%);
       color: var(--text);
+      min-height: 100vh;
       -webkit-font-smoothing: antialiased;
-      padding-left: 0;
+      display: flex;
+      flex-direction: column;
     }
+
     main {
-      width: min(1180px, calc(100vw - 40px));
-      margin: 48px auto 72px;
+      width: min(1200px, calc(100vw - 32px));
+      margin: 40px auto 60px;
+      flex: 1;
     }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
     h1 {
-      margin: 0 0 10px;
-      font-size: clamp(34px, 5vw, 56px);
-      line-height: 1;
-      letter-spacing: -0.052em;
-      font-weight: 800;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
     }
-    h2 {
-      margin: 0 0 14px;
-      font-size: 22px;
-      line-height: 1.15;
-      letter-spacing: -0.025em;
-    }
-    p { color: var(--muted); line-height: 1.58; }
-    button, input, select {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, .72);
-      color: var(--text);
-      border-radius: 999px;
-      padding: 10px 16px;
+
+    .subtitle {
+      color: var(--muted);
       font-size: 14px;
-      transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+      margin-top: 4px;
     }
-    button {
-      cursor: pointer;
-      background: var(--accent);
-      color: #fff;
-      border: 0;
-      font-weight: 600;
-      box-shadow: 0 8px 18px rgba(0, 113, 227, .24);
-    }
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 22px rgba(0, 113, 227, .26);
-    }
-    button.secondary {
-      background: rgba(255, 255, 255, .72);
-      color: var(--text);
-      border: 1px solid var(--line);
-      box-shadow: none;
-    }
-    button.secondary:hover {
-      background: #fff;
-      transform: translateY(-1px);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin: 18px 0;
-    }
+
     .card {
       border: 1px solid var(--line);
-      border-radius: 28px;
+      border-radius: var(--border-radius);
       background: var(--panel);
-      padding: 26px;
+      padding: 24px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(22px);
+      backdrop-filter: blur(20px);
       margin-bottom: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .stat-label {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    .stat-value {
-      font-size: 34px;
-      font-weight: 800;
-      letter-spacing: -0.045em;
-    }
-    .good { color: var(--good); }
-    .warn { color: var(--warn); }
-    .bad { color: var(--bad); }
-    .row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      margin-top: 8px;
-      font-size: 14px;
-    }
-    th, td {
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-    }
-    th { color: var(--muted); font-weight: 600; }
-    ul { color: var(--muted); line-height: 1.55; }
-    
-    .small { font-size: 13px; color: var(--muted); }
-    .wide { grid-column: 1 / -1; }
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin: 18px 0;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin: 16px 0;
-    }
-    .field label {
-      display: block;
-      margin: 0 0 6px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 650;
-    }
-    .field input,
-    .field select {
-      width: 100%;
-      border-radius: 10px;
-      padding: 8px 12px;
-    }
-    .check-field {
+
+    /* Tabs Selector */
+    .tabs-container {
       display: flex;
       gap: 8px;
-      align-items: center;
-      color: var(--text);
-      font-size: 13.5px;
-      font-weight: 650;
-      margin-top: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--line);
     }
-    .check-field input {
-      width: auto;
-      margin: 0;
+
+    .tab-btn {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 999px;
       cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
     }
-    
-    .site-nav {
-      display: none;
+
+    .tab-btn:hover {
+      background: rgba(0, 0, 0, 0.02);
+      color: var(--text);
     }
-    
-    /* Allocation Table Input Fields */
-    .alloc-table input[type="number"] {
+
+    .tab-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: rgba(0, 113, 227, 0.15);
+    }
+
+    /* Table styles */
+    .table-wrap {
       width: 100%;
-      border-radius: 8px;
-      padding: 6px 10px;
+      overflow-x: auto;
+      border-radius: 12px;
       border: 1px solid var(--line);
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.4);
     }
-    .alloc-table input[type="number"]:focus {
-      border-color: var(--accent);
-      outline: none;
-      background: #fff;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
     }
-    
-    .color-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-right: 8px;
+
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
       vertical-align: middle;
     }
+
+    th {
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 13px;
+      background: rgba(0, 0, 0, 0.01);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Editable Input Fields */
+    .holding-input {
+      width: 100%;
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 6px 10px;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      border-radius: 6px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .holding-input:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .holding-input:focus {
+      background: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+      outline: none;
+    }
+
+    select.holding-input {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%2386868b' stroke-width='1.5'><path d='M1 1l4 4 4-4'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+
+    /* Badges & Color indicators */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-active {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .badge-passive {
+      background: rgba(0,0,0,0.04);
+      color: var(--muted);
+    }
+
+    .gain-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .gain-pill.good {
+      background: var(--good-soft);
+      color: var(--good);
+    }
+
+    .gain-pill.bad {
+      background: var(--bad-soft);
+      color: var(--bad);
+    }
+
+    .color-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    
     .dot-spx { background-color: var(--color-spx); }
     .dot-ndx { background-color: var(--color-ndx); }
     .dot-ftse { background-color: var(--color-ftse); }
@@ -218,137 +246,73 @@
     .dot-gold { background-color: var(--color-gold); }
     .dot-cash { background-color: var(--color-cash); }
 
-    .badge {
-      display: inline-block;
-      padding: 3px 9px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-    .badge-active { background: rgba(0, 113, 227, 0.14); color: var(--accent); }
-    .badge-passive { background: rgba(110, 110, 115, 0.14); color: var(--muted); }
-    
-    .callout {
-      border-left: 4px solid var(--accent);
-      background: var(--accent-soft);
-      padding: 16px 18px;
-      border-radius: 18px;
-      color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-    .callout-warn {
-      border-left-color: var(--warn);
-      background: rgba(178, 106, 0, 0.08);
-      color: #7a4a00;
-    }
-    .callout-danger {
-      border-left-color: var(--bad);
-      background: rgba(215, 0, 21, 0.08);
-      color: #9c0010;
-    }
-    
-    .trade-list {
-      list-style: none;
-      padding: 0;
-      margin: 10px 0;
-    }
-    .trade-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--line);
+    /* Buttons */
+    button, .action-btn {
+      border: 1px solid transparent;
+      padding: 10px 20px;
       font-size: 14px;
-    }
-    .trade-item:last-child {
-      border-bottom: 0;
-    }
-    .trade-action {
-      font-weight: 700;
-      border-radius: 6px;
-      padding: 2px 6px;
-      font-size: 11px;
-      text-transform: uppercase;
-      margin-right: 8px;
-    }
-    .action-buy { background: rgba(36, 138, 61, 0.14); color: var(--good); }
-    .action-sell { background: rgba(215, 0, 21, 0.12); color: var(--bad); }
-    
-    .chart-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 250px;
-    }
-    .chart-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 15px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .chart-legend-item {
-      display: flex;
-      align-items: center;
-    }
-    
-    .progress-bar-container {
-      margin-top: 4px;
-      background: rgba(0, 0, 0, 0.05);
-      border-radius: 999px;
-      height: 8px;
-      overflow: hidden;
-      width: 100%;
-    }
-    
-    .drift-cell {
-      font-variant-numeric: tabular-nums;
       font-weight: 600;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    
-    .slider-container {
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.15);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      background: var(--muted);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    button.secondary {
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    button.secondary:hover {
+      background: #ffffff;
+      border-color: var(--muted);
+    }
+
+    .btn-delete-holding {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 4px;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
-      gap: 15px;
-      margin-top: 5px;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
     }
-    .slider-container input[type="range"] {
-      flex: 1;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-    .slider-val {
-      min-width: 60px;
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-      font-weight: bold;
-    }
-    
-    /* Drag and Drop Zone */
-    #dropZone {
-      border: 2px dashed var(--line);
-      border-radius: 18px;
-      padding: 24px;
-      text-align: center;
-      margin-top: 14px;
-      background: rgba(0, 0, 0, 0.01);
-      transition: background 0.2s, border-color 0.2s, transform 0.2s;
-      cursor: pointer;
-    }
-    #dropZone:hover {
-      background: rgba(0, 0, 0, 0.02);
-      border-color: var(--accent);
-    }
-    #dropZone.dragover {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      transform: scale(1.01);
+
+    .btn-delete-holding:hover {
+      background: var(--bad-soft);
+      color: var(--bad);
     }
 
     /* Lock Screen Layout */
@@ -359,100 +323,73 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background:
-        radial-gradient(circle at top left, rgba(0, 113, 227, 0.12), transparent 32rem),
-        linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 42%, #ffffff 100%);
+      background: radial-gradient(circle at top left, rgba(0, 113, 227, 0.08), transparent 40rem),
+                  linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
     }
+
     .lock-card {
-      width: min(420px, 90vw);
+      width: min(400px, 90vw);
       text-align: center;
+      padding: 32px;
+      border-radius: 28px;
     }
+
     .lock-input {
       width: 100%;
       border-radius: 12px;
       padding: 12px 18px;
       text-align: center;
-      font-size: 18px;
+      font-size: 20px;
       letter-spacing: 0.1em;
-      margin: 16px 0;
+      margin: 20px 0;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.8);
     }
 
-    /* Responsive details */
-    @media (max-width: 850px) {
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .two-col { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 520px) {
-      .grid { grid-template-columns: 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      .stat-value { font-size: 28px; }
-      .alloc-table {
-        display: block;
-        overflow-x: auto;
-      }
-    }
-    /* Accounts Tabs */
-    .tabs-container {
-      display: flex;
-      gap: 6px;
-      border-bottom: 1.5px solid var(--line);
-      margin-bottom: 20px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-    .tab-btn {
-      background: transparent;
-      border: 0;
-      border-bottom: 3px solid transparent;
-      border-radius: 0;
-      padding: 10px 18px;
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 13.5px;
-      box-shadow: none;
-      transition: color .2s, border-color .2s;
-    }
-    .tab-btn:hover {
-      color: var(--text);
-      transform: none;
-      box-shadow: none;
-      background: rgba(0,0,0,0.02);
-    }
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-      background: transparent;
-    }
-    .btn-delete-holding {
-      background: transparent;
-      color: var(--muted);
-      border: 0;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 4px 8px;
-      box-shadow: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .btn-delete-holding:hover {
-      color: var(--bad);
-      background: rgba(215, 0, 21, 0.08);
-      transform: none;
-      box-shadow: none;
-    }
-    .holding-input {
-      width: 100%;
-      border-radius: 6px;
-      padding: 5px 8px;
-      border: 1px solid var(--line);
-      font-size: 13px;
-      background: rgba(255,255,255,0.8);
-    }
-    .holding-input:focus {
-      border-color: var(--accent);
+    .lock-input:focus {
       outline: none;
-      background: #fff;
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+    }
+
+    .small { font-size: 13px; color: var(--muted); }
+    .bad { color: var(--bad); }
+    .good { color: var(--good); }
+
+    /* Account Totals Board */
+    .totals-board {
+      display: flex;
+      justify-content: flex-end;
+      gap: 32px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+      text-align: right;
+    }
+
+    .total-item-lbl {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .total-item-val {
+      font-size: 18px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Top utility row */
+    .utility-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
   </style>
 </head>
@@ -461,436 +398,99 @@
 <!-- SECURE LOCK SCREEN -->
 <div id="lockScreen">
   <div class="card lock-card">
-    <div style="font-size: 48px; margin-bottom: 12px;">🔒</div>
+    <div style="font-size: 48px; margin-bottom: 16px;">🔒</div>
     <h2 id="lblLockTitle">Set Up Master Passcode</h2>
     <p class="small" id="lblLockDesc">
       Create a master passcode to protect your holdings. 
-      Your portfolio data will be encrypted in local storage using zero-knowledge AES-GCM encryption.
+      Your portfolio data will be encrypted in local storage using zero-knowledge AES-GCM.
     </p>
     
     <input type="password" id="txtPasscode" class="lock-input" placeholder="••••••••" autocomplete="new-password" />
-    <div id="lblLockError" class="small bad" style="margin-bottom: 12px; display: none; font-weight: bold;"></div>
+    <div id="lblLockError" class="small bad" style="margin-bottom: 16px; display: none; font-weight: bold;"></div>
     
-    <button type="button" id="btnUnlock" style="width: 100%; padding: 12px; font-size: 15px;">Set Passcode &amp; Initialize</button>
+    <button type="button" id="btnUnlock" style="width: 100%; padding: 14px; font-size: 15px; justify-content: center;">Set Passcode &amp; Initialize</button>
   </div>
 </div>
 
 <!-- MAIN APP DASHBOARD -->
 <main id="appContainer" style="display: none;">
-  <!-- Global Sidebar injected here by site-nav.js -->
-  <nav class="site-nav" aria-label="Strategies"></nav>
+  <header>
+    <div>
+      <h1>Portfolio Holdings Tracker</h1>
+      <p class="subtitle">Consolidated view of your pension, ISA, JISA, and GIA wrapper accounts.</p>
+    </div>
+    <button type="button" class="secondary" id="btnLockPage">🔒 Lock Portfolio</button>
+  </header>
 
+  <!-- POSITIONS MANAGER CARD -->
   <section class="card">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
-      <div>
-        <h1>Holdings &amp; Tax Optimizer</h1>
-        <p style="margin: 4px 0 0 0;">
-          Manage your accounts (SIPPs, ISAs, JISAs, and GIAs) as a single unified portfolio.
-        </p>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+      <div class="tabs-container" id="accountsTabs" style="margin: 0; border: 0; flex: 1;">
+        <!-- Injected by JS -->
       </div>
-      <button type="button" class="secondary" id="btnLockPage" style="height: 38px;">🔒 Lock Portfolio</button>
-    </div>
-    
-    <div class="row" style="margin-top: 18px;">
-      <button type="button" id="btnLoadMock">Reset to Realistic Mock Portfolio</button>
-      <button type="button" class="secondary" id="btnClearHoldings">Clear All Data</button>
-    </div>
-  </section>
-
-  <!-- KPI SUMMARY CARDS -->
-  <div class="grid">
-    <div class="card" style="margin-bottom: 0;">
-      <div class="stat-label">Consolidated Portfolio Value</div>
-      <div id="lblTotalVal" class="stat-value">£0</div>
-      <p class="small" id="lblAccountCount">6 accounts active</p>
-    </div>
-    <div class="card" style="margin-bottom: 0;">
-      <div class="stat-label">Tax Efficiency Score</div>
-      <div id="lblTaxScore" class="stat-value">-</div>
-      <p class="small" id="lblTaxDesc">No active trades in taxable accounts</p>
-    </div>
-    <div class="card" style="margin-bottom: 0;">
-      <div class="stat-label">Pending Trades</div>
-      <div id="lblTradeCount" class="stat-value">0</div>
-      <p class="small" id="lblTradeLimit">Limit: 25 trades per month</p>
-    </div>
-    <div class="card" style="margin-bottom: 0;">
-      <div class="stat-label">Max Drift from Target</div>
-      <div id="lblMaxDrift" class="stat-value">0.0%</div>
-      <p class="small" id="lblDriftStatus">Perfect alignment</p>
-    </div>
-  </div>
-
-  <div class="two-col">
-    <!-- TARGET WEIGHTS CARD -->
-    <section class="card">
-      <h2>1. Portfolio Target Allocation</h2>
-      <p class="small">Define your strategic asset policy weights (must total 100%).</p>
       
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button type="button" id="btnFetchPrices" style="padding: 8px 16px; font-size: 13px;">🔄 Fetch Live Ticker Prices</button>
+        <span id="lblFetchStatus" class="small"></span>
+      </div>
+    </div>
+
+    <!-- Active Account Details -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line);">
+      <h3 id="lblActiveAccountName" style="font-size: 20px; font-weight: 700;">Account Name</h3>
+      <span id="lblActiveAccountBadge" class="badge">Wrapper Type</span>
+    </div>
+
+    <!-- Holdings Table -->
+    <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Asset Class</th>
-            <th>Default Policy</th>
-            <th style="width: 120px; text-align: right;">Target Weight (%)</th>
+            <th style="width: 32%;">Fund / Position Name</th>
+            <th style="width: 12%;">Ticker</th>
+            <th style="text-align: right; width: 12%;">Units Held</th>
+            <th style="text-align: right; width: 12%;">Price (pence)</th>
+            <th style="text-align: right; width: 13%;">Current Value (£)</th>
+            <th style="text-align: right; width: 12%;">Cost (£)</th>
+            <th style="text-align: right; width: 13%;">Unrealised G/L</th>
+            <th style="width: 14%;">Mapped Sleeve</th>
+            <th style="width: 5%; text-align: center;"></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><span class="color-dot dot-spx"></span><strong>S&amp;P 500</strong> <span class="small">(SPYL / XS2D / 3USL)</span></td>
-            <td>40%</td>
-            <td><input type="number" id="tgt_spx" min="0" max="100" step="1" value="40" style="width: 80px; text-align: right;" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td><span class="color-dot dot-ndx"></span><strong>Nasdaq 100</strong> <span class="small">(EQQQ / LQQ / LQQ3)</span></td>
-            <td>15%</td>
-            <td><input type="number" id="tgt_ndx" min="0" max="100" step="1" value="15" style="width: 80px; text-align: right;" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td><span class="color-dot dot-ftse"></span><strong>FTSE 250</strong> <span class="small">(MIDD)</span></td>
-            <td>16%</td>
-            <td><input type="number" id="tgt_ftse" min="0" max="100" step="1" value="16" style="width: 80px; text-align: right;" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td><span class="color-dot dot-em"></span><strong>MSCI EM</strong> <span class="small">(EIMI)</span></td>
-            <td>14%</td>
-            <td><input type="number" id="tgt_em" min="0" max="100" step="1" value="14" style="width: 80px; text-align: right;" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td><span class="color-dot dot-gold"></span><strong>Gold</strong> <span class="small">(SGLN)</span></td>
-            <td>15%</td>
-            <td><input type="number" id="tgt_gold" min="0" max="100" step="1" value="15" style="width: 80px; text-align: right;" onchange="updateAllocation()" /></td>
-          </tr>
-          <tr>
-            <td><span class="color-dot dot-cash"></span><strong>Cash</strong> <span class="small">(MMFs / Sterling Cash)</span></td>
-            <td>0%</td>
-            <td><input type="number" id="tgt_cash" min="0" max="100" step="1" value="0" style="width: 80px; text-align: right;" onchange="updateAllocation()" /></td>
-          </tr>
+        <tbody id="holdingsTableBody">
+          <!-- Rendered dynamically -->
         </tbody>
-        <tfoot>
-          <tr style="font-weight: bold;">
-            <td>Total</td>
-            <td>100%</td>
-            <td id="lblTargetTotal" style="text-align: right; padding-right: 12px;">100%</td>
-          </tr>
-        </tfoot>
-      </table>
-      <div id="lblWeightError" class="small bad" style="margin-top: 10px; display: none; font-weight: bold;">
-        ⚠️ Targets must add up to exactly 100% (currently: <span id="lblWeightCurrent">100</span>%).
-      </div>
-    </section>
-
-    <!-- OPTIMIZATION STRATEGY CARD -->
-    <section class="card">
-      <h2>2. Optimization Settings</h2>
-      <p class="small">Configure tax-shelter priorities and trade execution thresholds.</p>
-      
-      <div class="field" style="margin-bottom: 14px;">
-        <label for="optStrategy">Allocation Strategy</label>
-        <select id="optStrategy" onchange="updateAllocation()">
-          <option value="optimized" selected>Tax &amp; Trade Optimized (Asset Location)</option>
-          <option value="mirrored">Traditional Mirroring (Replicate weights in all accounts)</option>
-        </select>
-      </div>
-
-      <div class="field" style="margin-bottom: 14px;">
-        <div class="check-field">
-          <input type="checkbox" id="chkPoolISAs" checked onchange="updateAllocation()" />
-          <label for="chkPoolISAs">Treat Adult ISAs as a Single Pool (Minimizes trades)</label>
-        </div>
-        <p class="small" style="margin: 4px 0 0 22px;">
-          If enabled, Wife &amp; Self ISAs are allocated as a single block. E.g., placing all Gold in Self ISA and Nasdaq in Wife's.
-        </p>
-      </div>
-
-      <div class="field" style="margin-bottom: 14px;">
-        <div class="check-field">
-          <input type="checkbox" id="chkSimplifyJISAs" checked onchange="updateAllocation()" />
-          <label for="chkSimplifyJISAs">Simplify Children's JISAs (Buy-and-Hold S&amp;P 500 only)</label>
-        </div>
-        <p class="small" style="margin: 4px 0 0 22px;">
-          JISAs mirror each other but hold 100% passive S&amp;P 500 tracker. Prevents small, expensive rebalancing trades for children's wrappers.
-        </p>
-      </div>
-
-      <div class="field" style="margin-bottom: 12px;">
-        <label>Minimum Trade Size (£)</label>
-        <p class="small">Suppress trades below this value to avoid trading noise.</p>
-        <div class="slider-container">
-          <input type="range" id="rngMinTrade" min="0" max="2500" step="100" value="500" oninput="document.getElementById('lblMinTradeVal').textContent = '£' + this.value; updateAllocation();" />
-          <span class="slider-val" id="lblMinTradeVal">£500</span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Minimum Rebalance Drift (%)</label>
-        <p class="small">Only trade an asset if it drifts from target by more than this threshold.</p>
-        <div class="slider-container">
-          <input type="range" id="rngMinDrift" min="0" max="5" step="0.5" value="1.5" oninput="document.getElementById('lblMinDriftVal').textContent = this.value + '%'; updateAllocation();" />
-          <span class="slider-val" id="lblMinDriftVal">1.5%</span>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- BROKER CSV IMPORTER -->
-  <section class="card">
-    <h2>3. Import Holdings from Broker CSV</h2>
-    <p class="small">
-      Export your holdings CSV from Interactive Investor (ii) or Hargreaves Lansdown (HL) and drop it here. 
-      The parser will scan your tickers and security names to automatically map your balances.
-    </p>
-
-    <div class="form-grid" style="margin-top: 14px;">
-      <div class="field" style="grid-column: 1 / -1;">
-        <label for="csvAccountTarget">Target Wrapper Destination</label>
-        <select id="csvAccountTarget">
-          <option value="auto" selected>Auto-Detect Wrapper (Recommended - searches for "SIPP", "ISA", "Trading Account" etc.)</option>
-          <option value="sipp">Force all to: Pension (SIPP)</option>
-          <option value="gia">Force all to: General Investment Account (GIA)</option>
-          <option value="sisa">Force all to: Self ISA</option>
-          <option value="wisa">Force all to: Wife ISA</option>
-          <option value="jisa1">Force all to: Child 1 JISA</option>
-          <option value="jisa2">Force all to: Child 2 JISA</option>
-        </select>
-      </div>
-    </div>
-
-    <div id="dropZone">
-      <div style="font-size: 32px; margin-bottom: 8px;">📥</div>
-      <strong style="display: block; margin-bottom: 4px; font-size: 15px;">Drag and drop your ii or HL CSV file here</strong>
-      <span class="small">or click to browse files</span>
-      <input type="file" id="csvFileInput" accept=".csv" style="display: none;" />
-    </div>
-
-    <!-- PREVIEW BOX -->
-    <div id="csvPreviewContainer" style="display: none; margin-top: 20px; border-top: 1px solid var(--line); padding-top: 18px;">
-      <h3 style="margin: 0 0 6px; font-size: 16px;">Scan Results &amp; Asset Mappings</h3>
-      <p class="small" id="csvPreviewSummary" style="margin-bottom: 12px;"></p>
-      
-      <div class="table-wrap">
-        <table style="font-size: 13px;">
-          <thead>
-            <tr>
-              <th>Broker Holding Name</th>
-              <th>Ticker</th>
-              <th style="text-align: right;">Value</th>
-              <th>Detected Account</th>
-              <th>Mapped Asset Sleeve</th>
-            </tr>
-          </thead>
-          <tbody id="csvPreviewTableBody">
-            <!-- Injected by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <div class="row" style="margin-top: 18px;">
-        <button type="button" id="btnApplyCsv">Apply Imported Holdings</button>
-        <button type="button" class="secondary" id="btnCancelCsv">Clear Scan</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- DYNAMIC HOLDINGS PLANNER BY ACCOUNT TAB -->
-  <section class="card">
-    <h2>4. Current Portfolio Positions</h2>
-    <p class="small">
-      Manage your individual positions (units and prices in pence) under each wrapper. 
-      Their values and unrealised gains/losses are updated dynamically.
-    </p>
-
-    <!-- Tabs Container for Accounts -->
-    <div class="tabs-container" id="accountsTabs">
-      <!-- Injected by JS -->
-    </div>
-
-    <!-- Active Account Details Card -->
-    <div class="card" style="background: rgba(0, 0, 0, 0.015); border-radius: 20px; box-shadow: none; border: 1px solid var(--line); padding: 20px; margin-bottom: 8px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
-        <h3 id="lblActiveAccountName" style="margin: 0; font-size: 18px; font-weight: 700;">Account Name</h3>
-        <span id="lblActiveAccountBadge" class="badge badge-active">Wrapper Type</span>
-      </div>
-
-      <!-- Holdings Table -->
-      <div class="table-wrap">
-        <table style="font-size: 13.5px; width: 100%;">
-          <thead>
-            <tr>
-              <th style="width: 26%;">Position / Fund Name</th>
-              <th style="width: 11%;">Ticker</th>
-              <th style="text-align: right; width: 12%;">Units Held</th>
-              <th style="text-align: right; width: 12%;">Price (pence)</th>
-              <th style="text-align: right; width: 12%;">Current Value (£)</th>
-              <th style="text-align: right; width: 11%;">Cost (£)</th>
-              <th style="text-align: right; width: 11%;">Unrealised G/L</th>
-              <th style="width: 16%;">Mapped Sleeve</th>
-              <th style="width: 5%; text-align: center;"></th>
-            </tr>
-          </thead>
-          <tbody id="holdingsTableBody">
-            <!-- Positions will be rendered by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Add Position Button & Totals Summary -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; flex-wrap: wrap; gap: 16px;">
-        <button type="button" class="secondary" id="btnAddHolding" style="padding: 8px 16px; font-size: 13px;">➕ Add Custom Holding</button>
-        
-        <div style="display: flex; gap: 20px; text-align: right; font-size: 13.5px;">
-          <div>
-            <span style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;">Total Cost</span>
-            <strong id="lblAccountTotalCost">£0</strong>
-          </div>
-          <div>
-            <span style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;">Total Value</span>
-            <strong id="lblAccountTotalVal">£0</strong>
-          </div>
-          <div>
-            <span style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;">Unrealised Gain/Loss</span>
-            <strong id="lblAccountTotalGain" class="good">£0 (0.0%)</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AGGREGATED PORTFOLIO LOCATION MATRIX -->
-  <section class="card">
-    <h2>5. Aggregated Asset Location Matrix</h2>
-    <p class="small">
-      This read-only grid summarizes how your individual holdings roll up into each asset class and wrapper account. 
-      Use the tabs above to modify balances.
-    </p>
-
-    <div class="row" style="margin-bottom: 18px; gap: 14px; align-items: flex-end;">
-      <button type="button" id="btnFetchPrices" style="height: 38px;">Fetch Live Ticker Prices</button>
-      <span id="lblFetchStatus" class="small" style="align-self: center; margin-left: 8px;"></span>
-    </div>
-
-    <div class="table-wrap">
-      <table class="alloc-table">
-        <thead>
-          <tr>
-            <th>Asset Class</th>
-            <th style="text-align: right; width: 13%;">General Inv. (GIA)</th>
-            <th style="text-align: right; width: 13%;">Reza HL SIPP</th>
-            <th style="text-align: right; width: 13%;">Self ISA</th>
-            <th style="text-align: right; width: 13%;">Wife ISA</th>
-            <th style="text-align: right; width: 13%;">Child 1 JISA</th>
-            <th style="text-align: right; width: 13%;">Child 2 JISA</th>
-            <th style="text-align: right; width: 13%; font-weight: bold; background: rgba(0,0,0,0.025);">Sleeve Total</th>
-          </tr>
-        </thead>
-        <tbody id="matrixRollupBody">
-          <!-- Injected by JS -->
-        </tbody>
-        <tfoot>
-          <tr style="font-weight: bold; background: rgba(0,0,0,0.025);">
-            <td>Account Total</td>
-            <td id="tot_gia" style="text-align: right; padding-right: 10px;">£0</td>
-            <td id="tot_sipp" style="text-align: right; padding-right: 10px;">£0</td>
-            <td id="tot_sisa" style="text-align: right; padding-right: 10px;">£0</td>
-            <td id="tot_wisa" style="text-align: right; padding-right: 10px;">£0</td>
-            <td id="tot_jisa1" style="text-align: right; padding-right: 10px;">£0</td>
-            <td id="tot_jisa2" style="text-align: right; padding-right: 10px;">£0</td>
-            <td id="tot_all_portfolio" style="text-align: right; padding-right: 10px; font-size: 15px;">£0</td>
-          </tr>
-        </tfoot>
       </table>
     </div>
-  </section>
 
-  <!-- ANALYSIS & VISUALIZATIONS -->
-  <section class="card">
-    <h2>5. Portfolio Drift &amp; Allocations</h2>
-    <div class="two-col">
-      <div>
-        <h3>Target vs Actual Weight</h3>
-        <div class="chart-container">
-          <svg id="donutChart" width="220" height="220" viewBox="0 0 220 220">
-            <!-- Rendered by JS -->
-          </svg>
-          <div class="chart-legend" id="donutLegend">
-            <!-- Generated by JS -->
-          </div>
-        </div>
-      </div>
-      <div>
-        <h3>Account Placement Breakdown</h3>
-        <div id="barChartContainer" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
-          <!-- Generated by JS -->
-        </div>
-      </div>
-    </div>
-
-    <!-- CONSOLIDATED DRIFT TABLE -->
-    <table style="margin-top: 24px;">
-      <thead>
-        <tr>
-          <th>Asset Class</th>
-          <th style="text-align: right;">Current Value</th>
-          <th style="text-align: right;">Actual Weight</th>
-          <th style="text-align: right;">Target Weight</th>
-          <th style="text-align: right;">Drift (pp)</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="driftTableBody">
-        <!-- Generated by JS -->
-      </tbody>
-    </table>
-  </section>
-
-  <!-- TRADE PLANNER -->
-  <section class="card">
-    <h2>6. Optimal Rebalancing Trades</h2>
-    <p class="small">
-      This step-by-step transaction checklist aligns your portfolio to the targets. 
-      It is optimized to avoid trading in your GIA (tax taxable) and groups adult ISA holdings to minimize trades.
-    </p>
-
-    <div id="tradeCountAlert" class="callout" style="display: none;">
-      <!-- Warnings are injected here -->
-    </div>
-
-    <div class="two-col">
-      <div>
-        <h3>Trade List by Account</h3>
-        <div id="tradeListContainer">
-          <p class="small" style="font-style: italic;">No trades required. Portfolio is aligned or within drift thresholds.</p>
-        </div>
-      </div>
+    <!-- Actions & Totals -->
+    <div class="utility-row">
+      <button type="button" class="secondary" id="btnAddHolding" style="padding: 8px 16px; font-size: 13px;">➕ Add custom position</button>
       
-      <div>
-        <h3>Tax &amp; Trade Efficiency Metrics</h3>
-        <div class="card" style="background: rgba(0, 0, 0, 0.02); border-radius: 18px; box-shadow: none; padding: 18px;">
-          <table style="margin: 0; font-size: 13.5px;">
-            <tbody>
-              <tr>
-                <td style="border: 0; padding: 6px 0;">GIA Active Trading:</td>
-                <td style="border: 0; padding: 6px 0; text-align: right;" id="lblGiaTrading">None (Tax Safe)</td>
-              </tr>
-              <tr>
-                <td style="border: 0; padding: 6px 0;">Total Trade count:</td>
-                <td style="border: 0; padding: 6px 0; text-align: right; font-weight: bold;" id="lblTradeCountDetail">0 trades</td>
-              </tr>
-              <tr>
-                <td style="border: 0; padding: 6px 0;">Child JISA Mirroring:</td>
-                <td style="border: 0; padding: 6px 0; text-align: right;" id="lblJisaStatus">Mirrored Exactly</td>
-              </tr>
-              <tr>
-                <td style="border: 0; padding: 6px 0;">Adult ISA Strategy:</td>
-                <td style="border: 0; padding: 6px 0; text-align: right;" id="lblIsaStatus">Pooled</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="totals-board">
+        <div>
+          <div class="total-item-lbl">Total Cost</div>
+          <div id="lblAccountTotalCost" class="total-item-val">£0</div>
         </div>
-        
-        <div class="row" style="margin-top: 18px;">
-          <button type="button" id="btnApplyTrades">Simulate Execution (Apply Trades)</button>
+        <div>
+          <div class="total-item-lbl">Total Value</div>
+          <div id="lblAccountTotalVal" class="total-item-val" style="font-weight: 800;">£0</div>
         </div>
+        <div>
+          <div class="total-item-lbl">Unrealised Gain/Loss</div>
+          <div id="lblAccountTotalGain" class="total-item-val font-weight-bold">£0 (0.0%)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM UTILITY CARDS -->
+  <section class="card" style="padding: 16px 24px; background: rgba(0, 0, 0, 0.005); border-radius: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <span class="small">Data is securely stored encrypted locally. Changes save instantly.</span>
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="secondary" id="btnLoadMock" style="padding: 6px 12px; font-size: 12px;">Reset Default HL Portfolio</button>
+        <button type="button" class="secondary text-danger" id="btnClearHoldings" style="padding: 6px 12px; font-size: 12px; color: var(--bad); border-color: rgba(215, 0, 21, 0.15);">Clear All Data</button>
       </div>
     </div>
   </section>
@@ -908,21 +508,14 @@
   };
 
   const ACCOUNTS = {
-    gia: { name: 'General Investment Account (GIA)', taxable: true },
-    sipp: { name: 'Pension (SIPP)', taxable: false },
-    sisa: { name: 'Self ISA', taxable: false },
-    wisa: { name: 'Wife ISA', taxable: false },
-    jisa1: { name: 'Child 1 JISA', taxable: false },
-    jisa2: { name: 'Child 2 JISA', taxable: false }
+    sipp: { name: "Reza HL SIPP", taxable: false },
+    gia: { name: "General Investment Account (GIA)", taxable: true },
+    sisa: { name: "Self ISA", taxable: false },
+    wisa: { name: "Wife ISA", taxable: false },
+    jisa1: { name: "Child 1 JISA", taxable: false },
+    jisa2: { name: "Child 2 JISA", taxable: false }
   };
 
-  // Tax preference order (for GIA placement, lowest turnover first)
-  const TAX_PREFERENCE_ORDER = ['spx', 'gold', 'em', 'ftse', 'ndx', 'cash'];
-  
-  // SIPP/ISA active preference order (highest active/turnover first)
-  const ACTIVE_SHELTER_ORDER = ['ndx', 'ftse', 'em', 'gold', 'spx', 'cash'];
-
-  // Global state
   // Default accounts structure pre-populated with SIPP holdings from your HL screenshot
   const DEFAULT_ACCOUNTS = {
     sipp: {
@@ -994,75 +587,15 @@
 
   // Global state
   let state = {
-    targets: { spx: 40, ndx: 15, ftse: 16, em: 14, gold: 15, cash: 0 },
-    accounts: JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS)),
-    holdings: {
-      gia: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      sipp: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      sisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      wisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      jisa1: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      jisa2: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 }
-    },
-    quantities: {
-      gia: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      sipp: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      sisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      wisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      jisa1: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      jisa2: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 }
-    },
-    prices: { spx: 92.50, ndx: 285.40, ftse: 21.30, em: 30.10, gold: 42.60, cash: 1.0 },
-    tickers: { spx: 'VUAG.L', ndx: 'LQQ3.L', ftse: 'MIDD.L', em: 'EIMI.L', gold: 'SGLN.L', cash: '' },
-    settings: {
-      strategy: 'optimized',
-      poolISAs: true,
-      simplifyJISAs: true,
-      minTradeSize: 500,
-      minDrift: 1.5,
-      inputMode: 'value'
-    }
-  };
-
-  // Realistic mock data
-  const MOCK_DATA = {
-    targets: { spx: 40, ndx: 15, ftse: 16, em: 14, gold: 15, cash: 0 },
-    accounts: JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS)),
-    holdings: {
-      gia: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      sipp: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      sisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      wisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      jisa1: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      jisa2: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 }
-    },
-    quantities: {
-      gia: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      sipp: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      sisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      wisa: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      jisa1: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 },
-      jisa2: { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 }
-    },
-    prices: { spx: 92.50, ndx: 285.40, ftse: 21.30, em: 30.10, gold: 42.60, cash: 1.0 },
-    tickers: { spx: 'VUAG.L', ndx: 'LQQ3.L', ftse: 'MIDD.L', em: 'EIMI.L', gold: 'SGLN.L', cash: '' },
-    settings: {
-      strategy: 'optimized',
-      poolISAs: true,
-      simplifyJISAs: true,
-      minTradeSize: 500,
-      minDrift: 1.5,
-      inputMode: 'value'
-    }
+    accounts: JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS))
   };
 
   // Cryptographic Key memory
   let sessionPasscode = sessionStorage.getItem('holdings_master_passcode');
 
   // Format currency helper
-  const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
   function formatGBP(val) {
-    return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 }).format(val);
+    return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 2 }).format(val);
   }
 
   // --- CRYPTO HELPERS (AES-GCM Web Crypto) ---
@@ -1126,13 +659,14 @@
   function arrayToHex(arr) {
     return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
   }
+  
   function hexToArray(hex) {
     const match = hex.match(/.{1,2}/g);
     if (!match) return new Uint8Array(0);
     return new Uint8Array(match.map(byte => parseInt(byte, 16)));
   }
 
-  // --- SAVE / LOAD DATA OVERRIDES ---
+  // --- SAVE / LOAD DATA ---
   async function saveState() {
     if (!sessionPasscode) {
       lockPage();
@@ -1158,23 +692,22 @@
         holdings: []
       };
       
-      // If SIPP, populate with your HL SIPP screenshot assets
       if (acct === 'sipp') {
         accounts[acct].holdings = JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS.sipp.holdings));
         continue;
       }
       
-      // For other wrappers, create mock holding positions from legacy numbers
-      for (const asset in ASSETS) {
+      // For other wrappers, create mock positions from legacy numbers
+      const legacyAssetMap = { spx: 'S&P 500', ndx: 'Nasdaq 100', ftse: 'FTSE 250', em: 'MSCI EM', gold: 'Gold', cash: 'Cash' };
+      for (const asset in legacyAssetMap) {
         const val = oldHoldings?.[acct]?.[asset] || 0;
         if (val > 0) {
-          const price = prices[asset] || 1.0;
+          const price = prices?.[asset] || 1.0;
           const units = oldQuantities?.[acct]?.[asset] || (val / price);
-          const name = `${ASSETS[asset].name} Index Fund`;
-          const ticker = tickers[asset] || "";
+          const ticker = tickers?.[asset] || "";
           
           accounts[acct].holdings.push({
-            name: name,
+            name: `${legacyAssetMap[asset]} Index Fund`,
             ticker: ticker,
             units: parseFloat(units.toFixed(4)),
             pricePence: price * 100.0,
@@ -1204,7 +737,7 @@
 
     try {
       const decrypted = await decryptState(ciphertext, sessionPasscode, salt, iv);
-      const parsed = JSON.parse(decrypted);
+      const parsed = jsonParse(decrypted);
       
       // Auto-migrate schema if needed
       if (!parsed.accounts) {
@@ -1217,7 +750,6 @@
       document.getElementById('appContainer').style.display = 'block';
       
       syncStateToDOM();
-      updateAllocation();
       fetchLivePrices();
     } catch (e) {
       console.error("Decryption failed", e);
@@ -1225,6 +757,10 @@
       sessionPasscode = null;
       showUnlockScreen("Decryption failed. Stored data might be corrupted or passcode is incorrect.");
     }
+  }
+
+  function jsonParse(str) {
+    try { return JSON.parse(str); } catch(e) { return {}; }
   }
 
   function showSetupScreen() {
@@ -1275,7 +811,7 @@
       // First-time setup: encrypt empty/default state
       sessionPasscode = passcode;
       sessionStorage.setItem('holdings_master_passcode', passcode);
-      state = JSON.parse(JSON.stringify(MOCK_DATA));
+      state = { accounts: JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS)) };
       await saveState();
       loadState();
     } else {
@@ -1285,7 +821,7 @@
       
       try {
         const decrypted = await decryptState(ciphertext, passcode, salt, iv);
-        const parsed = JSON.parse(decrypted);
+        const parsed = jsonParse(decrypted);
         if (!parsed.accounts) {
           parsed.accounts = migrateLegacyHoldingsToAccounts(parsed.holdings, parsed.quantities, parsed.prices, parsed.tickers);
         }
@@ -1297,7 +833,6 @@
         document.getElementById('appContainer').style.display = 'block';
         
         syncStateToDOM();
-        updateAllocation();
         fetchLivePrices();
       } catch (err) {
         errEl.textContent = "Incorrect passcode. Decryption failed.";
@@ -1328,83 +863,71 @@
       holding[field] = value;
     }
 
-    // Reactively update calculated row cells in DOM to keep cursor focus fluid
+    // Recalculate values locally in real-time
+    const val = holding.units * (holding.pricePence / 100.0);
+    const gain = val - holding.cost;
+    const gainPct = holding.cost > 0 ? (gain / holding.cost) * 100 : 0;
+    
+    // Update DOM cells directly to avoid full table redraws (prevents focus loss)
     const row = document.getElementById(`holding-row-${acct}-${index}`);
     if (row) {
-      const currentVal = holding.units * (holding.pricePence / 100.0);
-      const gain = currentVal - holding.cost;
-      const gainPct = holding.cost > 0 ? (gain / holding.cost) * 100 : 0;
-      
-      row.querySelector('.holding-value-cell').textContent = formatGBP(currentVal);
-      
+      row.querySelector('.holding-value-cell').textContent = formatGBP(val);
       const gainCell = row.querySelector('.holding-gain-cell');
       gainCell.textContent = `${gain >= 0 ? '+' : ''}${formatGBP(gain)} (${gainPct.toFixed(1)}%)`;
-      gainCell.className = `holding-gain-cell ${gain >= 0 ? 'good' : 'bad'}`;
+      gainCell.className = `holding-gain-cell gain-pill ${gain >= 0 ? 'good' : 'bad'}`;
     }
 
     updateAccountTotalsInDOM(acct);
-    
-    // Save background state & update matrices/charts
     saveState();
-    
-    // Aggregate in background and update targets
-    const { totalPortfolioVal, capacities, proposed } = calculateAllocation();
-    const trades = generateTrades(proposed);
-    
-    document.getElementById('lblTotalVal').textContent = formatGBP(totalPortfolioVal);
-    renderSummaryMatrixDOM();
-    updateAllocationKPIs(totalPortfolioVal, capacities, proposed, trades);
   };
 
-  window.deleteHolding = function (acct, index) {
-    state.accounts[acct].holdings.splice(index, 1);
-    saveState();
-    syncStateToDOM();
-    updateAllocation();
-  };
+  function updateAccountTotalsInDOM(acct) {
+    const account = state.accounts[acct];
+    if (!account) return;
+
+    let totalCost = 0;
+    let totalVal = 0;
+
+    account.holdings.forEach(h => {
+      totalCost += h.cost;
+      totalVal += h.units * (h.pricePence / 100.0);
+    });
+
+    const totalGain = totalVal - totalCost;
+    const totalGainPct = totalCost > 0 ? (totalGain / totalCost) * 100 : 0;
+
+    document.getElementById('lblAccountTotalCost').textContent = formatGBP(totalCost);
+    document.getElementById('lblAccountTotalVal').textContent = formatGBP(totalVal);
+    
+    const gainEl = document.getElementById('lblAccountTotalGain');
+    gainEl.textContent = `${totalGain >= 0 ? '+' : ''}${formatGBP(totalGain)} (${totalGainPct.toFixed(1)}%)`;
+    gainEl.className = `total-item-val ${totalGain >= 0 ? 'good' : 'bad'}`;
+  }
 
   window.addHolding = function (acct) {
+    if (!state.accounts[acct]) return;
     state.accounts[acct].holdings.push({
       name: "New Position",
       ticker: "",
       units: 0,
       pricePence: 0,
       cost: 0,
-      sleeve: "spx"
+      sleeve: "other"
     });
-    saveState();
     syncStateToDOM();
-    updateAllocation();
+    saveState();
   };
 
-  function updateAccountTotalsInDOM(acct) {
-    let totalVal = 0;
-    let totalCost = 0;
-    
-    for (const h of state.accounts[acct].holdings) {
-      totalVal += h.units * (h.pricePence / 100.0);
-      totalCost += h.cost;
+  window.deleteHolding = function (acct, index) {
+    if (!state.accounts[acct]?.holdings[index]) return;
+    if (confirm("Are you sure you want to delete this position?")) {
+      state.accounts[acct].holdings.splice(index, 1);
+      syncStateToDOM();
+      saveState();
     }
-    
-    const totalGain = totalVal - totalCost;
-    const totalGainPct = totalCost > 0 ? (totalGain / totalCost) * 100 : 0;
-    
-    document.getElementById('lblAccountTotalCost').textContent = formatGBP(totalCost);
-    document.getElementById('lblAccountTotalVal').textContent = formatGBP(totalVal);
-    
-    const gainEl = document.getElementById('lblAccountTotalGain');
-    gainEl.textContent = `${totalGain >= 0 ? '+' : ''}${formatGBP(totalGain)} (${totalGainPct.toFixed(1)}%)`;
-    gainEl.className = `holding-gain-cell ${totalGain >= 0 ? 'good' : 'bad'}`;
-  }
+  };
 
-  // Sync state variables to inputs
   function syncStateToDOM() {
-    // Targets weights inputs
-    for (const key in state.targets) {
-      const el = document.getElementById(`tgt_${key}`);
-      if (el) el.value = state.targets[key];
-    }
-
     // Accounts tabs
     const tabsContainer = document.getElementById('accountsTabs');
     if (tabsContainer) {
@@ -1423,7 +946,7 @@
     const activeAcctData = state.accounts[activeAccountTab];
     if (activeAcctData) {
       document.getElementById('lblActiveAccountName').textContent = activeAcctData.name;
-      document.getElementById('lblActiveAccountBadge').textContent = ACCOUNTS[activeAccountTab].taxable ? "Taxable (GIA)" : "Tax Free";
+      document.getElementById('lblActiveAccountBadge').textContent = ACCOUNTS[activeAccountTab].taxable ? "Taxable Wrapper (GIA)" : "Tax Free Wrapper";
       document.getElementById('lblActiveAccountBadge').className = `badge ${ACCOUNTS[activeAccountTab].taxable ? 'badge-passive' : 'badge-active'}`;
       
       const tbody = document.getElementById('holdingsTableBody');
@@ -1455,8 +978,10 @@
           <td>
             <input type="number" class="holding-input" value="${h.cost}" step="any" oninput="updateHoldingField('${activeAccountTab}', ${index}, 'cost', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
           </td>
-          <td class="holding-gain-cell ${gain >= 0 ? 'good' : 'bad'}" style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums;">
-            ${gain >= 0 ? '+' : ''}${formatGBP(gain)} (${gainPct.toFixed(1)}%)
+          <td style="text-align: right;">
+            <span class="holding-gain-cell gain-pill ${gain >= 0 ? 'good' : 'bad'}">
+              ${gain >= 0 ? '+' : ''}${formatGBP(gain)} (${gainPct.toFixed(1)}%)
+            </span>
           </td>
           <td>
             <select class="holding-input" onchange="updateHoldingField('${activeAccountTab}', ${index}, 'sleeve', this.value)" style="padding: 4px 6px;">
@@ -1481,897 +1006,6 @@
       const addBtn = document.getElementById('btnAddHolding');
       addBtn.onclick = () => addHolding(activeAccountTab);
     }
-
-    renderSummaryMatrixDOM();
-
-    document.getElementById('optStrategy').value = state.settings.strategy;
-    document.getElementById('chkPoolISAs').checked = state.settings.poolISAs;
-    document.getElementById('chkSimplifyJISAs').checked = state.settings.simplifyJISAs;
-    
-    document.getElementById('rngMinTrade').value = state.settings.minTradeSize;
-    document.getElementById('lblMinTradeVal').textContent = '£' + state.settings.minTradeSize;
-    
-    document.getElementById('rngMinDrift').value = state.settings.minDrift;
-    document.getElementById('lblMinDriftVal').textContent = state.settings.minDrift + '%';
-  }
-
-  function renderSummaryMatrixDOM() {
-    const tbody = document.getElementById('matrixRollupBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    
-    const assetTotals = { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0, other: 0 };
-    const acctTotals = { gia: 0, sipp: 0, sisa: 0, wisa: 0, jisa1: 0, jisa2: 0 };
-    
-    const aggregated = {};
-    for (const key in ASSETS) {
-      aggregated[key] = { gia: 0, sipp: 0, sisa: 0, wisa: 0, jisa1: 0, jisa2: 0 };
-    }
-    aggregated['other'] = { gia: 0, sipp: 0, sisa: 0, wisa: 0, jisa1: 0, jisa2: 0 };
-    
-    for (const acct in state.accounts) {
-      for (const h of state.accounts[acct].holdings) {
-        const sleeve = h.sleeve || 'other';
-        const val = h.units * (h.pricePence / 100.0);
-        
-        if (aggregated[sleeve]) {
-          aggregated[sleeve][acct] += val;
-        }
-        acctTotals[acct] += val;
-        if (assetTotals[sleeve] !== undefined) {
-          assetTotals[sleeve] += val;
-        }
-      }
-    }
-    
-    let totalPortfolioVal = Object.values(acctTotals).reduce((a, b) => a + b, 0);
-
-    for (const asset in ASSETS) {
-      const tr = document.createElement('tr');
-      const valAll = Object.values(aggregated[asset]).reduce((a,b)=>a+b,0);
-      
-      tr.innerHTML = `
-        <td><span class="color-dot ${ASSETS[asset].class}"></span><strong>${ASSETS[asset].name}</strong></td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].gia)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].sipp)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].sisa)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].wisa)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].jisa1)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(aggregated[asset].jisa2)}</td>
-        <td style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums; background: rgba(0,0,0,0.025);">${formatGBP(valAll)}</td>
-      `;
-      tbody.appendChild(tr);
-    }
-    
-    const valOtherAll = Object.values(aggregated['other']).reduce((a,b)=>a+b,0);
-    if (valOtherAll > 0) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><span class="color-dot dot-cash" style="background: repeating-linear-gradient(45deg, #a1a1aa, #a1a1aa 2px, #e4e4e7 2px, #e4e4e7 4px);"></span><strong>Other / Unmanaged</strong> <span class="small">(Excluded)</span></td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].gia)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].sipp)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].sisa)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].wisa)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].jisa1)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; color: var(--muted);">${formatGBP(aggregated['other'].jisa2)}</td>
-        <td style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums; background: rgba(0,0,0,0.025); color: var(--muted);">${formatGBP(valOtherAll)}</td>
-      `;
-      tbody.appendChild(tr);
-    }
-    
-    for (const acct in acctTotals) {
-      const el = document.getElementById(`tot_${acct}`);
-      if (el) el.textContent = formatGBP(acctTotals[acct]);
-    }
-    document.getElementById('tot_all_portfolio').textContent = formatGBP(totalPortfolioVal);
-  }
-
-  function readDOMToState() {
-    let sum = 0;
-    for (const key in state.targets) {
-      const el = document.getElementById(`tgt_${key}`);
-      if (el) {
-        state.targets[key] = parseFloat(el.value) || 0;
-        sum += state.targets[key];
-      }
-    }
-    
-    const errEl = document.getElementById('lblWeightError');
-    const currEl = document.getElementById('lblWeightCurrent');
-    const totEl = document.getElementById('lblTargetTotal');
-    
-    totEl.textContent = sum + '%';
-    if (sum !== 100) {
-      errEl.style.display = 'block';
-      currEl.textContent = sum;
-      totEl.className = 'bad';
-    } else {
-      errEl.style.display = 'none';
-      totEl.className = '';
-    }
-
-    state.settings.strategy = document.getElementById('optStrategy').value;
-    state.settings.poolISAs = document.getElementById('chkPoolISAs').checked;
-    state.settings.simplifyJISAs = document.getElementById('chkSimplifyJISAs').checked;
-    state.settings.minTradeSize = parseInt(document.getElementById('rngMinTrade').value) || 0;
-    state.settings.minDrift = parseFloat(document.getElementById('rngMinDrift').value) || 0;
-  }
-
-  function loadMockData() {
-    state = JSON.parse(JSON.stringify(MOCK_DATA));
-    syncStateToDOM();
-    updateAllocation();
-  }
-
-  function clearHoldings() {
-    for (const acct in state.accounts) {
-      state.accounts[acct].holdings = [];
-    }
-    syncStateToDOM();
-    updateAllocation();
-  }
-
-  // Core allocation engine
-  function calculateAllocation() {
-    // Reset core matrix in memory
-    for (const acct in ACCOUNTS) {
-      for (const asset in ASSETS) {
-        state.holdings[acct][asset] = 0;
-        state.quantities[acct][asset] = 0;
-      }
-      state.holdings[acct]['other'] = 0;
-    }
-
-    // Roll up positions values
-    for (const acct in state.accounts) {
-      for (const h of state.accounts[acct].holdings) {
-        const sleeve = h.sleeve || 'other';
-        const val = h.units * (h.pricePence / 100.0);
-        
-        if (state.holdings[acct][sleeve] !== undefined) {
-          state.holdings[acct][sleeve] += val;
-        } else {
-          state.holdings[acct]['other'] += val;
-        }
-        
-        if (state.quantities[acct][sleeve] !== undefined) {
-          state.quantities[acct][sleeve] += h.units;
-        }
-      }
-    }
-
-    const capacities = {};
-    let totalPortfolioVal = 0;
-    
-    for (const acct in state.holdings) {
-      let cap = 0;
-      for (const asset in state.holdings[acct]) {
-        // Exclude unmanaged 'other' holdings from target allocation calculations
-        if (asset !== 'other') cap += state.holdings[acct][asset];
-      }
-      capacities[acct] = cap;
-      totalPortfolioVal += cap;
-    }
-
-    const proposed = {};
-    for (const acct in ACCOUNTS) {
-      proposed[acct] = { spx: 0, ndx: 0, ftse: 0, em: 0, gold: 0, cash: 0 };
-    }
-
-    if (totalPortfolioVal === 0) {
-      return { totalPortfolioVal, capacities, proposed };
-    }
-
-    const assetTargets = {};
-    for (const asset in ASSETS) {
-      assetTargets[asset] = totalPortfolioVal * (state.targets[asset] / 100.0);
-    }
-
-    const remainingTargets = { ...assetTargets };
-
-    if (state.settings.strategy === 'mirrored') {
-      for (const acct in ACCOUNTS) {
-        for (const asset in ASSETS) {
-          proposed[acct][asset] = capacities[acct] * (state.targets[asset] / 100.0);
-        }
-      }
-      return { totalPortfolioVal, capacities, proposed };
-    }
-
-    const jisa1Cap = capacities.jisa1;
-    const jisa2Cap = capacities.jisa2;
-    
-    if (state.settings.simplifyJISAs) {
-      const jisaAsset = state.targets.spx > 0 ? 'spx' : 'cash';
-      proposed.jisa1[jisaAsset] = jisa1Cap;
-      proposed.jisa2[jisaAsset] = jisa2Cap;
-      remainingTargets[jisaAsset] -= (jisa1Cap + jisa2Cap);
-    } else {
-      for (const asset in ASSETS) {
-        const share = state.targets[asset] / 100.0;
-        proposed.jisa1[asset] = jisa1Cap * share;
-        proposed.jisa2[asset] = jisa2Cap * share;
-        remainingTargets[asset] -= (jisa1Cap + jisa2Cap) * share;
-      }
-    }
-
-    for (const asset in remainingTargets) {
-      if (remainingTargets[asset] < 0) remainingTargets[asset] = 0;
-    }
-
-    function allocateToAccount(acct, assetList, caps) {
-      let remCap = caps[acct];
-      for (const asset of assetList) {
-        if (remCap <= 0) break;
-        const alloc = Math.min(remCap, remainingTargets[asset]);
-        proposed[acct][asset] = alloc;
-        remainingTargets[asset] -= alloc;
-        remCap -= alloc;
-      }
-      return remCap;
-    }
-
-    let giaRem = allocateToAccount('gia', TAX_PREFERENCE_ORDER, capacities);
-    let sippRem = allocateToAccount('sipp', ACTIVE_SHELTER_ORDER, capacities);
-
-    if (state.settings.poolISAs) {
-      const pooledTargets = { ...remainingTargets };
-      const sortedAssets = Object.keys(ASSETS).sort((a, b) => pooledTargets[b] - pooledTargets[a]);
-      
-      let sisaRem = capacities.sisa;
-      let wisaRem = capacities.wisa;
-      
-      for (const asset of sortedAssets) {
-        let amountNeeded = pooledTargets[asset];
-        if (amountNeeded <= 0) continue;
-
-        if (sisaRem >= amountNeeded && (sisaRem - amountNeeded < wisaRem - amountNeeded || wisaRem < amountNeeded)) {
-          proposed.sisa[asset] = amountNeeded;
-          sisaRem -= amountNeeded;
-          pooledTargets[asset] = 0;
-        } else if (wisaRem >= amountNeeded) {
-          proposed.wisa[asset] = amountNeeded;
-          wisaRem -= amountNeeded;
-          pooledTargets[asset] = 0;
-        } else {
-          if (sisaRem > wisaRem) {
-            const part = Math.min(sisaRem, amountNeeded);
-            proposed.sisa[asset] = part;
-            sisaRem -= part;
-            amountNeeded -= part;
-            
-            const part2 = Math.min(wisaRem, amountNeeded);
-            proposed.wisa[asset] = part2;
-            wisaRem -= part2;
-            amountNeeded -= part2;
-          } else {
-            const part = Math.min(wisaRem, amountNeeded);
-            proposed.wisa[asset] = part;
-            wisaRem -= part;
-            amountNeeded -= part;
-            
-            const part2 = Math.min(sisaRem, amountNeeded);
-            proposed.sisa[asset] = part2;
-            sisaRem -= part2;
-            amountNeeded -= part2;
-          }
-          pooledTargets[asset] = amountNeeded;
-        }
-      }
-      
-      for (const asset of sortedAssets) {
-        let amt = pooledTargets[asset];
-        if (amt <= 0) continue;
-        if (sisaRem > 0) {
-          const add = Math.min(sisaRem, amt);
-          proposed.sisa[asset] += add;
-          sisaRem -= add;
-          amt -= add;
-        }
-        if (amt > 0 && wisaRem > 0) {
-          const add = Math.min(wisaRem, amt);
-          proposed.wisa[asset] += add;
-          wisaRem -= add;
-          amt -= add;
-        }
-      }
-    } else {
-      const totalIsaCap = capacities.sisa + capacities.wisa;
-      if (totalIsaCap > 0) {
-        const sisaRatio = capacities.sisa / totalIsaCap;
-        const wisaRatio = capacities.wisa / totalIsaCap;
-        for (const asset in ASSETS) {
-          const amt = remainingTargets[asset];
-          proposed.sisa[asset] = amt * sisaRatio;
-          proposed.wisa[asset] = amt * wisaRatio;
-        }
-      }
-    }
-
-    for (const acct in ACCOUNTS) {
-      let sumProposed = 0;
-      for (const asset in ASSETS) {
-        sumProposed += proposed[acct][asset];
-      }
-      const diff = capacities[acct] - sumProposed;
-      if (Math.abs(diff) > 0.01) {
-        proposed[acct].cash += diff;
-      }
-    }
-
-    return { totalPortfolioVal, capacities, proposed };
-  }
-
-  function generateTrades(proposed) {
-    const rawTrades = [];
-    for (const acct in ACCOUNTS) {
-      for (const asset in ASSETS) {
-        const current = state.holdings[acct][asset];
-        const target = proposed[acct][asset];
-        const diff = target - current;
-        if (Math.abs(diff) > 0.01) {
-          rawTrades.push({ acct, asset, diff, current, target });
-        }
-      }
-    }
-
-    const totalVal = Object.values(state.holdings).reduce((sum, a) => sum + Object.values(a).reduce((s, v) => s + v, 0), 0);
-    const assetDrifts = {};
-    for (const asset in ASSETS) {
-      let currentAssetVal = 0;
-      for (const acct in ACCOUNTS) currentAssetVal += state.holdings[acct][asset];
-      const currentPct = totalVal > 0 ? (currentAssetVal / totalVal) * 100 : 0;
-      assetDrifts[asset] = Math.abs(currentPct - state.targets[asset]);
-    }
-
-    return rawTrades.filter(t => {
-      if (t.asset === 'cash') return true;
-      return assetDrifts[t.asset] >= state.settings.minDrift && Math.abs(t.diff) >= state.settings.minTradeSize;
-    });
-  }
-
-  function updateAllocation() {
-    readDOMToState();
-    saveState();
-
-    const { totalPortfolioVal, capacities, proposed } = calculateAllocation();
-    const trades = generateTrades(proposed);
-
-    document.getElementById('lblTotalVal').textContent = formatGBP(totalPortfolioVal);
-    renderSummaryMatrixDOM();
-    updateAllocationKPIs(totalPortfolioVal, capacities, proposed, trades);
-  }
-
-  function updateAllocationKPIs(totalPortfolioVal, capacities, proposed, trades) {
-    let activeAccts = 0;
-    for (const acct in capacities) {
-      if (capacities[acct] > 0) activeAccts++;
-    }
-    document.getElementById('lblAccountCount').textContent = `${activeAccts} accounts active`;
-
-    let maxDrift = 0;
-    let totalTaxScore = 100;
-    let giaActiveTrading = false;
-
-    const driftBody = document.getElementById('driftTableBody');
-    driftBody.innerHTML = '';
-
-    for (const asset in ASSETS) {
-      let currentAssetVal = 0;
-      for (const acct in ACCOUNTS) currentAssetVal += state.holdings[acct][asset];
-      
-      const actualPct = totalPortfolioVal > 0 ? (currentAssetVal / totalPortfolioVal) * 100 : 0;
-      const targetPct = state.targets[asset];
-      const drift = actualPct - targetPct;
-      
-      if (Math.abs(drift) > Math.abs(maxDrift)) maxDrift = drift;
-
-      if (asset !== 'spx' && asset !== 'cash') {
-        const giaHasHolding = state.holdings.gia[asset] > 0;
-        const proposedGiaDiff = Math.abs(proposed.gia[asset] - state.holdings.gia[asset]);
-        if (giaHasHolding || proposedGiaDiff > 100) {
-          totalTaxScore -= 15;
-        }
-      }
-
-      let statusText = 'Aligned';
-      let statusClass = 'good';
-      if (Math.abs(drift) > state.settings.minDrift) {
-        statusText = drift > 0 ? 'Overweight' : 'Underweight';
-        statusClass = 'warn';
-      }
-
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td><span class="color-dot ${ASSETS[asset].class}"></span><strong>${ASSETS[asset].name}</strong></td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${formatGBP(currentAssetVal)}</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${actualPct.toFixed(1)}%</td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums;">${targetPct.toFixed(1)}%</td>
-        <td class="drift-cell" style="text-align: right; font-variant-numeric: tabular-nums; color: ${drift >= 0 ? 'var(--good)' : 'var(--bad)'}">
-          ${drift >= 0 ? '+' : ''}${drift.toFixed(1)} pp
-        </td>
-        <td><span class="badge" style="background-color: ${statusClass === 'good' ? 'rgba(36,138,61,0.14)' : 'rgba(178,106,0,0.14)'}; color: var(--${statusClass});">${statusText}</span></td>
-      `;
-      driftBody.appendChild(row);
-    }
-
-    const giaTrades = trades.filter(t => t.acct === 'gia' && t.asset !== 'spx' && t.asset !== 'cash');
-    if (giaTrades.length > 0) {
-      giaActiveTrading = true;
-      totalTaxScore -= 30;
-    }
-
-    if (totalTaxScore < 0) totalTaxScore = 0;
-    
-    const scoreEl = document.getElementById('lblTaxScore');
-    scoreEl.textContent = totalTaxScore + '/100';
-    if (totalTaxScore >= 80) {
-      scoreEl.className = 'stat-value good';
-      document.getElementById('lblTaxDesc').textContent = 'Excellent tax sheltering';
-    } else if (totalTaxScore >= 50) {
-      scoreEl.className = 'stat-value warn';
-      document.getElementById('lblTaxDesc').textContent = 'Minor tax exposure in GIA';
-    } else {
-      scoreEl.className = 'stat-value bad';
-      document.getElementById('lblTaxDesc').textContent = 'High tax risk (active GIA trades)';
-    }
-
-    document.getElementById('lblGiaTrading').textContent = giaActiveTrading ? '⚠️ Active Signal Trading (Taxable)' : 'Passive Buy-and-Hold (Tax Safe)';
-    document.getElementById('lblGiaTrading').className = giaActiveTrading ? 'bad' : 'good';
-
-    document.getElementById('lblMaxDrift').textContent = (maxDrift >= 0 ? '+' : '') + maxDrift.toFixed(1) + ' pp';
-    const driftStatusEl = document.getElementById('lblDriftStatus');
-    if (Math.abs(maxDrift) <= state.settings.minDrift) {
-      document.getElementById('lblMaxDrift').className = 'stat-value good';
-      driftStatusEl.textContent = `Within ${state.settings.minDrift}% tolerance`;
-    } else {
-      document.getElementById('lblMaxDrift').className = 'stat-value warn';
-      driftStatusEl.textContent = `Drift exceeds ${state.settings.minDrift}% threshold`;
-    }
-
-    document.getElementById('lblTradeCount').textContent = trades.length;
-    document.getElementById('lblTradeCountDetail').textContent = `${trades.length} trades`;
-    const tradeKPI = document.getElementById('lblTradeCount');
-    const alertEl = document.getElementById('tradeCountAlert');
-    
-    if (trades.length > 25) {
-      tradeKPI.className = 'stat-value bad';
-      alertEl.style.display = 'block';
-      alertEl.className = 'callout callout-danger';
-      alertEl.innerHTML = `<strong>⚠️ Trade Limit Exceeded:</strong> You have proposed <strong>${trades.length} trades</strong>, which exceeds your work limit of <strong>25 trades per month</strong>.`;
-    } else if (trades.length > 18) {
-      tradeKPI.className = 'stat-value warn';
-      alertEl.style.display = 'block';
-      alertEl.className = 'callout callout-warn';
-      alertEl.innerHTML = `<strong>⚠️ Approaching Trade Limit:</strong> You have proposed <strong>${trades.length} trades</strong>.`;
-    } else {
-      tradeKPI.className = 'stat-value good';
-      alertEl.style.display = 'none';
-    }
-
-    document.getElementById('lblIsaStatus').textContent = state.settings.poolISAs ? 'Pooled (Optimized)' : 'Mirrored';
-    
-    let jisashare1 = capacities.jisa1 > 0 ? proposed.jisa1.spx / capacities.jisa1 : 0;
-    let jisashare2 = capacities.jisa2 > 0 ? proposed.jisa2.spx / capacities.jisa2 : 0;
-    const jisaMirrored = Math.abs(jisashare1 - jisashare2) < 0.01;
-    document.getElementById('lblJisaStatus').textContent = jisaMirrored ? 'Mirrored Exactly' : '⚠️ Unmirrored';
-    document.getElementById('lblJisaStatus').className = jisaMirrored ? 'good' : 'bad';
-
-    drawDonutChart(totalPortfolioVal);
-    drawBarChart(capacities, proposed);
-    renderTradePlanner(trades);
-  }
-
-  function drawDonutChart(totalVal) {
-    const svg = document.getElementById('donutChart');
-    const legend = document.getElementById('donutLegend');
-    svg.innerHTML = '';
-    legend.innerHTML = '';
-
-    if (totalVal === 0) {
-      svg.innerHTML = '<text x="110" y="110" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="var(--muted)">Enter portfolio value</text>';
-      return;
-    }
-
-    let accumPct = 0;
-    const r = 70;
-    const cx = 110;
-    const cy = 110;
-    const circumference = 2 * Math.PI * r;
-
-    // Sum active sleeves only
-    let activeTotal = 0;
-    for (const key in ASSETS) {
-      for (const acct in ACCOUNTS) activeTotal += state.holdings[acct][key];
-    }
-
-    for (const key in ASSETS) {
-      let currentVal = 0;
-      for (const acct in ACCOUNTS) currentVal += state.holdings[acct][key];
-      
-      const pct = activeTotal > 0 ? currentVal / activeTotal : 0;
-      if (pct > 0) {
-        const strokeDash = pct * circumference;
-        const strokeOffset = circumference - (accumPct * circumference);
-        
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.setAttribute('cx', cx);
-        circle.setAttribute('cy', cy);
-        circle.setAttribute('r', r);
-        circle.setAttribute('fill', 'transparent');
-        circle.setAttribute('stroke', ASSETS[key].color);
-        circle.setAttribute('stroke-width', '24');
-        circle.setAttribute('stroke-dasharray', `${strokeDash} ${circumference}`);
-        circle.setAttribute('stroke-dashoffset', -strokeOffset);
-        circle.setAttribute('transform', 'rotate(-90 110 110)');
-        
-        svg.appendChild(circle);
-        accumPct += pct;
-      }
-
-      const displayPct = totalVal > 0 ? currentVal / totalVal : 0;
-      const item = document.createElement('div');
-      item.className = 'chart-legend-item';
-      item.innerHTML = `<span class="color-dot ${ASSETS[key].class}"></span> ${ASSETS[key].name} (${(displayPct * 100).toFixed(1)}%)`;
-      legend.appendChild(item);
-    }
-
-    const innerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    innerCircle.setAttribute('cx', cx);
-    innerCircle.setAttribute('cy', cy);
-    innerCircle.setAttribute('r', '55');
-    innerCircle.setAttribute('fill', 'white');
-    svg.appendChild(innerCircle);
-
-    const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    txt.setAttribute('x', cx);
-    txt.setAttribute('y', cy - 5);
-    txt.setAttribute('text-anchor', 'middle');
-    txt.setAttribute('font-size', '11');
-    txt.setAttribute('fill', 'var(--muted)');
-    txt.setAttribute('font-weight', '600');
-    txt.textContent = 'ACTIVE';
-    svg.appendChild(txt);
-
-    const valTxt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    valTxt.setAttribute('x', cx);
-    valTxt.setAttribute('y', cy + 15);
-    valTxt.setAttribute('text-anchor', 'middle');
-    valTxt.setAttribute('font-size', '16');
-    valTxt.setAttribute('font-weight', '800');
-    valTxt.textContent = formatGBP(activeTotal);
-    svg.appendChild(valTxt);
-  }
-
-  function drawBarChart(capacities, proposed) {
-    const container = document.getElementById('barChartContainer');
-    container.innerHTML = '';
-
-    for (const acct in ACCOUNTS) {
-      const cap = capacities[acct];
-      if (cap === 0) continue;
-
-      const item = document.createElement('div');
-      item.innerHTML = `
-        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
-          <strong>${state.accounts[acct]?.name || ACCOUNTS[acct].name}</strong>
-          <span>${formatGBP(cap)}</span>
-        </div>
-        <div class="progress-bar-container" style="display: flex;"></div>
-      `;
-
-      const bar = item.querySelector('.progress-bar-container');
-      for (const asset in ASSETS) {
-        const val = proposed[acct][asset];
-        if (val > 0) {
-          const pct = (val / cap) * 100;
-          const seg = document.createElement('div');
-          seg.style.width = pct + '%';
-          seg.style.backgroundColor = ASSETS[asset].color;
-          seg.style.height = '100%';
-          seg.title = `${ASSETS[asset].name}: ${formatGBP(val)} (${pct.toFixed(0)}%)`;
-          bar.appendChild(seg);
-        }
-      }
-      container.appendChild(item);
-    }
-  }
-
-  function renderTradePlanner(trades) {
-    const container = document.getElementById('tradeListContainer');
-    container.innerHTML = '';
-
-    if (trades.length === 0) {
-      container.innerHTML = '<p class="small" style="font-style: italic;">No trades required. Portfolio is aligned or within drift thresholds.</p>';
-      return;
-    }
-
-    const grouped = {};
-    for (const trade of trades) {
-      if (!grouped[trade.acct]) grouped[trade.acct] = [];
-      grouped[trade.acct].push(trade);
-    }
-
-    for (const acct in grouped) {
-      const acctCard = document.createElement('div');
-      acctCard.style.marginBottom = '18px';
-      
-      const header = document.createElement('h4');
-      header.style.margin = '0 0 8px 0';
-      header.style.fontSize = '14px';
-      header.textContent = state.accounts[acct]?.name || ACCOUNTS[acct].name;
-      acctCard.appendChild(header);
-
-      const list = document.createElement('ul');
-      list.className = 'trade-list';
-      const sorted = grouped[acct].sort((a, b) => a.diff - b.diff);
-
-      for (const trade of sorted) {
-        const item = document.createElement('li');
-        item.className = 'trade-item';
-        const actionLabel = trade.diff > 0 ? 'Buy' : 'Sell';
-        const actionClass = trade.diff > 0 ? 'action-buy' : 'action-sell';
-        
-        item.innerHTML = `
-          <div>
-            <span class="trade-action ${actionClass}">${actionLabel}</span>
-            <strong>${ASSETS[trade.asset].name}</strong>
-            <span class="small" style="margin-left: 8px;">(Current: ${formatGBP(trade.current)} → Target: ${formatGBP(trade.target)})</span>
-          </div>
-          <span style="font-weight: 700; font-variant-numeric: tabular-nums;">
-            ${formatGBP(Math.abs(trade.diff))}
-          </span>
-        `;
-        list.appendChild(item);
-      }
-      acctCard.appendChild(list);
-      container.appendChild(acctCard);
-    }
-  }
-
-  function applyTrades() {
-    const { proposed } = calculateAllocation();
-    const trades = generateTrades(proposed);
-    if (trades.length === 0) return;
-
-    for (const trade of trades) {
-      const matchingHoldings = state.accounts[trade.acct].holdings.filter(h => h.sleeve === trade.asset);
-      
-      if (matchingHoldings.length > 0) {
-        if (trade.current > 0) {
-          const scaleFactor = trade.target / trade.current;
-          for (const h of matchingHoldings) {
-            h.units *= scaleFactor;
-            h.cost *= scaleFactor;
-          }
-        } else {
-          // Fallback evenly
-          const share = trade.target / matchingHoldings.length;
-          for (const h of matchingHoldings) {
-            h.units = share / (h.pricePence / 100.0);
-            h.cost = share;
-          }
-        }
-      } else if (trade.target > 0) {
-        // Create a new default holding position
-        const assetName = ASSETS[trade.asset]?.name || trade.asset;
-        const price = state.prices[trade.asset] || 1.0;
-        const defaultTickers = { spx: "VUAG.L", ndx: "LQQ3.L", ftse: "MIDD.L", em: "EIMI.L", gold: "SGLN.L", cash: "CASH" };
-        
-        state.accounts[trade.acct].holdings.push({
-          name: `${assetName} Index Position`,
-          ticker: defaultTickers[trade.asset] || "",
-          units: parseFloat((trade.target / price).toFixed(4)),
-          pricePence: price * 100.0,
-          cost: trade.target,
-          sleeve: trade.asset
-        });
-      }
-    }
-    
-    syncStateToDOM();
-    updateAllocation();
-  }
-
-  // --- BROKER CSV IMPORT LOGIC ---
-  const ASSET_MAPPING_RULES = [
-    { key: 'spx', tickers: ['SPYL', 'XS2D', '3USL', 'VUAG', 'VUSA', 'CSP1', 'VOO', 'SPY', 'IUSA'], keywords: ['S&P 500', 'S&P500', 'US Equity', 'S & P 500', 'US Index', 'US Broad'] },
-    { key: 'ndx', tickers: ['EQQQ', 'LQQ', 'LQQ3', 'CNDX', 'QQQ'], keywords: ['Nasdaq 100', 'Nasdaq100', 'Nasdaq', 'QQQ'] },
-    { key: 'ftse', tickers: ['MIDD', 'VMID', 'VMIG'], keywords: ['FTSE 250', 'FTSE250', 'Mid Cap', 'FTSE 250 Index'] },
-    { key: 'em', tickers: ['EIMI', 'VFEM', 'EEM'], keywords: ['Emerging Markets', 'MSCI EM', 'MSCI Emerging', 'EM Markets'] },
-    { key: 'gold', tickers: ['SGLN', 'PHGP', 'GLD', 'PHAU'], keywords: ['Physical Gold', 'Gold Bullion', 'Gold ETC', 'GLD'] },
-    { key: 'cash', tickers: ['CSH2', 'GBP', 'CASH'], keywords: ['Cash', 'Sterling Liquidity', 'Money Market', 'Capital', 'Uninvested', 'Cash Balance', 'Interest'] }
-  ];
-
-  let tempImportedHoldings = [];
-
-  function parseCSV(text) {
-    const lines = [];
-    let row = [""];
-    let inQuotes = false;
-    
-    for (let i = 0; i < text.length; i++) {
-      const char = text[i];
-      const next = text[i+1];
-      
-      if (char === '"') {
-        if (inQuotes && next === '"') {
-          row[row.length - 1] += '"';
-          i++;
-        } else {
-          inQuotes = !inQuotes;
-        }
-      } else if (char === ',' && !inQuotes) {
-        row.push("");
-      } else if ((char === '\r' || char === '\n') && !inQuotes) {
-        if (char === '\r' && next === '\n') i++;
-        lines.push(row.map(cell => cell.trim().replace(/^"|"$/g, '')));
-        row = [""];
-      } else {
-        row[row.length - 1] += char;
-      }
-    }
-    if (row.length > 1 || row[0] !== "") {
-      lines.push(row.map(cell => cell.trim().replace(/^"|"$/g, '')));
-    }
-    return lines;
-  }
-
-  function detectAssetClass(name, ticker) {
-    const cleanName = (name || '').toLowerCase();
-    const cleanTicker = (ticker || '').toUpperCase().trim();
-    
-    if (cleanTicker) {
-      for (const rule of ASSET_MAPPING_RULES) {
-        if (rule.tickers.includes(cleanTicker)) return rule.key;
-      }
-    }
-    for (const rule of ASSET_MAPPING_RULES) {
-      for (const keyword of rule.keywords) {
-        if (cleanName.includes(keyword.toLowerCase())) return rule.key;
-      }
-    }
-    for (const rule of ASSET_MAPPING_RULES) {
-      for (const t of rule.tickers) {
-        if (cleanName.includes(t.toLowerCase())) return rule.key;
-      }
-    }
-    return null;
-  }
-
-  function detectAccount(accountName) {
-    const clean = (accountName || '').toLowerCase();
-    if (clean.includes('sipp') || clean.includes('pension')) return 'sipp';
-    if (clean.includes('fund & share') || clean.includes('fund and share') || clean.includes('trading account') || clean.includes('investment account') || clean.includes('gia') || clean.includes('taxable')) return 'gia';
-    if (clean.includes('jisa') || clean.includes('junior')) {
-      if (clean.includes('2') || clean.includes('two')) return 'jisa2';
-      return 'jisa1';
-    }
-    if (clean.includes('isa')) {
-      if (clean.includes('wife') || clean.includes('spouse') || clean.includes('partner')) return 'wisa';
-      return 'sisa';
-    }
-    return null;
-  }
-
-  function processCsvText(text) {
-    const rows = parseCSV(text);
-    if (rows.length < 2) return alert("Empty or invalid CSV file.");
-
-    const headers = rows[0].map(h => h.toLowerCase().trim());
-    let nameCol = headers.findIndex(h => h.includes('holding') || h.includes('stock') || h.includes('name') || h.includes('security') || h.includes('description'));
-    let tickerCol = headers.findIndex(h => h.includes('ticker') || h.includes('symbol') || h.includes('code'));
-    let valCol = headers.findIndex(h => h.includes('value') || h.includes('balance') || h.includes('amount') || h.includes('valuation'));
-    let acctCol = headers.findIndex(h => h.includes('account') || h.includes('wrapper') || h.includes('type') || h.includes('product'));
-
-    if (nameCol === -1) nameCol = 0;
-    if (valCol === -1) valCol = Math.min(rows[0].length - 1, 4);
-    
-    const targetOverride = document.getElementById('csvAccountTarget').value;
-    tempImportedHoldings = [];
-
-    for (let i = 1; i < rows.length; i++) {
-      const row = rows[i];
-      if (row.length <= Math.max(nameCol, valCol)) continue;
-
-      const rawName = row[nameCol] || "";
-      const rawTicker = tickerCol !== -1 ? row[tickerCol] || "" : "";
-      const rawVal = row[valCol] || "0";
-      const rawAcct = acctCol !== -1 ? row[acctCol] || "" : "";
-
-      if (!rawName && !rawTicker) continue;
-
-      const numericVal = parseFloat(rawVal.replace(/[£$,\s]/g, '')) || 0;
-      if (numericVal === 0) continue;
-
-      const assetKey = detectAssetClass(rawName, rawTicker);
-      const acctKey = targetOverride !== 'auto' ? targetOverride : (detectAccount(rawAcct) || 'sisa');
-
-      tempImportedHoldings.push({ rawName, rawTicker: rawTicker || "N/A", value: numericVal, acctKey, assetKey });
-    }
-
-    renderCsvPreview();
-  }
-
-  function renderCsvPreview() {
-    const previewContainer = document.getElementById('csvPreviewContainer');
-    const tableBody = document.getElementById('csvPreviewTableBody');
-    const summary = document.getElementById('csvPreviewSummary');
-
-    tableBody.innerHTML = '';
-    if (tempImportedHoldings.length === 0) {
-      summary.innerHTML = "⚠️ <strong>No holdings detected.</strong> Make sure the CSV file contains 'Holding/Stock/Ticker' and 'Value' columns.";
-      document.getElementById('btnApplyCsv').disabled = true;
-      previewContainer.style.display = 'block';
-      return;
-    }
-
-    let totalVal = 0;
-    let mappedCount = 0;
-
-    for (const h of tempImportedHoldings) {
-      totalVal += h.value;
-      if (h.assetKey) mappedCount++;
-
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><strong>${h.rawName}</strong></td>
-        <td><span class="lev-pill">${h.rawTicker}</span></td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; font-weight: bold;">${formatGBP(h.value)}</td>
-        <td><span class="badge badge-active">${state.accounts[h.acctKey]?.name || h.acctKey}</span></td>
-        <td>
-          ${h.assetKey 
-            ? `<span class="color-dot ${ASSETS[h.assetKey].class}"></span><strong>${ASSETS[h.assetKey].name}</strong>` 
-            : `<span class="badge badge-passive" style="color: var(--bad); background: rgba(215,0,21,0.08);">Unmapped</span>`
-          }
-        </td>
-      `;
-      tableBody.appendChild(tr);
-    }
-
-    summary.innerHTML = `Found <strong>${tempImportedHoldings.length} holdings</strong> totaling <strong>${formatGBP(totalVal)}</strong>. Mapped <strong>${mappedCount} of ${tempImportedHoldings.length}</strong> items.`;
-    document.getElementById('btnApplyCsv').disabled = false;
-    previewContainer.style.display = 'block';
-  }
-
-  function applyImportedHoldings() {
-    if (tempImportedHoldings.length === 0) return;
-
-    const accountsInImport = new Set(tempImportedHoldings.map(h => h.acctKey));
-
-    for (const acct of accountsInImport) {
-      state.accounts[acct].holdings = []; // Clear old positions
-    }
-
-    for (const h of tempImportedHoldings) {
-      const sleeve = h.assetKey || 'other';
-      const price = state.prices[sleeve] || 1.0;
-      
-      state.accounts[h.acctKey].holdings.push({
-        name: h.rawName,
-        ticker: h.rawTicker === 'N/A' ? "" : h.rawTicker,
-        units: parseFloat((h.value / price).toFixed(4)),
-        pricePence: price * 100.0,
-        cost: h.value * 0.9, // assume 90% cost basis
-        sleeve: sleeve
-      });
-    }
-
-    document.getElementById('csvPreviewContainer').style.display = 'none';
-    tempImportedHoldings = [];
-
-    syncStateToDOM();
-    updateAllocation();
-  }
-
-  function handleCsvFile(file) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      processCsvText(e.target.result);
-    };
-    reader.readAsText(file);
   }
 
   async function fetchLivePrices() {
@@ -2409,14 +1043,6 @@
           const t = h.ticker ? h.ticker.trim().toUpperCase() : "";
           if (t && priceMap[t] !== undefined) {
             h.pricePence = priceMap[t];
-            
-            // Map the sleeve pricing for the rebalancing optimizer
-            if (h.sleeve === 'spx' && (t === 'VUAG.L' || t === 'XS2D.L')) state.prices.spx = priceMap[t] / 100.0;
-            if (h.sleeve === 'ndx' && t === 'LQQ3.L') state.prices.ndx = priceMap[t] / 100.0;
-            if (h.sleeve === 'ftse' && t === 'MIDD.L') state.prices.ftse = priceMap[t] / 100.0;
-            if (h.sleeve === 'em' && (t === 'EIMI.L' || t === 'EMRD.L')) state.prices.em = priceMap[t] / 100.0;
-            if (h.sleeve === 'gold' && (t === 'SGLN.L' || t === 'LBUL.L')) state.prices.gold = priceMap[t] / 100.0;
-            
             if (uniqueTickers.has(t)) {
               uniqueTickers.delete(t);
               successCount++;
@@ -2443,15 +1069,33 @@
 
     saveState();
     syncStateToDOM();
-    updateAllocation();
+  }
+
+  function loadMockData() {
+    if (confirm("Reset to default HL SIPP holdings? Current custom data will be replaced.")) {
+      state.accounts = JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS));
+      syncStateToDOM();
+      saveState();
+      fetchLivePrices();
+    }
+  }
+
+  function clearHoldings() {
+    if (confirm("Clear all holdings data? This action is irreversible.")) {
+      for (const acct in state.accounts) {
+        state.accounts[acct].holdings = [];
+      }
+      syncStateToDOM();
+      saveState();
+    }
   }
 
   // Bind UI Events
   document.getElementById('btnLoadMock').addEventListener('click', loadMockData);
   document.getElementById('btnClearHoldings').addEventListener('click', clearHoldings);
-  document.getElementById('btnApplyTrades').addEventListener('click', applyTrades);
   document.getElementById('btnUnlock').addEventListener('click', handlePasscodeSubmit);
   document.getElementById('btnLockPage').addEventListener('click', lockPage);
+  document.getElementById('btnFetchPrices').addEventListener('click', fetchLivePrices);
   
   // Unlock on Enter press
   document.getElementById('txtPasscode').addEventListener('keydown', (e) => {
@@ -2461,50 +1105,6 @@
   // Initialize
   window.addEventListener('DOMContentLoaded', () => {
     loadState();
-    
-    const allInputs = document.querySelectorAll('.alloc-table input, .card input');
-    allInputs.forEach(input => {
-      input.addEventListener('input', () => {
-        if (input.id === 'txtPasscode') return;
-        updateAllocation();
-      });
-    });
-
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('csvFileInput');
-
-    dropZone.addEventListener('click', () => {
-      fileInput.click();
-    });
-
-    fileInput.addEventListener('change', (e) => {
-      handleCsvFile(e.target.files[0]);
-    });
-
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('dragover');
-    });
-
-    dropZone.addEventListener('dragleave', () => {
-      dropZone.classList.remove('dragover');
-    });
-
-    dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropZone.classList.remove('dragover');
-      if (e.dataTransfer.files.length > 0) {
-        handleCsvFile(e.dataTransfer.files[0]);
-      }
-    });
-
-    document.getElementById('btnApplyCsv').addEventListener('click', applyImportedHoldings);
-    document.getElementById('btnCancelCsv').addEventListener('click', () => {
-      document.getElementById('csvPreviewContainer').style.display = 'none';
-      tempImportedHoldings = [];
-    });
-
-    document.getElementById('btnFetchPrices').addEventListener('click', fetchLivePrices);
   });
 </script>
 </body>
