@@ -18,6 +18,8 @@ TICKERS = [
     "EIMI.L",  # iShares MSCI EM IMI
     "SGLN.L",  # iShares Physical Gold
     "EMIM.L",  # iShares MSCI EM
+    "GDGB.L",  # VanEck Gold Miners UCITS ETF
+    "SEMI.L",  # iShares MSCI Global Semiconductor UCITS ETF
 ]
 
 def fetch_ticker_price(ticker):
