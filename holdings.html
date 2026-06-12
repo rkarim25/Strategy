@@ -142,7 +142,7 @@
     }
 
     th, td {
-      padding: 14px 12px;
+      padding: 10px 8px;
       text-align: left;
       border-bottom: 1px solid var(--line);
       vertical-align: middle;
@@ -155,6 +155,28 @@
       background: rgba(0, 0, 0, 0.01);
     }
 
+    .account-header-row {
+      background: rgba(0, 113, 227, 0.04);
+      border-bottom: 1px solid rgba(0, 113, 227, 0.12);
+    }
+
+    .account-header-row td {
+      padding: 10px 12px;
+      color: var(--accent);
+      border-top: 1px solid var(--line);
+    }
+
+    .account-subtotal-row {
+      background: rgba(0, 0, 0, 0.015);
+      font-weight: 600;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .account-subtotal-row td {
+      padding: 8px 10px;
+      color: var(--text);
+    }
+
     tr:last-child td {
       border-bottom: none;
     }
@@ -164,7 +186,7 @@
       width: 100%;
       background: transparent;
       border: 1px solid transparent;
-      padding: 6px 10px;
+      padding: 4px 6px;
       font-family: inherit;
       font-size: inherit;
       color: inherit;
@@ -424,21 +446,13 @@
 
   <!-- POSITIONS MANAGER CARD -->
   <section class="card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
-      <div class="tabs-container" id="accountsTabs" style="margin: 0; border: 0; flex: 1;">
-        <!-- Injected by JS -->
-      </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px;">
+      <h3 style="font-size: 20px; font-weight: 700; color: var(--text);">Account Positions</h3>
       
       <div style="display: flex; gap: 10px; align-items: center;">
         <button type="button" id="btnFetchPrices" style="padding: 8px 16px; font-size: 13px;">🔄 Fetch Live Ticker Prices</button>
         <span id="lblFetchStatus" class="small"></span>
       </div>
-    </div>
-
-    <!-- Active Account Details -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line);">
-      <h3 id="lblActiveAccountName" style="font-size: 20px; font-weight: 700;">Account Name</h3>
-      <span id="lblActiveAccountBadge" class="badge">Wrapper Type</span>
     </div>
 
     <!-- Holdings Table -->
@@ -464,20 +478,18 @@
     </div>
 
     <!-- Actions & Totals -->
-    <div class="utility-row">
-      <button type="button" class="secondary" id="btnAddHolding" style="padding: 8px 16px; font-size: 13px;">➕ Add custom position</button>
-      
+    <div class="utility-row" style="justify-content: flex-end;">
       <div class="totals-board">
         <div>
-          <div class="total-item-lbl">Total Cost</div>
+          <div class="total-item-lbl">Grand Total Cost</div>
           <div id="lblAccountTotalCost" class="total-item-val">£0</div>
         </div>
         <div>
-          <div class="total-item-lbl">Total Value</div>
+          <div class="total-item-lbl">Grand Total Value</div>
           <div id="lblAccountTotalVal" class="total-item-val" style="font-weight: 800;">£0</div>
         </div>
         <div>
-          <div class="total-item-lbl">Unrealised Gain/Loss</div>
+          <div class="total-item-lbl">Grand Unrealised G/L</div>
           <div id="lblAccountTotalGain" class="total-item-val font-weight-bold">£0 (0.0%)</div>
         </div>
       </div>
@@ -836,12 +848,6 @@
   }
 
   // --- HOLDINGS INTERACTION UTILITIES ---
-  let activeAccountTab = 'sipp';
-
-  window.switchAccountTab = function (acct) {
-    activeAccountTab = acct;
-    syncStateToDOM();
-  };
 
   window.updateHoldingField = function (acct, index, field, value) {
     const holding = state.accounts[acct]?.holdings[index];
@@ -879,23 +885,51 @@
     const account = state.accounts[acct];
     if (!account) return;
 
-    let totalCost = 0;
-    let totalVal = 0;
+    let accountTotalCost = 0;
+    let accountTotalVal = 0;
 
     account.holdings.forEach(h => {
-      totalCost += h.cost;
-      totalVal += h.units * (h.pricePence / 100.0);
+      accountTotalCost += h.cost;
+      accountTotalVal += h.units * (h.pricePence / 100.0);
     });
 
-    const totalGain = totalVal - totalCost;
-    const totalGainPct = totalCost > 0 ? (totalGain / totalCost) * 100 : 0;
+    const accountGain = accountTotalVal - accountTotalCost;
+    const accountGainPct = accountTotalCost > 0 ? (accountGain / accountTotalCost) * 100 : 0;
 
-    document.getElementById('lblAccountTotalCost').textContent = formatGBP(totalCost);
-    document.getElementById('lblAccountTotalVal').textContent = formatGBP(totalVal);
-    
+    // Update account subtotal cells in DOM
+    const subtotalTr = document.getElementById(`account-subtotal-${acct}`);
+    if (subtotalTr) {
+      subtotalTr.querySelector('.account-subtotal-val-cell').textContent = formatGBP(accountTotalVal);
+      subtotalTr.querySelector('.account-subtotal-cost-cell').textContent = formatGBP(accountTotalCost);
+      const gainCell = subtotalTr.querySelector('.account-subtotal-gain-cell');
+      gainCell.textContent = `${accountGain >= 0 ? '+' : ''}${formatGBP(accountGain)} (${accountGainPct.toFixed(1)}%)`;
+      gainCell.style.color = accountGain >= 0 ? 'var(--good)' : 'var(--bad)';
+    }
+
+    // Calculate Grand Portfolio Totals
+    let grandTotalCost = 0;
+    let grandTotalVal = 0;
+
+    for (const a in state.accounts) {
+      state.accounts[a].holdings.forEach(h => {
+        grandTotalCost += h.cost;
+        grandTotalVal += h.units * (h.pricePence / 100.0);
+      });
+    }
+
+    updateGrandTotalsDOM(grandTotalCost, grandTotalVal);
+  }
+
+  function updateGrandTotalsDOM(grandTotalCost, grandTotalVal) {
+    const grandTotalGain = grandTotalVal - grandTotalCost;
+    const grandTotalGainPct = grandTotalCost > 0 ? (grandTotalGain / grandTotalCost) * 100 : 0;
+
+    document.getElementById('lblAccountTotalCost').textContent = formatGBP(grandTotalCost);
+    document.getElementById('lblAccountTotalVal').textContent = formatGBP(grandTotalVal);
+
     const gainEl = document.getElementById('lblAccountTotalGain');
-    gainEl.textContent = `${totalGain >= 0 ? '+' : ''}${formatGBP(totalGain)} (${totalGainPct.toFixed(1)}%)`;
-    gainEl.className = `total-item-val ${totalGain >= 0 ? 'good' : 'bad'}`;
+    gainEl.textContent = `${grandTotalGain >= 0 ? '+' : ''}${formatGBP(grandTotalGain)} (${grandTotalGainPct.toFixed(1)}%)`;
+    gainEl.className = `total-item-val ${grandTotalGain >= 0 ? 'good' : 'bad'}`;
   }
 
   window.addHolding = function (acct) {
@@ -922,63 +956,71 @@
   };
 
   function syncStateToDOM() {
-    // Accounts tabs
-    const tabsContainer = document.getElementById('accountsTabs');
-    if (tabsContainer) {
-      tabsContainer.innerHTML = '';
-      for (const acct in ACCOUNTS) {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `tab-btn ${activeAccountTab === acct ? 'active' : ''}`;
-        btn.textContent = state.accounts[acct]?.name || ACCOUNTS[acct].name;
-        btn.addEventListener('click', () => switchAccountTab(acct));
-        tabsContainer.appendChild(btn);
-      }
-    }
+    const tbody = document.getElementById('holdingsTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
 
-    // Active tab positions table
-    const activeAcctData = state.accounts[activeAccountTab];
-    if (activeAcctData) {
-      document.getElementById('lblActiveAccountName').textContent = activeAcctData.name;
-      document.getElementById('lblActiveAccountBadge').textContent = ACCOUNTS[activeAccountTab].taxable ? "Taxable Wrapper (GIA)" : "Tax Free Wrapper";
-      document.getElementById('lblActiveAccountBadge').className = `badge ${ACCOUNTS[activeAccountTab].taxable ? 'badge-passive' : 'badge-active'}`;
-      
-      const tbody = document.getElementById('holdingsTableBody');
-      tbody.innerHTML = '';
-      
-      activeAcctData.holdings.forEach((h, index) => {
+    let grandTotalCost = 0;
+    let grandTotalVal = 0;
+
+    for (const acct in ACCOUNTS) {
+      const account = state.accounts[acct];
+      if (!account) continue;
+
+      // Add Account Header Divider
+      const headerTr = document.createElement('tr');
+      headerTr.className = 'account-header-row';
+      const wrapperBadgeText = ACCOUNTS[acct].taxable ? "Taxable GIA" : "Tax-Free";
+      headerTr.innerHTML = `
+        <td colspan="7" style="font-weight: bold; font-size: 14px; padding: 10px 8px;">
+          📁 ${account.name} <span class="badge ${ACCOUNTS[acct].taxable ? 'badge-passive' : 'badge-active'}" style="font-size: 10px; padding: 2px 6px; margin-left: 8px; font-weight: normal; vertical-align: middle;">${wrapperBadgeText}</span>
+        </td>
+        <td colspan="2" style="text-align: right; padding: 8px 10px;">
+          <button type="button" class="secondary" onclick="addHolding('${acct}')" style="padding: 4px 10px; font-size: 11px; font-weight: 600; border-radius: 6px; box-shadow: none;">➕ Add Position</button>
+        </td>
+      `;
+      tbody.appendChild(headerTr);
+
+      let accountTotalCost = 0;
+      let accountTotalVal = 0;
+
+      // Add Position rows
+      account.holdings.forEach((h, index) => {
         const val = h.units * (h.pricePence / 100.0);
         const gain = val - h.cost;
         const gainPct = h.cost > 0 ? (gain / h.cost) * 100 : 0;
-        
+
+        accountTotalCost += h.cost;
+        accountTotalVal += val;
+
         const tr = document.createElement('tr');
-        tr.id = `holding-row-${activeAccountTab}-${index}`;
+        tr.id = `holding-row-${acct}-${index}`;
         tr.innerHTML = `
           <td>
-            <input type="text" class="holding-input" value="${h.name}" placeholder="Fund/Stock Name" onchange="updateHoldingField('${activeAccountTab}', ${index}, 'name', this.value)" style="font-weight: 600;" />
+            <input type="text" class="holding-input" value="${h.name}" placeholder="Fund/Stock Name" onchange="updateHoldingField('${acct}', ${index}, 'name', this.value)" style="font-weight: 600;" />
           </td>
           <td>
-            <input type="text" class="holding-input" value="${h.ticker}" placeholder="Ticker" onchange="updateHoldingField('${activeAccountTab}', ${index}, 'ticker', this.value)" style="text-transform: uppercase;" />
+            <input type="text" class="holding-input" value="${h.ticker}" placeholder="Ticker" onchange="updateHoldingField('${acct}', ${index}, 'ticker', this.value)" style="text-transform: uppercase;" />
           </td>
           <td>
-            <input type="number" class="holding-input" value="${h.units}" step="any" oninput="updateHoldingField('${activeAccountTab}', ${index}, 'units', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
+            <input type="number" class="holding-input" value="${h.units}" step="any" oninput="updateHoldingField('${acct}', ${index}, 'units', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
           </td>
           <td>
-            <input type="number" class="holding-input" value="${h.pricePence}" step="any" oninput="updateHoldingField('${activeAccountTab}', ${index}, 'pricePence', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
+            <input type="number" class="holding-input" value="${h.pricePence}" step="any" oninput="updateHoldingField('${acct}', ${index}, 'pricePence', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
           </td>
-          <td class="holding-value-cell" style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums;">
+          <td class="holding-value-cell" style="text-align: right; font-weight: bold; font-variant-numeric: tabular-nums; padding-right: 12px;">
             ${formatGBP(val)}
           </td>
           <td>
-            <input type="number" class="holding-input" value="${h.cost}" step="any" oninput="updateHoldingField('${activeAccountTab}', ${index}, 'cost', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
+            <input type="number" class="holding-input" value="${h.cost}" step="any" oninput="updateHoldingField('${acct}', ${index}, 'cost', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
           </td>
-          <td style="text-align: right;">
+          <td style="text-align: right; padding-right: 12px;">
             <span class="holding-gain-cell gain-pill ${gain >= 0 ? 'good' : 'bad'}">
               ${gain >= 0 ? '+' : ''}${formatGBP(gain)} (${gainPct.toFixed(1)}%)
             </span>
           </td>
           <td>
-            <select class="holding-input" onchange="updateHoldingField('${activeAccountTab}', ${index}, 'sleeve', this.value)" style="padding: 4px 6px;">
+            <select class="holding-input" onchange="updateHoldingField('${acct}', ${index}, 'sleeve', this.value)" style="padding: 2px 4px;">
               <option value="spx" ${h.sleeve === 'spx' ? 'selected' : ''}>S&P 500</option>
               <option value="ndx" ${h.sleeve === 'ndx' ? 'selected' : ''}>Nasdaq 100</option>
               <option value="ftse" ${h.sleeve === 'ftse' ? 'selected' : ''}>FTSE 250</option>
@@ -989,17 +1031,51 @@
             </select>
           </td>
           <td style="text-align: center;">
-            <button type="button" class="btn-delete-holding" onclick="deleteHolding('${activeAccountTab}', ${index})" title="Delete Position">✕</button>
+            <button type="button" class="btn-delete-holding" onclick="deleteHolding('${acct}', ${index})" title="Delete Position">✕</button>
           </td>
         `;
         tbody.appendChild(tr);
       });
-      
-      updateAccountTotalsInDOM(activeAccountTab);
-      
-      const addBtn = document.getElementById('btnAddHolding');
-      addBtn.onclick = () => addHolding(activeAccountTab);
+
+      if (account.holdings.length === 0) {
+        const emptyTr = document.createElement('tr');
+        emptyTr.innerHTML = `
+          <td colspan="9" style="text-align: center; color: var(--muted); font-style: italic; padding: 10px;">
+            No positions in this account. Click "➕ Add Position" to add one.
+          </td>
+        `;
+        tbody.appendChild(emptyTr);
+      }
+
+      // Add Account Subtotal Row
+      const accountGain = accountTotalVal - accountTotalCost;
+      const accountGainPct = accountTotalCost > 0 ? (accountGain / accountTotalCost) * 100 : 0;
+
+      const subtotalTr = document.createElement('tr');
+      subtotalTr.className = 'account-subtotal-row';
+      subtotalTr.id = `account-subtotal-${acct}`;
+      subtotalTr.innerHTML = `
+        <td colspan="4" style="text-align: right; font-weight: bold; color: var(--muted);">
+          ${account.name} Subtotal:
+        </td>
+        <td class="account-subtotal-val-cell" style="text-align: right; font-weight: bold; padding-right: 12px;">
+          ${formatGBP(accountTotalVal)}
+        </td>
+        <td class="account-subtotal-cost-cell" style="text-align: right; font-weight: bold;">
+          ${formatGBP(accountTotalCost)}
+        </td>
+        <td class="account-subtotal-gain-cell" style="text-align: right; font-weight: bold; padding-right: 12px; color: ${accountGain >= 0 ? 'var(--good)' : 'var(--bad)'};">
+          ${accountGain >= 0 ? '+' : ''}${formatGBP(accountGain)} (${accountGainPct.toFixed(1)}%)
+        </td>
+        <td colspan="2"></td>
+      `;
+      tbody.appendChild(subtotalTr);
+
+      grandTotalCost += accountTotalCost;
+      grandTotalVal += accountTotalVal;
     }
+
+    updateGrandTotalsDOM(grandTotalCost, grandTotalVal);
   }
 
   async function fetchLivePrices() {
