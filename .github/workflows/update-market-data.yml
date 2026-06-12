@@ -55,7 +55,6 @@ jobs:
           ALERT_EMAIL_FROM: ${{ secrets.ALERT_EMAIL_FROM }}
         run: |
           python update_static_market_data.py
-          python refresh_holdings_prices.py
 
       - name: Commit refreshed data
         env:
@@ -73,11 +72,7 @@ jobs:
             msci_world_daily.csv latest_msci_world_signal.json msci_world_guarded_site_data.json \
             lqq3_daily.csv latest_lqq3_signal.json lqq3_guarded_site_data.json \
             3bal_daily.csv latest_3bal_signal.json 3bal_guarded_site_data.json \
-            news_score.json holdings_prices.json holdings_historical_prices.json
-          # holdings_web is a submodule of rkarim25/holdings: files inside it
-          # cannot be added from this repo (git add would fail fatally), and
-          # GITHUB_TOKEN cannot push there. Its copies of the price JSONs are
-          # refreshed locally instead.
+            news_score.json
           if git diff --cached --quiet; then
             echo "No market data changes to commit."
           else
