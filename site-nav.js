@@ -119,7 +119,7 @@
       asset: "Optimizer",
       strategy: "Asset allocator",
       group: "tools",
-      href: "holdings.html",
+      href: "https://rkarim25.github.io/holdings/",
       secondary: true,
     },
   ];
@@ -225,7 +225,7 @@
     const [file] = String(raw).split("#");
 
     const targetHash =
-      item.id === "instruments"
+      item.id === "instruments" || item.id === "allocator"
         ? ""
         : item.id === "momentum"
           ? currentPageId && currentPageId.startsWith("momentum")
