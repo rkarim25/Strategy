@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-12T22:18:47Z",
+  "generated_at_utc": "2026-06-12T23:15:13Z",
   "window_days": 7,
   "score": 4,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Ends Higher On Iran Deal Hopes; SpaceX Rockets 19% In Debut; Update: Equities Rise as SpaceX Soars; Wall Street Logs Weekly Gain Amid Iran Deal Optimism. Bearish offsets: Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool; Bitcoin's latest plunge revives the debate over owning it\u2014and whether it's just 'crypto being crypto'.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool; Bitcoin's latest plunge revives the debate over owning it\u2014and whether it's just 'crypto being crypto'.",
   "articles": [
     {
       "title": "Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool",
@@ -20,25 +20,25 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Dow Ends Higher On Iran Deal Hopes; SpaceX Rockets 19% In Debut",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/3ab863ee-d132-3549-8208-e6dd679a6a25/stock-market-today%3A-dow-ends.html?.tsrc=rss",
-      "published": "2026-06-12T21:06:20Z",
-      "tone": "bullish"
+      "title": "Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune",
+      "source": "Jefferson City News Tribune",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNQlU3ektlYVNvdFdHZHVQcHN5VkFfeHZmLWcwdkhwdDhnLUllaVB1aE5GNzR2akhkMUNZNnJWUVItRl9oZ0xkNTNMWElySllERUlRczRUOEduZHFKMEFHMlIxU3FyVktqV09qaWZ1NW1WanhJU1RNUDJKbFlXV0NJZUxkVWtic3pZd0VEMFFuREUyUlU4LVBGV0JB?oc=5",
+      "published": "2026-06-11T08:55:00Z",
+      "tone": "bearish"
     },
     {
-      "title": "Update: Equities Rise as SpaceX Soars; Wall Street Logs Weekly Gain Amid Iran Deal Optimism",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-rise-spacex-soars-wall-204325392.html?.tsrc=rss",
-      "published": "2026-06-12T20:43:25Z",
-      "tone": "bullish"
+      "title": "Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQUxUT1NqQm1KUFlpbmdjN0VuSm4wU2VIODFBNF81YU54bFBsWUptZVV0bU41ZXl0MHQxWE1UamxBaHlkUWhvWUY3MHFJZVJhYmJKdDZtMlkyLWlEbjdpOXZubnJLZFlZREdyOVhfMU5QM1l0ZGNoQnpIdHlYVjFVSHU2eXI3WGk3ek9aNXR4ZUJaQmp3dzF2dUxybmhWczI1ZEt3M1hCVmdNdmQ2bDJ3R3NOTkhzUVlRVE52WjF4cw?oc=5",
+      "published": "2026-06-10T22:58:16Z",
+      "tone": "bearish"
     },
     {
-      "title": "Massive Gap-Up Propels This Monster To Record High. These Clues Point To More Gains Ahead.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/03cab706-b8ce-3b05-9c3b-49ca163f2703/massive-gap-up-propels-this.html?.tsrc=rss",
-      "published": "2026-06-12T20:00:06Z",
-      "tone": "bullish"
+      "title": "Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - Scripps News",
+      "source": "Scripps News",
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNQVlLa2NmY3h1M1FhOEstUDBSd2lNaFJQVzlBM0JsajFob0l4Wkp1V3JneDFoMkszSkE2YkNpRk1lMW9FQnlqUmY3T3V1dHZoTEUwOXpnbkdybVdVeWRta0Y3ZEM2dUc2LVBaZGw0NEJRY1ZoN0tJaEdkSVdOMFhjTkJ0Z1RGYUFGckxMU1F0TG4wZ0FSTXpNcDRBNmZzXzd2UEdLQzBuSUdEZjdGR21UelpvR0JxelZRQ2RvWjZOTEhXY1NDbEROTWM0NzU4QQ?oc=5",
+      "published": "2026-06-10T20:53:11Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 91
       }
     ],
-    "headline_count": 142,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
