@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="site-scroll-init.js?v=20260610"></script>
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Hammer.js (Required for Chart.js Zoom/Pan Panning) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Chart.js Zoom Plugin CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
   <title>Holdings Portfolio Tracker</title>
@@ -1634,6 +1634,8 @@
             pan: {
               enabled: true,
               mode: 'x',
+              modifierKey: null,
+              threshold: 5,
               onPanComplete: function() {
                 updateDateInputsFromChartScale();
               }
