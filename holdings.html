@@ -1119,7 +1119,7 @@
   }
 
   function loadMockData() {
-    if (confirm("Reset to default HL SIPP holdings? Current custom data will be replaced.")) {
+    if (confirm("Reset to default HL portfolio? Current custom data will be replaced.")) {
       state.accounts = JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS));
       syncStateToDOM();
       saveState();
