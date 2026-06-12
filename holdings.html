@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="site-scroll-init.js?v=20260610"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>Holdings Portfolio Tracker</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -498,6 +500,112 @@
     </div>
   </section>
 
+  <!-- PERFORMANCE CHART CARD -->
+  <section class="card" id="chartCard" style="display: none; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px;">
+      <h3 style="font-size: 20px; font-weight: 700; color: var(--text);">Equity Performance</h3>
+      
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <!-- Account Selectors -->
+        <div id="chartAccountSelectors" style="display: flex; gap: 10px; align-items: center; font-size: 13px;">
+          <!-- Rendered dynamically -->
+        </div>
+        
+        <!-- Toggle Mode -->
+        <div style="display: flex; background: rgba(0, 0, 0, 0.05); padding: 2px; border-radius: 8px; border: 1px solid var(--line);">
+          <button type="button" id="btnChartModeVal" class="tab-btn active" style="padding: 4px 10px; font-size: 11px; border-radius: 6px; font-weight: 600; border: none; box-shadow: none;">£ Value</button>
+          <button type="button" id="btnChartModePct" class="tab-btn" style="padding: 4px 10px; font-size: 11px; border-radius: 6px; font-weight: 600; border: none; box-shadow: none;">% Return</button>
+        </div>
+
+        <!-- Date Ranges -->
+        <div style="display: flex; gap: 4px; background: rgba(0, 0, 0, 0.02); padding: 2px; border-radius: 8px;">
+          <button type="button" class="tab-btn chart-range-btn" data-range="3m" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">3M</button>
+          <button type="button" class="tab-btn chart-range-btn" data-range="6m" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">6M</button>
+          <button type="button" class="tab-btn chart-range-btn active" data-range="1y" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">1Y</button>
+          <button type="button" class="tab-btn chart-range-btn" data-range="all" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">ALL</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Canvas -->
+    <div style="position: relative; height: 320px; width: 100%;">
+      <canvas id="equityPerformanceChart"></canvas>
+    </div>
+  </section>
+
+  <!-- TRANSACTION LEDGER CARD -->
+  <section class="card" id="ledgerCard" style="display: none; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid var(--line); padding-bottom: 12px;" onclick="toggleLedgerSection()">
+      <h3 style="font-size: 18px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px;">
+        📜 Cash Flows &amp; Transactions Log 
+        <span id="ledgerToggleArrow" style="font-size: 12px; color: var(--muted); transition: transform 0.2s; display: inline-block;">▶</span>
+      </h3>
+      <span class="small" id="ledgerSummaryText" style="color: var(--muted);">Click to expand (0 records)</span>
+    </div>
+
+    <div id="ledgerContent" style="display: none; margin-top: 16px;">
+      <!-- Table wrap for ledger -->
+      <div class="table-wrap" style="margin-bottom: 16px; max-height: 250px; overflow-y: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 12%;">Date</th>
+              <th style="width: 18%;">Account</th>
+              <th style="width: 12%;">Type</th>
+              <th style="width: 15%;">Ticker</th>
+              <th style="width: 15%; text-align: right;">Units</th>
+              <th style="width: 18%; text-align: right;">Amount (£)</th>
+              <th style="width: 10%; text-align: center;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="ledgerTableBody">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Add transaction controls -->
+      <div style="background: rgba(0,0,0,0.02); padding: 12px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; border: 1px solid var(--line);">
+        <div style="flex: 1; min-width: 120px;">
+          <label class="small" style="font-weight: 600; display: block; margin-bottom: 4px;">Date</label>
+          <input type="date" id="txtTxDate" class="holding-input" style="border: 1px solid var(--line); background: white; border-radius: 6px; padding: 4px 6px;" />
+        </div>
+        <div style="flex: 1; min-width: 120px;">
+          <label class="small" style="font-weight: 600; display: block; margin-bottom: 4px;">Account</label>
+          <select id="selTxAccount" class="holding-input" style="border: 1px solid var(--line); background: white; border-radius: 6px; padding: 4px 6px; padding-right: 20px;">
+            <option value="sipp">Reza HL SIPP</option>
+            <option value="sisa">Reza ISA</option>
+            <option value="jisa1">Liyana JISA</option>
+          </select>
+        </div>
+        <div style="flex: 1; min-width: 120px;">
+          <label class="small" style="font-weight: 600; display: block; margin-bottom: 4px;">Type</label>
+          <select id="selTxType" class="holding-input" style="border: 1px solid var(--line); background: white; border-radius: 6px; padding: 4px 6px; padding-right: 20px;" onchange="handleTxTypeChange()">
+            <option value="inflow">Cash Inflow</option>
+            <option value="outflow">Cash Outflow</option>
+            <option value="buy">Buy Asset</option>
+            <option value="sell">Sell Asset</option>
+          </select>
+        </div>
+        <div style="flex: 1; min-width: 120px;">
+          <label class="small" style="font-weight: 600; display: block; margin-bottom: 4px;">Ticker</label>
+          <select id="selTxTicker" class="holding-input" style="border: 1px solid var(--line); background: white; border-radius: 6px; padding: 4px 6px; padding-right: 20px;" disabled>
+            <option value="CASH">CASH (Cash Balance)</option>
+          </select>
+        </div>
+        <div style="flex: 1; min-width: 100px;">
+          <label class="small" style="font-weight: 600; display: block; margin-bottom: 4px;">Units</label>
+          <input type="number" id="txtTxUnits" class="holding-input" placeholder="0" step="any" style="border: 1px solid var(--line); background: white; border-radius: 6px; padding: 4px 6px; text-align: right;" disabled />
+        </div>
+        <div style="flex: 1; min-width: 100px;">
+          <label class="small" style="font-weight: 600; display: block; margin-bottom: 4px;">Amount (£)</label>
+          <input type="number" id="txtTxAmount" class="holding-input" placeholder="0.00" step="any" style="border: 1px solid var(--line); background: white; border-radius: 6px; padding: 4px 6px; text-align: right;" />
+        </div>
+        <button type="button" onclick="addNewTransaction()" style="padding: 6px 16px; font-size: 13px; border-radius: 8px; height: 32px; box-shadow: none;">Add Record</button>
+      </div>
+    </div>
+  </section>
+
   <!-- BOTTOM UTILITY CARDS -->
   <section class="card" style="padding: 16px 24px; background: rgba(0, 0, 0, 0.005); border-radius: 16px;">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
@@ -511,6 +619,22 @@
 </main>
 
 <script>
+  const TICKERS = [
+    "MSE.PA",  // Amundi Euro Stoxx 50
+    "ARKA.L",  // Ark AI & Robotics
+    "EMRD.L",  // SPDR MSCI EM (USD)
+    "LBUL.L",  // WisdomTree Gold 2x (USD)
+    "XS2D.L",  // Xtrackers S&P 500 2x (USD)
+    "VUAG.L",  // Vanguard S&P 500 Acc
+    "LQQ3.L",  // WisdomTree Nasdaq 3x
+    "MIDD.L",  // iShares FTSE 250
+    "EIMI.L",  // iShares MSCI EM IMI
+    "SGLN.L",  // iShares Physical Gold
+    "EMIM.L",  // iShares MSCI EM
+    "GDGB.L",  // VanEck Gold Miners UCITS ETF
+    "SEMI.L"   // iShares MSCI Global Semiconductor UCITS ETF
+  ];
+
   const ASSETS = {
     spx: { name: 'S&P 500', color: 'var(--color-spx)', class: 'dot-spx' },
     ndx: { name: 'Nasdaq 100', color: 'var(--color-ndx)', class: 'dot-ndx' },
@@ -756,11 +880,18 @@
       
       state = parsed;
       
+      // Bootstrap transaction ledger if missing
+      if (!state.transactions) {
+        state.transactions = [];
+        initializeTransactionsFromHoldings();
+      }
+      
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('appContainer').style.display = 'block';
       
       syncStateToDOM();
       fetchLivePrices();
+      fetchHistoricalPrices();
     } catch (e) {
       console.error("Decryption failed", e);
       sessionStorage.removeItem('holdings_master_passcode');
@@ -821,7 +952,10 @@
       // First-time setup: encrypt empty/default state
       sessionPasscode = passcode;
       sessionStorage.setItem('holdings_master_passcode', passcode);
-      state = { accounts: JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS)) };
+      state = { 
+        accounts: JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS)),
+        transactions: JSON.parse(JSON.stringify(DEFAULT_TRANSACTIONS))
+      };
       await saveState();
       loadState();
     } else {
@@ -839,11 +973,18 @@
         sessionStorage.setItem('holdings_master_passcode', passcode);
         state = parsed;
         
+        // Bootstrap transaction ledger if missing
+        if (!state.transactions) {
+          state.transactions = [];
+          initializeTransactionsFromHoldings();
+        }
+        
         document.getElementById('lockScreen').style.display = 'none';
         document.getElementById('appContainer').style.display = 'block';
         
         syncStateToDOM();
         fetchLivePrices();
+        fetchHistoricalPrices();
       } catch (err) {
         errEl.textContent = "Incorrect passcode. Decryption failed.";
         errEl.style.display = 'block';
@@ -857,6 +998,8 @@
     const holding = state.accounts[acct]?.holdings[index];
     if (!holding) return;
 
+    const oldTicker = holding.ticker;
+
     if (field === 'units') {
       holding.units = parseFloat(value) || 0;
     } else if (field === 'pricePence') {
@@ -866,6 +1009,9 @@
     } else {
       holding[field] = value;
     }
+
+    // Sync to Transaction Ledger!
+    syncPositionsTableChangeToLedger(acct, oldTicker, holding, field);
 
     // Recalculate values locally in real-time
     const val = holding.units * (holding.pricePence / 100.0);
@@ -897,7 +1043,40 @@
 
     updateAccountTotalsInDOM(acct);
     saveState();
+    updateChart();
   };
+
+  function syncPositionsTableChangeToLedger(acct, ticker, holding, field) {
+    if (!state.transactions) return;
+    
+    // Find buy/inflow transaction for this ticker in this account
+    const tx = state.transactions.find(t => t.account === acct && t.ticker === ticker && (t.type === 'buy' || t.type === 'inflow'));
+    
+    if (tx) {
+      if (field === 'units') {
+        if (tx.type === 'buy') tx.units = holding.units;
+        else if (tx.type === 'inflow') tx.amount = holding.units;
+      } else if (field === 'cost') {
+        tx.amount = holding.cost;
+        
+        // Find corresponding funding transaction if exists
+        const fundingTx = state.transactions.find(t => t.account === acct && t.date === tx.date && t.type === 'inflow' && t.description && t.description.includes(tx.ticker));
+        if (fundingTx) fundingTx.amount = holding.cost;
+      } else if (field === 'entryDate') {
+        tx.date = holding.entryDate;
+        
+        // Also update date on funding transaction
+        const fundingTx = state.transactions.find(t => t.account === acct && t.type === 'inflow' && t.description && t.description.includes(tx.ticker));
+        if (fundingTx) fundingTx.date = holding.entryDate;
+      } else if (field === 'name') {
+        tx.name = holding.name;
+      } else if (field === 'sleeve') {
+        tx.sleeve = holding.sleeve;
+      } else if (field === 'ticker') {
+        tx.ticker = holding.ticker;
+      }
+    }
+  }
 
   function updateAccountTotalsInDOM(acct) {
     const account = state.accounts[acct];
@@ -952,7 +1131,7 @@
 
   window.addHolding = function (acct) {
     if (!state.accounts[acct]) return;
-    state.accounts[acct].holdings.push({
+    const newHolding = {
       name: "New Position",
       ticker: "",
       units: 0,
@@ -960,17 +1139,44 @@
       cost: 0,
       sleeve: "other",
       entryDate: ""
-    });
+    };
+    state.accounts[acct].holdings.push(newHolding);
+    
+    // Add buy transaction to ledger
+    if (state.transactions) {
+      state.transactions.push({
+        id: 'tx-' + Date.now(),
+        date: new Date().toISOString().split('T')[0],
+        account: acct,
+        type: "buy",
+        ticker: "",
+        name: "New Position",
+        units: 0,
+        amount: 0,
+        sleeve: "other",
+        description: "New Position Purchase"
+      });
+    }
+    
     syncStateToDOM();
     saveState();
+    updateChart();
+    if (ledgerExpanded) renderLedgerTable();
   };
 
   window.deleteHolding = function (acct, index) {
-    if (!state.accounts[acct]?.holdings[index]) return;
+    const holding = state.accounts[acct]?.holdings[index];
+    if (!holding) return;
     if (confirm("Are you sure you want to delete this position?")) {
+      // Remove corresponding transaction from ledger
+      if (state.transactions) {
+        state.transactions = state.transactions.filter(t => !(t.account === acct && t.ticker === holding.ticker));
+      }
       state.accounts[acct].holdings.splice(index, 1);
       syncStateToDOM();
       saveState();
+      updateChart();
+      if (ledgerExpanded) renderLedgerTable();
     }
   };
 
@@ -1121,7 +1327,7 @@
     statusEl.textContent = 'Fetching latest prices...';
 
     try {
-      const url = `https://rkarim25.github.io/Strategy/holdings_prices.json?v=${Date.now()}`;
+      const url = `holdings_prices.json?v=${Date.now()}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       
@@ -1173,14 +1379,18 @@
 
     saveState();
     syncStateToDOM();
+    updateChart();
   }
 
   function loadMockData() {
     if (confirm("Reset to default HL portfolio? Current custom data will be replaced.")) {
       state.accounts = JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS));
+      state.transactions = JSON.parse(JSON.stringify(DEFAULT_TRANSACTIONS));
       syncStateToDOM();
       saveState();
       fetchLivePrices();
+      updateChart();
+      if (ledgerExpanded) renderLedgerTable();
     }
   }
 
@@ -1189,9 +1399,589 @@
       for (const acct in state.accounts) {
         state.accounts[acct].holdings = [];
       }
+      state.transactions = [];
       syncStateToDOM();
       saveState();
+      updateChart();
+      if (ledgerExpanded) renderLedgerTable();
     }
+  }
+
+  // --- CHARTING & LEDGER CODE ---
+  const DEFAULT_TRANSACTIONS = [
+    // Reza HL SIPP
+    { id: "s1", date: "2025-01-01", account: "sipp", type: "inflow", ticker: "CASH", amount: 263640.40, description: "Initial SIPP Funding" },
+    { id: "s2", date: "2025-01-01", account: "sipp", type: "buy", ticker: "MSE.PA", name: "Amundi Euro Stoxx 50 (DR) UCITS ETF Acc", units: 889, amount: 44716.54, sleeve: "other" },
+    { id: "s3", date: "2025-01-01", account: "sipp", type: "buy", ticker: "ARKA.L", name: "Ark Artificial Intelligence & Robotics UCITS ETF", units: 2490, amount: 15999.62, sleeve: "ndx" },
+    { id: "s4", date: "2025-01-01", account: "sipp", type: "buy", ticker: "", name: "HL Growth Fund Accumulation (GBP)", units: 1058.246, amount: 1172.20, sleeve: "other" },
+    { id: "s5", date: "2025-01-01", account: "sipp", type: "buy", ticker: "", name: "Pictet Robotics Class I - Accumulation (GBP)", units: 61.47982, amount: 20000.00, sleeve: "ndx" },
+    { id: "s6", date: "2025-01-01", account: "sipp", type: "buy", ticker: "EMRD.L", name: "SPDR MSCI Emerging Markets UCITS ETF", units: 270, amount: 14486.51, sleeve: "em" },
+    { id: "s7", date: "2025-01-01", account: "sipp", type: "buy", ticker: "", name: "Vanguard FTSE Developed Europe ex-UK Equity Index Acc (GBP)", units: 37.3993, amount: 13061.26, sleeve: "other" },
+    { id: "s8", date: "2025-01-01", account: "sipp", type: "buy", ticker: "", name: "Vanguard FTSE UK All Share Index Acc (GBP)", units: 81.3924, amount: 19499.94, sleeve: "ftse" },
+    { id: "s9", date: "2025-01-01", account: "sipp", type: "buy", ticker: "", name: "Vanguard US 500 Stock Index Institutional - Acc (USD)", units: 172.55, amount: 8999.88, sleeve: "spx" },
+    { id: "s10", date: "2025-01-01", account: "sipp", type: "buy", ticker: "LBUL.L", name: "WisdomTree Gold 2x Daily Leveraged", units: 90, amount: 8995.62, sleeve: "gold" },
+    { id: "s11", date: "2025-01-01", account: "sipp", type: "buy", ticker: "XS2D.L", name: "Xtrackers S&P 500 2x Leveraged Daily UCITS ETF", units: 709, amount: 102334.03, sleeve: "spx" },
+    
+    // Reza ISA
+    { id: "i1", date: "2026-01-23", account: "sisa", type: "inflow", ticker: "CASH", amount: 152586.31, description: "Initial ISA Funding" },
+    { id: "i2", date: "2026-01-23", account: "sisa", type: "buy", ticker: "GDGB.L", name: "VanEck Gold Miners UCITS ETF", units: 1550, amount: 136463.25, sleeve: "gold", entryDate: "2026-01-23" },
+    
+    // Liyana JISA
+    { id: "j1", date: "2024-05-23", account: "jisa1", type: "inflow", ticker: "CASH", amount: 8994.09, description: "Initial JISA Funding" },
+    { id: "j2", date: "2024-05-23", account: "jisa1", type: "buy", ticker: "SEMI.L", name: "iShares MSCI Global Semiconductor UCITS ETF", units: 1432, amount: 8994.09, sleeve: "ndx", entryDate: "2024-05-23" },
+    { id: "j3", date: "2026-01-23", account: "jisa1", type: "inflow", ticker: "CASH", amount: 63645.83, description: "Additional JISA Deposit" },
+    { id: "j4", date: "2026-01-23", account: "jisa1", type: "buy", ticker: "GDGB.L", name: "VanEck Gold Miners UCITS ETF", units: 620, amount: 54572.67, sleeve: "gold", entryDate: "2026-01-23" }
+  ];
+
+  let historicalPriceDb = null;
+  let performanceChart = null;
+  let chartMode = 'value'; // 'value' or 'percent'
+  let chartRange = '1y'; // '3m', '6m', '1y', 'all'
+  let selectedChartAccounts = ['sipp', 'sisa', 'jisa1'];
+
+  async function fetchHistoricalPrices() {
+    try {
+      const url = `holdings_historical_prices.json?v=${Date.now()}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      historicalPriceDb = await res.json();
+      console.log("Loaded historical prices:", historicalPriceDb.dates.length, "dates");
+      
+      document.getElementById('chartCard').style.display = 'block';
+      document.getElementById('ledgerCard').style.display = 'block';
+      
+      initChartSelectors();
+      initChart();
+    } catch (err) {
+      console.warn("Failed to load historical prices. Chart will be hidden.", err);
+    }
+  }
+
+  function initializeTransactionsFromHoldings() {
+    const txs = [];
+    let idCounter = 1;
+    for (const acct in state.accounts) {
+      state.accounts[acct].holdings.forEach(h => {
+        const date = h.entryDate || "2025-01-01";
+        if (h.ticker === 'CASH') {
+          txs.push({
+            id: `t-cash-${acct}-${idCounter++}`,
+            date: date,
+            account: acct,
+            type: "inflow",
+            ticker: "CASH",
+            amount: h.units,
+            description: "Initial Cash"
+          });
+        } else {
+          txs.push({
+            id: `t-fund-${acct}-${idCounter++}`,
+            date: date,
+            account: acct,
+            type: "inflow",
+            ticker: "CASH",
+            amount: h.cost,
+            description: `Fund for ${h.name}`
+          });
+          txs.push({
+            id: `t-buy-${acct}-${idCounter++}`,
+            date: date,
+            account: acct,
+            type: "buy",
+            ticker: h.ticker,
+            name: h.name,
+            units: h.units,
+            amount: h.cost,
+            sleeve: h.sleeve,
+            description: `Buy ${h.name}`
+          });
+        }
+      });
+    }
+    state.transactions = txs;
+  }
+
+  function getHoldingsOnDate(date, accounts, transactions) {
+    const holdings = {};
+    const activeTxs = transactions.filter(t => t.date <= date && accounts.includes(t.account));
+    
+    activeTxs.forEach(t => {
+      if (t.type === 'inflow') {
+        holdings['CASH'] = (holdings['CASH'] || 0) + t.amount;
+      } else if (t.type === 'outflow') {
+        holdings['CASH'] = (holdings['CASH'] || 0) - t.amount;
+      } else if (t.type === 'buy') {
+        if (t.ticker && t.ticker !== 'CASH') {
+          holdings[t.ticker] = (holdings[t.ticker] || 0) + t.units;
+        }
+        holdings['CASH'] = (holdings['CASH'] || 0) - t.amount;
+      } else if (t.type === 'sell') {
+        if (t.ticker && t.ticker !== 'CASH') {
+          holdings[t.ticker] = (holdings[t.ticker] || 0) - t.units;
+        }
+        holdings['CASH'] = (holdings['CASH'] || 0) + t.amount;
+      }
+    });
+    
+    return holdings;
+  }
+
+  function calculateHoldingsValue(holdings, date, priceDb) {
+    let total = 0;
+    const dateIdx = priceDb.dates.indexOf(date);
+    
+    for (const ticker in holdings) {
+      const qty = holdings[ticker];
+      if (qty === 0) continue;
+      
+      if (ticker === 'CASH') {
+        total += qty;
+      } else {
+        let pricePence = 0;
+        if (dateIdx !== -1 && priceDb.prices[ticker] && priceDb.prices[ticker][dateIdx] !== undefined) {
+          pricePence = priceDb.prices[ticker][dateIdx];
+        } else {
+          pricePence = getFallbackPrice(ticker);
+        }
+        total += qty * (pricePence / 100.0);
+      }
+    }
+    return total;
+  }
+
+  function getFallbackPrice(ticker) {
+    for (const acct in state.accounts) {
+      const h = state.accounts[acct].holdings.find(x => x.ticker === ticker);
+      if (h) return h.pricePence;
+    }
+    return 100.0;
+  }
+
+  function initChartSelectors() {
+    const container = document.getElementById('chartAccountSelectors');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    for (const acct in ACCOUNTS) {
+      const isChecked = selectedChartAccounts.includes(acct) ? 'checked' : '';
+      container.innerHTML += `
+        <label style="display: inline-flex; align-items: center; gap: 4px; cursor: pointer;">
+          <input type="checkbox" value="${acct}" ${isChecked} onchange="handleChartAccountChange(this)" />
+          ${ACCOUNTS[acct].name}
+        </label>
+      `;
+    }
+  }
+
+  window.handleChartAccountChange = function(checkbox) {
+    const acct = checkbox.value;
+    if (checkbox.checked) {
+      if (!selectedChartAccounts.includes(acct)) selectedChartAccounts.push(acct);
+    } else {
+      selectedChartAccounts = selectedChartAccounts.filter(x => x !== acct);
+    }
+    updateChart();
+  };
+
+  function initChart() {
+    const ctx = document.getElementById('equityPerformanceChart').getContext('2d');
+    if (!ctx) return;
+    
+    if (performanceChart) {
+      performanceChart.destroy();
+    }
+    
+    performanceChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Portfolio Equity',
+          data: [],
+          borderColor: '#0071e3',
+          backgroundColor: 'rgba(0, 113, 227, 0.05)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.1,
+          pointRadius: 0,
+          pointHoverRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+              label: function(context) {
+                const val = context.parsed.y;
+                if (chartMode === 'value') {
+                  return 'Value: ' + formatGBP(val);
+                } else {
+                  return 'Return: ' + (val >= 0 ? '+' : '') + val.toFixed(2) + '%';
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(0,0,0,0.02)' },
+            ticks: { maxTicksLimit: 8, font: { family: 'Outfit' } }
+          },
+          y: {
+            grid: { color: 'rgba(0,0,0,0.04)' },
+            ticks: {
+              font: { family: 'Outfit' },
+              callback: function(value) {
+                if (chartMode === 'value') {
+                  return '£' + value.toLocaleString();
+                } else {
+                  return (value >= 0 ? '+' : '') + value.toFixed(1) + '%';
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    updateChart();
+  }
+
+  function updateChart() {
+    if (!performanceChart || !historicalPriceDb) return;
+    
+    if (selectedChartAccounts.length === 0) {
+      performanceChart.data.labels = [];
+      performanceChart.data.datasets[0].data = [];
+      performanceChart.update();
+      return;
+    }
+    
+    let startDate = '1970-01-01';
+    const today = new Date();
+    if (chartRange === '3m') {
+      const cut = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
+      startDate = cut.toISOString().split('T')[0];
+    } else if (chartRange === '6m') {
+      const cut = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
+      startDate = cut.toISOString().split('T')[0];
+    } else if (chartRange === '1y') {
+      const cut = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+      startDate = cut.toISOString().split('T')[0];
+    }
+    
+    const sortedTxs = [...state.transactions].sort((a, b) => a.date.localeCompare(b.date));
+    const earliestTxDate = sortedTxs.length > 0 ? sortedTxs[0].date : '2026-01-01';
+    
+    const displayStartDate = earliestTxDate > startDate ? earliestTxDate : startDate;
+    const activeDates = historicalPriceDb.dates.filter(d => d >= displayStartDate);
+    
+    if (activeDates.length === 0) {
+      performanceChart.data.labels = [];
+      performanceChart.data.datasets[0].data = [];
+      performanceChart.update();
+      return;
+    }
+    
+    const chartLabels = [];
+    const chartData = [];
+    
+    if (chartMode === 'value') {
+      activeDates.forEach(date => {
+        const holdings = getHoldingsOnDate(date, selectedChartAccounts, state.transactions);
+        const value = calculateHoldingsValue(holdings, date, historicalPriceDb);
+        
+        const displayDate = new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' });
+        chartLabels.push(displayDate);
+        chartData.push(value);
+      });
+      performanceChart.data.datasets[0].label = 'Portfolio Value (£)';
+    } else {
+      let cumulativeTWR = 1.0;
+      let prevValue = 0;
+      
+      activeDates.forEach((date, idx) => {
+        const holdings = getHoldingsOnDate(date, selectedChartAccounts, state.transactions);
+        const value = calculateHoldingsValue(holdings, date, historicalPriceDb);
+        
+        const todaysTxs = state.transactions.filter(t => t.date === date && selectedChartAccounts.includes(t.account));
+        let netCashFlow = 0;
+        todaysTxs.forEach(t => {
+          if (t.type === 'inflow') netCashFlow += t.amount;
+          else if (t.type === 'outflow') netCashFlow -= t.amount;
+        });
+        
+        let dailyReturn = 0;
+        if (idx > 0 && prevValue > 0) {
+          dailyReturn = (value - netCashFlow) / prevValue - 1;
+        }
+        
+        cumulativeTWR = cumulativeTWR * (1 + dailyReturn);
+        
+        const displayDate = new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' });
+        chartLabels.push(displayDate);
+        chartData.push((cumulativeTWR - 1) * 100);
+        
+        prevValue = value;
+      });
+      performanceChart.data.datasets[0].label = 'Portfolio Return (%)';
+    }
+    
+    performanceChart.data.labels = chartLabels;
+    performanceChart.data.datasets[0].data = chartData;
+    performanceChart.update();
+  }
+
+  // --- LEDGER PANEL & EDITOR ---
+  let ledgerExpanded = false;
+  
+  window.toggleLedgerSection = function() {
+    ledgerExpanded = !ledgerExpanded;
+    const content = document.getElementById('ledgerContent');
+    const arrow = document.getElementById('ledgerToggleArrow');
+    const summary = document.getElementById('ledgerSummaryText');
+    
+    if (ledgerExpanded) {
+      content.style.display = 'block';
+      arrow.style.transform = 'rotate(90deg)';
+      summary.textContent = 'Click to collapse';
+      renderLedgerTable();
+    } else {
+      content.style.display = 'none';
+      arrow.style.transform = 'rotate(0deg)';
+      summary.textContent = `Click to expand (${state.transactions.length} records)`;
+    }
+  };
+
+  function renderLedgerTable() {
+    const tbody = document.getElementById('ledgerTableBody');
+    const summary = document.getElementById('ledgerSummaryText');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    const sorted = [...state.transactions].sort((a, b) => b.date.localeCompare(a.date));
+    summary.textContent = `${ledgerExpanded ? 'Click to collapse' : 'Click to expand'} (${state.transactions.length} records)`;
+    
+    if (sorted.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--muted); font-style: italic;">No transactions recorded.</td></tr>`;
+      return;
+    }
+    
+    sorted.forEach(t => {
+      const tr = document.createElement('tr');
+      const formattedAmt = formatGBP(t.amount);
+      const formattedDate = new Date(t.date).toLocaleDateString('en-GB');
+      
+      let badgeColor = 'var(--muted)';
+      if (t.type === 'buy') badgeColor = 'var(--accent)';
+      else if (t.type === 'sell') badgeColor = '#d97706';
+      else if (t.type === 'inflow') badgeColor = 'var(--good)';
+      else if (t.type === 'outflow') badgeColor = 'var(--bad)';
+      
+      tr.innerHTML = `
+        <td style="font-variant-numeric: tabular-nums;">${formattedDate}</td>
+        <td>${ACCOUNTS[t.account]?.name || t.account}</td>
+        <td>
+          <span class="badge" style="background: ${badgeColor}15; color: ${badgeColor}; padding: 2px 8px; font-size: 11px;">
+            ${t.type.toUpperCase()}
+          </span>
+        </td>
+        <td><code>${t.ticker}</code></td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums;">${t.units !== undefined ? t.units.toLocaleString() : '—'}</td>
+        <td style="text-align: right; font-variant-numeric: tabular-nums; font-weight: bold;">${formattedAmt}</td>
+        <td style="text-align: center;">
+          <button type="button" class="btn-delete-holding" onclick="deleteTransaction('${t.id}')" title="Delete record" style="width: 22px; height: 22px; font-size: 12px; margin: auto;">✕</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  window.deleteTransaction = function(id) {
+    if (confirm("Are you sure you want to delete this transaction record?")) {
+      state.transactions = state.transactions.filter(t => t.id !== id);
+      rebuildAccountsFromTransactions();
+      saveState();
+      syncStateToDOM();
+      renderLedgerTable();
+      updateChart();
+    }
+  };
+
+  window.handleTxTypeChange = function() {
+    const type = document.getElementById('selTxType').value;
+    const unitsInput = document.getElementById('txtTxUnits');
+    const tickerSelect = document.getElementById('selTxTicker');
+    
+    if (type === 'inflow' || type === 'outflow') {
+      unitsInput.disabled = true;
+      unitsInput.value = '';
+      tickerSelect.value = 'CASH';
+      tickerSelect.disabled = true;
+    } else {
+      unitsInput.disabled = false;
+      tickerSelect.disabled = false;
+      if (tickerSelect.value === 'CASH') {
+        tickerSelect.selectedIndex = 1;
+      }
+    }
+  };
+
+  window.addNewTransaction = function() {
+    const date = document.getElementById('txtTxDate').value;
+    const account = document.getElementById('selTxAccount').value;
+    const type = document.getElementById('selTxType').value;
+    const ticker = document.getElementById('selTxTicker').value;
+    const units = parseFloat(document.getElementById('txtTxUnits').value) || 0;
+    const amount = parseFloat(document.getElementById('txtTxAmount').value) || 0;
+    
+    if (!date) {
+      alert("Please select a transaction date.");
+      return;
+    }
+    if (amount <= 0) {
+      alert("Please enter a valid amount greater than 0.");
+      return;
+    }
+    if ((type === 'buy' || type === 'sell') && units <= 0) {
+      alert("Please enter a valid units amount.");
+      return;
+    }
+    
+    const newTx = {
+      id: 'tx-' + Date.now(),
+      date: date,
+      account: account,
+      type: type,
+      ticker: ticker,
+      amount: amount
+    };
+    
+    if (type === 'buy' || type === 'sell') {
+      newTx.units = units;
+      newTx.name = getFallbackAssetName(ticker);
+      newTx.sleeve = getFallbackAssetSleeve(ticker);
+    }
+    
+    state.transactions.push(newTx);
+    rebuildAccountsFromTransactions();
+    saveState();
+    syncStateToDOM();
+    renderLedgerTable();
+    updateChart();
+    
+    document.getElementById('txtTxUnits').value = '';
+    document.getElementById('txtTxAmount').value = '';
+  };
+
+  function getFallbackAssetName(ticker) {
+    for (const acct in DEFAULT_ACCOUNTS) {
+      const h = DEFAULT_ACCOUNTS[acct].holdings.find(x => x.ticker === ticker);
+      if (h) return h.name;
+    }
+    return ticker + " Fund";
+  }
+
+  function getFallbackAssetSleeve(ticker) {
+    for (const acct in DEFAULT_ACCOUNTS) {
+      const h = DEFAULT_ACCOUNTS[acct].holdings.find(x => x.ticker === ticker);
+      if (h) return h.sleeve;
+    }
+    return "other";
+  }
+
+  function rebuildAccountsFromTransactions() {
+    for (const acct in state.accounts) {
+      state.accounts[acct].holdings = [];
+    }
+    
+    const accountHoldingsMap = {};
+    for (const acct in ACCOUNTS) {
+      accountHoldingsMap[acct] = {
+        CASH: { units: 0, cost: 0 },
+        assets: {}
+      };
+    }
+    
+    const sorted = [...state.transactions].sort((a, b) => a.date.localeCompare(b.date));
+    sorted.forEach(t => {
+      const map = accountHoldingsMap[t.account];
+      if (!map) return;
+      
+      if (t.type === 'inflow') {
+        map.CASH.units += t.amount;
+        map.CASH.cost += t.amount;
+      } else if (t.type === 'outflow') {
+        map.CASH.units -= t.amount;
+        map.CASH.cost -= t.amount;
+      } else if (t.type === 'buy') {
+        if (t.ticker && t.ticker !== 'CASH') {
+          if (!map.assets[t.ticker]) {
+            map.assets[t.ticker] = { name: t.name, units: 0, cost: 0, sleeve: t.sleeve, entryDate: t.date };
+          }
+          map.assets[t.ticker].units += t.units;
+          map.assets[t.ticker].cost += t.amount;
+        }
+        map.CASH.units -= t.amount;
+        map.CASH.cost -= t.amount;
+      } else if (t.type === 'sell') {
+        if (t.ticker && t.ticker !== 'CASH') {
+          if (map.assets[t.ticker]) {
+            map.assets[t.ticker].units -= t.units;
+            map.assets[t.ticker].cost -= t.amount;
+            if (map.assets[t.ticker].units <= 0) {
+              delete map.assets[t.ticker];
+            }
+          }
+        }
+        map.CASH.units += t.amount;
+        map.CASH.cost += t.amount;
+      }
+    });
+    
+    for (const acct in state.accounts) {
+      const map = accountHoldingsMap[acct];
+      if (!map) continue;
+      
+      for (const ticker in map.assets) {
+        const a = map.assets[ticker];
+        state.accounts[acct].holdings.push({
+          name: a.name,
+          ticker: ticker,
+          units: a.units,
+          pricePence: getFallbackPrice(ticker),
+          cost: a.cost,
+          sleeve: a.sleeve,
+          entryDate: a.entryDate
+        });
+      }
+      
+      if (map.CASH.units !== 0) {
+        state.accounts[acct].holdings.push({
+          name: "Cash (HL Account Balance)",
+          ticker: "CASH",
+          units: map.CASH.units,
+          pricePence: 100.0,
+          cost: map.CASH.units,
+          sleeve: "cash"
+        });
+      }
+    }
+  }
+
+  function populateTickerOptions() {
+    const select = document.getElementById('selTxTicker');
+    if (!select) return;
+    select.innerHTML = '<option value="CASH">CASH (Cash Balance)</option>';
+    TICKERS.forEach(t => {
+      select.innerHTML += `<option value="${t}">${t}</option>`;
+    });
   }
 
   // Bind UI Events
@@ -1201,6 +1991,29 @@
   document.getElementById('btnLockPage').addEventListener('click', lockPage);
   document.getElementById('btnFetchPrices').addEventListener('click', fetchLivePrices);
   
+  document.getElementById('btnChartModeVal').addEventListener('click', () => {
+    chartMode = 'value';
+    document.getElementById('btnChartModeVal').classList.add('active');
+    document.getElementById('btnChartModePct').classList.remove('active');
+    updateChart();
+  });
+  
+  document.getElementById('btnChartModePct').addEventListener('click', () => {
+    chartMode = 'percent';
+    document.getElementById('btnChartModePct').classList.add('active');
+    document.getElementById('btnChartModeVal').classList.remove('active');
+    updateChart();
+  });
+  
+  document.querySelectorAll('.chart-range-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.chart-range-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      chartRange = e.target.getAttribute('data-range');
+      updateChart();
+    });
+  });
+  
   // Unlock on Enter press
   document.getElementById('txtPasscode').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') handlePasscodeSubmit();
@@ -1209,6 +2022,7 @@
   // Initialize
   window.addEventListener('DOMContentLoaded', () => {
     loadState();
+    populateTickerOptions();
   });
 </script>
 </body>
