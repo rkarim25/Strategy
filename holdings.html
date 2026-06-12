@@ -4,8 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="site-scroll-init.js?v=20260610"></script>
+  <!-- Error Logging Helper -->
+  <script>
+    window.addEventListener('error', function(e) {
+      var errDiv = document.getElementById('debug-error-console');
+      if (!errDiv) {
+        errDiv = document.createElement('div');
+        errDiv.id = 'debug-error-console';
+        errDiv.style.cssText = 'background:#fee; color:#b00; padding:15px; margin:15px; border:1px solid #ecc; border-radius:8px; font-family:monospace; font-size:12px; z-index:999999; position:relative;';
+        document.body.insertBefore(errDiv, document.body.firstChild);
+      }
+      errDiv.innerHTML += '<div><strong>JS Error:</strong> ' + e.message + ' at ' + e.filename + ':' + e.lineno + '</div>';
+    });
+  </script>
   <!-- Hammer.js (Required for Chart.js Zoom/Pan Panning) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+  <script>
+    if (typeof window.Hammer === 'undefined' && typeof Hammer !== 'undefined') {
+      window.Hammer = Hammer;
+    }
+  </script>
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Chart.js Zoom Plugin CDN -->
@@ -2094,12 +2112,16 @@
   
   document.querySelectorAll('.chart-range-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
+      const currentBtn = e.currentTarget;
       document.querySelectorAll('.chart-range-btn').forEach(b => b.classList.remove('active'));
-      e.target.classList.add('active');
-      chartRange = e.target.getAttribute('data-range');
+      currentBtn.classList.add('active');
+      chartRange = currentBtn.getAttribute('data-range');
       // Hide Reset Zoom button since we're using a preset range
-      document.getElementById('btnResetZoom').style.display = 'none';
-      if (performanceChart) performanceChart.resetZoom();
+      const resetBtn = document.getElementById('btnResetZoom');
+      if (resetBtn) resetBtn.style.display = 'none';
+      if (performanceChart && typeof performanceChart.resetZoom === 'function') {
+        performanceChart.resetZoom();
+      }
       updateChart();
     });
   });
@@ -2108,23 +2130,30 @@
   document.getElementById('chartStartDate').addEventListener('change', () => {
     chartRange = 'custom';
     document.querySelectorAll('.chart-range-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btnResetZoom').style.display = 'none';
-    if (performanceChart) performanceChart.resetZoom();
+    const resetBtn = document.getElementById('btnResetZoom');
+    if (resetBtn) resetBtn.style.display = 'none';
+    if (performanceChart && typeof performanceChart.resetZoom === 'function') {
+      performanceChart.resetZoom();
+    }
     updateChart();
   });
   document.getElementById('chartEndDate').addEventListener('change', () => {
     chartRange = 'custom';
     document.querySelectorAll('.chart-range-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btnResetZoom').style.display = 'none';
-    if (performanceChart) performanceChart.resetZoom();
+    const resetBtn = document.getElementById('btnResetZoom');
+    if (resetBtn) resetBtn.style.display = 'none';
+    if (performanceChart && typeof performanceChart.resetZoom === 'function') {
+      performanceChart.resetZoom();
+    }
     updateChart();
   });
   
   // Reset Zoom button
   document.getElementById('btnResetZoom').addEventListener('click', () => {
-    if (performanceChart) {
+    if (performanceChart && typeof performanceChart.resetZoom === 'function') {
       performanceChart.resetZoom();
-      document.getElementById('btnResetZoom').style.display = 'none';
+      const resetBtn = document.getElementById('btnResetZoom');
+      if (resetBtn) resetBtn.style.display = 'none';
       updateChart();
     }
   });
