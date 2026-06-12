@@ -14,8 +14,13 @@
         errDiv.style.cssText = 'background:#fee; color:#b00; padding:15px; margin:15px; border:1px solid #ecc; border-radius:8px; font-family:monospace; font-size:12px; z-index:999999; position:relative;';
         document.body.insertBefore(errDiv, document.body.firstChild);
       }
-      errDiv.innerHTML += '<div><strong>JS Error:</strong> ' + e.message + ' at ' + e.filename + ':' + e.lineno + '</div>';
-    });
+      var target = e.target || e.srcElement;
+      if (target && (target.tagName === 'SCRIPT' || target.tagName === 'LINK')) {
+        errDiv.innerHTML += '<div><strong>Resource Load Error:</strong> Failed to load ' + (target.src || target.href) + '</div>';
+      } else {
+        errDiv.innerHTML += '<div><strong>JS Error:</strong> ' + e.message + ' at ' + (e.filename || 'unknown') + ':' + (e.lineno || '0') + '</div>';
+      }
+    }, true);
   </script>
   <!-- Hammer.js (Required for Chart.js Zoom/Pan Panning) -->
   <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
@@ -1726,21 +1731,25 @@
     
     let startDate = '1970-01-01';
     let endDate = '9999-12-31';
-    const today = new Date();
+    
+    const dates = historicalPriceDb.dates;
+    const latestDateStr = dates.length > 0 ? dates[dates.length - 1] : new Date().toISOString().split('T')[0];
+    const latestDate = new Date(latestDateStr);
+    
     if (chartRange === '1w') {
-      const cut = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+      const cut = new Date(latestDate.getTime() - 7 * 24 * 60 * 60 * 1000);
       startDate = cut.toISOString().split('T')[0];
     } else if (chartRange === '1m') {
-      const cut = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+      const cut = new Date(latestDate.getFullYear(), latestDate.getMonth() - 1, latestDate.getDate());
       startDate = cut.toISOString().split('T')[0];
     } else if (chartRange === '3m') {
-      const cut = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
+      const cut = new Date(latestDate.getFullYear(), latestDate.getMonth() - 3, latestDate.getDate());
       startDate = cut.toISOString().split('T')[0];
     } else if (chartRange === '6m') {
-      const cut = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
+      const cut = new Date(latestDate.getFullYear(), latestDate.getMonth() - 6, latestDate.getDate());
       startDate = cut.toISOString().split('T')[0];
     } else if (chartRange === '1y') {
-      const cut = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+      const cut = new Date(latestDate.getFullYear() - 1, latestDate.getMonth(), latestDate.getDate());
       startDate = cut.toISOString().split('T')[0];
     } else if (chartRange === 'custom') {
       const s = document.getElementById('chartStartDate').value;
@@ -1753,7 +1762,7 @@
     const earliestTxDate = sortedTxs.length > 0 ? sortedTxs[0].date : '2026-01-01';
     
     const displayStartDate = earliestTxDate > startDate ? earliestTxDate : startDate;
-    const displayEndDate = today.toISOString().split('T')[0] < endDate ? today.toISOString().split('T')[0] : endDate;
+    const displayEndDate = latestDateStr < endDate ? latestDateStr : endDate;
     
     if (chartRange !== 'custom') {
       document.getElementById('chartStartDate').value = displayStartDate;
