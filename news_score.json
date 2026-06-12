@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-06-12T16:20:21Z",
+  "generated_at_utc": "2026-06-12T17:20:35Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool; Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool; Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune.",
   "articles": [
     {
       "title": "Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool",
       "source": "The Motley Fool",
       "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNXzBQbkFLYm1RSFRvTDZZdmdocXRtQ1lWWjdfdThmVnRzblR6OWpTc1dYbWlLajliUGJZNWJnNGFEaTdBNFJFOXRxWEw1SU9BVVBnYldtamNmbkpNZ3IzVk5VOU5SdlBMRXZMOFlENzdlSHItaDhqb0pmOGFYTjY2bDh1elFjUFprN1B1MkxfbFBObzJTcjRCSzVRZU1abFVLSXdOZ0Y0Mm1FMnZIUTFzSHNYdVZpYVUzRFRQRElIRHpZVUI5VkszdUszVDNRR1NZbXd4YlBDNTlKeThMbWQ2OURId2lsOVU?oc=5",
       "published": "2026-06-10T16:52:38Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune",
+      "source": "Jefferson City News Tribune",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNQlU3ektlYVNvdFdHZHVQcHN5VkFfeHZmLWcwdkhwdDhnLUllaVB1aE5GNzR2akhkMUNZNnJWUVItRl9oZ0xkNTNMWElySllERUlRczRUOEduZHFKMEFHMlIxU3FyVktqV09qaWZ1NW1WanhJU1RNUDJKbFlXV0NJZUxkVWtic3pZd0VEMFFuREUyUlU4LVBGV0JB?oc=5",
+      "published": "2026-06-11T08:55:00Z",
       "tone": "bearish"
     },
     {
@@ -20,24 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPanFWWEpvdDgwaWMxV2NqeS1WWnpZTG1KcHIxX1NPelQ1eWt0bXNVd0RLbEw2UmZMdko1SEZUTzI2Q0owZU12eVYwYzB4dUM0UmlUVHEtV3d6ekVNa1BqN0JhSkpGZmQ1Vk51MmN6cUszWFRsWU9zcXJTVzlOTklveW0za0haaHNkTkw5VEJtelRfdUh4TzBpajBqdkhqX1ZYaWJyZXBacw?oc=5",
-      "published": "2026-06-05T20:34:13Z",
+      "title": "Wall Street ends sharply lower as chips slide, jobs data fuels rate hike fears By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOamVKYU9sRWFHY2F5OTNBb283a2RaamtKMVdWWjFMdHRNV3JhdXNVcnMzYURsaVVsYmNfa3BBak9HbHlQZUVySUdkdFhobUZSM1RkVzFnSDJYdFdsVG4zRkZkaWpsR0tuVVFEUHNHdkxGdXFPbXRVcTloWEQ3MkJTSkJLSzB5czhqdUY2VVBVdFYwUjFxaTFCanRkNWE5NkFxbHRsYXk5OUxpT28zVGptb1RnWlNFZ2VvTDRpTg?oc=5",
+      "published": "2026-06-05T21:59:41Z",
       "tone": "bearish"
     },
     {
-      "title": "Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - Boston Herald",
-      "source": "Boston Herald",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbnVuTEQwTk1ScFlIQnNTQUZuZ1pXTmFrYVhCaTNGOEh2aGxaZEwxZnR2ZHEtM2xDdjRQY2g3aTZlblQ2UE0ybkVLRlJrSXpoMW56VTc4Y2ZaejV5NFlmM291YmVyM0ZuMHA4QkF0VzRwZ01xVENXbUo5OTlZZ005UUVLVGFKcjVBUks5TFVHeUZSamdWcHpvMi1YOENkOGxaVV9zTUN2aGYxN0I0aG44ZndHNDRMM0Y1bVpWZmNESEcxd1BIUzJCNA?oc=5",
-      "published": "2026-06-10T20:09:42Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Another sell-off for AI stocks drags Wall Street toward its first back-to-back drop in weeks - WPLG Local 10",
-      "source": "WPLG Local 10",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPa3hzTi1JenhxYWVGNTg5N01Ka3VNVG9qSkR3RjNRSFRyNThLU1F2M1F2M0dFOHdRWHRTNmRvbkI4NWdYMmhuUFNPc2l4NG5aaGRvYV8ybnpLZHdOYnk1Z2JoSTZwRGRQUnl1dW1KLWVLcHFPNE5FUExMWk9aeTNndFhmXzhLOGNxeFpfWDVwQjZYOFRCcU44MkExRXFVb1lrN1JRTW5SM0NyZnM?oc=5",
-      "published": "2026-06-10T04:42:05Z",
+      "title": "Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - Scripps News",
+      "source": "Scripps News",
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNQVlLa2NmY3h1M1FhOEstUDBSd2lNaFJQVzlBM0JsajFob0l4Wkp1V3JneDFoMkszSkE2YkNpRk1lMW9FQnlqUmY3T3V1dHZoTEUwOXpnbkdybVdVeWRta0Y3ZEM2dUc2LVBaZGw0NEJRY1ZoN0tJaEdkSVdOMFhjTkJ0Z1RGYUFGckxMU1F0TG4wZ0FSTXpNcDRBNmZzXzd2UEdLQzBuSUdEZjdGR21UelpvR0JxelZRQ2RvWjZOTEhXY1NDbEROTWM0NzU4QQ?oc=5",
+      "published": "2026-06-10T20:53:11Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 93
       }
     ],
-    "headline_count": 142,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
