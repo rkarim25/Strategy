@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-12T11:00:57Z",
+  "generated_at_utc": "2026-06-12T14:11:02Z",
   "window_days": 7,
   "score": 4,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Elections advertising spend for 2026 expected to reach record high, outpacing presidential years. Bearish offsets: Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool; S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record: What investors need to know about Friday\u2019s selloff - MarketWatch.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Massive Gap-Up Propels This Monster To Record High. These Clues Point To More Gains Ahead.; Elections advertising spend for 2026 expected to reach record high, outpacing presidential years. Bearish offsets: Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool; S&P 500 sees $1.8 trillion wipeout, Nasdaq tallies biggest point drop on record: What investors need to know about Friday\u2019s selloff - MarketWatch.",
   "articles": [
     {
       "title": "Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool",
@@ -20,18 +20,18 @@
       "tone": "bearish"
     },
     {
+      "title": "Massive Gap-Up Propels This Monster To Record High. These Clues Point To More Gains Ahead.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/03cab706-b8ce-3b05-9c3b-49ca163f2703/massive-gap-up-propels-this.html?.tsrc=rss",
+      "published": "2026-06-12T13:52:24Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Elections advertising spend for 2026 expected to reach record high, outpacing presidential years",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/11/2026-elections-ad-spend-adimpact.html",
       "published": "2026-06-11T16:00:01Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Forget VOO, This Fund Holds the Exact Same 500 Stocks for a 33% Lower Fee",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/06/12/forget-voo-this-fund-holds-the-exact-same-500-stocks-for-a-33-lower-fee/?.tsrc=rss",
-      "published": "2026-06-12T10:50:00Z",
-      "tone": "bearish"
     },
     {
       "title": "Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 93
       }
     ],
-    "headline_count": 142,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-12T11:00:54Z",
-  "data_asof": "2026-06-11",
-  "daily_rows": 7548,
-  "quote_price": 29446.17578125,
-  "quote_timestamp": "2026-06-11",
+  "generated_at_utc": "2026-06-12T14:10:58Z",
+  "data_asof": "2026-06-12",
+  "daily_rows": 7549,
+  "quote_price": 29565.240234375,
+  "quote_timestamp": "2026-06-12",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-11",
-      "close": 29446.1796875
+      "date": "2026-06-12",
+      "close": 29565.240234375
     },
-    "latestSma": 29637.56787109375,
+    "latestSma": 29636.81484375,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.03960848572262332,
+    "latestDd": -0.035725308342145934,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -51,13 +51,13 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-06-11",
-      "close": 29446.17578125
+      "date": "2026-06-12",
+      "close": 29565.240234375
     },
-    "latestSma": 29630.86162109375,
+    "latestSma": 29658.81689453125,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.03960861312554598,
+    "latestDd": -0.035725308342145934,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -72,10 +72,10 @@
     "explanation": "No recovery tier active; base rule says cash because close is below SMA20."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-11",
+    "last_observed_asof": "2026-06-12",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-12T11:00:54Z",
+    "last_checked_at_utc": "2026-06-12T14:10:58Z",
     "last_email_sent_on": "2026-06-05",
     "last_transition": {
       "id": "2026-06-04:1->2026-06-05:0",

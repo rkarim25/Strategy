@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-12T11:00:55Z",
+  "generated_at_utc": "2026-06-12T14:11:00Z",
   "data_asof": "2026-06-12",
   "daily_rows": 4220,
-  "quote_price": 10569.0,
+  "quote_price": 10524.0,
   "quote_timestamp": "2026-06-12",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L?period1=0&period2=1781348455&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L?period1=0&period2=1781359860&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-12",
-      "close": 10569.0
+      "close": 10524.0
     },
-    "latestSma": 10583.35,
+    "latestSma": 10581.1,
     "highWater": 12837.8095703125,
     "highWaterDate": "2025-10-24",
-    "latestDd": -0.176728713561785,
+    "latestDd": -0.18023398443790573,
     "regime": "tier3",
     "entryClose": 9613.0,
     "entryDate": "2026-04-01",
@@ -39,7 +39,7 @@
     "aboveSma": false,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 10569.0,
+    "activeEntryClose": 10524.0,
     "activeEntryDate": "2026-06-12",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
@@ -48,12 +48,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-06-12",
-      "close": 10569.0
+      "close": 10524.0
     },
-    "latestSma": 10583.8,
+    "latestSma": 10579.3,
     "highWater": 12837.8095703125,
     "highWaterDate": "2025-10-24",
-    "latestDd": -0.176728713561785,
+    "latestDd": -0.18023398443790573,
     "regime": "tier3",
     "entryClose": 9613.0,
     "entryDate": "2026-04-01",
@@ -61,7 +61,7 @@
     "aboveSma": false,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 10569.0,
+    "activeEntryClose": 10524.0,
     "activeEntryDate": "2026-06-12",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
@@ -71,7 +71,7 @@
     "last_observed_asof": "2026-06-12",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-12T11:00:55Z",
+    "last_checked_at_utc": "2026-06-12T14:11:00Z",
     "last_email_sent_on": "2026-06-12",
     "last_transition": {
       "id": "2026-06-10:0->2026-06-12:1",
