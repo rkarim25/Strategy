@@ -509,7 +509,6 @@
 </main>
 
 <script>
-  // Asset keys & Display properties
   const ASSETS = {
     spx: { name: 'S&P 500', color: 'var(--color-spx)', class: 'dot-spx' },
     ndx: { name: 'Nasdaq 100', color: 'var(--color-ndx)', class: 'dot-ndx' },
@@ -521,11 +520,8 @@
 
   const ACCOUNTS = {
     sipp: { name: "Reza HL SIPP", taxable: false },
-    gia: { name: "General Investment Account (GIA)", taxable: true },
     sisa: { name: "Reza ISA", taxable: false },
-    wisa: { name: "Wife ISA", taxable: false },
-    jisa1: { name: "Liyana JISA", taxable: false },
-    jisa2: { name: "Child 2 JISA", taxable: false }
+    jisa1: { name: "Liyana JISA", taxable: false }
   };
 
   // Default accounts structure pre-populated with SIPP holdings from your HL screenshot
@@ -546,29 +542,11 @@
         { name: "Cash (HL Account Balance)", ticker: "CASH", units: 7318.05, pricePence: 100.0, cost: 7318.05, sleeve: "cash" }
       ]
     },
-    gia: {
-      name: "General Investment Account (GIA)",
-      holdings: [
-        { name: "Vanguard S&P 500 UCITS ETF (VUAG)", ticker: "VUAG.L", units: 562, pricePence: 9250.00, cost: 48000.0, sleeve: "spx" },
-        { name: "Cash Balance", ticker: "CASH", units: 1500, pricePence: 100.00, cost: 1500.0, sleeve: "cash" }
-      ]
-    },
     sisa: {
       name: "Reza ISA",
       holdings: [
         { name: "VanEck Gold Miners UCITS ETF", ticker: "GDGB.L", units: 1550, pricePence: 6368.0, cost: 136463.25, sleeve: "gold" },
         { name: "Cash (HL Account Balance)", ticker: "CASH", units: 16123.06, pricePence: 100.0, cost: 16123.06, sleeve: "cash" }
-      ]
-    },
-    wisa: {
-      name: "Wife ISA",
-      holdings: [
-        { name: "Vanguard S&P 500 UCITS ETF (VUAG)", ticker: "VUAG.L", units: 151, pricePence: 9250.00, cost: 12500.0, sleeve: "spx" },
-        { name: "LQQ3 3x Nasdaq ETF", ticker: "LQQ3.L", units: 26, pricePence: 28540.00, cost: 6500.0, sleeve: "ndx" },
-        { name: "Vanguard FTSE UK All Share Index Acc", ticker: "MIDD.L", units: 141, pricePence: 2130.00, cost: 2800.0, sleeve: "ftse" },
-        { name: "MSCI EM ETF (EIMI)", ticker: "EIMI.L", units: 166, pricePence: 3010.00, cost: 4500.0, sleeve: "em" },
-        { name: "Physical Gold ETC (SGLN)", ticker: "SGLN.L", units: 59, pricePence: 4260.00, cost: 2200.0, sleeve: "gold" },
-        { name: "Cash Balance", ticker: "CASH", units: 500, pricePence: 100.00, cost: 500.0, sleeve: "cash" }
       ]
     },
     jisa1: {
@@ -578,15 +556,8 @@
         { name: "iShares MSCI Global Semiconductor UCITS ETF", ticker: "SEMI.L", units: 1432, pricePence: 1561.20, cost: 8994.09, sleeve: "ndx" },
         { name: "Cash (HL Account Balance)", ticker: "CASH", units: 9073.16, pricePence: 100.0, cost: 9073.16, sleeve: "cash" }
       ]
-    },
-    jisa2: {
-      name: "Child 2 JISA",
-      holdings: [
-        { name: "Vanguard S&P 500 UCITS ETF (VUAG)", ticker: "VUAG.L", units: 53, pricePence: 9250.00, cost: 4300.0, sleeve: "spx" },
-        { name: "LQQ3 3x Nasdaq ETF", ticker: "LQQ3.L", units: 4, pricePence: 28540.00, cost: 1000.0, sleeve: "ndx" },
-        { name: "Vanguard FTSE UK All Share Index Acc", ticker: "MIDD.L", units: 28, pricePence: 2130.00, cost: 500.0, sleeve: "ftse" },
-        { name: "MSCI EM ETF (EIMI)", ticker: "EIMI.L", units: 13, pricePence: 3010.00, cost: 350.0, sleeve: "em" },
-        { name: "Physical Gold ETC (SGLN)", ticker: "SGLN.L", units: 12, pricePence: 4260.00, cost: 450.0, sleeve: "gold" }
+    }
+  };eeve: "gold" }
       ]
     }
   };
@@ -748,6 +719,15 @@
       // Auto-migrate schema if needed
       if (!parsed.accounts) {
         parsed.accounts = migrateLegacyHoldingsToAccounts(parsed.holdings, parsed.quantities, parsed.prices, parsed.tickers);
+      }
+      
+      // Clean up theoretical accounts from loaded state
+      if (parsed.accounts) {
+        for (const k in parsed.accounts) {
+          if (!ACCOUNTS[k]) {
+            delete parsed.accounts[k];
+          }
+        }
       }
       
       state = parsed;
