@@ -419,6 +419,14 @@
       gap: 12px;
       flex-wrap: wrap;
     }
+
+    #equityPerformanceChart {
+      touch-action: none;
+      cursor: grab;
+    }
+    #equityPerformanceChart:active {
+      cursor: grabbing;
+    }
   </style>
 </head>
 <body>
@@ -523,17 +531,28 @@
 
         <!-- Date Ranges -->
         <div style="display: flex; gap: 4px; background: rgba(0, 0, 0, 0.02); padding: 2px; border-radius: 8px;">
+          <button type="button" class="tab-btn chart-range-btn" data-range="1w" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">1W</button>
+          <button type="button" class="tab-btn chart-range-btn" data-range="1m" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">1M</button>
           <button type="button" class="tab-btn chart-range-btn" data-range="3m" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">3M</button>
           <button type="button" class="tab-btn chart-range-btn" data-range="6m" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">6M</button>
           <button type="button" class="tab-btn chart-range-btn active" data-range="1y" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">1Y</button>
           <button type="button" class="tab-btn chart-range-btn" data-range="all" style="padding: 4px 8px; font-size: 11px; font-weight: 500; border: none; box-shadow: none;">ALL</button>
+        </div>
+
+        <!-- Custom Dates -->
+        <div style="display: flex; gap: 6px; align-items: center; background: rgba(0, 0, 0, 0.02); padding: 2px 8px; border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
+          <span class="small" style="font-size: 11px; font-weight: 600; color: var(--muted);">Custom:</span>
+          <input type="date" id="chartStartDate" class="holding-input" style="padding: 2px 4px; font-size: 11px; border: 1px solid var(--line); border-radius: 6px; width: 115px; background: white;" />
+          <span style="font-size: 11px; color: var(--muted);">to</span>
+          <input type="date" id="chartEndDate" class="holding-input" style="padding: 2px 4px; font-size: 11px; border: 1px solid var(--line); border-radius: 6px; width: 115px; background: white;" />
+          <button type="button" id="btnResetZoom" class="tab-btn" style="padding: 2px 8px; font-size: 11px; font-weight: 600; border: none; box-shadow: none; border-radius: 6px; background: rgba(0,0,0,0.05); display: none;">Reset</button>
         </div>
       </div>
     </div>
 
     <!-- Chart Canvas -->
     <div style="position: relative; height: 320px; width: 100%;">
-      <canvas id="equityPerformanceChart"></canvas>
+      <canvas id="equityPerformanceChart" style="touch-action: none; cursor: grab;"></canvas>
     </div>
   </section>
 
@@ -1634,8 +1653,6 @@
             pan: {
               enabled: true,
               mode: 'x',
-              modifierKey: null,
-              threshold: 5,
               onPanComplete: function() {
                 updateDateInputsFromChartScale();
               }
@@ -1692,7 +1709,13 @@
     let startDate = '1970-01-01';
     let endDate = '9999-12-31';
     const today = new Date();
-    if (chartRange === '3m') {
+    if (chartRange === '1w') {
+      const cut = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+      startDate = cut.toISOString().split('T')[0];
+    } else if (chartRange === '1m') {
+      const cut = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+      startDate = cut.toISOString().split('T')[0];
+    } else if (chartRange === '3m') {
       const cut = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
       startDate = cut.toISOString().split('T')[0];
     } else if (chartRange === '6m') {
@@ -1793,6 +1816,10 @@
         document.getElementById('chartStartDate').value = currentActiveDates[startIdx];
         document.getElementById('chartEndDate').value = currentActiveDates[endIdx];
         document.getElementById('btnResetZoom').style.display = 'inline-block';
+        
+        // Mark range as custom since user zoomed/panned
+        chartRange = 'custom';
+        document.querySelectorAll('.chart-range-btn').forEach(b => b.classList.remove('active'));
       }
     }
   }
