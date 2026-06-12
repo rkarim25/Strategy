@@ -460,15 +460,17 @@
       <table>
         <thead>
           <tr>
-            <th style="width: 32%;">Fund / Position Name</th>
-            <th style="width: 12%;">Ticker</th>
-            <th style="text-align: right; width: 12%;">Units Held</th>
-            <th style="text-align: right; width: 12%;">Price (pence)</th>
-            <th style="text-align: right; width: 13%;">Current Value (£)</th>
-            <th style="text-align: right; width: 12%;">Cost (£)</th>
-            <th style="text-align: right; width: 13%;">Unrealised G/L</th>
-            <th style="width: 14%;">Mapped Sleeve</th>
-            <th style="width: 5%; text-align: center;"></th>
+            <th style="width: 20%;">Fund / Position Name</th>
+            <th style="width: 6%;">Ticker</th>
+            <th style="text-align: right; width: 8%;">Units Held</th>
+            <th style="text-align: right; width: 8%;">Price (pence)</th>
+            <th style="text-align: right; width: 9%;">Current Value (£)</th>
+            <th style="text-align: right; width: 8%;">Cost (£)</th>
+            <th style="text-align: center; width: 12%;">Entry Date</th>
+            <th style="text-align: right; width: 11%;">Unrealised G/L</th>
+            <th style="text-align: right; width: 9%;">Annualised</th>
+            <th style="width: 11%;">Mapped Sleeve</th>
+            <th style="width: 3%; text-align: center;"></th>
           </tr>
         </thead>
         <tbody id="holdingsTableBody">
@@ -545,14 +547,14 @@
     sisa: {
       name: "Reza ISA",
       holdings: [
-        { name: "VanEck Gold Miners UCITS ETF", ticker: "GDGB.L", units: 1550, pricePence: 6368.0, cost: 136463.25, sleeve: "gold" },
+        { name: "VanEck Gold Miners UCITS ETF", ticker: "GDGB.L", units: 1550, pricePence: 6368.0, cost: 136463.25, sleeve: "gold", entryDate: "2026-01-23" },
         { name: "Cash (HL Account Balance)", ticker: "CASH", units: 16123.06, pricePence: 100.0, cost: 16123.06, sleeve: "cash" }
       ]
     },
     jisa1: {
       name: "Liyana JISA",
       holdings: [
-        { name: "VanEck Gold Miners UCITS ETF", ticker: "GDGB.L", units: 620, pricePence: 6522.0, cost: 54572.67, sleeve: "gold" },
+        { name: "VanEck Gold Miners UCITS ETF", ticker: "GDGB.L", units: 620, pricePence: 6522.0, cost: 54572.67, sleeve: "gold", entryDate: "2026-01-23" },
         { name: "iShares MSCI Global Semiconductor UCITS ETF", ticker: "SEMI.L", units: 1432, pricePence: 1603.20, cost: 8994.09, sleeve: "ndx" },
         { name: "Cash (HL Account Balance)", ticker: "CASH", units: 9073.16, pricePence: 100.0, cost: 9073.16, sleeve: "cash" }
       ]
@@ -570,6 +572,31 @@
   // Format currency helper
   function formatGBP(val) {
     return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 2 }).format(val);
+  }
+
+  // Calculate Annualised Return (CAGR)
+  function calculateCAGR(val, cost, entryDateStr) {
+    if (!entryDateStr) return null;
+    const entryDate = new Date(entryDateStr);
+    if (isNaN(entryDate.getTime())) return null;
+
+    const today = new Date();
+    // Use midnight for dates to compute exact days held
+    const d1 = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate());
+    const d2 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    
+    const timeDiff = d2.getTime() - d1.getTime();
+    let daysHeld = timeDiff / (1000 * 60 * 60 * 24);
+    
+    if (daysHeld < 1) {
+      daysHeld = 1;
+    }
+
+    if (cost <= 0) return null;
+    if (val <= 0) return -100.0;
+    
+    const cagr = (Math.pow(val / cost, 365.25 / daysHeld) - 1) * 100;
+    return cagr;
   }
 
   // --- CRYPTO HELPERS (AES-GCM Web Crypto) ---
@@ -845,6 +872,14 @@
     const gain = val - holding.cost;
     const gainPct = holding.cost > 0 ? (gain / holding.cost) * 100 : 0;
     
+    // Calculate CAGR/Annualised return
+    const cagr = calculateCAGR(val, holding.cost, holding.entryDate);
+    const cagrText = cagr !== null ? `${cagr >= 0 ? '+' : ''}${cagr.toFixed(1)}% p.a.` : '—';
+    let cagrColor = 'var(--muted)';
+    if (cagr !== null) {
+      cagrColor = cagr >= 0 ? 'var(--good)' : 'var(--bad)';
+    }
+
     // Update DOM cells directly to avoid full table redraws (prevents focus loss)
     const row = document.getElementById(`holding-row-${acct}-${index}`);
     if (row) {
@@ -852,6 +887,12 @@
       const gainCell = row.querySelector('.holding-gain-cell');
       gainCell.textContent = `${gain >= 0 ? '+' : ''}${formatGBP(gain)} (${gainPct.toFixed(1)}%)`;
       gainCell.className = `holding-gain-cell gain-pill ${gain >= 0 ? 'good' : 'bad'}`;
+      
+      const annCell = row.querySelector('.holding-ann-cell');
+      if (annCell) {
+        annCell.textContent = cagrText;
+        annCell.style.color = cagrColor;
+      }
     }
 
     updateAccountTotalsInDOM(acct);
@@ -917,7 +958,8 @@
       units: 0,
       pricePence: 0,
       cost: 0,
-      sleeve: "other"
+      sleeve: "other",
+      entryDate: ""
     });
     syncStateToDOM();
     saveState();
@@ -944,12 +986,12 @@
       const account = state.accounts[acct];
       if (!account) continue;
 
-      // Add Account Header Divider
+      // Add Account Header Divider (spans 11 columns: 9 + 2)
       const headerTr = document.createElement('tr');
       headerTr.className = 'account-header-row';
       const wrapperBadgeText = ACCOUNTS[acct].taxable ? "Taxable GIA" : "Tax-Free";
       headerTr.innerHTML = `
-        <td colspan="7" style="font-weight: bold; font-size: 14px; padding: 10px 8px;">
+        <td colspan="9" style="font-weight: bold; font-size: 14px; padding: 10px 8px;">
           📁 ${account.name} <span class="badge ${ACCOUNTS[acct].taxable ? 'badge-passive' : 'badge-active'}" style="font-size: 10px; padding: 2px 6px; margin-left: 8px; font-weight: normal; vertical-align: middle;">${wrapperBadgeText}</span>
         </td>
         <td colspan="2" style="text-align: right; padding: 8px 10px;">
@@ -969,6 +1011,13 @@
 
         accountTotalCost += h.cost;
         accountTotalVal += val;
+
+        const cagr = calculateCAGR(val, h.cost, h.entryDate);
+        const cagrText = cagr !== null ? `${cagr >= 0 ? '+' : ''}${cagr.toFixed(1)}% p.a.` : '—';
+        let cagrColor = 'var(--muted)';
+        if (cagr !== null) {
+          cagrColor = cagr >= 0 ? 'var(--good)' : 'var(--bad)';
+        }
 
         const tr = document.createElement('tr');
         tr.id = `holding-row-${acct}-${index}`;
@@ -991,10 +1040,16 @@
           <td>
             <input type="number" class="holding-input" value="${h.cost}" step="any" oninput="updateHoldingField('${acct}', ${index}, 'cost', this.value)" style="text-align: right; font-variant-numeric: tabular-nums;" />
           </td>
+          <td>
+            <input type="date" class="holding-input" value="${h.entryDate || ''}" onchange="updateHoldingField('${acct}', ${index}, 'entryDate', this.value)" style="text-align: center;" />
+          </td>
           <td style="text-align: right; padding-right: 12px;">
             <span class="holding-gain-cell gain-pill ${gain >= 0 ? 'good' : 'bad'}">
               ${gain >= 0 ? '+' : ''}${formatGBP(gain)} (${gainPct.toFixed(1)}%)
             </span>
+          </td>
+          <td class="holding-ann-cell" style="text-align: right; padding-right: 12px; font-weight: 600; font-variant-numeric: tabular-nums; color: ${cagrColor};">
+            ${cagrText}
           </td>
           <td>
             <select class="holding-input" onchange="updateHoldingField('${acct}', ${index}, 'sleeve', this.value)" style="padding: 2px 4px;">
@@ -1017,7 +1072,7 @@
       if (account.holdings.length === 0) {
         const emptyTr = document.createElement('tr');
         emptyTr.innerHTML = `
-          <td colspan="9" style="text-align: center; color: var(--muted); font-style: italic; padding: 10px;">
+          <td colspan="11" style="text-align: center; color: var(--muted); font-style: italic; padding: 10px;">
             No positions in this account. Click "➕ Add Position" to add one.
           </td>
         `;
@@ -1041,10 +1096,12 @@
         <td class="account-subtotal-cost-cell" style="text-align: right; font-weight: bold;">
           ${formatGBP(accountTotalCost)}
         </td>
+        <td></td> <!-- Entry Date space -->
         <td class="account-subtotal-gain-cell" style="text-align: right; font-weight: bold; padding-right: 12px; color: ${accountGain >= 0 ? 'var(--good)' : 'var(--bad)'};">
           ${accountGain >= 0 ? '+' : ''}${formatGBP(accountGain)} (${accountGainPct.toFixed(1)}%)
         </td>
-        <td colspan="2"></td>
+        <td></td> <!-- Annualised Return space -->
+        <td colspan="2"></td> <!-- Sleeve & Action -->
       `;
       tbody.appendChild(subtotalTr);
 
