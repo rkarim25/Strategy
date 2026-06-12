@@ -1625,6 +1625,27 @@
                 }
               }
             }
+          },
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x',
+              onPanComplete: function() {
+                updateDateInputsFromChartScale();
+              }
+            },
+            zoom: {
+              wheel: {
+                enabled: true
+              },
+              pinch: {
+                enabled: true
+              },
+              mode: 'x',
+              onZoomComplete: function() {
+                updateDateInputsFromChartScale();
+              }
+            }
           }
         },
         scales: {
@@ -1663,6 +1684,7 @@
     }
     
     let startDate = '1970-01-01';
+    let endDate = '9999-12-31';
     const today = new Date();
     if (chartRange === '3m') {
       const cut = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
@@ -1673,13 +1695,26 @@
     } else if (chartRange === '1y') {
       const cut = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
       startDate = cut.toISOString().split('T')[0];
+    } else if (chartRange === 'custom') {
+      const s = document.getElementById('chartStartDate').value;
+      const e = document.getElementById('chartEndDate').value;
+      if (s) startDate = s;
+      if (e) endDate = e;
     }
     
     const sortedTxs = [...state.transactions].sort((a, b) => a.date.localeCompare(b.date));
     const earliestTxDate = sortedTxs.length > 0 ? sortedTxs[0].date : '2026-01-01';
     
     const displayStartDate = earliestTxDate > startDate ? earliestTxDate : startDate;
-    const activeDates = historicalPriceDb.dates.filter(d => d >= displayStartDate);
+    const displayEndDate = today.toISOString().split('T')[0] < endDate ? today.toISOString().split('T')[0] : endDate;
+    
+    if (chartRange !== 'custom') {
+      document.getElementById('chartStartDate').value = displayStartDate;
+      document.getElementById('chartEndDate').value = displayEndDate;
+    }
+    
+    const activeDates = historicalPriceDb.dates.filter(d => d >= displayStartDate && d <= endDate);
+    currentActiveDates = activeDates;
     
     if (activeDates.length === 0) {
       performanceChart.data.labels = [];
@@ -1735,6 +1770,25 @@
     performanceChart.data.labels = chartLabels;
     performanceChart.data.datasets[0].data = chartData;
     performanceChart.update();
+  }
+
+  function updateDateInputsFromChartScale() {
+    if (!performanceChart) return;
+    const xAxis = performanceChart.scales.x;
+    const minVal = xAxis.min;
+    const maxVal = xAxis.max;
+    
+    const labels = performanceChart.data.labels;
+    if (labels && labels.length > 0) {
+      const startIdx = Math.max(0, Math.floor(minVal));
+      const endIdx = Math.min(labels.length - 1, Math.ceil(maxVal));
+      
+      if (currentActiveDates && currentActiveDates[startIdx] && currentActiveDates[endIdx]) {
+        document.getElementById('chartStartDate').value = currentActiveDates[startIdx];
+        document.getElementById('chartEndDate').value = currentActiveDates[endIdx];
+        document.getElementById('btnResetZoom').style.display = 'inline-block';
+      }
+    }
   }
 
   // --- LEDGER PANEL & EDITOR ---
@@ -2010,8 +2064,36 @@
       document.querySelectorAll('.chart-range-btn').forEach(b => b.classList.remove('active'));
       e.target.classList.add('active');
       chartRange = e.target.getAttribute('data-range');
+      // Hide Reset Zoom button since we're using a preset range
+      document.getElementById('btnResetZoom').style.display = 'none';
+      if (performanceChart) performanceChart.resetZoom();
       updateChart();
     });
+  });
+
+  // Custom Date inputs
+  document.getElementById('chartStartDate').addEventListener('change', () => {
+    chartRange = 'custom';
+    document.querySelectorAll('.chart-range-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btnResetZoom').style.display = 'none';
+    if (performanceChart) performanceChart.resetZoom();
+    updateChart();
+  });
+  document.getElementById('chartEndDate').addEventListener('change', () => {
+    chartRange = 'custom';
+    document.querySelectorAll('.chart-range-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btnResetZoom').style.display = 'none';
+    if (performanceChart) performanceChart.resetZoom();
+    updateChart();
+  });
+  
+  // Reset Zoom button
+  document.getElementById('btnResetZoom').addEventListener('click', () => {
+    if (performanceChart) {
+      performanceChart.resetZoom();
+      document.getElementById('btnResetZoom').style.display = 'none';
+      updateChart();
+    }
   });
   
   // Unlock on Enter press
