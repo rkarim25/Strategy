@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-06-15T18:07:16Z",
+  "generated_at_utc": "2026-06-15T22:55:46Z",
   "window_days": 7,
-  "score": 5,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow jumps 600 points to record with rally gaining steam after Trump signs Iran deal memorandum: Live updates; onsemi Trades at a Discount: Buy, Hold or Sell the Stock?. Bearish offsets: Update: US Equity Indexes Jump Following Weekend Agreement to End Iran War; Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - Yahoo Finance.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow Hits Record High, Nasdaq And S&P 500 Jump On US-Iran Deal And SpaceX Optimism \u2014 SPCX, NVDA, ROKU, CRM, AMZN In Focus; Wall Street rallies, Dow ends with record on US-Iran deal. Bearish offsets: Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - ABC Columbia; Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune.",
   "articles": [
     {
-      "title": "Dow jumps 600 points to record with rally gaining steam after Trump signs Iran deal memorandum: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/14/stock-market-today-live-updates.html",
-      "published": "2026-06-15T17:44:02Z",
+      "title": "Dow Hits Record High, Nasdaq And S&P 500 Jump On US-Iran Deal And SpaceX Optimism \u2014 SPCX, NVDA, ROKU, CRM, AMZN In Focus",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://stocktwits.com/news-articles/markets/equity/dow-hits-record-high-nasdaq-and-s-and-p-500-jump-on-us-iran-deal-and-space-x-optimism-spcx-nvda-roku-crm-amzn-in-focus/cZKfwt9R73v?.tsrc=rss",
+      "published": "2026-06-15T21:52:23Z",
       "tone": "bullish"
     },
     {
-      "title": "Update: US Equity Indexes Jump Following Weekend Agreement to End Iran War",
+      "title": "Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - ABC Columbia",
+      "source": "ABC Columbia",
+      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOSEswMFZaSTVQR2YybVVYcHkxYnptazctSjlsZkRKNm0xaC14ejRfWXpEZWM2QkdyRDZfTUN5a2VwaEd1LWpZUjU1VWhtb1BkdmoxOUxtc1haak5JVUJHLWh4dU4wdVhWcmw1cWZiS3JzbkhDcVBjaVllUzFHcW1qZjZPMW9fZVpWaVJXdXduRmoxbUVUZWZ4Wjk4YlY1M0lhbDlIdS1KUHJFZ2RoSTNZV1h5cFJsMVotWXJVOVRIaHFQZmxYam52OHZOU0tlOElqMW0tcDd3?oc=5",
+      "published": "2026-06-15T17:05:49Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune",
+      "source": "Jefferson City News Tribune",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNQlU3ektlYVNvdFdHZHVQcHN5VkFfeHZmLWcwdkhwdDhnLUllaVB1aE5GNzR2akhkMUNZNnJWUVItRl9oZ0xkNTNMWElySllERUlRczRUOEduZHFKMEFHMlIxU3FyVktqV09qaWZ1NW1WanhJU1RNUDJKbFlXV0NJZUxkVWtic3pZd0VEMFFuREUyUlU4LVBGV0JB?oc=5",
+      "published": "2026-06-11T08:55:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street rallies, Dow ends with record on US-Iran deal",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-jump-following-163234178.html?.tsrc=rss",
-      "published": "2026-06-15T16:32:34Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPdENUSnFrSk5aY2JZM2hzOENmU0I5SVpheEd0UDZHNE1PdUpneGNoR3VMMVB1UEpJNjZadHE2Njk4TXY4b2ZCdXRFRGMwT0t1dGtKTVMwLUlLcWVYRVZmanVjY3lRazJKSHdwYWVGMEE3Mnppd3ZidTZJQVdaREhxeHNYdUJxT3hmczdLaTRR?oc=5",
-      "published": "2026-06-15T01:00:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPX2pqN1FSLTFtZVc3ZDBaeDJNcXpoN01MVW5VbWduSm1sUUFjVjBhbjYzOWYtZTI1UjU3Mmh5dUo5VkE4a2FSdi1aeWhzR1Ewb1dvOUh0dGgxXzllQ05LdGFMNncwaVZsb084NkNfdzZZWjNyWjZBTGpoTl9zaG1ub1VaV2F1alZDR2c5VWVRdnJ3UFVZ?oc=5",
-      "published": "2026-06-10T20:47:21Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "onsemi Trades at a Discount: Buy, Hold or Sell the Stock?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/onsemi-trades-discount-buy-hold-155400162.html?.tsrc=rss",
-      "published": "2026-06-15T15:54:00Z",
+      "url": "https://finance.yahoo.com/video/wall-street-rallies-dow-ends-223928887.html?.tsrc=rss",
+      "published": "2026-06-15T22:39:28Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - WDEF",
+      "source": "WDEF",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNWk94eldIRnZWcWUxbHNDelJFNVpGdE9TYUJMSjRiTE9JWjlxWWs4T09WVmMzeFVaWkE2VXJpVnJhQ2U0Tk1UWDdaS1R3Nm53ajc3YW9NSklDRElod0lkeHZ1V2NacHZPeG5DaVRUbS1RZG51ZVhRTVBPZjJuZHNueVI2dEpJN0xRX01sNXVCOWVfaFFISUp0b3NSb2pUVVlscXhab2stVEcyMXJiQ0Fj?oc=5",
+      "published": "2026-06-10T21:56:02Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 90
       }
     ],
-    "headline_count": 141,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
