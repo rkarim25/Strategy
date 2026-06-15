@@ -20,6 +20,14 @@ TICKERS = [
     "EMIM.L",  # iShares MSCI EM
     "GDGB.L",  # VanEck Gold Miners UCITS ETF
     "SEMI.L",  # iShares MSCI Global Semiconductor UCITS ETF
+    # --- added 2026-06 to back the per-position Return column on the holdings page ---
+    "EUE.L",   # iShares Core EURO STOXX 50 (Abbu EUE, real fund)
+    "IUCM.L",  # iShares S&P 500 Communication Sector (Abbu IUCM, real fund)
+    "MOAT.L",  # VanEck Morningstar US Wide Moat (Abbu MOAT, real fund)
+    "VERX.L",  # Vanguard FTSE Dev Europe ex-UK ETF (proxy for VANG_EUEX)
+    "FTAL.L",  # SPDR FTSE UK All Share ETF (proxy for VANG_UK)
+    "RBOT.L",  # iShares Automation & Robotics (proxy for PICTET Robotics)
+    "VWRP.L",  # Vanguard FTSE All-World Acc (proxy for HLGROWTH multi-asset growth)
 ]
 
 def fetch_ticker_price(ticker):
