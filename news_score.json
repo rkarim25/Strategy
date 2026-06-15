@@ -1,23 +1,16 @@
 {
-  "generated_at_utc": "2026-06-12T23:15:13Z",
+  "generated_at_utc": "2026-06-15T13:09:39Z",
   "window_days": 7,
-  "score": 4,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool; Bitcoin's latest plunge revives the debate over owning it\u2014and whether it's just 'crypto being crypto'.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: SpaceX Stock Jumps Again as Elon Musk Unveils Meteoric Revenue Target; Equity Funding Squeeze Driven By AI Rally, SpaceX IPO Stretches Banks - Bloomberg.com. Bearish offsets: Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune; Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - Scripps News.",
   "articles": [
     {
-      "title": "Stock Market Today, June 10: Hot Inflation and War Escalation Fears Pressure Stocks at Midday - The Motley Fool",
-      "source": "The Motley Fool",
-      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNXzBQbkFLYm1RSFRvTDZZdmdocXRtQ1lWWjdfdThmVnRzblR6OWpTc1dYbWlLajliUGJZNWJnNGFEaTdBNFJFOXRxWEw1SU9BVVBnYldtamNmbkpNZ3IzVk5VOU5SdlBMRXZMOFlENzdlSHItaDhqb0pmOGFYTjY2bDh1elFjUFprN1B1MkxfbFBObzJTcjRCSzVRZU1abFVLSXdOZ0Y0Mm1FMnZIUTFzSHNYdVZpYVUzRFRQRElIRHpZVUI5VkszdUszVDNRR1NZbXd4YlBDNTlKeThMbWQ2OURId2lsOVU?oc=5",
-      "published": "2026-06-10T16:52:38Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Bitcoin's latest plunge revives the debate over owning it\u2014and whether it's just 'crypto being crypto'",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/12/bitcoins-price-drop-is-forcing-investors-to-revisit-why-they-own-it.html",
-      "published": "2026-06-12T18:01:55Z",
-      "tone": "bearish"
+      "title": "SpaceX Stock Jumps Again as Elon Musk Unveils Meteoric Revenue Target",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/ce07efc6-0ec7-3113-bc85-f1ee92f5c600/spacex-stock-jumps-again-as.html?.tsrc=rss",
+      "published": "2026-06-15T12:26:00Z",
+      "tone": "bullish"
     },
     {
       "title": "Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune",
@@ -27,11 +20,11 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQUxUT1NqQm1KUFlpbmdjN0VuSm4wU2VIODFBNF81YU54bFBsWUptZVV0bU41ZXl0MHQxWE1UamxBaHlkUWhvWUY3MHFJZVJhYmJKdDZtMlkyLWlEbjdpOXZubnJLZFlZREdyOVhfMU5QM1l0ZGNoQnpIdHlYVjFVSHU2eXI3WGk3ek9aNXR4ZUJaQmp3dzF2dUxybmhWczI1ZEt3M1hCVmdNdmQ2bDJ3R3NOTkhzUVlRVE52WjF4cw?oc=5",
-      "published": "2026-06-10T22:58:16Z",
-      "tone": "bearish"
+      "title": "Equity Funding Squeeze Driven By AI Rally, SpaceX IPO Stretches Banks - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPLTFsYWxpVmpJQUJ3RlQ0UWtlNEpPVGJPYmNGcmxTS2NST3hSVmxONnlURENBQW9ZNmRIN2JRS2tEQjRvNzBHM3FHM1p1SnA3VWx6VEJlVDV0VTg4c015MkZVTUprOWFUY3YxNVNoc01CSUl2ZTNNUTZDM01mbjgya1FSV1pHZXVLSERMTkRCYzBIMWs5UmJ3akRfQVN3T1VVR0wyYXY5NVJuY0NRVWUzVllVaHhkVjRhVTh5dw?oc=5",
+      "published": "2026-06-14T14:00:00Z",
+      "tone": "bullish"
     },
     {
       "title": "Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - Scripps News",
@@ -39,6 +32,13 @@
       "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNQVlLa2NmY3h1M1FhOEstUDBSd2lNaFJQVzlBM0JsajFob0l4Wkp1V3JneDFoMkszSkE2YkNpRk1lMW9FQnlqUmY3T3V1dHZoTEUwOXpnbkdybVdVeWRta0Y3ZEM2dUc2LVBaZGw0NEJRY1ZoN0tJaEdkSVdOMFhjTkJ0Z1RGYUFGckxMU1F0TG4wZ0FSTXpNcDRBNmZzXzd2UEdLQzBuSUdEZjdGR21UelpvR0JxelZRQ2RvWjZOTEhXY1NDbEROTWM0NzU4QQ?oc=5",
       "published": "2026-06-10T20:53:11Z",
       "tone": "bearish"
+    },
+    {
+      "title": "S&P 500, Nasdaq rise as tech, chipmakers rebound - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQR0VnRHRMNWZyQUpuZEVLYmR5cUxDczIwd1k5Z3RMaGtvekU2VDV1cDVVRlpWSWlJb2tCN1F3Z0R5VDVnLTc3djFoZkNLa3NYTUxJUUhacGU2aTZsV3JwY2VjVVNfNkM2MWpxc0laQXh1Mk9sUUstRTdGalh5WDNVd0RGZW1nZVZvSGduY3dGTFBsWkFhSzhzOTVR?oc=5",
+      "published": "2026-06-09T21:46:28Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 90
       }
     ],
-    "headline_count": 141,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
