@@ -371,6 +371,33 @@ def fetch_worker_daily(
         raise
 
 
+def clean_price_spikes(
+    rows: list[dict[str, object]],
+    *,
+    jump: float = 0.25,
+    revert: float = 0.20,
+) -> list[dict[str, object]]:
+    """Replace single-day round-trip price spikes (bad upstream ticks) with the mean of
+    their neighbours. A spike jumps away from BOTH neighbours in the same direction and
+    reverts the next session (e.g. a 1x index printing +34% then back). Sustained real
+    moves — a 3x product down 50% in a crash and staying down — are NOT touched, because
+    they do not revert. Neighbours are read from the original series, not cleaned values."""
+    if len(rows) < 3:
+        return rows
+    cleaned = [dict(r) for r in rows]
+    for i in range(1, len(rows) - 1):
+        prev = float(rows[i - 1]["close"])
+        cur = float(rows[i]["close"])
+        nxt = float(rows[i + 1]["close"])
+        if prev <= 0 or nxt <= 0:
+            continue
+        spike_up = cur > prev * (1 + jump) and cur > nxt * (1 + revert)
+        spike_down = cur < prev * (1 - jump) and cur < nxt * (1 - revert)
+        if spike_up or spike_down:
+            cleaned[i]["close"] = (prev + nxt) / 2.0
+    return cleaned
+
+
 def fetch_yahoo_daily(
     sources: dict[str, object],
     *,
@@ -407,7 +434,7 @@ def fetch_yahoo_daily(
         if len(rows) < 260:
             raise ValueError(f"Yahoo chart returned only {len(rows)} rows")
         sources[source_key] = source_result(url, True, status)
-        return rows
+        return clean_price_spikes(rows)
     except Exception as exc:
         sources[source_key] = source_result(url, False, error=str(exc))
         raise
