@@ -1,15 +1,29 @@
 {
-  "generated_at_utc": "2026-06-15T23:43:24Z",
+  "generated_at_utc": "2026-06-16T12:07:59Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street rallies, Dow ends with record on US-Iran deal. Bearish offsets: Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - ABC Columbia; Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st; Wall Street Today: DJIA Hits Record as Iran Peace Deal and Fresh SpaceX Gains Spark Broad Rally - Moomoo. Bearish offsets: Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - Boston Herald; Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune.",
   "articles": [
     {
-      "title": "Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - ABC Columbia",
-      "source": "ABC Columbia",
-      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOSEswMFZaSTVQR2YybVVYcHkxYnptazctSjlsZkRKNm0xaC14ejRfWXpEZWM2QkdyRDZfTUN5a2VwaEd1LWpZUjU1VWhtb1BkdmoxOUxtc1haak5JVUJHLWh4dU4wdVhWcmw1cWZiS3JzbkhDcVBjaVllUzFHcW1qZjZPMW9fZVpWaVJXdXduRmoxbUVUZWZ4Wjk4YlY1M0lhbDlIdS1KUHJFZ2RoSTNZV1h5cFJsMVotWXJVOVRIaHFQZmxYam52OHZOU0tlOElqMW0tcDd3?oc=5",
-      "published": "2026-06-15T17:07:29Z",
+      "title": "US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st",
+      "source": "simplywall.st",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNkw5Y1hfMmw4WFZrSTZQWHVnTDU1VHd5YzVpNHljS2VTQ0tsRWxTeGhlcVJWUDBqaTR0OWNSSFNSOC1OdU5KRTc1Q2VUNW1MdHVxWlRYYnVKYm1iRFpFVG04QjY2VmFfU2lHT2E4dXJpandMUEZfb2IxOVMyeVFKWl8wUEFja0Fia1Y5UWlPMG9GWUQ2ZEYwemJYWjZHWWFCLVZZbEFfTkFfd0NHMUdoSjVWM0RrR3VMZlHSAb8BQVVfeXFMUEs3WVFhNGExMGlubjNXTUltTXVYNHJmYXg3ekIxTDl1T25qNldjZlRMeGpqZjRTZ0NlcmxuVXlOckpPNmd1VFBLS1JabVg0cEN5M3RYNXVKcHluQnd4LVItdC1NU0k5MFNGWEtzaFFzMW5yTzNLU1VSSC00T0wwTV9vS2JuZ0xXSVlCS0Z4Q2kxOWNTR0QtNzhwMG5WQ05oWUVWcVFjZFBKWHhsQ1lkMGpMSElUc1UxYmpmd2VhYWM?oc=5",
+      "published": "2026-06-16T08:34:27Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street Today: DJIA Hits Record as Iran Peace Deal and Fresh SpaceX Gains Spark Broad Rally - Moomoo",
+      "source": "Moomoo",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOVjZOZ1gtbGpwakgyTlBHcjlqQW50M0dNYlV6MV9ZSDcyaXA2bGMtZmlaSnBPR3p6c0UyWVBLcGptcWg0Sy1TTU56UDR2UFkxNkVaRVo1V2hha0hZTW1ia3RIb1NHd1kxWHp5Zm1HWVNKVnhRSVNZeUhYQVI4MENKb1E1Q1hCUDcxVEhla0hKNS1UUHVRX2QyQXAxbTZacE16bG1zeVkyUlp2OVk?oc=5",
+      "published": "2026-06-15T07:00:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - Boston Herald",
+      "source": "Boston Herald",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOVnFjZHFpVGtCdnpQRkFFZ0pSRGVmLUZXZ05XczBsT09wUE1sLWVLcEh3ZTFFREJOd3ZUdUIzQ1JnMlpRMG5IWTd1NnZfUk56WUVWT2RBSWREUjlSRkswbEZIX19zc0dpQlBCM2JTVWlkNTV4YXlGYmtVbHhCdEVtTXZEUGU?oc=5",
+      "published": "2026-06-15T21:34:29Z",
       "tone": "bearish"
     },
     {
@@ -20,24 +34,10 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street rallies, Dow ends with record on US-Iran deal",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/wall-street-rallies-dow-ends-223928887.html?.tsrc=rss",
-      "published": "2026-06-15T22:39:28Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Another sell-off for AI stocks drags Wall Street to its first back-to-back drop in weeks - WDEF",
-      "source": "WDEF",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNWk94eldIRnZWcWUxbHNDelJFNVpGdE9TYUJMSjRiTE9JWjlxWWs4T09WVmMzeFVaWkE2VXJpVnJhQ2U0Tk1UWDdaS1R3Nm53ajc3YW9NSklDRElod0lkeHZ1V2NacHZPeG5DaVRUbS1RZG51ZVhRTVBPZjJuZHNueVI2dEpJN0xRX01sNXVCOWVfaFFISUp0b3NSb2pUVVlscXhab2stVEcyMXJiQ0Fj?oc=5",
-      "published": "2026-06-10T21:56:02Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "US Stock Market Today: S&P 500 Futures Fall As Inflation Jitters Grip Tech - simplywall.st",
-      "source": "simplywall.st",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQcjVDZkhtMnRBdzk1VVdzTWpmcWJDWWFlOGFST0NBQlpQSGpxSkROV1BRcGFLemwzSllicm9WbWdhT0FraGI2bEd2UlA5YldyU3cwdldDcDBtYVZKQktfMFU1Y0VQZzlfRDZkUDNuYzhHSm1jTmxMbHhKLTFmbE5pd0tLbXVpd21MSHJJN29LSnpLdERyMEVfLS1hTkNzQVN4NzdQZnRZLWJwTUh3bUtZYjFSRWNvWEgtLS1UcjRMd2xuOU1fX1B5X0FpUDLSAdIBQVVfeXFMT0Y0TXN5ZmhjcDZnaUtYOUFibk54cFd3T2FYdkdYZklpUDFXdi1sYjU0UnlDNnp0d1ViQ20yUFl5UDJmVldqZzJXei1uUTJsVGtZNjI3T1dXN2ZhalVZZXc4OFlpTzYtS211bGJUNFhTWEk2aUxwU3ZkWHJraG4xcGpPUnpnMFNXTWxLRnJfbDBsdGRCVWQ4b19CUC1FQTN0SzFLRk9TOHhQOGZsRXBFMHp2LXoyRkRCYXlvdnplVlhFQW51akI1bVNHWl90SDg5MVRn?oc=5",
-      "published": "2026-06-11T10:59:28Z",
+      "title": "Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQUxUT1NqQm1KUFlpbmdjN0VuSm4wU2VIODFBNF81YU54bFBsWUptZVV0bU41ZXl0MHQxWE1UamxBaHlkUWhvWUY3MHFJZVJhYmJKdDZtMlkyLWlEbjdpOXZubnJLZFlZREdyOVhfMU5QM1l0ZGNoQnpIdHlYVjFVSHU2eXI3WGk3ek9aNXR4ZUJaQmp3dzF2dUxybmhWczI1ZEt3M1hCVmdNdmQ2bDJ3R3NOTkhzUVlRVE52WjF4cw?oc=5",
+      "published": "2026-06-10T22:58:16Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 92
       }
     ],
-    "headline_count": 139,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
