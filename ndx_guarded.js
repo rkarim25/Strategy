@@ -818,7 +818,9 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
         peak = Math.max(peak, aum);
       }
 
-      const lev = leverage[i];
+      // No lookahead: the leverage decided at the prior close is held through today,
+      // matching the Python engine (signal from close[i] earns return[i+1]).
+      const lev = i > 0 ? leverage[i - 1] : leverage[0];
       if (Math.abs(lev - prevLev) > 1e-9) {
         const cost = Math.abs(lev - prevLev) * aum * params.tradingCost;
         aum -= cost;

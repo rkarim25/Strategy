@@ -390,7 +390,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     const parts = [];
     if (prefix) parts.push(prefix);
     parts.push(window.SiteNav?.AUTO_REFRESH_HOURS_LABEL || "Auto-refreshes every 30 minutes during UK LSE hours while this page is open.");
-    parts.push("Enter a manual NDX level then click refresh to override the live quote.");
+    parts.push("Enter a manual gold (GC=F) level then click refresh to override the live quote.");
     if (staticSignalMetadata?.generated_at_utc) parts.push(`Static data generated: ${formatMetadataTime(staticSignalMetadata.generated_at_utc)}.`);
     if (staticSignalMetadata?.data_asof) parts.push(`Static daily data through: ${staticSignalMetadata.data_asof}.`);
     if (staticSignalMetadata?.quote_price) {
@@ -822,7 +822,9 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
         peak = Math.max(peak, aum);
       }
 
-      const lev = leverage[i];
+      // No lookahead: the leverage decided at the prior close is held through today,
+      // matching the Python engine (signal from close[i] earns return[i+1]).
+      const lev = i > 0 ? leverage[i - 1] : leverage[0];
       if (Math.abs(lev - prevLev) > 1e-9) {
         const cost = Math.abs(lev - prevLev) * aum * params.tradingCost;
         aum -= cost;

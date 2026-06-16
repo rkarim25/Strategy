@@ -90,7 +90,9 @@ const USE_WORKER_LIVE = false;
       const year = new Date(rows[i].date).getUTCFullYear();
       if (i > 0 && year !== prevYear) aum += ANNUAL_INFLOW;
 
-      const lev = leverage[i];
+      // No lookahead: the leverage decided at the prior close is held through today,
+      // matching the Python engine (signal from close[i] earns return[i+1]).
+      const lev = i > 0 ? leverage[i - 1] : leverage[0];
       if (Math.abs(lev - prevLev) > 1e-9) {
         const cost = Math.abs(lev - prevLev) * aum * DEFAULT_STRATEGY.tradingCost;
         aum -= cost;
@@ -761,7 +763,9 @@ const USE_WORKER_LIVE = false;
         peak = Math.max(peak, aum);
       }
 
-      const lev = leverage[i];
+      // No lookahead: the leverage decided at the prior close is held through today,
+      // matching the Python engine (signal from close[i] earns return[i+1]).
+      const lev = i > 0 ? leverage[i - 1] : leverage[0];
       if (Math.abs(lev - prevLev) > 1e-9) {
         const cost = Math.abs(lev - prevLev) * aum * params.tradingCost;
         aum -= cost;
