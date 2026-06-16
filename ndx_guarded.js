@@ -1202,7 +1202,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
     updateRangeNudgeStates();
   }
 
-  function sliceRowsByRange(range, offset, startInput, endInput) {
+  function sliceRowsByRange(range, offset, startInput, endInput, fullStartDate = null) {
     if (!latestRows.length) return [];
     const n = latestRows.length;
     if (range === "custom") {
@@ -1210,7 +1210,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       const end = endInput?.value;
       return latestRows.filter((row) => (!start || row.date >= start) && (!end || row.date <= end));
     }
-    if (range === "full") return latestRows.slice();
+    if (range === "full") return fullStartDate ? latestRows.filter((row) => row.date >= fullStartDate) : latestRows.slice();
     const len = RANGE_SESSIONS[range] || n;
     const endExclusive = Math.max(1, n - offset);
     const start = Math.max(0, endExclusive - len);
@@ -1953,7 +1953,7 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       strategy: strategy[index],
       spx: spx[index],
     }));
-    const rows = sliceRowsByRange(equityChartRange, equityChartRangeOffset, $("equityChartStart"), $("equityChartEnd"));
+    const rows = sliceRowsByRange(equityChartRange, equityChartRangeOffset, $("equityChartStart"), $("equityChartEnd"), staticSiteData?.sample?.start_date);
     const allowed = new Set(rows.map((row) => row.date));
     return fullData.filter((row) => allowed.has(row.date));
   }

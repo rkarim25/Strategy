@@ -54,6 +54,10 @@ DAX_DAILY_CSV = ROOT / "dax_daily.csv"
 LATEST_DAX_SIGNAL_JSON = ROOT / "latest_dax_signal.json"
 WORLD_DAILY_CSV = ROOT / "msci_world_daily.csv"
 LATEST_WORLD_SIGNAL_JSON = ROOT / "latest_msci_world_signal.json"
+# SWDA.L (MSCI World) has unreliable Yahoo inception data: a non-reverting ~39% cliff on
+# 2009-11-05 (2454 -> 1501) that clean_price_spikes cannot catch because it never round-trips.
+# Clamp the live world series to start after it. Keep in sync with GuardedAssetSpec.history_start.
+WORLD_HISTORY_START = "2009-12-01"
 LQQ3_DAILY_CSV = ROOT / "lqq3_daily.csv"
 LATEST_LQQ3_SIGNAL_JSON = ROOT / "latest_lqq3_signal.json"
 BAL3_DAILY_CSV = ROOT / "3bal_daily.csv"
@@ -1627,6 +1631,7 @@ def refresh_yahoo_only(
     send_trade_alerts: bool = False,
     alert_profile: str | None = None,
     signal_fn=compute_signal,
+    min_date: str | None = None,
 ) -> None:
     sources: dict[str, object] = {}
     rows = fetch_yahoo_daily(
@@ -1634,6 +1639,11 @@ def refresh_yahoo_only(
         yahoo_chart_url=yahoo_chart_url,
         source_key="daily_yahoo",
     )
+    if min_date:
+        # Drop unreliable inception rows (ISO dates sort lexicographically) before they reach the CSV.
+        rows = [row for row in rows if str(row["date"]) >= min_date]
+        if len(rows) < 260:
+            raise ValueError(f"{label}: only {len(rows)} rows remain after clamping to {min_date}")
     quote = yahoo_quote_from_rows(rows)
     write_daily_csv(rows, daily_csv)
     write_signal_json(
@@ -1838,6 +1848,7 @@ def main() -> int:
                 send_trade_alerts=True,
                 alert_profile=alert_profile,
                 signal_fn=signal_fn,
+                min_date=WORLD_HISTORY_START if label == "MSCI_WORLD" else None,
             )
         except Exception as exc:
             print(f"[{label}] refresh failed: {exc}", file=sys.stderr)

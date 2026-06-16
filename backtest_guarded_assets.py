@@ -16,6 +16,7 @@ import yfinance as yf
 from analyze_cross_asset_guarded_1x import DEFAULT_GUARDED, guarded_lead_leverage
 from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
 from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from price_cleaning import clean_close_series
 from guarded_asset_registry import ASSETS, GuardedAssetSpec
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW, sma_cash_leverage
 
@@ -46,12 +47,14 @@ def paths_for(spec: GuardedAssetSpec) -> dict[str, Path]:
     }
 
 
-def download_panel(ticker: str, years: int = YEARS) -> pd.DataFrame:
+def download_panel(ticker: str, years: int = YEARS, start: str | None = None) -> pd.DataFrame:
     end = datetime.today()
-    start = end - timedelta(days=int(years * 365.25))
+    # ``start`` overrides the default ``years``-back window so an asset with unreliable inception
+    # data (e.g. MSCI World / SWDA.L before 2009-12-01) can skip it -- see GuardedAssetSpec.history_start.
+    start_str = start if start is not None else (end - timedelta(days=int(years * 365.25))).strftime("%Y-%m-%d")
     raw = yf.download(
         [ticker, TBILL_TICKER],
-        start=start.strftime("%Y-%m-%d"),
+        start=start_str,
         end=end.strftime("%Y-%m-%d"),
         auto_adjust=True,
         progress=False,
@@ -75,6 +78,7 @@ def download_panel(ticker: str, years: int = YEARS) -> pd.DataFrame:
         }
     )
     panel = panel.sort_index().ffill().dropna(how="any")
+    panel["spx_close"] = clean_close_series(panel["spx_close"])
     if len(panel) < 260:
         raise ValueError(f"Not enough rows for {ticker}: {len(panel)}")
     return panel
@@ -290,7 +294,7 @@ def run_asset(spec: GuardedAssetSpec) -> None:
     p = paths_for(spec)
     p["output_dir"].mkdir(parents=True, exist_ok=True)
     print(f"\n=== {spec.title_short} ({spec.yahoo_ticker}) ===", flush=True)
-    prices = download_panel(spec.yahoo_ticker)
+    prices = download_panel(spec.yahoo_ticker, start=spec.history_start)
     print(f"Loaded {len(prices)} sessions", flush=True)
     write_daily_csv(prices, p["daily_csv"])
 

@@ -26,6 +26,7 @@ from etp_leverage import (
     export_etp_returns_json,
 )
 from metrics import comprehensive_stats
+from price_cleaning import clean_close_series
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW, sma_cash_leverage
 
@@ -77,6 +78,7 @@ def download_spx_panel(years: int = YEARS) -> pd.DataFrame:
         }
     )
     panel = panel.sort_index().ffill().dropna(how="any")
+    panel["spx_close"] = clean_close_series(panel["spx_close"])
     if len(panel) < 260:
         raise ValueError(f"Not enough SPX rows: {len(panel)}")
     return panel

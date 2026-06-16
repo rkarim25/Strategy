@@ -25,6 +25,10 @@ class GuardedAssetSpec:
     equity_compare_label: str
     manual_price_hint: str
     etf_1x: str
+    # Earliest trustworthy date for the backtest/series; None = use the default 30-year window.
+    # MSCI World (SWDA.L) has unreliable Yahoo inception data before 2009-12-01 (a non-reverting
+    # ~39% cliff on 2009-11-05 that the round-trip spike filter cannot catch); skip it here.
+    history_start: str | None = None
 
 
 ASSETS: list[GuardedAssetSpec] = [
@@ -127,6 +131,7 @@ ASSETS: list[GuardedAssetSpec] = [
         equity_compare_label="MSCI World vs Default Strategy Equity",
         manual_price_hint="Optional MSCI World level",
         etf_1x="IWDA / SWDA",
+        history_start="2009-12-01",
     ),
     GuardedAssetSpec(
         slug="lqq3",
