@@ -277,7 +277,8 @@ def build_site_payload(
         },
         "generated_at_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "levered_pnl_model": (
-            "Listed 2x/3x ETP daily returns (SPY/XS2D/3USL); "
+            "Listed 2x/3x ETP daily returns (SPY/SSO/UPRO, same US calendar as the index; "
+            "implement via UCITS XS2D.L 2x / 3USL.L 3x); "
             "VIX-linked synthetic daily-reset before ETP inception. "
             f"Monte Carlo: {MC_ETP_METHOD}"
         ),

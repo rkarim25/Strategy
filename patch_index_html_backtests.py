@@ -202,11 +202,15 @@ def main() -> int:
     )
 
     if orig:
+        cagr_dir = "rose" if bt["cagr"] >= orig["cagr"] else "fell"
+        # max_drawdown is negative; less negative = shallower (better)
+        dd_dir = "narrowed" if bt["max_drawdown"] >= orig["max_drawdown"] else "deepened"
         callout = (
-            "The new default improved the historical result versus the original strict A10/B20 version: "
-            f"CAGR rose from {pct(orig['cagr'])} to {bt['cagr_pct']}, while max drawdown improved from "
-            f"{pct(orig['max_drawdown'])} to {bt['max_drawdown_pct']} "
-            "(2x/3x P&amp;L uses listed ETP daily returns when history exists)."
+            "Versus the original strict A10/B20 version, "
+            f"CAGR {cagr_dir} from {pct(orig['cagr'])} to {bt['cagr_pct']}, while max drawdown "
+            f"{dd_dir} from {pct(orig['max_drawdown'])} to {bt['max_drawdown_pct']}. "
+            "2x/3x P&amp;L uses listed same-calendar US ETP daily returns when history exists; the deep "
+            "drawdowns come from 3x exposure in the synthetic pre-inception bear markets (dot-com, GFC)."
         )
         html = re.sub(
             r"<p id=\"backtestCallout\" class=\"callout\">[\s\S]*?</p>",

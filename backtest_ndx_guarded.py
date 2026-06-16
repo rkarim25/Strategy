@@ -282,7 +282,8 @@ def build_site_payload(
         },
         "generated_at_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "levered_pnl_model": (
-            "Listed 2x/3x ETP daily returns (QQQ/LQQ/LQQ3); "
+            "Listed 2x/3x ETP daily returns (QQQ/QLD/TQQQ, same US calendar as the index; "
+            "implement via LQQ.PA 2x / LQQ3.L 3x); "
             "VIX-linked synthetic daily-reset before ETP inception. "
             f"Monte Carlo: {MC_ETP_METHOD}"
         ),

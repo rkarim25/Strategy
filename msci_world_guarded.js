@@ -13,7 +13,7 @@ const USE_WORKER_LIVE = false;
     hold2: 0.40,
     hold3: 0.15,
     leadPct: 0.0075,
-    tradingCost: 0.01,
+    tradingCost: 0.001,
     cashRate: 0.04,
     maxLeverage: 1,
     maxHold2: null,
@@ -707,7 +707,7 @@ const USE_WORKER_LIVE = false;
     const hold2 = readNumber("calcHold2") / 100;
     const hold3 = readNumber("calcHold3") / 100;
     const leadPct = Math.max(readNumber("calcLeadPct", DEFAULT_GUARDED.leadPct * 100) / 100, 0);
-    const tradingCost = Math.max(readNumber("calcTradingCost", 1) / 100, 0);
+    const tradingCost = Math.max(readNumber("calcTradingCost", 0.1) / 100, 0);
     const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
     const maxHold2 = readOptionalNumber("calcMaxHold2");
     const maxHold3 = readOptionalNumber("calcMaxHold3");
@@ -947,7 +947,7 @@ const USE_WORKER_LIVE = false;
       if (comboCount > 7000) throw new Error(`Grid has ${comboCount.toLocaleString()} combinations. Narrow the range or increase step size.`);
 
       const objective = $("optObjective").value;
-      const tradingCost = Math.max(readNumber("calcTradingCost", 1) / 100, 0);
+      const tradingCost = Math.max(readNumber("calcTradingCost", 0.1) / 100, 0);
       const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
       const leadPct = Math.max(readNumber("calcLeadPct", DEFAULT_GUARDED.leadPct * 100) / 100, 0);
       const maxHold2 = readOptionalNumber("calcMaxHold2");
