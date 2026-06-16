@@ -1,8 +1,8 @@
 {
   "source": "Yahoo Finance ^GSPC and ^IRX via project data loader",
-  "market_history_start": "1996-05-16",
-  "market_history_end": "2026-05-15",
-  "n_sims": 500,
+  "market_history_start": "1996-06-17",
+  "market_history_end": "2026-06-15",
+  "n_sims": 75,
   "horizon_trading_days": 2520,
   "horizon_years": 10.0,
   "block_days": 21,

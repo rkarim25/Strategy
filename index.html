@@ -1309,13 +1309,16 @@
         <div class="kpi-grid">
           <div class="metric-card"><span class="small">Simulations</span><strong>75</strong></div>
           <div class="metric-card"><span class="small">Horizon</span><strong>10 years</strong></div>
-          <div class="metric-card"><span class="small">Best median candidate CAGR</span><strong>31.10%</strong></div>
-          <div class="metric-card"><span class="small">Best median candidate DD</span><strong>-29.82%</strong></div>
+          <div class="metric-card"><span class="small">Best candidate median CAGR</span><strong>9.24%</strong></div>
+          <div class="metric-card"><span class="small">Buy &amp; hold 1x median CAGR</span><strong>13.29%</strong></div>
         </div>
         <p class="callout">
-          Treat this as a screening Monte Carlo, not the final production validation. It is broad across many
-          strategy rules; once a short list is chosen, those finalists should get a full 500+ path run like the
-          Guarded A10/B20 SMA20 tab.
+          The headline: once daily-reset leverage carries realistic funding and trading costs, <strong>no momentum
+          candidate beats plain buy &amp; hold 1x</strong> in this scan &mdash; buy &amp; hold posts the highest median
+          CAGR (13.29%) and the mildest median drawdown (-34.76%). Block bootstrap deliberately scrambles the
+          multi-month trends that leverage needs to compound, so timed leverage pays the volatility drag without
+          capturing the run. Treat this as a screening Monte Carlo, not the final production validation; finalists
+          still deserve a full 500+ path run like the Guarded A10/B20 SMA20 tab.
         </p>
       </section>
 
@@ -1328,18 +1331,18 @@
               <tr><th>Strategy</th><th>Group</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P(DD &lt; -40%)</th><th>P(CAGR &gt; 20%)</th><th>Median 3x</th></tr>
             </thead>
             <tbody>
-              <tr><td>Keltner trend channel</td><td>Long-hold</td><td>31.10%</td><td>15.53% / 49.19%</td><td>-34.44%</td><td>20.0%</td><td>80.0%</td><td>47.10%</td></tr>
-              <tr><td>SMA slope momentum</td><td>Daily trigger</td><td>23.27%</td><td>11.42% / 35.36%</td><td>-32.44%</td><td>18.7%</td><td>58.7%</td><td>25.36%</td></tr>
-              <tr><td>SMA stack momentum</td><td>Daily trigger</td><td>22.88%</td><td>11.58% / 37.21%</td><td>-29.82%</td><td>9.3%</td><td>64.0%</td><td>29.09%</td></tr>
-              <tr><td>Donchian breakout momentum</td><td>Daily trigger</td><td>20.29%</td><td>10.23% / 33.66%</td><td>-31.98%</td><td>16.0%</td><td>50.7%</td><td>31.23%</td></tr>
-              <tr><td>Vol-adjusted SMA stack</td><td>Daily trigger</td><td>18.27%</td><td>9.48% / 32.52%</td><td>-31.39%</td><td>6.7%</td><td>44.0%</td><td>27.18%</td></tr>
-              <tr><td>Long-hold 3/6/12m momentum</td><td>Long-hold</td><td>14.05%</td><td>2.89% / 29.40%</td><td>-50.54%</td><td>90.7%</td><td>36.0%</td><td>47.10%</td></tr>
-              <tr><td>SMA stack hysteresis</td><td>Long-hold</td><td>13.03%</td><td>4.21% / 25.49%</td><td>-47.86%</td><td>85.3%</td><td>29.3%</td><td>40.56%</td></tr>
-              <tr><td>ADX trend strength</td><td>Long-hold</td><td>11.24%</td><td>4.54% / 21.28%</td><td>-40.79%</td><td>52.0%</td><td>16.0%</td><td>35.79%</td></tr>
-              <tr><td>MACD momentum</td><td>Daily trigger</td><td>8.09%</td><td>2.09% / 15.23%</td><td>-36.14%</td><td>32.0%</td><td>0.0%</td><td>14.40%</td></tr>
-              <tr><td>Monthly momentum regime</td><td>Long-hold</td><td>6.13%</td><td>-2.48% / 19.62%</td><td>-65.47%</td><td>100.0%</td><td>8.0%</td><td>42.06%</td></tr>
-              <tr><td>RSI momentum</td><td>Daily trigger</td><td>1.90%</td><td>-5.26% / 11.74%</td><td>-58.55%</td><td>97.3%</td><td>0.0%</td><td>36.94%</td></tr>
-              <tr><td>Absolute momentum trailing stop</td><td>Long-hold</td><td>0.94%</td><td>-9.52% / 13.72%</td><td>-75.29%</td><td>100.0%</td><td>4.0%</td><td>47.14%</td></tr>
+              <tr><td>Monthly momentum regime</td><td>Long-hold</td><td>9.24%</td><td>-0.16% / 24.10%</td><td>-61.47%</td><td>98.7%</td><td>17.3%</td><td>41.39%</td></tr>
+              <tr><td>SMA stack hysteresis</td><td>Long-hold</td><td>7.82%</td><td>-1.97% / 18.92%</td><td>-59.72%</td><td>94.7%</td><td>8.0%</td><td>39.84%</td></tr>
+              <tr><td>Long-hold 3/6/12m momentum</td><td>Long-hold</td><td>6.91%</td><td>-2.04% / 20.33%</td><td>-62.39%</td><td>98.7%</td><td>12.0%</td><td>45.48%</td></tr>
+              <tr><td>SMA slope momentum</td><td>Daily trigger</td><td>6.41%</td><td>-0.87% / 16.02%</td><td>-51.41%</td><td>93.3%</td><td>5.3%</td><td>24.76%</td></tr>
+              <tr><td>Donchian breakout momentum</td><td>Daily trigger</td><td>5.89%</td><td>-0.87% / 17.24%</td><td>-53.62%</td><td>94.7%</td><td>5.3%</td><td>30.79%</td></tr>
+              <tr><td>ADX trend strength</td><td>Long-hold</td><td>5.67%</td><td>-1.14% / 17.43%</td><td>-55.91%</td><td>94.7%</td><td>6.7%</td><td>35.63%</td></tr>
+              <tr><td>Keltner trend channel</td><td>Long-hold</td><td>5.33%</td><td>-3.57% / 17.21%</td><td>-59.92%</td><td>100.0%</td><td>8.0%</td><td>47.22%</td></tr>
+              <tr><td>Vol-adjusted SMA stack</td><td>Daily trigger</td><td>4.65%</td><td>-1.13% / 15.31%</td><td>-49.88%</td><td>78.7%</td><td>2.7%</td><td>27.02%</td></tr>
+              <tr><td>SMA stack momentum</td><td>Daily trigger</td><td>4.59%</td><td>-2.05% / 16.03%</td><td>-53.65%</td><td>88.0%</td><td>4.0%</td><td>29.05%</td></tr>
+              <tr><td>MACD momentum</td><td>Daily trigger</td><td>4.43%</td><td>-2.33% / 12.90%</td><td>-50.15%</td><td>76.0%</td><td>1.3%</td><td>13.49%</td></tr>
+              <tr><td>Absolute momentum trailing stop</td><td>Long-hold</td><td>3.13%</td><td>-5.40% / 17.52%</td><td>-62.84%</td><td>97.3%</td><td>9.3%</td><td>44.52%</td></tr>
+              <tr><td>RSI momentum</td><td>Daily trigger</td><td>1.07%</td><td>-6.02% / 9.11%</td><td>-59.15%</td><td>100.0%</td><td>4.0%</td><td>36.98%</td></tr>
             </tbody>
           </table>
         </div>
@@ -1353,17 +1356,20 @@
               <tr><th>Reference</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P(DD &lt; -40%)</th><th>P(CAGR &gt; 20%)</th><th>Median 3x</th></tr>
             </thead>
             <tbody>
-              <tr><td>SMA20 3x/cash</td><td>39.69%</td><td>25.78% / 62.42%</td><td>-36.87%</td><td>33.3%</td><td>97.3%</td><td>61.15%</td></tr>
-              <tr><td>Guarded A10/B20 SMA20</td><td>29.85%</td><td>20.86% / 41.14%</td><td>-29.59%</td><td>12.0%</td><td>96.0%</td><td>21.39%</td></tr>
-              <tr><td>SMA20 2x/cash</td><td>29.79%</td><td>21.38% / 43.44%</td><td>-24.85%</td><td>2.7%</td><td>92.0%</td><td>0.00%</td></tr>
-              <tr><td>Buy &amp; hold 1x</td><td>14.28%</td><td>7.34% / 20.33%</td><td>-32.00%</td><td>16.0%</td><td>13.3%</td><td>0.00%</td></tr>
+              <tr><td>Buy &amp; hold 1x</td><td>13.29%</td><td>7.20% / 19.32%</td><td>-34.76%</td><td>28.0%</td><td>6.7%</td><td>0.00%</td></tr>
+              <tr><td>Guarded A10/B20 SMA20</td><td>4.52%</td><td>-5.58% / 13.23%</td><td>-56.64%</td><td>82.7%</td><td>4.0%</td><td>19.96%</td></tr>
+              <tr><td>SMA20 2x/cash</td><td>2.89%</td><td>-3.14% / 10.65%</td><td>-51.24%</td><td>84.0%</td><td>2.7%</td><td>0.00%</td></tr>
+              <tr><td>SMA20 3x/cash</td><td>-1.33%</td><td>-8.02% / 9.78%</td><td>-70.30%</td><td>100.0%</td><td>4.0%</td><td>60.04%</td></tr>
             </tbody>
           </table>
         </div>
         <p class="callout section-gap">
-          The Monte Carlo scan is more favorable to Keltner than the historical backtest, but it still shows a
-          meaningful drawdown profile. SMA stack momentum looks more balanced in simulation: lower median CAGR
-          than Keltner, but the lowest probability of a -40% drawdown among the momentum candidates.
+          Every leveraged reference is dragged below buy &amp; hold too: SMA20 2x/cash medians just 2.89% and SMA20
+          3x/cash actually loses ground (-1.33%) with a -70% typical drawdown. Among the candidates the least-bad
+          drawdown is Vol-adjusted SMA stack at -49.88%, still far worse than buy &amp; hold's -34.76%. The lesson is
+          not that these rules are broken but that a path-scrambling bootstrap is a hostile environment for
+          daily-reset leverage; the historical backtests, which keep real multi-month trends intact, remain the
+          primary evidence.
         </p>
       </section>
     </section>
