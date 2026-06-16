@@ -103,10 +103,12 @@
     "SMA20 1x/cash","SMA20 2x/cash","SMA20 3x/cash",
     "SMA200 1x/cash","SMA200 2x/cash","SMA200 3x/cash",
     "Guarded A5/B25","Guarded A10/B20",
-    "Guarded+ (200/2x/floor)","Mom 12m 2x/cash"];
+    "Guarded+ (200/2x/floor)","Mom 12m 2x/cash",
+    "SMA200 2x monthly","SMA200 2x 3% band","Golden 50/200 2x"];
   const TURNOVER = ["SMA20 1x/cash","SMA20 2x/cash","SMA20 3x/cash","Guarded A5/B25","Guarded A10/B20",
     "SMA200 2x/cash","Guarded+ (200/2x/floor)","Mom 12m 2x/cash"];
-  const IMPROVED = ["SMA200 2x/cash","Guarded+ (200/2x/floor)","Mom 12m 2x/cash"];
+  const IMPROVED = ["SMA200 2x/cash","Guarded+ (200/2x/floor)","Mom 12m 2x/cash",
+    "SMA200 2x monthly","SMA200 2x 3% band","Golden 50/200 2x"];
   const REGIMES = [
     { key: "real", label: "Real · ETP era" },
     { key: "synth_era", label: "Synthetic · same era" },
@@ -236,12 +238,13 @@
     }).join("");
 
     document.getElementById("methodFoot").innerHTML =
-      `<strong>Balance</strong> (0–100, Rank 1 = best) blends, min–max-normalised across the ten strategies: ` +
+      `<strong>Balance</strong> (0–100, Rank 1 = best) blends, min–max-normalised across the strategies shown: ` +
       `35% Calmar (return ÷ drawdown), 25% CAGR, 20% max drawdown, 15% Sortino, 5% Sharpe — rewarding return that isn't paid for in drawdown. ` +
       `Non-guarded = above SMA20 → full leverage, else cash. Guarded = 1× base, tiers to 2×/3× after drawdowns ` +
       `(A5/B25 = site default; A10/B20 = original). <strong>SMA200 2×/cash</strong> swaps the 20-day filter for a 200-day trend filter; ` +
       `<strong>Guarded+</strong> combines the 200-day filter, a 2× cap, asset-relative volatility de-levering (1× when 20-day vol > 1.2× the asset's own trailing-median vol), and a −25% drawdown floor. ` +
       `<strong>Mom 12m 2×</strong> holds 2× while price is above its level 12 months ago (time-series momentum), else cash. ` +
+      `<strong>SMA200 2× monthly</strong>, <strong>3% band</strong> (a ±3% dead-band around the 200-day SMA) and <strong>Golden 50/200 2×</strong> (50- vs 200-day SMA cross) are lower-turnover trend variants — they rebalance ~monthly or less, cutting the daily SMA200's whipsaw and, on S&amp;P / Nasdaq history, improving CAGR, drawdown and trades/yr together. ` +
       `Greyed rows are dominated by buy &amp; hold 1× over the shown window (lower CAGR and deeper drawdown). ` +
       `Headline cost 0.10%/rebalance; volatility / Sharpe / Sortino are pre-cost. ` +
       `CAGR and End $ include the $10/yr inflows. ` +
@@ -249,7 +252,7 @@
       `equal-weight and gold-3× have no same-calendar leveraged product, so those tiers use the synthetic model.`;
   }
 
-  fetch("summary_data.json?v=20260616c")
+  fetch("summary_data.json?v=20260616e")
     .then((res) => res.json())
     .then((d) => { DATA = d; asset = d.assets[0].key; render(); })
     .catch((e) => {

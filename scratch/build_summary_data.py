@@ -33,7 +33,8 @@ STRATS = ["Buy & hold 1x", "Buy & hold 2x", "Buy & hold 3x",
           "SMA20 1x/cash", "SMA20 2x/cash", "SMA20 3x/cash",
           "SMA200 1x/cash", "SMA200 2x/cash", "SMA200 3x/cash",
           "Guarded A5/B25", "Guarded A10/B20",
-          "Guarded+ (200/2x/floor)", "Mom 12m 2x/cash"]
+          "Guarded+ (200/2x/floor)", "Mom 12m 2x/cash",
+          "SMA200 2x monthly", "SMA200 2x 3% band", "Golden 50/200 2x"]
 # "Guarded+" strategies run through a -25% drawdown-floor engine (see eng(floor=True)).
 FLOOR = {"Guarded+ (200/2x/floor)"}
 ASSETS = [
@@ -114,7 +115,40 @@ def absmom_lev(prices, lookback=252, lev=2.0):
     out[c > c.shift(lookback)] = lev
     return out
 
+def golden_lev(prices, fast=50, slow=200, lev=2.0):
+    # Golden cross: 2x while the fast SMA is above the slow SMA, else cash. Crosses are
+    # rare (~1 trade/yr), sidestepping the daily SMA200 whipsaw; best Nasdaq all-rounder.
+    c = prices["spx_close"].astype(float)
+    f = c.rolling(fast, min_periods=fast).mean()
+    s = c.rolling(slow, min_periods=slow).mean()
+    out = pd.Series(0.0, index=prices.index)
+    out[f > s] = lev
+    return out
+
+def monthlyize(raw):
+    # Hold the leverage decided at the PRIOR month-end through the month (cuts whipsaw
+    # turnover ~5x vs daily). Lookahead-free: uses only completed-month signals.
+    per = raw.index.to_period("M")
+    last = raw.groupby(per).last().shift(1)
+    return pd.Series(per.map(last), index=raw.index).astype(float).fillna(0.0)
+
+def hysteresis_lev(prices, window=200, lev=2.0, band=0.03):
+    # SMA200 with a +/-3% dead-band: 2x only above SMA*1.03, cash only below SMA*0.97, hold
+    # in between. Ignores minor dips around the line -> far fewer false exits/re-entries.
+    c = prices["spx_close"].astype(float)
+    s = c.rolling(window, min_periods=window).mean()
+    out = pd.Series(np.nan, index=prices.index)
+    out[c > s * (1 + band)] = lev
+    out[c < s * (1 - band)] = 0.0
+    return out.ffill().fillna(0.0)
+
 def lev_for(name, prices):
+    if name == "SMA200 2x monthly":
+        return monthlyize(sma_cash_leverage(prices, 200, 2.0))
+    if name == "SMA200 2x 3% band":
+        return hysteresis_lev(prices, 200, 2.0, 0.03)
+    if name == "Golden 50/200 2x":
+        return golden_lev(prices, 50, 200, 2.0)
     if name.startswith("Buy & hold"):
         return pd.Series(float(name.split()[3][0]), index=prices.index)
     if name.startswith("SMA200"):
