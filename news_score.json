@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-06-16T17:30:08Z",
+  "generated_at_utc": "2026-06-16T22:47:47Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st; Stock Market Today: Dow Hits A High, Nasdaq Lags; SpaceX Surges, Aerospace Play Breaks Out (Live Coverage). Bearish offsets: Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - 6abc Philadelphia; Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune.",
+  "score": 8,
+  "label": "Bullish",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg; US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st. Bearish offsets: Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - 6abc Philadelphia.",
   "articles": [
+    {
+      "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg",
+      "source": "Bloomberg",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQUGQyNjFqZGxoR2pXc28xbWU2a3FWZTVHeXF4MmJ6SlJOTmk4SEpKOVN5R192SG8zNmxCd0plSF9tMWVRcmtpdlUxU3RfOFcxU0h1MTlMZHlQNzhhZHBLaWY1TUE1ZVFKYWZaU3BTdWFhLUpYNWs1Nkw5TmUxOXY4OTdxbEpIN253SnBRMDdKNXJ2VTRHRThXYmVwY0xtZlNQQ05iTExkckxSa3lCUEFoZnlGT3A?oc=5",
+      "published": "2026-06-15T22:06:05Z",
+      "tone": "bullish"
+    },
     {
       "title": "US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st",
       "source": "simplywall.st",
@@ -13,17 +20,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today: Dow Hits A High, Nasdaq Lags; SpaceX Surges, Aerospace Play Breaks Out (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/a39710f6-3f72-3c33-b9c3-5edc7ed2c5f4/stock-market-today%3A-dow-hits.html?.tsrc=rss",
-      "published": "2026-06-16T16:18:41Z",
+      "title": "Stock market rebounds as chip stocks gain, S&P 500 rises 0.4% - eciks.org",
+      "source": "eciks.org",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBsVEEzbjRUcGxDUkhfcmZSVjRVZ2s3ZTdCLWVBR1NBMUNHb1gyS2ljWEFNX2FieE9QTnk4S1ZMUEV5VVhXRzZjaHhCNXZmeWJlVjRhOUdpLUNLbXlkdkxPYXZUQzA2UU9WZXdkOFJsZ21JWnM4?oc=5",
+      "published": "2026-06-11T18:48:58Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall Street Today: DJIA Hits Record as Iran Peace Deal and Fresh SpaceX Gains Spark Broad Rally - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPZ2c0TUg3VTZ1RDhtdXpMSmNPZnE3Wl9CeFdCQzI1eTZMVkdGNTFkNzU1cEpqY1hUT0s0ZDhoMnZGTkhPcy00X2g1clBoMjNmcTJ0TVhIdWFLckNIUElsWXRqUzA4VWg3UVpPd0N3ZmNBVUVmWEt5Nm0xX0ZreXNuUnN1Mk4zRTRuenZ3UmpIcUtGMFN2X2FwbEpSNGM3ckVnMk5JeG5lZVpvQQ?oc=5",
-      "published": "2026-06-15T07:00:00Z",
+      "title": "Wall Street Closes Higher: S&P 500, Nasdaq, Dow Jones Rally - CryptoRank",
+      "source": "CryptoRank",
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFB2Ylp3bE82X0hGM1o1T0k5azNXcjg4bGtLM1F2ZGdSZFZIRmlEOUVCRkhlai1CeXhNU1l0cHl0NTVKWDlIZkwtWVljV3N1TmxVeXYtenVzaS1uajMwdDRZWkhQVE1SUFhYQ2UwcTR6ZndSUHhFVk13?oc=5",
+      "published": "2026-06-11T07:00:00Z",
       "tone": "bullish"
     },
     {
@@ -31,13 +38,6 @@
       "source": "6abc Philadelphia",
       "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTFBRS2l2MWk2cTJlYm9iRlFWQVJXeWNCaVZfT0RhdHBVV0JKU1prcnhGUkZyaDJhTnlmRVItb01KMNIBswFBVV95cUxPUEZNX0FheHdzQWlDVk8wNkJKcVBoYm9nU18yeEk0SFVJOGpfVDg4SXBoV1VUUEE5ODYxQkMyamxoNTYyUlF6dEw0SVpzMnNXci05NkwyeDhCOWJWRjl2WlFLSzJQY1E0VnZxUUNhQmVSd3ZCMzBEWndVQmV5V2J4SmtJV0ZGOWhjd1h6MFVRVG9ucUZfcU5ZZ09HWEwzbHI5VFNhWElUSDhod3pzblBBUkpyMA?oc=5",
       "published": "2026-06-15T15:28:08Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street indexes fall more than 1 percent, hit by tech, Iran war worries - Jefferson City News Tribune",
-      "source": "Jefferson City News Tribune",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNQlU3ektlYVNvdFdHZHVQcHN5VkFfeHZmLWcwdkhwdDhnLUllaVB1aE5GNzR2akhkMUNZNnJWUVItRl9oZ0xkNTNMWElySllERUlRczRUOEduZHFKMEFHMlIxU3FyVktqV09qaWZ1NW1WanhJU1RNUDJKbFlXV0NJZUxkVWtic3pZd0VEMFFuREUyUlU4LVBGV0JB?oc=5",
-      "published": "2026-06-11T08:55:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 94
       }
     ],
-    "headline_count": 142,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
