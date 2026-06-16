@@ -84,10 +84,10 @@
     <div class="tbl-wrap">
       <table id="mainTable"><thead id="mainHead"></thead><tbody id="mainRows"></tbody></table>
     </div>
-    <div class="sub">Trading-cost sensitivity &nbsp;·&nbsp; CAGR / max drawdown</div>
+    <div class="sub">Trading-cost sensitivity &nbsp;·&nbsp; CAGR / max drawdown &nbsp;·&nbsp; the bold <strong>Realistic 0.10%</strong> column is the same CAGR shown in the table above; Gross 0% and Conservative 1% bracket the best / worst execution cost.</div>
     <div class="tbl-wrap">
       <table id="costTable">
-        <thead><tr><th class="l">Turnover strategy</th><th>Gross 0%</th><th>Realistic 0.10%</th><th>Conservative 1%</th></tr></thead>
+        <thead><tr><th class="l">Turnover strategy</th><th>Gross 0%</th><th>Realistic 0.10%<br><span style="font-weight:400;opacity:.7;">= headline CAGR</span></th><th>Conservative 1%</th></tr></thead>
         <tbody id="costRows"></tbody>
       </table>
     </div>
@@ -231,7 +231,7 @@
       const m = r.rows[s];
       return `<tr><td class="l">${s}</td>
         <td class="num">${pct(m.cagr_g)} / ${sgn(m.dd_g)}</td>
-        <td class="num">${pct(m.cagr_r)} / ${sgn(m.dd_r)}</td>
+        <td class="num"><strong>${pct(m.cagr_r)}</strong> / ${sgn(m.dd_r)}</td>
         <td class="num">${pct(m.cagr_x)} / ${sgn(m.dd_x)}</td></tr>`;
     }).join("");
 
