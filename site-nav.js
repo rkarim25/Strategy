@@ -98,6 +98,13 @@
       href: "gold_guarded.html#signalPage",
     },
     {
+      id: "summary",
+      asset: "Summary results",
+      strategy: "Cross-asset backtests",
+      group: "tools",
+      href: "summary.html",
+    },
+    {
       id: "momentum",
       asset: "Research",
       strategy: "Momentum strategy",
@@ -112,14 +119,6 @@
       strategy: "Instruments",
       group: "tools",
       href: "instruments.html",
-      secondary: true,
-    },
-    {
-      id: "allocator",
-      asset: "Optimizer",
-      strategy: "Asset allocator",
-      group: "tools",
-      href: "https://rkarim25.github.io/holdings/",
       secondary: true,
     },
   ];
@@ -216,6 +215,30 @@
     return "spx";
   }
 
+  const SECTION_PAGES = {
+    guarded: { signal: "signalPage", backtest: "backtestPage", monteCarlo: "monteCarloPage" },
+    momentum: {
+      signal: "momentumSignalPage",
+      backtest: "momentumBacktestPage",
+      monteCarlo: "momentumMonteCarloPage",
+    },
+  };
+
+  /** Section (signal/backtest/monteCarlo) a page id belongs to, ignoring strategy. */
+  function sectionOf(pageId) {
+    let p = pageId || "signalPage";
+    if (p.startsWith("momentum")) p = p.slice("momentum".length);
+    p = p.charAt(0).toLowerCase() + p.slice(1);
+    if (p === "backtestPage") return "backtest";
+    if (p === "monteCarloPage") return "monteCarlo";
+    return "signal";
+  }
+
+  function pageForStrategy(strategy, section) {
+    const pages = SECTION_PAGES[strategy] || SECTION_PAGES.guarded;
+    return pages[section] || pages.signal;
+  }
+
   function hrefForItem(item, loc = location) {
     const page = currentPageFile(loc);
     const onIndex = page === "index.html";
@@ -224,16 +247,17 @@
     const raw = onIndex && item.indexHref ? item.indexHref : item.href;
     const [file] = String(raw).split("#");
 
-    const targetHash =
-      item.id === "instruments" || item.id === "allocator"
-        ? ""
-        : item.id === "momentum"
-          ? currentPageId && currentPageId.startsWith("momentum")
-            ? currentPageId
-            : "momentumSignalPage"
-          : PAGE_IDS.has(currentPageId)
-            ? currentPageId
-            : "signalPage";
+    // Switch strategy but keep the current section. Previously guarded links
+    // reused the raw current page id, so clicking e.g. "S&P 500" from a momentum
+    // page pointed back at #momentumSignalPage instead of the guarded #signalPage.
+    let targetHash;
+    if (item.id === "instruments" || item.id === "summary") {
+      targetHash = "";
+    } else if (item.id === "momentum") {
+      targetHash = pageForStrategy("momentum", sectionOf(currentPageId));
+    } else {
+      targetHash = pageForStrategy("guarded", sectionOf(currentPageId));
+    }
 
     if (!file) return `#${targetHash}`;
     return targetHash ? `${file}#${targetHash}` : file;

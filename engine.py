@@ -21,8 +21,11 @@ VIX_3X_SPREAD_BUMP = 0.002
 INITIAL_CAPITAL = 100.0
 ANNUAL_CASH_INFLOW_PCT = 0.10
 DEFAULT_MAX_DRAWDOWN = 0.20
-# 1% of traded notional from mid on each leverage rebalance
-TRADING_COST_FROM_MID_PCT = 0.01
+# 0.10% of traded notional from mid on each leverage rebalance. Realistic-to-conservative
+# for liquid ETPs (real half-spreads on SPY/SSO/UPRO are ~0.01-0.05%); the prior 0.01 (1%)
+# was ~20-50x reality and silently destroyed high-turnover strategies (~28 trades/yr) over
+# long windows — it only looked survivable when paired with calendar-inflated UCITS returns.
+TRADING_COST_FROM_MID_PCT = 0.001
 # ~1 trading week (Mon–Fri)
 DEFAULT_DD_PAUSE_TRADING_DAYS = 5
 

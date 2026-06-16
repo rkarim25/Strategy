@@ -46,20 +46,26 @@ class EtpBundle:
     etf_1x_fallback: str | None = None  # longer history before primary 1x lists
 
 
+# Same-calendar US-listed leveraged ETPs: the signal index (^GSPC / ^NDX) and the P&L ETP
+# share a trading calendar. The UCITS XS2D.L / 3USL.L (LSE) and LQQ.PA / LQQ3.L (Paris)
+# were dropped from the daily-timed backtest because their Yahoo daily returns are
+# calendar-offset vs the US index (corr ~0.57, ratio ~1.2x): long-run totals match but a
+# daily-timed strategy gets badly inflated. UK / II investors implement the same
+# daily-leveraged exposure via XS2D.L (2x) / 3USL.L (3x) and LQQ.PA (2x) / LQQ3.L (3x).
 SPX_ETP = EtpBundle(
     name="S&P 500",
     etf_1x="SPY",
     etf_1x_fallback=None,
-    etf_2x="XS2D.L",
-    etf_3x="3USL.L",
+    etf_2x="SSO",
+    etf_3x="UPRO",
 )
 
 NDX_ETP = EtpBundle(
     name="Nasdaq 100",
     etf_1x="QQQ",
     etf_1x_fallback=None,
-    etf_2x="LQQ.PA",
-    etf_3x="LQQ3.L",
+    etf_2x="QLD",
+    etf_3x="TQQQ",
 )
 
 
@@ -109,7 +115,11 @@ def synthetic_daily_reset_return(
     """
     Approximate daily-reset levered ETP before listed history exists.
 
-    Includes VIX-linked borrow (when vix provided), convexity vol drag, and TER.
+    Daily return = leverage * index_return - VIX-linked borrow - TER. Compounding these
+    daily returns already produces the volatility drag/boost, so NO separate vol-drag term
+    is subtracted: doing so double-counts it and makes the model far too pessimistic. A
+    clean daily-reset 2x compound matches listed SSO/XS2D (~19x over 2012-26); the corrected
+    model tracks real same-calendar ETPs within ~2%/yr.
     """
     if leverage <= 0.0:
         return tbill_rate / TRADING_DAYS
@@ -118,10 +128,9 @@ def synthetic_daily_reset_return(
         return index_return - ter
 
     borrow = funding_cost_daily(leverage, tbill_rate, vix=vix)
-    vol_drag = 0.5 * leverage * (leverage - 1.0) * index_return * index_return
     tier = 3 if leverage >= 2.5 else 2
     ter = TER_ANNUAL[tier] / TRADING_DAYS
-    return leverage * index_return - borrow - vol_drag - ter
+    return leverage * index_return - borrow - ter
 
 
 def _tier_column(leverage: float) -> str:
