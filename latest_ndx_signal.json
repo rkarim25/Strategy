@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-06-17T17:51:23Z",
+  "generated_at_utc": "2026-06-17T22:29:27Z",
   "data_asof": "2026-06-17",
-  "daily_rows": 7549,
-  "quote_price": 30089.60546875,
+  "daily_rows": 7548,
+  "quote_price": 29670.947265625,
   "quote_timestamp": "2026-06-17",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,65 +30,66 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-17",
-      "close": 30089.60546875
+      "close": 29670.947265625
     },
-    "latestSma": 29823.5126953125,
+    "latestSma": 29802.57978515625,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.018623058514824598,
+    "latestDd": -0.03227765785269887,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
     "recoveryTarget": null,
-    "aboveSma": true,
+    "aboveSma": false,
     "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 30543.919921875,
-    "activeEntryDate": "2026-06-15",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": -0.01487413712080965,
-    "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "No recovery tier active; base rule says cash because close is below SMA20."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-06-17",
-      "close": 30089.60546875
+      "close": 29670.947265625
     },
-    "latestSma": 29863.1080078125,
+    "latestSma": 29821.2421875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.018623058514824598,
+    "latestDd": -0.03227765785269887,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
     "recoveryTarget": null,
-    "aboveSma": true,
+    "aboveSma": false,
     "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 30543.919921875,
-    "activeEntryDate": "2026-06-15",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": -0.01487413712080965,
-    "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "No recovery tier active; base rule says cash because close is below SMA20."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-06-17",
-    "last_observed_target_leverage": 1,
-    "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-17T17:51:23Z",
-    "last_email_sent_on": "2026-06-16",
+    "last_observed_target_leverage": 0,
+    "last_observed_target_label": "cash",
+    "last_checked_at_utc": "2026-06-17T22:29:27Z",
+    "last_email_sent_on": "2026-06-17",
+    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
-      "id": "2026-06-12:0->2026-06-16:1",
-      "detected_at_utc": "2026-06-16T17:30:05Z",
-      "previous_asof": "2026-06-12",
-      "current_asof": "2026-06-16",
-      "old_target_leverage": 0,
-      "new_target_leverage": 1,
-      "old_target_label": "cash",
-      "new_target_label": "1x",
-      "email_sent": false,
+      "id": "2026-06-17:1->2026-06-17:0",
+      "detected_at_utc": "2026-06-17T22:29:27Z",
+      "previous_asof": "2026-06-17",
+      "current_asof": "2026-06-17",
+      "old_target_leverage": 1,
+      "new_target_leverage": 0,
+      "old_target_label": "1x",
+      "new_target_label": "cash",
+      "email_sent": true,
       "email_error": null,
-      "email_skipped_reason": "Signal changed (cash -> 1x) but an alert email was already sent today (2026-06-16 UK)."
+      "email_skipped_reason": null
     }
   }
 }

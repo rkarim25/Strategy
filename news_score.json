@@ -1,27 +1,20 @@
 {
-  "generated_at_utc": "2026-06-17T17:51:27Z",
+  "generated_at_utc": "2026-06-17T22:29:31Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: SpaceX stock sinks 5%, losing momentum after a multiday rally; Friedman Industries Stock Gains Post Q4 Earnings, Sales Surge. Bearish offsets: Is CHWY Stock a Buy After Its Selloff and Lower Revenue View.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: SpaceX posts first losing day as stock sinks 5%, losing momentum after a multiday rally; S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com. Bearish offsets: China\u2019s Brutal Auto Price War Claims Its Biggest Victim Yet: BMW.",
   "articles": [
     {
-      "title": "SpaceX stock sinks 5%, losing momentum after a multiday rally",
+      "title": "SpaceX posts first losing day as stock sinks 5%, losing momentum after a multiday rally",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/17/spacex-stock-elon-musk-market-cap.html",
-      "published": "2026-06-17T14:55:46Z",
+      "published": "2026-06-17T20:10:12Z",
       "tone": "bullish"
     },
     {
-      "title": "Friedman Industries Stock Gains Post Q4 Earnings, Sales Surge",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/friedman-industries-stock-gains-post-152100102.html?.tsrc=rss",
-      "published": "2026-06-17T15:21:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg",
-      "source": "Bloomberg",
+      "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQUGQyNjFqZGxoR2pXc28xbWU2a3FWZTVHeXF4MmJ6SlJOTmk4SEpKOVN5R192SG8zNmxCd0plSF9tMWVRcmtpdlUxU3RfOFcxU0h1MTlMZHlQNzhhZHBLaWY1TUE1ZVFKYWZaU3BTdWFhLUpYNWs1Nkw5TmUxOXY4OTdxbEpIN253SnBRMDdKNXJ2VTRHRThXYmVwY0xtZlNQQ05iTExkckxSa3lCUEFoZnlGT3A?oc=5",
       "published": "2026-06-15T22:06:05Z",
       "tone": "bullish"
@@ -34,10 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Is CHWY Stock a Buy After Its Selloff and Lower Revenue View",
+      "title": "Wall Street Closes Higher: S&P 500, Nasdaq, Dow Jones Rally - CryptoRank",
+      "source": "CryptoRank",
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFB2Ylp3bE82X0hGM1o1T0k5azNXcjg4bGtLM1F2ZGdSZFZIRmlEOUVCRkhlai1CeXhNU1l0cHl0NTVKWDlIZkwtWVljV3N1TmxVeXYtenVzaS1uajMwdDRZWkhQVE1SUFhYQ2UwcTR6ZndSUHhFVk13?oc=5",
+      "published": "2026-06-11T07:00:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "China\u2019s Brutal Auto Price War Claims Its Biggest Victim Yet: BMW",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/chwy-stock-buy-selloff-lower-151000400.html?.tsrc=rss",
-      "published": "2026-06-17T15:10:00Z",
+      "url": "https://finance.yahoo.com/m/bc0f2aa4-01b2-383e-a160-3e1c024f4ac7/china%E2%80%99s-brutal-auto-price-war.html?.tsrc=rss",
+      "published": "2026-06-17T20:18:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 98
       }
     ],
-    "headline_count": 145,
+    "headline_count": 148,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
