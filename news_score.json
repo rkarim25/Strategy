@@ -1,20 +1,13 @@
 {
-  "generated_at_utc": "2026-06-16T23:22:28Z",
+  "generated_at_utc": "2026-06-17T11:43:04Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq and S&P 500 slip while Dow hits record high; S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com; US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st. Bearish offsets: Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - 6abc Philadelphia; Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters.",
   "articles": [
     {
-      "title": "Nasdaq and S&P 500 slip while Dow hits record high",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/nasdaq-p-500-slip-while-225342405.html?.tsrc=rss",
-      "published": "2026-06-16T22:53:42Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg",
-      "source": "Bloomberg",
+      "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQUGQyNjFqZGxoR2pXc28xbWU2a3FWZTVHeXF4MmJ6SlJOTmk4SEpKOVN5R192SG8zNmxCd0plSF9tMWVRcmtpdlUxU3RfOFcxU0h1MTlMZHlQNzhhZHBLaWY1TUE1ZVFKYWZaU3BTdWFhLUpYNWs1Nkw5TmUxOXY4OTdxbEpIN253SnBRMDdKNXJ2VTRHRThXYmVwY0xtZlNQQ05iTExkckxSa3lCUEFoZnlGT3A?oc=5",
       "published": "2026-06-15T22:06:05Z",
       "tone": "bullish"
@@ -27,18 +20,25 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock market rebounds as chip stocks gain, S&P 500 rises 0.4% - eciks.org",
-      "source": "eciks.org",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBsVEEzbjRUcGxDUkhfcmZSVjRVZ2s3ZTdCLWVBR1NBMUNHb1gyS2ljWEFNX2FieE9QTnk4S1ZMUEV5VVhXRzZjaHhCNXZmeWJlVjRhOUdpLUNLbXlkdkxPYXZUQzA2UU9WZXdkOFJsZ21JWnM4?oc=5",
-      "published": "2026-06-11T18:48:58Z",
+      "title": "Dow Jones Futures: Techs Rebound, SpaceX Rises Despite Trump's Iran Threat; Warsh's Fed Debut Due",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/8db20d3f-802e-3d8a-9772-1c97be3d346b/dow-jones-futures%3A-techs.html?.tsrc=rss",
+      "published": "2026-06-17T11:34:35Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall Street Closes Higher: S&P 500, Nasdaq, Dow Jones Rally - CryptoRank",
-      "source": "CryptoRank",
-      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFB2Ylp3bE82X0hGM1o1T0k5azNXcjg4bGtLM1F2ZGdSZFZIRmlEOUVCRkhlai1CeXhNU1l0cHl0NTVKWDlIZkwtWVljV3N1TmxVeXYtenVzaS1uajMwdDRZWkhQVE1SUFhYQ2UwcTR6ZndSUHhFVk13?oc=5",
-      "published": "2026-06-11T07:00:00Z",
-      "tone": "bullish"
+      "title": "Stocks leap worldwide, and oil prices drop after the US and Iran reach a tentative deal on their war - 6abc Philadelphia",
+      "source": "6abc Philadelphia",
+      "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTFBRS2l2MWk2cTJlYm9iRlFWQVJXeWNCaVZfT0RhdHBVV0JKU1prcnhGUkZyaDJhTnlmRVItb01KMNIBswFBVV95cUxPUEZNX0FheHdzQWlDVk8wNkJKcVBoYm9nU18yeEk0SFVJOGpfVDg4SXBoV1VUUEE5ODYxQkMyamxoNTYyUlF6dEw0SVpzMnNXci05NkwyeDhCOWJWRjl2WlFLSzJQY1E0VnZxUUNhQmVSd3ZCMzBEWndVQmV5V2J4SmtJV0ZGOWhjd1h6MFVRVG9ucUZfcU5ZZ09HWEwzbHI5VFNhWElUSDhod3pzblBBUkpyMA?oc=5",
+      "published": "2026-06-15T15:28:08Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street indexes fall more than 1%, hit by tech, Iran war worries - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQUxUT1NqQm1KUFlpbmdjN0VuSm4wU2VIODFBNF81YU54bFBsWUptZVV0bU41ZXl0MHQxWE1UamxBaHlkUWhvWUY3MHFJZVJhYmJKdDZtMlkyLWlEbjdpOXZubnJLZFlZREdyOVhfMU5QM1l0ZGNoQnpIdHlYVjFVSHU2eXI3WGk3ek9aNXR4ZUJaQmp3dzF2dUxybmhWczI1ZEt3M1hCVmdNdmQ2bDJ3R3NOTkhzUVlRVE52WjF4cw?oc=5",
+      "published": "2026-06-10T22:58:16Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 95
       }
     ],
-    "headline_count": 143,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
