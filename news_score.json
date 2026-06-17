@@ -1,15 +1,29 @@
 {
-  "generated_at_utc": "2026-06-17T22:29:31Z",
+  "generated_at_utc": "2026-06-17T23:21:24Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: SpaceX posts first losing day as stock sinks 5%, losing momentum after a multiday rally; S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com. Bearish offsets: China\u2019s Brutal Auto Price War Claims Its Biggest Victim Yet: BMW.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: SpaceX posts first losing day as stock sinks 5%, losing momentum after a multiday rally; Stock Market Today, June 17: Robinhood Jumps After Announcing 10% Workforce Reduction, Record June Volumes. Bearish offsets: Wall Street closes lower on Fed rate hike bets.",
   "articles": [
+    {
+      "title": "Wall Street closes lower on Fed rate hike bets",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/wall-street-closes-lower-fed-222319794.html?.tsrc=rss",
+      "published": "2026-06-17T22:23:19Z",
+      "tone": "bearish"
+    },
     {
       "title": "SpaceX posts first losing day as stock sinks 5%, losing momentum after a multiday rally",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/17/spacex-stock-elon-musk-market-cap.html",
       "published": "2026-06-17T20:10:12Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Market Today, June 17: Robinhood Jumps After Announcing 10% Workforce Reduction, Record June Volumes",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/06/17/stock-market-today-june-17-robinhood-jumps-after-announcing-10-workforce-reduction-record-june-volumes/?.tsrc=rss",
+      "published": "2026-06-17T23:00:11Z",
       "tone": "bullish"
     },
     {
@@ -25,20 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNkw5Y1hfMmw4WFZrSTZQWHVnTDU1VHd5YzVpNHljS2VTQ0tsRWxTeGhlcVJWUDBqaTR0OWNSSFNSOC1OdU5KRTc1Q2VUNW1MdHVxWlRYYnVKYm1iRFpFVG04QjY2VmFfU2lHT2E4dXJpandMUEZfb2IxOVMyeVFKWl8wUEFja0Fia1Y5UWlPMG9GWUQ2ZEYwemJYWjZHWWFCLVZZbEFfTkFfd0NHMUdoSjVWM0RrR3VMZlHSAb8BQVVfeXFMUEs3WVFhNGExMGlubjNXTUltTXVYNHJmYXg3ekIxTDl1T25qNldjZlRMeGpqZjRTZ0NlcmxuVXlOckpPNmd1VFBLS1JabVg0cEN5M3RYNXVKcHluQnd4LVItdC1NU0k5MFNGWEtzaFFzMW5yTzNLU1VSSC00T0wwTV9vS2JuZ0xXSVlCS0Z4Q2kxOWNTR0QtNzhwMG5WQ05oWUVWcVFjZFBKWHhsQ1lkMGpMSElUc1UxYmpmd2VhYWM?oc=5",
       "published": "2026-06-16T08:34:27Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Wall Street Closes Higher: S&P 500, Nasdaq, Dow Jones Rally - CryptoRank",
-      "source": "CryptoRank",
-      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFB2Ylp3bE82X0hGM1o1T0k5azNXcjg4bGtLM1F2ZGdSZFZIRmlEOUVCRkhlai1CeXhNU1l0cHl0NTVKWDlIZkwtWVljV3N1TmxVeXYtenVzaS1uajMwdDRZWkhQVE1SUFhYQ2UwcTR6ZndSUHhFVk13?oc=5",
-      "published": "2026-06-11T07:00:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "China\u2019s Brutal Auto Price War Claims Its Biggest Victim Yet: BMW",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/bc0f2aa4-01b2-383e-a160-3e1c024f4ac7/china%E2%80%99s-brutal-auto-price-war.html?.tsrc=rss",
-      "published": "2026-06-17T20:18:00Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
