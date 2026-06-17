@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-17T15:00:11Z",
+  "generated_at_utc": "2026-06-17T17:51:27Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: SpaceX stock sinks 5%, losing momentum after a multiday rally; Micron Stock Is Gaining Again Because That\u2019s Just What It Does. Bearish offsets: BMW stock slumps to 5-year low as Iran war and China slowdown spark profit warning.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: SpaceX stock sinks 5%, losing momentum after a multiday rally; Friedman Industries Stock Gains Post Q4 Earnings, Sales Surge. Bearish offsets: Is CHWY Stock a Buy After Its Selloff and Lower Revenue View.",
   "articles": [
     {
       "title": "SpaceX stock sinks 5%, losing momentum after a multiday rally",
@@ -13,18 +13,11 @@
       "tone": "bullish"
     },
     {
-      "title": "Micron Stock Is Gaining Again Because That\u2019s Just What It Does",
+      "title": "Friedman Industries Stock Gains Post Q4 Earnings, Sales Surge",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/a8733257-bb1e-321a-9841-1af64affaff7/micron-stock-is-gaining-again.html?.tsrc=rss",
-      "published": "2026-06-17T13:56:00Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/friedman-industries-stock-gains-post-152100102.html?.tsrc=rss",
+      "published": "2026-06-17T15:21:00Z",
       "tone": "bullish"
-    },
-    {
-      "title": "BMW stock slumps to 5-year low as Iran war and China slowdown spark profit warning",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/17/bmw-profit-warning-autos-cars-china-iran.html",
-      "published": "2026-06-17T11:53:11Z",
-      "tone": "bearish"
     },
     {
       "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg",
@@ -39,6 +32,13 @@
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNkw5Y1hfMmw4WFZrSTZQWHVnTDU1VHd5YzVpNHljS2VTQ0tsRWxTeGhlcVJWUDBqaTR0OWNSSFNSOC1OdU5KRTc1Q2VUNW1MdHVxWlRYYnVKYm1iRFpFVG04QjY2VmFfU2lHT2E4dXJpandMUEZfb2IxOVMyeVFKWl8wUEFja0Fia1Y5UWlPMG9GWUQ2ZEYwemJYWjZHWWFCLVZZbEFfTkFfd0NHMUdoSjVWM0RrR3VMZlHSAb8BQVVfeXFMUEs3WVFhNGExMGlubjNXTUltTXVYNHJmYXg3ekIxTDl1T25qNldjZlRMeGpqZjRTZ0NlcmxuVXlOckpPNmd1VFBLS1JabVg0cEN5M3RYNXVKcHluQnd4LVItdC1NU0k5MFNGWEtzaFFzMW5yTzNLU1VSSC00T0wwTV9vS2JuZ0xXSVlCS0Z4Q2kxOWNTR0QtNzhwMG5WQ05oWUVWcVFjZFBKWHhsQ1lkMGpMSElUc1UxYmpmd2VhYWM?oc=5",
       "published": "2026-06-16T08:34:27Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Is CHWY Stock a Buy After Its Selloff and Lower Revenue View",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/chwy-stock-buy-selloff-lower-151000400.html?.tsrc=rss",
+      "published": "2026-06-17T15:10:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 95
       }
     ],
-    "headline_count": 146,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
