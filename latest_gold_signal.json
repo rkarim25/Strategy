@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-17T11:43:02Z",
+  "generated_at_utc": "2026-06-17T15:00:07Z",
   "data_asof": "2026-06-17",
   "daily_rows": 6473,
   "quote_price": null,
@@ -7,7 +7,7 @@
   "quote_source": null,
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1781782982&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1781794807&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,30 +31,45 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-17",
-      "close": 4346.10009765625
+      "close": 4365.7001953125
     },
-    "latestSma": 4391.404992675782,
+    "latestSma": 4392.384997558594,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.18281810742720195,
+    "latestDd": -0.17913277010467143,
     "regime": "tier2",
     "entryClose": 4087.699951171875,
     "entryDate": "2025-10-21",
     "recoveryTarget": 5722.779931640624,
     "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
+    "recoveryOk": true,
+    "targetLeverage": 1,
+    "activeEntryClose": 4365.7001953125,
+    "activeEntryDate": "2026-06-17",
+    "activeEntryLeverage": 1,
+    "activeEntryPnl": 0.0,
+    "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
   },
   "provisional_signal": null,
   "trade_alert_state": {
     "last_observed_asof": "2026-06-17",
-    "last_observed_target_leverage": 0,
-    "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-17T11:43:02Z"
+    "last_observed_target_leverage": 1,
+    "last_observed_target_label": "1x",
+    "last_checked_at_utc": "2026-06-17T15:00:07Z",
+    "last_email_sent_on": "2026-06-17",
+    "last_email_sent_timezone": "Europe/London",
+    "last_transition": {
+      "id": "2026-06-17:0->2026-06-17:1",
+      "detected_at_utc": "2026-06-17T15:00:07Z",
+      "previous_asof": "2026-06-17",
+      "current_asof": "2026-06-17",
+      "old_target_leverage": 0,
+      "new_target_leverage": 1,
+      "old_target_label": "cash",
+      "new_target_label": "1x",
+      "email_sent": true,
+      "email_error": null,
+      "email_skipped_reason": null
+    }
   }
 }
