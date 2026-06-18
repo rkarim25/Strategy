@@ -1,31 +1,10 @@
 {
-  "generated_at_utc": "2026-06-17T23:21:24Z",
+  "generated_at_utc": "2026-06-18T11:06:27Z",
   "window_days": 7,
-  "score": 8,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: SpaceX posts first losing day as stock sinks 5%, losing momentum after a multiday rally; Stock Market Today, June 17: Robinhood Jumps After Announcing 10% Workforce Reduction, Record June Volumes. Bearish offsets: Wall Street closes lower on Fed rate hike bets.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com; US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st. Bearish offsets: Stocks leap worldwide, and oil prices drop after the U.S. and Iran reach a tentative deal on their war - BNN Bloomberg.",
   "articles": [
-    {
-      "title": "Wall Street closes lower on Fed rate hike bets",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/wall-street-closes-lower-fed-222319794.html?.tsrc=rss",
-      "published": "2026-06-17T22:23:19Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "SpaceX posts first losing day as stock sinks 5%, losing momentum after a multiday rally",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/17/spacex-stock-elon-musk-market-cap.html",
-      "published": "2026-06-17T20:10:12Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today, June 17: Robinhood Jumps After Announcing 10% Workforce Reduction, Record June Volumes",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/06/17/stock-market-today-june-17-robinhood-jumps-after-announcing-10-workforce-reduction-record-june-volumes/?.tsrc=rss",
-      "published": "2026-06-17T23:00:11Z",
-      "tone": "bullish"
-    },
     {
       "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com",
       "source": "Bloomberg.com",
@@ -36,8 +15,29 @@
     {
       "title": "US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st",
       "source": "simplywall.st",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNkw5Y1hfMmw4WFZrSTZQWHVnTDU1VHd5YzVpNHljS2VTQ0tsRWxTeGhlcVJWUDBqaTR0OWNSSFNSOC1OdU5KRTc1Q2VUNW1MdHVxWlRYYnVKYm1iRFpFVG04QjY2VmFfU2lHT2E4dXJpandMUEZfb2IxOVMyeVFKWl8wUEFja0Fia1Y5UWlPMG9GWUQ2ZEYwemJYWjZHWWFCLVZZbEFfTkFfd0NHMUdoSjVWM0RrR3VMZlHSAb8BQVVfeXFMUEs3WVFhNGExMGlubjNXTUltTXVYNHJmYXg3ekIxTDl1T25qNldjZlRMeGpqZjRTZ0NlcmxuVXlOckpPNmd1VFBLS1JabVg0cEN5M3RYNXVKcHluQnd4LVItdC1NU0k5MFNGWEtzaFFzMW5yTzNLU1VSSC00T0wwTV9vS2JuZ0xXSVlCS0Z4Q2kxOWNTR0QtNzhwMG5WQ05oWUVWcVFjZFBKWHhsQ1lkMGpMSElUc1UxYmpmd2VhYWM?oc=5",
-      "published": "2026-06-16T08:34:27Z",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPMWdweVhVY1VhWE4tSlZ1SmprQU1IS2ZDX29KbXcyRkdBQV9fbExOaG1pMTZELWFEZUtxMTYzYWtDeWpDSVM5Q2EyVXZ4Wk56ckNaS3lFcVliOVZnMGFXMUVOX2FYQldBelJtU0E4eVhHN2ZkYk9xWFFFMlEzcXg0OA?oc=5",
+      "published": "2026-06-16T08:36:33Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street Opens Higher as Tech Stocks Lead Broad Rally - CryptoRank",
+      "source": "CryptoRank",
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBaZzVtSkNHazFRaDAwbWdtMDFnQjFwdTVta0JKT1AtTEl3Z2lpd0gzWXJOUFNXNzQ3OGVkSERlb0U4QnVfTHYwM3I3VFZNYld3Rlpsd3MyX1FKRVBUVnVwb1ZoeEpTSjhNTkdQT19US3IyTXVxU19neWpB?oc=5",
+      "published": "2026-06-15T15:53:12Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stocks leap worldwide, and oil prices drop after the U.S. and Iran reach a tentative deal on their war - BNN Bloomberg",
+      "source": "BNN Bloomberg",
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQMmY5VHlFWm5qYVVTZHRHOWozM1VBc0dLS3FCS2ZQZUdEN0ZfdmFMM0tlaFpoS1dfWnFDd0t2dUpxMnZxYmNfWlFsbGliUkk2V25LTzBTZ3NCU0NheHZyUEM3VDVaZUF5cHAxNlgtVmZ6MFB0eFowMFhKc2RDQjBBN19TckdYck1xejA3RDJjN2o3bGd2NVlYVmZpbWVpc2RtMVludjVDeVU3ZmJtbzZlSnRNR29yTTliQjNyMm9maTdWazBNWnEyX0djVm8yTFVMakRobGpfTDNwMXhQT1I1Qg?oc=5",
+      "published": "2026-06-15T20:10:44Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Equity Funding Squeeze Driven By AI Rally, SpaceX IPO Stretches Banks - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPLTFsYWxpVmpJQUJ3RlQ0UWtlNEpPVGJPYmNGcmxTS2NST3hSVmxONnlURENBQW9ZNmRIN2JRS2tEQjRvNzBHM3FHM1p1SnA3VWx6VEJlVDV0VTg4c015MkZVTUprOWFUY3YxNVNoc01CSUl2ZTNNUTZDM01mbjgya1FSV1pHZXVLSERMTkRCYzBIMWs5UmJ3akRfQVN3T1VVR0wyYXY5NVJuY0NRVWUzVllVaHhkVjRhVTh5dw?oc=5",
+      "published": "2026-06-14T14:00:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 98
+        "articles": 96
       }
     ],
-    "headline_count": 148,
+    "headline_count": 146,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
