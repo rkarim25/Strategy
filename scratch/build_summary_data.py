@@ -45,6 +45,13 @@ ASSETS = [
     dict(key="rut", label="Russell 2000", idx="^RUT", t={1: "IWM", 2: "UWM", 3: "TNA"}, real={1, 2, 3}),
     dict(key="gold", label="Gold", idx="GLD", t={1: "GLD", 2: "UGL", 3: None}, real={1, 2}),
     dict(key="tlt", label="20Y+ Treasuries", idx="TLT", t={1: "TLT", 2: "UBT", 3: "TMF"}, real={1, 2, 3}),
+    # International equity classes (no same-calendar leveraged ETP -> 1x is the index/tracker,
+    # 2x/3x synthetic, like spxew). DAX (^GDAXI) is a TOTAL-RETURN index; ^FTMC/EEM/SWDA.L are
+    # price/NAV -> compare STRATEGIES within an asset, not raw CAGR across assets (see footnote).
+    dict(key="ftse250", label="FTSE 250", idx="^FTMC", t={1: "^FTMC", 2: None, 3: None}, real={1}),
+    dict(key="dax", label="DAX (TR)", idx="^GDAXI", t={1: "^GDAXI", 2: None, 3: None}, real={1}),
+    dict(key="msci_em", label="MSCI EM", idx="EEM", t={1: "EEM", 2: None, 3: None}, real={1}),
+    dict(key="msci_world", label="MSCI World", idx="SWDA.L", t={1: "SWDA.L", 2: None, 3: None}, real={1}),
 ]
 
 _C: dict[str, pd.Series] = {}

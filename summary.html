@@ -69,10 +69,13 @@
   <nav class="site-nav" aria-label="Strategies"></nav>
 
   <h1>Summary results</h1>
-  <p class="lede">SMA20 guarded and non-guarded strategies versus buy &amp; hold across six asset classes, on
+  <p class="lede">SMA20 guarded and non-guarded strategies versus buy &amp; hold across ten asset classes — US indices, gold,
+    Treasuries and international equity (FTSE 250, DAX, MSCI EM/World) — on
     <strong>real same-calendar listed-ETP returns</strong> where a leveraged product exists, plus the synthetic
     daily-reset model for the same window and for the long history. $100 start, $10/year inflow, 0.10% trading cost,
-    signals lagged one day. Click any column header to sort; <strong>Balance</strong> ranks each strategy on return vs drawdown.
+    signals lagged one day. Strategies are grouped by <strong>maximum leverage</strong> into <strong>1×, 2× and 3×</strong> panels —
+    variable-leverage strategies (guarded tiers, vol-guards) sit in their highest tier; <strong>Balance</strong> and rank (#) stay global across all tiers,
+    so the panels remain comparable. Click any column header to sort every panel.
     Improvers that beat buy &amp; hold (<strong>SMA200 2×/cash</strong>, <strong>Guarded+</strong>, <strong>Mom 12m 2×</strong>) are highlighted;
     strategies <strong>dominated by buy &amp; hold 1×</strong> (lower CAGR <em>and</em> deeper drawdown) are greyed out.</p>
 
@@ -81,10 +84,12 @@
     <div class="toolbar" id="regimeBar" style="margin-top:10px;"><span class="lab">Data</span></div>
     <div class="meta" id="periodLine"></div>
     <div id="bannerSlot"></div>
-    <div class="tbl-wrap">
-      <table id="mainTable"><thead id="mainHead"></thead><tbody id="mainRows"></tbody></table>
-    </div>
-    <div class="sub">Trading-cost sensitivity &nbsp;·&nbsp; CAGR / max drawdown &nbsp;·&nbsp; the bold <strong>Realistic 0.10%</strong> column is the same CAGR shown in the table above; Gross 0% and Conservative 1% bracket the best / worst execution cost.</div>
+  </div>
+
+  <div id="panels"></div>
+
+  <div class="card">
+    <div class="sub" style="margin-top:0;">Trading-cost sensitivity &nbsp;·&nbsp; CAGR / max drawdown &nbsp;·&nbsp; the bold <strong>Realistic 0.10%</strong> column is the same CAGR shown in the tables above; Gross 0% and Conservative 1% bracket the best / worst execution cost.</div>
     <div class="tbl-wrap">
       <table id="costTable">
         <thead><tr><th class="l">Turnover strategy</th><th>Gross 0%</th><th>Realistic 0.10%<br><span style="font-weight:400;opacity:.7;">= headline CAGR</span></th><th>Conservative 1%</th></tr></thead>
@@ -111,6 +116,17 @@
   const IMPROVED = ["SMA200 2x/cash","Guarded+ (200/2x/floor)","Mom 12m 2x/cash",
     "SMA200 2x monthly","SMA200 2x 3% band","Golden 50/200 2x",
     "Golden 2x volguard","Golden 3x volguard"];
+  // Panels grouped by MAXIMUM leverage. Balance/rank stay global (computed across all STRATS);
+  // these only group the display. Variable-leverage strategies (guarded tiers ramp 1×→3× after
+  // drawdowns; vol-guards de-lever on volatility) sit in their highest tier.
+  const GROUPS = [
+    { label: "1× · unleveraged", desc: "Full index exposure when invested, cash when out — the reference tier.",
+      strats: ["Buy & hold 1x", "SMA20 1x/cash", "SMA200 1x/cash"] },
+    { label: "2× · up to double leverage", desc: "Fixed 2× when invested (else cash), plus strategies capped or de-levered at 2× — Guarded+ and the 2× vol-guard ease off when volatility spikes.",
+      strats: ["Buy & hold 2x", "SMA20 2x/cash", "SMA200 2x/cash", "Mom 12m 2x/cash", "SMA200 2x monthly", "SMA200 2x 3% band", "Golden 50/200 2x", "Guarded+ (200/2x/floor)", "Golden 2x volguard"] },
+    { label: "3× · up to triple leverage", desc: "Fixed 3× when invested (else cash), plus strategies that reach 3× — the Guarded tiers ramp up after drawdowns; the 3× vol-guard de-levers on volatility. Highest return, deepest drawdowns.",
+      strats: ["Buy & hold 3x", "SMA20 3x/cash", "SMA200 3x/cash", "Guarded A5/B25", "Guarded A10/B20", "Golden 3x volguard"] },
+  ];
   const REGIMES = [
     { key: "real", label: "Real · ETP era" },
     { key: "synth_era", label: "Synthetic · same era" },
@@ -185,15 +201,28 @@
   function renderTable(data) {
     const col = COLS.find((c) => c.key === sort.key) || COLS[2];
     const dir = sort.dir === "asc" ? 1 : -1;
-    const sorted = [...data].sort((a, b) => {
-      const va = col.val(a), vb = col.val(b);
-      return (typeof va === "string" ? va.localeCompare(vb) : va - vb) * dir;
-    });
-    document.getElementById("mainHead").innerHTML = "<tr>" + COLS.map((c) => {
+    const byName = Object.fromEntries(data.map((d) => [d.s, d]));
+    const headHtml = "<tr>" + COLS.map((c) => {
       const ind = c.key === sort.key ? ` <span class="ind">${sort.dir === "asc" ? "▲" : "▼"}</span>` : "";
       return `<th class="${c.left ? "l" : ""}" data-k="${c.key}">${c.label}${ind}</th>`;
     }).join("") + "</tr>";
-    document.querySelectorAll("#mainHead th").forEach((th) => {
+    const cmp = (a, b) => {
+      const va = col.val(a), vb = col.val(b);
+      return (typeof va === "string" ? va.localeCompare(vb) : va - vb) * dir;
+    };
+    document.getElementById("panels").innerHTML = GROUPS.map((g) => {
+      const rows = g.strats.map((s) => byName[s]).filter(Boolean).sort(cmp);
+      const body = rows.map((d) => {
+        const ref = d.s.startsWith("Buy & hold"), dim = !d.beatsBH, hl = IMPROVED.includes(d.s) && !dim;
+        return `<tr class="${ref ? "ref" : ""}${hl ? " hl" : ""}${dim ? " dim" : ""}">` + COLS.map((c) => c.cell(d)).join("") + "</tr>";
+      }).join("");
+      return `<div class="card">
+        <div class="sub" style="margin-top:0;">${g.label}</div>
+        <div class="meta" style="margin:2px 0 8px;">${g.desc}</div>
+        <div class="tbl-wrap"><table><thead>${headHtml}</thead><tbody>${body}</tbody></table></div>
+      </div>`;
+    }).join("");
+    document.querySelectorAll("#panels th").forEach((th) => {
       th.onclick = () => {
         const k = th.dataset.k;
         if (sort.key === k) sort.dir = sort.dir === "asc" ? "desc" : "asc";
@@ -201,10 +230,6 @@
         renderTable(data);
       };
     });
-    document.getElementById("mainRows").innerHTML = sorted.map((d) => {
-      const ref = d.s.startsWith("Buy & hold"), dim = !d.beatsBH, hl = IMPROVED.includes(d.s) && !dim;
-      return `<tr class="${ref ? "ref" : ""}${hl ? " hl" : ""}${dim ? " dim" : ""}">` + COLS.map((c) => c.cell(d)).join("") + "</tr>";
-    }).join("");
   }
 
   function render() {
@@ -225,7 +250,7 @@
     const banner = document.getElementById("bannerSlot");
     banner.innerHTML = "";
     if (regime === "real" && !a.real_lev)
-      banner.innerHTML = `<div class="banner">No same-calendar real leveraged equal-weight ETP exists — 1× is real (${a.tickers["1x"]}); 2×/3× use the synthetic model, so "Real" and "Synthetic · same era" are identical here.</div>`;
+      banner.innerHTML = `<div class="banner">No same-calendar real leveraged ETP exists for ${a.label} — 1× is the actual ${a.tickers["1x"]} series; 2×/3× use the synthetic model, so "Real" and "Synthetic · same era" are identical here.</div>`;
     else if (regime === "synth_era")
       banner.innerHTML = `<div class="banner" style="color:var(--muted);background:rgba(0,0,0,.03);border-color:var(--line);">Synthetic model over the same window as the real ETPs — it now tracks the listed products within ~2%/yr, which validates the model used for the long history.</div>`;
 
@@ -252,10 +277,11 @@
       `Headline cost 0.10%/rebalance; volatility / Sharpe / Sortino are pre-cost. ` +
       `CAGR and End $ include the $10/yr inflows. ` +
       `Real ETPs are same-calendar US-listed (S&P SPY/SSO/UPRO, Nasdaq QQQ/QLD/TQQQ, Russell IWM/UWM/TNA, Gold GLD/UGL, Treasuries TLT/UBT/TMF); ` +
-      `equal-weight and gold-3× have no same-calendar leveraged product, so those tiers use the synthetic model.`;
+      `equal-weight, gold-3× and the international classes (FTSE 250, DAX, MSCI EM, MSCI World) have no same-calendar leveraged product, so those tiers use the synthetic model. ` +
+      `Data basis differs across the international classes — DAX (^GDAXI) is a total-return index whereas FTSE 250 (^FTMC) is price-return and MSCI EM/World are NAV — so compare strategies <em>within</em> an asset, not raw CAGR <em>across</em> assets.`;
   }
 
-  fetch("summary_data.json?v=20260616f")
+  fetch("summary_data.json?v=20260616intl")
     .then((res) => res.json())
     .then((d) => { DATA = d; asset = d.assets[0].key; render(); })
     .catch((e) => {
