@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-06-18T14:28:05Z",
+  "generated_at_utc": "2026-06-18T17:41:58Z",
   "data_asof": "2026-06-18",
   "daily_rows": 7549,
-  "quote_price": 30234.712890625,
+  "quote_price": 30400.947265625,
   "quote_timestamp": "2026-06-18",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-18",
-      "close": 30234.712890625
+      "close": 30400.947265625
     },
-    "latestSma": 29849.43056640625,
+    "latestSma": 29857.74228515625,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.013890358446211781,
+    "latestDd": -0.008468599670523269,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -43,7 +43,7 @@
     "aboveSma": true,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 30234.712890625,
+    "activeEntryClose": 30400.947265625,
     "activeEntryDate": "2026-06-18",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
@@ -52,12 +52,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-06-18",
-      "close": 30234.712890625
+      "close": 30400.947265625
     },
-    "latestSma": 29893.302734375,
+    "latestSma": 29909.926171875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.013890358446211781,
+    "latestDd": -0.008468599670523269,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -65,7 +65,7 @@
     "aboveSma": true,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 30234.712890625,
+    "activeEntryClose": 30400.947265625,
     "activeEntryDate": "2026-06-18",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
@@ -75,9 +75,8 @@
     "last_observed_asof": "2026-06-18",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-18T14:28:05Z",
+    "last_checked_at_utc": "2026-06-18T17:41:58Z",
     "last_email_sent_on": "2026-06-18",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
       "id": "2026-06-17:0->2026-06-18:1",
       "detected_at_utc": "2026-06-18T14:28:05Z",

@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-06-18T14:28:09Z",
+  "generated_at_utc": "2026-06-18T17:42:01Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com; US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st. Bearish offsets: Stocks leap worldwide, and oil prices drop after the U.S. and Iran reach a tentative deal on their war - BNN Bloomberg.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Why Apple Price Hikes Are Sending Micron Stock Toward a Record High; S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com. Bearish offsets: Wall Street closes lower on Fed rate hike bets - The Detroit News.",
   "articles": [
+    {
+      "title": "Why Apple Price Hikes Are Sending Micron Stock Toward a Record High",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/bfd3ae6b-568f-388f-815e-4fff5bae1c46/why-apple-price-hikes-are.html?.tsrc=rss",
+      "published": "2026-06-18T16:33:00Z",
+      "tone": "bullish"
+    },
     {
       "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com",
       "source": "Bloomberg.com",
@@ -20,25 +27,18 @@
       "tone": "bullish"
     },
     {
-      "title": "Intel gains 7% after Trump says company will partner with Apple on U.S. chip design",
+      "title": "Intel gains 10% after Trump says company will partner with Apple on U.S. chip design",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/18/trump-intel-apple-chip-design-deal.html",
-      "published": "2026-06-18T14:19:36Z",
+      "published": "2026-06-18T16:51:44Z",
       "tone": "bullish"
     },
     {
-      "title": "Stocks leap worldwide, and oil prices drop after the U.S. and Iran reach a tentative deal on their war - BNN Bloomberg",
-      "source": "BNN Bloomberg",
-      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQMmY5VHlFWm5qYVVTZHRHOWozM1VBc0dLS3FCS2ZQZUdEN0ZfdmFMM0tlaFpoS1dfWnFDd0t2dUpxMnZxYmNfWlFsbGliUkk2V25LTzBTZ3NCU0NheHZyUEM3VDVaZUF5cHAxNlgtVmZ6MFB0eFowMFhKc2RDQjBBN19TckdYck1xejA3RDJjN2o3bGd2NVlYVmZpbWVpc2RtMVludjVDeVU3ZmJtbzZlSnRNR29yTTliQjNyMm9maTdWazBNWnEyX0djVm8yTFVMakRobGpfTDNwMXhQT1I1Qg?oc=5",
-      "published": "2026-06-15T20:10:44Z",
+      "title": "Wall Street closes lower on Fed rate hike bets - The Detroit News",
+      "source": "The Detroit News",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPZmd3cjUyUThCbzBJOEZPeXZrY0w1X3NWX01zWlRLLTVnczJpMXhBRk5LR0FEOXMxR1hyNXZaMlc4SkROZUJiRnFucjV0YWRzWlpDUHBONDdZQ2l6YmhYU2pCMWF2WURCejdOUDdEQVJqTE9rRnR6TDh1THZiM3FZdDg1OEVRTHNvLWRZcHQyTzhGUUVPNnItQUpYcHdaWEJVcmRWME9nNEJ4RnozMDBXeGJaTjBzX3JmRnk2WDlRQ21hYjQxV2Vzb21QS0c0NDA?oc=5",
+      "published": "2026-06-17T20:33:00Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Equity Funding Squeeze Driven By AI Rally, SpaceX IPO Stretches Banks - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPLTFsYWxpVmpJQUJ3RlQ0UWtlNEpPVGJPYmNGcmxTS2NST3hSVmxONnlURENBQW9ZNmRIN2JRS2tEQjRvNzBHM3FHM1p1SnA3VWx6VEJlVDV0VTg4c015MkZVTUprOWFUY3YxNVNoc01CSUl2ZTNNUTZDM01mbjgya1FSV1pHZXVLSERMTkRCYzBIMWs5UmJ3akRfQVN3T1VVR0wyYXY5NVJuY0NRVWUzVllVaHhkVjRhVTh5dw?oc=5",
-      "published": "2026-06-14T14:00:00Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 97
+        "articles": 93
       }
     ],
-    "headline_count": 147,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
