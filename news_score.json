@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-18T11:06:27Z",
+  "generated_at_utc": "2026-06-18T14:28:09Z",
   "window_days": 7,
-  "score": 9,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com; US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st. Bearish offsets: Stocks leap worldwide, and oil prices drop after the U.S. and Iran reach a tentative deal on their war - BNN Bloomberg.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com; US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st. Bearish offsets: Stocks leap worldwide, and oil prices drop after the U.S. and Iran reach a tentative deal on their war - BNN Bloomberg.",
   "articles": [
     {
       "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com",
@@ -20,10 +20,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street Opens Higher as Tech Stocks Lead Broad Rally - CryptoRank",
-      "source": "CryptoRank",
-      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBaZzVtSkNHazFRaDAwbWdtMDFnQjFwdTVta0JKT1AtTEl3Z2lpd0gzWXJOUFNXNzQ3OGVkSERlb0U4QnVfTHYwM3I3VFZNYld3Rlpsd3MyX1FKRVBUVnVwb1ZoeEpTSjhNTkdQT19US3IyTXVxU19neWpB?oc=5",
-      "published": "2026-06-15T15:53:12Z",
+      "title": "Intel gains 7% after Trump says company will partner with Apple on U.S. chip design",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/18/trump-intel-apple-chip-design-deal.html",
+      "published": "2026-06-18T14:19:36Z",
       "tone": "bullish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 97
       }
     ],
-    "headline_count": 146,
+    "headline_count": 147,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
