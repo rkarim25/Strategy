@@ -1,22 +1,22 @@
 {
-  "generated_at_utc": "2026-06-18T17:42:01Z",
+  "generated_at_utc": "2026-06-18T22:51:56Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Why Apple Price Hikes Are Sending Micron Stock Toward a Record High; S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com. Bearish offsets: Wall Street closes lower on Fed rate hike bets - The Detroit News.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg; Stock Market Today, June 18: AMC Rallies After Record May Attendance Drives Trading Momentum. Bearish offsets: Wall Street closes lower on Fed rate hike bets - The Detroit News.",
   "articles": [
     {
-      "title": "Why Apple Price Hikes Are Sending Micron Stock Toward a Record High",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/bfd3ae6b-568f-388f-815e-4fff5bae1c46/why-apple-price-hikes-are.html?.tsrc=rss",
-      "published": "2026-06-18T16:33:00Z",
+      "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg",
+      "source": "Bloomberg",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQUGQyNjFqZGxoR2pXc28xbWU2a3FWZTVHeXF4MmJ6SlJOTmk4SEpKOVN5R192SG8zNmxCd0plSF9tMWVRcmtpdlUxU3RfOFcxU0h1MTlMZHlQNzhhZHBLaWY1TUE1ZVFKYWZaU3BTdWFhLUpYNWs1Nkw5TmUxOXY4OTdxbEpIN253SnBRMDdKNXJ2VTRHRThXYmVwY0xtZlNQQ05iTExkckxSa3lCUEFoZnlGT3A?oc=5",
+      "published": "2026-06-15T22:06:05Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQUGQyNjFqZGxoR2pXc28xbWU2a3FWZTVHeXF4MmJ6SlJOTmk4SEpKOVN5R192SG8zNmxCd0plSF9tMWVRcmtpdlUxU3RfOFcxU0h1MTlMZHlQNzhhZHBLaWY1TUE1ZVFKYWZaU3BTdWFhLUpYNWs1Nkw5TmUxOXY4OTdxbEpIN253SnBRMDdKNXJ2VTRHRThXYmVwY0xtZlNQQ05iTExkckxSa3lCUEFoZnlGT3A?oc=5",
-      "published": "2026-06-15T22:06:05Z",
+      "title": "Stock Market Today, June 18: AMC Rallies After Record May Attendance Drives Trading Momentum",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/06/18/stock-market-today-june-18-amc-rallies-after-record-may-attendance-drives-trading-momentum/?.tsrc=rss",
+      "published": "2026-06-18T21:24:14Z",
       "tone": "bullish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 94
       }
     ],
-    "headline_count": 143,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
