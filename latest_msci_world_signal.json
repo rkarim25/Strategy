@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-19T16:56:35Z",
+  "generated_at_utc": "2026-06-19T21:57:58Z",
   "data_asof": "2026-06-19",
-  "daily_rows": 4177,
+  "daily_rows": 4178,
   "quote_price": 10823.0,
   "quote_timestamp": "2026-06-19",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L?period1=0&period2=1781974595&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L?period1=0&period2=1781992678&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -28,7 +28,7 @@
       "date": "2026-06-19",
       "close": 10823.0
     },
-    "latestSma": 10639.9,
+    "latestSma": 10654.95,
     "highWater": 10823.0,
     "highWaterDate": "2026-06-19",
     "latestDd": 0.0,
@@ -50,7 +50,7 @@
       "date": "2026-06-19",
       "close": 10823.0
     },
-    "latestSma": 10655.65,
+    "latestSma": 10666.0,
     "highWater": 10823.0,
     "highWaterDate": "2026-06-19",
     "latestDd": 0.0,
@@ -71,7 +71,7 @@
     "last_observed_asof": "2026-06-19",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-19T16:56:35Z",
+    "last_checked_at_utc": "2026-06-19T21:57:58Z",
     "last_email_sent_on": "2026-06-15",
     "last_transition": {
       "id": "2026-06-11:0->2026-06-15:1",
