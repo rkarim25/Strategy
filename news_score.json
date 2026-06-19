@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-19T21:57:59Z",
+  "generated_at_utc": "2026-06-19T22:54:13Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
@@ -20,6 +20,13 @@
       "tone": "bullish"
     },
     {
+      "title": "US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st",
+      "source": "simplywall.st",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNkw5Y1hfMmw4WFZrSTZQWHVnTDU1VHd5YzVpNHljS2VTQ0tsRWxTeGhlcVJWUDBqaTR0OWNSSFNSOC1OdU5KRTc1Q2VUNW1MdHVxWlRYYnVKYm1iRFpFVG04QjY2VmFfU2lHT2E4dXJpandMUEZfb2IxOVMyeVFKWl8wUEFja0Fia1Y5UWlPMG9GWUQ2ZEYwemJYWjZHWWFCLVZZbEFfTkFfd0NHMUdoSjVWM0RrR3VMZlHSAb8BQVVfeXFMUEs3WVFhNGExMGlubjNXTUltTXVYNHJmYXg3ekIxTDl1T25qNldjZlRMeGpqZjRTZ0NlcmxuVXlOckpPNmd1VFBLS1JabVg0cEN5M3RYNXVKcHluQnd4LVItdC1NU0k5MFNGWEtzaFFzMW5yTzNLU1VSSC00T0wwTV9vS2JuZ0xXSVlCS0Z4Q2kxOWNTR0QtNzhwMG5WQ05oWUVWcVFjZFBKWHhsQ1lkMGpMSElUc1UxYmpmd2VhYWM?oc=5",
+      "published": "2026-06-16T08:34:27Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Wall Street closes lower on Fed rate hike bets - The Detroit News",
       "source": "The Detroit News",
       "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPZmd3cjUyUThCbzBJOEZPeXZrY0w1X3NWX01zWlRLLTVnczJpMXhBRk5LR0FEOXMxR1hyNXZaMlc4SkROZUJiRnFucjV0YWRzWlpDUHBONDdZQ2l6YmhYU2pCMWF2WURCejdOUDdEQVJqTE9rRnR6TDh1THZiM3FZdDg1OEVRTHNvLWRZcHQyTzhGUUVPNnItQUpYcHdaWEJVcmRWME9nNEJ4RnozMDBXeGJaTjBzX3JmRnk2WDlRQ21hYjQxV2Vzb21QS0c0NDA?oc=5",
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQMmY5VHlFWm5qYVVTZHRHOWozM1VBc0dLS3FCS2ZQZUdEN0ZfdmFMM0tlaFpoS1dfWnFDd0t2dUpxMnZxYmNfWlFsbGliUkk2V25LTzBTZ3NCU0NheHZyUEM3VDVaZUF5cHAxNlgtVmZ6MFB0eFowMFhKc2RDQjBBN19TckdYck1xejA3RDJjN2o3bGd2NVlYVmZpbWVpc2RtMVludjVDeVU3ZmJtbzZlSnRNR29yTTliQjNyMm9maTdWazBNWnEyX0djVm8yTFVMakRobGpfTDNwMXhQT1I1Qg?oc=5",
       "published": "2026-06-15T20:10:44Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Equity Funding Squeeze Driven By AI Rally, SpaceX IPO Stretches Banks - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPLTFsYWxpVmpJQUJ3RlQ0UWtlNEpPVGJPYmNGcmxTS2NST3hSVmxONnlURENBQW9ZNmRIN2JRS2tEQjRvNzBHM3FHM1p1SnA3VWx6VEJlVDV0VTg4c015MkZVTUprOWFUY3YxNVNoc01CSUl2ZTNNUTZDM01mbjgya1FSV1pHZXVLSERMTkRCYzBIMWs5UmJ3akRfQVN3T1VVR0wyYXY5NVJuY0NRVWUzVllVaHhkVjRhVTh5dw?oc=5",
-      "published": "2026-06-14T14:00:00Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 97
+        "articles": 99
       }
     ],
-    "headline_count": 147,
+    "headline_count": 149,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
