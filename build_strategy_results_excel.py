@@ -64,10 +64,10 @@ SUMMARY_COLS = [
 # ── Number format mapping ─────────────────────────────────────────────────
 # (column_name, openpyxl number_format)
 NUMBER_FORMATS = {
-    'CAGR_pct':        '0.00%',
-    'Vol_pct':         '0.00%',
-    'MaxDD_pct':       '0.00%',
-    'Pct_Cash_Time':   '0.00%',
+    'CAGR_pct':        '0.00',
+    'Vol_pct':         '0.00',
+    'MaxDD_pct':       '0.00',
+    'Pct_Cash_Time':   '0.00',
     'Sharpe':          '0.000',
     'Sortino':         '0.000',
     'Calmar':          '0.000',
@@ -77,9 +77,9 @@ NUMBER_FORMATS = {
     'Total_Trades':    '0',
     'Years':           '0.0',
     'Leverage_Max':    '0.0',
-    'BH_1x_CAGR':      '0.00%',
-    'BH_1x_MaxDD':     '0.00%',
-    'Best_Water_CAGR': '0.00%',
+    'BH_1x_CAGR':      '0.00',
+    'BH_1x_MaxDD':     '0.00',
+    'Best_Water_CAGR': '0.00',
     'Best_Octane_Calmar': '0.000',
 }
 
