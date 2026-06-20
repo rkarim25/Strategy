@@ -249,6 +249,7 @@
   function sectionOf(pageId) {
     let p = pageId || "signalPage";
     if (p.startsWith("momentum")) p = p.slice("momentum".length);
+    if (p.startsWith("spx3x")) p = p.slice("spx3x".length);
     p = p.charAt(0).toLowerCase() + p.slice(1);
     if (p === "backtestPage") return "backtest";
     if (p === "monteCarloPage") return "monteCarlo";
@@ -276,6 +277,8 @@
       targetHash = "";
     } else if (item.id === "momentum") {
       targetHash = pageForStrategy("momentum", sectionOf(currentPageId));
+    } else if (item.id === "spx3xLevered") {
+      targetHash = pageForStrategy("spx3x", sectionOf(currentPageId));
     } else {
       targetHash = pageForStrategy("guarded", sectionOf(currentPageId));
     }

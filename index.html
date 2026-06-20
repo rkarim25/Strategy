@@ -1749,6 +1749,49 @@
   const STATIC_ETP_URL = "spx_etp_returns.json";
   const STATIC_SPX3X_SITE_DATA_URL = "spx_3x_levered_site_data.json";
   const STATIC_SPX3X_ETP_URL = "spx_3x_levered_etp_returns.json";
+  let STATIC_SPX3X_ETP_DATA = null;
+
+  /** Separate ETP leverage instance for SPX 3x levered ETP return series. */
+  const EtpLeverageSpx3x = {
+    data: null,
+    dateToIndex: null,
+
+    async load(url) {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error(`ETP returns ${url}: HTTP ${response.status}`);
+      const data = await response.json();
+      const map = new Map();
+      (data.dates || []).forEach((d, i) => map.set(d, i));
+      this.data = data;
+      this.dateToIndex = map;
+      return data;
+    },
+
+    dailyReturn(leverage, indexRet, cashRate, dateIso) {
+      if (leverage <= 0) return cashRate / 252;
+      let vix = null;
+      if (this.data && this.dateToIndex && dateIso) {
+        const idx = this.dateToIndex.get(dateIso);
+        if (idx != null) {
+          const col = leverage <= 0 ? "ret_0" : leverage < 1.5 ? "ret_1" : leverage < 2.5 ? "ret_2" : "ret_3";
+          const v = this.data[col]?.[idx];
+          if (Number.isFinite(v)) return v;
+          const vixVal = this.data.vix?.[idx];
+          if (Number.isFinite(vixVal)) vix = vixVal;
+        }
+      }
+      // Fallback synthetic (inline for independence from EtpLeverage global)
+      if (leverage <= 0) return cashRate / 252;
+      if (leverage <= 1) return indexRet - 0.003 / 252;
+      const spread = vix != null && Number.isFinite(Number(vix))
+        ? Math.min(0.006 + Math.max(0, (Number(vix) - 15) / 10) * 0.003 + (leverage >= 2.5 ? 0.002 : 0), 0.026)
+        : 0.006;
+      const borrow = ((leverage - 1) * (cashRate + spread)) / 252;
+      const volDrag = 0.5 * leverage * (leverage - 1) * indexRet * indexRet;
+      const ter = (leverage >= 2.5 ? 0.009 : 0.006) / 252;
+      return leverage * indexRet - borrow - volDrag - ter;
+    },
+  };
   const AUTO_REFRESH_MS = 30 * 60 * 1000;
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
@@ -1993,6 +2036,12 @@
         await EtpLeverage.load(STATIC_ETP_URL);
       } catch (etpErr) {
         console.warn("ETP return series not loaded; using synthetic 2x/3x fallback.", etpErr);
+      }
+      try {
+        await EtpLeverageSpx3x.load(STATIC_SPX3X_ETP_URL);
+        STATIC_SPX3X_ETP_DATA = EtpLeverageSpx3x.data;
+      } catch (etpErr) {
+        console.warn("SPX 3x ETP return series not loaded; using synthetic 2x/3x fallback.", etpErr);
       }
       const { text: csv } = await fetchTextWithDiagnostics(STATIC_DAILY_URL, "Static historical back-test data");
       const rows = parseCsv(csv);
@@ -2334,7 +2383,8 @@
   async function getLivePrice(options = {}) {
     const { allowManualOverride = true } = options;
     if (allowManualOverride) {
-      const manual = Number($("manualIntradayPrice").value);
+      const isSpx3x = SiteNav.activeNavId() === "spx3xLevered";
+      const manual = Number($(isSpx3x ? "spx3xManualIntradayPrice" : "manualIntradayPrice").value);
       if (Number.isFinite(manual) && manual > 0) {
         return { price: manual, source: "manual override" };
       }
@@ -4153,7 +4203,7 @@
         if (lev <= 0) {
           ret = dailyCash;
         } else {
-          ret = EtpLeverage.dailyReturn(lev, spxRet, spec.cashRate, rows[i].date);
+          ret = EtpLeverageSpx3x.dailyReturn(lev, spxRet, spec.cashRate, rows[i].date);
         }
         aum *= 1 + ret;
       }
@@ -4643,7 +4693,7 @@
       const spxReturn = point.close / prevPoint.close - 1;
       const dailyReturn = lev <= 0
         ? dailyCash
-        : EtpLeverage.dailyReturn(lev, spxReturn, DEFAULT_SPX3X.cashRate, point.date);
+        : EtpLeverageSpx3x.dailyReturn(lev, spxReturn, DEFAULT_SPX3X.cashRate, point.date);
       strategy *= 1 + dailyReturn;
       spx *= 1 + spxReturn;
       points.push({
