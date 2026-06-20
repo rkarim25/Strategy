@@ -18,6 +18,8 @@ MC_SUMMARY = ROOT / "output" / "guarded_balanced_candidate" / "guarded_balanced_
 MOMENTUM_CSV = ROOT / "output" / "momentum_leverage_strategies" / "momentum_leverage_results.csv"
 LONG_HOLD_CSV = ROOT / "output" / "long_hold_momentum_strategies" / "long_hold_momentum_results.csv"
 TIERED_CSV = ROOT / "output" / "guarded_tiered_sma20_50_200" / "guarded_tiered_sma20_50_200_results.csv"
+SPX3X_COMPARISON_CSV = ROOT / "output" / "spx_3x_levered" / "spx_3x_levered_comparison.csv"
+SPX3X_SITE = ROOT / "spx_3x_levered_site_data.json"
 
 
 def pct(x: float) -> str:
@@ -96,6 +98,50 @@ def row_momentum(r: pd.Series) -> str:
         f"<td>{_pct_days(r['pct_days_1x'])}</td>"
         f"<td>{_pct_days(r['pct_days_2x'])}</td>"
         f"<td>{_pct_days(r['pct_days_3x'])}</td></tr>"
+    )
+
+
+def row_ref_bench(r: pd.Series) -> str:
+    """Row formatter for the Reference Benchmarks table (Strategy, CAGR, Ann vol, Sharpe, Max DD, End value, Trades, Cash %, 3x %)."""
+    cash = r.get("pct_days_cash")
+    cash_s = _pct_days(cash) if pd.notna(cash) else "0.00%"
+    p3 = r.get("pct_days_3x")
+    if pd.notna(p3):
+        three_x_s = _pct_days(p3)
+    elif "3x" in str(r["strategy"]):
+        three_x_s = _pct_days(100.0 - float(cash)) if pd.notna(cash) else "-"
+    else:
+        three_x_s = "0.00%"
+    return (
+        f"              <tr><td>{r['strategy']}</td>"
+        f"<td>{pct(r['cagr'])}</td>"
+        f"<td>{pct(r['ann_volatility'])}</td>"
+        f"<td>{float(r['sharpe']):.3f}</td>"
+        f"<td>{pct(r['max_drawdown'])}</td>"
+        f"<td>{money(r['end_$'])}</td>"
+        f"<td>{int(r.get('rebalances', 0))}</td>"
+        f"<td>{cash_s}</td>"
+        f"<td>{three_x_s}</td></tr>"
+    )
+
+
+def row_spx3x(r: pd.Series) -> str:
+    """Row formatter for SPX 3x Levered comparison table (Strategy, CAGR, Ann Vol, Sharpe, Sortino, Max DD, End Value, Trades, % Cash, Avg Lev)."""
+    cash = r.get("pct_days_cash")
+    cash_s = _pct_days(cash) if pd.notna(cash) else "0.00%"
+    avg_lev = r.get("avg_leverage")
+    avg_lev_s = f"{float(avg_lev):.1f}" if pd.notna(avg_lev) else "-"
+    return (
+        f"            <tr><td>{r['strategy']}</td>"
+        f"<td>{pct(r['cagr'])}</td>"
+        f"<td>{pct(r['ann_volatility'])}</td>"
+        f"<td>{float(r['sharpe']):.3f}</td>"
+        f"<td>{float(r['sortino']):.3f}</td>"
+        f"<td>{pct(r['max_drawdown'])}</td>"
+        f"<td>{money(r['end_$'])}</td>"
+        f"<td>{int(r.get('rebalances', 0))}</td>"
+        f"<td>{cash_s}</td>"
+        f"<td>{avg_lev_s}</td></tr>"
     )
 
 
@@ -284,6 +330,37 @@ def main() -> int:
             ref_html,
         )
 
+    # Reference Benchmarks table (S&P 500 momentum section)
+    bench_order = [
+        "SMA20 3x/cash",
+        "Guarded A10/B20 SMA20",
+        "SMA20 2x/cash",
+        "SMA20 1x/cash",
+        "Buy & hold 1x",
+    ]
+    # CSV uses "Original Guarded A10/B20 SMA20"; display uses "Guarded A10/B20 SMA20"
+    csv_to_display = {"Original Guarded A10/B20 SMA20": "Guarded A10/B20 SMA20"}
+    display_to_csv = {v: k for k, v in csv_to_display.items()}
+    bench_rows = []
+    for name in bench_order:
+        row = comp[comp["strategy"] == name]
+        if row.empty:
+            # try the CSV name that maps to this display name
+            csv_name = display_to_csv.get(name)
+            if csv_name:
+                row = comp[comp["strategy"] == csv_name]
+        if row.empty:
+            continue
+        r = row.iloc[0].copy()
+        r["strategy"] = csv_to_display.get(r["strategy"], r["strategy"])
+        bench_rows.append(row_ref_bench(r))
+    if bench_rows:
+        html = replace_tbody(
+            html,
+            "<h2>Reference Benchmarks</h2>",
+            "\n".join(bench_rows),
+        )
+
     bt_row = site["default_backtest"]
     diag = (
         f"            <tr><td>Cash days</td><td>{bt_row['pct_days_cash']:.2f}%</td>"
@@ -298,6 +375,137 @@ def main() -> int:
         f"<td>Funding (in ETP)</td><td>embedded in ETP returns</td></tr>"
     )
     html = replace_tbody(html, "<h2>Default Strategy Diagnostics</h2>", diag.rstrip())
+
+    # ── SPX 3x Levered tab ──────────────────────────────────────────────
+    if SPX3X_COMPARISON_CSV.exists() and SPX3X_SITE.exists():
+        spx3x_site = json.loads(SPX3X_SITE.read_text(encoding="utf-8"))
+        spx3x_comp = pd.read_csv(SPX3X_COMPARISON_CSV)
+        spx3x_default_name = spx3x_site["default_backtest"]["strategy"]
+
+        # A. SPX 3x Full-Sample Strategy Comparison table
+        spx3x_rows = "\n".join(
+            row_spx3x(r) for _, r in spx3x_comp.iterrows()
+        )
+        html = replace_tbody(html, "<h2>SPX 3x Full-Sample Strategy Comparison</h2>", spx3x_rows)
+
+        # B. SPX 3x KPI cards
+        spx3x_bt = spx3x_site["default_backtest"]
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">B1 CAGR</span><strong id="spx3xCagrKpi">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_bt['cagr_pct']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">B1 Max DD</span><strong id="spx3xMaxDdKpi">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_bt['max_drawdown_pct']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">B1 Sharpe</span><strong id="spx3xSharpeKpi">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_bt['sharpe_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">B1 Sortino</span><strong id="spx3xSortinoKpi">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_bt['sortino_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">B1 Calmar</span><strong id="spx3xCalmarKpi">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_bt['calmar_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">B1 Trades</span><strong id="spx3xTradesKpi">)[^<]*(</strong></div>)',
+            rf"\g<1>{int(spx3x_bt['rebalances'])}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">B1 End Value</span><strong id="spx3xEndValueKpi">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_bt['end_value_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">B1 Avg Leverage</span><strong id="spx3xAvgLevKpi">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_bt['avg_leverage']:.1f}\g<2>",
+            html, count=1,
+        )
+
+        # C. SPX 3x Monte Carlo KPI cards (median CAGR / median max DD)
+        spx3x_mc = spx3x_site["monte_carlo"]
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">Median CAGR</span><strong id="spx3xMcMedianCagr">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_mc['median_cagr_pct']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<div class="metric-card"><span class="small">Median max DD</span><strong id="spx3xMcMedianMaxDd">)[^<]*(</strong></div>)',
+            rf"\g<1>{spx3x_mc['median_max_dd_pct']}\g<2>",
+            html, count=1,
+        )
+
+        # D. SPX 3x Monte Carlo Comparison table
+        spx3x_mc_row = (
+            f"            <tr><td>{spx3x_mc['strategy']}</td>"
+            f"<td>{spx3x_mc['median_cagr_pct']}</td>"
+            f"<td>{spx3x_mc['cagr_ci_95_pct'][0]}</td>"
+            f"<td>{spx3x_mc['cagr_ci_95_pct'][1]}</td>"
+            f"<td>{spx3x_mc['median_max_dd_pct']}</td>"
+            f"<td>{spx3x_mc['median_sharpe_fmt']}</td>"
+            f"<td>{spx3x_mc['median_end_value_fmt']}</td>"
+            f"<td>—</td></tr>"
+        )
+        html = replace_tbody(html, "<h2>SPX 3x Monte Carlo Comparison</h2>", spx3x_mc_row)
+
+        # E. SPX 3x Risk Probabilities
+        html = re.sub(
+            r'(<tr><td>Probability max drawdown is worse than -35%</td><td id="spx3xProbDd35">)[^<]*(</td></tr>)',
+            rf"\g<1>{spx3x_mc['prob_dd_exceeds_35pct_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<tr><td>Probability max drawdown is worse than -50%</td><td id="spx3xProbDd50">)[^<]*(</td></tr>)',
+            rf"\g<1>{spx3x_mc['prob_dd_exceeds_50pct_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<tr><td>Probability max drawdown is worse than -70%</td><td id="spx3xProbDd70">)[^<]*(</td></tr>)',
+            rf"\g<1>{spx3x_mc['prob_dd_exceeds_70pct_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<tr><td>Probability CAGR is above 0%</td><td id="spx3xProbCagr0">)[^<]*(</td></tr>)',
+            rf"\g<1>{spx3x_mc['prob_positive_cagr_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<tr><td>Probability CAGR is above 10%</td><td id="spx3xProbCagr10">)[^<]*(</td></tr>)',
+            rf"\g<1>{spx3x_mc['prob_cagr_exceeds_10pct_fmt']}\g<2>",
+            html, count=1,
+        )
+        html = re.sub(
+            r'(<tr><td>Probability CAGR is above 20%</td><td id="spx3xProbCagr20">)[^<]*(</td></tr>)',
+            rf"\g<1>{spx3x_mc['prob_cagr_exceeds_20pct_fmt']}\g<2>",
+            html, count=1,
+        )
+
+        # F. B1 Strategy Diagnostics table
+        spx3x_diag = (
+            f"            <tr><td>Cash days</td><td>{spx3x_bt['pct_days_cash']:.2f}%</td>"
+            f"<td>3x days</td><td>{spx3x_bt['pct_days_3x']:.2f}%</td></tr>\n"
+            f"            <tr><td>Rebalances</td><td>{spx3x_bt['rebalances']}</td>"
+            f"<td>Total trading costs</td><td>${spx3x_bt['trading_costs_total']:,.0f}</td></tr>\n"
+            f"            <tr><td>Funding (in ETP)</td><td>embedded in ETP returns</td>"
+            f"<td>Avg leverage</td><td>{spx3x_bt['avg_leverage']:.1f}</td></tr>"
+        )
+        html = replace_tbody(html, "<h2>B1 Strategy Diagnostics</h2>", spx3x_diag)
+
+        print(f"Patched SPX 3x Levered tab (default strategy: {spx3x_default_name})")
+    else:
+        if not SPX3X_COMPARISON_CSV.exists():
+            print(f"Warning: SPX 3x comparison CSV not found at {SPX3X_COMPARISON_CSV}, skipping SPX 3x tab patching.")
+        if not SPX3X_SITE.exists():
+            print(f"Warning: SPX 3x site data JSON not found at {SPX3X_SITE}, skipping SPX 3x tab patching.")
 
     INDEX_HTML.write_text(html, encoding="utf-8")
     print(f"Updated {INDEX_HTML.name}")

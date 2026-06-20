@@ -8,8 +8,11 @@
     "momentumSignalPage",
     "momentumBacktestPage",
     "momentumMonteCarloPage",
+    "spx3xSignalPage",
+    "spx3xBacktestPage",
+    "spx3xMonteCarloPage",
   ]);
-  const STRATEGY_IDS = new Set(["guardedStrategy", "momentumStrategy"]);
+  const STRATEGY_IDS = new Set(["guardedStrategy", "momentumStrategy", "spx3xLevered"]);
   const PAGE_QUERY = {
     signal: "signalPage",
     backtest: "backtestPage",
@@ -21,6 +24,8 @@
     spx: "guardedStrategy",
     guarded: "guardedStrategy",
     momentum: "momentumStrategy",
+    spx3x: "spx3xLevered",
+    levered: "spx3xLevered",
   };
 
   const NAV_GROUPS = [
@@ -61,6 +66,15 @@
       href: "index.html#signalPage",
       indexHref: "#signalPage",
       strategyNav: "guarded",
+    },
+    {
+      id: "spx3xLevered",
+      asset: "S&P 500 3x",
+      strategy: "SMA200 ±3% Band + RSI Guard",
+      group: "leveraged",
+      href: "index.html#spx3xSignalPage",
+      indexHref: "#spx3xSignalPage",
+      strategyNav: "spx3x",
     },
     {
       id: "ftse250",
@@ -157,6 +171,7 @@
   function strategyForPage(pageId) {
     if (!pageId) return null;
     if (pageId.startsWith("momentum")) return "momentumStrategy";
+    if (pageId.startsWith("spx3x")) return "spx3xLevered";
     if (PAGE_IDS.has(pageId)) return "guardedStrategy";
     return null;
   }
@@ -212,6 +227,7 @@
     }
     const pageId = pageFromLocation(loc);
     if (pageId && pageId.startsWith("momentum")) return "momentum";
+    if (pageId && pageId.startsWith("spx3x")) return "spx3xLevered";
     return "spx";
   }
 
@@ -221,6 +237,11 @@
       signal: "momentumSignalPage",
       backtest: "momentumBacktestPage",
       monteCarlo: "momentumMonteCarloPage",
+    },
+    spx3x: {
+      signal: "spx3xSignalPage",
+      backtest: "spx3xBacktestPage",
+      monteCarlo: "spx3xMonteCarloPage",
     },
   };
 

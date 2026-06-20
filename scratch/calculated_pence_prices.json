@@ -1,0 +1,62 @@
+{
+  "MSE.PA": {
+    "name": "Amundi Euro Stoxx 50",
+    "raw_price": 68.76000213623047,
+    "currency": "EUR",
+    "price_pence": 5775.8401794433585
+  },
+  "ARKA.L": {
+    "name": "Ark AI & Robotics",
+    "raw_price": 283.20001220703125,
+    "currency": "GBp",
+    "price_pence": 283.20001220703125
+  },
+  "EMIM.L": {
+    "name": "SPDR/iShares MSCI EM",
+    "raw_price": 4013.0,
+    "currency": "GBp",
+    "price_pence": 4013.0
+  },
+  "LBUL.L": {
+    "name": "WisdomTree Gold 2x",
+    "raw_price": 172.88999938964844,
+    "currency": "USD",
+    "price_pence": 13507.031202316284
+  },
+  "XS2D.L": {
+    "name": "Xtrackers S&P 500 2x",
+    "raw_price": 328.9100036621094,
+    "currency": "USD",
+    "price_pence": 25696.094036102295
+  },
+  "VUAG.L": {
+    "name": "Vanguard S&P 500 Acc",
+    "raw_price": 105.45999908447266,
+    "currency": "GBP",
+    "price_pence": 10545.999908447266
+  },
+  "VUKG.L": {
+    "name": "Vanguard FTSE UK All Share Acc",
+    "raw_price": 54.95000076293945,
+    "currency": "GBP",
+    "price_pence": 5495.000076293945
+  },
+  "VERX.L": {
+    "name": "Vanguard FTSE Dev Europe ex-UK Acc",
+    "raw_price": 42.369998931884766,
+    "currency": "GBP",
+    "price_pence": 4236.999893188477
+  },
+  "RBOT.L": {
+    "name": "iShares Automation & Robotics (Pictet Proxy)",
+    "raw_price": 19.959999084472656,
+    "currency": "USD",
+    "price_pence": 1559.3749284744263
+  },
+  "VWRP.L": {
+    "name": "Vanguard FTSE All-World Acc (HL Growth Proxy)",
+    "raw_price": 137.8000030517578,
+    "currency": "GBP",
+    "price_pence": 13780.000305175781
+  }
+}

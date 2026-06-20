@@ -1,0 +1,110 @@
+{
+  "dd_limit_pct": 5.0,
+  "engine_note": "Hard floor at -5% from peak; leverage forced to cash when breached.",
+  "generated_at": "2026-05-22T12:37:24.845494Z",
+  "overall_winner": {
+    "asset": "Bitcoin",
+    "category": "Crypto",
+    "strategy": "Guarded max 1x",
+    "cagr_pct": 29.05,
+    "max_dd_pct": -5.0,
+    "pct_days_cash": 93.3,
+    "sharpe": 1.3
+  },
+  "best_by_strategy": [
+    {
+      "strategy": "Guarded max 1x",
+      "asset": "Bitcoin",
+      "category": "Crypto",
+      "cagr": 0.2905447841119462,
+      "max_drawdown": -0.05000000000000012,
+      "pct_days_cash": 93.29582747304266,
+      "sharpe": 1.2972216715828653
+    },
+    {
+      "strategy": "SMA20 1x/cash",
+      "asset": "Bitcoin",
+      "category": "Crypto",
+      "cagr": 0.26997987602487017,
+      "max_drawdown": -0.05000000000000009,
+      "pct_days_cash": 93.01453352086263,
+      "sharpe": 1.342871957744781
+    },
+    {
+      "strategy": "Buy & hold 1x",
+      "asset": "Bitcoin",
+      "category": "Crypto",
+      "cagr": 0.14067818959101408,
+      "max_drawdown": -0.05000000000000013,
+      "pct_days_cash": 96.17909048288796,
+      "sharpe": 0.4584004169759662
+    }
+  ],
+  "best_cagr_by_category": [
+    {
+      "category": "Crypto",
+      "best_asset": "Bitcoin",
+      "best_strategy": "Guarded max 1x",
+      "cagr_pct": 29.05,
+      "max_dd_pct": -5.0,
+      "pct_days_cash": 93.3
+    },
+    {
+      "category": "Volatility",
+      "best_asset": "VIX (exploratory)",
+      "best_strategy": "SMA20 1x/cash",
+      "cagr_pct": 19.06,
+      "max_dd_pct": -5.0,
+      "pct_days_cash": 98.2
+    },
+    {
+      "category": "US equity",
+      "best_asset": "Nasdaq 100",
+      "best_strategy": "SMA20 1x/cash",
+      "cagr_pct": 14.77,
+      "max_dd_pct": -5.0,
+      "pct_days_cash": 79.1
+    },
+    {
+      "category": "Intl equity",
+      "best_asset": "EM VWO",
+      "best_strategy": "SMA20 1x/cash",
+      "cagr_pct": 12.8,
+      "max_dd_pct": -5.0,
+      "pct_days_cash": 78.8
+    },
+    {
+      "category": "Commodities",
+      "best_asset": "Commodities DBC",
+      "best_strategy": "Guarded max 1x",
+      "cagr_pct": 11.92,
+      "max_dd_pct": -5.0,
+      "pct_days_cash": 76.1
+    },
+    {
+      "category": "Gold",
+      "best_asset": "Gold GLD",
+      "best_strategy": "Guarded max 1x",
+      "cagr_pct": 11.37,
+      "max_dd_pct": -5.0,
+      "pct_days_cash": 81.8
+    },
+    {
+      "category": "REITs",
+      "best_asset": "REITs VNQ",
+      "best_strategy": "SMA20 1x/cash",
+      "cagr_pct": 10.94,
+      "max_dd_pct": -5.0,
+      "pct_days_cash": 78.7
+    },
+    {
+      "category": "Bonds",
+      "best_asset": "Treasury 20Y+ TLT",
+      "best_strategy": "Buy & hold 1x",
+      "cagr_pct": 7.06,
+      "max_dd_pct": -5.0,
+      "pct_days_cash": 78.6
+    }
+  ],
+  "skipped": []
+}

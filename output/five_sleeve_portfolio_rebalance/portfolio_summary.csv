@@ -1,0 +1,3 @@
+portfolio,cagr_pct,ann_volatility_pct,sharpe,max_drawdown_pct,calmar,end_$,start_date,end_date,trading_days
+Hybrid + semi-annual rebalance (Jan/Jul),37.49,18.23,1.803,-12.17,3.08,94562.68,2004-11-18,2026-05-22,5532
+Hybrid + buy-and-hold weights (drift),56.67,25.27,1.867,-22.95,2.469,1568987.64,2004-11-18,2026-05-22,5532

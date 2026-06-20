@@ -1,0 +1,224 @@
+{
+  "generated": "2026-06-19T15:42:04.054443",
+  "assets": [
+    {
+      "key": "spx",
+      "label": "S&P 500",
+      "idx": "^GSPC",
+      "real_lev": true,
+      "tickers": {
+        "1x": "SPY",
+        "2x": "SSO",
+        "3x": "UPRO"
+      },
+      "real": {
+        "start": "2009-06-25",
+        "end": "2026-06-16",
+        "years": 17.0,
+        "sessions": 4271,
+        "cov": {
+          "pct_real_2x": 100.0,
+          "pct_real_3x": 100.0
+        },
+        "rows": {
+          "SMA200 ±3% Band + RSI>30 Exit 3x": {
+            "cagr_g": 0.2691,
+            "dd_g": -0.5241,
+            "vol": 0.3496,
+            "sharpe": 0.77,
+            "sortino": 0.84,
+            "calmar": 0.5,
+            "cash": 23.3,
+            "trades_yr": 1.2,
+            "end": 5421.0,
+            "cagr_r": 0.2653,
+            "dd_r": -0.5297,
+            "cagr_x": 0.2315,
+            "dd_x": -0.5777
+          },
+          "SMA200 ±3% Band + RSI>30 Exit 2x": {
+            "cagr_g": 0.2099,
+            "dd_g": -0.3747,
+            "vol": 0.2333,
+            "sharpe": 0.79,
+            "sortino": 0.86,
+            "calmar": 0.55,
+            "cash": 23.3,
+            "trades_yr": 1.2,
+            "end": 2453.0,
+            "cagr_r": 0.2075,
+            "dd_r": -0.3796,
+            "cagr_x": 0.1866,
+            "dd_x": -0.4217
+          },
+          "SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x": {
+            "cagr_g": 0.2044,
+            "dd_g": -0.2894,
+            "vol": 0.1926,
+            "sharpe": 0.89,
+            "sortino": 0.9,
+            "calmar": 0.61,
+            "cash": 23.3,
+            "trades_yr": 25.5,
+            "end": 1595.0,
+            "cagr_r": 0.1773,
+            "dd_r": -0.2917,
+            "cagr_x": 0.0014,
+            "dd_x": -0.4236
+          },
+          "SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x": {
+            "cagr_g": 0.1906,
+            "dd_g": -0.3042,
+            "vol": 0.1851,
+            "sharpe": 0.82,
+            "sortino": 0.81,
+            "calmar": 0.57,
+            "cash": 23.3,
+            "trades_yr": 15.5,
+            "end": 1524.0,
+            "cagr_r": 0.1741,
+            "dd_r": -0.3049,
+            "cagr_x": 0.047,
+            "dd_x": -0.4633
+          }
+        }
+      },
+      "synth_era": {
+        "start": "2009-06-25",
+        "end": "2026-06-16",
+        "years": 17.0,
+        "sessions": 4271,
+        "rows": {
+          "SMA200 ±3% Band + RSI>30 Exit 3x": {
+            "cagr_g": 0.2261,
+            "dd_g": -0.5294,
+            "vol": 0.3531,
+            "sharpe": 0.65,
+            "sortino": 0.71,
+            "calmar": 0.42,
+            "cash": 23.3,
+            "trades_yr": 1.2,
+            "end": 3028.0,
+            "cagr_r": 0.2226,
+            "dd_r": -0.5349,
+            "cagr_x": 0.1909,
+            "dd_x": -0.5818
+          },
+          "SMA200 ±3% Band + RSI>30 Exit 2x": {
+            "cagr_g": 0.1875,
+            "dd_g": -0.3774,
+            "vol": 0.2354,
+            "sharpe": 0.69,
+            "sortino": 0.75,
+            "calmar": 0.48,
+            "cash": 23.3,
+            "trades_yr": 1.2,
+            "end": 1788.0,
+            "cagr_r": 0.1852,
+            "dd_r": -0.3821,
+            "cagr_x": 0.1652,
+            "dd_x": -0.4238
+          },
+          "SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x": {
+            "cagr_g": 0.1917,
+            "dd_g": -0.2922,
+            "vol": 0.1943,
+            "sharpe": 0.82,
+            "sortino": 0.84,
+            "calmar": 0.55,
+            "cash": 23.3,
+            "trades_yr": 25.5,
+            "end": 1339.0,
+            "cagr_r": 0.1652,
+            "dd_r": -0.2984,
+            "cagr_x": -0.0037,
+            "dd_x": -0.4413
+          },
+          "SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x": {
+            "cagr_g": 0.1768,
+            "dd_g": -0.3069,
+            "vol": 0.1874,
+            "sharpe": 0.74,
+            "sortino": 0.74,
+            "calmar": 0.52,
+            "cash": 23.3,
+            "trades_yr": 15.5,
+            "end": 1255.0,
+            "cagr_r": 0.1608,
+            "dd_r": -0.3076,
+            "cagr_x": 0.0379,
+            "dd_x": -0.4753
+          }
+        }
+      },
+      "synth_long": {
+        "start": "1996-06-19",
+        "end": "2026-06-18",
+        "years": 30.0,
+        "sessions": 7549,
+        "rows": {
+          "SMA200 ±3% Band + RSI>30 Exit 3x": {
+            "cagr_g": 0.1847,
+            "dd_g": -0.5328,
+            "vol": 0.3602,
+            "sharpe": 0.6,
+            "sortino": 0.67,
+            "calmar": 0.34,
+            "cash": 28.6,
+            "trades_yr": 1.1,
+            "end": 14830.0,
+            "cagr_r": 0.1814,
+            "dd_r": -0.5383,
+            "cagr_x": 0.1526,
+            "dd_x": -0.5857
+          },
+          "SMA200 ±3% Band + RSI>30 Exit 2x": {
+            "cagr_g": 0.1575,
+            "dd_g": -0.3833,
+            "vol": 0.2401,
+            "sharpe": 0.65,
+            "sortino": 0.72,
+            "calmar": 0.4,
+            "cash": 28.6,
+            "trades_yr": 1.1,
+            "end": 7609.0,
+            "cagr_r": 0.1554,
+            "dd_r": -0.3882,
+            "cagr_x": 0.1369,
+            "dd_x": -0.4303
+          },
+          "SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x": {
+            "cagr_g": 0.1626,
+            "dd_g": -0.2922,
+            "vol": 0.1939,
+            "sharpe": 0.78,
+            "sortino": 0.8,
+            "calmar": 0.46,
+            "cash": 28.6,
+            "trades_yr": 23.6,
+            "end": 4842.0,
+            "cagr_r": 0.1381,
+            "dd_r": -0.2984,
+            "cagr_x": -0.0024,
+            "dd_x": -0.5894
+          },
+          "SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x": {
+            "cagr_g": 0.1571,
+            "dd_g": -0.3069,
+            "vol": 0.2056,
+            "sharpe": 0.73,
+            "sortino": 0.74,
+            "calmar": 0.43,
+            "cash": 28.6,
+            "trades_yr": 14.2,
+            "end": 5346.0,
+            "cagr_r": 0.1419,
+            "dd_r": -0.3277,
+            "cagr_x": 0.0321,
+            "dd_x": -0.5192
+          }
+        }
+      }
+    }
+  ]
+}

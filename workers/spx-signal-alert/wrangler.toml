@@ -1,0 +1,51 @@
+# Cloudflare Worker: SPX 3x Levered Signal Alert
+# Monitors the B1 strategy signal (SMA200 ±3% Band + RSI>30 Exit) and sends
+# email alerts via SendGrid when the signal changes (cash→long or long→cash).
+#
+# Deployment:
+#   1. Create a KV namespace in Cloudflare Dashboard:
+#      Workers & Pages > KV > Create namespace "SIGNAL_STATE"
+#      Copy the namespace ID and paste it below.
+#   2. Set the environment variables (or use `wrangler secret put`):
+#      SENDGRID_API_KEY  — your SendGrid API key (create at sendgrid.com)
+#      ALERT_EMAIL_FROM  — verified sender email in SendGrid
+#      ALERT_EMAIL_TO    — recipient email for alerts
+#   3. Deploy: npx wrangler deploy
+#   4. Test:  npx wrangler dev --test-scheduled
+
+name = "spx-signal-alert"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# === KV Namespace ===
+# Create this in Cloudflare Dashboard: Workers & Pages > KV > Create namespace
+# Name it "SIGNAL_STATE" and copy the ID here.
+[[kv_namespaces]]
+binding = "SIGNAL_STATE"
+id = "YOUR_KV_NAMESPACE_ID"  # <-- REPLACE with your KV namespace ID
+
+# === Cron Trigger ===
+# Runs every 30 minutes during LSE hours, Monday–Friday.
+# IMPORTANT: Cloudflare Workers cron uses UTC time.
+#   UK Summer (BST = UTC+1, late Mar–late Oct):
+#       LSE 08:00–16:30 BST = 07:00–15:30 UTC
+#       → Use: crons = ["*/30 7-15 * * 1-5"]
+#   UK Winter (GMT = UTC+0, late Oct–late Mar):
+#       LSE 08:00–16:30 GMT = 08:00–16:30 UTC
+#       → Use: crons = ["*/30 8-16 * * 1-5"]
+# Adjust the hours below based on the current season.
+[triggers]
+crons = ["*/30 8-16 * * 1-5"]
+
+# === Environment Variables ===
+# Set these in Cloudflare Dashboard or via `wrangler secret put`.
+# For local testing with `wrangler dev`, set them in a .dev.vars file:
+#   SENDGRID_API_KEY = "SG.xxxxxxxx"
+#   ALERT_EMAIL_FROM = "alerts@yourdomain.com"
+#   ALERT_EMAIL_TO   = "you@example.com"
+#   TEST_MODE         = "false"   (set to "true" to log instead of sending emails)
+[vars]
+SENDGRID_API_KEY = ""       # <-- REPLACE with your SendGrid API key
+ALERT_EMAIL_FROM = "alerts@yourdomain.com"   # <-- REPLACE
+ALERT_EMAIL_TO = "you@example.com"           # <-- REPLACE
+TEST_MODE = "false"

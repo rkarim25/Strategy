@@ -1,0 +1,64 @@
+{
+  "rule": {
+    "buy": "Enter 1x when close > SMA20",
+    "baseline_sell": "Exit when close <= SMA20",
+    "variant_sell": "Exit on cross down through SMA20*(1+X) from above"
+  },
+  "baseline": {
+    "cagr": 0.1857035477218163,
+    "sharpe": 3.1758361716798658,
+    "max_drawdown": -0.21624578345293655,
+    "end_$": 7963.241711086046,
+    "pct_days_cash": 32.093812683227895
+  },
+  "best_by_sharpe": {
+    "sell_label": "cross below SMA20+0.00%",
+    "cagr": 0.1857035477218163,
+    "sharpe": 3.1758361716798658,
+    "max_drawdown": -0.21624578345293655,
+    "end_$": 7963.241711086046,
+    "delta_cagr_pp": 0.0,
+    "delta_sharpe": 0.0,
+    "buffer_exits": 372
+  },
+  "best_by_cagr": {
+    "sell_label": "cross below SMA20-0.90%",
+    "cagr": 0.19139790358903652,
+    "sharpe": 3.0030084520930433,
+    "max_drawdown": -0.20133467119402024,
+    "calmar": 0.9506455219756564,
+    "end_$": 9009.159186658397,
+    "delta_cagr_pp": 0.5694355867220224
+  },
+  "best_by_calmar": {
+    "sell_label": "cross below SMA20-1.90%",
+    "cagr": 0.1883578346247008,
+    "sharpe": 2.19879879477972,
+    "max_drawdown": -0.1926354456315868,
+    "calmar": 0.9777942683764083,
+    "end_$": 8435.359042620876
+  },
+  "grid_size": 202,
+  "positive_5_to_15_count": 101,
+  "best_positive_5_to_15_by_sharpe": {
+    "sell_label": "cross below SMA20+5.20%",
+    "sell_buffer_x": 0.052,
+    "cagr": 0.14529067492408432,
+    "sharpe": 0.8127214379879668,
+    "max_drawdown": -0.41944223716095846,
+    "end_$": 3259.633464971099,
+    "pct_days_cash": 0.9566424934423701,
+    "buffer_exits": 80
+  },
+  "best_positive_5_to_15_by_cagr": {
+    "sell_label": "cross below SMA20+5.80%",
+    "sell_buffer_x": 0.058,
+    "cagr": 0.14791410279725858,
+    "sharpe": 0.7905513065221921,
+    "max_drawdown": -0.41979935576447985,
+    "end_$": 3457.509163537492
+  },
+  "positive_5_to_15_beats_baseline_count": 0,
+  "beats_baseline_count": 0,
+  "winners": []
+}

@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-05-22T21:13:53.669412Z",
+  "policy": {
+    "weights_pct": {
+      "S&P 500": 40.0,
+      "Nasdaq 100": 15.0,
+      "FTSE 250": 16.0,
+      "MSCI EM": 14.0,
+      "Gold": 15.0
+    },
+    "strategy": "Guarded A5/B25 X40/Y15 lead 0.75%",
+    "us_leverage": "full 2x/3x",
+    "other_leverage": "max 1x",
+    "rebalance": "Semi-annual (first trading day of January and July)",
+    "initial_capital": 100.0,
+    "annual_inflow_usd": 10.0,
+    "sleeve_trading_cost_pct": 0.01,
+    "portfolio_rebalance_cost_pct": 0.001,
+    "return_series": "equity.pct_change() per sleeve (includes costs; not raw port_ret)",
+    "sleeve_cagr_note": "Per-sleeve rows: engine equity, $10/yr each (site convention)"
+  },
+  "sleeves": [
+    {
+      "sleeve": "S&P 500",
+      "weight_pct": 40.0,
+      "max_leverage": 3.0,
+      "cagr_pct": 38.99,
+      "max_drawdown_pct": -29.38,
+      "sharpe": 1.324,
+      "end_$": 1927929.02
+    },
+    {
+      "sleeve": "Nasdaq 100",
+      "weight_pct": 15.0,
+      "max_leverage": 3.0,
+      "cagr_pct": 103.23,
+      "max_drawdown_pct": -34.0,
+      "sharpe": 1.807,
+      "end_$": 171636933696.59
+    },
+    {
+      "sleeve": "FTSE 250",
+      "weight_pct": 16.0,
+      "max_leverage": 1.0,
+      "cagr_pct": 18.4,
+      "max_drawdown_pct": -16.16,
+      "sharpe": 1.55,
+      "end_$": 15720.7
+    },
+    {
+      "sleeve": "MSCI EM",
+      "weight_pct": 14.0,
+      "max_leverage": 1.0,
+      "cagr_pct": 34.11,
+      "max_drawdown_pct": -15.98,
+      "sharpe": 1.794,
+      "end_$": 87160.15
+    },
+    {
+      "sleeve": "Gold",
+      "weight_pct": 15.0,
+      "max_leverage": 1.0,
+      "cagr_pct": 18.56,
+      "max_drawdown_pct": -21.25,
+      "sharpe": 1.233,
+      "end_$": 3853.27
+    }
+  ],
+  "portfolio": [
+    {
+      "portfolio": "Hybrid + semi-annual rebalance (Jan/Jul)",
+      "cagr_pct": 37.49,
+      "ann_volatility_pct": 18.23,
+      "sharpe": 1.803,
+      "max_drawdown_pct": -12.17,
+      "calmar": 3.08,
+      "end_$": 94562.68,
+      "start_date": "2004-11-18",
+      "end_date": "2026-05-22",
+      "trading_days": 5532
+    },
+    {
+      "portfolio": "Hybrid + buy-and-hold weights (drift)",
+      "cagr_pct": 56.67,
+      "ann_volatility_pct": 25.27,
+      "sharpe": 1.867,
+      "max_drawdown_pct": -22.95,
+      "calmar": 2.469,
+      "end_$": 1568987.64,
+      "start_date": "2004-11-18",
+      "end_date": "2026-05-22",
+      "trading_days": 5532
+    }
+  ],
+  "rebalance_event_count": 43
+}

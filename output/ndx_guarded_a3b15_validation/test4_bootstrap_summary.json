@@ -1,0 +1,15 @@
+{
+  "n_sims": 1000,
+  "horizon_days": 7560,
+  "block_days": 21,
+  "mean_cand_cagr": 0.9146282987367053,
+  "mean_base_cagr": 0.8397391744507672,
+  "mean_cagr_diff": 0.07488912428593798,
+  "median_cagr_diff": 0.07211240430455845,
+  "ci95_low": 0.005954755569943843,
+  "ci95_high": 0.14642640439626664,
+  "ci_excludes_zero": true,
+  "win_rate_cand": 0.989,
+  "pass": true,
+  "elapsed_s": 96.38
+}

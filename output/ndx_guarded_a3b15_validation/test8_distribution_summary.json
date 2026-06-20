@@ -1,0 +1,19 @@
+{
+  "n_sims": 200,
+  "horizon_years": 10.0,
+  "median_cand_cagr": 0.9311706125904992,
+  "median_base_cagr": 0.8613881821909942,
+  "median_cagr_diff": 0.07273266842847936,
+  "p05_cand_end_$": 12281.978162711512,
+  "p05_base_end_$": 9428.106699820402,
+  "p95_cand_end_$": 276539.72474598966,
+  "p95_base_end_$": 172569.94945491914,
+  "median_cand_end_$": 56764.22229364429,
+  "median_base_end_$": 39793.67498483254,
+  "cand_prob_loss_gt_30pct": 0.685,
+  "base_prob_loss_gt_30pct": 0.51,
+  "cand_dominates_median": true,
+  "cand_p05_not_worse": true,
+  "elapsed_s": 6.65,
+  "pass": true
+}

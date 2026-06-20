@@ -1,0 +1,237 @@
+{
+  "generated_at": "2026-05-23T21:19:13.455199Z",
+  "assumptions": {
+    "guarded": {
+      "trigger_a": 0.05,
+      "trigger_b": 0.25,
+      "lead_pct_below_sma20": 0.0075,
+      "x_return": 0.4,
+      "y_return": 0.15
+    },
+    "max_leverage": 3.0,
+    "initial_capital": 100.0,
+    "annual_inflow_usd": 10.0,
+    "sleeve_trading_cost_pct": 0.01,
+    "asset_switch_cost_pct": 0.01,
+    "levered_pnl": "Listed 2x/3x ETP daily returns (XS2D/3USL, LQQ/LQQ3); synthetic daily-reset before ETP inception",
+    "etp_coverage_spx": {
+      "pct_real_2x": 53.9,
+      "pct_real_3x": 44.7
+    },
+    "etp_coverage_ndx": {
+      "pct_real_2x": 61.3,
+      "pct_real_3x": 44.8
+    },
+    "window": {
+      "start": "1996-05-23",
+      "end": "2026-05-22",
+      "days": 7548
+    }
+  },
+  "nasdaq_benchmark": {
+    "cagr_pct": 89.94,
+    "ann_volatility_pct": 42.86,
+    "sharpe": 1.712,
+    "max_drawdown_pct": -35.51,
+    "calmar": 2.533,
+    "end_$": 22773955358.24
+  },
+  "best_by_sharpe": {
+    "strategy": "NDX home bias 6m (SPX must beat +8%)",
+    "category": "ndx_bias",
+    "description": "Default NDX unless SPX 6m return exceeds Nasdaq by 8pp",
+    "cagr_pct": 77.05,
+    "ann_volatility_pct": 38.25,
+    "sharpe": 1.686,
+    "max_drawdown_pct": -35.27,
+    "calmar": 2.185,
+    "end_$": 2764341378.39,
+    "switches": 12,
+    "switch_cost_total": 6711728.29325112,
+    "trading_costs": 3099112972.4778557,
+    "rebalance_count": 824,
+    "pct_days_spx": 7.856385797562268,
+    "pct_days_ndx": 92.14361420243773,
+    "pct_days_cash": 0.0,
+    "beats_ndx_cagr": false,
+    "beats_ndx_sharpe": false,
+    "beats_ndx_calmar": false,
+    "beats_ndx_max_dd": true,
+    "beats_ndx_cagr_and_max_dd": false
+  },
+  "best_by_cagr": {
+    "strategy": "NDX home bias 6m (SPX must beat +8%)",
+    "category": "ndx_bias",
+    "description": "Default NDX unless SPX 6m return exceeds Nasdaq by 8pp",
+    "cagr_pct": 77.05,
+    "ann_volatility_pct": 38.25,
+    "sharpe": 1.686,
+    "max_drawdown_pct": -35.27,
+    "calmar": 2.185,
+    "end_$": 2764341378.39,
+    "switches": 12,
+    "switch_cost_total": 6711728.29325112,
+    "trading_costs": 3099112972.4778557,
+    "rebalance_count": 824,
+    "pct_days_spx": 7.856385797562268,
+    "pct_days_ndx": 92.14361420243773,
+    "pct_days_cash": 0.0,
+    "beats_ndx_cagr": false,
+    "beats_ndx_sharpe": false,
+    "beats_ndx_calmar": false,
+    "beats_ndx_max_dd": true,
+    "beats_ndx_cagr_and_max_dd": false
+  },
+  "best_max_drawdown": {
+    "strategy": "RS > SMA100 + hysteresis 10d",
+    "category": "relative_strength",
+    "description": "RS pick; switch after 10 consecutive days",
+    "cagr_pct": 57.87,
+    "ann_volatility_pct": 35.42,
+    "sharpe": 1.468,
+    "max_drawdown_pct": -28.04,
+    "calmar": 2.064,
+    "end_$": 88793324.58,
+    "switches": 63,
+    "switch_cost_total": 6247619.660429158,
+    "trading_costs": 109577151.18834725,
+    "rebalance_count": 817,
+    "pct_days_spx": 35.2543720190779,
+    "pct_days_ndx": 64.7456279809221,
+    "pct_days_cash": 0.0,
+    "beats_ndx_cagr": false,
+    "beats_ndx_sharpe": false,
+    "beats_ndx_calmar": false,
+    "beats_ndx_max_dd": true,
+    "beats_ndx_cagr_and_max_dd": false
+  },
+  "pareto_vs_nasdaq_benchmark": {
+    "best_cagr_subject_to_dd": {
+      "strategy": "NDX home bias 6m (SPX must beat +8%)",
+      "category": "ndx_bias",
+      "description": "Default NDX unless SPX 6m return exceeds Nasdaq by 8pp",
+      "cagr_pct": 77.05,
+      "ann_volatility_pct": 38.25,
+      "sharpe": 1.686,
+      "max_drawdown_pct": -35.27,
+      "calmar": 2.185,
+      "end_$": 2764341378.39,
+      "switches": 12,
+      "switch_cost_total": 6711728.29325112,
+      "trading_costs": 3099112972.4778557,
+      "rebalance_count": 824,
+      "pct_days_spx": 7.856385797562268,
+      "pct_days_ndx": 92.14361420243773,
+      "pct_days_cash": 0.0,
+      "beats_ndx_cagr": false,
+      "beats_ndx_sharpe": false,
+      "beats_ndx_calmar": false,
+      "beats_ndx_max_dd": true,
+      "beats_ndx_cagr_and_max_dd": false
+    }
+  },
+  "beats_nasdaq_cagr_and_max_dd": [],
+  "beats_nasdaq_cagr_and_sharpe": [],
+  "top_10_by_sharpe": [
+    {
+      "strategy": "NDX home bias 6m (SPX must beat +8%)",
+      "cagr_pct": 77.05,
+      "ann_volatility_pct": 38.25,
+      "sharpe": 1.686,
+      "max_drawdown_pct": -35.27,
+      "end_$": 2764341378.39,
+      "pct_days_ndx": 92.14361420243773,
+      "switches": 12
+    },
+    {
+      "strategy": "NDX home bias 6m (SPX must beat +3%)",
+      "cagr_pct": 67.79,
+      "ann_volatility_pct": 36.53,
+      "sharpe": 1.602,
+      "max_drawdown_pct": -38.89,
+      "end_$": 552465424.28,
+      "pct_days_ndx": 81.06783253842077,
+      "switches": 26
+    },
+    {
+      "strategy": "NDX home bias 6m (SPX must beat +5%)",
+      "cagr_pct": 69.79,
+      "ann_volatility_pct": 37.52,
+      "sharpe": 1.6,
+      "max_drawdown_pct": -44.56,
+      "end_$": 787647607.89,
+      "pct_days_ndx": 87.42713301536831,
+      "switches": 22
+    },
+    {
+      "strategy": "NDX home bias 12m (SPX must beat +3%)",
+      "cagr_pct": 67.52,
+      "ann_volatility_pct": 36.52,
+      "sharpe": 1.597,
+      "max_drawdown_pct": -49.19,
+      "end_$": 526173734.49,
+      "pct_days_ndx": 81.17382087970323,
+      "switches": 20
+    },
+    {
+      "strategy": "NDX home bias 6m + vol filter VIX<28",
+      "cagr_pct": 64.57,
+      "ann_volatility_pct": 38.47,
+      "sharpe": 1.49,
+      "max_drawdown_pct": -40.26,
+      "end_$": 308727917.0,
+      "pct_days_ndx": 84.8834128245893,
+      "switches": 88
+    },
+    {
+      "strategy": "NDX home bias 6m (SPX must beat +0%)",
+      "cagr_pct": 58.67,
+      "ann_volatility_pct": 35.25,
+      "sharpe": 1.487,
+      "max_drawdown_pct": -55.92,
+      "end_$": 103269376.61,
+      "pct_days_ndx": 68.83942766295708,
+      "switches": 44
+    },
+    {
+      "strategy": "RS > SMA200 + hysteresis 10d",
+      "cagr_pct": 58.51,
+      "ann_volatility_pct": 35.44,
+      "sharpe": 1.479,
+      "max_drawdown_pct": -56.41,
+      "end_$": 100246571.66,
+      "pct_days_ndx": 66.52093269740328,
+      "switches": 43
+    },
+    {
+      "strategy": "RS > SMA100 + hysteresis 10d",
+      "cagr_pct": 57.87,
+      "ann_volatility_pct": 35.42,
+      "sharpe": 1.468,
+      "max_drawdown_pct": -28.04,
+      "end_$": 88793324.58,
+      "pct_days_ndx": 64.7456279809221,
+      "switches": 63
+    },
+    {
+      "strategy": "RS > SMA200 + hysteresis 5d",
+      "cagr_pct": 53.71,
+      "ann_volatility_pct": 35.45,
+      "sharpe": 1.392,
+      "max_drawdown_pct": -51.68,
+      "end_$": 39806177.26,
+      "pct_days_ndx": 66.49443561208267,
+      "switches": 67
+    },
+    {
+      "strategy": "RS > SMA100 + hysteresis 5d",
+      "cagr_pct": 53.66,
+      "ann_volatility_pct": 36.06,
+      "sharpe": 1.373,
+      "max_drawdown_pct": -30.4,
+      "end_$": 39420650.46,
+      "pct_days_ndx": 63.97721250662427,
+      "switches": 95
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "sample": {
+    "ticker": "GC=F",
+    "start": "2000-08-30",
+    "end": "2026-06-03",
+    "days": 6481
+  },
+  "baselines": {
+    "buy_hold_1x": {
+      "cagr": 0.1417021767630089,
+      "sharpe": 0.6987941793906342,
+      "max_drawdown": -0.41607983364672635,
+      "calmar": NaN,
+      "end_$": 3036.886195083781
+    },
+    "sma20_1x_cash": {
+      "cagr": 0.19222587412644154,
+      "sharpe": 3.608646946488487,
+      "max_drawdown": -0.23419402667363026,
+      "calmar": NaN,
+      "end_$": 9171.822652014675
+    },
+    "guarded_max_1x": {
+      "cagr": 0.1857035477218163,
+      "sharpe": 3.1758361716798658,
+      "max_drawdown": -0.21624578345293655,
+      "calmar": 0.8587614738958949,
+      "end_$": 7963.241711086046
+    }
+  },
+  "best_overall": {
+    "run_id": "atr_1p5__top_classic_exitLH_LL_k3__bot_spring_m3__guarded",
+    "sharpe": 3.523784826069712,
+    "cagr": 0.13099782389322723,
+    "max_drawdown": -0.379852514479128,
+    "calmar": 0.3448649644266742,
+    "integration": "guarded",
+    "swing_family": "atr",
+    "swing_param": 1.5
+  },
+  "best_per_swing_family": {
+    "fractal": {
+      "run_id": "fractal_5p0__top_classic_exitLH_LL_k3__bot_spring_m3__guarded",
+      "swing_param": 5.0,
+      "sharpe": 3.362923674906071,
+      "cagr": 0.14090994767379095,
+      "max_drawdown": -0.2965879152282521,
+      "integration": "guarded"
+    },
+    "pct": {
+      "run_id": "pct_0p03__top_classic_exitLH_LL_k3__bot_spring_m3__guarded",
+      "swing_param": 0.03,
+      "sharpe": 3.2293303746049635,
+      "cagr": 0.14554343971674522,
+      "max_drawdown": -0.23859404097647177,
+      "integration": "guarded"
+    },
+    "atr": {
+      "run_id": "atr_1p5__top_classic_exitLH_LL_k3__bot_spring_m3__guarded",
+      "swing_param": 1.5,
+      "sharpe": 3.523784826069712,
+      "cagr": 0.13099782389322723,
+      "max_drawdown": -0.379852514479128,
+      "integration": "guarded"
+    },
+    "zigzag": {
+      "run_id": "zigzag_0p03__top_classic_exitLH_LL_k3__bot_spring_m3__guarded",
+      "swing_param": 0.03,
+      "sharpe": 3.2293303746049635,
+      "cagr": 0.14554343971674522,
+      "max_drawdown": -0.23859404097647177,
+      "integration": "guarded"
+    }
+  },
+  "best_per_top_family": {
+    "classic": {
+      "run_id": "atr_1p5__top_classic_exitLH_LL_k3__bot_spring_m3__guarded",
+      "sharpe": 3.523784826069712,
+      "cagr": 0.13099782389322723,
+      "max_drawdown": -0.379852514479128
+    },
+    "failed_hh": {
+      "run_id": "atr_1p5__top_failed_hh_m3__bot_capitulation_k3__guarded",
+      "sharpe": 2.8661612087074815,
+      "cagr": 0.13870731990850182,
+      "max_drawdown": -0.31042773978785243
+    },
+    "hl_decay": {
+      "run_id": "pct_0p03__top_hl_decay_k3_n_hl2__bot_capitulation_k3__guarded",
+      "sharpe": 2.8861730523302094,
+      "cagr": 0.13383021568163667,
+      "max_drawdown": -0.2877937941187876
+    },
+    "extension": {
+      "run_id": "pct_0p03__top_extension_ext_pct0.1_k2__bot_capitulation_k3__guarded",
+      "sharpe": 3.048462911848464,
+      "cagr": 0.1640988543960633,
+      "max_drawdown": -0.29750652510033954
+    }
+  },
+  "best_per_bottom_family": {
+    "capitulation": {
+      "run_id": "pct_0p03__top_extension_ext_pct0.1_k2__bot_capitulation_k3__guarded",
+      "sharpe": 3.048462911848464,
+      "cagr": 0.1640988543960633,
+      "max_drawdown": -0.29750652510033954
+    },
+    "full_reversal": {
+      "run_id": "pct_0p03__top_classic_exitLH_LL_k3__bot_full_reversal___guarded",
+      "sharpe": 3.074987943908889,
+      "cagr": 0.16283608073630962,
+      "max_drawdown": -0.21347942506899295
+    },
+    "spring": {
+      "run_id": "atr_1p5__top_classic_exitLH_LL_k3__bot_spring_m3__guarded",
+      "sharpe": 3.523784826069712,
+      "cagr": 0.13099782389322723,
+      "max_drawdown": -0.379852514479128
+    },
+    "hl_stack": {
+      "run_id": "fractal_5p0__top_classic_exitLH_LL_k3__bot_hl_stack_hl_stack2__guarded",
+      "sharpe": 2.982818192325621,
+      "cagr": 0.15218260532829242,
+      "max_drawdown": -0.21223187425811424
+    }
+  },
+  "beats_guarded_cagr_sharpe_maxdd_count": 0,
+  "beats_guarded_rows": [],
+  "total_runs": 231,
+  "structure_runs": 228,
+  "realistic_structure_runs": 220,
+  "ranking_note": "Ranked subset excludes pct_days_cash>=95% or max_drawdown>-2% (degenerate low-vol Sharpe)."
+}

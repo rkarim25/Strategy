@@ -1,0 +1,4 @@
+label,ticker,start_date,end_date,trading_days,cagr,ann_volatility,sharpe,max_drawdown,end_$,note,pct_days_3x,pct_days_cash
+Guarded A5/B25 default (2x/3x tiers),^NDX,2012-12-13,2026-06-03,3387,0.5877767255841901,0.267965378190235,3.5412039452493125,-0.22386389265426576,50154.99488433381,Signals on ^NDX; P&L via listed ETP panel (LQQ3 at 3x tier),,
+Guarded A5/B25 binary 3x/cash,^NDX,2012-12-13,2026-06-03,3387,0.835535594860962,0.4054838915064629,3.5503943705116314,-0.4794080102492863,353655.02467242506,"Same Guarded signals as default; any invested day → 3x ETP, else cash",72.68969589607323,
+Guarded A5/B25 max 1x on LQQ3,LQQ3.L,2012-12-13,2026-06-03,3387,2.1666702227913315,0.3740421419028179,3.889393341141523,-0.2223211663027442,548110975.6404747,Signals and P&L on LQQ3.L; max 1x = cash vs fully in 3x ETP,,33.09713610865072

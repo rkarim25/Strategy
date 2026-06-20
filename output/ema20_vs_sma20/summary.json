@@ -1,0 +1,344 @@
+{
+  "generated_at": "2026-06-10T21:20:20.971445Z",
+  "assumptions": {
+    "initial_capital": 100.0,
+    "annual_inflow_usd": 10.0,
+    "trading_cost_pct": 0.01,
+    "guarded_params": {
+      "trigger_a": 0.05,
+      "trigger_b": 0.25,
+      "lead_pct_below_sma20": 0.0075,
+      "x_return": 0.4,
+      "y_return": 0.15
+    },
+    "ma_window": 20,
+    "ema_method": "ewm(span=20, adjust=False, min_periods=20)",
+    "spx_ndx_leverage": "full 0/1/2/3x via listed ETP daily returns",
+    "lqq3_window": "2012-12-13 onward (real LQQ3.L)",
+    "signal_delay_days": 0,
+    "signal_delay_note": "Matches website backtest convention (same-bar execution)."
+  },
+  "per_asset_verdicts": {
+    "LQQ3.L": {
+      "guarded_comparison": {
+        "verdict": "EMA20 slightly better (mixed)",
+        "ema_wins": 2,
+        "sma_wins": 1,
+        "ties": 1,
+        "metric_details": [
+          {
+            "metric": "cagr",
+            "sma": 2.157966109504842,
+            "ema": 2.5268859788259403,
+            "delta_ema_minus_sma": 0.3689198693210982,
+            "winner": "ema"
+          },
+          {
+            "metric": "sharpe",
+            "sma": 3.8568379876619616,
+            "ema": 4.277687841116309,
+            "delta_ema_minus_sma": 0.42084985345434767,
+            "winner": "ema"
+          },
+          {
+            "metric": "max_drawdown",
+            "sma": -0.22232116630274426,
+            "ema": -0.22232116630274437,
+            "delta_ema_minus_sma": -1.1102230246251565e-16,
+            "winner": "tie"
+          },
+          {
+            "metric": "rebalances",
+            "sma": 331.0,
+            "ema": 383.0,
+            "delta_ema_minus_sma": 52.0,
+            "winner": "sma"
+          }
+        ]
+      },
+      "baseline_comparison": {
+        "verdict": "EMA20 better",
+        "ema_wins": 3,
+        "sma_wins": 1,
+        "ties": 0,
+        "metric_details": [
+          {
+            "metric": "cagr",
+            "sma": 2.078255220023968,
+            "ema": 2.4823280015997096,
+            "delta_ema_minus_sma": 0.40407278157574167,
+            "winner": "ema"
+          },
+          {
+            "metric": "sharpe",
+            "sma": 3.952872071333144,
+            "ema": 4.358596084808562,
+            "delta_ema_minus_sma": 0.4057240134754183,
+            "winner": "ema"
+          },
+          {
+            "metric": "max_drawdown",
+            "sma": -0.25748656414323595,
+            "ema": -0.22921755740673033,
+            "delta_ema_minus_sma": 0.02826900673650562,
+            "winner": "ema"
+          },
+          {
+            "metric": "rebalances",
+            "sma": 371.0,
+            "ema": 395.0,
+            "delta_ema_minus_sma": 24.0,
+            "winner": "sma"
+          }
+        ]
+      }
+    },
+    "NDX": {
+      "guarded_comparison": {
+        "verdict": "Mixed \u2014 tradeoffs",
+        "ema_wins": 2,
+        "sma_wins": 2,
+        "ties": 0,
+        "metric_details": [
+          {
+            "metric": "cagr",
+            "sma": 0.9019438749793325,
+            "ema": 1.0366112681510797,
+            "delta_ema_minus_sma": 0.13466739317174725,
+            "winner": "ema"
+          },
+          {
+            "metric": "sharpe",
+            "sma": 3.198077675893948,
+            "ema": 3.4000461473649395,
+            "delta_ema_minus_sma": 0.2019684714709915,
+            "winner": "ema"
+          },
+          {
+            "metric": "max_drawdown",
+            "sma": -0.35510504116756425,
+            "ema": -0.355549543496568,
+            "delta_ema_minus_sma": -0.00044450232900372644,
+            "winner": "sma"
+          },
+          {
+            "metric": "rebalances",
+            "sma": 824.0,
+            "ema": 897.0,
+            "delta_ema_minus_sma": 73.0,
+            "winner": "sma"
+          }
+        ]
+      },
+      "baseline_comparison": {
+        "verdict": "EMA20 better",
+        "ema_wins": 3,
+        "sma_wins": 1,
+        "ties": 0,
+        "metric_details": [
+          {
+            "metric": "cagr",
+            "sma": 0.41539707841907636,
+            "ema": 0.44605175824955134,
+            "delta_ema_minus_sma": 0.030654679830474985,
+            "winner": "ema"
+          },
+          {
+            "metric": "sharpe",
+            "sma": 3.8852176371173406,
+            "ema": 4.139595269809917,
+            "delta_ema_minus_sma": 0.25437763269257685,
+            "winner": "ema"
+          },
+          {
+            "metric": "max_drawdown",
+            "sma": -0.12135601452628564,
+            "ema": -0.11371455236008098,
+            "delta_ema_minus_sma": 0.007641462166204663,
+            "winner": "ema"
+          },
+          {
+            "metric": "rebalances",
+            "sma": 879.0,
+            "ema": 985.0,
+            "delta_ema_minus_sma": 106.0,
+            "winner": "sma"
+          }
+        ]
+      }
+    },
+    "SPX": {
+      "guarded_comparison": {
+        "verdict": "SMA20 better",
+        "ema_wins": 1,
+        "sma_wins": 3,
+        "ties": 0,
+        "metric_details": [
+          {
+            "metric": "cagr",
+            "sma": 0.37226558323707315,
+            "ema": 0.3525834248172788,
+            "delta_ema_minus_sma": -0.01968215841979437,
+            "winner": "sma"
+          },
+          {
+            "metric": "sharpe",
+            "sma": 3.1331992598467204,
+            "ema": 3.3541889487196475,
+            "delta_ema_minus_sma": 0.22098968887292703,
+            "winner": "ema"
+          },
+          {
+            "metric": "max_drawdown",
+            "sma": -0.2789278577942374,
+            "ema": -0.47406598515122916,
+            "delta_ema_minus_sma": -0.19513812735699176,
+            "winner": "sma"
+          },
+          {
+            "metric": "rebalances",
+            "sma": 773.0,
+            "ema": 890.0,
+            "delta_ema_minus_sma": 117.0,
+            "winner": "sma"
+          }
+        ]
+      },
+      "baseline_comparison": {
+        "verdict": "Mixed \u2014 tradeoffs",
+        "ema_wins": 2,
+        "sma_wins": 2,
+        "ties": 0,
+        "metric_details": [
+          {
+            "metric": "cagr",
+            "sma": 0.16116016919997467,
+            "ema": 0.1825525255745335,
+            "delta_ema_minus_sma": 0.02139235637455883,
+            "winner": "ema"
+          },
+          {
+            "metric": "sharpe",
+            "sma": 3.9148919331798964,
+            "ema": 4.3649366265227965,
+            "delta_ema_minus_sma": 0.4500446933429001,
+            "winner": "ema"
+          },
+          {
+            "metric": "max_drawdown",
+            "sma": -0.16919120234236967,
+            "ema": -0.18204261509053096,
+            "delta_ema_minus_sma": -0.01285141274816129,
+            "winner": "sma"
+          },
+          {
+            "metric": "rebalances",
+            "sma": 867.0,
+            "ema": 949.0,
+            "delta_ema_minus_sma": 82.0,
+            "winner": "sma"
+          }
+        ]
+      }
+    }
+  },
+  "overall_recommendation": "Mixed across assets \u2014 keep SMA20 default on website",
+  "ranked_by_cagr": [
+    {
+      "asset": "LQQ3.L",
+      "strategy": "Guarded A5/B25 EMA20 Lead (max 1x)",
+      "cagr": 2.5268859788259403,
+      "sharpe": 4.277687841116309,
+      "max_drawdown": -0.22232116630274437,
+      "rebalances": 383
+    },
+    {
+      "asset": "LQQ3.L",
+      "strategy": "EMA20 1x/cash",
+      "cagr": 2.4823280015997096,
+      "sharpe": 4.358596084808562,
+      "max_drawdown": -0.22921755740673033,
+      "rebalances": 395
+    },
+    {
+      "asset": "LQQ3.L",
+      "strategy": "Guarded A5/B25 SMA20 Lead (max 1x)",
+      "cagr": 2.157966109504842,
+      "sharpe": 3.8568379876619616,
+      "max_drawdown": -0.22232116630274426,
+      "rebalances": 331
+    },
+    {
+      "asset": "LQQ3.L",
+      "strategy": "SMA20 1x/cash",
+      "cagr": 2.078255220023968,
+      "sharpe": 3.952872071333144,
+      "max_drawdown": -0.25748656414323595,
+      "rebalances": 371
+    },
+    {
+      "asset": "NDX",
+      "strategy": "Guarded A5/B25 EMA20 Lead (full 0/1/2/3x)",
+      "cagr": 1.0366112681510797,
+      "sharpe": 3.4000461473649395,
+      "max_drawdown": -0.355549543496568,
+      "rebalances": 897
+    },
+    {
+      "asset": "NDX",
+      "strategy": "Guarded A5/B25 SMA20 Lead (full 0/1/2/3x)",
+      "cagr": 0.9019438749793325,
+      "sharpe": 3.198077675893948,
+      "max_drawdown": -0.35510504116756425,
+      "rebalances": 824
+    },
+    {
+      "asset": "NDX",
+      "strategy": "EMA20 1x/cash",
+      "cagr": 0.44605175824955134,
+      "sharpe": 4.139595269809917,
+      "max_drawdown": -0.11371455236008098,
+      "rebalances": 985
+    },
+    {
+      "asset": "NDX",
+      "strategy": "SMA20 1x/cash",
+      "cagr": 0.41539707841907636,
+      "sharpe": 3.8852176371173406,
+      "max_drawdown": -0.12135601452628564,
+      "rebalances": 879
+    },
+    {
+      "asset": "SPX",
+      "strategy": "Guarded A5/B25 SMA20 Lead (full 0/1/2/3x)",
+      "cagr": 0.37226558323707315,
+      "sharpe": 3.1331992598467204,
+      "max_drawdown": -0.2789278577942374,
+      "rebalances": 773
+    },
+    {
+      "asset": "SPX",
+      "strategy": "Guarded A5/B25 EMA20 Lead (full 0/1/2/3x)",
+      "cagr": 0.3525834248172788,
+      "sharpe": 3.3541889487196475,
+      "max_drawdown": -0.47406598515122916,
+      "rebalances": 890
+    },
+    {
+      "asset": "SPX",
+      "strategy": "EMA20 1x/cash",
+      "cagr": 0.1825525255745335,
+      "sharpe": 4.3649366265227965,
+      "max_drawdown": -0.18204261509053096,
+      "rebalances": 949
+    },
+    {
+      "asset": "SPX",
+      "strategy": "SMA20 1x/cash",
+      "cagr": 0.16116016919997467,
+      "sharpe": 3.9148919331798964,
+      "max_drawdown": -0.16919120234236967,
+      "rebalances": 867
+    }
+  ]
+}

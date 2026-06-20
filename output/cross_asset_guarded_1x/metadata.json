@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-05-19T19:36:46.460207Z",
+  "assumptions": {
+    "initial_capital": 100.0,
+    "annual_inflow_usd": 10.0,
+    "trading_cost_pct": 0.01,
+    "guarded_params": {
+      "trigger_a": 0.05,
+      "trigger_b": 0.25,
+      "lead_pct_below_sma20": 0.0075,
+      "x_return": 0.4,
+      "y_return": 0.15
+    },
+    "max_leverage_note": "Cross-asset test caps recovery leverage at 1x (no 2x/3x)."
+  },
+  "assets": {
+    "SPX": "^GSPC",
+    "Gold (GLD)": "GLD",
+    "Nasdaq 100": "^NDX",
+    "World equities (VT)": "VT"
+  },
+  "world_30y_proxy": {
+    "note": "VT/FTSE Global All Cap has no usable 30y daily index on Yahoo; proxy splices SPY/EFA then VTI/VEU then VT.",
+    "components": [
+      "SPY",
+      "EFA",
+      "VTI",
+      "VEU",
+      "VT"
+    ],
+    "weights": {
+      "us": 0.52,
+      "ex_us": 0.48
+    },
+    "phases": [
+      "pre-EFA: SPY only (US placeholder)",
+      "EFA to VEU: 52% SPY + 48% EFA",
+      "VEU to VT: 52% VTI + 48% VEU",
+      "VT launch onward: VT"
+    ]
+  }
+}

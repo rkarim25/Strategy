@@ -1,0 +1,50 @@
+{
+  "verdict": "BINARY COMPETITIVE \u2014 REVIEW",
+  "tiered_pass_count": 2,
+  "total_tests": 8,
+  "best_binary_ndx": "binary_guarded_any_invested",
+  "tiered_ndx": {
+    "asset": "NDX",
+    "strategy_key": "tiered_default",
+    "strategy": "Tiered Guarded A5/B25 (default)",
+    "cagr": 0.8994780300934773,
+    "max_drawdown": -0.35510504564428164,
+    "sharpe": 3.1957327402226916,
+    "calmar": 2.5329914095180412,
+    "end_value": 22569355032.356564,
+    "pct_cash": 31.319554848966614,
+    "pct_1x": 5.140434552199258,
+    "pct_2x": 31.465288818229997,
+    "pct_3x": 32.07472178060413,
+    "switches": 824
+  },
+  "best_binary_ndx_row": {
+    "asset": "NDX",
+    "strategy_key": "binary_guarded_any_invested",
+    "strategy": "Binary: any Guarded invested day \u2192 3x",
+    "cagr": 1.1484646115780501,
+    "max_drawdown": -0.4794300959288514,
+    "sharpe": 3.2913045811893875,
+    "calmar": 2.3954787597407843,
+    "end_value": 908065877389.7983,
+    "pct_cash": 31.319554848966614,
+    "pct_1x": 0.0,
+    "pct_2x": 0.0,
+    "pct_3x": 68.68044515103338,
+    "switches": 807
+  },
+  "bootstrap": {
+    "best_binary_key": "binary_guarded_any_invested",
+    "tiered_wins_pct": 0.002,
+    "mean_cagr_delta_tiered_minus_binary": -0.3351823436353338,
+    "ci95_low": -0.612272112397667,
+    "ci95_high": -0.11856586106722525
+  },
+  "mc": {
+    "tiered_median_cagr": 0.8664255143790068,
+    "binary_median_cagr": 1.2337773700703765,
+    "tiered_wins_pct": 0.02,
+    "tiered_median_end": 40847.0194057022,
+    "binary_median_end": 231310.2466370419
+  }
+}

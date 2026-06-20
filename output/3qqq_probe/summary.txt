@@ -1,0 +1,7 @@
+3QQQ bare and 3QQQ.DE: no Yahoo data
+WisdomTree 3x Nasdaq (IE00BLRPRL42): LQQ3.L (GBX), QQQ3.L (USD); Xetra ticker 3QQQ not on Yahoo
+3QQQ.L on Yahoo is Leverage Shares 3x Tech 100 (different issuer)
+LQQ3.L: 3381 rows=output\3qqq_probe\LQQ3_L_wisdomtree_3x_gbx.csv 2012-12-13..2026-06-04 -> 3381
+QQQ3.L: 3402 rows=output\3qqq_probe\QQQ3_L_wisdomtree_3x_usd.csv 2012-12-13..2026-06-04 -> 3402
+3QQQ.L: 1009 rows=output\3qqq_probe\3QQQ_L_leverage_shares_3x.csv 2022-06-06..2026-06-04 -> 1009
+TQQQ: 4103 rows=output\3qqq_probe\TQQQ_us_3x.csv 2010-02-11..2026-06-04 -> 4103

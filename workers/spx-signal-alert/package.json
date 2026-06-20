@@ -1,0 +1,15 @@
+{
+  "name": "spx-signal-alert",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker for automated email alerts when the S&P500 3x Levered strategy signal changes.",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "test": "wrangler dev --test-scheduled"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED"
+}

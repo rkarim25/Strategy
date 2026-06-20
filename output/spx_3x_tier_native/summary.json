@@ -1,0 +1,94 @@
+{
+  "generated_at_utc": "2026-06-05T09:10:52Z",
+  "etp_coverage": {
+    "pct_real_2x": 54.0,
+    "pct_real_3x": 44.8
+  },
+  "tier_native_signal": "P_3x = cumulative 3x ETP price; SMA20 on P_3x not SPX",
+  "results": [
+    {
+      "strategy": "3x when 3x benchmark > SMA20 (tier-native)",
+      "start_date": "1996-06-05",
+      "end_date": "2026-06-04",
+      "trading_days": 7548,
+      "cagr": 0.32865412091421375,
+      "ann_volatility": 0.3060933219629363,
+      "sharpe": 3.845638724265089,
+      "max_drawdown": -0.5218242486272087,
+      "end_$": 498295.0066348771,
+      "rebalances": 840,
+      "pct_days_3x": 59.22098569157392,
+      "pct_cash": 40.77901430842607
+    },
+    {
+      "strategy": "3x when 3x benchmark >= SMA20 - 0.75% (tier-native lead)",
+      "start_date": "1996-06-05",
+      "end_date": "2026-06-04",
+      "trading_days": 7548,
+      "cagr": 0.3787803571342163,
+      "ann_volatility": 0.3149257094644555,
+      "sharpe": 3.6978285185860593,
+      "max_drawdown": -0.47830281133959157,
+      "end_$": 1513264.8586986999,
+      "rebalances": 788,
+      "pct_days_3x": 63.46051934287228,
+      "pct_cash": 36.53948065712772
+    },
+    {
+      "strategy": "3x tier-native SMA + positive 20d mom",
+      "start_date": "1996-06-05",
+      "end_date": "2026-06-04",
+      "trading_days": 7548,
+      "cagr": 0.1222642971272403,
+      "ann_volatility": 0.2714878861787079,
+      "sharpe": 3.5061126230979873,
+      "max_drawdown": -0.818442278050978,
+      "end_$": 3149.8064618829435,
+      "rebalances": 822,
+      "pct_days_3x": 51.73555908850026,
+      "pct_cash": 48.26444091149973
+    },
+    {
+      "strategy": "3x when SPX > SMA20 (index signal)",
+      "start_date": "1996-06-05",
+      "end_date": "2026-06-04",
+      "trading_days": 7548,
+      "cagr": 0.3305522405434236,
+      "ann_volatility": 0.3247960588329145,
+      "sharpe": 3.735955513986863,
+      "max_drawdown": -0.6257915787777798,
+      "end_$": 520096.27332625486,
+      "rebalances": 868,
+      "pct_days_3x": 63.049814520402755,
+      "pct_cash": 36.950185479597245
+    },
+    {
+      "strategy": "Guarded signals -> binary 3x/cash (SPX)",
+      "start_date": "1996-06-05",
+      "end_date": "2026-06-04",
+      "trading_days": 7548,
+      "cagr": 0.4519218700672121,
+      "ann_volatility": 0.3549908261384659,
+      "sharpe": 3.4003960193053144,
+      "max_drawdown": -0.48074446981624247,
+      "end_$": 7132923.06899356,
+      "rebalances": 764,
+      "pct_days_3x": 71.25066242713302,
+      "pct_cash": 28.749337572866985
+    },
+    {
+      "strategy": "Buy & hold 3x ETP",
+      "start_date": "1996-06-05",
+      "end_date": "2026-06-04",
+      "trading_days": 7548,
+      "cagr": 0.12516543087371979,
+      "ann_volatility": 0.5561442373301843,
+      "sharpe": 0.2937091298181085,
+      "max_drawdown": -0.9840253623085089,
+      "end_$": 3369.047699239777,
+      "rebalances": 1,
+      "pct_days_3x": 100.0,
+      "pct_cash": 0.0
+    }
+  ]
+}

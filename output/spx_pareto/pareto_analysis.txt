@@ -1,0 +1,80 @@
+
+================================================================================
+PARETO ANALYSIS vs B1
+Baseline: B1: SMA200 ±3% Band + RSI>30 Exit 3x
+CAGR=20.62% DD=-53.2% Vol=35.8% Sharpe=0.663 Sortino=0.730 AvgLev=3.00
+================================================================================
+
+NO STRICT PARETO IMPROVEMENTS
+
+Closest strategies (improved some metrics but had trade-offs):
+Strategy                                                    CAGR    MaxDD   AnnVol  Sharpe Sortino  AvgLev                    +                    -   Lev<
+--------------------------------------------------------------------------------------------------------------------------------------------
+B1 + RSI>30 Exit + RSI<65 Entry                           21.53%   -52.3%    35.5%   0.685   0.757    3.00 cagr, sharpe, sortino, max_drawdown, ann_volatility                          no
+B1 + RSI>30 Exit + RSI<60 Entry                           20.89%   -51.3%    35.2%   0.673   0.736    3.00 cagr, sharpe, sortino, max_drawdown, ann_volatility                          no
+B1 + Distance Leverage Scale (max 3x)                     18.12%   -49.4%    28.4%   0.744   0.774    2.10 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+B2 + Distance Leverage Scale (max 3x)                     18.12%   -49.4%    28.4%   0.744   0.774    2.10 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+B2 + RSI>30 Exit + RSI<65 Entry                           17.59%   -37.7%    23.7%   0.730   0.805    2.00 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+B2 + RSI>35 Exit                                          17.37%   -38.4%    24.4%   0.709   0.778    2.00 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+B2 + RSI>30 Exit + RSI<60 Entry                           17.12%   -36.8%    23.5%   0.717   0.783    2.00 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+B2 + ADX>20                                               17.03%   -38.4%    23.9%   0.707   0.778    2.00 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+
+================================================================================
+PARETO ANALYSIS vs B2
+Baseline: B2: SMA200 ±3% Band + RSI>30 Exit 2x
+CAGR=17.03% DD=-38.4% Vol=23.9% Sharpe=0.707 Sortino=0.778 AvgLev=2.00
+================================================================================
+
+NO STRICT PARETO IMPROVEMENTS
+
+Closest strategies (improved some metrics but had trade-offs):
+Strategy                                                    CAGR    MaxDD   AnnVol  Sharpe Sortino  AvgLev                    +                    -   Lev<
+--------------------------------------------------------------------------------------------------------------------------------------------
+B2 + RSI>30 Exit + RSI<65 Entry                           17.59%   -37.7%    23.7%   0.730   0.805    2.00 cagr, sharpe, sortino, max_drawdown, ann_volatility                          no
+B2 + RSI>30 Exit + RSI<60 Entry                           17.12%   -36.8%    23.5%   0.717   0.783    2.00 cagr, sharpe, sortino, max_drawdown, ann_volatility                          no
+B4 + ADX>20                                               15.27%   -31.2%    20.4%   0.781   0.786    1.30 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+B3 + ADX>20                                               14.60%   -29.2%    19.3%   0.818   0.834    1.28 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+B4 + SMA200 Slope>0                                       13.86%   -31.1%    20.0%   0.728   0.720    1.29 sharpe, max_drawdown, ann_volatility        cagr, sortino    YES
+B3 + SMA200 Slope>0                                       12.83%   -29.2%    18.9%   0.744   0.741    1.28 sharpe, max_drawdown, ann_volatility        cagr, sortino    YES
+B3 + 2-Day Persist                                        12.35%   -36.3%    14.0%   0.744   0.762    1.07 sharpe, max_drawdown, ann_volatility        cagr, sortino    YES
+B1 + Distance Leverage Scale (max 3x)                     18.12%   -49.4%    28.4%   0.744   0.774    2.10         cagr, sharpe sortino, max_drawdown, ann_volatility     no
+
+================================================================================
+PARETO ANALYSIS vs B3
+Baseline: B3: SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x
+CAGR=14.60% DD=-29.2% Vol=19.3% Sharpe=0.818 Sortino=0.834 AvgLev=1.28
+================================================================================
+
+NO STRICT PARETO IMPROVEMENTS
+
+Closest strategies (improved some metrics but had trade-offs):
+Strategy                                                    CAGR    MaxDD   AnnVol  Sharpe Sortino  AvgLev                    +                    -   Lev<
+--------------------------------------------------------------------------------------------------------------------------------------------
+B1 + RSI>30 Exit + RSI<65 Entry                           21.53%   -52.3%    35.5%   0.685   0.757    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + RSI>35 Exit                                          21.11%   -53.2%    36.5%   0.667   0.733    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + RSI>30 Exit + RSI<60 Entry                           20.89%   -51.3%    35.2%   0.673   0.736    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + ADX>20                                               20.62%   -53.2%    35.8%   0.663   0.730    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + ADX>25                                               20.62%   -53.2%    35.8%   0.663   0.730    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + ADX Leverage Scale (max 3x)                          20.62%   -53.2%    35.8%   0.663   0.730    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B2 + ADX Leverage Scale (max 3x)                          20.62%   -53.2%    35.8%   0.663   0.730    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + ADX>20 + ADX Leverage Scale                          20.62%   -53.2%    35.8%   0.663   0.730    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+
+================================================================================
+PARETO ANALYSIS vs B4
+Baseline: B4: SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x
+CAGR=15.27% DD=-31.2% Vol=20.4% Sharpe=0.781 Sortino=0.786 AvgLev=1.30
+================================================================================
+
+NO STRICT PARETO IMPROVEMENTS
+
+Closest strategies (improved some metrics but had trade-offs):
+Strategy                                                    CAGR    MaxDD   AnnVol  Sharpe Sortino  AvgLev                    +                    -   Lev<
+--------------------------------------------------------------------------------------------------------------------------------------------
+B3 + ADX>20                                               14.60%   -29.2%    19.3%   0.818   0.834    1.28 sharpe, sortino, max_drawdown, ann_volatility                 cagr    YES
+B2 + RSI>30 Exit + RSI<65 Entry                           17.59%   -37.7%    23.7%   0.730   0.805    2.00        cagr, sortino sharpe, max_drawdown, ann_volatility     no
+B4 + SMA200 Slope>0                                       13.86%   -31.1%    20.0%   0.728   0.720    1.29 max_drawdown, ann_volatility cagr, sharpe, sortino    YES
+B3 + SMA200 Slope>0                                       12.83%   -29.2%    18.9%   0.744   0.741    1.28 max_drawdown, ann_volatility cagr, sharpe, sortino    YES
+B1 + RSI>30 Exit + RSI<65 Entry                           21.53%   -52.3%    35.5%   0.685   0.757    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + RSI>35 Exit                                          21.11%   -53.2%    36.5%   0.667   0.733    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + RSI>30 Exit + RSI<60 Entry                           20.89%   -51.3%    35.2%   0.673   0.736    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no
+B1 + ADX>20                                               20.62%   -53.2%    35.8%   0.663   0.730    3.00                 cagr sharpe, sortino, max_drawdown, ann_volatility     no

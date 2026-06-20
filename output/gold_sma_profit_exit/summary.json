@@ -1,0 +1,52 @@
+{
+  "sample": {
+    "ticker": "GC=F",
+    "start": "2000-08-30",
+    "end": "2026-06-03",
+    "days": 6481
+  },
+  "rule": {
+    "buy": "Enter 1x when close > SMA20 (unchanged)",
+    "default_sell": "Exit to cash when close <= SMA20",
+    "variant_sell": "Exit to cash when close >= SMA20 * (1 + X)",
+    "variant_reentry": "After profit exit, re-enter only on cross from below SMA20",
+    "guarded": "Guarded A5/B25 SMA20 Lead max 1x; only base-rule exit modified"
+  },
+  "baseline_guarded": {
+    "sell_label": "below_SMA20 (default)",
+    "cagr": 0.1857035477218163,
+    "sharpe": 3.1758361716798658,
+    "max_drawdown": -0.21624578345293655,
+    "calmar": 0.8587614738958949,
+    "end_$": 7963.241711086046,
+    "pct_days_cash": 32.093812683227895
+  },
+  "baseline_sma20": {
+    "sell_label": "below_SMA20 (default)",
+    "cagr": 0.19222587412644154,
+    "sharpe": 3.608646946488487,
+    "max_drawdown": -0.23419402667363026,
+    "calmar": 0.8207975107508827,
+    "end_$": 9171.822652014675,
+    "pct_days_cash": 43.866687239623516
+  },
+  "best_guarded_by_sharpe": {
+    "sell_label": "+0.00% above SMA20",
+    "cagr": 0.1455336793052988,
+    "sharpe": 2.4870673029285375,
+    "max_drawdown": -0.30954529185217877,
+    "calmar": 0.47015310242482194,
+    "end_$": 3277.494858017791,
+    "delta_cagr_pp": -4.0169868416517485,
+    "delta_sharpe": -0.6887688687513283
+  },
+  "best_sma20_by_sharpe": {
+    "sell_label": "+0.00% above SMA20",
+    "cagr": -0.00646221722804563,
+    "sharpe": 1.5603682502921166,
+    "max_drawdown": -0.4971922999954617,
+    "end_$": 83.77443118292797
+  },
+  "guarded_beat_baseline_count": 0,
+  "guarded_improved_rows": []
+}

@@ -1,0 +1,580 @@
+=== spx (S&P 500) ===
+  real : 2009-06-25 - (17.0 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 2009-06-25 - (17.0 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 1990-01-02 - (36.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== spxew (S&P 500 Equal Weight) ===
+  real : 2003-05-01 - (23.1 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 2003-05-01 - (23.1 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 2003-05-01 - (23.1 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== ndx (Nasdaq 100) ===
+  real : 2010-02-11 - (16.3 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 2010-02-11 - (16.3 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 1990-01-02 - (36.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== rut (Russell 2000) ===
+  real : 2008-11-19 - (17.6 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 2008-11-19 - (17.6 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 1990-01-02 - (36.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== gold (Gold) ===
+  real : 2008-12-03 - (17.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 2008-12-03 - (17.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 2004-11-18 - (21.6 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== tlt (20Y+ Treasuries) ===
+  real : 2010-01-21 - (16.4 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 2010-01-21 - (16.4 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 2002-07-30 - (23.9 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== ftse250 (FTSE 250) ===
+  real : 1985-12-31 - (40.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 1985-12-31 - (40.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 1990-01-02 - (36.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== dax (DAX (TR)) ===
+  real : 1987-12-30 - (38.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 1987-12-30 - (38.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 1990-01-02 - (36.5 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== msci_em (MSCI EM) ===
+  real : 2003-04-14 - (23.2 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 2003-04-14 - (23.2 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 2003-04-14 - (23.2 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+=== msci_world (MSCI World) ===
+  real : 2009-09-25 - (16.7 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_era : 2009-09-25 - (16.7 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard
+  synth_long : 2009-09-25 - (16.7 yrs)
+    Buy & hold 1x
+    Buy & hold 2x
+    Buy & hold 3x
+    SMA20 1x/cash
+    SMA20 2x/cash
+    SMA20 3x/cash
+    SMA200 1x/cash
+    SMA200 2x/cash
+    SMA200 3x/cash
+    Guarded A5/B25
+    Guarded A10/B20
+    Guarded+ (200/2x/floor)
+    Mom 12m 2x/cash
+    SMA200 2x monthly
+    SMA200 2x 3% band
+    Golden 50/200 2x
+    Golden 2x volguard
+    Golden 3x volguard

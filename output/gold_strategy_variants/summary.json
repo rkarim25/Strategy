@@ -1,0 +1,411 @@
+{
+  "baseline_guarded": {
+    "cagr": 0.1857035477218163,
+    "sharpe": 3.1758361716798658,
+    "max_drawdown": -0.21624578345293655,
+    "calmar": 0.8587614738958949,
+    "end_$": 7963.241711086046
+  },
+  "baselines_all": {
+    "buy_hold": {
+      "cagr": 0.1417021767630089,
+      "sharpe": 0.6987941793906342,
+      "max_drawdown": -0.41607983364672635
+    },
+    "sma20": {
+      "cagr": 0.19222587412644154,
+      "sharpe": 3.608646946488487,
+      "max_drawdown": -0.23419402667363026
+    }
+  },
+  "variant_count": 60,
+  "beats_guarded_all_three_count": 0,
+  "best_overall_by_sharpe": {
+    "strategy": "Guarded ATR trail k=1.5 (entry>SMA20)",
+    "family": "atr_trail",
+    "cagr": 0.18468566252762164,
+    "sharpe": 3.2838918789077516,
+    "max_drawdown": -0.2163713241578579,
+    "beats_guarded_all_three": false
+  },
+  "best_overall_by_cagr": {
+    "strategy": "Guarded sell buffer X=-0.009",
+    "family": "sell_buffer",
+    "cagr": 0.19139790358903652,
+    "sharpe": 3.0030084520930433,
+    "max_drawdown": -0.20133467119402024,
+    "beats_guarded_all_three": false
+  },
+  "best_overall_by_calmar": {
+    "strategy": "Guarded sell buffer X=-0.019",
+    "cagr": 0.1883578346247008,
+    "sharpe": 2.19879879477972,
+    "max_drawdown": -0.1926354456315868,
+    "calmar": 0.9777942683764083
+  },
+  "best_beating_guarded_all_three": null,
+  "best_per_family": {
+    "atr_trail": {
+      "variant_id": "atr_k1.5",
+      "strategy": "Guarded ATR trail k=1.5 (entry>SMA20)",
+      "cagr": 0.18468566252762164,
+      "sharpe": 3.2838918789077516,
+      "max_drawdown": -0.2163713241578579,
+      "calmar": 0.8535588680544407,
+      "beats_guarded_all_three": false
+    },
+    "longer_sma": {
+      "variant_id": "sma30_simple",
+      "strategy": "SMA30 1x/cash",
+      "cagr": 0.1703317963148585,
+      "sharpe": 2.9681749500565986,
+      "max_drawdown": -0.2061103884271952,
+      "calmar": 0.8264105347364631,
+      "beats_guarded_all_three": false
+    },
+    "dual_timeframe": {
+      "variant_id": "weekly_sma20_gate",
+      "strategy": "Guarded + weekly>SMA20 gate",
+      "cagr": 0.1872418391048667,
+      "sharpe": 3.171278966976872,
+      "max_drawdown": -0.21645342048408175,
+      "calmar": 0.8650444917253534,
+      "beats_guarded_all_three": false
+    },
+    "vol_scaled": {
+      "variant_id": "vol_q4_scale0.75",
+      "strategy": "Guarded vol-scale 0.75x in top Q4",
+      "cagr": 0.1787985198542552,
+      "sharpe": 3.165583994289241,
+      "max_drawdown": -0.2153711639104444,
+      "calmar": 0.8301878329849357,
+      "beats_guarded_all_three": false
+    },
+    "sell_buffer": {
+      "variant_id": "buf_0p0%",
+      "strategy": "Guarded sell buffer X=0.000",
+      "cagr": 0.1857035477218163,
+      "sharpe": 3.1758361716798658,
+      "max_drawdown": -0.21624578345293655,
+      "calmar": 0.8587614738958949,
+      "beats_guarded_all_three": false
+    },
+    "donchian": {
+      "variant_id": "breakout_trail2.0",
+      "strategy": "Guarded Donchian+ATR trail k=2.0",
+      "cagr": 0.18739388615074803,
+      "sharpe": 3.189227981163665,
+      "max_drawdown": -0.2163941746681892,
+      "calmar": 0.8659839685522537,
+      "beats_guarded_all_three": false
+    },
+    "profit_skim": {
+      "variant_id": "skim_30_cash",
+      "strategy": "Guarded profit skim 30% -> cash",
+      "cagr": 0.1857035477218163,
+      "sharpe": 3.1758361716798658,
+      "max_drawdown": -0.21624578345293655,
+      "calmar": 0.8587614738958949,
+      "beats_guarded_all_three": false
+    },
+    "combined": {
+      "variant_id": "combo_atr2_buf09",
+      "strategy": "Guarded ATR2 + buffer -0.9%",
+      "cagr": 0.186080766775363,
+      "sharpe": 3.225946537593861,
+      "max_drawdown": -0.21635550214173538,
+      "calmar": 0.8600694918008636,
+      "beats_guarded_all_three": false
+    },
+    "chandelier_hwm": {
+      "variant_id": "roll_chand_k3.0",
+      "strategy": "Guarded chandelier roll20 k=3.0",
+      "cagr": 0.18358480251161424,
+      "sharpe": 2.7736311520847963,
+      "max_drawdown": -0.219228887921456,
+      "calmar": 0.8374115485062712,
+      "beats_guarded_all_three": false
+    },
+    "chandelier_entry": {
+      "variant_id": "entry_chand_k1.5",
+      "strategy": "Guarded entry-HWM chandelier k=1.5",
+      "cagr": 0.18716384774093564,
+      "sharpe": 3.2669852557150003,
+      "max_drawdown": -0.21652886268661034,
+      "calmar": 0.8643829068267186,
+      "beats_guarded_all_three": false
+    },
+    "asymmetric_ma": {
+      "variant_id": "sma20_buy_sma50_exit",
+      "strategy": "Guarded SMA20 in / SMA50 out",
+      "cagr": 0.15956225767891885,
+      "sharpe": 2.4080230096620445,
+      "max_drawdown": -0.2614474210999776,
+      "calmar": 0.6103034292998522,
+      "beats_guarded_all_three": false
+    }
+  },
+  "top_20_by_sharpe": [
+    {
+      "family": "atr_trail",
+      "variant_id": "atr_k1.5",
+      "strategy": "Guarded ATR trail k=1.5 (entry>SMA20)",
+      "cagr": 0.18468566252762164,
+      "sharpe": 3.2838918789077516,
+      "max_drawdown": -0.2163713241578579,
+      "calmar": 0.8535588680544407,
+      "end_$": 7789.016357513986,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.47%",
+      "max_dd_pct": "-21.64%"
+    },
+    {
+      "family": "chandelier_entry",
+      "variant_id": "entry_chand_k1.5",
+      "strategy": "Guarded entry-HWM chandelier k=1.5",
+      "cagr": 0.18716384774093564,
+      "sharpe": 3.2669852557150003,
+      "max_drawdown": -0.21652886268661034,
+      "calmar": 0.8643829068267186,
+      "end_$": 8219.74807661849,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.72%",
+      "max_dd_pct": "-21.65%"
+    },
+    {
+      "family": "combined",
+      "variant_id": "combo_atr2_buf09",
+      "strategy": "Guarded ATR2 + buffer -0.9%",
+      "cagr": 0.186080766775363,
+      "sharpe": 3.225946537593861,
+      "max_drawdown": -0.21635550214173538,
+      "calmar": 0.8600694918008636,
+      "end_$": 8028.754451083308,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.61%",
+      "max_dd_pct": "-21.64%"
+    },
+    {
+      "family": "donchian",
+      "variant_id": "breakout_trail2.0",
+      "strategy": "Guarded Donchian+ATR trail k=2.0",
+      "cagr": 0.18739388615074803,
+      "sharpe": 3.189227981163665,
+      "max_drawdown": -0.2163941746681892,
+      "calmar": 0.8659839685522537,
+      "end_$": 8260.87226713692,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.74%",
+      "max_dd_pct": "-21.64%"
+    },
+    {
+      "family": "combined",
+      "variant_id": "combo_atr25_buf09",
+      "strategy": "Guarded ATR2.5 + buffer -0.9%",
+      "cagr": 0.18881165968573943,
+      "sharpe": 3.179795204011726,
+      "max_drawdown": -0.2164976048402409,
+      "calmar": 0.8721189309464572,
+      "end_$": 8518.728376858704,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.88%",
+      "max_dd_pct": "-21.65%"
+    },
+    {
+      "family": "sell_buffer",
+      "variant_id": "buf_0p0%",
+      "strategy": "Guarded sell buffer X=0.000",
+      "cagr": 0.1857035477218163,
+      "sharpe": 3.1758361716798658,
+      "max_drawdown": -0.21624578345293655,
+      "calmar": 0.8587614738958949,
+      "end_$": 7963.241711086046,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.57%",
+      "max_dd_pct": "-21.62%"
+    },
+    {
+      "family": "profit_skim",
+      "variant_id": "skim_30_cash",
+      "strategy": "Guarded profit skim 30% -> cash",
+      "cagr": 0.1857035477218163,
+      "sharpe": 3.1758361716798658,
+      "max_drawdown": -0.21624578345293655,
+      "calmar": 0.8587614738958949,
+      "end_$": 7963.241711086046,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.57%",
+      "max_dd_pct": "-21.62%"
+    },
+    {
+      "family": "profit_skim",
+      "variant_id": "skim_30_half",
+      "strategy": "Guarded profit skim 30% -> half",
+      "cagr": 0.1857035477218163,
+      "sharpe": 3.1758361716798658,
+      "max_drawdown": -0.21624578345293655,
+      "calmar": 0.8587614738958949,
+      "end_$": 7963.241711086046,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.57%",
+      "max_dd_pct": "-21.62%"
+    },
+    {
+      "family": "dual_timeframe",
+      "variant_id": "weekly_sma20_gate",
+      "strategy": "Guarded + weekly>SMA20 gate",
+      "cagr": 0.1872418391048667,
+      "sharpe": 3.171278966976872,
+      "max_drawdown": -0.21645342048408175,
+      "calmar": 0.8650444917253534,
+      "end_$": 8233.668571269644,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.72%",
+      "max_dd_pct": "-21.65%"
+    },
+    {
+      "family": "sell_buffer",
+      "variant_id": "buf_m0p1%",
+      "strategy": "Guarded sell buffer X=-0.001",
+      "cagr": 0.18634702016353621,
+      "sharpe": 3.1690643745326126,
+      "max_drawdown": -0.21629364958665803,
+      "calmar": 0.8615464232059032,
+      "end_$": 8075.3069969048265,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.63%",
+      "max_dd_pct": "-21.63%"
+    },
+    {
+      "family": "sell_buffer",
+      "variant_id": "buf_m0p2%",
+      "strategy": "Guarded sell buffer X=-0.002",
+      "cagr": 0.18617827877999882,
+      "sharpe": 3.1677883128019118,
+      "max_drawdown": -0.21627060651693583,
+      "calmar": 0.8608579861055666,
+      "end_$": 8045.773728987129,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.62%",
+      "max_dd_pct": "-21.63%"
+    },
+    {
+      "family": "donchian",
+      "variant_id": "breakout_trail2.5",
+      "strategy": "Guarded Donchian+ATR trail k=2.5",
+      "cagr": 0.18927899098858902,
+      "sharpe": 3.1656101452101497,
+      "max_drawdown": -0.21655526705694694,
+      "calmar": 0.8740447349120114,
+      "end_$": 8605.406297005868,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.93%",
+      "max_dd_pct": "-21.66%"
+    },
+    {
+      "family": "vol_scaled",
+      "variant_id": "vol_q4_scale0.75",
+      "strategy": "Guarded vol-scale 0.75x in top Q4",
+      "cagr": 0.1787985198542552,
+      "sharpe": 3.165583994289241,
+      "max_drawdown": -0.2153711639104444,
+      "calmar": 0.8301878329849357,
+      "end_$": 6851.008825317502,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "17.88%",
+      "max_dd_pct": "-21.54%"
+    },
+    {
+      "family": "sell_buffer",
+      "variant_id": "buf_m0p3%",
+      "strategy": "Guarded sell buffer X=-0.003",
+      "cagr": 0.18536161104747406,
+      "sharpe": 3.154232866285616,
+      "max_drawdown": -0.2162223043596887,
+      "calmar": 0.8572733122810612,
+      "end_$": 7904.30078512517,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.54%",
+      "max_dd_pct": "-21.62%"
+    },
+    {
+      "family": "sell_buffer",
+      "variant_id": "buf_m0p4%",
+      "strategy": "Guarded sell buffer X=-0.004",
+      "cagr": 0.18527414419013066,
+      "sharpe": 3.153222641620775,
+      "max_drawdown": -0.21621021788466985,
+      "calmar": 0.856916689705012,
+      "end_$": 7889.291273479638,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.53%",
+      "max_dd_pct": "-21.62%"
+    },
+    {
+      "family": "sell_buffer",
+      "variant_id": "buf_m0p5%",
+      "strategy": "Guarded sell buffer X=-0.005",
+      "cagr": 0.1849682143183815,
+      "sharpe": 3.15091188891347,
+      "max_drawdown": -0.216203733079934,
+      "calmar": 0.8555273846728436,
+      "end_$": 7837.008194264293,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.50%",
+      "max_dd_pct": "-21.62%"
+    },
+    {
+      "family": "profit_skim",
+      "variant_id": "skim_20_cash",
+      "strategy": "Guarded profit skim 20% -> cash",
+      "cagr": 0.17571029975218755,
+      "sharpe": 3.146173733181307,
+      "max_drawdown": -0.21549185883350508,
+      "calmar": 0.8153918236324006,
+      "end_$": 6403.388244662226,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "17.57%",
+      "max_dd_pct": "-21.55%"
+    },
+    {
+      "family": "vol_scaled",
+      "variant_id": "vol_q4_scale0.5",
+      "strategy": "Guarded vol-scale 0.5x in top Q4",
+      "cagr": 0.17192331799195393,
+      "sharpe": 3.1435662067379035,
+      "max_drawdown": -0.21437138917767715,
+      "calmar": 0.801988169463505,
+      "end_$": 5892.777169755915,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "17.19%",
+      "max_dd_pct": "-21.44%"
+    },
+    {
+      "family": "sell_buffer",
+      "variant_id": "buf_m0p6%",
+      "strategy": "Guarded sell buffer X=-0.006",
+      "cagr": 0.18498657421729403,
+      "sharpe": 3.1379144863525053,
+      "max_drawdown": -0.21621435731562766,
+      "calmar": 0.8555702614477743,
+      "end_$": 7840.136464544607,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.50%",
+      "max_dd_pct": "-21.62%"
+    },
+    {
+      "family": "sell_buffer",
+      "variant_id": "buf_m0p7%",
+      "strategy": "Guarded sell buffer X=-0.007",
+      "cagr": 0.185840603030758,
+      "sharpe": 3.131175423884819,
+      "max_drawdown": -0.21631712965863636,
+      "calmar": 0.8591118203353916,
+      "end_$": 7986.984857408541,
+      "beats_guarded_all_three": false,
+      "cagr_pct": "18.58%",
+      "max_dd_pct": "-21.63%"
+    }
+  ],
+  "winners_all_three": []
+}

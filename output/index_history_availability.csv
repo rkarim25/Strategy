@@ -1,0 +1,41 @@
+ticker,kind,notes,earliest,latest,row_count,usable_30y,error
+^GSPC,index,S&P 500 baseline,1927-12-30,2026-05-19,24712,True,
+GLD,etf,Gold ETF,2004-11-18,2026-05-19,5408,False,
+GC=F,futures,Gold futures,2000-08-30,2026-05-19,6453,False,
+^GOLD,index,Gold index proxy,,,0,False,empty history
+XAUUSD=X,fx,Gold USD spot,,,0,False,empty history
+XAU=X,fx,Gold spot alt,,,0,False,empty history
+DBC,etf,Broad commodities ETF,2006-02-06,2026-05-19,5103,False,
+GSG,etf,Commodities ETF,2006-07-21,2026-05-19,4988,False,
+^CRB,index,CRB index,,,0,False,empty history
+^BCOM,index,Bloomberg Commodity,1991-01-02,2026-05-18,8882,True,
+^TNX,index,10Y yield,1962-01-02,2026-05-19,16110,True,
+^TYX,index,30Y yield,1977-02-15,2026-05-19,12340,True,
+^FVX,index,5Y yield,1962-01-02,2026-05-19,16110,True,
+TLT,etf,20+Y Treasury ETF,2002-07-30,2026-05-19,5990,False,
+IEF,etf,7-10Y Treasury ETF,2002-07-30,2026-05-19,5990,False,
+SHY,etf,1-3Y Treasury ETF,2002-07-30,2026-05-19,5990,False,
+ZB=F,futures,30Y bond futures,2000-09-21,2026-05-19,6449,False,
+VT,etf,Total world ETF,2008-06-26,2026-05-19,4502,False,
+ACWI,etf,MSCI ACWI ETF,2008-03-28,2026-05-19,4565,False,
+URTH,etf,MSCI World ETF,2012-01-12,2026-05-19,3608,False,
+EFA,etf,EAFE developed,2001-08-27,2026-05-19,6218,False,
+VEU,etf,All world ex-US,2007-03-08,2026-05-19,4831,False,
+GEISAC.FGI,index,FTSE Global All Cap,2026-05-19,2026-05-19,1,False,Yahoo allows only 1d/5d; max history unavailable (single snapshot)
+^NDX,index,Nasdaq 100,1985-10-01,2026-05-19,10237,True,
+^VIX,index,VIX,1990-01-02,2026-05-19,9162,True,
+^RUT,index,Russell 2000,1987-09-10,2026-05-19,9746,True,
+VNQ,etf,REIT ETF,2004-09-29,2026-05-19,5444,False,
+IYR,etf,REIT ETF,2000-06-19,2026-05-19,6518,False,
+EEM,etf,EM ETF,2003-04-14,2026-05-19,5812,False,
+^MSCIEF,index,MSCI EM index,,,0,False,empty history
+BTC-USD,crypto,Bitcoin,2014-09-17,2026-05-19,4263,False,
+^DJI,index,Dow Jones,1992-01-02,2026-05-19,8656,True,
+^IXIC,index,Nasdaq Composite,1971-02-05,2026-05-19,13938,True,
+SPY,etf,S&P 500 ETF,1993-01-29,2026-05-19,8383,True,
+VGK,etf,Europe,2005-03-10,2026-05-19,5332,False,
+VWO,etf,EM Vanguard,2005-03-10,2026-05-19,5332,False,
+TIP,etf,TIPS,2003-12-05,2026-05-19,5648,False,
+^IRX,index,13-week T-bill yield,1960-01-04,2026-05-19,16609,True,
+^GVZ,index,Gold vol,2008-06-03,2026-05-19,4519,False,
+^OVX,index,Oil vol,2007-05-10,2026-05-19,4787,False,

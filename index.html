@@ -215,7 +215,10 @@
     }
     #priceChart,
     #signalPnlChart,
-    #equityChart {
+    #equityChart,
+    #spx3xPriceChart,
+    #spx3xSignalPnlChart,
+    #spx3xEquityChart {
       width: 100%;
       height: 360px;
       display: block;
@@ -223,7 +226,8 @@
       border-radius: 22px;
       background: linear-gradient(180deg, #ffffff, #fbfbfd);
     }
-    #signalPnlChart {
+    #signalPnlChart,
+    #spx3xSignalPnlChart {
       height: 260px;
     }
     .chart-box.compact {
@@ -564,8 +568,10 @@
         position: static;
         border-radius: 22px;
       }
-      #priceChart { height: 320px; }
-      #signalPnlChart { height: 240px; }
+      #priceChart,
+      #spx3xPriceChart { height: 320px; }
+      #signalPnlChart,
+      #spx3xSignalPnlChart { height: 240px; }
     }
     @media (max-width: 520px) {
       main {
@@ -613,8 +619,11 @@
       .stat-value { font-size: 28px; }
       .signal { font-size: 52px; }
       #priceChart,
-      #equityChart { height: 280px; }
-      #signalPnlChart { height: 220px; }
+      #equityChart,
+      #spx3xPriceChart,
+      #spx3xEquityChart { height: 280px; }
+      #signalPnlChart,
+      #spx3xSignalPnlChart { height: 220px; }
       .bar-row {
         grid-template-columns: 1fr;
         gap: 6px;
@@ -1131,6 +1140,358 @@
 
   </section>
 
+  <section id="spx3xLevered" class="strategy">
+  <section class="card" style="margin-bottom: 18px;">
+    <h2>S&P 500 3x Levered — SMA200 ±3% Band + RSI(14) Guard</h2>
+    <p>
+      Strategies that hold 3x (or scaled 1x–3x) S&P 500 exposure when the close is above
+      the 200-day SMA plus a 3% buffer, exit to cash when the close falls below the 200-day
+      SMA minus a 3% buffer or RSI(14) drops below 30, and hold the prior state in the
+      neutral zone between the bands. Backtests use listed US ETP daily returns (SPY/SSO/UPRO)
+      for same-calendar accuracy; the execution vehicle is 3USL.L (UCITS 3x S&P 500).
+    </p>
+    <nav class="site-nav" aria-label="SPX 3x Levered strategy sections">
+      <button type="button" class="active" data-page-target="spx3xSignalPage">Signal</button>
+      <button type="button" data-page-target="spx3xBacktestPage">Back-test</button>
+      <button type="button" data-page-target="spx3xMonteCarloPage">Monte Carlo</button>
+    </nav>
+  </section>
+
+  <section id="spx3xSignalPage" class="page active">
+  <section class="card" style="margin-bottom: 18px;">
+    <h2>Strategy Rules</h2>
+    <ul>
+      <li><strong>Base trend rule:</strong> hold <strong>3x</strong> S&P exposure when the SPX close is above the 200-day SMA plus a 3% buffer (SMA200 × 1.03).</li>
+      <li><strong>Exit to cash:</strong> when the close falls below the 200-day SMA minus a 3% buffer (SMA200 × 0.97) <em>or</em> RSI(14) drops below 30.</li>
+      <li><strong>Neutral zone (hysteresis):</strong> when the close is between the upper and lower bands and RSI(14) ≥ 30, hold the prior state — no whipsaw exits.</li>
+      <li><strong>Execution vehicle:</strong> 3USL.L (UCITS 3x S&P 500). Backtested on US-listed SPY/SSO/UPRO for same-calendar accuracy.</li>
+    </ul>
+    <p class="small">
+      The official signal uses the latest completed daily close and matches the backtest logic.
+      The intraday signal is provisional and can use a delayed SPX quote through an API/proxy or a manually entered price.
+    </p>
+  </section>
+
+  <div class="card">
+    <h2>Data Source</h2>
+    <div class="row">
+      <button id="spx3xRefresh">Refresh now / apply manual level</button>
+      <input id="spx3xManualIntradayPrice" placeholder="Optional SPX live price override, e.g. 7408.50" style="min-width: 280px;" />
+    </div>
+    <div id="spx3xStatus" class="small">Ready.</div>
+    <div id="spx3xAutoRefreshStatus" class="small">
+      Auto-refreshes every 30 minutes during UK LSE hours (Mon-Fri 08:00-16:30 London) while open; enter a manual SPX level then click refresh to override the live quote.
+    </div>
+  </div>
+
+  <section class="two-col">
+    <div class="card">
+      <h2>Official Signal: Last Completed Close</h2>
+      <div class="stat-label">Target leverage</div>
+      <div id="spx3xEodLeverage" class="stat-value signal">-</div>
+      <p id="spx3xEodExplanation">Load data to calculate the close-based signal.</p>
+      <table>
+        <tbody>
+          <tr><th>Signal date</th><td id="spx3xEodDate">-</td></tr>
+          <tr><th>Close</th><td id="spx3xEodClose">-</td></tr>
+          <tr><th>SMA200</th><td id="spx3xEodSma200">-</td></tr>
+          <tr><th>RSI(14)</th><td id="spx3xEodRsi">-</td></tr>
+          <tr><th>Upper band (+3%)</th><td id="spx3xEodUpperBand">-</td></tr>
+          <tr><th>Lower band (-3%)</th><td id="spx3xEodLowerBand">-</td></tr>
+          <tr><th>Regime</th><td id="spx3xEodRegime">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h2>Live Intraday Signal: Provisional</h2>
+      <div class="stat-label">Target leverage</div>
+      <div id="spx3xLiveLeverage" class="stat-value signal">-</div>
+      <p id="spx3xLiveExplanation">Enter a live price or quote endpoint to calculate a provisional signal.</p>
+      <table>
+        <tbody>
+          <tr><th>Signal timestamp</th><td id="spx3xLiveDate">-</td></tr>
+          <tr><th>Live / provisional price</th><td id="spx3xLiveClose">-</td></tr>
+          <tr><th>Provisional SMA200</th><td id="spx3xLiveSma200">-</td></tr>
+          <tr><th>Provisional RSI(14)</th><td id="spx3xLiveRsi">-</td></tr>
+          <tr><th>Upper band (+3%)</th><td id="spx3xLiveUpperBand">-</td></tr>
+          <tr><th>Lower band (-3%)</th><td id="spx3xLiveLowerBand">-</td></tr>
+          <tr><th>Regime</th><td id="spx3xLiveRegime">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top: 18px;">
+    <h2>SPX Close vs 200-Day SMA with ±3% Bands</h2>
+    <div class="range-controls range-toolbar" id="spx3xSignalRangeToolbar">
+      <div class="range-unit"><button type="button" data-spx3x-range="1m">1M</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="1m" data-range-direction="back" aria-label="Pan 1M earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="1m" data-range-direction="forward" aria-label="Pan 1M later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-range="3m">3M</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="3m" data-range-direction="back" aria-label="Pan 3M earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="3m" data-range-direction="forward" aria-label="Pan 3M later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-range="6m">6M</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="6m" data-range-direction="back" aria-label="Pan 6M earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="6m" data-range-direction="forward" aria-label="Pan 6M later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-range="1y" class="active">1Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="1y" data-range-direction="back" aria-label="Pan 1Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="1y" data-range-direction="forward" aria-label="Pan 1Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-range="3y">3Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="3y" data-range-direction="back" aria-label="Pan 3Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="3y" data-range-direction="forward" aria-label="Pan 3Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-range="5y">5Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="5y" data-range-direction="back" aria-label="Pan 5Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="5y" data-range-direction="forward" aria-label="Pan 5Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-range="all">ALL</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="1y" data-range-direction="back" aria-label="Pan 1Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-signal" data-range-step="1y" data-range-direction="forward" aria-label="Pan 1Y later">&#8250;</button></div></div>
+      <div class="range-custom">
+        <input id="spx3xChartStart" type="date" />
+        <input id="spx3xChartEnd" type="date" />
+        <button id="spx3xApplyCustomRange" type="button" class="secondary">Apply custom</button>
+      </div>
+    </div>
+    <div id="spx3xChartMeta" class="small" style="margin-top: 10px;">Load data to draw the chart.</div>
+    <div class="chart-box">
+      <svg id="spx3xPriceChart" viewBox="0 0 900 360" role="img" aria-label="SPX close and 200-day SMA with ±3% bands chart"></svg>
+      <div id="spx3xChartTooltip" class="chart-tooltip"></div>
+    </div>
+    <div class="legend">
+      <span>SPX close</span>
+      <span class="sma">200-day SMA</span>
+      <span class="buy">Enter 3x</span>
+      <span class="sell">Exit to cash</span>
+    </div>
+    <div class="small" style="margin-top: 6px;">Markers show leverage transitions (0↔3x); dashed lines show SMA200 ±3% bands. Hover for exact date, price, SMA200, RSI, and rule context.</div>
+    <div class="attached-chart">
+      <h2>Selected Window Equity P&L</h2>
+      <div id="spx3xSignalPnlMeta" class="small">Load data to draw the selected-window equity chart.</div>
+      <div class="chart-box compact">
+        <svg id="spx3xSignalPnlChart" viewBox="0 0 900 260" role="img" aria-label="Selected window strategy equity P&L chart"></svg>
+        <div id="spx3xSignalPnlTooltip" class="chart-tooltip"></div>
+      </div>
+      <div class="legend">
+        <span class="strategy">Strategy equity (blue)</span>
+        <span class="spx">SPX reference (orange)</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Shared Strategy State From Daily History</h2>
+    <table>
+      <tbody>
+        <tr><th>Daily data through</th><td id="spx3xLatestDate">-</td></tr>
+        <tr><th>SMA200 value</th><td id="spx3xSma200">-</td></tr>
+        <tr><th>RSI(14) value</th><td id="spx3xRsi">-</td></tr>
+        <tr><th>Upper band (+3%)</th><td id="spx3xUpperBand">-</td></tr>
+        <tr><th>Lower band (-3%)</th><td id="spx3xLowerBand">-</td></tr>
+        <tr><th>Current regime</th><td id="spx3xRegime">-</td></tr>
+        <tr><th>Close above upper band?</th><td id="spx3xAboveUpperBand">-</td></tr>
+        <tr><th>Close below lower band?</th><td id="spx3xBelowLowerBand">-</td></tr>
+        <tr><th>RSI exit triggered?</th><td id="spx3xRsiExitTriggered">-</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card section-gap">
+    <h2>Signal History</h2>
+    <p class="small">Last 20 signal changes for the SMA200 ±3% Band + RSI>30 Exit 3x strategy.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>SPX Close</th>
+            <th>SMA200</th>
+            <th>RSI(14)</th>
+            <th>Signal</th>
+            <th>Leverage</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="spx3xSignalHistoryBody">
+          <tr><td colspan="7">Load data to compute signal history.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  </section>
+
+  <section id="spx3xBacktestPage" class="page">
+    <section class="card">
+      <h2>Back-test Overview</h2>
+      <p>
+        These results use the project backtest engine with <strong>listed 2x/3x ETP daily returns</strong> (SPY/SSO/UPRO) when available, synthetic daily-reset fill before ETP inception, $100 starting capital, $10 fixed annual inflows, and 0.10% rebalance cost on leverage changes.
+      </p>
+      <div class="kpi-grid">
+        <div class="metric-card"><span class="small">B1 CAGR</span><strong id="spx3xCagrKpi">30.29%</strong></div>
+        <div class="metric-card"><span class="small">B1 Max DD</span><strong id="spx3xMaxDdKpi">-48.56%</strong></div>
+        <div class="metric-card"><span class="small">B1 Sharpe</span><strong id="spx3xSharpeKpi">0.663</strong></div>
+        <div class="metric-card"><span class="small">B1 Sortino</span><strong id="spx3xSortinoKpi">0.730</strong></div>
+        <div class="metric-card"><span class="small">B1 Calmar</span><strong id="spx3xCalmarKpi">0.62</strong></div>
+        <div class="metric-card"><span class="small">B1 Trades</span><strong id="spx3xTradesKpi">32</strong></div>
+        <div class="metric-card"><span class="small">B1 End Value</span><strong id="spx3xEndValueKpi">$279,524</strong></div>
+        <div class="metric-card"><span class="small">B1 Avg Leverage</span><strong id="spx3xAvgLevKpi">3.0</strong></div>
+      </div>
+      <p id="spx3xBacktestCallout" class="callout">
+        B1 (SMA200 ±3% Band + RSI>30 Exit 3x) is the headline strategy at 20.85% CAGR. B2 uses 2x instead of 3x for lower drawdown. B3 scales leverage by RSI zones (1x–3x). B4 scales by VIX level (1x–3x). All four use the same SMA200 ±3% band and RSI>30 exit guard.
+      </p>
+    </section>
+    <section class="card section-gap">
+      <h2>Top 20 Strategy Drawdowns</h2>
+      <p class="small">Largest peak-to-trough declines on B1 strategy equity over the full back-test sample.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Depth</th>
+              <th>Peak</th>
+              <th>Trough</th>
+              <th>Recovery</th>
+              <th>Period</th>
+              <th>Trading days</th>
+            </tr>
+          </thead>
+          <tbody id="spx3xTopDrawdownsBody">
+            <tr><td colspan="7">Load historical data to compute drawdowns.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>SPX vs B1 Strategy Equity</h2>
+      <p class="small">
+        Browser-side chart preloaded from committed historical SPX daily closes, then updated by Refresh signal when
+        newer daily data is available. Both lines start at $100 and include $10 annual inflows. The chart uses a log
+        scale so the SPX buy-and-hold line remains visible beside the much larger strategy result.
+      </p>
+      <div class="range-controls range-toolbar" id="spx3xEquityRangeToolbar">
+      <div class="range-unit"><button type="button" data-spx3x-equity-range="1y">1Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="1y" data-range-direction="back" aria-label="Pan 1Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="1y" data-range-direction="forward" aria-label="Pan 1Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-equity-range="5y">5Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="5y" data-range-direction="back" aria-label="Pan 5Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="5y" data-range-direction="forward" aria-label="Pan 5Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-equity-range="10y">10Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="10y" data-range-direction="back" aria-label="Pan 10Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="10y" data-range-direction="forward" aria-label="Pan 10Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-equity-range="20y">20Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="20y" data-range-direction="back" aria-label="Pan 20Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="20y" data-range-direction="forward" aria-label="Pan 20Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-equity-range="30y">30Y</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="30y" data-range-direction="back" aria-label="Pan 30Y earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="30y" data-range-direction="forward" aria-label="Pan 30Y later">&#8250;</button></div></div>
+      <div class="range-unit"><button type="button" data-spx3x-equity-range="full" class="active">Full</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="1y" data-range-direction="back" aria-label="Pan 1 year earlier from end">&#8249;</button><button type="button" class="range-nudge" data-range-chart="spx3x-equity" data-range-step="1y" data-range-direction="forward" aria-label="Pan 1 year later toward end">&#8250;</button></div></div>
+        <div class="range-custom">
+          <input id="spx3xEquityChartStart" type="date" />
+          <input id="spx3xEquityChartEnd" type="date" />
+          <button id="spx3xApplyEquityCustomRange" type="button" class="secondary">Apply custom</button>
+        </div>
+      </div>
+      <div id="spx3xEquityChartMeta" class="small" style="margin-top: 10px;">Loading static historical back-test data...</div>
+      <div class="chart-box">
+        <svg id="spx3xEquityChart" viewBox="0 0 900 360" role="img" aria-label="SPX buy and hold versus B1 strategy equity chart"></svg>
+        <div id="spx3xEquityChartTooltip" class="chart-tooltip"></div>
+      </div>
+      <div class="legend">
+        <span class="strategy">Strategy equity (blue)</span>
+        <span class="spx">SPX reference (orange)</span>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>SPX 3x Full-Sample Strategy Comparison</h2>
+      <p class="small">Full sample: <span id="spx3xBacktestSampleRange">-</span>. Cash time is percent of sessions with zero risky exposure.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Strategy</th><th>CAGR</th><th>Ann Vol</th><th>Sharpe</th><th>Sortino</th><th>Max DD</th><th>End Value</th><th>Trades</th><th>% Cash</th><th>Avg Lev</th></tr>
+          </thead>
+          <tbody id="spx3xComparisonTableBody">
+            <tr><td>Buy & Hold SPY 1x</td><td>19.23%</td><td>19.13%</td><td>0.518</td><td>0.664</td><td>-48.58%</td><td>$19,520</td><td>2</td><td>0.00%</td><td>1.0</td></tr>
+            <tr><td>Buy & Hold SSO 2x</td><td>22.97%</td><td>37.69%</td><td>0.486</td><td>0.625</td><td>-81.45%</td><td>$49,320</td><td>2</td><td>0.00%</td><td>2.0</td></tr>
+            <tr><td>Buy & Hold UPRO 3x</td><td>20.50%</td><td>57.16%</td><td>0.449</td><td>0.575</td><td>-97.45%</td><td>$26,842</td><td>2</td><td>0.00%</td><td>3.0</td></tr>
+            <tr><td>SMA200 ±3% Band 3x</td><td>29.48%</td><td>35.24%</td><td>0.650</td><td>0.719</td><td>-48.56%</td><td>$231,884</td><td>32</td><td>28.77%</td><td>3.0</td></tr>
+            <tr><td>SMA200 ±3% Band 2x</td><td>25.67%</td><td>23.50%</td><td>0.695</td><td>0.767</td><td>-32.41%</td><td>$94,589</td><td>32</td><td>28.77%</td><td>2.0</td></tr>
+            <tr><td>SMA200 ±3% Band + RSI>30 Exit 3x</td><td>30.29%</td><td>35.80%</td><td>0.663</td><td>0.730</td><td>-48.56%</td><td>$279,524</td><td>32</td><td>28.60%</td><td>3.0</td></tr>
+            <tr><td>SMA200 ±3% Band + RSI>30 Exit 2x</td><td>26.25%</td><td>23.86%</td><td>0.707</td><td>0.778</td><td>-32.75%</td><td>$108,762</td><td>32</td><td>28.60%</td><td>2.0</td></tr>
+            <tr><td>SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x</td><td>23.39%</td><td>19.32%</td><td>0.818</td><td>0.834</td><td>-29.17%</td><td>$54,661</td><td>707</td><td>28.60%</td><td>1.3</td></tr>
+            <tr><td>SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x</td><td>24.43%</td><td>20.41%</td><td>0.781</td><td>0.786</td><td>-30.49%</td><td>$70,267</td><td>427</td><td>28.60%</td><td>1.3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>SPX 3x Strategy Details</h2>
+      <p>
+        The SMA200 ±3% band mechanism creates a neutral zone that prevents whipsaw exits during normal pullbacks.
+        The RSI(14) < 30 guard provides an additional safety exit when momentum collapses, even if price hasn't
+        crossed the lower band. B3 and B4 add leverage scaling within the in-market state: B3 uses RSI zones
+        (RSI≥70→3x, RSI≥55→2x, RSI≥40→1x), while B4 uses VIX levels (VIX<15→3x, VIX<22→2x, VIX<30→1x).
+      </p>
+      <p class="small">
+        All strategies use the same SMA200 ±3% band and RSI>30 exit guard. The difference is only in what
+        leverage is applied when in the market: B1 = fixed 3x, B2 = fixed 2x, B3 = RSI-scaled 1-3x, B4 = VIX-scaled 1-3x.
+      </p>
+    </section>
+  </section>
+
+  <section id="spx3xMonteCarloPage" class="page">
+    <section class="card">
+      <h2>Monte Carlo Validation</h2>
+      <p>
+        The Monte Carlo run stress-tests the <strong>SMA200 ±3% Band + RSI>30 Exit 3x</strong> strategy (B1) over 200 synthetic
+        10-year market paths. Paths are built with 21-trading-day blocks sampled from historical S&P and T-bill
+        data, preserving short-term clustering better than single-day random sampling.
+      </p>
+      <div class="kpi-grid">
+        <div class="metric-card"><span class="small">Simulations</span><strong>200</strong></div>
+        <div class="metric-card"><span class="small">Horizon</span><strong>10 years</strong></div>
+        <div class="metric-card"><span class="small">Median CAGR</span><strong id="spx3xMcMedianCagr">14.46%</strong></div>
+        <div class="metric-card"><span class="small">Median max DD</span><strong id="spx3xMcMedianMaxDd">-63.02%</strong></div>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>SPX 3x Monte Carlo Comparison</h2>
+      <p class="small">Summary across 200 simulated 10-year paths for B1–B4 strategies.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Strategy</th><th>Median CAGR</th><th>95% CI Low</th><th>95% CI High</th><th>Median Max DD</th><th>Median Sharpe</th><th>Median End Value</th><th>P(DD < -40%)</th></tr>
+          </thead>
+          <tbody id="spx3xMonteCarloTableBody">
+            <tr><td>SMA200 ±3% Band + RSI>30 Exit 3x</td><td>14.46%</td><td>-12.04%</td><td>49.38%</td><td>-63.02%</td><td>0.332</td><td>$368</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>SPX 3x Risk Probabilities</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Question</th><th>Monte Carlo result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Probability max drawdown is worse than -35%</td><td id="spx3xProbDd35">100.00%</td></tr>
+            <tr><td>Probability max drawdown is worse than -50%</td><td id="spx3xProbDd50">89.00%</td></tr>
+            <tr><td>Probability max drawdown is worse than -70%</td><td id="spx3xProbDd70">33.00%</td></tr>
+            <tr><td>Probability CAGR is above 0%</td><td id="spx3xProbCagr0">86.50%</td></tr>
+            <tr><td>Probability CAGR is above 10%</td><td id="spx3xProbCagr10">63.50%</td></tr>
+            <tr><td>Probability CAGR is above 20%</td><td id="spx3xProbCagr20">36.00%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>B1 Strategy Diagnostics</h2>
+      <p class="small">Full-sample diagnostics for the SMA200 ±3% Band + RSI>30 Exit 3x default strategy.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Value</th><th>Metric</th><th>Value</th></tr>
+          </thead>
+          <tbody id="spx3xDiagnosticsBody">
+            <tr><td>Cash days</td><td>28.60%</td><td>3x days</td><td>71.40%</td></tr>
+            <tr><td>Rebalances</td><td>32</td><td>Total trading costs</td><td>$3,730</td></tr>
+            <tr><td>Funding (in ETP)</td><td>embedded in ETP returns</td><td>Avg leverage</td><td>3.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="callout section-gap">
+        The Monte Carlo profile is attractive but not drawdown-free. A -35% drawdown remains plausible, while a
+        -50% drawdown was uncommon in this simulation. Position sizing should assume the strategy can still spend
+        long periods underwater.
+      </p>
+    </section>
+  </section>
+
+  </section>
+
   <section id="momentumStrategy" class="strategy">
     <section class="card" style="margin-bottom: 18px;">
       <h2>Momentum Strategy Research</h2>
@@ -1281,12 +1642,12 @@
               <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th><th>3x</th></tr>
             </thead>
             <tbody>
-              <tr><td>SMA20 3x/cash</td><td>35.76%</td><td>32.95%</td><td>3.754</td><td>-49.16%</td><td>$951,245</td><td>868</td><td>37.08%</td><td>62.92%</td></tr>
-              <tr><td>Guarded A10/B20 SMA20</td><td>29.39%</td><td>26.65%</td><td>3.232</td><td>-34.37%</td><td>$224,918</td><td>878</td><td>37.08%</td><td>26.46%</td></tr>
-              <tr><td>SMA20 2x/cash</td><td>26.23%</td><td>21.97%</td><td>3.794</td><td>-33.92%</td><td>$107,235</td><td>868</td><td>37.08%</td><td>0.00%</td></tr>
-              <tr><td>SMA20 1x/cash</td><td>16.05%</td><td>10.99%</td><td>3.913</td><td>-16.92%</td><td>$8,601</td><td>868</td><td>37.08%</td><td>0.00%</td></tr>
-              <tr><td>Buy &amp; hold 1x</td><td>11.38%</td><td>19.12%</td><td>0.517</td><td>-53.67%</td><td>$2,533</td><td>0</td><td>0.00%</td><td>0.00%</td></tr>
-            </tbody>
+              <tr><td>SMA20 3x/cash</td><td>6.20%</td><td>33.98%</td><td>0.330</td><td>-92.69%</td><td>$607</td><td>867</td><td>36.97%</td><td>63.03%</td></tr>
+              <tr><td>Guarded A10/B20 SMA20</td><td>8.08%</td><td>27.36%</td><td>0.420</td><td>-75.96%</td><td>$1,028</td><td>877</td><td>36.97%</td><td>26.46%</td></tr>
+              <tr><td>SMA20 2x/cash</td><td>6.65%</td><td>22.44%</td><td>0.403</td><td>-71.81%</td><td>$690</td><td>867</td><td>36.97%</td><td>0.00%</td></tr>
+              <tr><td>SMA20 1x/cash</td><td>6.11%</td><td>11.38%</td><td>0.434</td><td>-39.39%</td><td>$592</td><td>867</td><td>36.97%</td><td>0.00%</td></tr>
+              <tr><td>Buy & hold 1x</td><td>12.95%</td><td>19.31%</td><td>0.603</td><td>-52.45%</td><td>$3,852</td><td>2</td><td>0.00%</td><td>0.00%</td></tr>
+          </tbody>
           </table>
         </div>
         <p class="callout section-gap">
@@ -1386,10 +1747,12 @@
   const STATIC_SIGNAL_URL = "latest_signal.json";
   const STATIC_SITE_DATA_URL = "spx_guarded_site_data.json";
   const STATIC_ETP_URL = "spx_etp_returns.json";
+  const STATIC_SPX3X_SITE_DATA_URL = "spx_3x_levered_site_data.json";
+  const STATIC_SPX3X_ETP_URL = "spx_3x_levered_etp_returns.json";
   const AUTO_REFRESH_MS = 30 * 60 * 1000;
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
-  const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "1y": 252, "5y": 1260, "10y": 2520, "20y": 5040, "30y": 7560 };
+  const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "6m": 126, "1y": 252, "3y": 756, "5y": 1260, "10y": 2520, "20y": 5040, "30y": 7560 };
   const DEFAULT_GUARDED = {
     triggerA: 0.05,
     triggerB: 0.25,
@@ -1423,6 +1786,30 @@
   let lastSuccessfulWorkerRefreshAt = null;
   let staticSignalMetadata = null;
   let staticSiteData = null;
+
+  // SPX 3x Levered state
+  let spx3xChartRange = "1y";
+  let spx3xChartRangeOffset = 0;
+  let spx3xEquityChartRange = "full";
+  let spx3xEquityChartRangeOffset = 0;
+  let spx3xChartPoints = [];
+  let spx3xChartPlot = null;
+  let spx3xSignalPnlPoints = [];
+  let spx3xSignalPnlPlot = null;
+  let spx3xEquityChartPoints = [];
+  let spx3xEquityChartPlot = null;
+  let staticSpx3xSiteData = null;
+  let spx3xDataLoaded = false;
+
+  const DEFAULT_SPX3X = {
+    smaWindow: 200,
+    bandPct: 0.03,
+    rsiWindow: 14,
+    rsiExit: 30,
+    leverage: 3,
+    tradingCost: 0.001,
+    cashRate: 0.04,
+  };
 
   const $ = (id) => document.getElementById(id);
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
@@ -1628,6 +2015,17 @@
       renderTopDrawdownsTable();
       updateRangeNudgeStates();
       runCalculator();
+
+      // Also compute SPX 3x Levered signal from static data
+      if (rows.length >= 200) {
+        const eod3x = computeSpx3xSignal(rows);
+        renderSpx3xState(eod3x, eod3x);
+      }
+      // Load SPX 3x site data in background
+      loadStaticSpx3xSiteData().then(() => {
+        spx3xDataLoaded = true;
+      });
+
       setStatus(`Preloaded static market data: ${rows.length} rows from ${rows[0].date} to ${rows[rows.length - 1].date}.${describeStaticSignalMetadata(signalMetadata)} Auto-refresh will check live data next.`);
     } catch (err) {
       console.error(err);
@@ -1698,6 +2096,20 @@
         renderTopDrawdownsTable();
         updateRangeNudgeStates();
         runCalculator();
+
+        // Also compute SPX 3x Levered signal from the same rows
+        const eod3x = computeSpx3xSignal(rows);
+        const live3x = livePriceInfo?.price == null ? eod3x : computeSpx3xSignal(appendIntradayRow(rows, livePriceInfo.price));
+        renderSpx3xState(eod3x, live3x);
+        if (document.getElementById("spx3xSignalPage")?.classList.contains("active")) {
+          renderSpx3xPriceChart();
+          renderSpx3xSignalPnlChart();
+        }
+        if (document.getElementById("spx3xBacktestPage")?.classList.contains("active")) {
+          renderSpx3xEquityChart();
+          renderSpx3xTopDrawdownsTable();
+        }
+
         const quoteStatus = livePriceInfo?.price == null
           ? `Live quote failed; using last completed close. ${quoteWarning}`
           : `Live quote loaded from ${livePriceInfo.source}.`;
@@ -1712,6 +2124,15 @@
           renderBacktestEquityChart();
           renderTopDrawdownsTable();
           updateRangeNudgeStates();
+          // Also re-render SPX 3x charts from static data
+          if (document.getElementById("spx3xSignalPage")?.classList.contains("active")) {
+            renderSpx3xPriceChart();
+            renderSpx3xSignalPnlChart();
+          }
+          if (document.getElementById("spx3xBacktestPage")?.classList.contains("active")) {
+            renderSpx3xEquityChart();
+            renderSpx3xTopDrawdownsTable();
+          }
         } else {
           setStatus("Error: " + err.message, true);
         }
@@ -1817,7 +2238,9 @@
     document.querySelectorAll(".strategy").forEach((strategy) => {
       strategy.classList.toggle("active", strategy.id === strategyId);
     });
-    const strategyNavKey = strategyId === "momentumStrategy" ? "momentum" : "guarded";
+    const strategyNavKey = strategyId === "momentumStrategy" ? "momentum"
+      : strategyId === "spx3xLevered" ? "spx3x"
+      : "guarded";
     document.querySelectorAll('[aria-label="Strategies"] [data-strategy-nav]').forEach((link) => {
       link.classList.toggle("active", link.dataset.strategyNav === strategyNavKey);
     });
@@ -1827,6 +2250,25 @@
       ?? strategy.querySelector("[data-page-target].active")?.dataset.pageTarget
       ?? strategy.querySelector("[data-page-target]")?.dataset.pageTarget;
     if (activePage) showPage(activePage, strategy, options);
+
+    // Load SPX 3x data on first activation
+    if (strategyId === "spx3xLevered" && !spx3xDataLoaded) {
+      loadStaticSpx3xSiteData().then(() => {
+        spx3xDataLoaded = true;
+        const activePageNow = strategy.querySelector("[data-page-target].active")?.dataset.pageTarget;
+        if (activePageNow === "spx3xSignalPage") {
+          renderSpx3xPriceChart();
+          renderSpx3xSignalPnlChart();
+        }
+        if (activePageNow === "spx3xBacktestPage") {
+          renderSpx3xEquityChart();
+          renderSpx3xTopDrawdownsTable();
+        }
+        if (activePageNow === "spx3xMonteCarloPage") {
+          populateSpx3xMonteCarloPage();
+        }
+      });
+    }
   }
 
   function showPage(pageId, scope = document, options = {}) {
@@ -1846,6 +2288,17 @@
     if (pageId === "backtestPage") {
       renderBacktestEquityChart();
       renderTopDrawdownsTable();
+    }
+    if (pageId === "spx3xSignalPage") {
+      renderSpx3xPriceChart();
+      renderSpx3xSignalPnlChart();
+    }
+    if (pageId === "spx3xBacktestPage") {
+      renderSpx3xEquityChart();
+      renderSpx3xTopDrawdownsTable();
+    }
+    if (pageId === "spx3xMonteCarloPage") {
+      populateSpx3xMonteCarloPage();
     }
   }
 
@@ -3552,6 +4005,1301 @@
   startAutoRefresh();
   updateRangeNudgeStates();
   loadStaticHistoricalBacktest().then(() => refresh({ reason: "initial live", allowManualOverride: false, force: true }));
+
+  // =========================================================================
+  // SPX 3x Levered — Signal Computation
+  // =========================================================================
+
+  function computeRSI(closes, endIndex, window = 14) {
+    if (endIndex < window) return NaN;
+    let gains = 0, losses = 0;
+    for (let i = endIndex - window + 1; i <= endIndex; i++) {
+      const delta = closes[i] - closes[i - 1];
+      if (delta > 0) gains += delta; else losses -= delta;
+    }
+    let avgGain = gains / window;
+    let avgLoss = losses / window;
+    if (avgLoss === 0) return 100;
+    const rs = avgGain / avgLoss;
+    return 100 - (100 / (1 + rs));
+  }
+
+  function computeSpx3xSignal(rows) {
+    const SMA_WINDOW = 200;
+    const BAND_PCT = 0.03;
+    const RSI_WINDOW = 14;
+    const RSI_EXIT = 30;
+    const BASE_LEVERAGE = 3;
+
+    const closes = rows.map(r => r.close);
+    let prevLeverage = 0;
+    let targetLeverage = 0;
+    let regime = "cash";
+    let explanation = "";
+
+    for (let i = 0; i < rows.length; i++) {
+      const close = closes[i];
+      const sma200 = sma(closes, i, SMA_WINDOW);
+      const rsi = computeRSI(closes, i, RSI_WINDOW);
+
+      if (!Number.isFinite(sma200) || !Number.isFinite(rsi)) {
+        targetLeverage = 0;
+        prevLeverage = 0;
+        continue;
+      }
+
+      const upperBand = sma200 * (1 + BAND_PCT);
+      const lowerBand = sma200 * (1 - BAND_PCT);
+
+      if (close > upperBand) {
+        targetLeverage = BASE_LEVERAGE;
+        regime = "long";
+        explanation = "Close above SMA200 + 3% band; enter/hold 3x.";
+      } else if (close < lowerBand || rsi < RSI_EXIT) {
+        targetLeverage = 0;
+        regime = "cash";
+        explanation = close < lowerBand
+          ? "Close below SMA200 - 3% band; exit to cash."
+          : "RSI(14) dropped below 30; exit to cash.";
+      } else {
+        targetLeverage = prevLeverage;
+        explanation = "In neutral zone between bands with RSI ≥ 30; holding prior state.";
+      }
+      prevLeverage = targetLeverage;
+    }
+
+    const lastIndex = rows.length - 1;
+    const latest = rows[lastIndex];
+    const latestSma200 = sma(closes, lastIndex, SMA_WINDOW);
+    const latestRsi = computeRSI(closes, lastIndex, RSI_WINDOW);
+    const upperBand = latestSma200 * (1 + BAND_PCT);
+    const lowerBand = latestSma200 * (1 - BAND_PCT);
+
+    return {
+      latest,
+      latestSma200,
+      latestRsi,
+      upperBand,
+      lowerBand,
+      regime,
+      targetLeverage,
+      explanation,
+      aboveUpperBand: latest.close > upperBand,
+      belowLowerBand: latest.close < lowerBand,
+      rsiExitTriggered: latestRsi < RSI_EXIT,
+    };
+  }
+
+  function spx3xLeverageForParams(rows, spec) {
+    const closes = rows.map(r => r.close);
+    const leverage = [];
+    let prevLev = 0;
+
+    for (let i = 0; i < rows.length; i++) {
+      const sma200 = sma(closes, i, spec.smaWindow || 200);
+      const rsi = computeRSI(closes, i, spec.rsiWindow || 14);
+      if (!Number.isFinite(sma200) || !Number.isFinite(rsi)) {
+        leverage.push(0);
+        prevLev = 0;
+        continue;
+      }
+      const upperBand = sma200 * (1 + (spec.bandPct || 0.03));
+      const lowerBand = sma200 * (1 - (spec.bandPct || 0.03));
+      let target;
+      if (closes[i] > upperBand) {
+        target = spec.leverage || 3;
+      } else if (closes[i] < lowerBand || rsi < (spec.rsiExit || 30)) {
+        target = 0;
+      } else {
+        target = prevLev;
+      }
+      leverage.push(target);
+      prevLev = target;
+    }
+    return leverage;
+  }
+
+  function backtestParameterizedSpx3x(rows, spec) {
+    const leverage = spx3xLeverageForParams(rows, spec);
+    let aum = INITIAL_CAPITAL;
+    let peak = aum;
+    let prevLev = 1;
+    let prevYear = new Date(rows[0].date).getUTCFullYear();
+    let tradingCosts = 0;
+    let rebalances = 0;
+    const equity = [];
+    const returns = [];
+    const dailyCash = spec.cashRate / TRADING_DAYS;
+
+    for (let i = 0; i < rows.length; i++) {
+      const year = new Date(rows[i].date).getUTCFullYear();
+      if (i > 0 && year !== prevYear) {
+        aum += ANNUAL_INFLOW;
+        peak = Math.max(peak, aum);
+      }
+
+      const lev = i > 0 ? leverage[i - 1] : leverage[0];
+      if (Math.abs(lev - prevLev) > 1e-9) {
+        const cost = Math.abs(lev - prevLev) * aum * spec.tradingCost;
+        aum -= cost;
+        tradingCosts += cost;
+        rebalances += 1;
+        prevLev = lev;
+      }
+
+      let ret = 0;
+      if (i > 0) {
+        const spxRet = rows[i].close / rows[i - 1].close - 1;
+        if (lev <= 0) {
+          ret = dailyCash;
+        } else {
+          ret = EtpLeverage.dailyReturn(lev, spxRet, spec.cashRate, rows[i].date);
+        }
+        aum *= 1 + ret;
+      }
+
+      peak = Math.max(peak, aum);
+      equity.push(aum);
+      returns.push(ret);
+      prevYear = year;
+    }
+
+    return {
+      ...portfolioStats(rows, equity, returns),
+      tradingCosts,
+      rebalances,
+      leverage,
+      equity,
+    };
+  }
+
+  // =========================================================================
+  // SPX 3x Levered — State Rendering
+  // =========================================================================
+
+  function renderSpx3xState(eod, live) {
+    renderSpx3xSignal("spx3xEod", eod);
+    renderSpx3xSignal("spx3xLive", live);
+    $("spx3xLatestDate").textContent = eod.latest.date;
+    $("spx3xSma200").textContent = fmtMoney(eod.latestSma200);
+    $("spx3xRsi").textContent = Number.isFinite(eod.latestRsi) ? eod.latestRsi.toFixed(1) : "-";
+    $("spx3xUpperBand").textContent = fmtMoney(eod.upperBand);
+    $("spx3xLowerBand").textContent = fmtMoney(eod.lowerBand);
+    $("spx3xRegime").textContent = eod.regime;
+    $("spx3xAboveUpperBand").textContent = eod.aboveUpperBand ? "Yes" : "No";
+    $("spx3xBelowLowerBand").textContent = eod.belowLowerBand ? "Yes" : "No";
+    $("spx3xRsiExitTriggered").textContent = eod.rsiExitTriggered ? "Yes" : "No";
+  }
+
+  function renderSpx3xSignal(prefix, result) {
+    const lev = $(prefix + "Leverage");
+    if (!lev) return;
+    lev.textContent = result.targetLeverage === 0 ? "Cash" : result.targetLeverage.toFixed(0) + "x";
+    lev.className = "stat-value signal " + (result.targetLeverage >= 3 ? "bad" : result.targetLeverage >= 2 ? "warn" : "good");
+    const set = (id, value) => { const el = $(prefix + id); if (el && value != null) el.textContent = value; };
+    set("Explanation", result.explanation);
+    set("Date", result.latest.date);
+    set("Close", fmtMoney(result.latest.close));
+    set("Sma200", fmtMoney(result.latestSma200));
+    set("Rsi", Number.isFinite(result.latestRsi) ? result.latestRsi.toFixed(1) : "-");
+    set("UpperBand", fmtMoney(result.upperBand));
+    set("LowerBand", fmtMoney(result.lowerBand));
+    set("Regime", result.regime);
+  }
+
+  // =========================================================================
+  // SPX 3x Levered — Data Loading
+  // =========================================================================
+
+  async function loadStaticSpx3xSiteData() {
+    try {
+      const { text } = await fetchTextWithDiagnostics(STATIC_SPX3X_SITE_DATA_URL, "SPX 3x site data");
+      staticSpx3xSiteData = JSON.parse(text);
+      applySpx3xSiteData(staticSpx3xSiteData);
+      return staticSpx3xSiteData;
+    } catch (err) {
+      console.warn(err);
+      staticSpx3xSiteData = null;
+      return null;
+    }
+  }
+
+  function applySpx3xSiteData(data) {
+    if (!data) return;
+    const bt = data.default_backtest;
+    const mc = data.monte_carlo;
+    const sample = data;
+    const set = (id, value) => {
+      const el = $(id);
+      if (el && value != null) el.textContent = value;
+    };
+
+    // KPI cards
+    set("spx3xCagrKpi", bt?.cagr_pct);
+    set("spx3xMaxDdKpi", bt?.max_drawdown_pct);
+    set("spx3xSharpeKpi", bt?.sharpe_fmt);
+    set("spx3xSortinoKpi", bt?.sortino_fmt);
+    set("spx3xCalmarKpi", bt?.calmar_fmt);
+    set("spx3xTradesKpi", bt?.rebalances != null ? String(bt.rebalances) : "—");
+    set("spx3xEndValueKpi", bt?.end_value_fmt);
+    set("spx3xAvgLevKpi", bt?.avg_leverage != null ? bt.avg_leverage.toFixed(2) : "—");
+    set("spx3xBacktestSampleRange", sample ? `${sample.data_start} to ${sample.data_end}` : "-");
+
+    // Monte Carlo KPIs
+    set("spx3xMcMedianCagr", mc?.median_cagr_pct);
+    set("spx3xMcMedianMaxDd", mc?.median_max_dd_pct);
+
+    // Risk probabilities
+    set("spx3xProbDd35", mc?.prob_dd_exceeds_35pct_fmt);
+    set("spx3xProbDd50", mc?.prob_dd_exceeds_50pct_fmt);
+    set("spx3xProbDd70", mc?.prob_dd_exceeds_70pct_fmt);
+    set("spx3xProbCagr0", mc?.prob_positive_cagr_fmt);
+    set("spx3xProbCagr10", mc?.prob_cagr_exceeds_10pct_fmt);
+    set("spx3xProbCagr20", mc?.prob_cagr_exceeds_20pct_fmt);
+
+    // Backtest callout
+    if ($("spx3xBacktestCallout") && bt) {
+      $("spx3xBacktestCallout").textContent =
+        `B1 (SMA200 ±3% Band + RSI>30 Exit 3x) is the headline strategy at ${bt.cagr_pct} CAGR with ${bt.max_drawdown_pct} max drawdown. B2 uses 2x instead of 3x for lower drawdown. B3 scales leverage by RSI zones (1x–3x). B4 scales by VIX level (1x–3x). All four use the same SMA200 ±3% band and RSI>30 exit guard.`;
+    }
+
+    // Comparison table
+    const comparisonBody = $("spx3xComparisonTableBody");
+    if (comparisonBody && Array.isArray(data.comparison_table)) {
+      comparisonBody.innerHTML = data.comparison_table.map((row) => {
+        const isDefault = row.strategy === bt?.strategy;
+        const b = isDefault ? "<strong>" : "";
+        const be = isDefault ? "</strong>" : "";
+        return `<tr>
+          <td>${b}${row.strategy}${be}</td>
+          <td>${b}${row.cagr_pct || "-"}${be}</td>
+          <td>${row.ann_volatility_pct || "-"}</td>
+          <td>${row.sharpe_fmt || "-"}</td>
+          <td>${row.sortino_fmt || "-"}</td>
+          <td>${row.max_drawdown_pct || "-"}</td>
+          <td>${b}${row.end_value_fmt || "-"}${be}</td>
+          <td>${row.rebalances ?? "-"}</td>
+          <td>${row.cash_pct || "-"}</td>
+          <td>${row.avg_leverage_fmt || "-"}</td>
+        </tr>`;
+      }).join("");
+    }
+
+    // Diagnostics table
+    const diag = $("spx3xDiagnosticsBody");
+    if (diag && bt) {
+      diag.innerHTML = `
+        <tr><td>Cash days</td><td>${bt.pct_days_cash?.toFixed(2)}%</td><td>3x days</td><td>${bt.pct_days_3x?.toFixed(2)}%</td></tr>
+        <tr><td>Rebalances</td><td>${bt.rebalances ?? "-"}</td><td>Total trading costs</td><td>${bt.trading_costs_total != null ? fmtCompactCurrency(bt.trading_costs_total) : "-"}</td></tr>
+        <tr><td>Funding (in ETP)</td><td>embedded in ETP returns</td><td>Avg leverage</td><td>${bt.avg_leverage != null ? bt.avg_leverage.toFixed(2) : "-"}</td></tr>
+      `;
+    }
+
+    // Monte Carlo comparison table
+    const mcBody = $("spx3xMonteCarloTableBody");
+    if (mcBody && mc) {
+      const b1 = mc;
+      const b = "<strong>";
+      const be = "</strong>";
+      mcBody.innerHTML = `
+        <tr><td>${b}${b1.strategy || "SMA200 ±3% Band + RSI>30 Exit 3x"}${be}</td><td>${b}${b1.median_cagr_pct || "—"}${be}</td><td>${b1.cagr_ci_95_pct || "—"}</td><td>${b1.cagr_ci_95_pct || "—"}</td><td>${b}${b1.median_max_dd_pct || "—"}${be}</td><td>${b}${b1.median_sharpe_fmt || "—"}${be}</td><td>${b}${b1.median_end_value_fmt || "—"}${be}</td><td>${b1.prob_dd_exceeds_40pct ? b1.prob_dd_exceeds_40pct_fmt : "—"}</td></tr>
+      `;
+    }
+
+    // Populate signal history from site data
+    populateSpx3xSignalHistoryFromData(data);
+  }
+
+  function populateSpx3xSignalHistoryFromData(data) {
+    const tbody = $("spx3xSignalHistoryBody");
+    if (!tbody || !Array.isArray(data?.signal_history)) return;
+    const history = data.signal_history;
+    // Show last 20 signal changes
+    const changes = [];
+    for (let i = 0; i < history.length; i++) {
+      if (i === 0 || history[i].action !== "hold") {
+        changes.push(history[i]);
+      }
+    }
+    const display = changes.slice(-20);
+    if (!display.length) {
+      tbody.innerHTML = '<tr><td colspan="7">No signal history available.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = display.map((row) => {
+      const signalClass = row.signal === "long" ? "good" : "bad";
+      const levLabel = row.leverage === 0 ? "Cash" : row.leverage.toFixed(0) + "x";
+      return `<tr>
+        <td>${row.date}</td>
+        <td>${fmtMoney(row.spx_close)}</td>
+        <td>${row.sma200 != null ? fmtMoney(row.sma200) : "-"}</td>
+        <td>${row.rsi14 != null ? Number(row.rsi14).toFixed(1) : "-"}</td>
+        <td class="${signalClass}">${row.signal.toUpperCase()}</td>
+        <td>${levLabel}</td>
+        <td>${row.action}</td>
+      </tr>`;
+    }).join("");
+  }
+
+  // =========================================================================
+  // SPX 3x Levered — Chart Rendering
+  // =========================================================================
+
+  function spx3xChartDataForRange() {
+    if (!latestRows.length) return [];
+    const closes = latestRows.map((row) => row.close);
+    const leverage = spx3xLeverageForParams(latestRows, DEFAULT_SPX3X);
+    const fullData = latestRows.map((row, index) => ({
+      index,
+      date: row.date,
+      close: row.close,
+      sma200: sma(closes, index, 200),
+      upperBand: sma(closes, index, 200) * 1.03,
+      lowerBand: sma(closes, index, 200) * 0.97,
+      rsi: computeRSI(closes, index, 14),
+      leverage: leverage[index],
+      prevLeverage: index > 0 ? leverage[index - 1] : 0,
+    }));
+    const rows = sliceRowsByRange(spx3xChartRange, spx3xChartRangeOffset, $("spx3xChartStart"), $("spx3xChartEnd"));
+    const allowed = new Set(rows.map((row) => row.date));
+    return fullData.filter((row) => allowed.has(row.date));
+  }
+
+  function spx3xBuildTradeAnnotations(rows, leverage) {
+    const annotations = Array(rows.length).fill(null);
+    for (let i = 1; i < rows.length; i++) {
+      const prevLev = leverage[i - 1];
+      const nextLev = leverage[i];
+      if (nextLev === prevLev) continue;
+      const isBuy = nextLev > prevLev;
+      annotations[i] = {
+        type: isBuy ? "buy" : "sell",
+        action: isBuy ? "Enter 3x" : "Exit to cash",
+        from: prevLev,
+        to: nextLev,
+        transition: `${fmtLeverageLabel(prevLev)} → ${fmtLeverageLabel(nextLev)}`,
+        reason: isBuy
+          ? "Close crossed above SMA200 + 3% band; enter 3x."
+          : "Close crossed below SMA200 - 3% band or RSI(14) < 30; exit to cash.",
+      };
+    }
+    return annotations;
+  }
+
+  function spx3xTradeMarkerColor(trade) {
+    if (trade.type === "buy") return "#15803d";
+    return "#b42318";
+  }
+
+  function renderSpx3xPriceChart() {
+    const svg = $("spx3xPriceChart");
+    const data = spx3xChartDataForRange();
+    if (!svg || !latestRows.length) return;
+    if (data.length < 2) {
+      svg.innerHTML = "";
+      spx3xChartPoints = [];
+      spx3xChartPlot = null;
+      $("spx3xChartMeta").textContent = "Choose a wider date range to draw the chart.";
+      return;
+    }
+
+    const width = 900;
+    const height = 360;
+    const pad = { left: 66, right: 24, top: 24, bottom: 54 };
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
+    const values = data.flatMap((point) => {
+      const vals = [point.close];
+      if (Number.isFinite(point.sma200)) vals.push(point.sma200);
+      if (Number.isFinite(point.upperBand)) vals.push(point.upperBand);
+      if (Number.isFinite(point.lowerBand)) vals.push(point.lowerBand);
+      return vals;
+    });
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
+    const buffer = (maxValue - minValue) * 0.06 || maxValue * 0.02;
+    const yMin = minValue - buffer;
+    const yMax = maxValue + buffer;
+    const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * plotWidth;
+    const yScale = (value) => pad.top + ((yMax - value) / (yMax - yMin)) * plotHeight;
+    const linePath = (selector) => data
+      .map((point, index) => {
+        const value = selector(point);
+        return Number.isFinite(value) ? `${xScale(index).toFixed(2)},${yScale(value).toFixed(2)}` : null;
+      })
+      .filter(Boolean)
+      .join(" ");
+
+    spx3xChartPlot = {
+      left: pad.left,
+      right: width - pad.right,
+      top: pad.top,
+      bottom: height - pad.bottom,
+      width,
+      height,
+    };
+
+    const leverage = data.map(p => p.leverage);
+    const trades = spx3xBuildTradeAnnotations(data, leverage);
+    const visibleTradeCount = data.filter((point, i) => trades[i]).length;
+    const showTransitionLabels = visibleTradeCount > 0 && visibleTradeCount <= 25;
+
+    const markerForPoint = (point, index) => {
+      const trade = trades[index];
+      if (!trade) return "";
+      const x = xScale(index).toFixed(2);
+      const y = yScale(point.close).toFixed(2);
+      const color = spx3xTradeMarkerColor(trade);
+      const shape = trade.type === "buy"
+        ? '<polygon points="0,-6 -5,4.5 5,4.5" />'
+        : '<polygon points="-5,-4.5 5,-4.5 0,6" />';
+      const labelY = trade.type === "buy" ? -12 : 20;
+      const compactLabel = fmtMarkerLeverageLabel(trade.to);
+      const label = showTransitionLabels
+        ? `<g transform="translate(0 ${labelY})">
+            <rect x="-11" y="-8" width="22" height="14" rx="7" fill="#ffffff" stroke="${color}" stroke-width="1.1" />
+            <text x="0" y="2.5" fill="${color}" stroke="none" font-size="9" font-weight="800" text-anchor="middle">${compactLabel}</text>
+          </g>`
+        : "";
+      const title = `${trade.action} on ${point.date}: ${trade.transition} at close ${fmtMoney(point.close)}. ${trade.reason}`;
+      return `
+        <g transform="translate(${x} ${y})" fill="${color}" stroke="#ffffff" stroke-width="1.6" aria-label="${escapeSvgText(title)}">
+          <title>${escapeSvgText(title)}</title>
+          ${shape}
+          ${label}
+        </g>
+      `;
+    };
+
+    spx3xChartPoints = data.map((point, index) => ({
+      ...point,
+      x: xScale(index),
+      y: yScale(point.close),
+      trade: trades[index],
+    }));
+
+    const grid = [];
+    for (let i = 0; i <= 4; i++) {
+      const value = yMin + ((yMax - yMin) * i) / 4;
+      const y = yScale(value);
+      grid.push(`
+        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
+        <text x="${pad.left - 10}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtWholeNumber(value)}</text>
+      `);
+    }
+
+    const xTicks = chartDateTicks(data, xScale);
+    const xGrid = xTicks.map((tick, index) => {
+      const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
+      return `
+        <line x1="${tick.x.toFixed(2)}" y1="${pad.top}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom}" stroke="#eef0f3" stroke-width="1" />
+        <line x1="${tick.x.toFixed(2)}" y1="${height - pad.bottom}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom + 5}" stroke="#98a2b3" stroke-width="1" />
+        <text x="${tick.x.toFixed(2)}" y="${height - 18}" fill="#667085" font-size="12" font-weight="600" text-anchor="${anchor}">${tick.label}</text>
+      `;
+    });
+
+    const startDate = data[0].date;
+    const endDate = data[data.length - 1].date;
+    const last = data[data.length - 1];
+
+    svg.innerHTML = `
+      <defs>
+        <clipPath id="spx3xPricePlotClip"><rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" /></clipPath>
+      </defs>
+      <rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" rx="12" fill="#ffffff" stroke="#e5e7eb" />
+      ${xGrid.join("")}
+      ${grid.join("")}
+      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <g clip-path="url(#spx3xPricePlotClip)">
+        <polyline points="${linePath((point) => point.close)}" fill="none" stroke="#2563eb" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.sma200)}" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.upperBand)}" fill="none" stroke="#34c759" stroke-width="1.6" stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.lowerBand)}" fill="none" stroke="#ff3b30" stroke-width="1.6" stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round" />
+        ${data.map(markerForPoint).join("")}
+      </g>
+    `;
+    $("spx3xChartMeta").textContent = `${data.length} trading sessions shown: ${startDate} to ${endDate}. Latest close ${fmtMoney(last.close)}, SMA200 ${fmtMoney(last.sma200)}, RSI(14) ${Number.isFinite(last.rsi) ? last.rsi.toFixed(1) : "-"}.`;
+  }
+
+  function hideSpx3xChartTooltip() {
+    $("spx3xChartTooltip").style.display = "none";
+  }
+
+  function showSpx3xChartTooltip(event) {
+    if (!spx3xChartPoints.length || !spx3xChartPlot) return;
+    const svg = $("spx3xPriceChart");
+    const rect = svg.getBoundingClientRect();
+    const ctm = svg.getScreenCTM();
+    if (!ctm) {
+      hideSpx3xChartTooltip();
+      return;
+    }
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+    const cursor = svgPoint.matrixTransform(ctm.inverse());
+    const svgX = cursor.x;
+    const svgY = cursor.y;
+    if (
+      svgX < spx3xChartPlot.left ||
+      svgX > spx3xChartPlot.right ||
+      svgY < spx3xChartPlot.top ||
+      svgY > spx3xChartPlot.bottom
+    ) {
+      hideSpx3xChartTooltip();
+      return;
+    }
+
+    const ratio = (svgX - spx3xChartPlot.left) / (spx3xChartPlot.right - spx3xChartPlot.left);
+    const index = Math.max(0, Math.min(spx3xChartPoints.length - 1, Math.round(ratio * (spx3xChartPoints.length - 1))));
+    const nearest = spx3xChartPoints[index];
+    const tooltip = $("spx3xChartTooltip");
+    tooltip.innerHTML = `
+      <strong>${nearest.date}</strong><br>
+      Close: ${fmtMoney(nearest.close)}<br>
+      SMA200: ${fmtMoney(nearest.sma200)}<br>
+      RSI(14): ${Number.isFinite(nearest.rsi) ? nearest.rsi.toFixed(1) : "-"}<br>
+      Upper band: ${fmtMoney(nearest.upperBand)}<br>
+      Lower band: ${fmtMoney(nearest.lowerBand)}<br>
+      Signal: ${nearest.leverage === 0 ? "CASH" : "LONG 3x"}
+      ${nearest.trade ? `<br><span style="color: ${spx3xTradeMarkerColor(nearest.trade)}; font-weight: 700;">${nearest.trade.action}: ${nearest.trade.transition}</span><br>${nearest.trade.reason}` : ""}
+    `;
+    tooltip.style.display = "block";
+    const tooltipWidth = Math.max(tooltip.offsetWidth, 190);
+    const tooltipHeight = Math.max(tooltip.offsetHeight, 64);
+    const chartWidth = spx3xChartPlot.width || 900;
+    const chartHeight = spx3xChartPlot.height || 360;
+    const plotLeftPx = (spx3xChartPlot.left / chartWidth) * rect.width;
+    const plotRightPx = (spx3xChartPlot.right / chartWidth) * rect.width;
+    const pointerX = (nearest.x / chartWidth) * rect.width;
+    const pointerY = (nearest.y / chartHeight) * rect.height;
+    const openRight = pointerX + tooltipWidth + 18 < plotRightPx;
+    const left = openRight ? pointerX + 14 : Math.max(plotLeftPx, pointerX - tooltipWidth - 14);
+    const top = Math.max(10, Math.min(pointerY - tooltipHeight - 10, rect.height - tooltipHeight - 10));
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
+  }
+
+  // SPX 3x Signal P&L Chart
+  function spx3xSelectedWindowPnlData() {
+    const selected = spx3xChartDataForRange();
+    if (selected.length < 2) {
+      return { points: [], meta: "Choose a wider date range to draw selected-window equity P&L." };
+    }
+
+    const entryOffset = selected.findIndex((point) => point.leverage > 0 && point.prevLeverage <= 0);
+    let startOffset = entryOffset;
+    let startReason = "first in-window entry";
+    if (startOffset < 0) {
+      startOffset = selected.findIndex((point) => point.leverage > 0);
+      startReason = "already active at first selected exposure";
+    }
+    if (startOffset < 0) {
+      const startDate = selected[0].date;
+      const endDate = selected[selected.length - 1].date;
+      return {
+        points: [],
+        meta: `No B1 strategy market exposure from ${startDate} to ${endDate}; widen the range or choose a period with leverage above cash.`,
+      };
+    }
+
+    const active = selected.slice(startOffset);
+    if (active.length < 2) {
+      return {
+        points: [],
+        meta: `Entry found on ${active[0].date} at ${fmtLeverageLabel(active[0].leverage)}, but at least one later session is needed to draw P&L.`,
+      };
+    }
+
+    let strategy = INITIAL_CAPITAL;
+    let spx = INITIAL_CAPITAL;
+    let prevLev = active[0].leverage;
+    let tradingCosts = 0;
+    let rebalances = 0;
+    const dailyCash = DEFAULT_SPX3X.cashRate / TRADING_DAYS;
+    const points = [{
+      date: active[0].date,
+      strategy,
+      spx,
+      close: active[0].close,
+      leverage: active[0].leverage,
+      dailyReturn: 0,
+      trade: null,
+    }];
+
+    for (let i = 1; i < active.length; i++) {
+      const point = active[i];
+      const prevPoint = active[i - 1];
+      const lev = point.leverage;
+      if (Math.abs(lev - prevLev) > 1e-9) {
+        const cost = Math.abs(lev - prevLev) * strategy * DEFAULT_SPX3X.tradingCost;
+        strategy -= cost;
+        tradingCosts += cost;
+        rebalances += 1;
+        prevLev = lev;
+      }
+
+      const spxReturn = point.close / prevPoint.close - 1;
+      const dailyReturn = lev <= 0
+        ? dailyCash
+        : EtpLeverage.dailyReturn(lev, spxReturn, DEFAULT_SPX3X.cashRate, point.date);
+      strategy *= 1 + dailyReturn;
+      spx *= 1 + spxReturn;
+      points.push({
+        date: point.date,
+        strategy,
+        spx,
+        close: point.close,
+        leverage: lev,
+        dailyReturn,
+        trade: null,
+      });
+    }
+
+    const first = active[0];
+    const last = points[points.length - 1];
+    const transition = `${fmtLeverageLabel(first.prevLeverage)} → ${fmtLeverageLabel(first.leverage)}`;
+    const entryLabel = entryOffset >= 0 ? transition : fmtLeverageLabel(first.leverage);
+    const windowReturn = last.strategy / INITIAL_CAPITAL - 1;
+    const costLabel = rebalances
+      ? `Includes ${fmtWholeCurrency(tradingCosts)} in subsequent rebalance costs`
+      : "No subsequent rebalance costs";
+    return {
+      points,
+      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); ${fmtWholeCurrency(INITIAL_CAPITAL)} to ${fmtWholeCurrency(last.strategy)} (${fmtSignedPct(windowReturn)}). ${costLabel}; applies ${fmtPct(DEFAULT_SPX3X.cashRate)} annual cash/funding and ${(DEFAULT_SPX3X.tradingCost * 100).toFixed(2)}% trading cost on later leverage changes.`,
+    };
+  }
+
+  function hideSpx3xSignalPnlTooltip() {
+    $("spx3xSignalPnlTooltip").style.display = "none";
+    const hoverLayer = $("spx3xSignalPnlHoverLayer");
+    if (hoverLayer) hoverLayer.style.display = "none";
+  }
+
+  function renderSpx3xSignalPnlChart() {
+    const svg = $("spx3xSignalPnlChart");
+    if (!svg || !latestRows.length) return;
+    const { points, meta } = spx3xSelectedWindowPnlData();
+    if (points.length < 2) {
+      svg.innerHTML = "";
+      spx3xSignalPnlPoints = [];
+      spx3xSignalPnlPlot = null;
+      $("spx3xSignalPnlMeta").textContent = meta;
+      return;
+    }
+
+    const width = 900;
+    const height = 260;
+    const pad = { left: 64, right: 22, top: 18, bottom: 40 };
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
+    const values = points.flatMap((point) => [point.strategy, point.spx]).filter(Number.isFinite);
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
+    const buffer = Math.max((maxValue - minValue) * 0.12, maxValue * 0.015, 1);
+    const yMin = Math.max(0, minValue - buffer);
+    const yMax = maxValue + buffer;
+    const range = Math.max(yMax - yMin, 1e-9);
+    const xScale = (index) => pad.left + (index / Math.max(points.length - 1, 1)) * plotWidth;
+    const yScale = (value) => pad.top + ((yMax - value) / range) * plotHeight;
+    const linePath = (selector) => points
+      .map((point, index) => {
+        const value = selector(point);
+        return Number.isFinite(value) ? `${xScale(index).toFixed(2)},${yScale(value).toFixed(2)}` : null;
+      })
+      .filter(Boolean)
+      .join(" ");
+
+    spx3xSignalPnlPlot = {
+      left: pad.left,
+      right: width - pad.right,
+      top: pad.top,
+      bottom: height - pad.bottom,
+      width,
+      height,
+    };
+    spx3xSignalPnlPoints = points.map((point, index) => ({
+      ...point,
+      x: xScale(index),
+      strategyY: yScale(point.strategy),
+      spxY: yScale(point.spx),
+    }));
+
+    const yGrid = [];
+    for (let i = 0; i <= 4; i++) {
+      const value = yMin + (range * i) / 4;
+      const y = yScale(value);
+      yGrid.push(`
+        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="#e5e7eb" stroke-width="1" />
+        <text x="${pad.left - 10}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtWholeCurrency(value)}</text>
+      `);
+    }
+    const xTicks = chartDateTicks(points, xScale);
+    const xGrid = xTicks.map((tick, index) => {
+      const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
+      return `
+        <line x1="${tick.x.toFixed(2)}" y1="${pad.top}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom}" stroke="#eef0f3" stroke-width="1" />
+        <text x="${tick.x.toFixed(2)}" y="${height - 14}" fill="#667085" font-size="12" font-weight="600" text-anchor="${anchor}">${tick.label}</text>
+      `;
+    });
+
+    svg.innerHTML = `
+      <defs>
+        <clipPath id="spx3xSignalPnlPlotClip"><rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" /></clipPath>
+      </defs>
+      <rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" rx="12" fill="#ffffff" stroke="#e5e7eb" />
+      ${xGrid.join("")}
+      ${yGrid.join("")}
+      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <g clip-path="url(#spx3xSignalPnlPlotClip)">
+        <polyline points="${linePath((point) => point.strategy)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.spx)}" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      <g id="spx3xSignalPnlHoverLayer" style="display: none;">
+        <line id="spx3xSignalPnlHoverLine" x1="0" y1="${pad.top}" x2="0" y2="${height - pad.bottom}" stroke="#475467" stroke-width="1" stroke-dasharray="4 4" />
+        <circle id="spx3xSignalPnlHoverStrategy" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+        <circle id="spx3xSignalPnlHoverSpx" r="4" fill="#d97706" stroke="#ffffff" stroke-width="2" />
+      </g>
+      <rect id="spx3xSignalPnlHoverCapture" x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" fill="transparent" pointer-events="all" />
+    `;
+    const hoverCapture = $("spx3xSignalPnlHoverCapture");
+    if (hoverCapture) {
+      hoverCapture.addEventListener("mousemove", showSpx3xSignalPnlTooltip);
+      hoverCapture.addEventListener("mouseleave", hideSpx3xSignalPnlTooltip);
+    }
+    $("spx3xSignalPnlMeta").textContent = meta;
+  }
+
+  function showSpx3xSignalPnlTooltip(event) {
+    if (!spx3xSignalPnlPoints.length || !spx3xSignalPnlPlot) return;
+    const svg = $("spx3xSignalPnlChart");
+    const rect = svg.getBoundingClientRect();
+    const ctm = svg.getScreenCTM();
+    if (!ctm) {
+      hideSpx3xSignalPnlTooltip();
+      return;
+    }
+    const chartWidth = spx3xSignalPnlPlot.width || 900;
+    const chartHeight = spx3xSignalPnlPlot.height || 260;
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+    const cursor = svgPoint.matrixTransform(ctm.inverse());
+    const svgX = cursor.x;
+    const svgY = cursor.y;
+    if (
+      svgX < spx3xSignalPnlPlot.left ||
+      svgX > spx3xSignalPnlPlot.right ||
+      svgY < spx3xSignalPnlPlot.top ||
+      svgY > spx3xSignalPnlPlot.bottom
+    ) {
+      hideSpx3xSignalPnlTooltip();
+      return;
+    }
+
+    const ratio = (svgX - spx3xSignalPnlPlot.left) / (spx3xSignalPnlPlot.right - spx3xSignalPnlPlot.left);
+    const index = Math.max(0, Math.min(spx3xSignalPnlPoints.length - 1, Math.round(ratio * (spx3xSignalPnlPoints.length - 1))));
+    const nearest = spx3xSignalPnlPoints[index];
+    const nearestX = nearest.x;
+    const hoverLayer = $("spx3xSignalPnlHoverLayer");
+    if (hoverLayer) {
+      hoverLayer.style.display = "block";
+      $("spx3xSignalPnlHoverLine").setAttribute("x1", nearestX.toFixed(2));
+      $("spx3xSignalPnlHoverLine").setAttribute("x2", nearestX.toFixed(2));
+      $("spx3xSignalPnlHoverStrategy").setAttribute("cx", nearestX.toFixed(2));
+      $("spx3xSignalPnlHoverStrategy").setAttribute("cy", nearest.strategyY.toFixed(2));
+      $("spx3xSignalPnlHoverSpx").setAttribute("cx", nearestX.toFixed(2));
+      $("spx3xSignalPnlHoverSpx").setAttribute("cy", nearest.spxY.toFixed(2));
+    }
+
+    const tooltip = $("spx3xSignalPnlTooltip");
+    tooltip.innerHTML = `
+      <strong>${nearest.date}</strong><br>
+      Strategy equity: ${fmtWholeCurrency(nearest.strategy)} (${fmtSignedPct(nearest.strategy / INITIAL_CAPITAL - 1)})<br>
+      SPX buy & hold: ${fmtWholeCurrency(nearest.spx)} (${fmtSignedPct(nearest.spx / INITIAL_CAPITAL - 1)})<br>
+      Leverage: ${fmtLeverageLabel(nearest.leverage)}
+    `;
+    tooltip.style.display = "block";
+    const tooltipWidth = Math.max(tooltip.offsetWidth, 235);
+    const tooltipHeight = Math.max(tooltip.offsetHeight, 78);
+    const plotLeftPx = (spx3xSignalPnlPlot.left / chartWidth) * rect.width;
+    const plotRightPx = (spx3xSignalPnlPlot.right / chartWidth) * rect.width;
+    const pointerX = (nearestX / chartWidth) * rect.width;
+    const pointerY = (Math.min(nearest.strategyY, nearest.spxY) / chartHeight) * rect.height;
+    const openRight = pointerX + tooltipWidth + 18 < plotRightPx;
+    const left = openRight ? pointerX + 14 : Math.max(plotLeftPx, pointerX - tooltipWidth - 14);
+    const top = Math.max(10, Math.min(pointerY - tooltipHeight - 10, rect.height - tooltipHeight - 10));
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
+  }
+
+  // SPX 3x Equity Chart
+  function spx3xEquityDataForRange() {
+    if (!latestRows.length) return [];
+    const strategy = backtestParameterizedSpx3x(latestRows, DEFAULT_SPX3X).equity;
+    const spx = buyHoldWithInflows(latestRows);
+    const fullData = latestRows.map((row, index) => ({
+      date: row.date,
+      strategy: strategy[index],
+      spx: spx[index],
+    }));
+    const rows = sliceRowsByRange(spx3xEquityChartRange, spx3xEquityChartRangeOffset, $("spx3xEquityChartStart"), $("spx3xEquityChartEnd"));
+    const allowed = new Set(rows.map((row) => row.date));
+    return fullData.filter((row) => allowed.has(row.date));
+  }
+
+  function hideSpx3xEquityChartTooltip() {
+    $("spx3xEquityChartTooltip").style.display = "none";
+    const hoverLayer = $("spx3xEquityHoverLayer");
+    if (hoverLayer) hoverLayer.style.display = "none";
+  }
+
+  function renderSpx3xEquityChart() {
+    const svg = $("spx3xEquityChart");
+    if (!svg || !latestRows.length) return;
+    const data = rebaseEquityToReturns(spx3xEquityDataForRange());
+    if (data.length < 2) {
+      svg.innerHTML = "";
+      spx3xEquityChartPoints = [];
+      spx3xEquityChartPlot = null;
+      $("spx3xEquityChartMeta").textContent = "Choose a wider date range to draw the equity chart.";
+      return;
+    }
+
+    const width = 900;
+    const height = 360;
+    const pad = { left: 76, right: 24, top: 24, bottom: 54 };
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
+    const returns = data.flatMap((point) => [point.strategyReturn, point.spxReturn]).filter(Number.isFinite);
+    let yMin = Math.min(...returns, 0);
+    let yMax = Math.max(...returns, 0);
+    const buffer = Math.max((yMax - yMin) * 0.1, 0.02);
+    yMin -= buffer;
+    yMax += buffer;
+    const returnRange = Math.max(yMax - yMin, 1e-9);
+    const xScale = (index) => pad.left + (index / Math.max(data.length - 1, 1)) * plotWidth;
+    const yScale = (ratio) => pad.top + ((yMax - ratio) / returnRange) * plotHeight;
+    const linePath = (selector) => data
+      .map((point, index) => `${xScale(index).toFixed(2)},${yScale(selector(point)).toFixed(2)}`)
+      .join(" ");
+
+    spx3xEquityChartPlot = {
+      left: pad.left,
+      right: width - pad.right,
+      top: pad.top,
+      bottom: height - pad.bottom,
+      width,
+      height,
+    };
+    spx3xEquityChartPoints = data.map((point, index) => ({
+      ...point,
+      x: xScale(index),
+      strategyY: yScale(point.strategyReturn),
+      spxY: yScale(point.spxReturn),
+    }));
+
+    const yTicks = returnAxisTicks(yMin, yMax);
+    const zeroLine = yMin <= 0 && yMax >= 0
+      ? `<line x1="${pad.left}" y1="${yScale(0).toFixed(2)}" x2="${width - pad.right}" y2="${yScale(0).toFixed(2)}" stroke="#98a2b3" stroke-width="1.2" stroke-dasharray="5 4" />`
+      : "";
+    const yGrid = yTicks.map((value) => {
+      const y = yScale(value);
+      const isZero = Math.abs(value) < 1e-9;
+      return `
+        <line x1="${pad.left}" y1="${y.toFixed(2)}" x2="${width - pad.right}" y2="${y.toFixed(2)}" stroke="${isZero ? "#d0d5dd" : "#e5e7eb"}" stroke-width="1" />
+        <text x="${pad.left - 12}" y="${(y + 4).toFixed(2)}" fill="#667085" font-size="12" font-weight="600" text-anchor="end">${fmtReturnAxis(value)}</text>
+      `;
+    });
+    const xTicks = chartDateTicks(data, xScale);
+    const xGrid = xTicks.map((tick, index) => {
+      const anchor = index === 0 ? "start" : index === xTicks.length - 1 ? "end" : "middle";
+      return `
+        <line x1="${tick.x.toFixed(2)}" y1="${pad.top}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom}" stroke="#eef0f3" stroke-width="1" />
+        <line x1="${tick.x.toFixed(2)}" y1="${height - pad.bottom}" x2="${tick.x.toFixed(2)}" y2="${height - pad.bottom + 5}" stroke="#98a2b3" stroke-width="1" />
+        <text x="${tick.x.toFixed(2)}" y="${height - 18}" fill="#667085" font-size="12" font-weight="600" text-anchor="${anchor}">${tick.label}</text>
+      `;
+    });
+
+    const startDate = data[0].date;
+    const endDate = data[data.length - 1].date;
+    svg.innerHTML = `
+      <defs>
+        <clipPath id="spx3xEquityPlotClip"><rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" /></clipPath>
+      </defs>
+      <rect x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" rx="12" fill="#ffffff" stroke="#e5e7eb" />
+      ${xGrid.join("")}
+      ${yGrid.join("")}
+      ${zeroLine}
+      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="#98a2b3" stroke-width="1.2" />
+      <g clip-path="url(#spx3xEquityPlotClip)">
+        <polyline points="${linePath((point) => point.strategyReturn)}" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${linePath((point) => point.spxReturn)}" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      <g id="spx3xEquityHoverLayer" style="display: none;">
+        <line id="spx3xEquityHoverLine" x1="0" y1="${pad.top}" x2="0" y2="${height - pad.bottom}" stroke="#475467" stroke-width="1" stroke-dasharray="4 4" />
+        <circle id="spx3xEquityHoverStrategy" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+        <circle id="spx3xEquityHoverSpx" r="4" fill="#d97706" stroke="#ffffff" stroke-width="2" />
+      </g>
+      <rect id="spx3xEquityHoverCapture" x="${pad.left}" y="${pad.top}" width="${plotWidth}" height="${plotHeight}" fill="transparent" pointer-events="all" />
+    `;
+    const hoverCapture = $("spx3xEquityHoverCapture");
+    if (hoverCapture) {
+      hoverCapture.addEventListener("mousemove", showSpx3xEquityChartTooltip);
+      hoverCapture.addEventListener("mouseleave", hideSpx3xEquityChartTooltip);
+    }
+    const last = data[data.length - 1];
+    $("spx3xEquityChartMeta").textContent = `${latestRowsSourceLabel()}; ${data.length} trading sessions from ${startDate} to ${endDate}. Cumulative return rebased to 0% at range start: strategy ${fmtSignedPct(last.strategyReturn)} vs SPX buy & hold ${fmtSignedPct(last.spxReturn)}.`;
+  }
+
+  function showSpx3xEquityChartTooltip(event) {
+    if (!spx3xEquityChartPoints.length || !spx3xEquityChartPlot) return;
+    const svg = $("spx3xEquityChart");
+    const rect = svg.getBoundingClientRect();
+    const chartWidth = spx3xEquityChartPlot.width || 900;
+    const chartHeight = spx3xEquityChartPlot.height || 360;
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+    const cursor = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
+    const svgX = cursor.x;
+    const svgY = cursor.y;
+    if (
+      svgX < spx3xEquityChartPlot.left ||
+      svgX > spx3xEquityChartPlot.right ||
+      svgY < spx3xEquityChartPlot.top ||
+      svgY > spx3xEquityChartPlot.bottom
+    ) {
+      hideSpx3xEquityChartTooltip();
+      return;
+    }
+
+    const ratio = (svgX - spx3xEquityChartPlot.left) / (spx3xEquityChartPlot.right - spx3xEquityChartPlot.left);
+    const index = Math.max(0, Math.min(spx3xEquityChartPoints.length - 1, Math.round(ratio * (spx3xEquityChartPoints.length - 1))));
+    const nearest = spx3xEquityChartPoints[index];
+    const nearestX = nearest.x;
+    const hoverLayer = $("spx3xEquityHoverLayer");
+    if (hoverLayer) {
+      hoverLayer.style.display = "block";
+      $("spx3xEquityHoverLine").setAttribute("x1", nearestX.toFixed(2));
+      $("spx3xEquityHoverLine").setAttribute("x2", nearestX.toFixed(2));
+      $("spx3xEquityHoverStrategy").setAttribute("cx", nearestX.toFixed(2));
+      $("spx3xEquityHoverStrategy").setAttribute("cy", nearest.strategyY.toFixed(2));
+      $("spx3xEquityHoverSpx").setAttribute("cx", nearestX.toFixed(2));
+      $("spx3xEquityHoverSpx").setAttribute("cy", nearest.spxY.toFixed(2));
+    }
+
+    const tooltip = $("spx3xEquityChartTooltip");
+    tooltip.innerHTML = `
+      <strong>${nearest.date}</strong><br>
+      B1 strategy: ${fmtSignedPct(nearest.strategyReturn)}<br>
+      SPX buy & hold: ${fmtSignedPct(nearest.spxReturn)}
+    `;
+    tooltip.style.display = "block";
+    const tooltipWidth = Math.max(tooltip.offsetWidth, 220);
+    const tooltipHeight = Math.max(tooltip.offsetHeight, 64);
+    const plotLeftPx = (spx3xEquityChartPlot.left / chartWidth) * rect.width;
+    const plotRightPx = (spx3xEquityChartPlot.right / chartWidth) * rect.width;
+    const pointerX = (nearestX / chartWidth) * rect.width;
+    const pointerY = (Math.min(nearest.strategyY, nearest.spxY) / chartHeight) * rect.height;
+    const openRight = pointerX + tooltipWidth + 18 < plotRightPx;
+    const left = openRight ? pointerX + 14 : Math.max(plotLeftPx, pointerX - tooltipWidth - 14);
+    const top = Math.max(10, Math.min(pointerY - tooltipHeight - 10, rect.height - tooltipHeight - 10));
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
+  }
+
+  // SPX 3x Top Drawdowns
+  function computeSpx3xStrategyDrawdownEpisodes() {
+    if (!latestRows.length) return [];
+    const equity = backtestParameterizedSpx3x(latestRows, DEFAULT_SPX3X).equity;
+    const episodes = [];
+    let peakValue = equity[0];
+    let peakDate = latestRows[0].date;
+    let inEpisode = false;
+    let episodePeakDate = peakDate;
+    let episodePeakValue = peakValue;
+    let troughDate = peakDate;
+    let troughValue = peakValue;
+
+    for (let i = 0; i < latestRows.length; i++) {
+      const value = equity[i];
+      const date = latestRows[i].date;
+      if (value >= peakValue) {
+        if (inEpisode) {
+          const peakIdx = latestRows.findIndex((row) => row.date === episodePeakDate);
+          const troughIdx = latestRows.findIndex((row) => row.date === troughDate);
+          episodes.push({
+            peakDate: episodePeakDate,
+            troughDate,
+            recoveryDate: date,
+            depth: troughValue / episodePeakValue - 1,
+            tradingDays: Math.max(0, troughIdx - peakIdx),
+            periodStart: episodePeakDate,
+            periodEnd: date,
+          });
+          inEpisode = false;
+        }
+        peakValue = value;
+        peakDate = date;
+        continue;
+      }
+      if (!inEpisode) {
+        inEpisode = true;
+        episodePeakDate = peakDate;
+        episodePeakValue = peakValue;
+        troughDate = date;
+        troughValue = value;
+      } else if (value < troughValue) {
+        troughDate = date;
+        troughValue = value;
+      }
+    }
+
+    if (inEpisode) {
+      const lastDate = latestRows[latestRows.length - 1].date;
+      const peakIdx = latestRows.findIndex((row) => row.date === episodePeakDate);
+      const troughIdx = latestRows.findIndex((row) => row.date === troughDate);
+      episodes.push({
+        peakDate: episodePeakDate,
+        troughDate,
+        recoveryDate: null,
+        depth: troughValue / episodePeakValue - 1,
+        tradingDays: troughIdx - peakIdx,
+        periodStart: episodePeakDate,
+        periodEnd: lastDate,
+      });
+    }
+    return episodes;
+  }
+
+  function renderSpx3xTopDrawdownsTable() {
+    const tbody = $("spx3xTopDrawdownsBody");
+    if (!tbody) return;
+    if (!latestRows.length) {
+      tbody.innerHTML = '<tr><td colspan="7">Load historical data to compute drawdowns.</td></tr>';
+      return;
+    }
+    const top = computeSpx3xStrategyDrawdownEpisodes()
+      .sort((a, b) => a.depth - b.depth)
+      .slice(0, 20);
+    if (!top.length) {
+      tbody.innerHTML = '<tr><td colspan="7">No drawdown episodes found.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = top.map((episode, index) => {
+      const recovery = episode.recoveryDate || "Open";
+      const period = `${episode.periodStart} to ${episode.periodEnd}`;
+      return `<tr>
+        <td>${index + 1}</td>
+        <td>${fmtPct(episode.depth)}</td>
+        <td>${episode.peakDate}</td>
+        <td>${episode.troughDate}</td>
+        <td>${recovery}</td>
+        <td>${period}</td>
+        <td>${episode.tradingDays}</td>
+      </tr>`;
+    }).join("");
+  }
+
+  // SPX 3x Monte Carlo Page
+  function populateSpx3xMonteCarloPage() {
+    if (!staticSpx3xSiteData) return;
+    applySpx3xSiteData(staticSpx3xSiteData);
+  }
+
+  // =========================================================================
+  // SPX 3x Levered — Range Controls & Event Bindings
+  // =========================================================================
+
+  function setActiveSpx3xRangeButton(range) {
+    document.querySelectorAll("[data-spx3x-range]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.spx3xRange === range);
+    });
+  }
+
+  function setActiveSpx3xEquityRangeButton(range) {
+    document.querySelectorAll("[data-spx3x-equity-range]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.spx3xEquityRange === range);
+    });
+  }
+
+  function spx3xRangeWindowLength(range) {
+    if (range === "full" || range === "all") return latestRows.length;
+    if (range === "custom") return null;
+    return RANGE_SESSIONS[range] || latestRows.length;
+  }
+
+  function spx3xMaxRangeOffset(range) {
+    if (!latestRows.length || range === "custom") return 0;
+    const len = spx3xRangeWindowLength(range);
+    return Math.max(0, latestRows.length - len);
+  }
+
+  function spx3xUpdateRangeNudgeStates() {
+    document.querySelectorAll("#spx3xSignalRangeToolbar .range-nudge, #spx3xEquityRangeToolbar .range-nudge").forEach((button) => {
+      const chartKind = button.dataset.rangeChart;
+      const stepKey = button.dataset.rangeStep;
+      const direction = button.dataset.rangeDirection;
+      const range = chartKind === "spx3x-equity" ? spx3xEquityChartRange : spx3xChartRange;
+      const offset = chartKind === "spx3x-equity" ? spx3xEquityChartRangeOffset : spx3xChartRangeOffset;
+      const step = RANGE_SESSIONS[stepKey];
+      if (!step) return;
+      if (direction === "forward") {
+        button.disabled = range === "custom" || offset === 0;
+        return;
+      }
+      if (range === "custom") {
+        button.disabled = false;
+        return;
+      }
+      const activeLen = range === stepKey ? spx3xRangeWindowLength(range) : step;
+      const projectedOffset = range === stepKey ? offset + step : step;
+      button.disabled = projectedOffset > spx3xMaxRangeOffset(stepKey) && range !== "full" && range !== "all";
+    });
+  }
+
+  function spx3xNudgeCustomRange(chartKind, step, direction) {
+    const startEl = chartKind === "spx3x-equity" ? $("spx3xEquityChartStart") : $("spx3xChartStart");
+    const endEl = chartKind === "spx3x-equity" ? $("spx3xEquityChartEnd") : $("spx3xChartEnd");
+    const startValue = startEl.value || latestRows[0].date;
+    const endValue = endEl.value || latestRows[latestRows.length - 1].date;
+    let startIdx = latestRows.findIndex((row) => row.date >= startValue);
+    let endIdx = latestRows.length - 1;
+    for (let i = latestRows.length - 1; i >= 0; i--) {
+      if (latestRows[i].date <= endValue) {
+        endIdx = i;
+        break;
+      }
+    }
+    if (startIdx < 0) startIdx = 0;
+    const delta = direction === "back" ? -step : step;
+    const newStartIdx = Math.max(0, Math.min(latestRows.length - 1, startIdx + delta));
+    const newEndIdx = Math.max(newStartIdx, Math.min(latestRows.length - 1, endIdx + delta));
+    startEl.value = latestRows[newStartIdx].date;
+    endEl.value = latestRows[newEndIdx].date;
+    if (chartKind === "spx3x-equity") {
+      spx3xEquityChartRange = "custom";
+      setActiveSpx3xEquityRangeButton("custom");
+      renderSpx3xEquityChart();
+    } else {
+      spx3xChartRange = "custom";
+      setActiveSpx3xRangeButton("custom");
+      renderSpx3xPriceChart();
+      renderSpx3xSignalPnlChart();
+    }
+    spx3xUpdateRangeNudgeStates();
+  }
+
+  function spx3xNudgeChartWindow(chartKind, stepKey, direction) {
+    if (!latestRows.length) return;
+    const step = RANGE_SESSIONS[stepKey];
+    if (!step) return;
+    let range = chartKind === "spx3x-equity" ? spx3xEquityChartRange : spx3xChartRange;
+    let offset = chartKind === "spx3x-equity" ? spx3xEquityChartRangeOffset : spx3xChartRangeOffset;
+
+    if (range === "custom") {
+      spx3xNudgeCustomRange(chartKind, step, direction);
+      return;
+    }
+
+    if ((range === "full" || range === "all") && chartKind === "spx3x-equity") {
+      range = stepKey;
+      offset = direction === "back" ? step : 0;
+    } else if (range !== stepKey) {
+      range = stepKey;
+      offset = direction === "back" ? step : 0;
+    } else {
+      offset = direction === "back"
+        ? Math.min(spx3xMaxRangeOffset(stepKey), offset + step)
+        : Math.max(0, offset - step);
+    }
+
+    if (chartKind === "spx3x-equity") {
+      spx3xEquityChartRange = range;
+      spx3xEquityChartRangeOffset = offset;
+      setActiveSpx3xEquityRangeButton(range);
+      renderSpx3xEquityChart();
+    } else {
+      spx3xChartRange = range;
+      spx3xChartRangeOffset = offset;
+      setActiveSpx3xRangeButton(range);
+      renderSpx3xPriceChart();
+      renderSpx3xSignalPnlChart();
+    }
+    spx3xUpdateRangeNudgeStates();
+  }
+
+  // Event bindings for SPX 3x Levered tab
+  $("spx3xRefresh").addEventListener("click", () => refresh({ reason: "manual", allowManualOverride: true, force: true }));
+
+  document.querySelectorAll("[data-spx3x-range]").forEach((button) => {
+    button.addEventListener("click", () => {
+      spx3xChartRange = button.dataset.spx3xRange;
+      spx3xChartRangeOffset = 0;
+      $("spx3xChartStart").value = "";
+      $("spx3xChartEnd").value = "";
+      setActiveSpx3xRangeButton(spx3xChartRange);
+      renderSpx3xPriceChart();
+      renderSpx3xSignalPnlChart();
+      spx3xUpdateRangeNudgeStates();
+    });
+  });
+
+  document.querySelectorAll("[data-spx3x-equity-range]").forEach((button) => {
+    button.addEventListener("click", () => {
+      spx3xEquityChartRange = button.dataset.spx3xEquityRange;
+      spx3xEquityChartRangeOffset = 0;
+      $("spx3xEquityChartStart").value = "";
+      $("spx3xEquityChartEnd").value = "";
+      setActiveSpx3xEquityRangeButton(spx3xEquityChartRange);
+      renderSpx3xEquityChart();
+      spx3xUpdateRangeNudgeStates();
+    });
+  });
+
+  document.querySelectorAll("#spx3xSignalRangeToolbar .range-nudge, #spx3xEquityRangeToolbar .range-nudge").forEach((button) => {
+    button.addEventListener("click", () => {
+      spx3xNudgeChartWindow(button.dataset.rangeChart, button.dataset.rangeStep, button.dataset.rangeDirection);
+    });
+  });
+
+  $("spx3xApplyCustomRange").addEventListener("click", () => {
+    spx3xChartRange = "custom";
+    spx3xChartRangeOffset = 0;
+    setActiveSpx3xRangeButton(spx3xChartRange);
+    renderSpx3xPriceChart();
+    renderSpx3xSignalPnlChart();
+    spx3xUpdateRangeNudgeStates();
+  });
+
+  $("spx3xApplyEquityCustomRange").addEventListener("click", () => {
+    spx3xEquityChartRange = "custom";
+    spx3xEquityChartRangeOffset = 0;
+    setActiveSpx3xEquityRangeButton(spx3xEquityChartRange);
+    renderSpx3xEquityChart();
+    spx3xUpdateRangeNudgeStates();
+  });
+
+  $("spx3xPriceChart").addEventListener("mousemove", showSpx3xChartTooltip);
+  $("spx3xPriceChart").addEventListener("mouseleave", hideSpx3xChartTooltip);
+  $("spx3xSignalPnlChart").addEventListener("mouseleave", hideSpx3xSignalPnlTooltip);
+  $("spx3xEquityChart").addEventListener("mouseleave", hideSpx3xEquityChartTooltip);
+
+  // Extend window resize to also redraw SPX 3x charts
+  window.addEventListener("resize", () => {
+    if (document.getElementById("spx3xSignalPage")?.classList.contains("active")) {
+      renderSpx3xPriceChart();
+      renderSpx3xSignalPnlChart();
+    }
+    if (document.getElementById("spx3xBacktestPage")?.classList.contains("active")) {
+      renderSpx3xEquityChart();
+    }
+  });
+
 </script>
 </body>
 </html>

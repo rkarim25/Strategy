@@ -1,0 +1,2 @@
+label,A_pct,B_pct,X_pct,Y_pct,trigger_a,trigger_b,x_return,y_return,cagr,ann_volatility,sharpe,max_drawdown,calmar,end_$,ulcer_index,max_dd_duration_days,rebalances,tier2_entries,tier3_entries,lead_only_days,pct_days_cash,pct_days_1x,pct_days_2x,pct_days_3x
+A3/B15,3.0,15.0,40.0,15.0,0.03,0.15,0.4,0.15,0.9195264233511048,0.4548058473264605,3.222541646272823,-0.3551050411675642,2.589449083369126,30649141060.70987,0.1017820133853778,216.0,846,13,5,559,31.06281473628412,4.505698383249404,27.140206732043463,37.291280148423006
