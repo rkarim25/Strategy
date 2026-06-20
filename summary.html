@@ -143,7 +143,7 @@
 
   const pct = (v) => (v == null ? "—" : (v * 100).toFixed(1) + "%");
   const sgn = (v) => `<span class="${v < 0 ? "neg" : ""}">${pct(v)}</span>`;
-  const num = (v, d = 2) => (v == null ? "—" : Number(v).toFixed(d));
+  const num = (v, d = 2) => (v == null || v !== v ? "—" : Number(v).toFixed(d));
   const money = (v) => (v == null ? "—" : "$" + Math.round(v).toLocaleString());
 
   const COLS = [
@@ -254,8 +254,13 @@
 
     const banner = document.getElementById("bannerSlot");
     banner.innerHTML = "";
-    if (regime === "real" && !a.real_lev)
-      banner.innerHTML = `<div class="banner">No same-calendar real leveraged ETP exists for ${a.label} — 1× is the actual ${a.tickers["1x"]} series; 2×/3× use the synthetic model, so "Real" and "Synthetic · same era" are identical here.</div>`;
+    if (regime === "real" && !a.real_lev) {
+      const bh1Real = a.real.rows["Buy & hold 1x"].cagr_r;
+      const bh1Synth = a.synth_era.rows["Buy & hold 1x"].cagr_r;
+      const diff = Math.abs(bh1Real - bh1Synth) * 100;
+      const identical = diff <= 0.1;
+      banner.innerHTML = `<div class="banner">No same-calendar real leveraged ETP exists for ${a.label} — 1× is the actual ${a.tickers["1x"]} series; 2×/3× use the synthetic model. The 1× CAGR differs by ${diff.toFixed(1)}pp between "Real" (${(bh1Real*100).toFixed(1)}%) and "Synthetic · same era" (${(bh1Synth*100).toFixed(1)}%)${identical ? " — effectively identical" : ""}.</div>`;
+    }
     else if (regime === "synth_era")
       banner.innerHTML = `<div class="banner" style="color:var(--muted);background:rgba(0,0,0,.03);border-color:var(--line);">Synthetic model over the same window as the real ETPs — it now tracks the listed products within ~2%/yr, which validates the model used for the long history.</div>`;
 

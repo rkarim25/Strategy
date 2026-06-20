@@ -16,7 +16,7 @@ for a in d['assets']:
         r = a.get(reg)
         if not r: continue
         for sname, m in r['rows'].items():
-            expected = abs(m['cagr_r'] / m['dd_r']) if m['dd_r'] != 0 else float('inf')
+            expected = m['cagr_r'] / abs(m['dd_r']) if m['dd_r'] != 0 else float('inf')
             actual = m['calmar']
             if abs(expected - actual) > 0.015 and abs(m['dd_r']) > 0.001:
                 calmar_errors += 1
@@ -56,8 +56,9 @@ for a in d['assets']:
             # Check 1x B&H (should differ since real uses actual ETF)
             bh1_real = real_r['rows'].get('Buy & hold 1x', {})
             bh1_synth = synth_r['rows'].get('Buy & hold 1x', {})
-            if bh1_real.get('cagr_r') != bh1_synth.get('cagr_r'):
-                warnings.append(f"BANNER-MISLEADING: {a['key']} ({a['label']}) real_lev=false but 1x CAGR differs: real={bh1_real.get('cagr_r'):.4f}, synth_era={bh1_synth.get('cagr_r'):.4f}. Banner claims they are identical.")
+            diff_pp = abs(bh1_real.get('cagr_r', 0) - bh1_synth.get('cagr_r', 0)) * 100
+            if diff_pp > 0.1:
+                warnings.append(f"BANNER-DIFF: {a['key']} ({a['label']}) real_lev=false: 1x CAGR real={bh1_real.get('cagr_r'):.4f}, synth_era={bh1_synth.get('cagr_r'):.4f} (diff={diff_pp:.1f}pp). Banner now shows the actual difference.")
             # Check 2x/3x B&H (should be identical since both synthetic)
             for lev in ['Buy & hold 2x', 'Buy & hold 3x']:
                 r2 = real_r['rows'].get(lev, {})
@@ -72,7 +73,7 @@ for a in d['assets']:
         r = a.get(reg)
         if not r: continue
         for sname, m in r['rows'].items():
-            if m['cagr_r'] < 0 and m['sharpe'] > 0.05:
+            if m['cagr_r'] < 0 and (m['sharpe'] is not None and m['sharpe'] > 0.05):
                 warnings.append(f"NEG-CAGR-POS-SHARPE: {a['key']}/{reg}/{sname}: cagr_r={m['cagr_r']:.4f}, sharpe={m['sharpe']:.3f} (possible if rf < 0)")
 
 # 5. Exactly zero Sharpe/Sortino
@@ -82,7 +83,9 @@ for a in d['assets']:
         r = a.get(reg)
         if not r: continue
         for sname, m in r['rows'].items():
-            if m['sharpe'] == 0.0 or m['sortino'] == 0.0:
+            if m['sharpe'] is None or m['sortino'] is None:
+                warnings.append(f"NULL-METRIC: {a['key']}/{reg}/{sname}: sharpe={m['sharpe']}, sortino={m['sortino']}, cagr_r={m['cagr_r']:.4f} (genuinely undefined — excess returns near zero)")
+            elif m['sharpe'] == 0.0 or m['sortino'] == 0.0:
                 warnings.append(f"ZERO-METRIC: {a['key']}/{reg}/{sname}: sharpe={m['sharpe']}, sortino={m['sortino']}, cagr_r={m['cagr_r']:.4f}")
 
 # 6. Unusually high Sharpe (>1.5)
@@ -92,7 +95,7 @@ for a in d['assets']:
         r = a.get(reg)
         if not r: continue
         for sname, m in r['rows'].items():
-            if m['sharpe'] > 1.5:
+            if m['sharpe'] is not None and m['sharpe'] > 1.5:
                 warnings.append(f"HIGH-SHARPE: {a['key']}/{reg}/{sname}: sharpe={m['sharpe']:.2f}, cagr_r={m['cagr_r']:.4f}, vol={m['vol']:.4f}, dd_r={m['dd_r']:.4f}")
 
 # 7. End value sanity: $100 start + $10/yr inflow

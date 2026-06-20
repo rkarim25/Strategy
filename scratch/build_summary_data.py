@@ -194,8 +194,10 @@ def metrics(prices, lev, panel, years, floor=False):
         res = eng(cost, floor).run(prices, lev, etp_returns=panel)
         s = comprehensive_stats(res.equity, res.daily_returns)
         if tag == "r":
-            out.update(vol=round(s["volatility"], 4), sharpe=round(s["sharpe"], 2),
-                       sortino=round(s.get("sortino") or 0, 2), calmar=round(s.get("calmar") or 0, 2),
+            out.update(vol=round(s["volatility"], 4),
+                       sharpe=round(s["sharpe"], 2) if not (s["sharpe"] != s["sharpe"]) else None,
+                       sortino=round(s.get("sortino"), 2) if not (s.get("sortino") != s.get("sortino")) else None,
+                       calmar=round(s.get("calmar") or 0, 2),
                        cash=round(float((res.leverage <= 0).mean()*100), 1),
                        trades_yr=round(res.rebalance_count/years, 1), end=round(float(res.equity.iloc[-1]), 0))
         out[f"cagr_{tag}"] = round(s["cagr"], 4)
