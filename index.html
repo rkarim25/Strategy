@@ -2073,6 +2073,15 @@
       // Load SPX 3x site data in background
       loadStaticSpx3xSiteData().then(() => {
         spx3xDataLoaded = true;
+        // Render SPX 3x charts from static data (matching guarded strategy behavior)
+        if (document.getElementById("spx3xSignalPage")?.classList.contains("active")) {
+          renderSpx3xPriceChart();
+          renderSpx3xSignalPnlChart();
+        }
+        if (document.getElementById("spx3xBacktestPage")?.classList.contains("active")) {
+          renderSpx3xEquityChart();
+          renderSpx3xTopDrawdownsTable();
+        }
       });
 
       setStatus(`Preloaded static market data: ${rows.length} rows from ${rows[0].date} to ${rows[rows.length - 1].date}.${describeStaticSignalMetadata(signalMetadata)} Auto-refresh will check live data next.`);
@@ -2300,23 +2309,22 @@
       ?? strategy.querySelector("[data-page-target]")?.dataset.pageTarget;
     if (activePage) showPage(activePage, strategy, options);
 
-    // Load SPX 3x data on first activation
-    if (strategyId === "spx3xLevered" && !spx3xDataLoaded) {
-      loadStaticSpx3xSiteData().then(() => {
-        spx3xDataLoaded = true;
-        const activePageNow = strategy.querySelector("[data-page-target].active")?.dataset.pageTarget;
-        if (activePageNow === "spx3xSignalPage") {
-          renderSpx3xPriceChart();
-          renderSpx3xSignalPnlChart();
-        }
-        if (activePageNow === "spx3xBacktestPage") {
-          renderSpx3xEquityChart();
-          renderSpx3xTopDrawdownsTable();
-        }
-        if (activePageNow === "spx3xMonteCarloPage") {
-          populateSpx3xMonteCarloPage();
-        }
-      });
+    // Load SPX 3x data on first activation (data already fetched by loadStaticHistoricalBacktest)
+    if (strategyId === "spx3xLevered" && !spx3xDataLoaded && staticSpx3xSiteData) {
+      spx3xDataLoaded = true;
+      applySpx3xSiteData();
+      const activePageNow = strategy.querySelector("[data-page-target].active")?.dataset.pageTarget;
+      if (activePageNow === "spx3xSignalPage" || !activePageNow) {
+        renderSpx3xPriceChart();
+        renderSpx3xSignalPnlChart();
+      }
+      if (activePageNow === "spx3xBacktestPage") {
+        renderSpx3xEquityChart();
+        renderSpx3xTopDrawdownsTable();
+      }
+      if (activePageNow === "spx3xMonteCarloPage") {
+        populateSpx3xMonteCarloPage();
+      }
     }
   }
 
@@ -2337,14 +2345,6 @@
     if (pageId === "backtestPage") {
       renderBacktestEquityChart();
       renderTopDrawdownsTable();
-    }
-    if (pageId === "spx3xSignalPage") {
-      renderSpx3xPriceChart();
-      renderSpx3xSignalPnlChart();
-    }
-    if (pageId === "spx3xBacktestPage") {
-      renderSpx3xEquityChart();
-      renderSpx3xTopDrawdownsTable();
     }
     if (pageId === "spx3xMonteCarloPage") {
       populateSpx3xMonteCarloPage();
