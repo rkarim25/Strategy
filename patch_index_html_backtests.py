@@ -1,7 +1,6 @@
 """
 Update hardcoded backtest tables in index.html from regenerated CSV/JSON outputs.
 """
-
 from __future__ import annotations
 
 import json
@@ -13,13 +12,14 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent
 INDEX_HTML = ROOT / "index.html"
-SPX_SITE = ROOT / "spx_guarded_site_data.json"
+SPX_SITE = ROOT / "spx_distance_scale_site_data.json"
 MC_SUMMARY = ROOT / "output" / "guarded_balanced_candidate" / "guarded_balanced_candidate_monte_carlo_summary.csv"
 MOMENTUM_CSV = ROOT / "output" / "momentum_leverage_strategies" / "momentum_leverage_results.csv"
 LONG_HOLD_CSV = ROOT / "output" / "long_hold_momentum_strategies" / "long_hold_momentum_results.csv"
 TIERED_CSV = ROOT / "output" / "guarded_tiered_sma20_50_200" / "guarded_tiered_sma20_50_200_results.csv"
 SPX3X_COMPARISON_CSV = ROOT / "output" / "spx_3x_levered" / "spx_3x_levered_comparison.csv"
 SPX3X_SITE = ROOT / "spx_3x_levered_site_data.json"
+DISTANCE_SCALE_COMPARISON_CSV = ROOT / "output" / "spx_distance_scale" / "spx_distance_scale_comparison.csv"
 
 
 def pct(x: float) -> str:
@@ -55,15 +55,21 @@ def row_full_sample(r: pd.Series, bold: bool = False) -> str:
     be = "</strong>" if bold else ""
     cash = r.get("pct_days_cash")
     cash_s = pct(cash / 100.0) if pd.notna(cash) and cash > 1 else pct(cash) if pd.notna(cash) else "-"
+    sortino = r.get("sortino")
+    sortino_s = f"{float(sortino):.3f}" if pd.notna(sortino) else "-"
+    avg_lev = r.get("avg_leverage")
+    avg_lev_s = f"{float(avg_lev):.1f}" if pd.notna(avg_lev) else "-"
     return (
         f"            <tr><td>{b}{r['strategy']}{be}</td>"
         f"<td>{b}{pct(r['cagr'])}{be}</td>"
         f"<td>{pct(r['ann_volatility']) if pd.notna(r.get('ann_volatility')) else '-'}</td>"
         f"<td>{float(r['sharpe']):.3f}</td>"
+        f"<td>{sortino_s}</td>"
         f"<td>{pct(r['max_drawdown'])}</td>"
         f"<td>{b}{money(r['end_$'])}{be}</td>"
         f"<td>{int(r.get('rebalances', 0))}</td>"
-        f"<td>{cash_s}</td></tr>"
+        f"<td>{cash_s}</td>"
+        f"<td>{avg_lev_s}</td></tr>"
     )
 
 
@@ -148,7 +154,7 @@ def row_spx3x(r: pd.Series) -> str:
 def main() -> int:
     html = INDEX_HTML.read_text(encoding="utf-8")
     site = json.loads(SPX_SITE.read_text(encoding="utf-8"))
-    comp = pd.read_csv(ROOT / "output" / "spx_guarded" / "spx_guarded_comparison.csv")
+    comp = pd.read_csv(DISTANCE_SCALE_COMPARISON_CSV)
     default_name = site["default_backtest"]["strategy"]
     full_rows = "\n".join(
         row_full_sample(r, bold=(r["strategy"] == default_name)) for _, r in comp.iterrows()
@@ -255,7 +261,7 @@ def main() -> int:
             "Versus the original strict A10/B20 version, "
             f"CAGR {cagr_dir} from {pct(orig['cagr'])} to {bt['cagr_pct']}, while max drawdown "
             f"{dd_dir} from {pct(orig['max_drawdown'])} to {bt['max_drawdown_pct']}. "
-            "2x/3x P&amp;L uses listed same-calendar US ETP daily returns when history exists; the deep "
+            "2x/3x P&L uses listed same-calendar US ETP daily returns when history exists; the deep "
             "drawdowns come from 3x exposure in the synthetic pre-inception bear markets (dot-com, GFC)."
         )
         html = re.sub(
@@ -265,36 +271,35 @@ def main() -> int:
             count=1,
         )
 
-    if MC_SUMMARY.exists():
-        mc_df = pd.read_csv(MC_SUMMARY)
-        mc_rows = ""
-        for _, r in mc_df.iterrows():
-            bold = "Lead 0.75 A5/B25" in r["strategy"]
-            b, be = ("<strong>", "</strong>") if bold else ("", "")
-            mc_rows += (
-                f"            <tr><td>{b}{r['strategy']}{be}</td>"
-                f"<td>{b}{pct(r['median_cagr'])}{be}</td>"
-                f"<td>{pct(r['p10_cagr'])} / {pct(r['p90_cagr'])}</td>"
-                f"<td>{b}{pct(r['median_max_drawdown'])}{be}</td>"
-                f"<td>{pct(r['p10_max_drawdown'])} / {pct(r['p90_max_drawdown'])}</td>"
-                f"<td>{float(r['median_sharpe']):.3f}</td>"
-                f"<td>{b}{money(r['median_end_$'])}{be}</td>"
-                f"<td>{pct(r['prob_max_dd_worse_40pct'])}</td></tr>\n"
-            )
-        html = replace_tbody(html, "<h2>Monte Carlo Comparison</h2>", mc_rows.rstrip())
+    # Monte Carlo Comparison — single row from site data (no MC_SUMMARY CSV for distance scale)
+    mc_row = (
+        f"            <tr><td><strong>{mc['strategy']}</strong></td>"
+        f"<td><strong>{mc['median_cagr_pct']}</strong></td>"
+        f"<td>{mc.get('p10_cagr_pct', '-')} / {mc.get('p90_cagr_pct', '-')}</td>"
+        f"<td><strong>{mc['median_max_drawdown_pct']}</strong></td>"
+        f"<td>{mc.get('p10_max_drawdown_pct', '-')} / {mc.get('p90_max_drawdown_pct', '-')}</td>"
+        f"<td>{mc.get('median_sharpe_fmt', '-')}</td>"
+        f"<td><strong>{mc.get('median_end_value_fmt', '-')}</strong></td>"
+        f"<td>{mc.get('prob_max_dd_worse_40pct_fmt', '-')}</td></tr>"
+    )
+    html = replace_tbody(html, "<h2>Monte Carlo Comparison</h2>", mc_row)
 
+    # Overview note — update to distance scale context
     overview_note = (
         "These results use the project backtest engine with "
         "<strong>listed 2x/3x ETP daily returns</strong> (SPYL/XS2D/3USL) when available, "
         "synthetic daily-reset fill before ETP inception, $100 starting capital, "
         "$10 fixed annual inflows, and 1.0% rebalance cost on leverage changes."
     )
-    html = re.sub(
-        r"These results use the project backtest engine over[\s\S]*?2x/3x exposure can start when price is within 0\.75% below SMA20\.",
-        overview_note,
-        html,
-        count=1,
-    )
+    # Try to match the old overview text and replace
+    old_overview_pattern = r"These results use the project backtest engine with[\s\S]*?1\.0% rebalance cost on leverage changes\."
+    if re.search(old_overview_pattern, html):
+        html = re.sub(
+            old_overview_pattern,
+            overview_note,
+            html,
+            count=1,
+        )
 
     def cagr_for(name: str, df: pd.DataFrame) -> str:
         row = df[df["strategy"] == name]
@@ -338,14 +343,12 @@ def main() -> int:
         "SMA20 1x/cash",
         "Buy & hold 1x",
     ]
-    # CSV uses "Original Guarded A10/B20 SMA20"; display uses "Guarded A10/B20 SMA20"
     csv_to_display = {"Original Guarded A10/B20 SMA20": "Guarded A10/B20 SMA20"}
     display_to_csv = {v: k for k, v in csv_to_display.items()}
     bench_rows = []
     for name in bench_order:
         row = comp[comp["strategy"] == name]
         if row.empty:
-            # try the CSV name that maps to this display name
             csv_name = display_to_csv.get(name)
             if csv_name:
                 row = comp[comp["strategy"] == csv_name]
@@ -361,18 +364,19 @@ def main() -> int:
             "\n".join(bench_rows),
         )
 
+    # Diagnostics table — distance scale format (no tier2/tier3/lead_only_days)
     bt_row = site["default_backtest"]
     diag = (
         f"            <tr><td>Cash days</td><td>{bt_row['pct_days_cash']:.2f}%</td>"
         f"<td>1x days</td><td>{bt_row['pct_days_1x']:.2f}%</td></tr>\n"
         f"            <tr><td>2x days</td><td>{bt_row['pct_days_2x']:.2f}%</td>"
         f"<td>3x days</td><td>{bt_row['pct_days_3x']:.2f}%</td></tr>\n"
-        f"            <tr><td>2x entries</td><td>{bt_row['tier2_entries']}</td>"
-        f"<td>3x entries</td><td>{bt_row['tier3_entries']}</td></tr>\n"
-        f"            <tr><td>Lead-only days</td><td>{bt_row['lead_only_days']}</td>"
-        f"<td>Rebalances</td><td>{bt_row['rebalances']}</td></tr>\n"
-        f"            <tr><td>Total trading costs</td><td>${bt_row['trading_costs_total']:,.0f}</td>"
-        f"<td>Funding (in ETP)</td><td>embedded in ETP returns</td></tr>"
+        f"            <tr><td>Avg leverage</td><td>{bt_row['avg_leverage']:.1f}</td>"
+        f"<td>Total trades</td><td>{bt_row.get('total_trades', bt_row.get('rebalances', '-'))}</td></tr>\n"
+        f"            <tr><td>Rebalances</td><td>{bt_row['rebalances']}</td>"
+        f"<td>Total trading costs</td><td>${bt_row['trading_costs_total']:,.0f}</td></tr>\n"
+        f"            <tr><td>Funding (in ETP)</td><td>embedded in ETP returns</td>"
+        f"<td></td><td></td></tr>"
     )
     html = replace_tbody(html, "<h2>Default Strategy Diagnostics</h2>", diag.rstrip())
 

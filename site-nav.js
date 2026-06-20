@@ -61,7 +61,7 @@
     {
       id: "spx",
       asset: "S&P 500",
-      strategy: "Guarded A5/B25 SMA20 Lead",
+      strategy: "SMA200 ±3% Band + Distance Scale 1-3x",
       group: "leveraged",
       href: "index.html#signalPage",
       indexHref: "#signalPage",

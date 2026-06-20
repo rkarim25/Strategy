@@ -642,13 +642,13 @@
 
   <section id="guardedStrategy" class="strategy active">
   <section class="card" style="margin-bottom: 18px;">
-    <h2>Guarded A5/B25 SMA20 Lead Signal</h2>
+    <h2>SMA200 ±3% Band + Distance Scale 1-3x Signal</h2>
     <p>
       Computes the strategy state from S&amp;P 500 daily closes: base exposure is 1x only when
       close is above SMA20; drawdown of 5% arms 2x and drawdown of 25% arms 3x. Recovery
       leverage is allowed when price is within 0.75% below SMA20 or better.
     </p>
-    <nav class="site-nav" aria-label="Guarded strategy sections">
+    <nav class="site-nav" aria-label="S&P 500 strategy sections">
       <button type="button" class="active" data-page-target="signalPage">Signal</button>
       <button type="button" data-page-target="backtestPage">Back-test</button>
       <button type="button" data-page-target="monteCarloPage">Monte Carlo</button>
@@ -727,7 +727,7 @@
   </section>
 
   <section class="card" style="margin-top: 18px;">
-    <h2>SPX Close vs 20-Day SMA</h2>
+    <h2>SPX Close vs 200-Day SMA</h2>
     <div class="range-controls range-toolbar" id="signalRangeToolbar">
       <div class="range-unit"><button type="button" data-range="1w">1W</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1w" data-range-direction="back" aria-label="Pan 1W earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1w" data-range-direction="forward" aria-label="Pan 1W later">&#8250;</button></div></div>
       <div class="range-unit"><button type="button" data-range="1m">1M</button><div class="range-shift"><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1m" data-range-direction="back" aria-label="Pan 1M earlier">&#8249;</button><button type="button" class="range-nudge" data-range-chart="signal" data-range-step="1m" data-range-direction="forward" aria-label="Pan 1M later">&#8250;</button></div></div>
@@ -750,7 +750,7 @@
     </div>
     <div class="legend">
       <span>SPX close</span>
-      <span class="sma">20-day SMA</span>
+      <span class="sma">200-day SMA</span>
       <span class="buy">Buy / 1x</span>
       <span class="add">Add / 2x-3x</span>
       <span class="reduce">Reduce</span>
@@ -788,135 +788,22 @@
   </section>
 
   <section class="card section-gap">
-    <h2>Guarded Strategy Calculator</h2>
+    <h2>Distance Scale Parameters</h2>
     <p>
-      Input A, B, X, and Y, then calculate the historical drawdown, CAGR, Sharpe ratio, and ending value.
-      A is the drawdown that starts 2x, B is the drawdown that starts 3x, X is the upside from the 2x entry
-      where 2x is released, and Y is the upside from the 3x entry where 3x is released.
+      The SMA200 ±3% Band + Distance Scale 1-3x strategy uses fixed parameters:
     </p>
-    <p class="callout">
-      Default Guarded values: <strong>A = 5%</strong>, <strong>B = 25%</strong>,
-      <strong>X = 40%</strong>, <strong>Y = 15%</strong>, and recovery lead guard = <strong>0.75%</strong> below SMA20.
-    </p>
-    <div class="form-grid">
-      <div class="field">
-        <label for="calcTriggerA">A: start 2x after drawdown (%)</label>
-        <input id="calcTriggerA" type="number" min="1" max="80" step="0.5" value="5" />
-      </div>
-      <div class="field">
-        <label for="calcTriggerB">B: start 3x after drawdown (%)</label>
-        <input id="calcTriggerB" type="number" min="1" max="90" step="0.5" value="25" />
-      </div>
-      <div class="field">
-        <label for="calcHold2">X: hold 2x until upside from entry (%)</label>
-        <input id="calcHold2" type="number" min="1" max="200" step="1" value="40" />
-      </div>
-      <div class="field">
-        <label for="calcHold3">Y: hold 3x until upside from entry (%)</label>
-        <input id="calcHold3" type="number" min="1" max="250" step="1" value="15" />
-      </div>
-    </div>
-    <details class="advanced">
-      <summary>Advanced assumptions</summary>
-      <div class="form-grid">
-      <div class="field">
-        <label for="calcLeadPct">Recovery lead below SMA20 (%)</label>
-        <input id="calcLeadPct" type="number" min="0" max="5" step="0.05" value="0.75" />
-      </div>
-      <div class="field">
-        <label for="calcMaxHold2">Max 2x hold days (optional)</label>
-        <input id="calcMaxHold2" type="number" min="1" max="2520" step="1" placeholder="No cap" />
-      </div>
-      <div class="field">
-        <label for="calcMaxHold3">Max 3x hold days (optional)</label>
-        <input id="calcMaxHold3" type="number" min="1" max="2520" step="1" placeholder="No cap" />
-      </div>
-      <div class="field">
-        <label for="calcTradingCost">Trading cost (%)</label>
-        <input id="calcTradingCost" type="number" min="0" max="10" step="0.1" value="0.1" />
-      </div>
-      <div class="field">
-        <label for="calcCashRate">Cash / funding rate (%)</label>
-        <input id="calcCashRate" type="number" min="0" max="20" step="0.25" value="4" />
-      </div>
-      </div>
-    </details>
-    <div class="row">
-      <button id="runCalculator" type="button">Calculate stats</button>
-      <button id="resetCalculator" type="button" class="secondary">Reset defaults</button>
-    </div>
-    <div id="calcStatus" class="small section-gap">Load data, then calculate a parameter set.</div>
-    <div class="kpi-grid">
-      <div class="metric-card"><span class="small">CAGR</span><strong id="calcCagr">-</strong></div>
-      <div class="metric-card"><span class="small">Max drawdown</span><strong id="calcMaxDd">-</strong></div>
-      <div class="metric-card"><span class="small">Sharpe ratio</span><strong id="calcSharpe">-</strong></div>
-      <div class="metric-card"><span class="small">End value</span><strong id="calcEndValue">-</strong></div>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <tbody>
-          <tr><th>Trades</th><td id="calcTrades">-</td><th>Trading costs</th><td id="calcCosts">-</td></tr>
-          <tr><th>Cash / 1x / 2x / 3x</th><td id="calcExposure" colspan="3">-</td></tr>
-          <tr><th>Tier entries</th><td id="calcTierEntries" colspan="3">-</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="card section-gap">
-    <h2>Goal Seek / Optimizer</h2>
-    <p>
-      Tick any value you want to keep fixed. Unticked values are optimized across the ranges below. If A, B, X,
-      and Y are all unticked, the optimizer searches freely and returns the best combinations for the selected
-      objective: high CAGR, low drawdown, or high Sharpe.
-    </p>
-    <div class="form-grid">
-      <label class="check-field"><input id="optFixA" type="checkbox" /> Fix A at calculator value</label>
-      <label class="check-field"><input id="optFixB" type="checkbox" /> Fix B at calculator value</label>
-      <label class="check-field"><input id="optFixX" type="checkbox" /> Fix X at calculator value</label>
-      <label class="check-field"><input id="optFixY" type="checkbox" /> Fix Y at calculator value</label>
-      <div class="field"><label for="optObjective">Optimise for</label><select id="optObjective"><option value="cagr">Highest CAGR</option><option value="drawdown">Lowest drawdown</option><option value="sharpe">Highest Sharpe</option></select></div>
-      <div class="field"><label for="optResultCount">Show top results</label><input id="optResultCount" type="number" min="3" max="25" step="1" value="10" /></div>
-    </div>
-    <details class="advanced" open>
-      <summary>Search ranges for unfixed values</summary>
-      <div class="form-grid">
-        <div class="field"><label for="optAStart">A start (%)</label><input id="optAStart" type="number" step="0.5" value="6" /></div>
-        <div class="field"><label for="optAEnd">A end (%)</label><input id="optAEnd" type="number" step="0.5" value="18" /></div>
-        <div class="field"><label for="optAStep">A step (%)</label><input id="optAStep" type="number" min="0.5" step="0.5" value="2" /></div>
-        <div></div>
-        <div class="field"><label for="optBStart">B start (%)</label><input id="optBStart" type="number" step="0.5" value="14" /></div>
-        <div class="field"><label for="optBEnd">B end (%)</label><input id="optBEnd" type="number" step="0.5" value="32" /></div>
-        <div class="field"><label for="optBStep">B step (%)</label><input id="optBStep" type="number" min="0.5" step="0.5" value="3" /></div>
-        <div></div>
-        <div class="field"><label for="optHold2Start">X start (%)</label><input id="optHold2Start" type="number" step="1" value="10" /></div>
-        <div class="field"><label for="optHold2End">X end (%)</label><input id="optHold2End" type="number" step="1" value="40" /></div>
-        <div class="field"><label for="optHold2Step">X step (%)</label><input id="optHold2Step" type="number" min="1" step="1" value="5" /></div>
-        <div></div>
-        <div class="field"><label for="optHold3Start">Y start (%)</label><input id="optHold3Start" type="number" step="1" value="15" /></div>
-        <div class="field"><label for="optHold3End">Y end (%)</label><input id="optHold3End" type="number" step="1" value="60" /></div>
-        <div class="field"><label for="optHold3Step">Y step (%)</label><input id="optHold3Step" type="number" min="1" step="1" value="5" /></div>
-      </div>
-    </details>
-    <div class="row">
-      <button id="runOptimizer" type="button">Run optimizer</button>
-      <button id="useBestOptimizer" type="button" class="secondary">Use best in calculator</button>
-    </div>
-    <div id="optStatus" class="small section-gap">Load data, then run a grid search.</div>
+    <ul>
+      <li><strong>SMA window:</strong> 200 days</li>
+      <li><strong>Band width:</strong> ±3% around SMA200</li>
+      <li><strong>Distance scale:</strong> 3x when ratio ≤ 1.05, 2x when ratio ≤ 1.10, 1x otherwise</li>
+      <li><strong>RSI window:</strong> 14 days</li>
+      <li><strong>RSI exit threshold:</strong> 30 (stay at 1x below 30 instead of cash)</li>
+      <li><strong>Hysteresis:</strong> hold prior state in the neutral zone between bands</li>
+    </ul>
     <p class="small">
-      Results show the best combinations, with extra variety across any unfixed inputs so you can see how A, B,
-      X, and Y behave across the search range.
+      These parameters are fixed and not adjustable via sliders. The strategy was selected
+      through systematic optimization across SMA windows, band widths, and RSI thresholds.
     </p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Rank</th><th>A</th><th>B</th><th>X</th><th>Y</th><th>CAGR</th><th>Max DD</th><th>Sharpe</th><th>End value</th><th>Trades</th></tr>
-        </thead>
-        <tbody id="optimizerRows">
-          <tr><td colspan="10">No optimizer results yet.</td></tr>
-        </tbody>
-      </table>
-    </div>
   </section>
 
   </section>
@@ -925,15 +812,15 @@
     <section class="card">
       <h2>Back-test Overview</h2>
       <p>
-        These results use the project backtest engine with <strong>listed 2x/3x ETP daily returns</strong> (SPY/SSO/UPRO) when available, synthetic daily-reset fill before ETP inception, $100 starting capital, $10 fixed annual inflows, and 0.10% rebalance cost on leverage changes.
+        These results use the project backtest engine with <strong>listed 2x/3x ETP daily returns</strong> (SPYL/XS2D/3USL) when available, synthetic daily-reset fill before ETP inception, $100 starting capital, $10 fixed annual inflows, and 1.0% rebalance cost on leverage changes.
       </p>
       <div class="kpi-grid">
-        <div class="metric-card"><span class="small">Default CAGR</span><strong id="kpiDefaultCagr">9.81%</strong></div>
-        <div class="metric-card"><span class="small">Default max DD</span><strong id="kpiDefaultMaxDd">-82.69%</strong></div>
-        <div class="metric-card"><span class="small">Default Sharpe</span><strong id="kpiDefaultSharpe">0.455</strong></div>
-        <div class="metric-card"><span class="small">Annual volatility</span><strong id="kpiDefaultVol">28.87%</strong></div>
-        <div class="metric-card"><span class="small">Calmar ratio</span><strong id="kpiDefaultCalmar">0.12</strong></div>
-        <div class="metric-card"><span class="small">Default end value</span><strong id="kpiDefaultEnd">$1,654</strong></div>
+        <div class="metric-card"><span class="small">Default CAGR</span><strong id="kpiDefaultCagr">18.09%</strong></div>
+        <div class="metric-card"><span class="small">Default max DD</span><strong id="kpiDefaultMaxDd">-49.38%</strong></div>
+        <div class="metric-card"><span class="small">Default Sharpe</span><strong id="kpiDefaultSharpe">0.743</strong></div>
+        <div class="metric-card"><span class="small">Annual volatility</span><strong id="kpiDefaultVol">28.40%</strong></div>
+        <div class="metric-card"><span class="small">Calmar ratio</span><strong id="kpiDefaultCalmar">0.37</strong></div>
+        <div class="metric-card"><span class="small">Default end value</span><strong id="kpiDefaultEnd">$14,635</strong></div>
         <div class="metric-card"><span class="small">Contribution NPV</span><strong>$273</strong><span class="small">Discounted at 4%; includes $100 initial capital and $10 annual inflows.</span></div>
         <div class="metric-card"><span class="small">End / NPV multiple</span><strong>7,200x</strong></div>
       </div>
@@ -941,12 +828,12 @@
         Calmar = CAGR / absolute max drawdown; multiple = end value divided by discounted contributions.
       </p>
       <p id="backtestCallout" class="callout">
-        Versus the original strict A10/B20 version, CAGR rose from 8.08% to 9.81%, while max drawdown deepened from -75.96% to -82.69%. 2x/3x P&amp;L uses listed same-calendar US ETP daily returns when history exists; the deep drawdowns come from 3x exposure in the synthetic pre-inception bear markets (dot-com, GFC).
+        Versus the original strict A10/B20 version, CAGR rose from 8.08% to 18.09%, while max drawdown narrowed from -75.96% to -49.38%. 2x/3x P&L uses listed same-calendar US ETP daily returns when history exists; the deep drawdowns come from 3x exposure in the synthetic pre-inception bear markets (dot-com, GFC).
       </p>
     </section>
     <section class="card section-gap">
       <h2>Top 20 Strategy Drawdowns</h2>
-      <p class="small">Largest peak-to-trough declines on default Guarded strategy equity over the full back-test sample.</p>
+      <p class="small">Largest peak-to-trough declines on default Distance Scale strategy equity over the full back-test sample.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -1007,14 +894,13 @@
             <tr><th>Strategy</th><th>CAGR</th><th>Ann vol</th><th>Sharpe</th><th>Max DD</th><th>End value</th><th>Trades</th><th>Cash</th></tr>
           </thead>
           <tbody id="comparisonTableBody">
-            <tr><td>Buy & hold 1x</td><td>12.95%</td><td>19.31%</td><td>0.603</td><td>-52.45%</td><td>$3,852</td><td>2</td><td>0.00%</td></tr>
-            <tr><td>Buy & hold 2x</td><td>15.15%</td><td>37.69%</td><td>0.485</td><td>-85.12%</td><td>$6,869</td><td>2</td><td>0.00%</td></tr>
-            <tr><td>Buy & hold 3x</td><td>15.35%</td><td>57.15%</td><td>0.448</td><td>-97.51%</td><td>$7,240</td><td>2</td><td>0.00%</td></tr>
-            <tr><td>SMA20 1x/cash</td><td>6.11%</td><td>11.38%</td><td>0.434</td><td>-39.39%</td><td>$592</td><td>867</td><td>36.97%</td></tr>
-            <tr><td>SMA20 2x/cash</td><td>6.65%</td><td>22.44%</td><td>0.403</td><td>-71.81%</td><td>$690</td><td>867</td><td>36.97%</td></tr>
-            <tr><td>SMA20 3x/cash</td><td>6.20%</td><td>33.98%</td><td>0.330</td><td>-92.69%</td><td>$607</td><td>867</td><td>36.97%</td></tr>
-            <tr><td><strong>Guarded A5/B25 SMA20 Lead</strong></td><td><strong>9.81%</strong></td><td>28.87%</td><td>0.455</td><td>-82.69%</td><td><strong>$1,654</strong></td><td>774</td><td>28.74%</td></tr>
-            <tr><td>Original Guarded A10/B20 SMA20</td><td>8.08%</td><td>27.36%</td><td>0.420</td><td>-75.96%</td><td>$1,028</td><td>877</td><td>36.97%</td></tr>
+            <tr><td>Buy & Hold SPY 1x</td><td>11.39%</td><td>19.13%</td><td>0.518</td><td>0.664</td><td>-53.68%</td><td>$2,540</td><td>2</td><td>0.00%</td><td>1.0</td></tr>
+            <tr><td>Buy & Hold SSO 2x</td><td>15.16%</td><td>37.70%</td><td>0.486</td><td>0.625</td><td>-85.17%</td><td>$6,881</td><td>2</td><td>0.00%</td><td>2.0</td></tr>
+            <tr><td>Buy & Hold UPRO 3x</td><td>15.34%</td><td>57.16%</td><td>0.449</td><td>0.575</td><td>-97.53%</td><td>$7,229</td><td>2</td><td>0.00%</td><td>3.0</td></tr>
+            <tr><td>SMA200 ±3% Band 3x</td><td>19.84%</td><td>35.25%</td><td>0.649</td><td>0.718</td><td>-53.19%</td><td>$22,746</td><td>32</td><td>28.78%</td><td>3.0</td></tr>
+            <tr><td>SMA200 ±3% Band 2x</td><td>16.47%</td><td>23.50%</td><td>0.693</td><td>0.766</td><td>-38.43%</td><td>$9,662</td><td>32</td><td>28.78%</td><td>2.0</td></tr>
+            <tr><td>SMA200 ±3% Band 1x/cash</td><td>11.09%</td><td>11.81%</td><td>0.749</td><td>0.832</td><td>-19.68%</td><td>$2,340</td><td>32</td><td>28.78%</td><td>1.0</td></tr>
+            <tr><td><strong>SMA200 ±3% Band + Distance Scale 1-3x + RSI>30 Exit</strong></td><td><strong>18.09%</strong></td><td>28.40%</td><td>0.743</td><td>0.772</td><td>-49.38%</td><td><strong>$14,635</strong></td><td>582</td><td>28.60%</td><td>2.1</td></tr>
           </tbody>
         </table>
       </div>
@@ -1022,7 +908,7 @@
 
     <section class="card section-gap">
       <h2>Legacy Guard SMA Sensitivity</h2>
-      <p class="small">Earlier A10/B20 tiering study kept for reference. The site default is now the A5/B25/X40/Y15 lead-guard version above.</p>
+      <p class="small">Earlier A10/B20 tiering study kept for reference. The site default is now the SMA200 ±3% Band + Distance Scale 1-3x version above.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -1067,15 +953,15 @@
     <section class="card">
       <h2>Monte Carlo Validation</h2>
       <p>
-        The Monte Carlo run stress-tests the default <strong>Guarded A5/B25/X40/Y15 SMA20 Lead</strong> strategy over 200 synthetic
+        The Monte Carlo run stress-tests the default <strong>SMA200 ±3% Band + Distance Scale 1-3x + RSI>30 Exit</strong> strategy over 200 synthetic
         10-year market paths. Paths are built with 21-trading-day blocks sampled from historical S&amp;P and T-bill
         data, preserving short-term clustering better than single-day random sampling.
       </p>
       <div class="kpi-grid">
         <div class="metric-card"><span class="small">Simulations</span><strong>200</strong></div>
         <div class="metric-card"><span class="small">Horizon</span><strong>10 years</strong></div>
-        <div class="metric-card"><span class="small">Median CAGR</span><strong id="mcMedianCagr">8.07%</strong></div>
-        <div class="metric-card"><span class="small">Median max DD</span><strong id="mcMedianMaxDd">-52.82%</strong></div>
+        <div class="metric-card"><span class="small">Median CAGR</span><strong id="mcMedianCagr">12.45%</strong></div>
+        <div class="metric-card"><span class="small">Median max DD</span><strong id="mcMedianMaxDd">-53.16%</strong></div>
       </div>
     </section>
 
@@ -1088,9 +974,7 @@
             <tr><th>Strategy</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P10 / P90 max DD</th><th>Median Sharpe</th><th>Median end value</th><th>P(DD &lt; -40%)</th></tr>
           </thead>
           <tbody>
-            <tr><td>Lead 0.75 A10/B20 X40/Y15</td><td>7.03%</td><td>-4.15% / 17.23%</td><td>-55.93%</td><td>-79.82% / -34.09%</td><td>0.309</td><td>$193</td><td>81.50%</td></tr>
-            <tr><td><strong>Lead 0.75 A5/B25 X40/Y15</strong></td><td><strong>7.19%</strong></td><td>-3.59% / 16.57%</td><td><strong>-54.81%</strong></td><td>-79.53% / -38.01%</td><td>0.328</td><td><strong>$195</strong></td><td>85.00%</td></tr>
-            <tr><td>Original strict SMA20 A10/B20 X25/Y33</td><td>5.88%</td><td>-4.20% / 15.61%</td><td>-51.28%</td><td>-76.34% / -34.29%</td><td>0.303</td><td>$173</td><td>77.50%</td></tr>
+            <tr><td><strong>SMA200 ±3% Band + Distance Scale 1-3x + RSI>30 Exit</strong></td><td><strong>12.45%</strong></td><td>1.06% / 25.88%</td><td><strong>-53.16%</strong></td><td>-68.09% / -40.96%</td><td>0.416</td><td><strong>$310</strong></td><td>91.00%</td></tr>
           </tbody>
         </table>
       </div>
@@ -1104,10 +988,10 @@
             <tr><th>Question</th><th>Monte Carlo result</th></tr>
           </thead>
           <tbody>
-            <tr><td>Probability max drawdown is worse than -35%</td><td id="mcProbDd35">94.00%</td></tr>
-            <tr><td>Probability max drawdown is worse than -40%</td><td id="mcProbDd40">87.50%</td></tr>
-            <tr><td>Probability max drawdown is worse than -50%</td><td id="mcProbDd50">60.00%</td></tr>
-            <tr><td>Probability ending below starting capital</td><td id="mcProbBelowStart">18.00%</td></tr>
+            <tr><td>Probability max drawdown is worse than -35%</td><td id="mcProbDd35">96.00%</td></tr>
+            <tr><td>Probability max drawdown is worse than -40%</td><td id="mcProbDd40">91.00%</td></tr>
+            <tr><td>Probability max drawdown is worse than -50%</td><td id="mcProbDd50">61.50%</td></tr>
+            <tr><td>Probability ending below starting capital</td><td id="mcProbBelowStart">8.00%</td></tr>
           </tbody>
         </table>
       </div>
@@ -1115,25 +999,25 @@
 
     <section class="card section-gap">
       <h2>Default Strategy Diagnostics</h2>
-      <p class="small">Full-sample diagnostics for the A5/B25/X40/Y15 lead-guard default.</p>
+      <p class="small">Full-sample diagnostics for the SMA200 ±3% Band + Distance Scale 1-3x default.</p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr><th>Metric</th><th>Value</th><th>Metric</th><th>Value</th></tr>
           </thead>
           <tbody id="diagnosticsBody">
-            <tr><td>Cash days</td><td>28.74%</td><td>1x days</td><td>8.93%</td></tr>
-            <tr><td>2x days</td><td>48.71%</td><td>3x days</td><td>13.62%</td></tr>
-            <tr><td>2x entries</td><td>10</td><td>3x entries</td><td>4</td></tr>
-            <tr><td>Lead-only days</td><td>749</td><td>Rebalances</td><td>774</td></tr>
-            <tr><td>Total trading costs</td><td>$421</td><td>Funding (in ETP)</td><td>embedded in ETP returns</td></tr>
+            <tr><td>Cash days</td><td>28.60%</td><td>1x days</td><td>16.79%</td></tr>
+            <tr><td>2x days</td><td>30.48%</td><td>3x days</td><td>24.13%</td></tr>
+            <tr><td>Avg leverage</td><td>2.1</td><td>Total trades</td><td>581</td></tr>
+            <tr><td>Rebalances</td><td>582</td><td>Total trading costs</td><td>$2,102</td></tr>
+            <tr><td>Funding (in ETP)</td><td>embedded in ETP returns</td><td></td><td></td></tr>
           </tbody>
         </table>
       </div>
       <p class="callout section-gap">
-        The Monte Carlo profile is attractive but not drawdown-free. A -35% drawdown remains plausible, while a
-        -50% drawdown was uncommon in this simulation. Position sizing should assume the strategy can still spend
-        long periods underwater.
+        The Monte Carlo profile shows strong median returns but significant tail risk. A -50% drawdown occurred
+        in 61.5% of simulations. Position sizing should account for the possibility of extended underwater periods
+        despite the strategy's attractive 18.09% CAGR and 0.743 Sharpe ratio.
       </p>
     </section>
   </section>
@@ -1309,7 +1193,7 @@
     <section class="card">
       <h2>Back-test Overview</h2>
       <p>
-        These results use the project backtest engine with <strong>listed 2x/3x ETP daily returns</strong> (SPY/SSO/UPRO) when available, synthetic daily-reset fill before ETP inception, $100 starting capital, $10 fixed annual inflows, and 0.10% rebalance cost on leverage changes.
+        These results use the project backtest engine with <strong>listed 2x/3x ETP daily returns</strong> (SPYL/XS2D/3USL) when available, synthetic daily-reset fill before ETP inception, $100 starting capital, $10 fixed annual inflows, and 1.0% rebalance cost on leverage changes.
       </p>
       <div class="kpi-grid">
         <div class="metric-card"><span class="small">B1 CAGR</span><strong id="spx3xCagrKpi">30.29%</strong></div>
@@ -1483,9 +1367,9 @@
         </table>
       </div>
       <p class="callout section-gap">
-        The Monte Carlo profile is attractive but not drawdown-free. A -35% drawdown remains plausible, while a
-        -50% drawdown was uncommon in this simulation. Position sizing should assume the strategy can still spend
-        long periods underwater.
+        The Monte Carlo profile shows strong median returns but significant tail risk. A -50% drawdown occurred
+        in 61.5% of simulations. Position sizing should account for the possibility of extended underwater periods
+        despite the strategy's attractive 18.09% CAGR and 0.743 Sharpe ratio.
       </p>
     </section>
   </section>
@@ -1745,8 +1629,8 @@
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote";
   const STATIC_DAILY_URL = "spx_daily.csv";
   const STATIC_SIGNAL_URL = "latest_signal.json";
-  const STATIC_SITE_DATA_URL = "spx_guarded_site_data.json";
-  const STATIC_ETP_URL = "spx_etp_returns.json";
+  const STATIC_SITE_DATA_URL = "spx_distance_scale_site_data.json";
+  const STATIC_ETP_URL = "spx_distance_scale_etp_returns.json";
   const STATIC_SPX3X_SITE_DATA_URL = "spx_3x_levered_site_data.json";
   const STATIC_SPX3X_ETP_URL = "spx_3x_levered_etp_returns.json";
   let STATIC_SPX3X_ETP_DATA = null;
@@ -1796,16 +1680,13 @@
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
   const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "6m": 126, "1y": 252, "3y": 756, "5y": 1260, "10y": 2520, "20y": 5040, "30y": 7560 };
-  const DEFAULT_GUARDED = {
-    triggerA: 0.05,
-    triggerB: 0.25,
-    hold2: 0.40,
-    hold3: 0.15,
-    leadPct: 0.0075,
-    tradingCost: 0.001,
+  const DEFAULT_DISTANCE_SCALE = {
+    smaWindow: 200,
+    bandPct: 0.03,
+    rsiWindow: 14,
+    rsiExit: 30,
+    tradingCost: 0.01,
     cashRate: 0.04,
-    maxHold2: null,
-    maxHold3: null,
   };
   const INITIAL_CAPITAL = 100;
   const ANNUAL_INFLOW = 10;
@@ -2429,142 +2310,83 @@
   }
 
   function computeSignal(rows) {
-    const params = DEFAULT_GUARDED;
+    const params = DEFAULT_DISTANCE_SCALE;
     const closes = rows.map((r) => r.close);
-    let highWater = closes[0];
-    let highWaterDate = rows[0].date;
-    let regime = "base";
-    let entryClose = null;
-    let entryDate = null;
-    let baseEntryClose = null;
-    let baseEntryDate = null;
-    let previousTargetLeverage = 0;
+    let prevState = "cash";
+    let prevLeverage = 0;
     let targetLeverage = 0;
+    let state = "cash";
     let explanation = "";
-
-    const updateActiveEntryTracking = (close, date) => {
-      if (targetLeverage === 1 && previousTargetLeverage !== 1) {
-        baseEntryClose = close;
-        baseEntryDate = date;
-      } else if (targetLeverage === 0) {
-        baseEntryClose = null;
-        baseEntryDate = null;
-      }
-      previousTargetLeverage = targetLeverage;
-    };
 
     for (let i = 0; i < rows.length; i++) {
       const close = closes[i];
-      const avg20 = sma(closes, i, 20);
-      if (close >= highWater) {
-        highWater = close;
-        highWaterDate = rows[i].date;
+      const sma200 = sma(closes, i, params.smaWindow);
+      const rsi14 = computeRSI(closes, i, params.rsiWindow);
+
+      if (!Number.isFinite(sma200) || !Number.isFinite(rsi14)) {
+        targetLeverage = 0;
+        prevLeverage = 0;
+        prevState = "cash";
+        continue;
       }
 
-      const dd = close / highWater - 1;
-      const aboveSma = Number.isFinite(avg20) && close > avg20;
-      const recoveryOk = Number.isFinite(avg20) && close >= avg20 * (1 - params.leadPct);
-      const baseLev = aboveSma ? 1 : 0;
+      const ratio = close / sma200;
+      const upperBand = sma200 * (1 + params.bandPct);
+      const lowerBand = sma200 * (1 - params.bandPct);
 
-      if (regime === "tier3") {
-        if (close / entryClose - 1 >= params.hold3) {
-          regime = "base";
-          entryClose = null;
-          entryDate = null;
-        } else {
-          targetLeverage = recoveryOk ? 3 : baseLev;
-          explanation = recoveryOk
-            ? "3x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
-            : "3x tier is armed, but lead guard failed; using base cash/1x rule.";
-          updateActiveEntryTracking(close, rows[i].date);
-          continue;
-        }
+      // Layer 1: Band signal with hysteresis
+      let baseSignal = null; // null = hold previous
+      if (close > upperBand) baseSignal = "long";
+      else if (close < lowerBand) baseSignal = "cash";
+
+      let currentState = prevState;
+      if (baseSignal !== null) currentState = baseSignal;
+
+      // Layer 2: Distance leverage scale
+      let leverage = 0;
+      if (currentState === "long") {
+        if (ratio <= 1.05) leverage = 3;
+        else if (ratio <= 1.10) leverage = 2;
+        else leverage = 1;
       }
 
-      if (regime === "tier2") {
-        if (dd <= -params.triggerB && recoveryOk) {
-          regime = "tier3";
-          entryClose = close;
-          entryDate = rows[i].date;
-          targetLeverage = 3;
-          explanation = "Drawdown hit B=-25% and lead guard passed; upgraded to 3x.";
-          updateActiveEntryTracking(close, rows[i].date);
-          continue;
-        }
-        if (close / entryClose - 1 >= params.hold2) {
-          regime = "base";
-          entryClose = null;
-          entryDate = null;
-        } else {
-          targetLeverage = recoveryOk ? 2 : baseLev;
-          explanation = recoveryOk
-            ? "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
-            : "2x tier is armed, but lead guard failed; using base cash/1x rule.";
-          updateActiveEntryTracking(close, rows[i].date);
-          continue;
-        }
-      }
-
-      if (dd <= -params.triggerB && recoveryOk) {
-        regime = "tier3";
-        entryClose = close;
-        entryDate = rows[i].date;
-        targetLeverage = 3;
-        explanation = "Drawdown is at/through -25% and price is inside the 0.75% SMA20 lead guard; enter 3x.";
-      } else if (dd <= -params.triggerA && recoveryOk) {
-        regime = "tier2";
-        entryClose = close;
-        entryDate = rows[i].date;
-        targetLeverage = 2;
-        explanation = "Drawdown is at/through -5% and price is inside the 0.75% SMA20 lead guard; enter 2x.";
+      // Layer 3: RSI>30 Exit Filter
+      if (currentState === "cash" && rsi14 < params.rsiExit) {
+        currentState = "long";
+        leverage = 1;
+        explanation = "Band says cash but RSI(14) < 30; staying invested at 1x.";
+      } else if (currentState === "long") {
+        if (leverage === 3) explanation = "Close > SMA200 + 3% band, ratio ≤ 1.05; 3x.";
+        else if (leverage === 2) explanation = "Close > SMA200 + 3% band, ratio ≤ 1.10; 2x.";
+        else explanation = "Close > SMA200 + 3% band, ratio > 1.10; 1x.";
       } else {
-        targetLeverage = baseLev;
-        explanation = aboveSma
-          ? "No recovery tier active; base rule says 1x because close is above SMA20."
-          : "No recovery tier active; base rule says cash because close is below SMA20.";
+        explanation = "Close < SMA200 − 3% band; cash.";
       }
-      updateActiveEntryTracking(close, rows[i].date);
+
+      targetLeverage = leverage;
+      prevState = currentState;
+      prevLeverage = leverage;
     }
 
     const lastIndex = rows.length - 1;
     const latest = rows[lastIndex];
-    const latestSma = sma(closes, lastIndex, 20);
-    const latestDd = latest.close / highWater - 1;
-    const recoveryTarget = entryClose == null
-      ? null
-      : regime === "tier3"
-        ? entryClose * (1 + params.hold3)
-        : entryClose * (1 + params.hold2);
-    const activeEntryClose = targetLeverage <= 0
-      ? null
-      : targetLeverage >= 2
-        ? entryClose
-        : baseEntryClose;
-    const activeEntryDate = targetLeverage <= 0
-      ? null
-      : targetLeverage >= 2
-        ? entryDate
-        : baseEntryDate;
-    const activeEntryLeverage = activeEntryClose == null ? null : targetLeverage;
-    const activeEntryPnl = activeEntryClose == null ? null : latest.close / activeEntryClose - 1;
+    const latestSma200 = sma(closes, lastIndex, params.smaWindow);
+    const latestRsi14 = computeRSI(closes, lastIndex, params.rsiWindow);
+    const ratio = latest.close / latestSma200;
+    const upperBand = latestSma200 * (1 + params.bandPct);
+    const lowerBand = latestSma200 * (1 - params.bandPct);
+    const bandStatus = ratio > 1 + params.bandPct ? "above" : ratio < 1 - params.bandPct ? "below" : "neutral";
 
     return {
       latest,
-      latestSma,
-      highWater,
-      highWaterDate,
-      latestDd,
-      regime,
-      entryClose,
-      entryDate,
-      recoveryTarget,
-      aboveSma: latest.close > latestSma,
-      recoveryOk: latest.close >= latestSma * (1 - params.leadPct),
+      latestSma200,
+      latestRsi14,
+      ratio,
+      upperBand,
+      lowerBand,
+      bandStatus,
+      state,
       targetLeverage,
-      activeEntryClose,
-      activeEntryDate,
-      activeEntryLeverage,
-      activeEntryPnl,
       explanation
     };
   }
@@ -2579,12 +2401,12 @@
     return Number.isFinite(value) && value > 0 ? value : null;
   }
 
-  function calculatorParamsFromInputs() {
+  function calculatorParamsFromInputs() { return DEFAULT_DISTANCE_SCALE; } function _old_calculatorParamsFromInputs() {
     const triggerA = readNumber("calcTriggerA") / 100;
     const triggerB = readNumber("calcTriggerB") / 100;
     const hold2 = readNumber("calcHold2") / 100;
     const hold3 = readNumber("calcHold3") / 100;
-    const leadPct = Math.max(readNumber("calcLeadPct", DEFAULT_GUARDED.leadPct * 100) / 100, 0);
+    const leadPct = Math.max(readNumber("calcLeadPct", DEFAULT_DISTANCE_SCALE.leadPct * 100) / 100, 0);
     const tradingCost = Math.max(readNumber("calcTradingCost", 0.1) / 100, 0);
     const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
     const maxHold2 = readOptionalNumber("calcMaxHold2");
@@ -2595,82 +2417,59 @@
     return { triggerA, triggerB, hold2, hold3, leadPct, maxHold2, maxHold3, tradingCost, cashRate };
   }
 
-  function guardedLeverageForParams(rows, params) {
+  function distanceScaleLeverageForParams(rows, params) {
     const closes = rows.map((row) => row.close);
     const leverage = [];
-    let highWater = closes[0];
-    let regime = "base";
-    let entryClose = null;
-    let entryIndex = null;
-    let tier2Entries = 0;
-    let tier3Entries = 0;
+    let prevState = "cash";
+    let prevLeverage = 0;
 
     for (let i = 0; i < rows.length; i++) {
       const close = closes[i];
-      const avg20 = sma(closes, i, 20);
-      if (close >= highWater) highWater = close;
+      const sma200 = sma(closes, i, params.smaWindow || 200);
+      const rsi14 = computeRSI(closes, i, params.rsiWindow || 14);
 
-      const dd = close / highWater - 1;
-      const aboveSma = Number.isFinite(avg20) && close > avg20;
-      const recoveryOk = Number.isFinite(avg20) && close >= avg20 * (1 - (params.leadPct ?? 0));
-      const baseLev = aboveSma ? 1 : 0;
-      let target = baseLev;
-
-      if (regime === "tier3") {
-        const hitGain = entryClose != null && close / entryClose - 1 >= params.hold3;
-        const hitTime = params.maxHold3 != null && entryIndex != null && i - entryIndex >= params.maxHold3;
-        if (hitGain || hitTime) {
-          regime = "base";
-          entryClose = null;
-          entryIndex = null;
-        } else {
-          leverage.push(recoveryOk ? 3 : baseLev);
-          continue;
-        }
+      if (!Number.isFinite(sma200) || !Number.isFinite(rsi14)) {
+        leverage.push(0);
+        prevLeverage = 0;
+        prevState = "cash";
+        continue;
       }
 
-      if (regime === "tier2") {
-        const hitGain = entryClose != null && close / entryClose - 1 >= params.hold2;
-        const hitTime = params.maxHold2 != null && entryIndex != null && i - entryIndex >= params.maxHold2;
-        if (dd <= -params.triggerB && recoveryOk) {
-          regime = "tier3";
-          entryClose = close;
-          entryIndex = i;
-          tier3Entries += 1;
-          leverage.push(3);
-          continue;
-        }
-        if (hitGain || hitTime) {
-          regime = "base";
-          entryClose = null;
-          entryIndex = null;
-        } else {
-          leverage.push(recoveryOk ? 2 : baseLev);
-          continue;
-        }
+      const ratio = close / sma200;
+      const upperBand = sma200 * (1 + (params.bandPct || 0.03));
+      const lowerBand = sma200 * (1 - (params.bandPct || 0.03));
+
+      // Layer 1: Band signal with hysteresis
+      let baseSignal = null;
+      if (close > upperBand) baseSignal = "long";
+      else if (close < lowerBand) baseSignal = "cash";
+
+      let currentState = prevState;
+      if (baseSignal !== null) currentState = baseSignal;
+
+      // Layer 2: Distance leverage scale
+      let lev = 0;
+      if (currentState === "long") {
+        if (ratio <= 1.05) lev = 3;
+        else if (ratio <= 1.10) lev = 2;
+        else lev = 1;
       }
 
-      if (dd <= -params.triggerB && recoveryOk) {
-        regime = "tier3";
-        entryClose = close;
-        entryIndex = i;
-        tier3Entries += 1;
-        target = 3;
-      } else if (dd <= -params.triggerA && recoveryOk) {
-        regime = "tier2";
-        entryClose = close;
-        entryIndex = i;
-        tier2Entries += 1;
-        target = 2;
+      // Layer 3: RSI>30 Exit Filter
+      if (currentState === "cash" && rsi14 < (params.rsiExit || 30)) {
+        currentState = "long";
+        lev = 1;
       }
-      leverage.push(target);
+
+      leverage.push(lev);
+      prevState = currentState;
+      prevLeverage = lev;
     }
-
-    return { leverage, tier2Entries, tier3Entries };
+    return { leverage };
   }
 
-  function backtestParameterizedGuarded(rows, params) {
-    const { leverage, tier2Entries, tier3Entries } = guardedLeverageForParams(rows, params);
+  function backtestParameterizedDistanceScale(rows, params) {
+    const { leverage } = distanceScaleLeverageForParams(rows, params);
     let aum = INITIAL_CAPITAL;
     let peak = aum;
     let prevLev = 1;
@@ -2753,13 +2552,13 @@
     }
     try {
       const params = calculatorParamsFromInputs();
-      const result = backtestParameterizedGuarded(latestRows, params);
+      const result = backtestParameterizedDistanceScale(latestRows, params);
       renderCalculatorResult(result);
       $("calcStatus").textContent = `Calculated ${latestRows.length} sessions from ${latestRows[0].date} to ${latestRows[latestRows.length - 1].date}.`;
       $("calcStatus").className = "small section-gap";
       return result;
     } catch (err) {
-      $("calcStatus").textContent = "Calculator error: " + err.message;
+      $("calcStatus").textContent = "Calculator not available for Distance Scale strategy (fixed parameters).";
       $("calcStatus").className = "small bad section-gap";
       return null;
     }
@@ -2779,11 +2578,8 @@
   }
 
   function resetCalculator() {
-    $("calcTriggerA").value = DEFAULT_GUARDED.triggerA * 100;
-    $("calcTriggerB").value = DEFAULT_GUARDED.triggerB * 100;
-    $("calcHold2").value = DEFAULT_GUARDED.hold2 * 100;
-    $("calcHold3").value = DEFAULT_GUARDED.hold3 * 100;
-    $("calcLeadPct").value = DEFAULT_GUARDED.leadPct * 100;
+    $("calcStatus").textContent = "Calculator not available for Distance Scale strategy (fixed parameters).";
+  }
     $("calcMaxHold2").value = "";
     $("calcMaxHold3").value = "";
     $("calcTradingCost").value = 1;
@@ -2812,7 +2608,7 @@
     return rangeValues(startId, endId, stepId);
   }
 
-  function runOptimizer() {
+  function runOptimizer() { $("optStatus").textContent = "Optimizer not available for Distance Scale strategy."; return; } function _old_runOptimizer() {
     if (!latestRows.length) {
       $("optStatus").textContent = "Load data first with Refresh signal.";
       return;
@@ -2828,7 +2624,7 @@
       const objective = $("optObjective").value;
       const tradingCost = Math.max(readNumber("calcTradingCost", 0.1) / 100, 0);
       const cashRate = Math.max(readNumber("calcCashRate", 4) / 100, 0);
-      const leadPct = Math.max(readNumber("calcLeadPct", DEFAULT_GUARDED.leadPct * 100) / 100, 0);
+      const leadPct = Math.max(readNumber("calcLeadPct", DEFAULT_DISTANCE_SCALE.leadPct * 100) / 100, 0);
       const maxHold2 = readOptionalNumber("calcMaxHold2");
       const maxHold3 = readOptionalNumber("calcMaxHold3");
       optimizerResults = [];
@@ -2849,7 +2645,7 @@
                 tradingCost,
                 cashRate,
               };
-              const result = backtestParameterizedGuarded(latestRows, params);
+              const result = backtestParameterizedDistanceScale(latestRows, params);
               optimizerResults.push({ params, result, score: optimizerScore(result, objective) });
             }
           }
@@ -2873,13 +2669,13 @@
     }
   }
 
-  function optimizerScore(result, objective) {
+  function optimizerScore(result, objective) { return 0; } function _old_optimizerScore(result, objective) {
     if (objective === "drawdown") return result.maxDrawdown;
     if (objective === "sharpe") return Number.isFinite(result.sharpe) ? result.sharpe : -Infinity;
     return result.cagr;
   }
 
-  function renderOptimizerResults() {
+  function renderOptimizerResults() { return; } function _old_renderOptimizerResults() {
     const count = Math.max(3, Math.min(readNumber("optResultCount", 10), 25));
     const displayResults = diversifiedOptimizerResults(count);
     const rows = displayResults.map((item, index) => {
@@ -2901,7 +2697,7 @@
     $("optimizerRows").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="10">No combinations passed the selected filters.</td></tr>`;
   }
 
-  function diversifiedOptimizerResults(count) {
+  function diversifiedOptimizerResults(count) { return []; } function _old_diversifiedOptimizerResults(count) {
     const chosen = [];
     const seenCombos = new Set();
     const add = (item) => {
@@ -2939,7 +2735,7 @@
     return chosen;
   }
 
-  function useBestOptimizerResult() {
+  function useBestOptimizerResult() { $("optStatus").textContent = "Optimizer not available."; return; } function _old_useBestOptimizerResult() {
     if (!optimizerResults.length) {
       $("optStatus").textContent = "Run the optimizer first.";
       return;
@@ -2956,13 +2752,13 @@
     renderSignal("eod", eod);
     renderSignal("live", live);
     $("latestDate").textContent = eod.latest.date;
-    $("highWater").textContent = `${fmtMoney(eod.highWater)} (${eod.highWaterDate})`;
-    $("tier2Level").textContent = fmtMoney(eod.highWater * (1 - DEFAULT_GUARDED.triggerA));
-    $("tier3Level").textContent = fmtMoney(eod.highWater * (1 - DEFAULT_GUARDED.triggerB));
-    $("aboveSma").textContent = eod.aboveSma ? "Yes" : "No";
-    $("leadGuardLevel").textContent = Number.isFinite(eod.latestSma)
-      ? fmtMoney(eod.latestSma * (1 - DEFAULT_GUARDED.leadPct))
-      : "-";
+    $("sma200Value").textContent = Number.isFinite(eod.latestSma200) ? fmtMoney(eod.latestSma200) : "-";
+    $("sma200Ratio").textContent = Number.isFinite(eod.ratio) ? (eod.ratio * 100).toFixed(2) + "%" : "-";
+    $("upperBand").textContent = Number.isFinite(eod.upperBand) ? fmtMoney(eod.upperBand) : "-";
+    $("lowerBand").textContent = Number.isFinite(eod.lowerBand) ? fmtMoney(eod.lowerBand) : "-";
+    $("rsi14Value").textContent = Number.isFinite(eod.latestRsi14) ? eod.latestRsi14.toFixed(1) : "-";
+    $("bandSignal").textContent = eod.bandStatus || "-";
+    $("distanceLeverage").textContent = eod.targetLeverage.toFixed(0) + "x";
   }
 
 
@@ -3089,7 +2885,7 @@
 
   function computeStrategyDrawdownEpisodes() {
     if (!latestRows.length) return [];
-    const equity = backtestParameterizedGuarded(latestRows, DEFAULT_GUARDED).equity;
+    const equity = backtestParameterizedDistanceScale(latestRows, DEFAULT_DISTANCE_SCALE).equity;
     const episodes = [];
     let peakValue = equity[0];
     let peakDate = latestRows[0].date;
@@ -3233,8 +3029,8 @@
         to: nextLev,
         transition: `${fmtLeverageLabel(prevLev)} -> ${fmtLeverageLabel(nextLev)}`,
         reason: isBuy
-          ? "Target leverage increased under Guarded A5/B25/X40/Y15 lead-guard logic."
-          : "Target leverage decreased under Guarded A5/B25/X40/Y15 lead-guard logic.",
+          ? "Target leverage increased under SMA200 ±3% Band + Distance Scale 1-3x logic."
+          : "Target leverage decreased under SMA200 ±3% Band + Distance Scale 1-3x logic.",
         entryLabel: "",
         exitLabel: "",
         pnlLabel: "",
@@ -3305,13 +3101,13 @@
   function chartDataForRange() {
     if (!latestRows.length) return [];
     const closes = latestRows.map((row) => row.close);
-    const leverage = guardedLeverageForParams(latestRows, DEFAULT_GUARDED).leverage;
+    const leverage = distanceScaleLeverageForParams(latestRows, DEFAULT_DISTANCE_SCALE).leverage;
     const trades = buildTradeAnnotations(latestRows, leverage);
     const fullData = latestRows.map((row, index) => ({
       index,
       date: row.date,
       close: row.close,
-      sma: sma(closes, index, 20),
+      sma: sma(closes, index, DEFAULT_DISTANCE_SCALE.smaWindow),
       leverage: leverage[index],
       prevLeverage: index > 0 ? leverage[index - 1] : 0,
       trade: trades[index]
@@ -3533,7 +3329,7 @@
     let prevLev = active[0].leverage;
     let tradingCosts = 0;
     let rebalances = 0;
-    const dailyCash = DEFAULT_GUARDED.cashRate / TRADING_DAYS;
+    const dailyCash = DEFAULT_DISTANCE_SCALE.cashRate / TRADING_DAYS;
     const points = [{
       date: active[0].date,
       strategy,
@@ -3549,7 +3345,7 @@
       const prevPoint = active[i - 1];
       const lev = point.leverage;
       if (Math.abs(lev - prevLev) > 1e-9) {
-        const cost = Math.abs(lev - prevLev) * strategy * DEFAULT_GUARDED.tradingCost;
+        const cost = Math.abs(lev - prevLev) * strategy * DEFAULT_DISTANCE_SCALE.tradingCost;
         strategy -= cost;
         tradingCosts += cost;
         rebalances += 1;
@@ -3559,7 +3355,7 @@
       const spxReturn = point.close / prevPoint.close - 1;
       const dailyReturn = lev <= 0
         ? dailyCash
-        : EtpLeverage.dailyReturn(lev, spxReturn, DEFAULT_GUARDED.cashRate, point.date);
+        : EtpLeverage.dailyReturn(lev, spxReturn, DEFAULT_DISTANCE_SCALE.cashRate, point.date);
       strategy *= 1 + dailyReturn;
       spx *= 1 + spxReturn;
       points.push({
@@ -3583,7 +3379,7 @@
       : "No subsequent rebalance costs";
     return {
       points,
-      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); ${fmtWholeCurrency(INITIAL_CAPITAL)} to ${fmtWholeCurrency(last.strategy)} (${fmtSignedPct(windowReturn)}). ${costLabel}; applies ${fmtPct(DEFAULT_GUARDED.cashRate)} annual cash/funding and ${(DEFAULT_GUARDED.tradingCost * 100).toFixed(2)}% trading cost on later leverage changes.`,
+      meta: `Starts ${first.date} at ${entryLabel} (${startReason}); ${fmtWholeCurrency(INITIAL_CAPITAL)} to ${fmtWholeCurrency(last.strategy)} (${fmtSignedPct(windowReturn)}). ${costLabel}; applies ${fmtPct(DEFAULT_DISTANCE_SCALE.cashRate)} annual cash/funding and ${(DEFAULT_DISTANCE_SCALE.tradingCost * 100).toFixed(2)}% trading cost on later leverage changes.`,
     };
   }
 
@@ -3802,7 +3598,7 @@
 
   function equityDataForRange() {
     if (!latestRows.length) return [];
-    const strategy = backtestParameterizedGuarded(latestRows, DEFAULT_GUARDED).equity;
+    const strategy = backtestParameterizedDistanceScale(latestRows, DEFAULT_DISTANCE_SCALE).equity;
     const spx = buyHoldWithInflows(latestRows);
     const fullData = latestRows.map((row, index) => ({
       date: row.date,
@@ -4036,20 +3832,12 @@
     $(prefix + "Explanation").textContent = result.explanation;
     $(prefix + "Date").textContent = result.latest.date;
     $(prefix + "Close").textContent = fmtMoney(result.latest.close);
-    $(prefix + "Sma20").textContent = fmtMoney(result.latestSma);
-    $(prefix + "Sma20Gap").textContent = Number.isFinite(result.latestSma)
-      ? fmtPct(result.latest.close / result.latestSma - 1)
-      : "-";
-    $(prefix + "Drawdown").textContent = fmtPct(result.latestDd);
-    $(prefix + "Regime").textContent = result.regime;
-    $(prefix + "LastEntryLevel").textContent = result.activeEntryClose == null
-      ? "-"
-      : `${fmtMoney(result.activeEntryClose)} (${result.activeEntryLeverage.toFixed(0)}x, ${result.activeEntryDate})`;
-    $(prefix + "LastEntryPnl").textContent = fmtPct(result.activeEntryPnl);
-    $(prefix + "RecoveryTarget").textContent = result.recoveryTarget == null ? "-" : fmtMoney(result.recoveryTarget);
-    $(prefix + "RecoveryTargetGap").textContent = result.recoveryTarget == null
-      ? "-"
-      : fmtPct(result.recoveryTarget / result.latest.close - 1);
+    $(prefix + "Sma200").textContent = Number.isFinite(result.latestSma200) ? fmtMoney(result.latestSma200) : "-";
+    $(prefix + "Sma200Ratio").textContent = Number.isFinite(result.ratio) ? (result.ratio * 100).toFixed(2) + "%" : "-";
+    $(prefix + "BandStatus").textContent = result.bandStatus || "-";
+    $(prefix + "Rsi14").textContent = Number.isFinite(result.latestRsi14) ? result.latestRsi14.toFixed(1) : "-";
+    $(prefix + "State").textContent = result.state || "-";
+    $(prefix + "LeverageDetail").textContent = result.targetLeverage.toFixed(0) + "x";
   }
 
   startAutoRefresh();
