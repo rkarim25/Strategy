@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-22T12:45:26Z",
+  "generated_at_utc": "2026-06-22T17:27:25Z",
   "data_asof": "2026-06-22",
   "daily_rows": 2901,
-  "quote_price": 7148.0,
+  "quote_price": 7209.0,
   "quote_timestamp": "2026-06-22",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L?period1=0&period2=1782218726&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L?period1=0&period2=1782235645&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-22",
-      "close": 7148.0
+      "close": 7209.0
     },
-    "latestSma": 5876.9,
+    "latestSma": 5879.95,
     "highWater": 13014.4912109375,
     "highWaterDate": "2015-04-13",
-    "latestDd": -0.4507660818893362,
+    "latestDd": -0.4460789989284031,
     "regime": "sma20",
     "entryClose": null,
     "entryDate": null,
@@ -42,18 +42,18 @@
     "activeEntryClose": 5864.0,
     "activeEntryDate": "2026-06-12",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.2189631650750341,
+    "activeEntryPnl": 0.22936562073669853,
     "explanation": "Close is above SMA20; hold 1x (fully in 3BAL)."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-06-22",
-      "close": 7148.0
+      "close": 7209.0
     },
-    "latestSma": 5957.15,
+    "latestSma": 5963.25,
     "highWater": 13014.4912109375,
     "highWaterDate": "2015-04-13",
-    "latestDd": -0.4507660818893362,
+    "latestDd": -0.4460789989284031,
     "regime": "sma20",
     "entryClose": null,
     "entryDate": null,
@@ -64,14 +64,14 @@
     "activeEntryClose": 5864.0,
     "activeEntryDate": "2026-06-12",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.2189631650750341,
+    "activeEntryPnl": 0.22936562073669853,
     "explanation": "Close is above SMA20; hold 1x (fully in 3BAL)."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-06-22",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-22T12:45:26Z",
+    "last_checked_at_utc": "2026-06-22T17:27:25Z",
     "last_email_sent_on": "2026-06-15",
     "last_transition": {
       "id": "2026-06-11:0->2026-06-15:1",

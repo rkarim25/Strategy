@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-22T12:45:27Z",
+  "generated_at_utc": "2026-06-22T17:27:26Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com; US stock market today: Wall Street rebounds as oil slides after US-Iran deal; S&P 500, Nasdaq rise over 1 - The Times of India. Bearish offsets: Wall Street closes lower on Fed rate hike bets - The Detroit News; Rising Bond Yields Are Becoming the Stock Market\u2019s Biggest Problem.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com; US stock market today: Wall Street rebounds as oil slides after US-Iran deal; S&P 500, Nasdaq rise over 1 - The Times of India. Bearish offsets: S&P 500 runs out of steam, falls into the red as Big Tech, SpaceX struggle: Live updates; Wall Street closes lower on Fed rate hike bets - The Detroit News.",
   "articles": [
     {
       "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com",
@@ -13,17 +13,17 @@
       "tone": "bullish"
     },
     {
+      "title": "S&P 500 runs out of steam, falls into the red as Big Tech, SpaceX struggle: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/21/stock-market-today-live-updates.html",
+      "published": "2026-06-22T17:24:18Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Wall Street closes lower on Fed rate hike bets - The Detroit News",
       "source": "The Detroit News",
       "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPZmd3cjUyUThCbzBJOEZPeXZrY0w1X3NWX01zWlRLLTVnczJpMXhBRk5LR0FEOXMxR1hyNXZaMlc4SkROZUJiRnFucjV0YWRzWlpDUHBONDdZQ2l6YmhYU2pCMWF2WURCejdOUDdEQVJqTE9rRnR6TDh1THZiM3FZdDg1OEVRTHNvLWRZcHQyTzhGUUVPNnItQUpYcHdaWEJVcmRWME9nNEJ4RnozMDBXeGJaTjBzX3JmRnk2WDlRQ21hYjQxV2Vzb21QS0c0NDA?oc=5",
       "published": "2026-06-17T20:33:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Rising Bond Yields Are Becoming the Stock Market\u2019s Biggest Problem",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/d8c48714-15ad-3e0f-87f8-d56cf063d371/rising-bond-yields-are.html?.tsrc=rss",
-      "published": "2026-06-22T12:30:00Z",
       "tone": "bearish"
     },
     {
@@ -34,11 +34,11 @@
       "tone": "bullish"
     },
     {
-      "title": "1 Bank Stock Worth Investigating and 2 Facing Headwinds",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/1-bank-stock-worth-investigating-111519717.html?.tsrc=rss",
-      "published": "2026-06-22T11:15:19Z",
-      "tone": "bullish"
+      "title": "Stock Market Today: S&P 500, Dow, Nasdaq 100 Futures Jump After Sharp Sell-Off On Fed Rates Pause\u2014 Freeca - Benzinga",
+      "source": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMinwJBVV95cUxOamltU2ljX0I3cmRxWHFNNXFTSWJLbEpjNHFjdWxZZ0Jyb00wTnpwbmFQdkt6QnplVS1WdldwUlNacTduczUyMUdZZTJYSXd2dkJJd0hHWjdGOTFmc2xWN25RclR0WUF2TlNUSU5UallGMloyVFdRRVNqSzBoenlsc3BLV3pQa2VBVUc5aGRMZ2pkcnh4Y1JCWFZpenlYWnBVZVNSbl9kNUpSQWJKTVUxdnYzZFVlU0VaQWhBeVpGeThQeFcwaEhwUWY3b1k4N2c5VGQwUXJfZTZ3M0JYWDIyS1FvUzNCRUVpdFNpT3FYMVpRSDlwYmVYLXhIWTlSWTRweFhlZnlHaVdvZ3lLQmFrMTRIN3NMdmxndUVGZU9lMA?oc=5",
+      "published": "2026-06-18T12:47:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 98
       }
     ],
-    "headline_count": 146,
+    "headline_count": 148,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
