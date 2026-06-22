@@ -1,29 +1,15 @@
 {
-  "generated_at_utc": "2026-06-19T22:54:13Z",
+  "generated_at_utc": "2026-06-22T12:45:27Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Elevated S&P 500 Valuations Could Signal Final Stage of AI-Driven Market Rally; S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com. Bearish offsets: Wall Street closes lower on Fed rate hike bets - The Detroit News; Stocks leap worldwide, and oil prices drop after the U.S. and Iran reach a tentative deal on their war - BNN Bloomberg.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com; US stock market today: Wall Street rebounds as oil slides after US-Iran deal; S&P 500, Nasdaq rise over 1 - The Times of India. Bearish offsets: Wall Street closes lower on Fed rate hike bets - The Detroit News; Rising Bond Yields Are Becoming the Stock Market\u2019s Biggest Problem.",
   "articles": [
-    {
-      "title": "Elevated S&P 500 Valuations Could Signal Final Stage of AI-Driven Market Rally",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://investorshub.advfn.com/market-news/article/30813/elevated-sp-500-valuations-could-signal-final-stage-of-ai-driven-market-rally?.tsrc=rss",
-      "published": "2026-06-19T15:40:00Z",
-      "tone": "bullish"
-    },
     {
       "title": "S&P 500 Rally Wavers Before Fed as SpaceX Jumps: Markets Wrap - Bloomberg.com",
       "source": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQUGQyNjFqZGxoR2pXc28xbWU2a3FWZTVHeXF4MmJ6SlJOTmk4SEpKOVN5R192SG8zNmxCd0plSF9tMWVRcmtpdlUxU3RfOFcxU0h1MTlMZHlQNzhhZHBLaWY1TUE1ZVFKYWZaU3BTdWFhLUpYNWs1Nkw5TmUxOXY4OTdxbEpIN253SnBRMDdKNXJ2VTRHRThXYmVwY0xtZlNQQ05iTExkckxSa3lCUEFoZnlGT3A?oc=5",
       "published": "2026-06-15T22:06:05Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "US Stock Market Today: S&P 500 Futures Rally On Easing Yields And Fed Optimism - simplywall.st",
-      "source": "simplywall.st",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNkw5Y1hfMmw4WFZrSTZQWHVnTDU1VHd5YzVpNHljS2VTQ0tsRWxTeGhlcVJWUDBqaTR0OWNSSFNSOC1OdU5KRTc1Q2VUNW1MdHVxWlRYYnVKYm1iRFpFVG04QjY2VmFfU2lHT2E4dXJpandMUEZfb2IxOVMyeVFKWl8wUEFja0Fia1Y5UWlPMG9GWUQ2ZEYwemJYWjZHWWFCLVZZbEFfTkFfd0NHMUdoSjVWM0RrR3VMZlHSAb8BQVVfeXFMUEs3WVFhNGExMGlubjNXTUltTXVYNHJmYXg3ekIxTDl1T25qNldjZlRMeGpqZjRTZ0NlcmxuVXlOckpPNmd1VFBLS1JabVg0cEN5M3RYNXVKcHluQnd4LVItdC1NU0k5MFNGWEtzaFFzMW5yTzNLU1VSSC00T0wwTV9vS2JuZ0xXSVlCS0Z4Q2kxOWNTR0QtNzhwMG5WQ05oWUVWcVFjZFBKWHhsQ1lkMGpMSElUc1UxYmpmd2VhYWM?oc=5",
-      "published": "2026-06-16T08:34:27Z",
       "tone": "bullish"
     },
     {
@@ -34,11 +20,25 @@
       "tone": "bearish"
     },
     {
-      "title": "Stocks leap worldwide, and oil prices drop after the U.S. and Iran reach a tentative deal on their war - BNN Bloomberg",
-      "source": "BNN Bloomberg",
-      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQMmY5VHlFWm5qYVVTZHRHOWozM1VBc0dLS3FCS2ZQZUdEN0ZfdmFMM0tlaFpoS1dfWnFDd0t2dUpxMnZxYmNfWlFsbGliUkk2V25LTzBTZ3NCU0NheHZyUEM3VDVaZUF5cHAxNlgtVmZ6MFB0eFowMFhKc2RDQjBBN19TckdYck1xejA3RDJjN2o3bGd2NVlYVmZpbWVpc2RtMVludjVDeVU3ZmJtbzZlSnRNR29yTTliQjNyMm9maTdWazBNWnEyX0djVm8yTFVMakRobGpfTDNwMXhQT1I1Qg?oc=5",
-      "published": "2026-06-15T20:10:44Z",
+      "title": "Rising Bond Yields Are Becoming the Stock Market\u2019s Biggest Problem",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/d8c48714-15ad-3e0f-87f8-d56cf063d371/rising-bond-yields-are.html?.tsrc=rss",
+      "published": "2026-06-22T12:30:00Z",
       "tone": "bearish"
+    },
+    {
+      "title": "US stock market today: Wall Street rebounds as oil slides after US-Iran deal; S&P 500, Nasdaq rise over 1 - The Times of India",
+      "source": "The Times of India",
+      "url": "https://news.google.com/rss/articles/CBMioAJBVV95cUxPRHVLbU90bXc1T25YRjFTVEVfYXppUUFQam5KM2dGMHZBNG1yTnJTU0ZsTW5JNXdNakViS0R5aU05Qk5pY0tPN1RSTTZ4NzhGblc1V0hITV9SRjVGN0NkcDBNQXQ4QUNLbnpuNEs4SVBEX3BsdTVkRmUwWVNTMjBVN0NqWGpWa253TnFWQmtHQ1VpME4wU3YxX0tuTmZLWTRxVmg5WmpnNjVhUlNSMl9CeVRsOVZCZmdKUVNsWklNVlJuVDA0WUdWdEczZ041RjF2YmlheUZFRlZwOVIwZkNKQkp2alQtTXRrc2xyTU5rcGdXdmkxY3d1bDQtc2x2SEpyOUx3WVRVeVJPeTBIQnlaTE53UTl1dE1rU2lMUUgxNUfSAaYCQVVfeXFMTVNsQVhKZFVjX0lDNExOVG9hWGJTWngtaWZEZ3U4SHdsZ1F1eWpCX0RzWlhZUzZuWk5fZ0JMc1JXeWQ2OXhjdjJrbE9FWlRDTEZ1a095VUN1U2pwMHYxcFd1UnhEZ0cyZ0h4TU5QN1czWC1SMWxub0FfdzRwSTBhdnJUTEt5MlZ6cGpQeFU0LV9tY1Z4TVVFVHRHLXFuMHhpb1lOZzZqOWlRYmhKdUZqalo0RVBpS1NSQmJaQndOWndzMGMtaUVrb2RPYS1hYXJBTEV5SzcyOTJZQ3F2M2FJYlpVQXVqQzA0V3poMmQ0OWI3OUdjNDdETjQ5RDNyNGxkd2lxd0JRT015RXlEUjJyUnRwWUlnVTQ5dDhVendlQWs2YTU2NVBn?oc=5",
+      "published": "2026-06-18T14:01:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "1 Bank Stock Worth Investigating and 2 Facing Headwinds",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-bank-stock-worth-investigating-111519717.html?.tsrc=rss",
+      "published": "2026-06-22T11:15:19Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 99
+        "articles": 96
       }
     ],
-    "headline_count": 149,
+    "headline_count": 146,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
