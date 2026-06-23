@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-06-23T16:24:28Z",
+  "generated_at_utc": "2026-06-23T18:19:19Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: SpaceX stock climbs 5%, rebounding from three-day losing streak. Bearish offsets: S&P 500 falls on global chip rout with Nasdaq off more than 1%, led by Micron: Live updates; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
+  "score": 3,
+  "label": "Bearish",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: SpaceX stock climbs 6%, rebounding from three-day losing streak. Bearish offsets: S&P 500 falls on global chip rout with Nasdaq off more than 1%, led by Micron: Live updates; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
   "articles": [
     {
       "title": "S&P 500 falls on global chip rout with Nasdaq off more than 1%, led by Micron: Live updates",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/22/stock-market-today-live-updates.html",
-      "published": "2026-06-23T16:18:18Z",
+      "published": "2026-06-23T17:41:28Z",
       "tone": "bearish"
     },
     {
@@ -20,24 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Nasdaq Falls As Micron Sinks Ahead Of Earnings; Trump Helps Quantum Stocks (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/3510202e-147f-3825-9cd7-6eef1801d532/stock-market-today%3A-nasdaq.html?.tsrc=rss",
-      "published": "2026-06-23T15:48:50Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "SpaceX stock climbs 5%, rebounding from three-day losing streak",
+      "title": "SpaceX stock climbs 6%, rebounding from three-day losing streak",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/23/spacex-stock-tech-sell-off.html",
-      "published": "2026-06-23T16:22:12Z",
+      "published": "2026-06-23T17:07:05Z",
       "tone": "bullish"
     },
     {
-      "title": "One factor may keep chip stocks on a roller coaster for foreseeable future",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/23/one-factor-may-keep-chip-stocks-on-a-roller-coaster-for-foreseeable-future.html",
-      "published": "2026-06-23T13:28:21Z",
+      "title": "Nasdaq tumbles more than 2% in opening trading as global tech sell-off deepens",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/world-indices/articles/nasdaq-tumbles-more-than-2-in-opening-trading-as-global-tech-sell-off-deepens-150452438.html?.tsrc=rss",
+      "published": "2026-06-23T15:04:52Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street points to another day of losses, led by an ongoing sell-off in tech - BNN Bloomberg",
+      "source": "BNN Bloomberg",
+      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdldta0FLT1dFLTNrXzBlTmJOWlJYdmhOY2hMa2xzOUUyMlFYYkY3V3hoOVB5cWFJTy1CS1RSYWl4TlZRYUlXUGRTRENJckp1YWtzYXlZUnZ6ckZNTVB5cWx0ekQ2NkJqb2xoVDFod0o2ajJ5WmV3d05LZWVQcWNmelUzemFWc0w2ZkZmUlVHS3U2RlhSMEItZlU3YkVSYVRZS2d0M2h6ODFZTHJ0VElXQnNFQUlycV9RSzVyQkV1LVlSc25IaUlDWlNONnFkVkZPUnc?oc=5",
+      "published": "2026-06-23T12:50:56Z",
       "tone": "bearish"
     }
   ],
