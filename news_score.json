@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-22T23:16:34Z",
+  "generated_at_utc": "2026-06-23T10:32:32Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US stocks end mostly lower, dragged by megacap tech; focus on Iran; US stock market today: Wall Street rebounds as oil slides after US-Iran deal; S&P 500, Nasdaq rise over 1 - The Times of India. Bearish offsets: Stock Market Today: S&P 500, Dow, Nasdaq 100 Futures Jump After Sharp Sell-Off On Fed Rates Pause\u2014 Freeca - Benzinga.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: US stocks end mostly lower, dragged by megacap tech; focus on Iran. Bearish offsets: Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East; Tech rout intensifies as selloff grips global stocks.",
   "articles": [
     {
       "title": "US stocks end mostly lower, dragged by megacap tech; focus on Iran",
@@ -13,32 +13,32 @@
       "tone": "bullish"
     },
     {
-      "title": "US stock market today: Wall Street rebounds as oil slides after US-Iran deal; S&P 500, Nasdaq rise over 1 - The Times of India",
-      "source": "The Times of India",
-      "url": "https://news.google.com/rss/articles/CBMioAJBVV95cUxPRHVLbU90bXc1T25YRjFTVEVfYXppUUFQam5KM2dGMHZBNG1yTnJTU0ZsTW5JNXdNakViS0R5aU05Qk5pY0tPN1RSTTZ4NzhGblc1V0hITV9SRjVGN0NkcDBNQXQ4QUNLbnpuNEs4SVBEX3BsdTVkRmUwWVNTMjBVN0NqWGpWa253TnFWQmtHQ1VpME4wU3YxX0tuTmZLWTRxVmg5WmpnNjVhUlNSMl9CeVRsOVZCZmdKUVNsWklNVlJuVDA0WUdWdEczZ041RjF2YmlheUZFRlZwOVIwZkNKQkp2alQtTXRrc2xyTU5rcGdXdmkxY3d1bDQtc2x2SEpyOUx3WVRVeVJPeTBIQnlaTE53UTl1dE1rU2lMUUgxNUfSAaYCQVVfeXFMTVNsQVhKZFVjX0lDNExOVG9hWGJTWngtaWZEZ3U4SHdsZ1F1eWpCX0RzWlhZUzZuWk5fZ0JMc1JXeWQ2OXhjdjJrbE9FWlRDTEZ1a095VUN1U2pwMHYxcFd1UnhEZ0cyZ0h4TU5QN1czWC1SMWxub0FfdzRwSTBhdnJUTEt5MlZ6cGpQeFU0LV9tY1Z4TVVFVHRHLXFuMHhpb1lOZzZqOWlRYmhKdUZqalo0RVBpS1NSQmJaQndOWndzMGMtaUVrb2RPYS1hYXJBTEV5SzcyOTJZQ3F2M2FJYlpVQXVqQzA0V3poMmQ0OWI3OUdjNDdETjQ5RDNyNGxkd2lxd0JRT015RXlEUjJyUnRwWUlnVTQ5dDhVendlQWs2YTU2NVBn?oc=5",
-      "published": "2026-06-18T14:01:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "SpaceX stock tanks 16%, extending slump following post-IPO rally",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/22/spacex-stock-ipo-rally-selloff.html",
-      "published": "2026-06-22T20:10:16Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today: S&P 500, Dow, Nasdaq 100 Futures Jump After Sharp Sell-Off On Fed Rates Pause\u2014 Freeca - Benzinga",
-      "source": "Benzinga",
-      "url": "https://news.google.com/rss/articles/CBMinwJBVV95cUxOamltU2ljX0I3cmRxWHFNNXFTSWJLbEpjNHFjdWxZZ0Jyb00wTnpwbmFQdkt6QnplVS1WdldwUlNacTduczUyMUdZZTJYSXd2dkJJd0hHWjdGOTFmc2xWN25RclR0WUF2TlNUSU5UallGMloyVFdRRVNqSzBoenlsc3BLV3pQa2VBVUc5aGRMZ2pkcnh4Y1JCWFZpenlYWnBVZVNSbl9kNUpSQWJKTVUxdnYzZFVlU0VaQWhBeVpGeThQeFcwaEhwUWY3b1k4N2c5VGQwUXJfZTZ3M0JYWDIyS1FvUzNCRUVpdFNpT3FYMVpRSDlwYmVYLXhIWTlSWTRweFhlZnlHaVdvZ3lLQmFrMTRIN3NMdmxndUVGZU9lMA?oc=5",
-      "published": "2026-06-18T12:47:00Z",
+      "title": "Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East",
+      "source": "Economy Middle East",
+      "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNUG1nYjVKYkhVNm96eEtETy14c0RsYmdhVERXYldKZ3N1UFZVNVlIUFNZWThrOF90aGFHMThxamhjLXZxNEhzZDdJM2wwR2pmeFBJRkxQMXVnaFZOcExrWlhzZjAzVWFWT3RVSTVoVjVERFhSdHVSdDBHS01WRmkzZ2VvSmZiQV92bS01cFF0b2RaNFV2Rk5qS3hmUzNsOExuQnhkRjJGclYwdVVEcU9ueTRhWTlGcVV3V1hYTllrSEg3UWx4YmdBZXBKclN6aFhxU0V6M19tb3dLY0U1TGV4eS1SaWNVakNXY2ZYSXRPUFlYSDNBWGZoNjNxR1dZQU0?oc=5",
+      "published": "2026-06-23T07:39:08Z",
       "tone": "bearish"
     },
     {
-      "title": "S&P rises 1%, Nasdaq gains nearly 2% as U.S.-Iran peace deal boosts sentiment - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQY1lIMFVqQmZHbmVGcVV3OGx1RHpJZXFlWnZ1YXFOTGNCc0V4Y01oZERScFh3SnFjcTRpek4wQ2FCS1BEZkVjRmdBbXJEN2diZkVLaFIxU0YzVnluQWNHM0ZxX0pjYTBCc21yVDJWaUJmZlJzSmgxR2RZUXFQdlVGaWpvVkh0UWtMYXlER3lGTERBOVpVWDQyR1VURVpYZEpfV3Z3eEpzRl81UWw4LTRsT0V1N2pEZjQtMlB6MzVQU2lnRVdERnVWREZlQzZIa1k?oc=5",
-      "published": "2026-06-18T01:01:29Z",
-      "tone": "bullish"
+      "title": "Tech rout intensifies as selloff grips global stocks",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/23/tech-stocks-sell-off-mag7-samsung-sk-hynix.html",
+      "published": "2026-06-23T09:25:52Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPOE9pYW4wR3lMMmxwaUFFUlZGUHJzNjh0aUV1RGs4T1MyYkNCNXlwTDRpbzk2SlhEZ3lEdmoxRnRvVUU0Uk1oUTYtWXJvaUpyeURNaVZJS0FvcmE4cGwwUzczTFhyZmJXSmdvZEIwSVZvYU5UWC04V3ZBTUQwQmhOYVpRZ1ZPWjU4akcxckRRRUlKTkpPZTlOaFRpWGdDYnRiY0RuRG9zbmlGYm1paUR3cF9yVGIwWlZTd0RxNmZtUVlNNzl3MnhRbnQwM0Z4N3J0ZFJabUVVRjNqT29YbExLNXFOMTdySEhVMUF4SmNiU01nMWkxcHc?oc=5",
+      "published": "2026-06-23T07:30:45Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock market today: Nasdaq, S&P 500 futures dive as global chip sell-off spurs AI doubts",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/economy/live/stock-market-today-nasdaq-sp-500-futures-dive-as-global-chip-sell-off-spurs-ai-doubts-230258084.html?.tsrc=rss",
+      "published": "2026-06-22T23:02:58Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 97
       }
     ],
-    "headline_count": 146,
+    "headline_count": 147,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-22T23:16:29Z",
+  "generated_at_utc": "2026-06-23T10:32:26Z",
   "data_asof": "2026-06-22",
   "daily_rows": 7546,
   "quote_price": 30347.08203125,
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-22",
-      "close": 30347.08203125
+      "close": 30347.080078125
     },
-    "latestSma": 29907.49501953125,
+    "latestSma": 29907.494921875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.010225422272209461,
+    "latestDd": -0.01022548597367079,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -46,7 +46,7 @@
     "activeEntryClose": 30406.189453125,
     "activeEntryDate": "2026-06-18",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": -0.001943927303555193,
+    "activeEntryPnl": -0.0019439915380098372,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "provisional_signal": {
@@ -54,7 +54,7 @@
       "date": "2026-06-22",
       "close": 30347.08203125
     },
-    "latestSma": 29950.76708984375,
+    "latestSma": 29950.7669921875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
     "latestDd": -0.010225422272209461,
@@ -75,7 +75,7 @@
     "last_observed_asof": "2026-06-22",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-22T23:16:29Z",
+    "last_checked_at_utc": "2026-06-23T10:32:26Z",
     "last_email_sent_on": "2026-06-19",
     "last_transition": {
       "id": "2026-06-17:0->2026-06-18:1",
