@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-06-23T13:40:48Z",
+  "generated_at_utc": "2026-06-23T16:24:28Z",
   "window_days": 7,
   "score": 4,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: UBS sees AI FOMO fuelling US share rally. Bearish offsets: Nasdaq tipped for steep fall amidst 'rotation not liquidation' in tech; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: SpaceX stock climbs 5%, rebounding from three-day losing streak. Bearish offsets: S&P 500 falls on global chip rout with Nasdaq off more than 1%, led by Micron: Live updates; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
   "articles": [
     {
-      "title": "Nasdaq tipped for steep fall amidst 'rotation not liquidation' in tech",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.proactiveinvestors.com/companies/news/1094335/nasdaq-tipped-for-steep-fall-amidst-rotation-not-liquidation-in-tech-1094335.html?.tsrc=rss",
-      "published": "2026-06-23T12:30:00Z",
+      "title": "S&P 500 falls on global chip rout with Nasdaq off more than 1%, led by Micron: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/22/stock-market-today-live-updates.html",
+      "published": "2026-06-23T16:18:18Z",
       "tone": "bearish"
     },
     {
@@ -20,24 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "UBS sees AI FOMO fuelling US share rally",
+      "title": "Stock Market Today: Nasdaq Falls As Micron Sinks Ahead Of Earnings; Trump Helps Quantum Stocks (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.proactiveinvestors.com/companies/news/1094325/ubs-sees-ai-fomo-fuelling-us-share-rally-1094325.html?.tsrc=rss",
-      "published": "2026-06-23T12:53:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Update: US Equity Futures Fall Pre-Bell Amid Broad Tech Sell-Off, US-Iran Peace Negotiations",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-futures-fall-pre-124953893.html?.tsrc=rss",
-      "published": "2026-06-23T12:49:53Z",
+      "url": "https://finance.yahoo.com/m/3510202e-147f-3825-9cd7-6eef1801d532/stock-market-today%3A-nasdaq.html?.tsrc=rss",
+      "published": "2026-06-23T15:48:50Z",
       "tone": "bearish"
     },
     {
-      "title": "Stocks tumble on global chip rout with Nasdaq off 2%, led by Micron: Live updates",
+      "title": "SpaceX stock climbs 5%, rebounding from three-day losing streak",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/22/stock-market-today-live-updates.html",
-      "published": "2026-06-23T13:36:52Z",
+      "url": "https://www.cnbc.com/2026/06/23/spacex-stock-tech-sell-off.html",
+      "published": "2026-06-23T16:22:12Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "One factor may keep chip stocks on a roller coaster for foreseeable future",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/23/one-factor-may-keep-chip-stocks-on-a-roller-coaster-for-foreseeable-future.html",
+      "published": "2026-06-23T13:28:21Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 91
       }
     ],
-    "headline_count": 146,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
