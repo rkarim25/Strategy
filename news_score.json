@@ -1,16 +1,16 @@
 {
-  "generated_at_utc": "2026-06-23T10:32:32Z",
+  "generated_at_utc": "2026-06-23T13:40:48Z",
   "window_days": 7,
-  "score": 6,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: US stocks end mostly lower, dragged by megacap tech; focus on Iran. Bearish offsets: Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East; Tech rout intensifies as selloff grips global stocks.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: UBS sees AI FOMO fuelling US share rally. Bearish offsets: Nasdaq tipped for steep fall amidst 'rotation not liquidation' in tech; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
   "articles": [
     {
-      "title": "US stocks end mostly lower, dragged by megacap tech; focus on Iran",
+      "title": "Nasdaq tipped for steep fall amidst 'rotation not liquidation' in tech",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/us-stocks-end-mostly-lower-225701815.html?.tsrc=rss",
-      "published": "2026-06-22T22:57:01Z",
-      "tone": "bullish"
+      "url": "https://www.proactiveinvestors.com/companies/news/1094335/nasdaq-tipped-for-steep-fall-amidst-rotation-not-liquidation-in-tech-1094335.html?.tsrc=rss",
+      "published": "2026-06-23T12:30:00Z",
+      "tone": "bearish"
     },
     {
       "title": "Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East",
@@ -20,24 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "Tech rout intensifies as selloff grips global stocks",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/23/tech-stocks-sell-off-mag7-samsung-sk-hynix.html",
-      "published": "2026-06-23T09:25:52Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView",
-      "source": "TradingView",
-      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPOE9pYW4wR3lMMmxwaUFFUlZGUHJzNjh0aUV1RGs4T1MyYkNCNXlwTDRpbzk2SlhEZ3lEdmoxRnRvVUU0Uk1oUTYtWXJvaUpyeURNaVZJS0FvcmE4cGwwUzczTFhyZmJXSmdvZEIwSVZvYU5UWC04V3ZBTUQwQmhOYVpRZ1ZPWjU4akcxckRRRUlKTkpPZTlOaFRpWGdDYnRiY0RuRG9zbmlGYm1paUR3cF9yVGIwWlZTd0RxNmZtUVlNNzl3MnhRbnQwM0Z4N3J0ZFJabUVVRjNqT29YbExLNXFOMTdySEhVMUF4SmNiU01nMWkxcHc?oc=5",
-      "published": "2026-06-23T07:30:45Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Stock market today: Nasdaq, S&P 500 futures dive as global chip sell-off spurs AI doubts",
+      "title": "UBS sees AI FOMO fuelling US share rally",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/economy/live/stock-market-today-nasdaq-sp-500-futures-dive-as-global-chip-sell-off-spurs-ai-doubts-230258084.html?.tsrc=rss",
-      "published": "2026-06-22T23:02:58Z",
+      "url": "https://www.proactiveinvestors.com/companies/news/1094325/ubs-sees-ai-fomo-fuelling-us-share-rally-1094325.html?.tsrc=rss",
+      "published": "2026-06-23T12:53:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Update: US Equity Futures Fall Pre-Bell Amid Broad Tech Sell-Off, US-Iran Peace Negotiations",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-futures-fall-pre-124953893.html?.tsrc=rss",
+      "published": "2026-06-23T12:49:53Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stocks tumble on global chip rout with Nasdaq off 2%, led by Micron: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/22/stock-market-today-live-updates.html",
+      "published": "2026-06-23T13:36:52Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 97
+        "articles": 96
       }
     ],
-    "headline_count": 147,
+    "headline_count": 146,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

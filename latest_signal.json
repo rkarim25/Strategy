@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-23T10:32:25Z",
-  "data_asof": "2026-06-22",
-  "daily_rows": 7546,
-  "quote_price": 7472.7900390625,
-  "quote_timestamp": "2026-06-22",
+  "generated_at_utc": "2026-06-23T13:40:38Z",
+  "data_asof": "2026-06-23",
+  "daily_rows": 7547,
+  "quote_price": 7369.75,
+  "quote_timestamp": "2026-06-23",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,66 +29,67 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-22",
-      "close": 7472.7900390625
+      "date": "2026-06-23",
+      "close": 7370.6201171875
     },
-    "latestSma": 7486.617529296875,
+    "latestSma": 7481.475024414062,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.018001801623874103,
+    "latestDd": -0.03142793546210865,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
     "recoveryTarget": 9205.44775390625,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 2,
-    "activeEntryClose": 6575.31982421875,
-    "activeEntryDate": "2026-04-01",
-    "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.1364907318330153,
-    "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-06-22",
-      "close": 7472.7900390625
+      "date": "2026-06-23",
+      "close": 7369.75
     },
-    "latestSma": 7486.583520507813,
+    "latestSma": 7474.006518554687,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.018001801623874103,
+    "latestDd": -0.031542277428902143,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
     "recoveryTarget": 9205.44775390625,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 2,
-    "activeEntryClose": 6575.31982421875,
-    "activeEntryDate": "2026-04-01",
-    "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.1364907318330153,
-    "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-22",
-    "last_observed_target_leverage": 2,
-    "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-06-23T10:32:25Z",
-    "last_email_sent_on": "2026-06-19",
+    "last_observed_asof": "2026-06-23",
+    "last_observed_target_leverage": 0,
+    "last_observed_target_label": "cash",
+    "last_checked_at_utc": "2026-06-23T13:40:38Z",
+    "last_email_sent_on": "2026-06-23",
+    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
-      "id": "2026-06-17:0->2026-06-18:2",
-      "detected_at_utc": "2026-06-19T21:57:56Z",
-      "previous_asof": "2026-06-17",
-      "current_asof": "2026-06-18",
-      "old_target_leverage": 0,
-      "new_target_leverage": 2,
-      "old_target_label": "cash",
-      "new_target_label": "2x",
-      "email_sent": false,
+      "id": "2026-06-22:2->2026-06-23:0",
+      "detected_at_utc": "2026-06-23T13:40:38Z",
+      "previous_asof": "2026-06-22",
+      "current_asof": "2026-06-23",
+      "old_target_leverage": 2,
+      "new_target_leverage": 0,
+      "old_target_label": "2x",
+      "new_target_label": "cash",
+      "email_sent": true,
       "email_error": null,
-      "email_skipped_reason": "Signal changed (cash -> 2x) but an alert email was already sent today (2026-06-19 UK)."
+      "email_skipped_reason": null
     }
   }
 }
