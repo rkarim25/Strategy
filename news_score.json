@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-23T22:07:31Z",
+  "generated_at_utc": "2026-06-23T23:06:55Z",
   "window_days": 7,
   "score": 3,
   "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: SpaceX closes nearly 1% higher, snapping three-day losing streak. Bearish offsets: Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East; Stock Market Today: Nasdaq Falls 580 Points; Micron, Sandisk Are Big Losers.",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: SpaceX closes nearly 1% higher, snapping three-day losing streak. Bearish offsets: Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East; Nasdaq closes down more than 2% as global tech sell-off deepens.",
   "articles": [
     {
       "title": "SpaceX closes nearly 1% higher, snapping three-day losing streak",
@@ -20,17 +20,10 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Nasdaq Falls 580 Points; Micron, Sandisk Are Big Losers",
+      "title": "Nasdaq closes down more than 2% as global tech sell-off deepens",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/3510202e-147f-3825-9cd7-6eef1801d532/stock-market-today%3A-nasdaq.html?.tsrc=rss",
-      "published": "2026-06-23T20:33:56Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street Buys Staples and Sells Chips, Sending Nasdaq Down 2%",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/23785669-1315-3d75-8af4-ba144bb54784/wall-street-buys-staples-and.html?.tsrc=rss",
-      "published": "2026-06-23T20:01:05Z",
+      "url": "https://finance.yahoo.com/markets/world-indices/articles/nasdaq-tumbles-more-than-2-in-opening-trading-as-global-tech-sell-off-deepens-150452438.html?.tsrc=rss",
+      "published": "2026-06-23T22:48:57Z",
       "tone": "bearish"
     },
     {
@@ -38,6 +31,13 @@
       "source": "BNN Bloomberg",
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdldta0FLT1dFLTNrXzBlTmJOWlJYdmhOY2hMa2xzOUUyMlFYYkY3V3hoOVB5cWFJTy1CS1RSYWl4TlZRYUlXUGRTRENJckp1YWtzYXlZUnZ6ckZNTVB5cWx0ekQ2NkJqb2xoVDFod0o2ajJ5WmV3d05LZWVQcWNmelUzemFWc0w2ZkZmUlVHS3U2RlhSMEItZlU3YkVSYVRZS2d0M2h6ODFZTHJ0VElXQnNFQUlycV9RSzVyQkV1LVlSc25IaUlDWlNONnFkVkZPUnc?oc=5",
       "published": "2026-06-23T12:50:56Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off... - Moneycontrol.com",
+      "source": "Moneycontrol.com",
+      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQSEVhczNoekI2U283WFFzMFNocE8yVElnbFpQajNPRE9jRy1OLWxFa2NHSEpZWXIwc1lvLTNwY1ZRdnhrcU9WamVMd0pQazh1SmpQYlV0UDhieTNOUEdnTjJLQjZkNU9uSU1tRTNHNEo1WFp4SmpPZ2x5aUxsRHVORHVPa3dMcG0wN2pOeFdQNWZSWlhDS1ZTZ181YUxlaXBzQ1k4NXU1ZnB4dkhFNXRjbXpOWk84cDlSRFBfT285cTdFTmFpOWFueXUwS1NXV1RvV1pvb2c3d0ZRcU16QTFhNlNPb0RuSWJTcTFLOXMzYjRDN28talpuN9IB_gFBVV95cUxNZ0lsY1JyRW9INjBLOVE1cEQwT1VlYVJmc2pqWktDWWdXdkR6OGdwWENjLV8wSEMzTDhmT2w3Vk5Ca3NZSjgwNFRkWVlsNm1PT2dIb0N5SWVjNi16Smw1YXZxaFVQS2EzR21oTlhOZW44QTlMOEt4Tm1IdnliTmRZOXpEREhVN1luWENhZ2d3N3YxYU9QS3ZJQ1l2REYxYnAwUlAweWI4VkNyaVUzbHpSY1ZZaEJCdGtta3lWbUxYMWJLa05NdUROWkVMV2RuZWRuNGt6X2pPRi05SEFERzJBX3JQcHY0SlpMTFNtLWZiZWxuXzYwVjFER2txVkZlQQ?oc=5",
+      "published": "2026-06-23T07:30:45Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 90
       }
     ],
-    "headline_count": 137,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
