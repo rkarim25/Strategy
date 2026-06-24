@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-24T15:30:49Z",
+  "generated_at_utc": "2026-06-24T17:49:36Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Is ECPG Still Undervalued After Its Rally and Earnings Reset Higher. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Micron, Alphabet, Builders FirstSource, Sunrun, Wendy\u2019s, and More Stocks That Explain Today\u2019s Market. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
   "articles": [
     {
       "title": "Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East",
@@ -20,13 +20,6 @@
       "tone": "bearish"
     },
     {
-      "title": "Is ECPG Still Undervalued After Its Rally and Earnings Reset Higher",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ecpg-still-undervalued-rally-earnings-134800449.html?.tsrc=rss",
-      "published": "2026-06-24T13:48:00Z",
-      "tone": "bullish"
-    },
-    {
       "title": "Mega-Cap Sell-Off Drags Nasdaq And S&P 500 Lower While DJIA Holds Ground - foreignpolicyjournal.com",
       "source": "foreignpolicyjournal.com",
       "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNWEN1RXNDTTZDcFpHRnR0MXZfYnhsRkhTUk9qN2RZbi1xc1pQX2xBU1hkU0NEODdpX1ctZVlrTDBoRktuejZEdlVGLUYwS0d2UWozcFBmRzhoc2JkajRwaHpRRHl1V2p1MWMxdjI5dzN6ekM4bFFXY2tBTkRVQzR0eUQwazBrSWZnRzhxZ1dsTlQ4dVF6OVZaczVXNnZLeEQtWlotTWNza004cWNKT2dNRTFDdFZ6bTVqVXgwbg?oc=5",
@@ -39,6 +32,13 @@
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdldta0FLT1dFLTNrXzBlTmJOWlJYdmhOY2hMa2xzOUUyMlFYYkY3V3hoOVB5cWFJTy1CS1RSYWl4TlZRYUlXUGRTRENJckp1YWtzYXlZUnZ6ckZNTVB5cWx0ekQ2NkJqb2xoVDFod0o2ajJ5WmV3d05LZWVQcWNmelUzemFWc0w2ZkZmUlVHS3U2RlhSMEItZlU3YkVSYVRZS2d0M2h6ODFZTHJ0VElXQnNFQUlycV9RSzVyQkV1LVlSc25IaUlDWlNONnFkVkZPUnc?oc=5",
       "published": "2026-06-23T12:50:56Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Micron, Alphabet, Builders FirstSource, Sunrun, Wendy\u2019s, and More Stocks That Explain Today\u2019s Market",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/ceec6673-cc8d-32dc-86a0-f6e409c55462/micron%2C-alphabet%2C-builders.html?.tsrc=rss",
+      "published": "2026-06-24T16:30:00Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 91
       }
     ],
-    "headline_count": 144,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
