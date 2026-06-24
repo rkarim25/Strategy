@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-24T22:07:30Z",
+  "generated_at_utc": "2026-06-24T23:01:55Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, June 24: Amazon Gains as Investors Monitor Strong Prime Day Demand and AI Shopping Activity. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Micron stock jumps 15% as soaring prices from memory crunch lead to quadrupling of revenue. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
   "articles": [
     {
       "title": "Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East",
@@ -20,13 +20,6 @@
       "tone": "bearish"
     },
     {
-      "title": "Mega-Cap Sell-Off Drags Nasdaq And S&P 500 Lower While DJIA Holds Ground - foreignpolicyjournal.com",
-      "source": "foreignpolicyjournal.com",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNWEN1RXNDTTZDcFpHRnR0MXZfYnhsRkhTUk9qN2RZbi1xc1pQX2xBU1hkU0NEODdpX1ctZVlrTDBoRktuejZEdlVGLUYwS0d2UWozcFBmRzhoc2JkajRwaHpRRHl1V2p1MWMxdjI5dzN6ekM4bFFXY2tBTkRVQzR0eUQwazBrSWZnRzhxZ1dsTlQ4dVF6OVZaczVXNnZLeEQtWlotTWNza004cWNKT2dNRTFDdFZ6bTVqVXgwbg?oc=5",
-      "published": "2026-06-23T23:50:00Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Wall Street points to another day of losses, led by an ongoing sell-off in tech - BNN Bloomberg",
       "source": "BNN Bloomberg",
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdldta0FLT1dFLTNrXzBlTmJOWlJYdmhOY2hMa2xzOUUyMlFYYkY3V3hoOVB5cWFJTy1CS1RSYWl4TlZRYUlXUGRTRENJckp1YWtzYXlZUnZ6ckZNTVB5cWx0ekQ2NkJqb2xoVDFod0o2ajJ5WmV3d05LZWVQcWNmelUzemFWc0w2ZkZmUlVHS3U2RlhSMEItZlU3YkVSYVRZS2d0M2h6ODFZTHJ0VElXQnNFQUlycV9RSzVyQkV1LVlSc25IaUlDWlNONnFkVkZPUnc?oc=5",
@@ -34,11 +27,18 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today, June 24: Amazon Gains as Investors Monitor Strong Prime Day Demand and AI Shopping Activity",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/06/24/stock-market-today-june-24-amazon-gains-as-investors-monitor-strong-prime-day-demand-and-ai-shopping-activity/?.tsrc=rss",
-      "published": "2026-06-24T21:21:46Z",
+      "title": "Micron stock jumps 15% as soaring prices from memory crunch lead to quadrupling of revenue",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/24/micron-mu-earnings-report-q3-2026.html",
+      "published": "2026-06-24T22:39:58Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPOE9pYW4wR3lMMmxwaUFFUlZGUHJzNjh0aUV1RGs4T1MyYkNCNXlwTDRpbzk2SlhEZ3lEdmoxRnRvVUU0Uk1oUTYtWXJvaUpyeURNaVZJS0FvcmE4cGwwUzczTFhyZmJXSmdvZEIwSVZvYU5UWC04V3ZBTUQwQmhOYVpRZ1ZPWjU4akcxckRRRUlKTkpPZTlOaFRpWGdDYnRiY0RuRG9zbmlGYm1paUR3cF9yVGIwWlZTd0RxNmZtUVlNNzl3MnhRbnQwM0Z4N3J0ZFJabUVVRjNqT29YbExLNXFOMTdySEhVMUF4SmNiU01nMWkxcHc?oc=5",
+      "published": "2026-06-23T07:30:45Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 92
       }
     ],
-    "headline_count": 145,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
