@@ -1,16 +1,23 @@
 {
-  "generated_at_utc": "2026-06-23T23:06:55Z",
+  "generated_at_utc": "2026-06-24T10:17:15Z",
   "window_days": 7,
-  "score": 3,
+  "score": 2,
   "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: SpaceX closes nearly 1% higher, snapping three-day losing streak. Bearish offsets: Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East; Nasdaq closes down more than 2% as global tech sell-off deepens.",
+  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Nasdaq, S&P 500 Futures Rebound As Micron Rally Lifts Chip Stocks: Why SPCX, QCOM, TSM, BABA, PLTR, CBRS, WEN, IBRX Are In Focus. Bearish offsets: Gold Pressured by Stronger Dollar, Rate-Hike Concerns; Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East.",
   "articles": [
     {
-      "title": "SpaceX closes nearly 1% higher, snapping three-day losing streak",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/23/spacex-stock-tech-sell-off.html",
-      "published": "2026-06-23T20:05:57Z",
-      "tone": "bullish"
+      "title": "Gold Pressured by Stronger Dollar, Rate-Hike Concerns",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/09fa0d72-c96f-36e8-a9b1-ccf19fccdc6f/gold-pressured-by-stronger.html?.tsrc=rss",
+      "published": "2026-06-24T08:25:02Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East",
+      "source": "Economy Middle East",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPeWlMdkNDS01LakJLSWdWcF90cGJSWG1UTFpNWXZMM2VyUWJYdDRkUl80aThtV2pNMUJGTEFsaVVjV2VMVFg4REt2Ym1GcklpekJaaG1sYmNOU09lSWJxSUFMTzZaWUhYb3M0ZGlNZjhLNmtKSFBxb2syaHVkQzNUX19JcDh1VlJHYUhrbDRlcmVRLWQ3Sy1vV3FSSWRrLW1sbGhhcjJlNDE2QjRxUXAyb1VKb21XZjhJaDYyWWNjT0UzbHRGT3VUbHZMRktWdzdDakEyb0RER3dOX3BkLWxoQndvMFV3WTJTX2I4Tg?oc=5",
+      "published": "2026-06-24T06:58:21Z",
+      "tone": "bearish"
     },
     {
       "title": "Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East",
@@ -20,25 +27,18 @@
       "tone": "bearish"
     },
     {
-      "title": "Nasdaq closes down more than 2% as global tech sell-off deepens",
+      "title": "Brent falls below $76, notching its lowest level since day before U.S.-Iran war",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/24/oil-prices-wti-brent-crude-trump-doj-gasoline-prices-strait-of-hormuz.html",
+      "published": "2026-06-24T09:05:09Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Nasdaq, S&P 500 Futures Rebound As Micron Rally Lifts Chip Stocks: Why SPCX, QCOM, TSM, BABA, PLTR, CBRS, WEN, IBRX Are In Focus",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/world-indices/articles/nasdaq-tumbles-more-than-2-in-opening-trading-as-global-tech-sell-off-deepens-150452438.html?.tsrc=rss",
-      "published": "2026-06-23T22:48:57Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street points to another day of losses, led by an ongoing sell-off in tech - BNN Bloomberg",
-      "source": "BNN Bloomberg",
-      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdldta0FLT1dFLTNrXzBlTmJOWlJYdmhOY2hMa2xzOUUyMlFYYkY3V3hoOVB5cWFJTy1CS1RSYWl4TlZRYUlXUGRTRENJckp1YWtzYXlZUnZ6ckZNTVB5cWx0ekQ2NkJqb2xoVDFod0o2ajJ5WmV3d05LZWVQcWNmelUzemFWc0w2ZkZmUlVHS3U2RlhSMEItZlU3YkVSYVRZS2d0M2h6ODFZTHJ0VElXQnNFQUlycV9RSzVyQkV1LVlSc25IaUlDWlNONnFkVkZPUnc?oc=5",
-      "published": "2026-06-23T12:50:56Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off... - Moneycontrol.com",
-      "source": "Moneycontrol.com",
-      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQSEVhczNoekI2U283WFFzMFNocE8yVElnbFpQajNPRE9jRy1OLWxFa2NHSEpZWXIwc1lvLTNwY1ZRdnhrcU9WamVMd0pQazh1SmpQYlV0UDhieTNOUEdnTjJLQjZkNU9uSU1tRTNHNEo1WFp4SmpPZ2x5aUxsRHVORHVPa3dMcG0wN2pOeFdQNWZSWlhDS1ZTZ181YUxlaXBzQ1k4NXU1ZnB4dkhFNXRjbXpOWk84cDlSRFBfT285cTdFTmFpOWFueXUwS1NXV1RvV1pvb2c3d0ZRcU16QTFhNlNPb0RuSWJTcTFLOXMzYjRDN28talpuN9IB_gFBVV95cUxNZ0lsY1JyRW9INjBLOVE1cEQwT1VlYVJmc2pqWktDWWdXdkR6OGdwWENjLV8wSEMzTDhmT2w3Vk5Ca3NZSjgwNFRkWVlsNm1PT2dIb0N5SWVjNi16Smw1YXZxaFVQS2EzR21oTlhOZW44QTlMOEt4Tm1IdnliTmRZOXpEREhVN1luWENhZ2d3N3YxYU9QS3ZJQ1l2REYxYnAwUlAweWI4VkNyaVUzbHpSY1ZZaEJCdGtta3lWbUxYMWJLa05NdUROWkVMV2RuZWRuNGt6X2pPRi05SEFERzJBX3JQcHY0SlpMTFNtLWZiZWxuXzYwVjFER2txVkZlQQ?oc=5",
-      "published": "2026-06-23T07:30:45Z",
-      "tone": "bearish"
+      "url": "https://stocktwits.com/news-articles/markets/equity/nasdaq-sp500-futures-rebound-micron-rally-lifts-chip-stocks-why-spcx-qcom-tsm-baba-pltr-cbrs-wen-ibrx-are-in-focus/cZKyP4nR7Or?.tsrc=rss",
+      "published": "2026-06-24T08:48:41Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 92
       }
     ],
-    "headline_count": 140,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
