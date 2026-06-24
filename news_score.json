@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-24T12:32:44Z",
+  "generated_at_utc": "2026-06-24T15:30:49Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Mega-Cap Sell-Off Drags Nasdaq And S&P 500 Lower While DJIA Holds Ground - foreignpolicyjournal.com.",
+  "score": 3,
+  "label": "Bearish",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Is ECPG Still Undervalued After Its Rally and Earnings Reset Higher. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East.",
   "articles": [
     {
       "title": "Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East",
@@ -11,6 +11,20 @@
       "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPeWlMdkNDS01LakJLSWdWcF90cGJSWG1UTFpNWXZMM2VyUWJYdDRkUl80aThtV2pNMUJGTEFsaVVjV2VMVFg4REt2Ym1GcklpekJaaG1sYmNOU09lSWJxSUFMTzZaWUhYb3M0ZGlNZjhLNmtKSFBxb2syaHVkQzNUX19JcDh1VlJHYUhrbDRlcmVRLWQ3Sy1vV3FSSWRrLW1sbGhhcjJlNDE2QjRxUXAyb1VKb21XZjhJaDYyWWNjT0UzbHRGT3VUbHZMRktWdzdDakEyb0RER3dOX3BkLWxoQndvMFV3WTJTX2I4Tg?oc=5",
       "published": "2026-06-24T06:58:21Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Stock market today: S&P 500 falls 0.8 percent Stoxx 600 drops 0.6 percent Nikkei 225 sinks 1 percent on Fed rate hike bets, strong dollar - Economy Middle East",
+      "source": "Economy Middle East",
+      "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNUG1nYjVKYkhVNm96eEtETy14c0RsYmdhVERXYldKZ3N1UFZVNVlIUFNZWThrOF90aGFHMThxamhjLXZxNEhzZDdJM2wwR2pmeFBJRkxQMXVnaFZOcExrWlhzZjAzVWFWT3RVSTVoVjVERFhSdHVSdDBHS01WRmkzZ2VvSmZiQV92bS01cFF0b2RaNFV2Rk5qS3hmUzNsOExuQnhkRjJGclYwdVVEcU9ueTRhWTlGcVV3V1hYTllrSEg3UWx4YmdBZXBKclN6aFhxU0V6M19tb3dLY0U1TGV4eS1SaWNVakNXY2ZYSXRPUFlYSDNBWGZoNjNxR1dZQU0?oc=5",
+      "published": "2026-06-23T07:39:08Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Is ECPG Still Undervalued After Its Rally and Earnings Reset Higher",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ecpg-still-undervalued-rally-earnings-134800449.html?.tsrc=rss",
+      "published": "2026-06-24T13:48:00Z",
+      "tone": "bullish"
     },
     {
       "title": "Mega-Cap Sell-Off Drags Nasdaq And S&P 500 Lower While DJIA Holds Ground - foreignpolicyjournal.com",
@@ -24,20 +38,6 @@
       "source": "BNN Bloomberg",
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdldta0FLT1dFLTNrXzBlTmJOWlJYdmhOY2hMa2xzOUUyMlFYYkY3V3hoOVB5cWFJTy1CS1RSYWl4TlZRYUlXUGRTRENJckp1YWtzYXlZUnZ6ckZNTVB5cWx0ekQ2NkJqb2xoVDFod0o2ajJ5WmV3d05LZWVQcWNmelUzemFWc0w2ZkZmUlVHS3U2RlhSMEItZlU3YkVSYVRZS2d0M2h6ODFZTHJ0VElXQnNFQUlycV9RSzVyQkV1LVlSc25IaUlDWlNONnFkVkZPUnc?oc=5",
       "published": "2026-06-23T12:50:56Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView",
-      "source": "TradingView",
-      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPOE9pYW4wR3lMMmxwaUFFUlZGUHJzNjh0aUV1RGs4T1MyYkNCNXlwTDRpbzk2SlhEZ3lEdmoxRnRvVUU0Uk1oUTYtWXJvaUpyeURNaVZJS0FvcmE4cGwwUzczTFhyZmJXSmdvZEIwSVZvYU5UWC04V3ZBTUQwQmhOYVpRZ1ZPWjU4akcxckRRRUlKTkpPZTlOaFRpWGdDYnRiY0RuRG9zbmlGYm1paUR3cF9yVGIwWlZTd0RxNmZtUVlNNzl3MnhRbnQwM0Z4N3J0ZFJabUVVRjNqT29YbExLNXFOMTdySEhVMUF4SmNiU01nMWkxcHc?oc=5",
-      "published": "2026-06-23T07:30:45Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street ends lower on semiconductor selloff as AI spending concerns mount - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxON2t3ZXZzXzl6MTZCNnY4U09lU2l4ZWZENmdOZVZuNVF2VzFjYlFleVlLR1FHNlFwbjlvRnZVVjFsOGo1RXBsOGUzVk1xVERVal9SbVFxeG1CdVhSaHZtajFlUDRRZFllalVYdVRGY1J5ZGN1bVFfN2xmRHB0aTdxQjJBRVhIMFI0NWI3SjlXeTdRWUQxaU9rRA?oc=5",
-      "published": "2026-06-23T23:03:21Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 94
       }
     ],
-    "headline_count": 141,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
