@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-25T10:13:11Z",
+  "generated_at_utc": "2026-06-25T12:36:44Z",
   "data_asof": "2026-06-24",
   "daily_rows": 5836,
   "quote_price": 67.25,
@@ -7,7 +7,7 @@
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1782468791&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1782477404&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -71,7 +71,7 @@
     "last_observed_asof": "2026-06-24",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-25T10:13:11Z",
+    "last_checked_at_utc": "2026-06-25T12:36:44Z",
     "last_email_sent_on": "2026-06-23",
     "last_transition": {
       "id": "2026-06-22:1->2026-06-23:0",
