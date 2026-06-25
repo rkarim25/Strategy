@@ -42,6 +42,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
+TRADING_COST = 0.005          # 0.5% from mid (conservative/realistic)
 ANNUAL_INFLOW_USD = 10.0      # $10/year on $100 base
 SIGNAL_DELAY_DAYS = 1
 DEFAULT_VIX = 20.0            # before VIX inception (1990)
@@ -56,52 +57,52 @@ ASSETS: dict[str, dict[str, Any]] = {
     "spx": {
         "label": "S&P 500", "index": "^GSPC", "etf_1x": "SPY", "etf_2x": "SSO", "etf_3x": "UPRO",
         "etf_1x_start": "1993-01-29", "etf_2x_start": "2006-06-21", "etf_3x_start": "2009-06-25",
-        "index_start": "1950-01-03", "max_leverage": 3, "trading_cost": 0.001,
+        "index_start": "1950-01-03", "max_leverage": 3,
     },
     "spxew": {
         "label": "S&P 500 Equal Weight", "index": "RSP", "etf_1x": "RSP", "etf_2x": None, "etf_3x": None,
         "etf_1x_start": "2003-05-01", "etf_2x_start": None, "etf_3x_start": None,
-        "index_start": "2003-05-01", "max_leverage": 3, "trading_cost": 0.0012,
+        "index_start": "2003-05-01", "max_leverage": 3,
     },
     "ndx": {
         "label": "Nasdaq 100", "index": "^NDX", "etf_1x": "QQQ", "etf_2x": "QLD", "etf_3x": "TQQQ",
         "etf_1x_start": "1999-03-10", "etf_2x_start": "2006-06-21", "etf_3x_start": "2010-02-11",
-        "index_start": "1985-10-01", "max_leverage": 3, "trading_cost": 0.001,
+        "index_start": "1985-10-01", "max_leverage": 3,
     },
     "rut": {
         "label": "Russell 2000", "index": "^RUT", "etf_1x": "IWM", "etf_2x": "UWM", "etf_3x": "TNA",
         "etf_1x_start": "2000-05-26", "etf_2x_start": "2007-01-25", "etf_3x_start": "2008-11-19",
-        "index_start": "1987-09-11", "max_leverage": 3, "trading_cost": 0.0015,
+        "index_start": "1987-09-11", "max_leverage": 3,
     },
     "gold": {
         "label": "Gold", "index": "GLD", "etf_1x": "GLD", "etf_2x": "UGL", "etf_3x": None,
         "etf_1x_start": "2004-11-18", "etf_2x_start": "2008-12-03", "etf_3x_start": None,
-        "index_start": "2004-11-18", "max_leverage": 2, "trading_cost": 0.0015,
+        "index_start": "2004-11-18", "max_leverage": 2,
     },
     "tlt": {
         "label": "20Y+ Treasuries", "index": "TLT", "etf_1x": "TLT", "etf_2x": "UBT", "etf_3x": "TMF",
         "etf_1x_start": "2002-07-30", "etf_2x_start": "2010-01-21", "etf_3x_start": "2010-01-21",
-        "index_start": "2002-07-30", "max_leverage": 3, "trading_cost": 0.001,
+        "index_start": "2002-07-30", "max_leverage": 3,
     },
     "ftse250": {
         "label": "FTSE 250", "index": "^FTMC", "etf_1x": None, "etf_2x": None, "etf_3x": None,
         "etf_1x_start": None, "etf_2x_start": None, "etf_3x_start": None,
-        "index_start": "1985-12-31", "max_leverage": 2, "trading_cost": 0.002,
+        "index_start": "1985-12-31", "max_leverage": 2,
     },
     "dax": {
         "label": "DAX (TR)", "index": "^GDAXI", "etf_1x": None, "etf_2x": None, "etf_3x": None,
         "etf_1x_start": None, "etf_2x_start": None, "etf_3x_start": None,
-        "index_start": "1987-12-30", "max_leverage": 2, "trading_cost": 0.002,
+        "index_start": "1987-12-30", "max_leverage": 2,
     },
     "msci_em": {
         "label": "MSCI EM", "index": "EEM", "etf_1x": "EEM", "etf_2x": None, "etf_3x": None,
         "etf_1x_start": "2003-04-14", "etf_2x_start": None, "etf_3x_start": None,
-        "index_start": "2003-04-14", "max_leverage": 2, "trading_cost": 0.002,
+        "index_start": "2003-04-14", "max_leverage": 2,
     },
     "msci_world": {
         "label": "MSCI World", "index": "SWDA.L", "etf_1x": "SWDA.L", "etf_2x": None, "etf_3x": None,
         "etf_1x_start": "2009-09-25", "etf_2x_start": None, "etf_3x_start": None,
-        "index_start": "2009-09-25", "max_leverage": 2, "trading_cost": 0.0015,
+        "index_start": "2009-09-25", "max_leverage": 2,
     },
 }
 
@@ -970,12 +971,12 @@ def build_strategies(prices: pd.DataFrame, asset_key: str) -> list[tuple[str, pd
 # PART 7: BACKTEST EXECUTION
 # ===================================================================
 
-def make_engine(trading_cost: float) -> PortfolioEngine:
-    """Standard engine: no DD protection, ETP mode, honest execution, per-asset trading cost."""
+def make_engine() -> PortfolioEngine:
+    """Standard engine: no DD protection, ETP mode, honest execution, 0.5% trading cost."""
     return PortfolioEngine(
         max_drawdown_limit=None,
         hard_drawdown_floor=False,
-        trading_cost_pct=trading_cost,
+        trading_cost_pct=TRADING_COST,
         annual_inflow_pct=0.0,
         annual_inflow_abs=ANNUAL_INFLOW_USD,
         signal_delay_days=SIGNAL_DELAY_DAYS,
@@ -983,9 +984,9 @@ def make_engine(trading_cost: float) -> PortfolioEngine:
 
 
 def run_one_backtest(prices: pd.DataFrame, etp_panel: pd.DataFrame,
-                     name: str, leverage: pd.Series, trading_cost: float) -> dict[str, Any]:
+                     name: str, leverage: pd.Series) -> dict[str, Any]:
     """Run a single strategy through PortfolioEngine and return metrics dict."""
-    engine = make_engine(trading_cost)
+    engine = make_engine()
     result = engine.run(prices, leverage, name=name, etp_returns=etp_panel)
 
     # Average risk-free rate over the period
@@ -1107,11 +1108,10 @@ def main() -> int:
             pct_done = (i + 1) / len(strategies) * 100
             print(f"    [{i+1:3d}/{len(strategies)} {pct_done:5.1f}%] {name} ...", end=" ", flush=True)
             try:
-                row = run_one_backtest(prices, etp_panel, name, leverage, cfg["trading_cost"])
+                row = run_one_backtest(prices, etp_panel, name, leverage)
                 row["asset"] = asset_key
                 row["asset_label"] = cfg["label"]
                 row["leverage_max"] = lev_max
-                row["trading_cost"] = cfg["trading_cost"]
                 asset_results.append(row)
 
                 cagr_s = f"{row['cagr']*100:.2f}%" if not np.isnan(row['cagr']) else "N/A"
@@ -1176,7 +1176,6 @@ def _write_results_csv(results: list[dict[str, Any]], path: Path, include_asset:
         "MaxDD_pct", "End_Value", "Start_Date", "End_Date", "Years",
         "Pct_Cash_Time", "Trades_Per_Year", "Total_Trades", "Avg_Leverage",
         "Beat_BH_Sharpe", "Beat_BH_Calmar", "Beat_BH_DD", "Beat_BH_CAGR",
-        "Trading_Cost_Pct",
     ]
     if include_asset:
         fieldnames = ["Asset"] + fieldnames
@@ -1208,7 +1207,6 @@ def _write_results_csv(results: list[dict[str, Any]], path: Path, include_asset:
             row_out["Beat_BH_Calmar"] = r.get("beat_bh_calmar", 0)
             row_out["Beat_BH_DD"] = r.get("beat_bh_dd", 0)
             row_out["Beat_BH_CAGR"] = r.get("beat_bh_cagr", 0)
-            row_out["Trading_Cost_Pct"] = _pct(r.get("trading_cost", 0.0))
             writer.writerow(row_out)
 
 

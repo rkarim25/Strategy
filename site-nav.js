@@ -61,7 +61,7 @@
     {
       id: "spx",
       asset: "S&P 500",
-      strategy: "SMA200 ±3% Band 1x/cash",
+      strategy: "SMA200 ±3% Band + Distance Scale 1-3x",
       group: "leveraged",
       href: "index.html#signalPage",
       indexHref: "#signalPage",
