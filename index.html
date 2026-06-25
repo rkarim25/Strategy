@@ -1735,7 +1735,15 @@
     cashRate: 0.04,
   };
 
-  const $ = (id) => document.getElementById(id);
+  // Resilient lookup: the Distance-Scale rewrite removed several calculator/optimizer/
+  // diagnostic elements but left code that references them. Return a no-op stand-in for
+  // any missing id so a stale reference can't abort the whole script (blanking the signal).
+  const $MISSING = new Proxy(function(){}, {
+    get(_t, p) { if (p === Symbol.toPrimitive) return () => ""; if (p === Symbol.iterator) return function*(){}; return $MISSING; },
+    set() { return true; },
+    apply() { return $MISSING; }
+  });
+  const $ = (id) => document.getElementById(id) || $MISSING;
   const fmtMoney = (x) => Number.isFinite(x) ? x.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "-";
   const fmtWholeNumber = (x) => Number.isFinite(x) ? Math.round(x).toLocaleString() : "-";
   const fmtWholeCurrency = (x) => Number.isFinite(x) ? "$" + Math.round(x).toLocaleString() : "-";
@@ -2521,8 +2529,6 @@
       rebalances,
       leverage,
       equity,
-      tier2Entries,
-      tier3Entries,
     };
   }
 
@@ -2579,12 +2585,6 @@
 
   function resetCalculator() {
     $("calcStatus").textContent = "Calculator not available for Distance Scale strategy (fixed parameters).";
-  }
-    $("calcMaxHold2").value = "";
-    $("calcMaxHold3").value = "";
-    $("calcTradingCost").value = 1;
-    $("calcCashRate").value = 4;
-    runCalculator();
   }
 
   function rangeValues(startId, endId, stepId) {
