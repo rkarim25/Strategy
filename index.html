@@ -659,11 +659,9 @@
   <section class="card" style="margin-bottom: 18px;">
     <h2>Strategy Rules</h2>
     <ul>
-      <li><strong>Base trend rule:</strong> hold <strong>1x</strong> S&amp;P exposure only when the SPX close is above the 20-day SMA. Otherwise hold cash/T-bills.</li>
-      <li><strong>2x recovery tier:</strong> if the S&amp;P is down <strong>5%</strong> or more from its closing high-water mark, the 2x tier is armed.</li>
-      <li><strong>3x recovery tier:</strong> if the S&amp;P is down <strong>25%</strong> or more from its closing high-water mark, the 3x tier is armed.</li>
-      <li><strong>Lead guard:</strong> recovery leverage can run when close is at least <strong>99.25%</strong> of SMA20, i.e. within 0.75% below SMA20 or above it.</li>
-      <li><strong>Exit recovery:</strong> 2x resets after the S&amp;P rises 40% from the tier entry close. 3x resets after the S&amp;P rises 15% from the tier entry close.</li>
+      <li><strong>Trend filter (±3% band):</strong> go long when the SPX close rises above <strong>SMA200 × 1.03</strong> (upper band); exit to cash when it falls below <strong>SMA200 × 0.97</strong> (lower band). Between the bands, hold the prior state (hysteresis &mdash; no whipsaw exits).</li>
+      <li><strong>Distance-scaled leverage:</strong> while long, set leverage by how far the close sits above the 200-day SMA (ratio = close ÷ SMA200): <strong>3x</strong> when ratio ≤ 1.05, <strong>2x</strong> when ratio ≤ 1.10, <strong>1x</strong> when ratio &gt; 1.10 — most leverage just after a fresh breakout, least when extended.</li>
+      <li><strong>RSI&gt;30 exit guard:</strong> if the band would flip to cash but <strong>RSI(14) &lt; 30</strong> (oversold), stay invested at 1x instead of selling into the dip.</li>
     </ul>
     <p class="small">
       The official signal uses the latest completed daily close and matches the backtest logic.
