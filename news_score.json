@@ -1,23 +1,23 @@
 {
-  "generated_at_utc": "2026-06-25T18:05:45Z",
+  "generated_at_utc": "2026-06-25T22:15:32Z",
   "window_days": 7,
-  "score": 6,
+  "score": 5,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Bitcoin Is Paying the Price for the End of the Dollar Debasement Trade; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Iran warns ships it's 'unacceptable and dangerous' to transit the Strait of Hormuz without their approval.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: 6-26-2025: AI Crosscurrents, Broadening Rally + Small Caps Rise; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's.",
   "articles": [
+    {
+      "title": "6-26-2025: AI Crosscurrents, Broadening Rally + Small Caps Rise",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/6-26-2025-ai-crosscurrents-202324460.html?.tsrc=rss",
+      "published": "2026-06-25T20:23:24Z",
+      "tone": "bullish"
+    },
     {
       "title": "Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East",
       "source": "Economy Middle East",
       "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPeWlMdkNDS01LakJLSWdWcF90cGJSWG1UTFpNWXZMM2VyUWJYdDRkUl80aThtV2pNMUJGTEFsaVVjV2VMVFg4REt2Ym1GcklpekJaaG1sYmNOU09lSWJxSUFMTzZaWUhYb3M0ZGlNZjhLNmtKSFBxb2syaHVkQzNUX19JcDh1VlJHYUhrbDRlcmVRLWQ3Sy1vV3FSSWRrLW1sbGhhcjJlNDE2QjRxUXAyb1VKb21XZjhJaDYyWWNjT0UzbHRGT3VUbHZMRktWdzdDakEyb0RER3dOX3BkLWxoQndvMFV3WTJTX2I4Tg?oc=5",
       "published": "2026-06-24T06:58:21Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Bitcoin Is Paying the Price for the End of the Dollar Debasement Trade",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/63f57230-e7c5-3738-8313-e58448eb04d1/bitcoin-is-paying-the-price.html?.tsrc=rss",
-      "published": "2026-06-25T15:52:00Z",
-      "tone": "bullish"
     },
     {
       "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
@@ -27,17 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Why Micron earnings beat may fuel AI trade optimism",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/why-micron-earnings-beat-may-162728027.html?.tsrc=rss",
-      "published": "2026-06-25T16:27:28Z",
-      "tone": "bullish"
+      "title": "Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's",
+      "source": "Barron's",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBnVFozOWNNczBGWDhadHlPOXpWNlM2bUJ0R2QyMlZqQTJtOTB6cHJldUx5M3YzbUFuVTZxZ0VpaDRTQWFOekFLNkpZTUVnUF9kbndwQWxxVWNtSEJUTGpJQ1NkYVlQTmRpamlxTzVIQTBtTWV1RFE?oc=5",
+      "published": "2026-06-23T15:12:00Z",
+      "tone": "bearish"
     },
     {
-      "title": "Iran warns ships it's 'unacceptable and dangerous' to transit the Strait of Hormuz without their approval",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/25/iran-navy-shipping-recovery-strait-of-hormuz-unauthorized-routes-us-fragile-mou-.html",
-      "published": "2026-06-25T14:03:16Z",
+      "title": "Global tech selloff: semiconductors lead Nasdaq and S&P 500 lower - ThinkMarkets",
+      "source": "ThinkMarkets",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNQ0tHRlBuWS1lMTB1UWRvZ2VJbm44ejRvallTUS13TVJrZGQwN3RqNjQ4bXFNMEVEY1ViTGxOam9nbi1ucFotbEtKM0VsYTJfaTBMeWVVWE9DYWx0U1NOYl94Z3E1VkxMZjdEMTFhSlkwYUQ4UTZtTlZOU1FzZF9ETExTbnNXSndUcWdNbTY1WkZOWmU5QlFibk1FSjg1UQ?oc=5",
+      "published": "2026-06-24T11:16:24Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 90
       }
     ],
-    "headline_count": 146,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
