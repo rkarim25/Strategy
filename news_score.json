@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-25T15:37:48Z",
+  "generated_at_utc": "2026-06-25T18:05:45Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga; There Goes the Nasdaq's Rally. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Iran warns ships it's 'unacceptable and dangerous' to transit the Strait of Hormuz without their approval.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Bitcoin Is Paying the Price for the End of the Dollar Debasement Trade; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East; Iran warns ships it's 'unacceptable and dangerous' to transit the Strait of Hormuz without their approval.",
   "articles": [
     {
       "title": "Stock market today: S&P 500 falls 1.4 percent while Nikkei 225 drops 0.71 percent as tech selloff weighs on global markets - Economy Middle East",
@@ -13,6 +13,13 @@
       "tone": "bearish"
     },
     {
+      "title": "Bitcoin Is Paying the Price for the End of the Dollar Debasement Trade",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/63f57230-e7c5-3738-8313-e58448eb04d1/bitcoin-is-paying-the-price.html?.tsrc=rss",
+      "published": "2026-06-25T15:52:00Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
       "source": "Benzinga",
       "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNRkFaMnhCa0JSblJ6ZVcxUHUyQ3l0blVqSlktd2x6bUloMzRCMU0wVkZaX0ZIV3p1WEQ0NFpqSnNMdVM4a2EzbW11ODg0cmlua01RVXo3UnlUdl9qNmd6UmUzRmkzUUh3UHhwOXJlSm1yUVpnUmZoWVhRY1VrMHBpODZpR2RmMGZjaE1vdkgxTzluTUF4ZExMTHk5ZXJZMXlRazFmamhYaHNpMUVZVXZJRE53M3l6c3B1Zzk0RzI1dXd5dnJhUWJtUWxVODJaSUFmN1FIM3Y0SWdkR0VEVkM4NW1DT3dSQ2JMWVBNWnBONnRjcVIwWnZpMks3QVdpa1E2b0E?oc=5",
@@ -20,10 +27,10 @@
       "tone": "bullish"
     },
     {
-      "title": "There Goes the Nasdaq's Rally",
+      "title": "Why Micron earnings beat may fuel AI trade optimism",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/7f6185d4-c311-3c7b-902c-0e2421483f10/there-goes-the-nasdaq%27s-rally.html?.tsrc=rss",
-      "published": "2026-06-25T14:26:00Z",
+      "url": "https://finance.yahoo.com/video/why-micron-earnings-beat-may-162728027.html?.tsrc=rss",
+      "published": "2026-06-25T16:27:28Z",
       "tone": "bullish"
     },
     {
@@ -31,13 +38,6 @@
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/25/iran-navy-shipping-recovery-strait-of-hormuz-unauthorized-routes-us-fragile-mou-.html",
       "published": "2026-06-25T14:03:16Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Global tech selloff drags Nasdaq and S&P 500 lower - ThinkMarkets",
-      "source": "ThinkMarkets",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNQ0tHRlBuWS1lMTB1UWRvZ2VJbm44ejRvallTUS13TVJrZGQwN3RqNjQ4bXFNMEVEY1ViTGxOam9nbi1ucFotbEtKM0VsYTJfaTBMeWVVWE9DYWx0U1NOYl94Z3E1VkxMZjdEMTFhSlkwYUQ4UTZtTlZOU1FzZF9ETExTbnNXSndUcWdNbTY1WkZOWmU5QlFibk1FSjg1UQ?oc=5",
-      "published": "2026-06-24T11:16:24Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 96
       }
     ],
-    "headline_count": 144,
+    "headline_count": 146,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
