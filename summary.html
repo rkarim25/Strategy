@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="site-scroll-init.js?v=20260610"></script>
-  <title>Summary results — cross-asset backtests</title>
+  <title>Summary — Water / Octane results</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <style>
     :root {
@@ -13,10 +13,11 @@
       --text: #1d1d1f; --muted: #6e6e73; --line: rgba(0,0,0,.10);
       --accent: #0071e3; --accent-soft: rgba(0,113,227,.10);
       --good: #248a3d; --warn: #b26a00; --bad: #d70015;
+      --water: rgba(0,113,227,.08); --octane: rgba(36,138,61,.10);
       --shadow: 0 18px 45px rgba(0,0,0,.08);
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: auto; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -26,279 +27,201 @@
     }
     main { width: min(1180px, calc(100vw - 40px)); margin: 48px auto 72px; }
     h1 { margin: 0 0 10px; font-size: clamp(32px,5vw,52px); line-height: 1; letter-spacing: -0.05em; font-weight: 800; }
+    h2 { margin: 2px 0 8px; font-size: 19px; letter-spacing: -0.02em; }
     p { color: var(--muted); line-height: 1.58; }
-    .lede { font-size: 17px; max-width: 72ch; }
+    .lede { font-size: 17px; max-width: 74ch; }
     .card {
       border: 1px solid var(--line); border-radius: 24px; background: var(--panel);
       padding: 22px 24px; box-shadow: var(--shadow); backdrop-filter: blur(22px); margin: 18px 0;
     }
-    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 2px; }
-    .toolbar .lab { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
-    .chip {
-      cursor: pointer; border: 1px solid var(--line); background: rgba(255,255,255,.72);
-      color: var(--text); border-radius: 999px; padding: 8px 14px; font-size: 13.5px; font-weight: 500;
-      transition: background .15s ease, border-color .15s ease, color .15s ease;
-    }
-    .chip:hover { border-color: rgba(0,113,227,.4); }
-    .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .meta { font-size: 13px; color: var(--muted); margin: 14px 0 6px; line-height: 1.5; }
-    .banner { font-size: 13px; color: var(--warn); background: rgba(178,106,0,.08); border: 1px solid rgba(178,106,0,.2);
-      border-radius: 12px; padding: 8px 12px; margin: 10px 0; }
+    .meta { font-size: 13px; color: var(--muted); margin: 8px 0 6px; line-height: 1.5; }
     .tbl-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 6px; font-size: 13px; min-width: 880px; }
+    table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 6px; font-size: 13px; }
     th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
-    th { color: var(--muted); font-weight: 600; font-size: 12px; cursor: pointer; user-select: none; }
-    th:hover { color: var(--text); }
+    th { color: var(--muted); font-weight: 600; font-size: 12px; }
+    th.s { cursor: pointer; user-select: none; }
+    th.s:hover { color: var(--text); }
     th.l, td.l { text-align: left; }
     th .ind { color: var(--accent); font-size: 10px; }
     td.num { font-variant-numeric: tabular-nums; }
-    tr.ref td { color: var(--muted); }
-    tr.hl td { background: rgba(0,113,227,.06); }
-    tr.dim { opacity: 0.4; }
-    td.rank { font-weight: 700; color: var(--muted); }
-    td.bal b { display: inline-block; min-width: 30px; text-align: right; font-weight: 700; }
     .neg { color: var(--bad); }
-    #costTable { min-width: 520px; }
+    .pos { color: var(--good); }
+    .badge { display: inline-block; min-width: 26px; text-align: center; border-radius: 999px; padding: 2px 9px; font-weight: 700; font-size: 12.5px; }
+    .badge.w { background: var(--water); color: var(--accent); }
+    .badge.o { background: var(--octane); color: var(--good); }
+    .badge.z { background: rgba(0,0,0,.05); color: var(--muted); }
+    #overview table { min-width: 760px; }
+    #overview tbody tr { cursor: pointer; }
+    #overview tbody tr:hover td { background: rgba(0,113,227,.05); }
+    .assetCard h2 { cursor: pointer; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .assetCard h2 .chev { color: var(--muted); font-size: 14px; transition: transform .15s ease; }
+    .assetCard.open h2 .chev { transform: rotate(90deg); }
+    .assetCard .body { display: none; }
+    .assetCard.open .body { display: block; }
+    .sub { font-size: 12px; color: var(--muted); margin: 16px 0 4px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .sub.w { color: var(--accent); } .sub.o { color: var(--good); }
+    .qtable tbody tr.w td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+    .qtable tbody tr.o td:first-child { box-shadow: inset 3px 0 0 var(--good); }
+    .qtable tbody tr:hover td { background: rgba(0,0,0,.025); }
+    .bh td { color: var(--muted); font-style: italic; }
     .foot { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
-    .sub { font-size: 12px; color: var(--muted); margin: 16px 0 4px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; }
-    code { background: rgba(0,0,0,.05); padding: 1px 5px; border-radius: 5px; font-size: 12px; }
+    .pill { font-size: 12px; color: var(--muted); }
+    .defs li { color: var(--muted); line-height: 1.6; margin: 3px 0; }
+    .defs b { color: var(--text); }
   </style>
 </head>
 <body>
 <main>
   <nav class="site-nav" aria-label="Strategies"></nav>
 
-  <h1>Summary results</h1>
-  <p class="lede">SMA20 guarded and non-guarded strategies versus buy &amp; hold across ten asset classes — US indices, gold,
-    Treasuries and international equity (FTSE 250, DAX, MSCI EM/World) — on
-    <strong>real same-calendar listed-ETP returns</strong> where a leveraged product exists, plus the synthetic
-    daily-reset model for the same window and for the long history. $100 start, $10/year inflow, 0.10% trading cost,
-    signals lagged one day. Strategies are grouped by <strong>maximum leverage</strong> into <strong>1×, 2× and 3×</strong> panels —
-    variable-leverage strategies (guarded tiers, vol-guards) sit in their highest tier; <strong>Balance</strong> and rank (#) stay global across all tiers,
-    so the panels remain comparable. Click any column header to sort every panel.
-    Improvers that beat buy &amp; hold (<strong>SMA200 2×/cash</strong>, <strong>Guarded+</strong>, <strong>Mom 12m 2×</strong>) are highlighted;
-    strategies <strong>dominated by buy &amp; hold 1×</strong> (lower CAGR <em>and</em> deeper drawdown) are greyed out.</p>
+  <h1>Summary</h1>
+  <p class="lede">Every strategy in the cross-asset sweep, classified <strong>Water</strong>, <strong>Octane</strong> or
+    neither against each asset's own Buy &amp; Hold 1×, over the <strong>full available history</strong> (S&amp;P 500 from
+    1950) at each asset's per-asset trading cost. This mirrors the <code>Results/strategy_results.xlsx</code> workbook.
+    Click any asset to open its qualifying-strategy tables.</p>
 
-  <div class="card">
-    <div class="toolbar" id="assetBar"><span class="lab">Asset</span></div>
-    <div class="toolbar" id="regimeBar" style="margin-top:10px;"><span class="lab">Data</span></div>
-    <div class="meta" id="periodLine"></div>
-    <div id="bannerSlot"></div>
-  </div>
-
-  <div id="panels"></div>
-
-  <div class="card">
-    <div class="sub" style="margin-top:0;">Trading-cost sensitivity &nbsp;·&nbsp; CAGR / max drawdown &nbsp;·&nbsp; the bold <strong>Realistic 0.10%</strong> column is the same CAGR shown in the tables above; Gross 0% and Conservative 1% bracket the best / worst execution cost.</div>
+  <div class="card" id="overviewCard">
+    <h2>Overview</h2>
+    <p class="meta" id="overviewMeta">Loading…</p>
     <div class="tbl-wrap">
-      <table id="costTable">
-        <thead><tr><th class="l">Turnover strategy</th><th>Gross 0%</th><th>Realistic 0.10%<br><span style="font-weight:400;opacity:.7;">= headline CAGR</span></th><th>Conservative 1%</th></tr></thead>
-        <tbody id="costRows"></tbody>
+      <table id="overview">
+        <thead></thead>
+        <tbody></tbody>
       </table>
     </div>
   </div>
 
-  <p class="foot" id="methodFoot"></p>
+  <div id="details"></div>
+
+  <div class="card defs">
+    <h2>How strategies are classified</h2>
+    <ul>
+      <li><b>Water</b> — beats Buy &amp; Hold 1× on CAGR and/or max drawdown while <em>not</em> sacrificing any metric
+        (Sharpe, Sortino, Calmar, MaxDD, volatility all no worse; at least one of CAGR or MaxDD strictly better).</li>
+      <li><b>Octane</b> — strictly higher CAGR <em>and</em> Calmar than Buy &amp; Hold 1×, with max drawdown no worse
+        than −45% and at most 30 trades per year. (Water takes precedence when both qualify.)</li>
+      <li><b>Stillwater</b> (Nasdaq 100 only) — the Water/Octane risk criteria, but CAGR may be up to 2 percentage points
+        below Buy &amp; Hold 1×. Surfaces defensive variants where strict Water/Octane is unreachable because the
+        benchmark's high CAGR comes only with an extreme (−82%) drawdown.</li>
+    </ul>
+    <p class="meta" id="costNote"></p>
+  </div>
+
+  <p class="foot">Engine: 1-day signal delay (no look-ahead), VIX-linked borrow, real listed-ETP daily returns where a
+    leveraged product exists with synthetic daily-reset fallback, $100 start + $10/yr inflow. Source:
+    <code>output/strategy_results/all_assets_combined.csv</code> via <code>build_summary_excel_json.py</code>.</p>
 </main>
 
 <script src="site-nav.js?v=20260616"></script>
 <script>
-(function () {
-  const STRATS = ["Buy & hold 1x","Buy & hold 2x","Buy & hold 3x",
-    "SMA20 1x/cash","SMA20 2x/cash","SMA20 3x/cash",
-    "SMA200 1x/cash","SMA200 2x/cash","SMA200 3x/cash",
-    "Guarded A5/B25","Guarded A10/B20",
-    "Guarded+ (200/2x/floor)","Mom 12m 2x/cash",
-    "SMA200 2x monthly","SMA200 2x 3% band","Golden 50/200 2x",
-    "Golden 2x volguard","Golden 3x volguard",
-    "SMA200 ±3% Band + RSI>30 Exit 3x","SMA200 ±3% Band + RSI>30 Exit 2x",
-    "SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x","SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x"];
-  const TURNOVER = ["SMA20 1x/cash","SMA20 2x/cash","SMA20 3x/cash","Guarded A5/B25","Guarded A10/B20",
-    "SMA200 2x/cash","Guarded+ (200/2x/floor)","Mom 12m 2x/cash",
-    "SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x","SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x"];
-  const IMPROVED = ["SMA200 2x/cash","Guarded+ (200/2x/floor)","Mom 12m 2x/cash",
-    "SMA200 2x monthly","SMA200 2x 3% band","Golden 50/200 2x",
-    "Golden 2x volguard","Golden 3x volguard",
-    "SMA200 ±3% Band + RSI>30 Exit 3x","SMA200 ±3% Band + RSI>30 Exit 2x",
-    "SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x","SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x"];
-  // Panels grouped by MAXIMUM leverage. Balance/rank stay global (computed across all STRATS);
-  // these only group the display. Variable-leverage strategies (guarded tiers ramp 1×→3× after
-  // drawdowns; vol-guards de-lever on volatility) sit in their highest tier.
-  const GROUPS = [
-    { label: "1× · unleveraged", desc: "Full index exposure when invested, cash when out — the reference tier.",
-      strats: ["Buy & hold 1x", "SMA20 1x/cash", "SMA200 1x/cash"] },
-    { label: "2× · up to double leverage", desc: "Fixed 2× when invested (else cash), plus strategies capped or de-levered at 2× — Guarded+ and the 2× vol-guard ease off when volatility spikes.",
-      strats: ["Buy & hold 2x", "SMA20 2x/cash", "SMA200 2x/cash", "Mom 12m 2x/cash", "SMA200 2x monthly", "SMA200 2x 3% band", "Golden 50/200 2x", "Guarded+ (200/2x/floor)", "Golden 2x volguard", "SMA200 ±3% Band + RSI>30 Exit 2x"] },
-    { label: "3× · up to triple leverage", desc: "Fixed 3× when invested (else cash), plus strategies that reach 3× — the Guarded tiers ramp up after drawdowns; the 3× vol-guard de-levers on volatility. Highest return, deepest drawdowns.",
-      strats: ["Buy & hold 3x", "SMA20 3x/cash", "SMA200 3x/cash", "Guarded A5/B25", "Guarded A10/B20", "Golden 3x volguard", "SMA200 ±3% Band + RSI>30 Exit 3x", "SMA200 ±3% Band + RSI>30 Exit + RSI Scale 1-3x", "SMA200 ±3% Band + RSI>30 Exit + VIX Scale 1-3x"] },
-  ];
-  const REGIMES = [
-    { key: "real", label: "Real · ETP era" },
-    { key: "synth_era", label: "Synthetic · same era" },
-    { key: "synth_long", label: "Synthetic · long history" },
-  ];
-  // Balance score weights — return that isn't paid for with drawdown. Calmar (return ÷
-  // drawdown) leads so catastrophic-drawdown strategies can't rank high on CAGR alone.
-  const W = { calmar: 0.35, cagr: 0.25, dd: 0.20, sortino: 0.15, sharpe: 0.05 };
+  const fmtPct = (v) => v == null ? "—" : `${v >= 0 ? "" : ""}${v.toFixed(2)}%`;
+  const fmt3 = (v) => v == null ? "—" : v.toFixed(3);
+  const fmt1 = (v) => v == null ? "—" : v.toFixed(1);
+  const fmtLev = (v) => v == null ? "—" : `${v % 1 === 0 ? v.toFixed(0) : v.toFixed(1)}×`;
+  const fmtMoney = (v) => v == null ? "—" : "$" + Math.round(v).toLocaleString();
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  const ddCell = (v) => v == null ? "—" : `<span class="neg">${v.toFixed(2)}%</span>`;
 
-  const pct = (v) => (v == null ? "—" : (v * 100).toFixed(1) + "%");
-  const sgn = (v) => `<span class="${v < 0 ? "neg" : ""}">${pct(v)}</span>`;
-  const num = (v, d = 2) => (v == null || v !== v ? "—" : Number(v).toFixed(d));
-  const money = (v) => (v == null ? "—" : "$" + Math.round(v).toLocaleString());
-
-  const COLS = [
-    { key: "rank", label: "#", val: (d) => d.rank, cell: (d) => `<td class="num rank">${d.rank}</td>` },
-    { key: "strategy", label: "Strategy", left: true, val: (d) => d.i, cell: (d) => `<td class="l">${d.s}</td>` },
-    { key: "balance", label: "Balance", val: (d) => d.balance, cell: (d) => `<td class="num bal"><b>${d.balance.toFixed(0)}</b></td>` },
-    { key: "trades", label: "Trades/yr", val: (d) => d.m.trades_yr, cell: (d) => `<td class="num">${num(d.m.trades_yr, 1)}</td>` },
-    { key: "cagr", label: "CAGR", val: (d) => d.m.cagr_r, cell: (d) => `<td class="num">${pct(d.m.cagr_r)}</td>` },
-    { key: "dd", label: "Max DD", val: (d) => d.m.dd_r, cell: (d) => `<td class="num">${sgn(d.m.dd_r)}</td>` },
-    { key: "vol", label: "Vol", val: (d) => d.m.vol, cell: (d) => `<td class="num">${pct(d.m.vol)}</td>` },
-    { key: "sharpe", label: "Sharpe", val: (d) => d.m.sharpe, cell: (d) => `<td class="num">${num(d.m.sharpe)}</td>` },
-    { key: "sortino", label: "Sortino", val: (d) => d.m.sortino, cell: (d) => `<td class="num">${num(d.m.sortino)}</td>` },
-    { key: "calmar", label: "Calmar", val: (d) => d.m.calmar, cell: (d) => `<td class="num">${num(d.m.calmar)}</td>` },
-    { key: "cash", label: "% cash", val: (d) => d.m.cash, cell: (d) => `<td class="num">${num(d.m.cash, 0)}%</td>` },
-    { key: "end", label: "End $", val: (d) => d.m.end, cell: (d) => `<td class="num">${money(d.m.end)}</td>` },
+  const OVERVIEW_COLS = [
+    { key: "label", name: "Asset", l: true, sortable: true, get: (a) => a.label, render: (a) => esc(a.label) },
+    { key: "octane_count", name: "Octane", sortable: true, get: (a) => a.octane_count, render: (a) => `<span class="badge ${a.octane_count ? "o" : "z"}">${a.octane_count}</span>` },
+    { key: "water_count", name: "Water", sortable: true, get: (a) => a.water_count, render: (a) => `<span class="badge ${a.water_count ? "w" : "z"}">${a.water_count}</span>` },
+    { key: "neither_count", name: "Neither", sortable: true, get: (a) => a.neither_count, render: (a) => `<span class="pill">${a.neither_count}</span>` },
+    { key: "best_octane", name: "Best Octane (Calmar)", l: true, sortable: false, render: (a) => a.best_octane ? `${esc(a.best_octane.name)} <span class="pill">${fmt3(a.best_octane.calmar)}</span>` : "—" },
+    { key: "best_water", name: "Best Water (CAGR)", l: true, sortable: false, render: (a) => a.best_water ? `${esc(a.best_water.name)} <span class="pill">${fmtPct(a.best_water.cagr)}</span>` : "—" },
+    { key: "bh_cagr", name: "B&H CAGR", sortable: true, get: (a) => a.bh_cagr, render: (a) => fmtPct(a.bh_cagr) },
+    { key: "bh_maxdd", name: "B&H MaxDD", sortable: true, get: (a) => a.bh_maxdd, render: (a) => ddCell(a.bh_maxdd) },
   ];
 
-  let DATA = null, asset = null, regime = "real";
-  let sort = { key: "balance", dir: "desc" };
+  const DETAIL_COLS = [
+    { key: "Strategy", name: "Strategy", l: true, render: (r) => esc(r.Strategy) },
+    { key: "Leverage_Max", name: "Lev", render: (r) => fmtLev(r.Leverage_Max) },
+    { key: "CAGR_pct", name: "CAGR", render: (r) => fmtPct(r.CAGR_pct) },
+    { key: "Vol_pct", name: "Vol", render: (r) => fmtPct(r.Vol_pct) },
+    { key: "Sharpe", name: "Sharpe", render: (r) => fmt3(r.Sharpe) },
+    { key: "Sortino", name: "Sortino", render: (r) => fmt3(r.Sortino) },
+    { key: "Calmar", name: "Calmar", render: (r) => fmt3(r.Calmar) },
+    { key: "MaxDD_pct", name: "MaxDD", render: (r) => ddCell(r.MaxDD_pct) },
+    { key: "Trades_Per_Year", name: "Trades/yr", render: (r) => fmt1(r.Trades_Per_Year) },
+    { key: "Pct_Cash_Time", name: "% Cash", render: (r) => fmtPct(r.Pct_Cash_Time) },
+  ];
 
-  function makeChips(barId, items, current, onPick) {
-    const bar = document.getElementById(barId);
-    bar.querySelectorAll(".chip").forEach((c) => c.remove());
-    items.forEach((it) => {
-      const b = document.createElement("button");
-      b.className = "chip" + (it.key === current ? " active" : "");
-      b.textContent = it.label;
-      b.onclick = () => onPick(it.key);
-      bar.appendChild(b);
-    });
-  }
+  let DATA = null;
+  let sortKey = null;
+  let sortDir = -1;
 
-  function norm(x, arr, higherBetter) {
-    const mn = Math.min(...arr), mx = Math.max(...arr);
-    if (mx === mn) return 0.5;
-    const t = (x - mn) / (mx - mn);
-    return higherBetter ? t : 1 - t;
-  }
-
-  function buildRows(r) {
-    const data = STRATS.map((s, i) => ({ s, i, m: r.rows[s] }));
-    const arr = (f) => data.map((d) => f(d.m));
-    const aC = arr((m) => m.cagr_r), aCal = arr((m) => m.calmar), aD = arr((m) => m.dd_r),
-      aSo = arr((m) => m.sortino), aSh = arr((m) => m.sharpe);
-    data.forEach((d) => {
-      const m = d.m;
-      d.balance = 100 * (
-        W.cagr * norm(m.cagr_r, aC, true) + W.calmar * norm(m.calmar, aCal, true) +
-        W.dd * norm(m.dd_r, aD, true) + W.sortino * norm(m.sortino, aSo, true) +
-        W.sharpe * norm(m.sharpe, aSh, true));
-    });
-    [...data].sort((a, b) => b.balance - a.balance).forEach((d, i) => { d.rank = i + 1; });
-    const bh1 = data.find((d) => d.s === "Buy & hold 1x");
-    data.forEach((d) => {
-      d.beatsBH = d.s === "Buy & hold 1x" || d.m.cagr_r > bh1.m.cagr_r || d.m.dd_r > bh1.m.dd_r;
-    });
-    return data;
-  }
-
-  function renderTable(data) {
-    const col = COLS.find((c) => c.key === sort.key) || COLS[2];
-    const dir = sort.dir === "asc" ? 1 : -1;
-    const byName = Object.fromEntries(data.map((d) => [d.s, d]));
-    const headHtml = "<tr>" + COLS.map((c) => {
-      const ind = c.key === sort.key ? ` <span class="ind">${sort.dir === "asc" ? "▲" : "▼"}</span>` : "";
-      return `<th class="${c.left ? "l" : ""}" data-k="${c.key}">${c.label}${ind}</th>`;
+  function renderOverview() {
+    const thead = document.querySelector("#overview thead");
+    const tbody = document.querySelector("#overview tbody");
+    thead.innerHTML = "<tr>" + OVERVIEW_COLS.map((c) => {
+      const ind = sortKey === c.key ? `<span class="ind">${sortDir < 0 ? "▼" : "▲"}</span>` : "";
+      return `<th class="${c.l ? "l " : ""}${c.sortable ? "s" : ""}" data-key="${c.key}">${c.name} ${ind}</th>`;
     }).join("") + "</tr>";
-    const cmp = (a, b) => {
-      const va = col.val(a), vb = col.val(b);
-      return (typeof va === "string" ? va.localeCompare(vb) : va - vb) * dir;
-    };
-    document.getElementById("panels").innerHTML = GROUPS.map((g) => {
-      const rows = g.strats.map((s) => byName[s]).filter(Boolean).sort(cmp);
-      const body = rows.map((d) => {
-        const ref = d.s.startsWith("Buy & hold"), dim = !d.beatsBH, hl = IMPROVED.includes(d.s) && !dim;
-        return `<tr class="${ref ? "ref" : ""}${hl ? " hl" : ""}${dim ? " dim" : ""}">` + COLS.map((c) => c.cell(d)).join("") + "</tr>";
-      }).join("");
-      return `<div class="card">
-        <div class="sub" style="margin-top:0;">${g.label}</div>
-        <div class="meta" style="margin:2px 0 8px;">${g.desc}</div>
-        <div class="tbl-wrap"><table><thead>${headHtml}</thead><tbody>${body}</tbody></table></div>
+
+    let rows = DATA.assets.slice();
+    if (sortKey) {
+      const col = OVERVIEW_COLS.find((c) => c.key === sortKey);
+      rows.sort((a, b) => {
+        const va = col.get(a), vb = col.get(b);
+        if (typeof va === "string") return sortDir * va.localeCompare(vb);
+        return sortDir * ((va ?? -1e9) - (vb ?? -1e9));
+      });
+    }
+    tbody.innerHTML = rows.map((a) => "<tr data-asset='" + a.key + "'>" + OVERVIEW_COLS.map((c) =>
+      `<td class="${c.l ? "l" : "num"}">${c.render(a)}</td>`).join("") + "</tr>").join("");
+
+    thead.querySelectorAll("th.s").forEach((th) => th.addEventListener("click", () => {
+      const k = th.dataset.key;
+      if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = (k === "label") ? 1 : -1; }
+      renderOverview();
+    }));
+    tbody.querySelectorAll("tr").forEach((tr) => tr.addEventListener("click", () => {
+      const card = document.getElementById("asset-" + tr.dataset.asset);
+      if (card) { card.classList.add("open"); card.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }));
+  }
+
+  function detailTable(rows, kind) {
+    const head = "<tr>" + DETAIL_COLS.map((c) => `<th class="${c.l ? "l" : ""}">${c.name}</th>`).join("") + "</tr>";
+    const body = rows.map((r) => `<tr class="${kind}">` + DETAIL_COLS.map((c) =>
+      `<td class="${c.l ? "l" : "num"}">${c.render(r)}</td>`).join("") + "</tr>").join("");
+    return `<div class="tbl-wrap"><table class="qtable"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+  }
+
+  function renderDetails() {
+    document.getElementById("details").innerHTML = DATA.assets.map((a) => {
+      const bh = `B&H 1× ${fmtPct(a.bh_cagr)} / ${a.bh_maxdd != null ? a.bh_maxdd.toFixed(2) + "%" : "—"}`;
+      let body = "";
+      if (a.octane_rows.length) body += `<div class="sub o">Octane (${a.octane_rows.length})</div>` + detailTable(a.octane_rows, "o");
+      if (a.water_rows.length) body += `<div class="sub w">Water (${a.water_rows.length})</div>` + detailTable(a.water_rows, "w");
+      if (a.stillwater_rows && a.stillwater_rows.length) body += `<div class="sub o">Stillwater (${a.stillwater_rows.length}) — CAGR within 2pp of B&amp;H</div>` + detailTable(a.stillwater_rows, "o");
+      if (!body) body = `<p class="meta">No Water or Octane strategies for ${esc(a.label)} — all ${a.total} tested strategies were dominated by Buy &amp; Hold 1× on the full-history basis.</p>`;
+      return `<div class="card assetCard" id="asset-${a.key}">
+        <h2 onclick="this.parentElement.classList.toggle('open')"><span class="chev">▶</span> ${esc(a.label)}
+          <span class="badge o">${a.octane_count} O</span><span class="badge w">${a.water_count} W</span>
+          <span class="pill" style="font-weight:400">${bh} · ${a.cost} cost</span></h2>
+        <div class="body">${body}</div>
       </div>`;
     }).join("");
-    document.querySelectorAll("#panels th").forEach((th) => {
-      th.onclick = () => {
-        const k = th.dataset.k;
-        if (sort.key === k) sort.dir = sort.dir === "asc" ? "desc" : "asc";
-        else sort = { key: k, dir: k === "strategy" ? "asc" : "desc" };
-        renderTable(data);
-      };
-    });
   }
 
-  function render() {
-    const a = DATA.assets.find((x) => x.key === asset);
-    const r = a[regime];
-    makeChips("assetBar", DATA.assets.map((x) => ({ key: x.key, label: x.label })), asset, (k) => { asset = k; render(); });
-    makeChips("regimeBar", REGIMES, regime, (k) => { regime = k; render(); });
-
-    const cov = regime === "real" && a.real_lev ? ` · real 2× ${r.cov.pct_real_2x}% / 3× ${r.cov.pct_real_3x}%` : "";
-    const model = regime !== "real"
-      ? "Synthetic daily-reset model (index return × leverage − borrow − fees)"
-      : a.real_lev
-        ? `Real listed ETP — 1× ${a.tickers["1x"]}, 2× ${a.tickers["2x"]}, 3× ${a.tickers["3x"]}`
-        : `1× ${a.tickers["1x"]} (real) · 2×/3× synthetic`;
-    document.getElementById("periodLine").innerHTML =
-      `<strong>${r.start} → ${r.end}</strong> · ${r.years} yrs · ${r.sessions.toLocaleString()} sessions · ${model}${cov}`;
-
-    const banner = document.getElementById("bannerSlot");
-    banner.innerHTML = "";
-    if (regime === "real" && !a.real_lev) {
-      const bh1Real = a.real.rows["Buy & hold 1x"].cagr_r;
-      const bh1Synth = a.synth_era.rows["Buy & hold 1x"].cagr_r;
-      const diff = Math.abs(bh1Real - bh1Synth) * 100;
-      const identical = diff <= 0.1;
-      banner.innerHTML = `<div class="banner">No same-calendar real leveraged ETP exists for ${a.label} — 1× is the actual ${a.tickers["1x"]} series; 2×/3× use the synthetic model. The 1× CAGR differs by ${diff.toFixed(1)}pp between "Real" (${(bh1Real*100).toFixed(1)}%) and "Synthetic · same era" (${(bh1Synth*100).toFixed(1)}%)${identical ? " — effectively identical" : ""}.</div>`;
-    }
-    else if (regime === "synth_era")
-      banner.innerHTML = `<div class="banner" style="color:var(--muted);background:rgba(0,0,0,.03);border-color:var(--line);">Synthetic model over the same window as the real ETPs — it now tracks the listed products within ~2%/yr, which validates the model used for the long history.</div>`;
-
-    renderTable(buildRows(r));
-
-    document.getElementById("costRows").innerHTML = TURNOVER.map((s) => {
-      const m = r.rows[s];
-      return `<tr><td class="l">${s}</td>
-        <td class="num">${pct(m.cagr_g)} / ${sgn(m.dd_g)}</td>
-        <td class="num"><strong>${pct(m.cagr_r)}</strong> / ${sgn(m.dd_r)}</td>
-        <td class="num">${pct(m.cagr_x)} / ${sgn(m.dd_x)}</td></tr>`;
-    }).join("");
-
-    document.getElementById("methodFoot").innerHTML =
-      `<strong>Balance</strong> (0–100, Rank 1 = best) blends, min–max-normalised across the strategies shown: ` +
-      `35% Calmar (return ÷ drawdown), 25% CAGR, 20% max drawdown, 15% Sortino, 5% Sharpe — rewarding return that isn't paid for in drawdown. ` +
-      `Non-guarded = above SMA20 → full leverage, else cash. Guarded = 1× base, tiers to 2×/3× after drawdowns ` +
-      `(A5/B25 = site default; A10/B20 = original). <strong>SMA200 2×/cash</strong> swaps the 20-day filter for a 200-day trend filter; ` +
-      `<strong>Guarded+</strong> combines the 200-day filter, a 2× cap, asset-relative volatility de-levering (1× when 20-day vol > 1.2× the asset's own trailing-median vol), and a −25% drawdown floor. ` +
-      `<strong>Mom 12m 2×</strong> holds 2× while price is above its level 12 months ago (time-series momentum), else cash. ` +
-      `<strong>SMA200 2× monthly</strong>, <strong>3% band</strong> (a ±3% dead-band around the 200-day SMA) and <strong>Golden 50/200 2×</strong> (50- vs 200-day SMA cross) are lower-turnover trend variants — they rebalance ~monthly or less, cutting the daily SMA200's whipsaw and, on S&amp;P / Nasdaq history, improving CAGR, drawdown and trades/yr together. ` +
-      `<strong>Golden 2×/3× vol-guard</strong> add the asset-relative vol cap to the golden cross (de-lever when 20-day vol > 1.2× the asset's own median) — best risk-adjusted on high-vol indices (Nasdaq 2×: −45% maxDD / Calmar 0.52; 3×: 29.9% CAGR / 0.44), at higher turnover (~6 trades/yr). ` +
-      `Greyed rows are dominated by buy &amp; hold 1× over the shown window (lower CAGR and deeper drawdown). ` +
-      `Headline cost 0.10%/rebalance; volatility / Sharpe / Sortino are pre-cost. ` +
-      `CAGR and End $ include the $10/yr inflows. ` +
-      `Real ETPs are same-calendar US-listed (S&P SPY/SSO/UPRO, Nasdaq QQQ/QLD/TQQQ, Russell IWM/UWM/TNA, Gold GLD/UGL, Treasuries TLT/UBT/TMF); ` +
-      `equal-weight, gold-3× and the international classes (FTSE 250, DAX, MSCI EM, MSCI World) have no same-calendar leveraged product, so those tiers use the synthetic model. ` +
-      `Data basis differs across the international classes — DAX (^GDAXI) is a total-return index whereas FTSE 250 (^FTMC) is price-return and MSCI EM/World are NAV — so compare strategies <em>within</em> an asset, not raw CAGR <em>across</em> assets.`;
-  }
-
-  fetch("summary_data.json?v=20260616intl")
-    .then((res) => res.json())
-    .then((d) => { DATA = d; asset = d.assets[0].key; render(); })
+  fetch("summary_excel.json?v=" + Date.now())
+    .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then((data) => {
+      DATA = data;
+      const tw = data.assets.reduce((s, a) => s + a.water_count, 0);
+      const to = data.assets.reduce((s, a) => s + a.octane_count, 0);
+      document.getElementById("overviewMeta").textContent =
+        `${data.assets.length} asset classes · ${to} Octane and ${tw} Water strategies in total. Generated ${data.generated}.`;
+      document.getElementById("costNote").textContent =
+        "Per-asset trading cost (from mid-price): " + data.assets.map((a) => `${a.label} ${a.cost}`).join(" · ") + ".";
+      renderOverview();
+      renderDetails();
+    })
     .catch((e) => {
-      document.getElementById("periodLine").innerHTML =
-        `<span class="neg">Could not load summary_data.json — ${e.message}</span>`;
+      document.getElementById("overviewMeta").innerHTML =
+        `<span class="neg">Could not load summary_excel.json — ${esc(e.message)}</span>`;
     });
-})();
 </script>
 </body>
 </html>

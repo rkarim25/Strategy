@@ -642,11 +642,13 @@
 
   <section id="guardedStrategy" class="strategy active">
   <section class="card" style="margin-bottom: 18px;">
-    <h2>SMA200 ±3% Band + Distance Scale 1-3x Signal</h2>
+    <h2>SMA200 ±3% Band + RSI&gt;20 Exit 2x Signal</h2>
     <p>
-      Computes the strategy state from S&amp;P 500 daily closes: base exposure is 1x only when
-      close is above SMA20; drawdown of 5% arms 2x and drawdown of 25% arms 3x. Recovery
-      leverage is allowed when price is within 0.75% below SMA20 or better.
+      Computes the strategy state from S&amp;P 500 daily closes: hold <strong>2x</strong> exposure
+      while the close is above the SMA200 +3% band, move to cash below the −3% band, and hold the
+      prior state inside the band. The RSI&gt;20 guard keeps the position invested through deeply
+      oversold dips (RSI(14) &lt; 20) instead of selling into the panic. An Octane strategy from the
+      Excel sweep (≈13.3% CAGR / −41.5% max drawdown over the full 1950+ history at 0.10% cost).
     </p>
     <nav class="site-nav" aria-label="S&P 500 strategy sections">
       <button type="button" class="active" data-page-target="signalPage">Signal</button>
@@ -659,9 +661,9 @@
   <section class="card" style="margin-bottom: 18px;">
     <h2>Strategy Rules</h2>
     <ul>
-      <li><strong>Trend filter (±3% band):</strong> go long when the SPX close rises above <strong>SMA200 × 1.03</strong> (upper band); exit to cash when it falls below <strong>SMA200 × 0.97</strong> (lower band). Between the bands, hold the prior state (hysteresis &mdash; no whipsaw exits).</li>
-      <li><strong>Distance-scaled leverage:</strong> while long, set leverage by how far the close sits above the 200-day SMA (ratio = close ÷ SMA200): <strong>3x</strong> when ratio ≤ 1.05, <strong>2x</strong> when ratio ≤ 1.10, <strong>1x</strong> when ratio &gt; 1.10 — most leverage just after a fresh breakout, least when extended.</li>
-      <li><strong>RSI&gt;30 exit guard:</strong> if the band would flip to cash but <strong>RSI(14) &lt; 30</strong> (oversold), stay invested at 1x instead of selling into the dip.</li>
+      <li><strong>Trend filter (±3% band):</strong> go long at <strong>2x</strong> when the SPX close rises above <strong>SMA200 × 1.03</strong> (upper band); exit to cash when it falls below <strong>SMA200 × 0.97</strong> (lower band). Between the bands, hold the prior state (hysteresis &mdash; no whipsaw exits).</li>
+      <li><strong>Fixed 2x leverage:</strong> hold a constant <strong>2x</strong> while long — no distance scaling.</li>
+      <li><strong>RSI&gt;20 exit guard:</strong> if the band would flip to cash but <strong>RSI(14) &lt; 20</strong> (oversold), stay invested at 2x instead of selling into the dip.</li>
     </ul>
     <p class="small">
       The official signal uses the latest completed daily close and matches the backtest logic.
@@ -786,21 +788,21 @@
   </section>
 
   <section class="card section-gap">
-    <h2>Distance Scale Parameters</h2>
+    <h2>Strategy Parameters</h2>
     <p>
-      The SMA200 ±3% Band + Distance Scale 1-3x strategy uses fixed parameters:
+      The SMA200 ±3% Band + RSI&gt;20 Exit 2x strategy uses fixed parameters:
     </p>
     <ul>
       <li><strong>SMA window:</strong> 200 days</li>
       <li><strong>Band width:</strong> ±3% around SMA200</li>
-      <li><strong>Distance scale:</strong> 3x when ratio ≤ 1.05, 2x when ratio ≤ 1.10, 1x otherwise</li>
+      <li><strong>Leverage:</strong> fixed 2x while long, cash otherwise</li>
       <li><strong>RSI window:</strong> 14 days</li>
-      <li><strong>RSI exit threshold:</strong> 30 (stay at 1x below 30 instead of cash)</li>
+      <li><strong>RSI exit threshold:</strong> 20 (stay invested at 2x while RSI &lt; 20 instead of selling into the dip)</li>
       <li><strong>Hysteresis:</strong> hold prior state in the neutral zone between bands</li>
     </ul>
     <p class="small">
-      These parameters are fixed and not adjustable via sliders. The strategy was selected
-      through systematic optimization across SMA windows, band widths, and RSI thresholds.
+      These parameters are fixed and not adjustable via sliders. This is one of the Octane strategies
+      from the cross-asset Excel sweep (full 1950+ history at 0.10% trading cost) — see the Summary page.
     </p>
   </section>
 
@@ -831,7 +833,7 @@
     </section>
     <section class="card section-gap">
       <h2>Top 20 Strategy Drawdowns</h2>
-      <p class="small">Largest peak-to-trough declines on default Distance Scale strategy equity over the full back-test sample.</p>
+      <p class="small">Largest peak-to-trough declines on the default strategy equity over the full 1950+ back-test sample.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -906,7 +908,7 @@
 
     <section class="card section-gap">
       <h2>Legacy Guard SMA Sensitivity</h2>
-      <p class="small">Earlier A10/B20 tiering study kept for reference. The site default is now the SMA200 ±3% Band + Distance Scale 1-3x version above.</p>
+      <p class="small">Earlier studies kept for reference. The site default is now the SMA200 ±3% Band + RSI&gt;20 Exit 2x version above.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -951,7 +953,7 @@
     <section class="card">
       <h2>Monte Carlo Validation</h2>
       <p>
-        The Monte Carlo run stress-tests the default <strong>SMA200 ±3% Band + Distance Scale 1-3x + RSI>30 Exit</strong> strategy over 200 synthetic
+        The Monte Carlo run stress-tests the default <strong>SMA200 ±3% Band + RSI&gt;20 Exit 2x</strong> strategy over 200 synthetic
         10-year market paths. Paths are built with 21-trading-day blocks sampled from historical S&amp;P and T-bill
         data, preserving short-term clustering better than single-day random sampling.
       </p>
@@ -971,8 +973,8 @@
           <thead>
             <tr><th>Strategy</th><th>Median CAGR</th><th>P10 / P90 CAGR</th><th>Median max DD</th><th>P10 / P90 max DD</th><th>Median Sharpe</th><th>Median end value</th><th>P(DD &lt; -40%)</th></tr>
           </thead>
-          <tbody>
-            <tr><td><strong>SMA200 ±3% Band + Distance Scale 1-3x + RSI>30 Exit</strong></td><td><strong>12.45%</strong></td><td>1.06% / 25.88%</td><td><strong>-53.16%</strong></td><td>-68.09% / -40.96%</td><td>0.416</td><td><strong>$310</strong></td><td>91.00%</td></tr>
+          <tbody id="mcComparisonBody">
+            <tr><td><strong>SMA200 ±3% Band + RSI&gt;20 Exit 2x</strong></td><td><strong id="mcCmpMedCagr">–</strong></td><td id="mcCmpCagrRange">–</td><td><strong id="mcCmpMedDd">–</strong></td><td id="mcCmpDdRange">–</td><td id="mcCmpSharpe">–</td><td><strong id="mcCmpEnd">–</strong></td><td id="mcCmpProbDd40">–</td></tr>
           </tbody>
         </table>
       </div>
@@ -997,7 +999,7 @@
 
     <section class="card section-gap">
       <h2>Default Strategy Diagnostics</h2>
-      <p class="small">Full-sample diagnostics for the SMA200 ±3% Band + Distance Scale 1-3x default.</p>
+      <p class="small">Full-sample diagnostics for the SMA200 ±3% Band + RSI&gt;20 Exit 2x default.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -1678,12 +1680,14 @@
   const MIN_REFRESH_MS = 5 * 60 * 1000;
   const FOCUS_STALE_MS = 10 * 60 * 1000;
   const RANGE_SESSIONS = { "1w": 5, "1m": 21, "3m": 63, "6m": 126, "1y": 252, "3y": 756, "5y": 1260, "10y": 2520, "20y": 5040, "30y": 7560 };
+  // SMA200 ±3% Band + RSI>20 Exit 2x (the Octane strategy; name kept for code stability).
   const DEFAULT_DISTANCE_SCALE = {
     smaWindow: 200,
     bandPct: 0.03,
     rsiWindow: 14,
-    rsiExit: 30,
-    tradingCost: 0.01,
+    rsiExit: 20,
+    leverage: 2,
+    tradingCost: 0.001,
     cashRate: 0.04,
   };
   const INITIAL_CAPITAL = 100;
@@ -1878,6 +1882,14 @@
     set("mcProbDd40", mc?.prob_max_dd_worse_40pct_fmt);
     set("mcProbDd50", mc?.prob_max_dd_worse_50pct_fmt);
     set("mcProbBelowStart", mc?.prob_end_below_start_fmt);
+    // Monte Carlo comparison detail row
+    set("mcCmpMedCagr", mc?.median_cagr_pct);
+    set("mcCmpMedDd", mc?.median_max_drawdown_pct);
+    set("mcCmpSharpe", mc?.median_sharpe_fmt);
+    set("mcCmpEnd", mc?.median_end_value_fmt);
+    set("mcCmpProbDd40", mc?.prob_max_dd_worse_40pct_fmt);
+    if ($("mcCmpCagrRange")) $("mcCmpCagrRange").textContent = `${mc?.p10_cagr_pct ?? "–"} / ${mc?.p90_cagr_pct ?? "–"}`;
+    if ($("mcCmpDdRange")) $("mcCmpDdRange").textContent = `${mc?.p10_max_drawdown_pct ?? "–"} / ${mc?.p90_max_drawdown_pct ?? "–"}`;
     if ($("backtestCallout") && bt && orig) {
       const origCagr = orig.cagr_pct || (Number.isFinite(orig.cagr) ? (orig.cagr * 100).toFixed(2) + "%" : "-");
       const origDd = orig.max_drawdown_pct || (Number.isFinite(orig.max_drawdown) ? (orig.max_drawdown * 100).toFixed(2) + "%" : "-");
@@ -2315,73 +2327,75 @@
     return sum / window;
   }
 
-  function computeSignal(rows) {
-    const params = DEFAULT_DISTANCE_SCALE;
+  // SMA200 ±3% Band + RSI>20 Exit, fixed 2x.
+  // Mirrors the Python sma_band_signal(200,0.03,2) + rsi_exit_filter_on_series(20,14):
+  //   band hysteresis -> 0/2x; while invested, if the band would exit to cash but
+  //   RSI(14) < 20 (oversold), stay at 2x instead of selling into the panic.
+  function bandRsiLeverageSeries(rows, params) {
     const closes = rows.map((r) => r.close);
-    let prevState = "cash";
-    let prevLeverage = 0;
-    let targetLeverage = 0;
-    let state = "cash";
-    let explanation = "";
-
+    const smaW = params.smaWindow || 200;
+    const bandPct = (params.bandPct != null) ? params.bandPct : 0.03;
+    const L = (params.leverage != null) ? params.leverage : 2;
+    const rsiW = params.rsiWindow || 14;
+    const rsiExit = (params.rsiExit != null) ? params.rsiExit : 20;
+    const leverage = new Array(rows.length).fill(0);
+    const meta = new Array(rows.length).fill(null);
+    let bandState = 0;   // 0 = cash, 1 = long (raw band hysteresis state)
+    let inPos = false;   // RSI-filter position
+    let curLev = 0;
     for (let i = 0; i < rows.length; i++) {
       const close = closes[i];
-      const sma200 = sma(closes, i, params.smaWindow);
-      const rsi14 = computeRSI(closes, i, params.rsiWindow);
-
+      const sma200 = sma(closes, i, smaW);
+      const rsi14 = computeRSI(closes, i, rsiW);
       if (!Number.isFinite(sma200) || !Number.isFinite(rsi14)) {
-        targetLeverage = 0;
-        prevLeverage = 0;
-        prevState = "cash";
+        bandState = 0; inPos = false; curLev = 0; leverage[i] = 0;
+        meta[i] = { sma200: NaN, rsi14: NaN, upperBand: NaN, lowerBand: NaN, bandLong: false };
         continue;
       }
-
-      const ratio = close / sma200;
-      const upperBand = sma200 * (1 + params.bandPct);
-      const lowerBand = sma200 * (1 - params.bandPct);
-
-      // Layer 1: Band signal with hysteresis
-      let baseSignal = null; // null = hold previous
-      if (close > upperBand) baseSignal = "long";
-      else if (close < lowerBand) baseSignal = "cash";
-
-      let currentState = prevState;
-      if (baseSignal !== null) currentState = baseSignal;
-
-      // Layer 2: Distance leverage scale
-      let leverage = 0;
-      if (currentState === "long") {
-        if (ratio <= 1.05) leverage = 3;
-        else if (ratio <= 1.10) leverage = 2;
-        else leverage = 1;
-      }
-
-      // Layer 3: RSI>30 Exit Filter
-      if (currentState === "cash" && rsi14 < params.rsiExit) {
-        currentState = "long";
-        leverage = 1;
-        explanation = "Band says cash but RSI(14) < 30; staying invested at 1x.";
-      } else if (currentState === "long") {
-        if (leverage === 3) explanation = "Close > SMA200 + 3% band, ratio ≤ 1.05; 3x.";
-        else if (leverage === 2) explanation = "Close > SMA200 + 3% band, ratio ≤ 1.10; 2x.";
-        else explanation = "Close > SMA200 + 3% band, ratio > 1.10; 1x.";
+      const upperBand = sma200 * (1 + bandPct);
+      const lowerBand = sma200 * (1 - bandPct);
+      if (close > upperBand) bandState = 1;
+      else if (close < lowerBand) bandState = 0;
+      const bandLev = bandState * L; // 0 or L
+      let out;
+      if (!inPos) {
+        if (bandLev > 0) { inPos = true; curLev = bandLev; out = bandLev; }
+        else out = 0;
       } else {
-        explanation = "Close < SMA200 − 3% band; cash.";
+        if (bandLev === 0) {
+          if (rsi14 < rsiExit) { out = curLev; }            // oversold: block exit
+          else { inPos = false; curLev = 0; out = 0; }       // exit to cash
+        } else { curLev = bandLev; out = bandLev; }
       }
-
-      targetLeverage = leverage;
-      prevState = currentState;
-      prevLeverage = leverage;
+      leverage[i] = out;
+      meta[i] = { sma200, rsi14, upperBand, lowerBand, bandLong: bandState === 1 };
     }
+    return { leverage, meta };
+  }
 
+  function computeSignal(rows) {
+    const params = DEFAULT_DISTANCE_SCALE;
+    const { leverage, meta } = bandRsiLeverageSeries(rows, params);
     const lastIndex = rows.length - 1;
     const latest = rows[lastIndex];
-    const latestSma200 = sma(closes, lastIndex, params.smaWindow);
-    const latestRsi14 = computeRSI(closes, lastIndex, params.rsiWindow);
+    const m = meta[lastIndex] || {};
+    const targetLeverage = leverage[lastIndex] || 0;
+    const latestSma200 = m.sma200;
+    const latestRsi14 = m.rsi14;
     const ratio = latest.close / latestSma200;
-    const upperBand = latestSma200 * (1 + params.bandPct);
-    const lowerBand = latestSma200 * (1 - params.bandPct);
-    const bandStatus = ratio > 1 + params.bandPct ? "above" : ratio < 1 - params.bandPct ? "below" : "neutral";
+    const upperBand = m.upperBand;
+    const lowerBand = m.lowerBand;
+    const bandStatus = latest.close > upperBand ? "above" : latest.close < lowerBand ? "below" : "neutral";
+
+    let explanation;
+    if (targetLeverage > 0) {
+      if (m.bandLong) explanation = "Close is above the SMA200 +3% band; hold 2x.";
+      else if (bandStatus === "below") explanation = "Band would exit, but RSI(14) < 20 (oversold) — staying invested at 2x.";
+      else explanation = "Inside the SMA200 ±3% band; holding 2x from the prior signal.";
+    } else {
+      if (bandStatus === "below") explanation = "Close is below the SMA200 −3% band (RSI ≥ 20); in cash.";
+      else explanation = "Inside the SMA200 ±3% band; holding cash from the prior signal.";
+    }
 
     return {
       latest,
@@ -2391,7 +2405,7 @@
       upperBand,
       lowerBand,
       bandStatus,
-      state,
+      state: targetLeverage > 0 ? "long" : "cash",
       targetLeverage,
       explanation
     };
@@ -2424,54 +2438,8 @@
   }
 
   function distanceScaleLeverageForParams(rows, params) {
-    const closes = rows.map((row) => row.close);
-    const leverage = [];
-    let prevState = "cash";
-    let prevLeverage = 0;
-
-    for (let i = 0; i < rows.length; i++) {
-      const close = closes[i];
-      const sma200 = sma(closes, i, params.smaWindow || 200);
-      const rsi14 = computeRSI(closes, i, params.rsiWindow || 14);
-
-      if (!Number.isFinite(sma200) || !Number.isFinite(rsi14)) {
-        leverage.push(0);
-        prevLeverage = 0;
-        prevState = "cash";
-        continue;
-      }
-
-      const ratio = close / sma200;
-      const upperBand = sma200 * (1 + (params.bandPct || 0.03));
-      const lowerBand = sma200 * (1 - (params.bandPct || 0.03));
-
-      // Layer 1: Band signal with hysteresis
-      let baseSignal = null;
-      if (close > upperBand) baseSignal = "long";
-      else if (close < lowerBand) baseSignal = "cash";
-
-      let currentState = prevState;
-      if (baseSignal !== null) currentState = baseSignal;
-
-      // Layer 2: Distance leverage scale
-      let lev = 0;
-      if (currentState === "long") {
-        if (ratio <= 1.05) lev = 3;
-        else if (ratio <= 1.10) lev = 2;
-        else lev = 1;
-      }
-
-      // Layer 3: RSI>30 Exit Filter
-      if (currentState === "cash" && rsi14 < (params.rsiExit || 30)) {
-        currentState = "long";
-        lev = 1;
-      }
-
-      leverage.push(lev);
-      prevState = currentState;
-      prevLeverage = lev;
-    }
-    return { leverage };
+    // Delegates to the shared band-2x + RSI>20 helper (kept name for existing call sites).
+    return { leverage: bandRsiLeverageSeries(rows, params).leverage };
   }
 
   function backtestParameterizedDistanceScale(rows, params) {
@@ -2881,25 +2849,59 @@
     return latestRows.slice(start, endExclusive);
   }
 
-  function computeStrategyDrawdownEpisodes() {
+  // Full-history strategy vs B&H 1x equity for the Back-test tab, sourced from the
+  // regenerated 1950+ site_data JSON (equity_curve) so the chart + drawdowns match the
+  // headline KPIs. Falls back to the client-side recent-window backtest if the JSON
+  // isn't loaded yet.
+  function backtestEquityFullData() {
+    const ec = staticSiteData && staticSiteData.equity_curve;
+    if (ec && Array.isArray(ec.dates) && ec.dates.length) {
+      return ec.dates.map((date, i) => ({
+        date,
+        strategy: ec.strategy_equity[i],
+        spx: ec.buy_hold_1x_equity ? ec.buy_hold_1x_equity[i] : null,
+      }));
+    }
     if (!latestRows.length) return [];
-    const equity = backtestParameterizedDistanceScale(latestRows, DEFAULT_DISTANCE_SCALE).equity;
+    const strategy = backtestParameterizedDistanceScale(latestRows, DEFAULT_DISTANCE_SCALE).equity;
+    const spx = buyHoldWithInflows(latestRows);
+    return latestRows.map((row, i) => ({ date: row.date, strategy: strategy[i], spx: spx[i] }));
+  }
+
+  function sliceEquityByRange(data, range, offset, startInput, endInput) {
+    if (!data.length) return [];
+    const n = data.length;
+    if (range === "custom") {
+      const start = startInput && startInput.value;
+      const end = endInput && endInput.value;
+      return data.filter((row) => (!start || row.date >= start) && (!end || row.date <= end));
+    }
+    if (range === "full") return data.slice();
+    const len = RANGE_SESSIONS[range] || n;
+    const endExclusive = Math.max(1, n - offset);
+    const start = Math.max(0, endExclusive - len);
+    return data.slice(start, endExclusive);
+  }
+
+  function computeStrategyDrawdownEpisodes() {
+    const data = backtestEquityFullData();
+    if (!data.length) return [];
     const episodes = [];
-    let peakValue = equity[0];
-    let peakDate = latestRows[0].date;
+    let peakValue = data[0].strategy;
+    let peakDate = data[0].date;
     let inEpisode = false;
     let episodePeakDate = peakDate;
     let episodePeakValue = peakValue;
     let troughDate = peakDate;
     let troughValue = peakValue;
 
-    for (let i = 0; i < latestRows.length; i++) {
-      const value = equity[i];
-      const date = latestRows[i].date;
+    for (let i = 0; i < data.length; i++) {
+      const value = data[i].strategy;
+      const date = data[i].date;
       if (value >= peakValue) {
         if (inEpisode) {
-          const peakIdx = latestRows.findIndex((row) => row.date === episodePeakDate);
-          const troughIdx = latestRows.findIndex((row) => row.date === troughDate);
+          const peakIdx = data.findIndex((row) => row.date === episodePeakDate);
+          const troughIdx = data.findIndex((row) => row.date === troughDate);
           episodes.push({
             peakDate: episodePeakDate,
             troughDate,
@@ -2928,9 +2930,9 @@
     }
 
     if (inEpisode) {
-      const lastDate = latestRows[latestRows.length - 1].date;
-      const peakIdx = latestRows.findIndex((row) => row.date === episodePeakDate);
-      const troughIdx = latestRows.findIndex((row) => row.date === troughDate);
+      const lastDate = data[data.length - 1].date;
+      const peakIdx = data.findIndex((row) => row.date === episodePeakDate);
+      const troughIdx = data.findIndex((row) => row.date === troughDate);
       episodes.push({
         peakDate: episodePeakDate,
         troughDate,
@@ -3027,8 +3029,8 @@
         to: nextLev,
         transition: `${fmtLeverageLabel(prevLev)} -> ${fmtLeverageLabel(nextLev)}`,
         reason: isBuy
-          ? "Target leverage increased under SMA200 ±3% Band + Distance Scale 1-3x logic."
-          : "Target leverage decreased under SMA200 ±3% Band + Distance Scale 1-3x logic.",
+          ? "Target leverage increased under SMA200 ±3% Band + RSI>20 Exit 2x logic."
+          : "Target leverage decreased under SMA200 ±3% Band + RSI>20 Exit 2x logic.",
         entryLabel: "",
         exitLabel: "",
         pnlLabel: "",
@@ -3595,17 +3597,9 @@
   }
 
   function equityDataForRange() {
-    if (!latestRows.length) return [];
-    const strategy = backtestParameterizedDistanceScale(latestRows, DEFAULT_DISTANCE_SCALE).equity;
-    const spx = buyHoldWithInflows(latestRows);
-    const fullData = latestRows.map((row, index) => ({
-      date: row.date,
-      strategy: strategy[index],
-      spx: spx[index],
-    }));
-    const rows = sliceRowsByRange(equityChartRange, equityChartRangeOffset, $("equityChartStart"), $("equityChartEnd"));
-    const allowed = new Set(rows.map((row) => row.date));
-    return fullData.filter((row) => allowed.has(row.date));
+    const fullData = backtestEquityFullData();
+    if (!fullData.length) return [];
+    return sliceEquityByRange(fullData, equityChartRange, equityChartRangeOffset, $("equityChartStart"), $("equityChartEnd"));
   }
 
   function rebaseEquityToReturns(data) {
