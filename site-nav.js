@@ -36,7 +36,7 @@
   /** Single source of truth for strategy/asset sidebar links. */
   const STRATEGY_NAV_ITEMS = [
     { id: "spx_water", asset: "S&P 500 Water", strategy: "SMA200 ±3% Band 1x/cash", group: "strategies", href: "spx_water.html" },
-    { id: "spx", asset: "S&P 500 Octane", strategy: "SMA200 ±3% Band + RSI>20 Exit 2x", group: "strategies", href: "index.html#signalPage", indexHref: "#signalPage", strategyNav: "guarded" },
+    { id: "spx", asset: "S&P 500 Octane", strategy: "SMA200 ±3% Band + RSI>20 Exit 2x", group: "strategies", href: "index.html" },
     { id: "ndx_water", asset: "Nasdaq 100 Water*", strategy: "SMA50/200 Golden Cross 1x/cash", group: "strategies", href: "ndx_water.html" },
     { id: "ndx_octane", asset: "Nasdaq 100 Octane*", strategy: "GC 50/200 1x; +2x when VIX<20 & idxDD>-12%", group: "strategies", href: "ndx_octane.html" },
     { id: "ftse250", asset: "FTSE 250", strategy: "SMA20 1x/cash", group: "strategies", href: "ftse250_guarded.html#signalPage" },
@@ -186,8 +186,8 @@
     // reused the raw current page id, so clicking e.g. "S&P 500" from a momentum
     // page pointed back at #momentumSignalPage instead of the guarded #signalPage.
     let targetHash;
-    if (item.id === "instruments" || item.id === "summary") {
-      targetHash = "";
+    if (item.id === "instruments" || item.id === "summary" || item.id === "spx") {
+      targetHash = "";   // spx (index.html) is now a thin-host page — no section hash
     } else if (item.id === "momentum") {
       targetHash = pageForStrategy("momentum", sectionOf(currentPageId));
     } else if (item.id === "spx3xLevered") {
@@ -215,7 +215,7 @@
 
     const brand = document.createElement("a");
     brand.className = "site-nav-brand";
-    brand.href = "index.html#signalPage";
+    brand.href = "index.html";
     brand.textContent = "Strategy";
 
     const list = document.createElement("div");

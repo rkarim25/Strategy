@@ -36,6 +36,19 @@
     return s / n;
   }
 
+  // RSI of the last `period` deltas (simple averaging) — used by the S&P Octane RSI-exit rule.
+  function rsiLast(arr, period) {
+    const v = arr.filter((x) => x != null && isFinite(x));
+    if (v.length < period + 1) return NaN;
+    let gain = 0, loss = 0;
+    for (let i = v.length - period; i < v.length; i++) {
+      const d = v[i] - v[i - 1];
+      if (d >= 0) gain += d; else loss -= d;
+    }
+    if (loss === 0) return 100;
+    return 100 - 100 / (1 + (gain / period) / (loss / period));
+  }
+
   // Recompute current leverage from a live/manual close, per strategy family.
   function liveLeverage(d, livePrice, liveVix, priorLev) {
     const p = d.price_sma_data || {}, sp = d.strategy_params || {};
@@ -45,7 +58,13 @@
       const sma = smaLast(closes, w);
       if (!isFinite(sma)) return priorLev;
       if (livePrice > sma * (1 + band)) return lev;
-      if (livePrice < sma * (1 - band)) return 0;
+      if (livePrice < sma * (1 - band)) {
+        // Octane RSI exit-block: stay invested while the recent regime is oversold (RSI < threshold)
+        // rather than going to cash. RSI is taken from the real close history (not the hypothetical
+        // manual/live point) so a far-off manual price doesn't distort it into a fake oversold reading.
+        if (sp.rsi_threshold && rsiLast(p.spx_close || [], sp.rsi_period || 14) < sp.rsi_threshold) return priorLev;
+        return 0;
+      }
       return priorLev;                               // hysteresis: hold prior state in-band
     }
     if (p.sma50 && p.sma200) {                        // golden cross (Nasdaq Water*/Octane*)
