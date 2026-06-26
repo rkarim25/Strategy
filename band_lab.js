@@ -131,9 +131,9 @@
           <input id="smaNum" type="number" min="2" max="400" step="1" value="100" />
         </div>
         <div class="ctl"><label>Upper band (exit): <span class="val" id="upVal"></span></label>
-          <input id="upper" type="range" min="0" max="15" step="0.5" value="2" /></div>
+          <input id="upper" type="range" min="-15" max="15" step="0.5" value="2" /></div>
         <div class="ctl"><label>Lower band (entry): <span class="val" id="loVal"></span></label>
-          <input id="lower" type="range" min="0" max="15" step="0.5" value="2" /></div>
+          <input id="lower" type="range" min="-15" max="15" step="0.5" value="2" /></div>
         <div class="ctl"><label>Leverage when invested</label>
           <div class="seg" id="levSeg"></div></div>
       </div>
