@@ -37,6 +37,7 @@ from backtest_lqq3_guarded import (
     buy_hold_row,
 )
 from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
+from core.guarded_site_series import build_equity_curve, build_price_sma_data, build_signal_history
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW
 
 try:
@@ -128,7 +129,13 @@ def site_comparison(prices: pd.DataFrame) -> list[dict]:
 
 
 def build_site_payload(
-    prices: pd.DataFrame, comparison: list[dict], default_row: dict, mc: dict
+    prices: pd.DataFrame,
+    comparison: list[dict],
+    default_row: dict,
+    mc: dict,
+    price_sma_data: dict,
+    signal_history: list[dict],
+    equity_curve: dict,
 ) -> dict:
     bh = comparison[0]
     return {
@@ -138,6 +145,15 @@ def build_site_payload(
         "inception": INCEPTION,
         "default_strategy": DEFAULT_STRATEGY_NAME,
         "guarded_params": DEFAULT_SPEC,
+        # Default site strategy is the strict SMA20 1x/cash cross (no lead-guard hysteresis), so
+        # lead_pct_below_sma20=0 makes the shared renderer's manual-price recompute a strict cross.
+        "strategy_params": {
+            "strategy": DEFAULT_STRATEGY_NAME,
+            "family": "guarded",
+            "sma_window": BASE_SMA_WINDOW,
+            "lead_pct_below_sma20": 0.0,
+            "max_leverage": 1.0,
+        },
         "leverage_note": (
             "Max 1x on this tab means the portfolio toggles between cash (T-bills) and "
             "fully invested in 3BAL (3x daily EURO STOXX Banks ETP). The default SMA20 rule "
@@ -157,6 +173,7 @@ def build_site_payload(
             "sharpe_fmt": f"{default_row['sharpe']:.3f}",
             "end_value_fmt": money(default_row["end_$"]),
             "calmar_fmt": f"{default_row.get('calmar', 0):.2f}" if default_row.get("calmar") else None,
+            "sortino_fmt": f"{default_row['sortino']:.3f}" if default_row.get("sortino") is not None else None,
         },
         "buy_and_hold_1x": {
             **bh,
@@ -198,6 +215,10 @@ def build_site_payload(
             "prob_end_below_start_fmt": pct(mc["prob_end_below_start"]),
         },
         "generated_at_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        # Series consumed by the shared strategy_page.js renderer (price chart + markers + % equity).
+        "price_sma_data": price_sma_data,
+        "signal_history": signal_history,
+        "equity_curve": equity_curve,
     }
 
 
@@ -256,15 +277,25 @@ def main() -> int:
     pd.DataFrame(comparison_rows).to_csv(OUTPUT_DIR / "comparison.csv", index=False)
     pd.DataFrame(site_rows).to_csv(OUTPUT_DIR / "site_comparison.csv", index=False)
 
+    # Series for the shared renderer, built from the DEFAULT site strategy (SMA20 1x/cash → lev_sma).
+    strat_result = make_engine().run(prices, lev_sma, name=DEFAULT_STRATEGY_NAME)
+    bh_result = make_engine().run(prices, lev_bh, name="Buy & hold (always in 3BAL)")
+    price_sma_data = build_price_sma_data(prices, BASE_SMA_WINDOW)
+    signal_history = build_signal_history(prices, lev_sma, BASE_SMA_WINDOW)
+    equity_curve = build_equity_curve(prices.index, strat_result.equity, bh_result.equity)
+
     print("\nRunning Monte Carlo on SMA20 1x/cash...", flush=True)
     mc_paths, mc_summary = monte_carlo_sma20(prices)
     mc_paths.to_csv(OUTPUT_DIR / "monte_carlo_paths.csv", index=False)
 
-    payload = build_site_payload(prices, site_rows, default_row, mc_summary)
-    SITE_DATA_JSON.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    (OUTPUT_DIR / "3bal_guarded_site_data.json").write_text(
-        json.dumps(payload, indent=2) + "\n", encoding="utf-8"
+    payload = build_site_payload(
+        prices, site_rows, default_row, mc_summary,
+        price_sma_data, signal_history, equity_curve,
     )
+    # allow_nan=False: fail loud rather than emit NaN/Infinity (invalid JSON silently blanks the page).
+    text = json.dumps(payload, indent=2, allow_nan=False) + "\n"
+    SITE_DATA_JSON.write_text(text, encoding="utf-8")
+    (OUTPUT_DIR / "3bal_guarded_site_data.json").write_text(text, encoding="utf-8")
 
     summary = {
         "generated_at_utc": payload["generated_at_utc"],

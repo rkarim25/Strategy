@@ -18,8 +18,17 @@ import yfinance as yf
 
 from analyze_cross_asset_guarded_1x import DEFAULT_GUARDED, guarded_lead_leverage
 from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from core.guarded_site_series import (
+    build_equity_curve,
+    build_price_sma_data,
+    build_price_sma_data_for,
+    build_signal_history,
+    leverage_for,
+    strategy_params_for,
+)
 from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from core.price_cleaning import clean_close_series
+from core.site_default_strategy import SITE_DEFAULT_STRATEGY
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW, sma_cash_leverage
 
@@ -108,6 +117,7 @@ def run_guarded_1x(prices: pd.DataFrame) -> dict:
         "sharpe": stats["sharpe"],
         "max_drawdown": stats["max_drawdown"],
         "calmar": stats.get("calmar"),
+        "sortino": stats.get("sortino"),
         "end_$": float(result.equity.iloc[-1]),
         "rebalances": result.rebalance_count,
         "trading_costs_total": result.trading_costs_total,
@@ -243,12 +253,22 @@ def money(x: float | None) -> str | None:
     return f"${float(x):,.0f}"
 
 
-def build_site_payload(prices: pd.DataFrame, comparison: list[dict], default_row: dict, mc: dict) -> dict:
+def build_site_payload(
+    prices: pd.DataFrame,
+    comparison: list[dict],
+    default_row: dict,
+    mc: dict,
+    price_sma_data: dict,
+    signal_history: list[dict],
+    equity_curve: dict,
+) -> dict:
     bh = next(r for r in comparison if r["strategy"] == "Buy & hold 1x")
     return {
         "ticker": GOLD_TICKER,
         "asset_label": "Gold (COMEX continuous futures)",
         "guarded_params": DEFAULT_SPEC,
+        # strategy_params drives the shared renderer's Guarded family branch (manual-price recompute).
+        "strategy_params": {**DEFAULT_SPEC, "family": "guarded", "sma_window": BASE_SMA_WINDOW},
         "leverage_note": "Site default caps recovery tiers at 1x (tier arms still fire; exposure stays at 1x max).",
         "sample": {
             "start_date": prices.index[0].date().isoformat(),
@@ -263,6 +283,7 @@ def build_site_payload(prices: pd.DataFrame, comparison: list[dict], default_row
             "sharpe_fmt": f"{default_row['sharpe']:.3f}",
             "end_value_fmt": money(default_row["end_$"]),
             "calmar_fmt": f"{default_row.get('calmar', 0):.2f}" if default_row.get("calmar") else None,
+            "sortino_fmt": f"{default_row['sortino']:.3f}" if default_row.get("sortino") is not None else None,
         },
         "buy_and_hold_1x": {
             **bh,
@@ -302,6 +323,111 @@ def build_site_payload(prices: pd.DataFrame, comparison: list[dict], default_row
             "prob_end_below_start_fmt": pct(mc["prob_end_below_start"]),
         },
         "generated_at_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        # Series consumed by the shared strategy_page.js renderer (price chart + markers + % equity).
+        "price_sma_data": price_sma_data,
+        "signal_history": signal_history,
+        "equity_curve": equity_curve,
+    }
+
+
+def strategy_row(prices: pd.DataFrame, lev: pd.Series, name: str) -> tuple[dict, object]:
+    result = make_engine().run(prices, lev, name=name)
+    stats = comprehensive_stats(result.equity, result.daily_returns)
+    row = {
+        "strategy": name, "cagr": stats["cagr"], "ann_volatility": stats["volatility"],
+        "sharpe": stats["sharpe"], "max_drawdown": stats["max_drawdown"],
+        "calmar": stats.get("calmar"), "sortino": stats.get("sortino"),
+        "end_$": float(result.equity.iloc[-1]), "rebalances": result.rebalance_count,
+        "pct_days_cash": float((lev <= 0).mean() * 100.0),
+    }
+    return row, result
+
+
+def monte_carlo_for(prices: pd.DataFrame, strat_spec: dict) -> tuple[pd.DataFrame, dict]:
+    rows: list[dict] = []
+    for sim, path in enumerate(synthetic_paths(prices)):
+        if sim % 25 == 0:
+            print(f"Monte Carlo path {sim + 1}/{N_SIMS}", flush=True)
+        lev = leverage_for(path, strat_spec)
+        result = make_engine().run(path, lev, name=strat_spec["name"])
+        st = comprehensive_stats(result.equity, result.daily_returns)
+        rows.append({"cagr": st["cagr"], "max_drawdown": st["max_drawdown"],
+                     "sharpe": st["sharpe"], "end_$": float(result.equity.iloc[-1]), "simulation": sim})
+    df = pd.DataFrame(rows)
+    return df, {
+        "strategy": strat_spec["name"],
+        "median_cagr": float(df["cagr"].median()),
+        "p10_cagr": float(df["cagr"].quantile(0.10)),
+        "p90_cagr": float(df["cagr"].quantile(0.90)),
+        "median_max_drawdown": float(df["max_drawdown"].median()),
+        "p10_max_drawdown": float(df["max_drawdown"].quantile(0.10)),
+        "p90_max_drawdown": float(df["max_drawdown"].quantile(0.90)),
+        "median_sharpe": float(df["sharpe"].median()),
+        "median_end_$": float(df["end_$"].median()),
+        "prob_max_dd_worse_35pct": float((df["max_drawdown"] <= -0.35).mean()),
+        "prob_max_dd_worse_40pct": float((df["max_drawdown"] <= -0.40).mean()),
+        "prob_max_dd_worse_50pct": float((df["max_drawdown"] <= -0.50).mean()),
+        "prob_end_below_start": float((df["end_$"] < INITIAL_CAPITAL).mean()),
+    }
+
+
+def build_strategy_site_payload(prices, comparison, default_row, mc, strategy_params,
+                                price_sma_data, signal_history, equity_curve) -> dict:
+    """Gold payload with a Water-style default (golden cross), no guarded_params."""
+    bh = next(r for r in comparison if r["strategy"].startswith("Buy & hold"))
+    return {
+        "ticker": GOLD_TICKER,
+        "asset_label": "Gold (COMEX continuous futures)",
+        "strategy_params": strategy_params,
+        "sample": {
+            "start_date": prices.index[0].date().isoformat(),
+            "end_date": prices.index[-1].date().isoformat(),
+            "trading_days": len(prices),
+        },
+        "default_backtest": {
+            **default_row,
+            "cagr_pct": pct(default_row["cagr"]),
+            "max_drawdown_pct": pct(default_row["max_drawdown"]),
+            "ann_volatility_pct": pct(default_row["ann_volatility"]),
+            "sharpe_fmt": f"{default_row['sharpe']:.3f}",
+            "end_value_fmt": money(default_row["end_$"]),
+            "calmar_fmt": f"{default_row.get('calmar', 0):.2f}" if default_row.get("calmar") else None,
+            "sortino_fmt": f"{default_row['sortino']:.3f}" if default_row.get("sortino") is not None else None,
+        },
+        "buy_and_hold_1x": {**bh, "cagr_pct": pct(bh["cagr"]), "max_drawdown_pct": pct(bh["max_drawdown"])},
+        "comparison_table": [
+            {
+                **row,
+                "cagr_pct": pct(row["cagr"]),
+                "ann_volatility_pct": pct(row.get("ann_volatility")),
+                "max_drawdown_pct": pct(row["max_drawdown"]),
+                "sharpe_fmt": f"{row['sharpe']:.3f}" if row.get("sharpe") is not None else None,
+                "calmar_fmt": f"{row.get('calmar', 0):.2f}" if row.get("calmar") else None,
+                "end_value_fmt": money(row.get("end_$")),
+                "cash_pct": pct(row["pct_days_cash"] / 100.0) if row.get("pct_days_cash") is not None else None,
+            }
+            for row in comparison
+        ],
+        "monte_carlo": {
+            "n_sims": N_SIMS, "horizon_years": HORIZON_DAYS / 252.0, "block_days": BLOCK_DAYS, "seed": SEED,
+            **mc,
+            "median_cagr_pct": pct(mc["median_cagr"]),
+            "p10_cagr_pct": pct(mc["p10_cagr"]),
+            "p90_cagr_pct": pct(mc["p90_cagr"]),
+            "median_max_drawdown_pct": pct(mc["median_max_drawdown"]),
+            "p10_max_drawdown_pct": pct(mc["p10_max_drawdown"]),
+            "p90_max_drawdown_pct": pct(mc["p90_max_drawdown"]),
+            "median_sharpe_fmt": f"{mc['median_sharpe']:.3f}",
+            "median_end_value_fmt": money(mc["median_end_$"]),
+            "prob_max_dd_worse_35pct_fmt": pct(mc["prob_max_dd_worse_35pct"]),
+            "prob_max_dd_worse_40pct_fmt": pct(mc["prob_max_dd_worse_40pct"]),
+            "prob_max_dd_worse_50pct_fmt": pct(mc["prob_max_dd_worse_50pct"]),
+            "prob_end_below_start_fmt": pct(mc["prob_end_below_start"]),
+        },
+        "generated_at_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "price_sma_data": price_sma_data,
+        "signal_history": signal_history,
+        "equity_curve": equity_curve,
     }
 
 
@@ -314,28 +440,33 @@ def main() -> int:
     write_gold_daily_csv(prices)
     print(f"Wrote {GOLD_DAILY_CSV.name}", flush=True)
 
-    comparison = [
-        buy_hold_row(prices),
-        sma_row(prices),
-        run_guarded_1x(prices),
-        run_guarded_full(prices),
-    ]
-    default_row = comparison[2]
-
+    # Default = the chosen Water-style trend rule for gold (SMA50/200 golden cross). Keep the prior
+    # Guarded default + simple SMA20 as reference rows in the comparison table.
+    gold_spec = SITE_DEFAULT_STRATEGY["gold"]
+    lev = leverage_for(prices, gold_spec)
+    default_row, strat_result = strategy_row(prices, lev, gold_spec["name"])
+    bh_row, bh_result = strategy_row(prices, pd.Series(1.0, index=prices.index), "Buy & hold 1x")
+    comparison = [bh_row, default_row, sma_row(prices), run_guarded_1x(prices)]
     pd.DataFrame(comparison).to_csv(OUTPUT_DIR / "gold_guarded_comparison.csv", index=False)
 
-    print("\nRunning Monte Carlo (max 1x)...", flush=True)
-    mc_paths, mc_summary = monte_carlo(prices)
+    price_sma_data = build_price_sma_data_for(prices, gold_spec)
+    signal_history = build_signal_history(prices, lev)
+    equity_curve = build_equity_curve(prices.index, strat_result.equity, bh_result.equity)
+
+    print("\nRunning Monte Carlo (golden cross)...", flush=True)
+    mc_paths, mc_summary = monte_carlo_for(prices, gold_spec)
     mc_paths.to_csv(OUTPUT_DIR / "gold_guarded_monte_carlo_paths.csv", index=False)
 
-    payload = build_site_payload(prices, comparison, default_row, mc_summary)
-    SITE_DATA_JSON.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    (OUTPUT_DIR / "gold_guarded_site_data.json").write_text(
-        json.dumps(payload, indent=2) + "\n", encoding="utf-8"
+    payload = build_strategy_site_payload(
+        prices, comparison, default_row, mc_summary,
+        strategy_params_for(gold_spec), price_sma_data, signal_history, equity_curve,
     )
+    # allow_nan=False: fail loud rather than emit NaN/Infinity (invalid JSON silently blanks the page).
+    text = json.dumps(payload, indent=2, allow_nan=False) + "\n"
+    SITE_DATA_JSON.write_text(text, encoding="utf-8")
+    (OUTPUT_DIR / "gold_guarded_site_data.json").write_text(text, encoding="utf-8")
 
-    bh_row = comparison[0]
-    print("\n=== Gold Guarded (max 1x) ===")
+    print(f"\n=== Gold — {gold_spec['name']} ===")
     print(f"CAGR: {pct(default_row['cagr'])}  Max DD: {pct(default_row['max_drawdown'])}  Sharpe: {default_row['sharpe']:.3f}")
     print(f"End value: {money(default_row['end_$'])}  vs buy-hold CAGR {pct(bh_row['cagr'])} / DD {pct(bh_row['max_drawdown'])}")
     print(f"\nMonte Carlo median CAGR: {pct(mc_summary['median_cagr'])}  median max DD: {pct(mc_summary['median_max_drawdown'])}")

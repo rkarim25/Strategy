@@ -18,6 +18,15 @@ from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEng
 from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from core.price_cleaning import clean_close_series
 from core.guarded_asset_registry import ASSETS, GuardedAssetSpec
+from core.guarded_site_series import (
+    build_equity_curve,
+    build_price_sma_data,
+    build_price_sma_data_for,
+    build_signal_history,
+    leverage_for,
+    strategy_params_for,
+)
+from core.site_default_strategy import SITE_DEFAULT_STRATEGY
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW, sma_cash_leverage
 
 ROOT = Path(__file__).resolve().parent
@@ -114,6 +123,7 @@ def run_guarded_1x(prices: pd.DataFrame) -> dict:
         "sharpe": stats["sharpe"],
         "max_drawdown": stats["max_drawdown"],
         "calmar": stats.get("calmar"),
+        "sortino": stats.get("sortino"),
         "end_$": float(result.equity.iloc[-1]),
         "rebalances": result.rebalance_count,
         "trading_costs_total": result.trading_costs_total,
@@ -228,12 +238,19 @@ def build_site_payload(
     comparison: list[dict],
     default_row: dict,
     mc: dict,
+    price_sma_data: dict,
+    signal_history: list[dict],
+    equity_curve: dict,
 ) -> dict:
     bh = next(r for r in comparison if r["strategy"] == "Buy & hold 1x")
     return {
         "ticker": spec.yahoo_ticker,
         "asset_label": spec.asset_label,
         "guarded_params": DEFAULT_SPEC,
+        # strategy_params lets the shared renderer identify the family (for the manual-price
+        # current-signal recompute) and name the strategy. `family` + `sma_window` drive the
+        # Guarded branch of strategy_page.js liveLeverage().
+        "strategy_params": {**DEFAULT_SPEC, "family": "guarded", "sma_window": BASE_SMA_WINDOW},
         "leverage_note": "Site default caps recovery tiers at 1x (tier arms still fire; exposure stays at 1x max).",
         "sample": {
             "start_date": prices.index[0].date().isoformat(),
@@ -248,6 +265,7 @@ def build_site_payload(
             "sharpe_fmt": f"{default_row['sharpe']:.3f}",
             "end_value_fmt": money(default_row["end_$"]),
             "calmar_fmt": f"{default_row.get('calmar', 0):.2f}" if default_row.get("calmar") else None,
+            "sortino_fmt": f"{default_row['sortino']:.3f}" if default_row.get("sortino") is not None else None,
         },
         "buy_and_hold_1x": {
             **bh,
@@ -287,7 +305,177 @@ def build_site_payload(
             "prob_end_below_start_fmt": pct(mc["prob_end_below_start"]),
         },
         "generated_at_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        # Series consumed by the shared strategy_page.js renderer (price chart + markers + % equity).
+        "price_sma_data": price_sma_data,
+        "signal_history": signal_history,
+        "equity_curve": equity_curve,
     }
+
+
+def strategy_row(prices: pd.DataFrame, lev: pd.Series, name: str) -> tuple[dict, object]:
+    """Generic comparison/default row for an arbitrary daily leverage series."""
+    result = make_engine().run(prices, lev, name=name)
+    stats = comprehensive_stats(result.equity, result.daily_returns)
+    row = {
+        "strategy": name,
+        "cagr": stats["cagr"],
+        "ann_volatility": stats["volatility"],
+        "sharpe": stats["sharpe"],
+        "max_drawdown": stats["max_drawdown"],
+        "calmar": stats.get("calmar"),
+        "sortino": stats.get("sortino"),
+        "end_$": float(result.equity.iloc[-1]),
+        "rebalances": result.rebalance_count,
+        "pct_days_cash": float((lev <= 0).mean() * 100.0),
+    }
+    return row, result
+
+
+def _mc_summary(df: pd.DataFrame, name: str) -> dict:
+    return {
+        "strategy": name,
+        "median_cagr": float(df["cagr"].median()),
+        "p10_cagr": float(df["cagr"].quantile(0.10)),
+        "p90_cagr": float(df["cagr"].quantile(0.90)),
+        "median_max_drawdown": float(df["max_drawdown"].median()),
+        "p10_max_drawdown": float(df["max_drawdown"].quantile(0.10)),
+        "p90_max_drawdown": float(df["max_drawdown"].quantile(0.90)),
+        "median_sharpe": float(df["sharpe"].median()),
+        "median_end_$": float(df["end_$"].median()),
+        "prob_max_dd_worse_35pct": float((df["max_drawdown"] <= -0.35).mean()),
+        "prob_max_dd_worse_40pct": float((df["max_drawdown"] <= -0.40).mean()),
+        "prob_max_dd_worse_50pct": float((df["max_drawdown"] <= -0.50).mean()),
+        "prob_end_below_start": float((df["end_$"] < INITIAL_CAPITAL).mean()),
+    }
+
+
+def monte_carlo_for(prices: pd.DataFrame, strat_spec: dict) -> tuple[pd.DataFrame, dict]:
+    """Monte Carlo applying the chosen default strategy (not Guarded) to each bootstrap path."""
+    rows: list[dict] = []
+    for sim, path in enumerate(synthetic_paths(prices)):
+        if sim % 25 == 0:
+            print(f"  MC path {sim + 1}/{N_SIMS}", flush=True)
+        lev = leverage_for(path, strat_spec)
+        result = make_engine().run(path, lev, name=strat_spec["name"])
+        st = comprehensive_stats(result.equity, result.daily_returns)
+        rows.append({
+            "cagr": st["cagr"], "max_drawdown": st["max_drawdown"],
+            "sharpe": st["sharpe"], "end_$": float(result.equity.iloc[-1]), "simulation": sim,
+        })
+    df = pd.DataFrame(rows)
+    return df, _mc_summary(df, strat_spec["name"])
+
+
+def build_strategy_site_payload(
+    spec: GuardedAssetSpec,
+    prices: pd.DataFrame,
+    comparison: list[dict],
+    default_row: dict,
+    mc: dict,
+    strategy_params: dict,
+    price_sma_data: dict,
+    signal_history: list[dict],
+    equity_curve: dict,
+) -> dict:
+    """Payload for an asset whose default is a Water-style trend rule (sma-cash / band / golden-cross)."""
+    bh = next(r for r in comparison if r["strategy"].startswith("Buy & hold"))
+    return {
+        "ticker": spec.yahoo_ticker,
+        "asset_label": spec.asset_label,
+        "strategy_params": strategy_params,
+        "sample": {
+            "start_date": prices.index[0].date().isoformat(),
+            "end_date": prices.index[-1].date().isoformat(),
+            "trading_days": len(prices),
+        },
+        "default_backtest": {
+            **default_row,
+            "cagr_pct": pct(default_row["cagr"]),
+            "max_drawdown_pct": pct(default_row["max_drawdown"]),
+            "ann_volatility_pct": pct(default_row["ann_volatility"]),
+            "sharpe_fmt": f"{default_row['sharpe']:.3f}",
+            "end_value_fmt": money(default_row["end_$"]),
+            "calmar_fmt": f"{default_row.get('calmar', 0):.2f}" if default_row.get("calmar") else None,
+            "sortino_fmt": f"{default_row['sortino']:.3f}" if default_row.get("sortino") is not None else None,
+        },
+        "buy_and_hold_1x": {**bh, "cagr_pct": pct(bh["cagr"]), "max_drawdown_pct": pct(bh["max_drawdown"])},
+        "comparison_table": [
+            {
+                **row,
+                "cagr_pct": pct(row["cagr"]),
+                "ann_volatility_pct": pct(row.get("ann_volatility")),
+                "max_drawdown_pct": pct(row["max_drawdown"]),
+                "sharpe_fmt": f"{row['sharpe']:.3f}" if row.get("sharpe") is not None else None,
+                "calmar_fmt": f"{row.get('calmar', 0):.2f}" if row.get("calmar") else None,
+                "end_value_fmt": money(row.get("end_$")),
+                "cash_pct": pct(row["pct_days_cash"] / 100.0) if row.get("pct_days_cash") is not None else None,
+            }
+            for row in comparison
+        ],
+        "monte_carlo": {
+            "n_sims": N_SIMS,
+            "horizon_years": HORIZON_DAYS / 252.0,
+            "block_days": BLOCK_DAYS,
+            "seed": SEED,
+            **mc,
+            "median_cagr_pct": pct(mc["median_cagr"]),
+            "p10_cagr_pct": pct(mc["p10_cagr"]),
+            "p90_cagr_pct": pct(mc["p90_cagr"]),
+            "median_max_drawdown_pct": pct(mc["median_max_drawdown"]),
+            "p10_max_drawdown_pct": pct(mc["p10_max_drawdown"]),
+            "p90_max_drawdown_pct": pct(mc["p90_max_drawdown"]),
+            "median_sharpe_fmt": f"{mc['median_sharpe']:.3f}",
+            "median_end_value_fmt": money(mc["median_end_$"]),
+            "prob_max_dd_worse_35pct_fmt": pct(mc["prob_max_dd_worse_35pct"]),
+            "prob_max_dd_worse_40pct_fmt": pct(mc["prob_max_dd_worse_40pct"]),
+            "prob_max_dd_worse_50pct_fmt": pct(mc["prob_max_dd_worse_50pct"]),
+            "prob_end_below_start_fmt": pct(mc["prob_end_below_start"]),
+        },
+        "generated_at_utc": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "price_sma_data": price_sma_data,
+        "signal_history": signal_history,
+        "equity_curve": equity_curve,
+    }
+
+
+def _guarded_payload(spec: GuardedAssetSpec, prices: pd.DataFrame, p: dict) -> tuple[dict, dict]:
+    """Legacy Guarded A5/B25 default (fallback for slugs without a Water default yet, e.g. lqq3)."""
+    comparison = [buy_hold_row(prices), sma_row(prices), run_guarded_1x(prices)]
+    default_row = comparison[2]
+    pd.DataFrame(comparison).to_csv(p["output_dir"] / f"{spec.slug}_comparison.csv", index=False)
+    lev, _ = guarded_lead_leverage(prices, max_leverage=1.0)
+    strat_result = make_engine().run(prices, lev, name=DEFAULT_SPEC["strategy"])
+    bh_result = make_engine().run(prices, pd.Series(1.0, index=prices.index), name="Buy & hold 1x")
+    price_sma_data = build_price_sma_data(prices, BASE_SMA_WINDOW)
+    signal_history = build_signal_history(prices, lev, BASE_SMA_WINDOW)
+    equity_curve = build_equity_curve(prices.index, strat_result.equity, bh_result.equity)
+    print("Monte Carlo...", flush=True)
+    mc_paths, mc_summary = monte_carlo(prices)
+    mc_paths.to_csv(p["output_dir"] / f"{spec.slug}_monte_carlo_paths.csv", index=False)
+    payload = build_site_payload(
+        spec, prices, comparison, default_row, mc_summary, price_sma_data, signal_history, equity_curve,
+    )
+    return payload, default_row
+
+
+def _strategy_payload(spec: GuardedAssetSpec, prices: pd.DataFrame, p: dict, strat_spec: dict) -> tuple[dict, dict]:
+    """Water-style default (sma-cash / band / golden-cross) per core.site_default_strategy."""
+    lev = leverage_for(prices, strat_spec)
+    default_row, strat_result = strategy_row(prices, lev, strat_spec["name"])
+    bh_row, bh_result = strategy_row(prices, pd.Series(1.0, index=prices.index), "Buy & hold 1x")
+    comparison = [bh_row, default_row]
+    pd.DataFrame(comparison).to_csv(p["output_dir"] / f"{spec.slug}_comparison.csv", index=False)
+    price_sma_data = build_price_sma_data_for(prices, strat_spec)
+    signal_history = build_signal_history(prices, lev)
+    equity_curve = build_equity_curve(prices.index, strat_result.equity, bh_result.equity)
+    print("Monte Carlo...", flush=True)
+    mc_paths, mc_summary = monte_carlo_for(prices, strat_spec)
+    mc_paths.to_csv(p["output_dir"] / f"{spec.slug}_monte_carlo_paths.csv", index=False)
+    payload = build_strategy_site_payload(
+        spec, prices, comparison, default_row, mc_summary,
+        strategy_params_for(strat_spec), price_sma_data, signal_history, equity_curve,
+    )
+    return payload, default_row
 
 
 def run_asset(spec: GuardedAssetSpec) -> None:
@@ -298,23 +486,18 @@ def run_asset(spec: GuardedAssetSpec) -> None:
     print(f"Loaded {len(prices)} sessions", flush=True)
     write_daily_csv(prices, p["daily_csv"])
 
-    comparison = [buy_hold_row(prices), sma_row(prices), run_guarded_1x(prices)]
-    default_row = comparison[2]
-    pd.DataFrame(comparison).to_csv(p["output_dir"] / f"{spec.slug}_comparison.csv", index=False)
+    strat_spec = SITE_DEFAULT_STRATEGY.get(spec.slug)
+    if strat_spec:
+        payload, default_row = _strategy_payload(spec, prices, p, strat_spec)
+    else:
+        payload, default_row = _guarded_payload(spec, prices, p)
 
-    print("Monte Carlo...", flush=True)
-    mc_paths, mc_summary = monte_carlo(prices)
-    mc_paths.to_csv(p["output_dir"] / f"{spec.slug}_monte_carlo_paths.csv", index=False)
-
-    payload = build_site_payload(spec, prices, comparison, default_row, mc_summary)
-    text = json.dumps(payload, indent=2) + "\n"
+    # allow_nan=False: fail loud rather than write NaN/Infinity (invalid JSON silently blanks the page).
+    text = json.dumps(payload, indent=2, allow_nan=False) + "\n"
     p["site_json"].write_text(text, encoding="utf-8")
     (p["output_dir"] / f"{spec.slug}_site_data.json").write_text(text, encoding="utf-8")
 
-    print(
-        f"Guarded 1x: CAGR {pct(default_row['cagr'])}  DD {pct(default_row['max_drawdown'])}  "
-        f"vs B&H {pct(comparison[0]['cagr'])} / {pct(comparison[0]['max_drawdown'])}"
-    )
+    print(f"{default_row['strategy']}: CAGR {pct(default_row['cagr'])}  DD {pct(default_row['max_drawdown'])}")
     print(f"Wrote {p['daily_csv'].name}, {p['site_json'].name}")
 
 

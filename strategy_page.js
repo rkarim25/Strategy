@@ -4,7 +4,8 @@
  * A thin host page sets `window.STRATEGY_DATA_URL` (a *_site_data.json) and
  * `window.STRATEGY_PAGE_TITLE`, includes site-nav.js then this file. This builds the
  * full Signal / Back-test / Monte-Carlo experience (current signal, KPI cards,
- * interactive equity + price/SMA charts, comparison table, Monte-Carlo) from the
+ * interactive equity + price/SMA charts with on-chart signal markers, a rebased
+ * %-return window chart, a manual-price check, comparison table, Monte-Carlo) from the
  * precomputed payload — works for both band (S&P Water) and golden-cross (Nasdaq) data.
  */
 (function () {
@@ -35,7 +36,7 @@
     return s / n;
   }
 
-  // Recompute current leverage from a live close, per strategy family.
+  // Recompute current leverage from a live/manual close, per strategy family.
   function liveLeverage(d, livePrice, liveVix, priorLev) {
     const p = d.price_sma_data || {}, sp = d.strategy_params || {};
     const closes = (p.spx_close || []).concat([livePrice]);
@@ -55,7 +56,77 @@
       if (liveVix == null) return priorLev >= 2 ? 2 : 1;   // no live VIX yet: keep prior bump
       return (liveVix < 20 && dd > -0.12) ? 2 : 1;
     }
+    if (p.sma_main) {                                 // generic SMA cross 1x/cash (Water sma-cash family)
+      const w = sp.sma_window || 20;
+      const sma = smaLast(closes, w);
+      if (!isFinite(sma)) return priorLev;
+      return livePrice > sma ? (sp.leverage || 1) : 0;
+    }
+    if (p.sma20) {                                    // Guarded SMA20-lead family (max 1x)
+      const w = sp.sma_window || 20;
+      const sma = smaLast(closes, w);
+      if (!isFinite(sma)) return priorLev;
+      const lead = sp.lead_pct_below_sma20 != null ? sp.lead_pct_below_sma20 : 0.0075;
+      const cap = sp.max_leverage || 1;
+      if (livePrice >= sma) return Math.min(1, cap);
+      if (livePrice >= sma * (1 - lead)) return priorLev;   // within lead guard: hold prior state
+      return 0;
+    }
     return priorLev;
+  }
+
+  const fmt = (v) => (v == null || v === "" ? "—" : v);
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  const fmtLev = (x) => (Number(x) > 0 ? `${Number(x).toFixed(0)}x` : "0x");
+  const fmtNum = (v) => (v == null || !isFinite(v) ? "—" : Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }));
+
+  // Colour for a leverage transition marker. Up moves (enter/add) green→blue by size; down moves
+  // (reduce/exit) orange→red (red when going fully to cash).
+  function markerColor(prevLev, nextLev) {
+    const up = nextLev > prevLev;
+    if (up) return nextLev >= 2 ? "#2563eb" : "#15803d";
+    return nextLev === 0 ? "#b42318" : "#b45309";
+  }
+
+  // Build on-chart markers from signal_history: one per leverage transition. Each carries the
+  // date (used to locate it on whichever chart), direction, colour, short label and a tooltip.
+  function buildMarkers(d) {
+    const sh = d.signal_history || [];
+    const out = [];
+    let prev = null;
+    for (let i = 0; i < sh.length; i++) {
+      const lev = Number(sh[i].leverage) || 0;
+      if (prev === null) { prev = lev; continue; }
+      if (lev !== prev) {
+        const up = lev > prev;
+        const close = sh[i].spx_close;
+        // P&L to the next reduce (for an entry/add), measured on the index close.
+        let pnl = null;
+        if (up && close) {
+          for (let j = i + 1; j < sh.length; j++) {
+            if ((Number(sh[j].leverage) || 0) < lev) { if (sh[j].spx_close) pnl = sh[j].spx_close / close - 1; break; }
+          }
+        }
+        out.push({
+          date: sh[i].date,
+          dir: up ? "up" : "down",
+          color: markerColor(prev, lev),
+          label: fmtLev(lev),
+          tip: `<b>${fmtLev(prev)} → ${fmtLev(lev)}</b><br>${esc(sh[i].date)}<br>${up ? "Enter / add" : "Reduce / exit"}`
+            + (close ? `<br>close ${fmtNum(close)}` : "")
+            + (pnl != null ? `<br>P&amp;L to next reduce ${(pnl >= 0 ? "+" : "") + (pnl * 100).toFixed(1)}%` : ""),
+        });
+        prev = lev;
+      }
+    }
+    return out;
+  }
+
+  // ---- shared hover tooltip ----
+  let tipEl = null;
+  function tooltip() {
+    if (!tipEl) { tipEl = document.createElement("div"); tipEl.className = "sp-tip"; tipEl.style.display = "none"; document.body.appendChild(tipEl); }
+    return tipEl;
   }
 
   function setBanner(lev, asOf, live) {
@@ -66,9 +137,21 @@
       <div class="sub">${live ? "● LIVE" : "Last close"} · ${esc(asOf)}</div></div></div>`;
   }
 
+  // Recompute + display the signal at a given price (shared by live auto-refresh and the manual box).
+  async function showSignalAtPrice(d, sig, price, { live = false, ts = null } = {}) {
+    const q = window.STRATEGY_QUOTE;
+    const priorLev = sig ? Number(sig.leverage) : 0;
+    let liveVix = null;
+    if ((d.strategy_params || {}).octane) { const v = await fetchLiveQuote("vix", "^VIX"); liveVix = v ? v.price : null; }
+    const lev = liveLeverage(d, price, liveVix, priorLev);
+    const when = ts ? new Date(ts).toLocaleString() : new Date().toLocaleString();
+    const tickerLbl = q && q.ticker ? q.ticker + " " : "";
+    setBanner(lev, `${live ? "live" : "manual"} ${tickerLbl}${fmtNum(price)} · ${when}`, live);
+    return lev;
+  }
+
   async function maybeGoLive(d, sig) {
     const q = window.STRATEGY_QUOTE, note = document.getElementById("signalNote");
-    const priorLev = sig ? Number(sig.leverage) : 0;
     if (!q) { if (note) note.textContent = "Static signal."; return; }
     const run = async () => {
       const quote = await fetchLiveQuote(q.symbol, q.ticker);
@@ -76,19 +159,12 @@
         if (note) note.textContent = "Live quote not available for this asset yet — showing the last completed close. It will go live automatically once the quote worker is deployed for it.";
         return;
       }
-      let liveVix = null;
-      if ((d.strategy_params || {}).octane) { const v = await fetchLiveQuote("vix", "^VIX"); liveVix = v ? v.price : null; }
-      const lev = liveLeverage(d, quote.price, liveVix, priorLev);
-      const when = quote.ts ? new Date(quote.ts).toLocaleString() : new Date().toLocaleString();
-      setBanner(lev, `live ${q.ticker} ${quote.price.toLocaleString()} · ${when}`, true);
+      await showSignalAtPrice(d, sig, quote.price, { live: true, ts: quote.ts });
       if (note) note.textContent = "Live intraday quote via the Cloudflare proxy; auto-refreshes every 30 min during UK LSE hours. Falls back to last close if unavailable.";
     };
     await run();
     window.SiteNav?.registerAutoRefresh?.(run, 30 * 60 * 1000);
   }
-
-  const fmt = (v) => (v == null || v === "" ? "—" : v);
-  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
   function injectStyles() {
     if (document.getElementById("strategy-page-styles")) return;
@@ -129,44 +205,67 @@
       tr.me td{background:rgba(0,113,227,.06);font-weight:600;}
       .tbl-wrap{overflow-x:auto;}
       .chartwrap{position:relative;width:100%;margin-top:8px;} canvas{width:100%;height:auto;display:block;}
-      .ranges{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0;}
+      .ranges{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0;align-items:center;}
       .ranges button{font:inherit;font-size:12px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;}
       .ranges button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+      .ranges input[type=date]{font:inherit;font-size:12px;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:#fff;}
+      .ranges .sep{width:1px;height:18px;background:var(--line);margin:0 2px;}
       .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px;}
       .legend span{display:inline-flex;align-items:center;gap:6px;} .legend i{width:14px;height:3px;border-radius:2px;display:inline-block;}
       .meta{font-size:12.5px;color:var(--muted);line-height:1.5;}
       .err{color:var(--bad);font-weight:600;}
+      .manual{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px;}
+      .manual input{font:inherit;font-size:14px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;width:160px;}
+      .manual button{font:inherit;font-size:13px;font-weight:600;padding:8px 16px;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;}
+      .manual button.ghost{background:#fff;color:var(--text);border-color:var(--line);}
+      .sp-tip{position:fixed;z-index:9999;pointer-events:none;background:#1d1d1f;color:#fff;font-size:12px;line-height:1.4;
+        padding:7px 10px;border-radius:9px;box-shadow:0 8px 24px rgba(0,0,0,.22);max-width:240px;}
     `;
     document.head.appendChild(s);
   }
 
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
+
   // ---- canvas line chart ----
-  function lineChart(canvas, dates, series, { log = false } = {}) {
+  // series: [{label,color,width,values}]  markers: [{i,value,dir,color,label,tip}] (already sliced to local i)
+  function lineChart(canvas, dates, series, { log = false, pct = false, markers = [] } = {}) {
     const dpr = window.devicePixelRatio || 1;
     const W = canvas.clientWidth || 900, H = 320;
     canvas.width = W * dpr; canvas.height = H * dpr;
     const ctx = canvas.getContext("2d"); ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, W, H);
-    const padL = 56, padR = 12, padT = 12, padB = 24;
+    const padL = 56, padR = 12, padT = 16, padB = 24;
     const plotW = W - padL - padR, plotH = H - padT - padB;
     let lo = Infinity, hi = -Infinity;
     for (const s of series) for (const v of s.values) if (v != null && isFinite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); }
-    if (!isFinite(lo) || !isFinite(hi)) return;
+    if (!isFinite(lo) || !isFinite(hi)) { canvas.__hits = []; return; }
+    if (pct) { const pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad; }       // breathing room for % charts
     const tf = (v) => (log ? Math.log10(Math.max(v, 1e-9)) : v);
     let tlo = tf(lo), thi = tf(hi); if (tlo === thi) thi = tlo + 1;
     const n = dates.length;
-    const xAt = (i) => padL + (n <= 1 ? 0 : (i / (n - 1)) * plotW);
+    const xAt = (i) => padL + (n <= 1 ? plotW / 2 : (i / (n - 1)) * plotW);
     const yAt = (v) => padT + plotH - ((tf(v) - tlo) / (thi - tlo)) * plotH;
+    const fmtY = (val) => pct ? `${val >= 0 ? "+" : ""}${val.toFixed(Math.abs(val) < 10 ? 1 : 0)}%`
+      : (val >= 1000 ? Math.round(val).toLocaleString() : val.toFixed(val < 10 ? 1 : 0));
     // gridlines + y labels
     ctx.strokeStyle = "rgba(0,0,0,.07)"; ctx.fillStyle = "#6e6e73"; ctx.font = "11px system-ui"; ctx.textAlign = "right";
     for (let g = 0; g <= 4; g++) {
       const y = padT + (g / 4) * plotH;
       ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
       const tv = thi - (g / 4) * (thi - tlo); const val = log ? Math.pow(10, tv) : tv;
-      ctx.fillText(val >= 1000 ? Math.round(val).toLocaleString() : val.toFixed(val < 10 ? 1 : 0), padL - 6, y + 3);
+      ctx.fillText(fmtY(val), padL - 6, y + 3);
+    }
+    // zero baseline for % charts
+    if (pct && lo < 0 && hi > 0) {
+      const yz = yAt(0); ctx.strokeStyle = "rgba(0,0,0,.28)"; ctx.setLineDash([4, 3]);
+      ctx.beginPath(); ctx.moveTo(padL, yz); ctx.lineTo(W - padR, yz); ctx.stroke(); ctx.setLineDash([]);
     }
     // x labels (first / mid / last)
-    ctx.textAlign = "center";
+    ctx.textAlign = "center"; ctx.fillStyle = "#6e6e73";
     for (const i of [0, Math.floor((n - 1) / 2), n - 1]) {
       if (i >= 0 && i < n && dates[i]) ctx.fillText(String(dates[i]).slice(0, 7), xAt(i), H - 7);
     }
@@ -181,9 +280,36 @@
       }
       ctx.stroke();
     }
+    // markers
+    const hits = [];
+    for (const m of markers) {
+      if (m.value == null || !isFinite(m.value) || m.i < 0 || m.i >= n) continue;
+      const x = xAt(m.i), y = yAt(m.value), up = m.dir === "up";
+      ctx.fillStyle = m.color;
+      ctx.beginPath();
+      if (up) { ctx.moveTo(x, y - 1); ctx.lineTo(x - 4, y - 7); ctx.lineTo(x + 4, y - 7); }
+      else { ctx.moveTo(x, y + 1); ctx.lineTo(x - 4, y + 7); ctx.lineTo(x + 4, y + 7); }
+      ctx.closePath(); ctx.fill();
+      ctx.font = "700 10px system-ui";
+      const tw = ctx.measureText(m.label).width, pw = tw + 10, ph = 15;
+      const px = Math.min(Math.max(x - pw / 2, padL), W - padR - pw);
+      const py = up ? y - 7 - ph : y + 7;
+      roundRect(ctx, px, py, pw, ph, 4); ctx.fillStyle = "#fff"; ctx.fill();
+      ctx.strokeStyle = m.color; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = m.color; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(m.label, px + pw / 2, py + ph / 2 + 0.5);
+      ctx.textBaseline = "alphabetic";
+      hits.push({ x: px + pw / 2, y: py + ph / 2, r: Math.max(11, pw / 2 + 2), html: m.tip });
+    }
+    canvas.__hits = hits;
   }
 
-  function chartBlock(title, dates, seriesDefs, { log = false, ranges = true } = {}) {
+  // A chart card with range buttons, optional custom date pickers, optional %-rebasing and markers.
+  // seriesDefs values are full-length, aligned to `dates`. markerDefs: [{date,dir,color,label,tip}].
+  function chartBlock(title, dates, seriesDefs, opts = {}) {
+    const { log = false, rebasePct = false, markerDefs = [], customDates = false,
+      ranges = [["1M", 21], ["3M", 63], ["1Y", 252], ["5Y", 1260], ["10Y", 2520], ["Full", dates.length]] } = opts;
+    const dateIdx = new Map(); dates.forEach((dt, i) => dateIdx.set(dt, i));
     const wrap = document.createElement("div"); wrap.className = "card";
     wrap.innerHTML = `<h2>${esc(title)}</h2>`;
     const cw = document.createElement("div"); cw.className = "chartwrap";
@@ -191,24 +317,66 @@
     const legend = document.createElement("div"); legend.className = "legend";
     legend.innerHTML = seriesDefs.map((s) => `<span><i style="background:${s.color}"></i>${esc(s.label)}</span>`).join("");
     wrap.appendChild(legend);
-    let curN = dates.length;
+
+    let winLo = 0, winHi = dates.length;
     const draw = () => {
-      const start = Math.max(0, dates.length - curN);
-      const d = dates.slice(start);
-      const ser = seriesDefs.map((s) => ({ color: s.color, width: s.width, values: s.values.slice(start) }));
-      lineChart(canvas, d, ser, { log });
+      const lo = Math.max(0, winLo), hi = Math.min(dates.length, winHi);
+      const dslice = dates.slice(lo, hi);
+      const ser = seriesDefs.map((s) => {
+        let vals = s.values.slice(lo, hi);
+        if (rebasePct) {
+          const base = vals.find((v) => v != null && isFinite(v));
+          vals = base ? vals.map((v) => (v != null && isFinite(v) ? (v / base - 1) * 100 : null)) : vals;
+        }
+        return { color: s.color, width: s.width, values: vals };
+      });
+      const anchor = ser[0] ? ser[0].values : [];
+      const markers = markerDefs.map((m) => {
+        const gi = dateIdx.get(m.date); if (gi == null || gi < lo || gi >= hi) return null;
+        const li = gi - lo; return { ...m, i: li, value: anchor[li] };
+      }).filter(Boolean);
+      lineChart(canvas, dslice, ser, { log, pct: rebasePct, markers });
     };
-    if (ranges) {
-      const rdiv = document.createElement("div"); rdiv.className = "ranges";
-      const opts = [["1Y", 252], ["5Y", 1260], ["10Y", 2520], ["Full", dates.length]];
-      for (const [lbl, days] of opts) {
-        if (days > dates.length && lbl !== "Full") continue;
-        const b = document.createElement("button"); b.textContent = lbl; if (lbl === "Full") b.classList.add("active");
-        b.onclick = () => { curN = Math.min(days, dates.length); rdiv.querySelectorAll("button").forEach((x) => x.classList.remove("active")); b.classList.add("active"); draw(); };
-        rdiv.appendChild(b);
-      }
-      wrap.appendChild(rdiv);
+
+    const rdiv = document.createElement("div"); rdiv.className = "ranges";
+    const setActive = (btn) => rdiv.querySelectorAll("button[data-range]").forEach((x) => x.classList.toggle("active", x === btn));
+    for (const [lbl, days] of ranges) {
+      if (days > dates.length && lbl !== "Full") continue;
+      const b = document.createElement("button"); b.dataset.range = lbl; b.textContent = lbl;
+      if (lbl === "Full") b.classList.add("active");
+      b.onclick = () => { winHi = dates.length; winLo = Math.max(0, dates.length - days); if (customStart) { customStart.value = ""; customEnd.value = ""; } setActive(b); draw(); };
+      rdiv.appendChild(b);
     }
+    let customStart = null, customEnd = null;
+    if (customDates) {
+      const sep = document.createElement("span"); sep.className = "sep"; rdiv.appendChild(sep);
+      customStart = document.createElement("input"); customStart.type = "date";
+      customEnd = document.createElement("input"); customEnd.type = "date";
+      if (dates.length) { customStart.min = customEnd.min = dates[0]; customStart.max = customEnd.max = dates[dates.length - 1]; }
+      const apply = document.createElement("button"); apply.textContent = "Apply dates";
+      apply.onclick = () => {
+        const s = customStart.value, e = customEnd.value; if (!s && !e) return;
+        let lo = 0, hi = dates.length;
+        if (s) { lo = dates.findIndex((dt) => dt >= s); if (lo < 0) lo = dates.length - 1; }
+        if (e) { for (let i = dates.length - 1; i >= 0; i--) { if (dates[i] <= e) { hi = i + 1; break; } } }
+        if (hi <= lo) hi = lo + 1;
+        winLo = lo; winHi = hi; setActive(null); draw();
+      };
+      rdiv.appendChild(customStart); rdiv.appendChild(customEnd); rdiv.appendChild(apply);
+    }
+    wrap.appendChild(rdiv);
+
+    // hover tooltip on markers
+    canvas.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+      const hit = (canvas.__hits || []).find((h) => Math.abs(mx - h.x) <= h.r && Math.abs(my - h.y) <= 11);
+      const t = tooltip();
+      if (hit) { t.innerHTML = hit.html; t.style.display = "block"; t.style.left = (e.clientX + 13) + "px"; t.style.top = (e.clientY + 13) + "px"; }
+      else t.style.display = "none";
+    });
+    canvas.addEventListener("mouseleave", () => { tooltip().style.display = "none"; });
+
     setTimeout(draw, 0);
     window.addEventListener("resize", draw);
     return wrap;
@@ -225,7 +393,7 @@
     const asset = d.asset_label || "";
     const db = d.default_backtest || {}, bh = d.buy_and_hold_1x || {};
     const sig = (d.signal_history && d.signal_history.length) ? d.signal_history[d.signal_history.length - 1] : null;
-    const isLong = sig && Number(sig.leverage) > 0;
+    const markerDefs = buildMarkers(d);
 
     app.innerHTML = `
       <h1>${esc(asset)} — ${esc(name)}</h1>
@@ -248,13 +416,44 @@
     vs.appendChild(bann);
     setBanner(sig ? Number(sig.leverage) : 0, sig ? `${esc(sig.date)} close ${sig.spx_close != null ? sig.spx_close.toLocaleString() : "—"}` : "—", false);
     maybeGoLive(d, sig);
+
+    // manual price check
+    const man = document.createElement("div"); man.className = "card";
+    man.innerHTML = `<h2>Manual price check</h2>
+      <div class="manual">
+        <input id="manualPrice" type="number" step="any" inputmode="decimal" placeholder="Enter ${esc(asset)} level" />
+        <button id="applyManual">Apply</button>
+        <button id="clearManual" class="ghost">Reset to last close</button>
+      </div>
+      <p class="meta" id="manualNote">Type a current ${esc(asset)} level and click Apply to see the signal at that price (recomputes the current leverage only — not the historical backtest).</p>`;
+    vs.appendChild(man);
+    const applyManual = () => {
+      const raw = parseFloat(document.getElementById("manualPrice").value);
+      const note = document.getElementById("manualNote");
+      if (!isFinite(raw) || raw <= 0) { if (note) note.textContent = "Enter a positive price level."; return; }
+      showSignalAtPrice(d, sig, raw, { live: false }).then((lev) => {
+        if (note) note.innerHTML = `At <b>${fmtNum(raw)}</b> the signal is <b>${lev > 0 ? "IN — " + lev.toFixed(0) + "× exposure" : "CASH"}</b>. Recomputes the current leverage only.`;
+      });
+    };
+    man.querySelector("#applyManual").addEventListener("click", applyManual);
+    man.querySelector("#manualPrice").addEventListener("keydown", (e) => { if (e.key === "Enter") applyManual(); });
+    man.querySelector("#clearManual").addEventListener("click", () => {
+      document.getElementById("manualPrice").value = "";
+      setBanner(sig ? Number(sig.leverage) : 0, sig ? `${esc(sig.date)} close ${sig.spx_close != null ? sig.spx_close.toLocaleString() : "—"}` : "—", false);
+      maybeGoLive(d, sig);
+      const note = document.getElementById("manualNote");
+      if (note) note.textContent = `Type a current ${asset} level and click Apply to see the signal at that price.`;
+    });
+
     if (d.price_sma_data) {
       const p = d.price_sma_data, defs = [{ label: asset + " close", color: "#1d1d1f", values: p.spx_close }];
       if (p.sma200) defs.push({ label: "SMA200", color: ACCENT, values: p.sma200 });
       if (p.sma50) defs.push({ label: "SMA50", color: "#b26a00", values: p.sma50 });
+      if (p.sma20) defs.push({ label: "SMA20", color: "#b26a00", values: p.sma20 });
+      if (p.sma_main) defs.push({ label: "SMA" + (sp.sma_window || ""), color: "#b26a00", values: p.sma_main });
       if (p.sma200_upper_band) defs.push({ label: "Upper band", color: "rgba(36,138,61,.5)", values: p.sma200_upper_band });
       if (p.sma200_lower_band) defs.push({ label: "Lower band", color: "rgba(215,0,21,.5)", values: p.sma200_lower_band });
-      vs.appendChild(chartBlock("Price & moving averages", p.dates, defs, { log: false }));
+      vs.appendChild(chartBlock("Price & moving averages — with signal markers", p.dates, defs, { log: false, markerDefs }));
     }
     // recent signal history
     const sh = (d.signal_history || []).slice(-14).reverse();
@@ -281,6 +480,12 @@
     vb.appendChild(kc);
     if (d.equity_curve) {
       const e = d.equity_curve;
+      // Rebased %-return window (primary): strategy vs buy & hold, 0% at window start, signal markers overlaid.
+      vb.appendChild(chartBlock("Selected window equity P&L (rebased to 0%)", e.dates, [
+        { label: name, color: ACCENT, width: 2, values: e.strategy_equity },
+        { label: "Buy & hold 1×", color: "#6e6e73", values: e.buy_hold_1x_equity },
+      ], { rebasePct: true, customDates: true, markerDefs }));
+      // Absolute growth-of-$100 (log) for the long view.
       vb.appendChild(chartBlock("Growth of $100 (log scale)", e.dates, [
         { label: name, color: ACCENT, width: 2, values: e.strategy_equity },
         { label: "Buy & hold 1×", color: "#6e6e73", values: e.buy_hold_1x_equity },
