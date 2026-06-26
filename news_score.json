@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-26T10:18:41Z",
+  "generated_at_utc": "2026-06-26T12:30:21Z",
   "window_days": 7,
-  "score": 4,
+  "score": 5,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's; Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga; Micron Leads Tech Stocks Rally on Blowout Earnings. Bearish offsets: Stock Market Today: Nasdaq Futures Slide Amid Global Tech Sell-Off; Micron, Nvidia, Sandisk Fall (Live Coverage); Oil prices fall, tech sell-off hits S&P 500 and Nasdaq.",
   "articles": [
     {
       "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
@@ -13,6 +13,20 @@
       "tone": "bullish"
     },
     {
+      "title": "Stock Market Today: Nasdaq Futures Slide Amid Global Tech Sell-Off; Micron, Nvidia, Sandisk Fall (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/71673a4f-6fe0-330c-8edb-892aa4e7b732/stock-market-today%3A-nasdaq.html?.tsrc=rss",
+      "published": "2026-06-26T12:12:17Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Oil prices fall, tech sell-off hits S&P 500 and Nasdaq",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://qz.com/oil-prices-tech-selloff-stocks-nasdaq-sp500-062626?.tsrc=rss",
+      "published": "2026-06-26T11:34:26Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's",
       "source": "Barron's",
       "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBnVFozOWNNczBGWDhadHlPOXpWNlM2bUJ0R2QyMlZqQTJtOTB6cHJldUx5M3YzbUFuVTZxZ0VpaDRTQWFOekFLNkpZTUVnUF9kbndwQWxxVWNtSEJUTGpJQ1NkYVlQTmRpamlxTzVIQTBtTWV1RFE?oc=5",
@@ -20,25 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView",
-      "source": "TradingView",
-      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPOE9pYW4wR3lMMmxwaUFFUlZGUHJzNjh0aUV1RGs4T1MyYkNCNXlwTDRpbzk2SlhEZ3lEdmoxRnRvVUU0Uk1oUTYtWXJvaUpyeURNaVZJS0FvcmE4cGwwUzczTFhyZmJXSmdvZEIwSVZvYU5UWC04V3ZBTUQwQmhOYVpRZ1ZPWjU4akcxckRRRUlKTkpPZTlOaFRpWGdDYnRiY0RuRG9zbmlGYm1paUR3cF9yVGIwWlZTd0RxNmZtUVlNNzl3MnhRbnQwM0Z4N3J0ZFJabUVVRjNqT29YbExLNXFOMTdySEhVMUF4SmNiU01nMWkxcHc?oc=5",
-      "published": "2026-06-23T07:30:45Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street ends lower on semiconductor selloff as AI spending concerns mount - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOQnlIcE1UTlduazdvRTZrdlV4TjhDcXNaOVNpbEJoRnRrd3VqdzJCcElQRVNvZXg1UU5IbVE1THNwXzJJTVB1MldQNFNpY0VwV0JOR0VhUk1idktydVlGN19XVHJkQjFtS3lHNUY4dnZNZXhJNUkxYXI1UnZIQ2xqMTNVNkhiaS1KWGpwaWNUN0pTUGF4OUE?oc=5",
-      "published": "2026-06-23T20:38:44Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "U.S. crude oil falls below $70, resuming losses after attack on cargo ship near Oman",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/06/26/oil-prices-middle-east-iran-strait-of-hormuz-opec-iraq-wti-brent-crude.html",
-      "published": "2026-06-26T09:22:30Z",
-      "tone": "bearish"
+      "title": "Micron Leads Tech Stocks Rally on Blowout Earnings",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/micron-leads-tech-stocks-rally-113529692.html?.tsrc=rss",
+      "published": "2026-06-26T11:35:29Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 86
+        "articles": 89
       }
     ],
-    "headline_count": 136,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
