@@ -1,24 +1,10 @@
 {
-  "generated_at_utc": "2026-06-26T15:21:22Z",
+  "generated_at_utc": "2026-06-26T17:14:22Z",
   "window_days": 7,
   "score": 5,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Neogen Gains 101.1% in a Year: What's Driving the Rally?; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Nasdaq Falls 1%. The Chip Selloff Is Back.; Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's; S&P 500 heads for losing week, chip stocks add to their losses on Friday: Live updates.",
   "articles": [
-    {
-      "title": "Nasdaq Falls 1%. The Chip Selloff Is Back.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/d3fef1d0-2840-3ea2-aa88-70ac1cbb3f93/nasdaq-falls-1%25.-the-chip.html?.tsrc=rss",
-      "published": "2026-06-26T13:32:36Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Neogen Gains 101.1% in a Year: What's Driving the Rally?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/healthcare/articles/neogen-gains-101-1-whats-140300972.html?.tsrc=rss",
-      "published": "2026-06-26T14:03:00Z",
-      "tone": "bullish"
-    },
     {
       "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
       "source": "Benzinga",
@@ -34,11 +20,25 @@
       "tone": "bearish"
     },
     {
-      "title": "World shares skid as traders sell to lock in profits after recent rallies driven by AI - WIVB News 4",
-      "source": "WIVB News 4",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNSExLWkhnYThudG5jYWpsVThzYUwycnl1NGx2WmktT0Y1cmF2Qk1tRk9DZERPVjhmZ0pGZzJZZWhPZ1dwNW1KTmR5U29sa19sNzI3SlhBRkZqY19rVE8xeEhkY3dON1lQUlcyRm1FX1ZMUkRja2c0bmQ4S1VicV9JajB0Wl9jdmVXTXVWRWZpYkJTQUh2cEhlTlVadUJXQzhVcjdycTctMzYtZzFxNEQzUEhhZWNfT1Y3RTdTN2l0TmUxTlM3S0HSAcsBQVVfeXFMTmhqblgtZWswQ2pkLUFxZlZXSG91SnFTcEx3MVliOXZuS3Y0MERidC0xVDhCT3JwczZENERtRHBxRE1qa2ZtbG8xT2l6Tnd2M0FzMlhzQmRFcU9HQzd4TWVQbEpUcG54VVg2YlF1NGRuUWdaQnZoRTl4NkVUOUQyclQ3d3o5bDZQVWlPblNzTEl1dE1KY3Q1b0lkMVBJRlp5cGZJVFN0QU16WDd6UXotZkhEbk5WM0pEdzA1eWEyUFRCTVB1M0t4Z2s2aEE?oc=5",
-      "published": "2026-06-26T13:47:35Z",
-      "tone": "bullish"
+      "title": "S&P 500 heads for losing week, chip stocks add to their losses on Friday: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/25/stock-market-today-live-updates.html",
+      "published": "2026-06-26T17:02:50Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Minneapolis Fed President Neel Kashkari says he expects a rate hike this year",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/26/minneapolis-fed-president-neel-kashkari-says-he-expects-a-rate-hike-this-year.html",
+      "published": "2026-06-26T16:04:42Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPOE9pYW4wR3lMMmxwaUFFUlZGUHJzNjh0aUV1RGs4T1MyYkNCNXlwTDRpbzk2SlhEZ3lEdmoxRnRvVUU0Uk1oUTYtWXJvaUpyeURNaVZJS0FvcmE4cGwwUzczTFhyZmJXSmdvZEIwSVZvYU5UWC04V3ZBTUQwQmhOYVpRZ1ZPWjU4akcxckRRRUlKTkpPZTlOaFRpWGdDYnRiY0RuRG9zbmlGYm1paUR3cF9yVGIwWlZTd0RxNmZtUVlNNzl3MnhRbnQwM0Z4N3J0ZFJabUVVRjNqT29YbExLNXFOMTdySEhVMUF4SmNiU01nMWkxcHc?oc=5",
+      "published": "2026-06-23T07:30:45Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 89
       }
     ],
-    "headline_count": 137,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
