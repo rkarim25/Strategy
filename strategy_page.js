@@ -333,6 +333,7 @@
   // seriesDefs values are full-length, aligned to `dates`. markerDefs: [{date,dir,color,label,tip}].
   function chartBlock(title, dates, seriesDefs, opts = {}) {
     const { log = false, rebasePct = false, markerDefs = [], customDates = false, defaultRange = "Full",
+      onWindow = null,
       ranges = [["1M", 21], ["3M", 63], ["1Y", 252], ["5Y", 1260], ["10Y", 2520], ["Full", dates.length]] } = opts;
     const dateIdx = new Map(); dates.forEach((dt, i) => dateIdx.set(dt, i));
     // Open at defaultRange (e.g. "1Y") so a rebased %-chart isn't a useless multi-decade scale;
@@ -367,6 +368,7 @@
       }).filter(Boolean);
       lineChart(canvas, dslice, ser, { log, pct: rebasePct, markers });
       canvas.style.cursor = (winHi - winLo) < dates.length ? "grab" : "default";
+      if (onWindow) onWindow(lo, hi);
     };
     // Pan the visible window left/right, keeping its width (time scroll). frac<0 = back, >0 = forward.
     const panBy = (frac) => {
@@ -501,6 +503,34 @@
       if (note) note.textContent = `Type a current ${asset} level and click Apply to see the signal at that price.`;
     });
 
+    // --- Signal-change history, dynamically linked to the price chart's visible window ---
+    const _sh = d.signal_history || [];
+    const transitions = [];
+    for (let i = 1; i < _sh.length; i++) {
+      const lev = Number(_sh[i].leverage) || 0, prev = Number(_sh[i - 1].leverage) || 0;
+      if (lev !== prev) transitions.push({ gi: i, date: _sh[i].date, prev, lev, close: _sh[i].spx_close });
+    }
+    function renderSignalHistory(lo, hi) {
+      const cont = document.getElementById("sigHistBody"); if (!cont) return;
+      const inWin = transitions.filter((t) => t.gi >= lo && t.gi < hi);
+      const a = _sh[Math.max(0, lo)], b = _sh[Math.min(hi, _sh.length) - 1];
+      const period = a && b ? `${a.date} → ${b.date}` : "";
+      if (!inWin.length) {
+        const lev = b ? Number(b.leverage) || 0 : 0;
+        cont.innerHTML = `<p class="meta">No signal changes in the charted period (${esc(period)}) — ${lev > 0 ? "held " + lev.toFixed(0) + "× throughout" : "in cash throughout"}.</p>`;
+        return;
+      }
+      const shown = inWin.slice(-30).reverse();
+      const rows = shown.map((t) => `<tr><td class="l">${esc(t.date)}</td><td class="l">${t.lev > 0 ? "Long " + t.lev.toFixed(0) + "×" : "Cash"}</td><td class="num">${t.close != null ? t.close.toLocaleString() : "—"}</td><td class="l">${fmtLev(t.prev)} → ${fmtLev(t.lev)}</td></tr>`).join("");
+      cont.innerHTML = `<div class="meta" style="margin-bottom:6px">${inWin.length} signal change${inWin.length !== 1 ? "s" : ""} in the charted period (${esc(period)})${inWin.length > shown.length ? ` · latest ${shown.length} shown` : ""}.</div><div class="tbl-wrap"><table><thead><tr><th class="l">Date</th><th class="l">New signal</th><th>Close</th><th class="l">Change</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+    let _lastLo = -1, _lastHi = -1;
+    function scheduleSignalHistory(lo, hi) {
+      if (lo === _lastLo && hi === _lastHi) return;   // skip redundant redraws (e.g. unchanged drag frame)
+      _lastLo = lo; _lastHi = hi;
+      renderSignalHistory(lo, hi);
+    }
+
     if (d.price_sma_data) {
       const p = d.price_sma_data, defs = [{ label: asset + " close", color: "#1d1d1f", values: p.spx_close }];
       if (p.sma200) defs.push({ label: "SMA200", color: ACCENT, values: p.sma200 });
@@ -509,7 +539,7 @@
       if (p.sma_main) defs.push({ label: "SMA" + (sp.sma_window || ""), color: "#b26a00", values: p.sma_main });
       if (p.sma200_upper_band) defs.push({ label: "Upper band", color: "rgba(36,138,61,.5)", values: p.sma200_upper_band });
       if (p.sma200_lower_band) defs.push({ label: "Lower band", color: "rgba(215,0,21,.5)", values: p.sma200_lower_band });
-      vs.appendChild(chartBlock("Price & moving averages — with signal markers", p.dates, defs, { log: false, markerDefs, customDates: true }));
+      vs.appendChild(chartBlock("Price & moving averages — with signal markers", p.dates, defs, { log: false, markerDefs, customDates: true, onWindow: scheduleSignalHistory }));
     }
     // Rebased %-equity P&L chart on the Signal view (price + equity together, with markers).
     if (d.equity_curve) {
@@ -519,14 +549,14 @@
         { label: "Buy & hold 1×", color: "#6e6e73", values: e.buy_hold_1x_equity },
       ], { rebasePct: true, customDates: true, markerDefs, defaultRange: "1Y" }));
     }
-    // recent signal history
-    const sh = (d.signal_history || []).slice(-14).reverse();
-    if (sh.length) {
-      const rows = sh.map((r) => `<tr><td class="l">${esc(r.date)}</td><td class="l">${r.leverage > 0 ? "Long " + Number(r.leverage).toFixed(0) + "×" : "Cash"}</td>
-        <td class="num">${r.spx_close != null ? r.spx_close.toLocaleString() : "—"}</td><td class="l">${esc(r.action || "")}</td></tr>`).join("");
+    // Signal-change table — filled (and updated) by the price chart's onWindow callback.
+    if (_sh.length) {
       const c = document.createElement("div"); c.className = "card";
-      c.innerHTML = `<h2>Recent signal history</h2><div class="tbl-wrap"><table><thead><tr><th class="l">Date</th><th class="l">Signal</th><th>Close</th><th class="l">Action</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      c.innerHTML = `<h2>Signal changes — charted period</h2>
+        <p class="meta" style="margin:0 0 8px">Follows the price chart above: change its range / scroll / dates to update.</p>
+        <div id="sigHistBody"></div>`;
       vs.appendChild(c);
+      renderSignalHistory(0, _sh.length);   // initial fill (price chart opens Full); refined once it draws
     }
 
     // --- Backtest view ---
