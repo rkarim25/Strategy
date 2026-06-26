@@ -25,9 +25,9 @@ from analyze_cross_asset_guarded_1x import DEFAULT_GUARDED
 from backtest_lqq3_guarded import LQQ3_START, LQQ3_TICKER, download_panel as download_lqq3_panel
 from backtest_ndx_guarded import download_ndx_panel
 from backtest_spx_guarded import download_spx_panel
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
-from etp_leverage import NDX_ETP, SPX_ETP, build_etp_return_panel
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from core.etp_leverage import NDX_ETP, SPX_ETP, build_etp_return_panel
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW
 
 OUTPUT_DIR = Path("output") / "ema20_vs_sma20"

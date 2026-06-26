@@ -12,8 +12,8 @@ import pandas as pd
 import yfinance as yf
 
 from analyze_multi_asset_guarded_scan import UNIVERSE, MIN_ROWS, YEARS, PROXY_COMPONENTS, panel_for_close
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
-from metrics import comprehensive_stats
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from core.metrics import comprehensive_stats
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 
 OUTPUT = Path("output") / "bh_dd5_filter"

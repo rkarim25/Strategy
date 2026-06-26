@@ -8,9 +8,9 @@ for parameters/regeneration see [`backtesting.md`](backtesting.md).
 1. **Python backtesting engine** (local) — runs historical simulations, computes metrics, emits JSON/CSV/Excel.
 2. **Static website** (GitHub Pages) — displays live signals, charts, Monte Carlo, cross-asset comparison.
 
-## Core Python modules (root)
+## Core Python modules (`core/` package)
 
-These are imported widely — **moving any of them breaks dozens of scripts.** Import counts (approx) show how load-bearing they are.
+These live in the **`core/`** package and are imported widely (`from core import engine`, `from core.metrics import comprehensive_stats`). The table lists each by name — the file is `core/<name>.py`. Import counts (approx) show how load-bearing they are.
 
 | Module | Role | ~importers |
 |--------|------|-----------|

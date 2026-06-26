@@ -24,18 +24,18 @@ import pandas as pd
 
 from backtest_ndx_guarded import download_ndx_panel
 from backtest_spx_guarded import download_spx_panel
-from engine import (
+from core.engine import (
     INITIAL_CAPITAL,
     TRADING_COST_FROM_MID_PCT,
     TRADING_DAYS,
 )
-from etp_leverage import (
+from core.etp_leverage import (
     NDX_ETP,
     SPX_ETP,
     build_etp_return_panel,
     etp_coverage_summary,
 )
-from metrics import comprehensive_stats
+from core.metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 

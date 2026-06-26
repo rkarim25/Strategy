@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 if TYPE_CHECKING:
-    from etp_leverage import EtpBundle
+    from core.etp_leverage import EtpBundle
 
 TRADING_DAYS = 252
 FUNDING_SPREAD = 0.006
@@ -179,12 +179,12 @@ class PortfolioEngine:
         etp_panel = etp_returns
         etp_cov: dict[str, float] | None = None
         if etp_panel is None and etp_bundle is not None:
-            from etp_leverage import build_etp_return_panel, etp_coverage_summary
+            from core.etp_leverage import build_etp_return_panel, etp_coverage_summary
 
             etp_panel = build_etp_return_panel(df, etp_bundle)
             etp_cov = etp_coverage_summary(etp_panel)
         elif etp_panel is not None:
-            from etp_leverage import etp_coverage_summary
+            from core.etp_leverage import etp_coverage_summary
 
             etp_cov = etp_coverage_summary(etp_panel)
 
@@ -214,7 +214,7 @@ class PortfolioEngine:
         etp_returns: pd.DataFrame | None = None,
         vix: pd.Series | None = None,
     ) -> tuple[pd.Series, pd.Series, pd.Series, int, float, float, float, int]:
-        from etp_leverage import daily_return_for_leverage
+        from core.etp_leverage import daily_return_for_leverage
 
         use_etp = etp_returns is not None
         equity = pd.Series(index=index, dtype=float)

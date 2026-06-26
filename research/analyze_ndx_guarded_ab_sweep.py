@@ -44,8 +44,8 @@ from backtest_ndx_guarded import (
     download_ndx_panel,
     make_engine,
 )
-from etp_leverage import NDX_ETP, build_etp_return_panel, etp_coverage_summary
-from metrics import comprehensive_stats
+from core.etp_leverage import NDX_ETP, build_etp_return_panel, etp_coverage_summary
+from core.metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 
 ROOT = Path(__file__).resolve().parent.parent

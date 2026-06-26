@@ -19,7 +19,7 @@ import pandas as pd
 
 from analyze_cross_asset_guarded_1x import DEFAULT_GUARDED
 from backtest_gold_guarded import download_gold_panel, make_engine
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW, sma_cash_leverage
 
 OUTPUT_DIR = Path("output") / "gold_sma_profit_exit"

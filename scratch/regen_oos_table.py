@@ -5,9 +5,9 @@ from pathlib import Path
 import pandas as pd, yfinance as yf
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from engine import PortfolioEngine
-from etp_leverage import SPX_ETP, build_etp_return_panel
-from metrics import comprehensive_stats
+from core.engine import PortfolioEngine
+from core.etp_leverage import SPX_ETP, build_etp_return_panel
+from core.metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import sma_cash_leverage
 

@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from price_cleaning import clean_close_series, clean_spike_values
+from core.price_cleaning import clean_close_series, clean_spike_values
 
 ROOT = Path(__file__).resolve().parent
 DAILY_CSVS = sorted(ROOT.glob("*_daily.csv"))

@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
-from engine import TRADING_DAYS, VIX_STRESS_THRESHOLD, funding_cost_daily
+from core.engine import TRADING_DAYS, VIX_STRESS_THRESHOLD, funding_cost_daily
 
 TBILL_TICKER = "^IRX"
 VIX_TICKER = "^VIX"

@@ -11,9 +11,9 @@ import pandas as pd
 import yfinance as yf
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from engine import PortfolioEngine  # noqa: E402
-from etp_leverage import NDX_ETP, SPX_ETP, EtpBundle, build_etp_return_panel, etp_coverage_summary  # noqa: E402
-from metrics import comprehensive_stats  # noqa: E402
+from core.engine import PortfolioEngine  # noqa: E402
+from core.etp_leverage import NDX_ETP, SPX_ETP, EtpBundle, build_etp_return_panel, etp_coverage_summary  # noqa: E402
+from core.metrics import comprehensive_stats  # noqa: E402
 from test_guarded_balanced_candidate import guarded_strategy_leverage  # noqa: E402
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW, sma_cash_leverage  # noqa: E402
 

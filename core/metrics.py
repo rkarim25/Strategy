@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from engine import TRADING_DAYS
+from core.engine import TRADING_DAYS
 
 
 def _drawdown_series(equity: pd.Series) -> pd.Series:

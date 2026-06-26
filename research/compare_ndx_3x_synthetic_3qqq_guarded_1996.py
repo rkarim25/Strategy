@@ -28,8 +28,8 @@ from backtest_lqq3_synthetic_guarded import (
     panel_from_close,
 )
 from backtest_ndx_guarded import DEFAULT_SPEC, make_engine
-from etp_leverage import NDX_ETP, build_etp_return_panel, etp_coverage_summary
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.etp_leverage import NDX_ETP, build_etp_return_panel, etp_coverage_summary
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW
 

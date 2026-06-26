@@ -19,19 +19,19 @@ import yfinance as yf
 
 from analyze_cross_asset_guarded_1x import DEFAULT_GUARDED, guarded_lead_leverage
 from analyze_multi_asset_guarded_scan import panel_for_close
-from engine import (
+from core.engine import (
     INITIAL_CAPITAL,
     TRADING_COST_FROM_MID_PCT,
     trading_cost,
 )
-from etp_leverage import (
+from core.etp_leverage import (
     NDX_ETP,
     SPX_ETP,
     build_etp_return_panel,
     daily_return_for_leverage,
     etp_coverage_summary,
 )
-from metrics import comprehensive_stats
+from core.metrics import comprehensive_stats
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW
 
 OUTPUT_DIR = Path("output") / "spx_ndx_rotation_guarded"

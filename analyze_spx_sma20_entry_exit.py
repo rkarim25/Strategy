@@ -25,9 +25,9 @@ import numpy as np
 import pandas as pd
 
 from backtest_spx_guarded import DEFAULT_SPEC, download_spx_panel, make_engine, run_strategy
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
-from etp_leverage import SPX_ETP, build_etp_return_panel, etp_coverage_summary
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
+from core.etp_leverage import SPX_ETP, build_etp_return_panel, etp_coverage_summary
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW, sma_cash_leverage
 
 ROOT = Path(__file__).resolve().parent

@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 import pandas as pd
 
-from indicators import enrich_prices, macd
+from core.indicators import enrich_prices, macd
 
 
 @dataclass(frozen=True)

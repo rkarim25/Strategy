@@ -29,9 +29,9 @@ try:
 except Exception:
     pass
 
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, TRADING_DAYS
-from etp_leverage import bootstrap_etp_paths
-from metrics import comprehensive_stats
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, TRADING_DAYS
+from core.etp_leverage import bootstrap_etp_paths
+from core.metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 
 ROOT = Path(__file__).resolve().parent

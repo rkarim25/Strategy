@@ -16,9 +16,9 @@ from pathlib import Path
 import numpy as np, pandas as pd, yfinance as yf
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from engine import PortfolioEngine, FUNDING_SPREAD, TRADING_DAYS  # noqa: E402
-from etp_leverage import TER_ANNUAL  # noqa: E402
-from metrics import comprehensive_stats  # noqa: E402
+from core.engine import PortfolioEngine, FUNDING_SPREAD, TRADING_DAYS  # noqa: E402
+from core.etp_leverage import TER_ANNUAL  # noqa: E402
+from core.metrics import comprehensive_stats  # noqa: E402
 from test_guarded_balanced_candidate import guarded_strategy_leverage  # noqa: E402
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW, sma_cash_leverage  # noqa: E402
 

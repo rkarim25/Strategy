@@ -16,8 +16,8 @@ from pathlib import Path
 import pandas as pd
 import yfinance as yf
 
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW, sma_cash_leverage
 
 OUTPUT_DIR = Path("output") / "cross_asset_guarded_1x"

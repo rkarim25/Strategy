@@ -5,9 +5,9 @@ from pathlib import Path
 import numpy as np, pandas as pd, yfinance as yf
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from engine import PortfolioEngine, FUNDING_SPREAD, TRADING_DAYS
-from etp_leverage import TER_ANNUAL
-from metrics import comprehensive_stats
+from core.engine import PortfolioEngine, FUNDING_SPREAD, TRADING_DAYS
+from core.etp_leverage import TER_ANNUAL
+from core.metrics import comprehensive_stats
 
 def cl(t):
     s = yf.download(t, start="1990-01-01", end="2026-06-16", auto_adjust=True, progress=False)["Close"].dropna().astype(float).squeeze()

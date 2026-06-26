@@ -7,9 +7,9 @@
 2. Need data? → [`../../catalog/data.md`](../../catalog/data.md) first (don't re-download).
 
 ## Run it
-3. **Reuse the engine** — import `engine.py` (`PortfolioEngine`), `strategies.py`, `metrics.py`,
-   `etp_leverage.py`. **Never write a new backtest engine or re-implement metrics.** Add a new strategy by
-   extending `strategies.py`.
+3. **Reuse the engine** — use the `core/` package: `from core import engine, strategies, metrics, etp_leverage`
+   (`PortfolioEngine` lives in `core.engine`). **Never write a new backtest engine or re-implement metrics.**
+   Add a new strategy by extending `core/strategies.py`.
 4. Obey [`../coding-standards.md`](../coding-standards.md): 1-day signal lag, ≥10 bps cost, VIX borrow, vectorized.
 5. Write **all** outputs to `output/<your-experiment-id>/` — one directory per experiment, so parallel agents
    never collide.

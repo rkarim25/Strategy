@@ -14,10 +14,10 @@ import pandas as pd
 import yfinance as yf
 
 from analyze_cross_asset_guarded_1x import DEFAULT_GUARDED, guarded_lead_leverage
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
-from price_cleaning import clean_close_series
-from guarded_asset_registry import ASSETS, GuardedAssetSpec
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.price_cleaning import clean_close_series
+from core.guarded_asset_registry import ASSETS, GuardedAssetSpec
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW, sma_cash_leverage
 
 ROOT = Path(__file__).resolve().parent

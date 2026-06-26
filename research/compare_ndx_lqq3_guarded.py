@@ -11,8 +11,8 @@ import pandas as pd
 
 from analyze_cross_asset_guarded_1x import guarded_lead_leverage
 from backtest_lqq3_guarded import download_panel, make_engine
-from etp_leverage import NDX_ETP, build_etp_return_panel
-from metrics import comprehensive_stats
+from core.etp_leverage import NDX_ETP, build_etp_return_panel
+from core.metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 
 OUTPUT_DIR = Path("output") / "ndx_vs_lqq3_guarded"

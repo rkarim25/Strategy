@@ -21,7 +21,7 @@ from analyze_cross_asset_guarded_1x import (
     guarded_lead_leverage,
 )
 from analyze_multi_asset_guarded_scan import UNIVERSE, MIN_ROWS, YEARS, PROXY_COMPONENTS
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine, passes_drawdown_limit
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine, passes_drawdown_limit
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW, sma_cash_leverage
 
 OUTPUT_DIR = Path("output") / "dd5_limit_global"

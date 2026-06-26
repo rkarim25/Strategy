@@ -8,9 +8,9 @@ import pandas as pd
 from analyze_cross_asset_guarded_1x import guarded_lead_leverage
 from backtest_lqq3_synthetic_guarded import build_synthetic_lqq3_close, download_ndx_vix_tbill, panel_from_close
 from backtest_ndx_guarded import DEFAULT_SPEC, make_engine
-from engine import TRADING_COST_FROM_MID_PCT
-from etp_leverage import NDX_ETP, build_etp_return_panel, daily_return_for_leverage
-from metrics import comprehensive_stats
+from core.engine import TRADING_COST_FROM_MID_PCT
+from core.etp_leverage import NDX_ETP, build_etp_return_panel, daily_return_for_leverage
+from core.metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW, sma_cash_leverage
 

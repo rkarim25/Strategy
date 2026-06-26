@@ -28,8 +28,8 @@ from backtest_momentum_leverage_strategies import (
     sma_stack_momentum,
     vol_adjusted_momentum,
 )
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
-from metrics import comprehensive_stats
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from core.metrics import comprehensive_stats
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 
 OUTPUT_DIR = Path("output") / "momentum_monte_carlo"

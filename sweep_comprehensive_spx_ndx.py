@@ -17,15 +17,15 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
-from engine import (
+from core.engine import (
     INITIAL_CAPITAL,
     TRADING_DAYS,
     VIX_STRESS_THRESHOLD,
     PortfolioEngine,
     BacktestResult,
 )
-from metrics import comprehensive_stats
-from etp_leverage import (
+from core.metrics import comprehensive_stats
+from core.etp_leverage import (
     synthetic_daily_reset_return,
     daily_return_for_leverage,
     TER_ANNUAL,
@@ -34,7 +34,7 @@ from etp_leverage import (
     SPX_ETP,
     NDX_ETP,
 )
-from indicators import sma, ema, rsi, macd, bollinger_bands
+from core.indicators import sma, ema, rsi, macd, bollinger_bands
 
 # ---------------------------------------------------------------------------
 # Paths

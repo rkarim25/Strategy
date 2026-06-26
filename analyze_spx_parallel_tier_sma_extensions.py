@@ -36,7 +36,7 @@ from analyze_spx_parallel_tier_sma import (
     run_strategy,
     tier_margins,
 )
-from etp_leverage import SPX_ETP, build_etp_return_panel, etp_coverage_summary
+from core.etp_leverage import SPX_ETP, build_etp_return_panel, etp_coverage_summary
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")

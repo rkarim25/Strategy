@@ -18,17 +18,17 @@ from typing import Callable
 import numpy as np
 import pandas as pd
 
-from data_manager import load_backtest_data
-from engine import (
+from core.data_manager import load_backtest_data
+from core.engine import (
     INITIAL_CAPITAL,
     TRADING_COST_FROM_MID_PCT,
     ANNUAL_CASH_INFLOW_PCT,
     PortfolioEngine,
 )
-from etp_leverage import SPX_ETP, build_etp_return_panel
-from indicators import sma, ema, rsi, macd, enrich_prices
-from metrics import comprehensive_stats
-from strategies import _run_state_machine, MacdParams, TunableMacdStrategy
+from core.etp_leverage import SPX_ETP, build_etp_return_panel
+from core.indicators import sma, ema, rsi, macd, enrich_prices
+from core.metrics import comprehensive_stats
+from core.strategies import _run_state_machine, MacdParams, TunableMacdStrategy
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = ROOT / "output" / "spx_dd_protection_sweep"

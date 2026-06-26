@@ -36,7 +36,7 @@ from backtest_lqq3_guarded import (
     sma_row,
     buy_hold_row,
 )
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD, BASE_SMA_WINDOW
 
 try:

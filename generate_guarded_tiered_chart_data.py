@@ -14,8 +14,8 @@ from backtest_guarded_tiered_sma20_50_200 import (
     make_engine,
     sma_cash_leverage,
 )
-from data_manager import load_backtest_data
-from etp_leverage import SPX_ETP, build_etp_return_panel
+from core.data_manager import load_backtest_data
+from core.etp_leverage import SPX_ETP, build_etp_return_panel
 
 CHART_JSON = OUTPUT_DIR / "guarded_tiered_sma20_50_200_chart_data.json"
 

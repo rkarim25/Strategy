@@ -30,13 +30,13 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
-from engine import (
+from core.engine import (
     INITIAL_CAPITAL,
     TRADING_COST_FROM_MID_PCT,
     ANNUAL_CASH_INFLOW_PCT,
     PortfolioEngine,
 )
-from etp_leverage import (
+from core.etp_leverage import (
     MC_ETP_METHOD,
     SPX_ETP,
     bootstrap_etp_paths,
@@ -44,9 +44,9 @@ from etp_leverage import (
     etp_coverage_summary,
     export_etp_returns_json,
 )
-from indicators import sma, rsi
-from metrics import comprehensive_stats
-from price_cleaning import clean_close_series
+from core.indicators import sma, rsi
+from core.metrics import comprehensive_stats
+from core.price_cleaning import clean_close_series
 
 ROOT = Path(__file__).resolve().parent
 SPX_TICKER = "^GSPC"

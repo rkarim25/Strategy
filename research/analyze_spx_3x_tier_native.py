@@ -12,8 +12,8 @@ import pandas as pd
 
 from analyze_spx_parallel_tier_sma import benchmark_prices_from_etp
 from backtest_spx_guarded import download_spx_panel, make_engine
-from etp_leverage import SPX_ETP, build_etp_return_panel, etp_coverage_summary
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.etp_leverage import SPX_ETP, build_etp_return_panel, etp_coverage_summary
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from test_tiered_dd_recovery_guarded import sma_cash_leverage
 
 from analyze_cross_asset_guarded_1x import guarded_lead_leverage

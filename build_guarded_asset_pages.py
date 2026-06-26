@@ -6,7 +6,7 @@ import json
 import re
 from pathlib import Path
 
-from guarded_asset_registry import ASSETS, GuardedAssetSpec
+from core.guarded_asset_registry import ASSETS, GuardedAssetSpec
 
 ROOT = Path(__file__).resolve().parent
 GOLD_HTML = ROOT / "gold_guarded.html"

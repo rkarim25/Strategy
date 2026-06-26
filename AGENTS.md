@@ -34,7 +34,7 @@ A personal **systematic leveraged backtesting + live-signal platform**. Two halv
    them by relative path. Don't relocate website or data files.
 2. **No duplication.** Check [`catalog/data.md`](catalog/data.md) before downloading and
    [`catalog/experiments.md`](catalog/experiments.md) before backtesting. Reuse the engine
-   (`engine`/`metrics`/`etp_leverage`) — never re-implement it.
+   (`from core import engine, metrics, etp_leverage`) — never re-implement it.
 3. **No clashing.** Sync first; respect ownership zones; claim shared work. See
    [`docs/runbooks/coordination.md`](docs/runbooks/coordination.md).
 4. **Deploy via the isolated worktree, never a plain push** (OneDrive locks `.git`). See [`docs/deploy.md`](docs/deploy.md).
@@ -49,7 +49,7 @@ A personal **systematic leveraged backtesting + live-signal platform**. Two halv
 
 ## 30-second architecture
 ```
-Yahoo Finance ──> *_daily.csv ──> Python engine (engine.py + strategies.py)
+Yahoo Finance ──> *_daily.csv ──> Python engine (core/engine.py + core/strategies.py)
                                       │
                   ┌───────────────────┼─────────────────────┐
                   ▼                    ▼                     ▼
@@ -75,7 +75,7 @@ pages (ftse250/dax/msci_em/msci_world/lqq3), `3bal_guarded.html`, `summary.html`
 |------|------|----------|
 | `index.html`, `*_guarded.html/js`, `site-nav.js`, `instruments-*.js`, `etp-leverage.js`, `favicon.svg` | website (served at root) | ❌ |
 | `*_daily.csv`, `*_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json`, `summary_excel.json` | live data (root + cron-written) | ❌ |
-| `engine.py`, `strategies.py`, `metrics.py`, `indicators.py`, `data_manager.py`, `etp_leverage.py`, `price_cleaning.py`, `guarded_asset_registry.py`, `reporting.py` | core engine (imported widely) | ❌ |
+| `core/` package — `engine.py`, `strategies.py`, `metrics.py`, `indicators.py`, `data_manager.py`, `etp_leverage.py`, `price_cleaning.py`, `guarded_asset_registry.py`, `reporting.py`, `data_three_asset.py` (import via `from core import …`) | core engine (imported widely) | ❌ |
 | `test_tiered_dd_recovery_guarded.py`, `test_guarded_balanced_candidate.py` | strategy libs (imported despite `test_` name) | ❌ |
 | root: `build_*.py`, master sweeps, site-data `backtest_*` · `research/`: exploratory `analyze_/sweep_/verify_` | build pipeline vs exploration | ⚠️ coordinate |
 | `update_static_market_data.py`, `refresh_holdings_prices.py` | cron entrypoints (`refresh_holdings_prices` is cross-repo) | ❌ |

@@ -29,20 +29,20 @@ try:
 except Exception:
     pass
 
-from engine import (
+from core.engine import (
     INITIAL_CAPITAL,
     PortfolioEngine,
     TRADING_COST_FROM_MID_PCT,
     TRADING_DAYS,
 )
-from etp_leverage import (
+from core.etp_leverage import (
     NDX_ETP,
     SPX_ETP,
     bootstrap_etp_paths,
     etp_coverage_summary,
     synthetic_daily_reset_return,
 )
-from metrics import comprehensive_stats
+from core.metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 

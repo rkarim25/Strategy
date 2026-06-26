@@ -18,7 +18,7 @@ import pandas as pd
 
 from analyze_cross_asset_guarded_1x import DEFAULT_GUARDED
 from backtest_gold_guarded import buy_hold_row, download_gold_panel, make_engine, run_guarded_1x, sma_row
-from metrics import comprehensive_stats
+from core.metrics import comprehensive_stats
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW
 
 OUTPUT_DIR = Path("output") / "gold_market_structure"

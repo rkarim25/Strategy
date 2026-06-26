@@ -8,14 +8,14 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import pandas as pd
 
-from engine import (
+from core.engine import (
     DEFAULT_MAX_DRAWDOWN,
     TRADING_COST_FROM_MID_PCT,
     BacktestResult,
     passes_drawdown_limit,
 )
-from metrics import comprehensive_stats
-from strategies import BENCHMARK_RULES
+from core.metrics import comprehensive_stats
+from core.strategies import BENCHMARK_RULES
 
 BENCHMARK_LABEL = "Buy & Hold 1x SPX"
 

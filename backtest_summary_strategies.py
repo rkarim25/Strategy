@@ -18,16 +18,16 @@ from typing import Callable
 import numpy as np
 import pandas as pd
 
-from data_manager import load_backtest_data
-from engine import (
+from core.data_manager import load_backtest_data
+from core.engine import (
     INITIAL_CAPITAL,
     TRADING_COST_FROM_MID_PCT,
     ANNUAL_CASH_INFLOW_PCT,
     PortfolioEngine,
 )
-from etp_leverage import SPX_ETP, build_etp_return_panel
-from indicators import sma, rsi
-from metrics import comprehensive_stats
+from core.etp_leverage import SPX_ETP, build_etp_return_panel
+from core.indicators import sma, rsi
+from core.metrics import comprehensive_stats
 
 ROOT = Path(__file__).resolve().parent
 OUTPUT_DIR = ROOT / "output"
@@ -441,7 +441,7 @@ def main() -> None:
     # Build ETP panel for real regime
     print("  Building ETP return panel (SPY/SSO/UPRO)...")
     etp_panel = build_etp_return_panel(era_prices, SPX_ETP)
-    from etp_leverage import etp_coverage_summary
+    from core.etp_leverage import etp_coverage_summary
     cov = etp_coverage_summary(etp_panel)
     print(f"  -> ETP coverage: 2x real {cov['pct_real_2x']}%, 3x real {cov['pct_real_3x']}%")
     

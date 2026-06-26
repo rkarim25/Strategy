@@ -32,7 +32,7 @@ from backtest_lqq3_guarded import (
     sma_cash_leverage,
     strategies_for_panel,
 )
-from etp_leverage import TBILL_TICKER, VIX_TICKER, synthetic_daily_reset_return
+from core.etp_leverage import TBILL_TICKER, VIX_TICKER, synthetic_daily_reset_return
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW
 
 ROOT = Path(__file__).resolve().parent

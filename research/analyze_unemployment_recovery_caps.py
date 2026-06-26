@@ -29,8 +29,8 @@ from analyze_fundamental_overlay_filters import (
     run_backtest,
     selected_annual_equity,
 )
-from data_manager import load_backtest_data
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
+from core.data_manager import load_backtest_data
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 
 

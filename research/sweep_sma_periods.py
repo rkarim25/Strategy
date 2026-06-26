@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pandas as pd
 
-from data_manager import load_backtest_data
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
-from metrics import comprehensive_stats
-from reporting import BENCHMARK_LABEL
+from core.data_manager import load_backtest_data
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT, PortfolioEngine
+from core.metrics import comprehensive_stats
+from core.reporting import BENCHMARK_LABEL
 
 OUTPUT_DIR = Path("output") / "sma_sweep"
 

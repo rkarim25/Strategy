@@ -29,8 +29,8 @@ import pandas as pd
 from analyze_cross_asset_guarded_1x import DEFAULT_GUARDED, guarded_lead_leverage
 from analyze_spx_sma20_entry_exit import pareto_3d, sma_entry_exit_leverage, strategy_label
 from backtest_lqq3_guarded import LQQ3_START, LQQ3_TICKER, download_panel, make_engine
-from engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.engine import INITIAL_CAPITAL, TRADING_COST_FROM_MID_PCT
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW, sma_cash_leverage
 
 try:

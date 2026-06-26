@@ -10,9 +10,9 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from engine import PortfolioEngine, FUNDING_SPREAD, TRADING_DAYS
-from etp_leverage import TER_ANNUAL
-from metrics import comprehensive_stats
+from core.engine import PortfolioEngine, FUNDING_SPREAD, TRADING_DAYS
+from core.etp_leverage import TER_ANNUAL
+from core.metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 SPEC = dict(trigger_a=0.05, trigger_b=0.25, lead_pct_below_sma20=0.0075, x_return=0.40, y_return=0.15)
 OUT = ROOT / "Results" / "Claude back testing.xlsx"

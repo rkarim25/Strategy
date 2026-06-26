@@ -21,7 +21,7 @@ market friction and eliminate statistical biases. No shortcuts that would flatte
 
 ## Repo rules (don't fight the factory)
 - **Don't move** website / data / core-engine files — see the golden rules in [`../AGENTS.md`](../AGENTS.md).
-- **Reuse, don't rebuild:** import `engine`, `metrics`, `etp_leverage`, `indicators`, `strategies`. Never
+- **Reuse, don't rebuild:** import from the `core/` package — `from core import engine, metrics, etp_leverage, indicators, strategies`. Never
   re-implement the backtest engine or the metrics — extend them.
 - **Don't re-download or re-run:** check `catalog/data.md` before pulling data and `catalog/experiments.md`
   before running a backtest. Register new work afterwards (`python tools/build_catalog.py`).

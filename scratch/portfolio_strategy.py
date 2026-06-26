@@ -8,9 +8,9 @@ from pathlib import Path
 import numpy as np, pandas as pd, yfinance as yf
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from engine import PortfolioEngine, FUNDING_SPREAD, TRADING_DAYS, block_bootstrap_paths
-from etp_leverage import TER_ANNUAL
-from metrics import comprehensive_stats
+from core.engine import PortfolioEngine, FUNDING_SPREAD, TRADING_DAYS, block_bootstrap_paths
+from core.etp_leverage import TER_ANNUAL
+from core.metrics import comprehensive_stats
 
 _C={}
 def close(tk):

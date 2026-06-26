@@ -30,7 +30,7 @@ from backtest_gold_guarded import (
     run_guarded_1x,
     sma_row,
 )
-from metrics import comprehensive_stats, invested_vs_tbills_sessions
+from core.metrics import comprehensive_stats, invested_vs_tbills_sessions
 from test_tiered_dd_recovery_guarded import BASE_SMA_WINDOW, sma_cash_leverage
 
 OUTPUT_DIR = Path("output") / "gold_strategy_variants"
