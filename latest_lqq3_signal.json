@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-25T23:15:28Z",
-  "data_asof": "2026-06-24",
-  "daily_rows": 3395,
-  "quote_price": 33390.0,
-  "quote_timestamp": "2026-06-24",
+  "generated_at_utc": "2026-06-26T10:18:40Z",
+  "data_asof": "2026-06-26",
+  "daily_rows": 3397,
+  "quote_price": 31773.0,
+  "quote_timestamp": "2026-06-26",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L?period1=0&period2=1782515728&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L?period1=0&period2=1782555520&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -25,13 +25,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-24",
-      "close": 33390.0
+      "date": "2026-06-26",
+      "close": 31773.0
     },
-    "latestSma": 35039.15,
+    "latestSma": 34623.1,
     "highWater": 37632.0,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.1127232142857143,
+    "latestDd": -0.1556919642857143,
     "regime": "tier2",
     "entryClose": 31980.5,
     "entryDate": "2026-05-18",
@@ -47,13 +47,13 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-06-24",
-      "close": 33390.0
+      "date": "2026-06-26",
+      "close": 31773.0
     },
-    "latestSma": 34893.4,
+    "latestSma": 34358.725,
     "highWater": 37632.0,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.1127232142857143,
+    "latestDd": -0.1556919642857143,
     "regime": "tier2",
     "entryClose": 31980.5,
     "entryDate": "2026-05-18",
@@ -68,10 +68,10 @@
     "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-24",
+    "last_observed_asof": "2026-06-26",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-25T23:15:28Z",
+    "last_checked_at_utc": "2026-06-26T10:18:40Z",
     "last_email_sent_on": "2026-06-24",
     "last_transition": {
       "id": "2026-06-22:1->2026-06-24:0",

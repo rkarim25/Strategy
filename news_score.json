@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-25T23:15:29Z",
+  "generated_at_utc": "2026-06-26T10:18:41Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's; Global tech selloff: semiconductors lead Nasdaq and S&P 500 lower - ThinkMarkets.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's; Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView.",
   "articles": [
     {
       "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
@@ -20,24 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "Global tech selloff: semiconductors lead Nasdaq and S&P 500 lower - ThinkMarkets",
-      "source": "ThinkMarkets",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNQ0tHRlBuWS1lMTB1UWRvZ2VJbm44ejRvallTUS13TVJrZGQwN3RqNjQ4bXFNMEVEY1ViTGxOam9nbi1ucFotbEtKM0VsYTJfaTBMeWVVWE9DYWx0U1NOYl94Z3E1VkxMZjdEMTFhSlkwYUQ4UTZtTlZOU1FzZF9ETExTbnNXSndUcWdNbTY1WkZOWmU5QlFibk1FSjg1UQ?oc=5",
-      "published": "2026-06-24T11:16:24Z",
+      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPOE9pYW4wR3lMMmxwaUFFUlZGUHJzNjh0aUV1RGs4T1MyYkNCNXlwTDRpbzk2SlhEZ3lEdmoxRnRvVUU0Uk1oUTYtWXJvaUpyeURNaVZJS0FvcmE4cGwwUzczTFhyZmJXSmdvZEIwSVZvYU5UWC04V3ZBTUQwQmhOYVpRZ1ZPWjU4akcxckRRRUlKTkpPZTlOaFRpWGdDYnRiY0RuRG9zbmlGYm1paUR3cF9yVGIwWlZTd0RxNmZtUVlNNzl3MnhRbnQwM0Z4N3J0ZFJabUVVRjNqT29YbExLNXFOMTdySEhVMUF4SmNiU01nMWkxcHc?oc=5",
+      "published": "2026-06-23T07:30:45Z",
       "tone": "bearish"
     },
     {
-      "title": "Wall Street points to another day of losses, led by an ongoing sell-off in tech - BNN Bloomberg",
-      "source": "BNN Bloomberg",
-      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdldta0FLT1dFLTNrXzBlTmJOWlJYdmhOY2hMa2xzOUUyMlFYYkY3V3hoOVB5cWFJTy1CS1RSYWl4TlZRYUlXUGRTRENJckp1YWtzYXlZUnZ6ckZNTVB5cWx0ekQ2NkJqb2xoVDFod0o2ajJ5WmV3d05LZWVQcWNmelUzemFWc0w2ZkZmUlVHS3U2RlhSMEItZlU3YkVSYVRZS2d0M2h6ODFZTHJ0VElXQnNFQUlycV9RSzVyQkV1LVlSc25IaUlDWlNONnFkVkZPUnc?oc=5",
-      "published": "2026-06-23T12:50:56Z",
+      "title": "Wall Street ends lower on semiconductor selloff as AI spending concerns mount - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOQnlIcE1UTlduazdvRTZrdlV4TjhDcXNaOVNpbEJoRnRrd3VqdzJCcElQRVNvZXg1UU5IbVE1THNwXzJJTVB1MldQNFNpY0VwV0JOR0VhUk1idktydVlGN19XVHJkQjFtS3lHNUY4dnZNZXhJNUkxYXI1UnZIQ2xqMTNVNkhiaS1KWGpwaWNUN0pTUGF4OUE?oc=5",
+      "published": "2026-06-23T20:38:44Z",
       "tone": "bearish"
     },
     {
-      "title": "Wall St ends mixed as tech megacap losses outweigh upbeat chip outlook",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/wall-st-ends-mixed-tech-225558142.html?.tsrc=rss",
-      "published": "2026-06-25T22:55:58Z",
+      "title": "U.S. crude oil falls below $70, resuming losses after attack on cargo ship near Oman",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/06/26/oil-prices-middle-east-iran-strait-of-hormuz-opec-iraq-wti-brent-crude.html",
+      "published": "2026-06-26T09:22:30Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 86
       }
     ],
-    "headline_count": 140,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

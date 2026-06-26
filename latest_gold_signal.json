@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-25T23:15:27Z",
-  "data_asof": "2026-06-25",
-  "daily_rows": 6478,
+  "generated_at_utc": "2026-06-26T10:18:38Z",
+  "data_asof": "2026-06-26",
+  "daily_rows": 6479,
   "quote_price": null,
   "quote_timestamp": null,
   "quote_source": null,
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1782515726&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1782555517&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -30,13 +30,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-25",
-      "close": 4038.60009765625
+      "date": "2026-06-26",
+      "close": 4065.0
     },
-    "latestSma": 4293.285009765625,
+    "latestSma": 4271.165014648437,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.24063624928308025,
+    "latestDd": -0.23567236863692642,
     "regime": "tier2",
     "entryClose": 4087.699951171875,
     "entryDate": "2025-10-21",
@@ -52,10 +52,10 @@
   },
   "provisional_signal": null,
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-25",
+    "last_observed_asof": "2026-06-26",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-25T23:15:27Z",
+    "last_checked_at_utc": "2026-06-26T10:18:38Z",
     "last_email_sent_on": "2026-06-17",
     "last_transition": {
       "id": "2026-06-17:1->2026-06-17:0",
