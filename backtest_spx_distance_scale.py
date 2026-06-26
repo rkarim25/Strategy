@@ -620,8 +620,11 @@ def build_site_payload(
     signal_history: list[dict],
     price_sma_data: dict,
     equity_curve: dict,
+    spec: dict | None = None,
 ) -> dict:
     """Assemble the full site_data.json payload matching spx_guarded_site_data.json structure."""
+    if spec is None:
+        spec = DEFAULT_SPEC
     bh1 = next(r for r in comparison if r["strategy"] == "Buy & Hold SPY 1x")
     bh2 = next(r for r in comparison if r["strategy"] == "Buy & Hold SSO 2x")
     bh3 = next(r for r in comparison if r["strategy"] == "Buy & Hold UPRO 3x")
@@ -639,7 +642,7 @@ def build_site_payload(
     return {
         "ticker": SPX_TICKER,
         "asset_label": "S&P 500",
-        "strategy_params": DEFAULT_SPEC,
+        "strategy_params": spec,
         "sample": {
             "start_date": prices.index[0].date().isoformat(),
             "end_date": prices.index[-1].date().isoformat(),
