@@ -392,8 +392,8 @@
     let customStart = null, customEnd = null;
     if (customDates) {
       const sep = document.createElement("span"); sep.className = "sep"; rdiv.appendChild(sep);
-      customStart = document.createElement("input"); customStart.type = "date";
-      customEnd = document.createElement("input"); customEnd.type = "date";
+      customStart = document.createElement("input"); customStart.type = "date"; customStart.title = "Custom start date";
+      customEnd = document.createElement("input"); customEnd.type = "date"; customEnd.title = "Custom end date";
       if (dates.length) { customStart.min = customEnd.min = dates[0]; customStart.max = customEnd.max = dates[dates.length - 1]; }
       const apply = document.createElement("button"); apply.textContent = "Apply dates";
       apply.onclick = () => {
@@ -509,7 +509,7 @@
       if (p.sma_main) defs.push({ label: "SMA" + (sp.sma_window || ""), color: "#b26a00", values: p.sma_main });
       if (p.sma200_upper_band) defs.push({ label: "Upper band", color: "rgba(36,138,61,.5)", values: p.sma200_upper_band });
       if (p.sma200_lower_band) defs.push({ label: "Lower band", color: "rgba(215,0,21,.5)", values: p.sma200_lower_band });
-      vs.appendChild(chartBlock("Price & moving averages — with signal markers", p.dates, defs, { log: false, markerDefs }));
+      vs.appendChild(chartBlock("Price & moving averages — with signal markers", p.dates, defs, { log: false, markerDefs, customDates: true }));
     }
     // Rebased %-equity P&L chart on the Signal view (price + equity together, with markers).
     if (d.equity_curve) {
@@ -548,7 +548,7 @@
       vb.appendChild(chartBlock("Growth of $100 (log scale)", e.dates, [
         { label: name, color: ACCENT, width: 2, values: e.strategy_equity },
         { label: "Buy & hold 1×", color: "#6e6e73", values: e.buy_hold_1x_equity },
-      ], { log: true }));
+      ], { log: true, customDates: true }));
     }
     if (d.comparison_table) {
       const rows = d.comparison_table.map((r) => {
