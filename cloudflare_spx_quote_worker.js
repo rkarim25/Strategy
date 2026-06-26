@@ -1,6 +1,16 @@
+// slug -> Yahoo Finance ticker. Every site asset is mapped so ?symbol=<slug> returns
+// that asset's real quote. Unknown symbols fall back to the param uppercased.
 const SYMBOLS = {
-  spx: { encoded: "%5EGSPC", ticker: "^GSPC" },
-  ndx: { encoded: "%5ENDX", ticker: "^NDX" },
+  spx: "^GSPC",
+  ndx: "^NDX",
+  gold: "GC=F",
+  ftse250: "^FTMC",
+  dax: "^GDAXI",
+  msci_em: "EEM",
+  msci_world: "SWDA.L",
+  lqq3: "LQQ3.L",
+  "3bal": "3BAL.L",
+  vix: "^VIX",
 };
 
 export default {
@@ -9,17 +19,9 @@ export default {
     const mode = url.searchParams.get("mode") || "daily";
     const symbolParam = url.searchParams.get("symbol") || "spx";
     const symbolKey = symbolParam.toLowerCase();
-    
-    let tickerName = symbolParam;
-    let encodedTicker = "";
 
-    if (SYMBOLS[symbolKey]) {
-      tickerName = SYMBOLS[symbolKey].ticker;
-      encodedTicker = SYMBOLS[symbolKey].encoded;
-    } else {
-      tickerName = symbolParam.toUpperCase();
-      encodedTicker = encodeURIComponent(symbolParam);
-    }
+    const tickerName = SYMBOLS[symbolKey] || symbolParam.toUpperCase();
+    const encodedTicker = encodeURIComponent(tickerName);
 
     const dailyUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${encodedTicker}?interval=1d&range=30y`;
     const quoteUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${encodedTicker}?interval=1m&range=1d`;
