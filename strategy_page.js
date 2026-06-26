@@ -455,6 +455,14 @@
       if (p.sma200_lower_band) defs.push({ label: "Lower band", color: "rgba(215,0,21,.5)", values: p.sma200_lower_band });
       vs.appendChild(chartBlock("Price & moving averages — with signal markers", p.dates, defs, { log: false, markerDefs }));
     }
+    // Rebased %-equity P&L chart on the Signal view (price + equity together, with markers).
+    if (d.equity_curve) {
+      const e = d.equity_curve;
+      vs.appendChild(chartBlock("Equity P&L vs buy & hold (rebased to 0%)", e.dates, [
+        { label: name, color: ACCENT, width: 2, values: e.strategy_equity },
+        { label: "Buy & hold 1×", color: "#6e6e73", values: e.buy_hold_1x_equity },
+      ], { rebasePct: true, customDates: true, markerDefs }));
+    }
     // recent signal history
     const sh = (d.signal_history || []).slice(-14).reverse();
     if (sh.length) {
@@ -480,12 +488,7 @@
     vb.appendChild(kc);
     if (d.equity_curve) {
       const e = d.equity_curve;
-      // Rebased %-return window (primary): strategy vs buy & hold, 0% at window start, signal markers overlaid.
-      vb.appendChild(chartBlock("Selected window equity P&L (rebased to 0%)", e.dates, [
-        { label: name, color: ACCENT, width: 2, values: e.strategy_equity },
-        { label: "Buy & hold 1×", color: "#6e6e73", values: e.buy_hold_1x_equity },
-      ], { rebasePct: true, customDates: true, markerDefs }));
-      // Absolute growth-of-$100 (log) for the long view.
+      // Absolute growth-of-$100 (log) for the long view (the rebased %-equity chart is on the Signal view).
       vb.appendChild(chartBlock("Growth of $100 (log scale)", e.dates, [
         { label: name, color: ACCENT, width: 2, values: e.strategy_equity },
         { label: "Buy & hold 1×", color: "#6e6e73", values: e.buy_hold_1x_equity },
