@@ -1,0 +1,172 @@
+{
+  "assets": [
+    {
+      "slug": "3bal",
+      "name": "WisdomTree EURO STOXX Banks 3x Daily Leveraged (GBX, ISIN IE00BLS09N40)",
+      "ticker": "3BAL.L",
+      "source": "Yahoo Finance",
+      "file": "3bal_daily.csv",
+      "rows": 2900,
+      "start": "2014-12-08",
+      "end": "2026-06-19",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "dax",
+      "name": "DAX",
+      "ticker": "^GDAXI",
+      "source": "Yahoo Finance",
+      "file": "dax_daily.csv",
+      "rows": 9726,
+      "start": "1987-12-30",
+      "end": "2026-06-18",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "ftse250",
+      "name": "FTSE 250",
+      "ticker": "^FTMC",
+      "source": "Yahoo Finance",
+      "file": "ftse250_daily.csv",
+      "rows": 10224,
+      "start": "1985-12-31",
+      "end": "2026-06-19",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "gold",
+      "name": "Gold (futures)",
+      "ticker": "GC=F",
+      "source": "Yahoo Finance",
+      "file": "gold_daily.csv",
+      "rows": 6475,
+      "start": "2000-08-30",
+      "end": "2026-06-19",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "lqq3",
+      "name": "WisdomTree 3x Daily Nasdaq 100 ETP",
+      "ticker": "LQQ3.L",
+      "source": "Yahoo Finance",
+      "file": "lqq3_daily.csv",
+      "rows": 3392,
+      "start": "2012-12-13",
+      "end": "2026-06-19",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "msci_em",
+      "name": "MSCI Emerging Markets",
+      "ticker": "EEM",
+      "source": "Yahoo Finance",
+      "file": "msci_em_daily.csv",
+      "rows": 5833,
+      "start": "2003-04-14",
+      "end": "2026-06-18",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "msci_world",
+      "name": "MSCI World",
+      "ticker": "SWDA.L",
+      "source": "Yahoo Finance",
+      "file": "msci_world_daily.csv",
+      "rows": 4178,
+      "start": "2009-12-01",
+      "end": "2026-06-19",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "ndx",
+      "name": "Nasdaq 100",
+      "ticker": "^NDX",
+      "source": "Yahoo Finance",
+      "file": "ndx_daily.csv",
+      "rows": 7548,
+      "start": "1996-06-19",
+      "end": "2026-06-18",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "rut",
+      "name": "Russell 2000",
+      "ticker": "^RUT",
+      "source": "Yahoo Finance",
+      "file": "rut_daily.csv",
+      "rows": 9185,
+      "start": "1990-01-03",
+      "end": "2026-06-24",
+      "refresh": "manual (download_missing_data / sweep)"
+    },
+    {
+      "slug": "spx",
+      "name": "S&P 500",
+      "ticker": "^GSPC",
+      "source": "Yahoo Finance",
+      "file": "spx_daily.csv",
+      "rows": 7548,
+      "start": "1996-06-19",
+      "end": "2026-06-18",
+      "refresh": "cron update-market-data.yml"
+    },
+    {
+      "slug": "spxew",
+      "name": "S&P 500 Equal Weight",
+      "ticker": "RSP",
+      "source": "Yahoo Finance",
+      "file": "spxew_daily.csv",
+      "rows": 5823,
+      "start": "2003-05-02",
+      "end": "2026-06-24",
+      "refresh": "manual"
+    },
+    {
+      "slug": "tlt",
+      "name": "20Y+ US Treasuries",
+      "ticker": "TLT",
+      "source": "Yahoo Finance",
+      "file": "tlt_daily.csv",
+      "rows": 6013,
+      "start": "2002-07-31",
+      "end": "2026-06-24",
+      "refresh": "manual"
+    }
+  ],
+  "auxiliary": [
+    {
+      "name": "T-bill rate (13-week)",
+      "ticker": "^IRX",
+      "source": "Yahoo Finance",
+      "use": "risk-free rate + borrow-cost base; default 3% before history"
+    },
+    {
+      "name": "VIX",
+      "ticker": "^VIX",
+      "source": "Yahoo Finance",
+      "use": "VIX-linked borrow spread; default 20.0 before history"
+    }
+  ],
+  "etp_models": [
+    {
+      "name": "3x S&P 500",
+      "ticker": "UPRO",
+      "use": "real ETP daily returns in etp_leverage.py (synthetic daily-reset fallback pre-inception)"
+    },
+    {
+      "name": "3x Nasdaq 100",
+      "ticker": "TQQQ",
+      "use": "real ETP daily returns"
+    },
+    {
+      "name": "1x Gold",
+      "ticker": "GLD",
+      "use": "real ETP daily returns"
+    },
+    {
+      "name": "2x Gold",
+      "ticker": "UGL",
+      "use": "real ETP daily returns"
+    }
+  ]
+}

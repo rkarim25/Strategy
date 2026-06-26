@@ -1,0 +1,567 @@
+{
+  "experiments": [
+    {
+      "experiment": "3bal_guarded",
+      "path": "output/3bal_guarded/",
+      "files": 6,
+      "key_files": [
+        "3bal_daily.csv",
+        "3bal_guarded_site_data.json",
+        "comparison.csv",
+        "monte_carlo_paths.csv",
+        "site_comparison.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "3qqq_probe",
+      "path": "output/3qqq_probe/",
+      "files": 5,
+      "key_files": [
+        "3QQQ_L_leverage_shares_3x.csv",
+        "LQQ3_L_wisdomtree_3x_gbx.csv",
+        "QQQ3_L_wisdomtree_3x_usd.csv",
+        "TQQQ_us_3x.csv",
+        "summary.txt"
+      ]
+    },
+    {
+      "experiment": "bh_dd5_filter",
+      "path": "output/bh_dd5_filter/",
+      "files": 3,
+      "key_files": [
+        "buy_hold_all.csv",
+        "buy_hold_within_5pct_dd.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "comprehensive_sweep",
+      "path": "output/comprehensive_sweep/",
+      "files": 1,
+      "key_files": [
+        "spx_ndx_comprehensive.csv"
+      ]
+    },
+    {
+      "experiment": "cross_asset_guarded_1x",
+      "path": "output/cross_asset_guarded_1x/",
+      "files": 3,
+      "key_files": [
+        "cross_asset_guarded_1x_common_window.csv",
+        "cross_asset_guarded_1x_results.csv",
+        "metadata.json"
+      ]
+    },
+    {
+      "experiment": "dax_guarded",
+      "path": "output/dax_guarded/",
+      "files": 3,
+      "key_files": [
+        "dax_comparison.csv",
+        "dax_monte_carlo_paths.csv",
+        "dax_site_data.json"
+      ]
+    },
+    {
+      "experiment": "dd5_limit_global",
+      "path": "output/dd5_limit_global/",
+      "files": 2,
+      "key_files": [
+        "dd5_limit_results.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "ema20_vs_sma20",
+      "path": "output/ema20_vs_sma20/",
+      "files": 2,
+      "key_files": [
+        "comparison.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "five_sleeve_portfolio_rebalance",
+      "path": "output/five_sleeve_portfolio_rebalance/",
+      "files": 6,
+      "key_files": [
+        "portfolio_equity_semiannual_rebal.csv",
+        "portfolio_summary.csv",
+        "portfolio_weights_semiannual_rebal.csv",
+        "rebalance_events.csv",
+        "sleeve_guarded_stats.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "ftse250_guarded",
+      "path": "output/ftse250_guarded/",
+      "files": 3,
+      "key_files": [
+        "ftse250_comparison.csv",
+        "ftse250_monte_carlo_paths.csv",
+        "ftse250_site_data.json"
+      ]
+    },
+    {
+      "experiment": "global_equity_guarded_ii",
+      "path": "output/global_equity_guarded_ii/",
+      "files": 2,
+      "key_files": [
+        "results.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "gold_guarded",
+      "path": "output/gold_guarded/",
+      "files": 3,
+      "key_files": [
+        "gold_guarded_comparison.csv",
+        "gold_guarded_monte_carlo_paths.csv",
+        "gold_guarded_site_data.json"
+      ]
+    },
+    {
+      "experiment": "gold_market_structure",
+      "path": "output/gold_market_structure/",
+      "files": 3,
+      "key_files": [
+        "structure_sweep_ranked.csv",
+        "structure_sweep_results.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "gold_sma_profit_exit",
+      "path": "output/gold_sma_profit_exit/",
+      "files": 5,
+      "key_files": [
+        "guarded_profit_exit_ranked.csv",
+        "guarded_profit_exit_sweep.csv",
+        "sma20_profit_exit_ranked.csv",
+        "sma20_profit_exit_sweep.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "gold_sma_sell_buffer",
+      "path": "output/gold_sma_sell_buffer/",
+      "files": 5,
+      "key_files": [
+        "guarded_sell_buffer_5_to_15.csv",
+        "guarded_sell_buffer_5_to_15_ranked.csv",
+        "guarded_sell_buffer_ranked.csv",
+        "guarded_sell_buffer_sweep.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "gold_strategy_variants",
+      "path": "output/gold_strategy_variants/",
+      "files": 3,
+      "key_files": [
+        "summary.json",
+        "variants_sweep_ranked.csv",
+        "variants_sweep_results.csv"
+      ]
+    },
+    {
+      "experiment": "guarded_3x_skim_variants",
+      "path": "output/guarded_3x_skim_variants/",
+      "files": 22,
+      "key_files": [
+        "comparison_table.md",
+        "equity_NDX_A_trend_hwm_skim_skim10pct.csv",
+        "equity_NDX_A_trend_hwm_skim_skim20pct.csv",
+        "equity_NDX_A_trend_hwm_skim_skim30pct.csv",
+        "equity_NDX_A_trend_hwm_skim_skim40pct.csv",
+        "equity_NDX_B_vol_quarterly_skim_skim20pct.csv"
+      ]
+    },
+    {
+      "experiment": "guarded_balanced_candidate",
+      "path": "output/guarded_balanced_candidate/",
+      "files": 4,
+      "key_files": [
+        "guarded_balanced_candidate_backtest.csv",
+        "guarded_balanced_candidate_monte_carlo_metadata.json",
+        "guarded_balanced_candidate_monte_carlo_paths.csv",
+        "guarded_balanced_candidate_monte_carlo_summary.csv"
+      ]
+    },
+    {
+      "experiment": "guarded_tiered_sma20_50_200",
+      "path": "output/guarded_tiered_sma20_50_200/",
+      "files": 2,
+      "key_files": [
+        "guarded_tiered_sma20_50_200_chart_data.json",
+        "guarded_tiered_sma20_50_200_results.csv"
+      ]
+    },
+    {
+      "experiment": "long_hold_momentum_strategies",
+      "path": "output/long_hold_momentum_strategies/",
+      "files": 2,
+      "key_files": [
+        "long_hold_momentum_chart_data.json",
+        "long_hold_momentum_results.csv"
+      ]
+    },
+    {
+      "experiment": "lqq3_guarded",
+      "path": "output/lqq3_guarded/",
+      "files": 6,
+      "key_files": [
+        "lqq3_daily.csv",
+        "lqq3_guarded_comparison.csv",
+        "lqq3_guarded_site_data.json",
+        "lqq3_monte_carlo_paths.csv",
+        "lqq3_site_comparison.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "lqq3_sma_asymmetric_xy",
+      "path": "output/lqq3_sma_asymmetric_xy/",
+      "files": 13,
+      "key_files": [
+        "balanced_improvers_vs_guarded.csv",
+        "balanced_improvers_vs_sma20.csv",
+        "beats_any_vs_guarded.csv",
+        "beats_any_vs_sma20.csv",
+        "comparison.csv",
+        "no_sacrifice_vs_guarded.csv"
+      ]
+    },
+    {
+      "experiment": "lqq3_synthetic_guarded",
+      "path": "output/lqq3_synthetic_guarded/",
+      "files": 3,
+      "key_files": [
+        "comparison.csv",
+        "lqq3_synthetic_daily.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "lqq3_turnover_reduction",
+      "path": "output/lqq3_turnover_reduction/",
+      "files": 6,
+      "key_files": [
+        "comparison.csv",
+        "lowest_rebalances_vs_sma.csv",
+        "no_sacrifice_vs_guarded.csv",
+        "no_sacrifice_vs_sma20.csv",
+        "pareto_frontier.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "momentum_leverage_strategies",
+      "path": "output/momentum_leverage_strategies/",
+      "files": 2,
+      "key_files": [
+        "momentum_leverage_chart_data.json",
+        "momentum_leverage_results.csv"
+      ]
+    },
+    {
+      "experiment": "momentum_monte_carlo",
+      "path": "output/momentum_monte_carlo/",
+      "files": 3,
+      "key_files": [
+        "momentum_monte_carlo_metadata.json",
+        "momentum_monte_carlo_paths.csv",
+        "momentum_monte_carlo_summary.csv"
+      ]
+    },
+    {
+      "experiment": "monte_carlo_guarded_sma20_a10b20",
+      "path": "output/monte_carlo_guarded_sma20_a10b20/",
+      "files": 3,
+      "key_files": [
+        "annual_path_percentiles.csv",
+        "monte_carlo_paths.csv",
+        "monte_carlo_summary.json"
+      ]
+    },
+    {
+      "experiment": "msci_em_guarded",
+      "path": "output/msci_em_guarded/",
+      "files": 3,
+      "key_files": [
+        "msci_em_comparison.csv",
+        "msci_em_monte_carlo_paths.csv",
+        "msci_em_site_data.json"
+      ]
+    },
+    {
+      "experiment": "msci_world_guarded",
+      "path": "output/msci_world_guarded/",
+      "files": 3,
+      "key_files": [
+        "msci_world_comparison.csv",
+        "msci_world_monte_carlo_paths.csv",
+        "msci_world_site_data.json"
+      ]
+    },
+    {
+      "experiment": "multi_asset_guarded_scan",
+      "path": "output/multi_asset_guarded_scan/",
+      "files": 3,
+      "key_files": [
+        "canvas_data.json",
+        "canvas_rows.json",
+        "multi_asset_guarded_scan.csv"
+      ]
+    },
+    {
+      "experiment": "ndx_3x_vs_synthetic_3qqq_1996",
+      "path": "output/ndx_3x_vs_synthetic_3qqq_1996/",
+      "files": 2,
+      "key_files": [
+        "comparison.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "ndx_guarded",
+      "path": "output/ndx_guarded/",
+      "files": 4,
+      "key_files": [
+        "ndx_guarded_comparison.csv",
+        "ndx_guarded_default_backtest.csv",
+        "ndx_guarded_monte_carlo_paths.csv",
+        "ndx_guarded_site_data.json"
+      ]
+    },
+    {
+      "experiment": "ndx_guarded_a3b15_validation",
+      "path": "output/ndx_guarded_a3b15_validation/",
+      "files": 12,
+      "key_files": [
+        "_run.log",
+        "final_verdict.md",
+        "test1_boundary_sweep.csv",
+        "test2_walkforward.csv",
+        "test3_cross_asset.csv",
+        "test4_bootstrap_ci.csv"
+      ]
+    },
+    {
+      "experiment": "ndx_guarded_ab_sweep",
+      "path": "output/ndx_guarded_ab_sweep/",
+      "files": 6,
+      "key_files": [
+        "ab_sweep_ranked.csv",
+        "ab_sweep_results.csv",
+        "comparison_table.md",
+        "pareto_frontier.csv",
+        "secondary_xy_sweep.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "ndx_vs_lqq3_guarded",
+      "path": "output/ndx_vs_lqq3_guarded/",
+      "files": 2,
+      "key_files": [
+        "comparison.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "spx_1x_sweep",
+      "path": "output/spx_1x_sweep/",
+      "files": 1,
+      "key_files": [
+        "spx_1x_sweep_results.csv"
+      ]
+    },
+    {
+      "experiment": "spx_3x_levered",
+      "path": "output/spx_3x_levered/",
+      "files": 3,
+      "key_files": [
+        "spx_3x_levered_comparison.csv",
+        "spx_3x_levered_monte_carlo_paths.csv",
+        "spx_3x_levered_site_data.json"
+      ]
+    },
+    {
+      "experiment": "spx_3x_tier_native",
+      "path": "output/spx_3x_tier_native/",
+      "files": 2,
+      "key_files": [
+        "comparison.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "spx_counter_cyclical",
+      "path": "output/spx_counter_cyclical/",
+      "files": 1,
+      "key_files": [
+        "spx_counter_cyclical_results.csv"
+      ]
+    },
+    {
+      "experiment": "spx_dd_protection_sweep",
+      "path": "output/spx_dd_protection_sweep/",
+      "files": 1,
+      "key_files": [
+        "spx_dd_protection_results.csv"
+      ]
+    },
+    {
+      "experiment": "spx_dd_refinement",
+      "path": "output/spx_dd_refinement/",
+      "files": 1,
+      "key_files": [
+        "spx_dd_refinement_results.csv"
+      ]
+    },
+    {
+      "experiment": "spx_distance_scale",
+      "path": "output/spx_distance_scale/",
+      "files": 3,
+      "key_files": [
+        "spx_distance_scale_comparison.csv",
+        "spx_distance_scale_monte_carlo_paths.csv",
+        "spx_distance_scale_site_data.json"
+      ]
+    },
+    {
+      "experiment": "spx_guarded",
+      "path": "output/spx_guarded/",
+      "files": 4,
+      "key_files": [
+        "spx_guarded_comparison.csv",
+        "spx_guarded_default_backtest.csv",
+        "spx_guarded_monte_carlo_paths.csv",
+        "spx_guarded_site_data.json"
+      ]
+    },
+    {
+      "experiment": "spx_ndx_rotation_guarded",
+      "path": "output/spx_ndx_rotation_guarded/",
+      "files": 2,
+      "key_files": [
+        "rotation_results.csv",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "spx_parallel_risk_cap_sweep",
+      "path": "output/spx_parallel_risk_cap_sweep/",
+      "files": 8,
+      "key_files": [
+        "comparison.csv",
+        "pareto_frontier.csv",
+        "ranked_beats_both.csv",
+        "ranked_beats_cagr.csv",
+        "ranked_beats_sharpe.csv",
+        "ranked_similar_dd_better_sharpe.csv"
+      ]
+    },
+    {
+      "experiment": "spx_parallel_tier_sma",
+      "path": "output/spx_parallel_tier_sma/",
+      "files": 3,
+      "key_files": [
+        "comparison.csv",
+        "strategy_plan.md",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "spx_parallel_tier_sma_extensions",
+      "path": "output/spx_parallel_tier_sma_extensions/",
+      "files": 3,
+      "key_files": [
+        "comparison.csv",
+        "strategy_plan.md",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "spx_pareto",
+      "path": "output/spx_pareto/",
+      "files": 2,
+      "key_files": [
+        "pareto_analysis.txt",
+        "spx_pareto_results.csv"
+      ]
+    },
+    {
+      "experiment": "spx_sma20_entry_exit",
+      "path": "output/spx_sma20_entry_exit/",
+      "files": 6,
+      "key_files": [
+        "comparison.csv",
+        "pareto_frontier.csv",
+        "ranked_cagr.csv",
+        "ranked_low_turnover.csv",
+        "strategy_plan.md",
+        "summary.json"
+      ]
+    },
+    {
+      "experiment": "spx_strategy_sweep",
+      "path": "output/spx_strategy_sweep/",
+      "files": 1,
+      "key_files": [
+        "spx_sweep_results.csv"
+      ]
+    },
+    {
+      "experiment": "strategies",
+      "path": "output/strategies/",
+      "files": 9,
+      "key_files": [
+        "BB_Mean_Reversion_2x.pdf",
+        "DD_Recovery_3x.pdf",
+        "Golden_Cross_3x.pdf",
+        "MACD_Momentum_3x.pdf",
+        "MACD___SMA200_3x.pdf",
+        "RSI_Momentum_3x.pdf"
+      ]
+    },
+    {
+      "experiment": "strategy_results",
+      "path": "output/strategy_results/",
+      "files": 38,
+      "key_files": [
+        "additional_strategies_results.csv",
+        "all_assets_combined.csv",
+        "all_assets_combined.csv",
+        "all_assets_combined.csv",
+        "all_assets_pareto_combined.csv",
+        "comprehensive_all_assets_results.csv"
+      ]
+    },
+    {
+      "experiment": "tiered_dd_recovery_guarded",
+      "path": "output/tiered_dd_recovery_guarded/",
+      "files": 1,
+      "key_files": [
+        "tiered_dd_recovery_guarded_results.csv"
+      ]
+    },
+    {
+      "experiment": "tiered_vs_binary_guarded",
+      "path": "output/tiered_vs_binary_guarded/",
+      "files": 11,
+      "key_files": [
+        "final_report.md",
+        "summary.json",
+        "test1_full_period.csv",
+        "test2_tier_decomposition.csv",
+        "test3_walkforward.csv",
+        "test4_bootstrap.json"
+      ]
+    }
+  ]
+}

@@ -23,6 +23,8 @@ established research scripts only. Everything new and throwaway goes in a folder
 
 | You're adding… | Put it in… |
 |----------------|-----------|
+| **Downloading market data** | **STOP** — check `catalog/data.md` first; then follow `docs/runbooks/add-data-source.md`; register with `python tools/build_catalog.py` |
+| **Running a backtest** | **STOP** — check `catalog/experiments.md` first; then `docs/runbooks/run-backtest.md`; outputs → `output/<id>/`; register with `python tools/build_catalog.py` |
 | A throwaway / one-off / debug script | `scratch/` (prefix `_` or `debug_`) — **never root** |
 | A new reusable strategy | `strategies.py` (extend `LeverageStrategy`) |
 | A new asset's guarded page | `guarded_asset_registry.py` + run `build_guarded_asset_pages.py` |

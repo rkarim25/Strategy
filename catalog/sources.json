@@ -1,0 +1,37 @@
+{
+  "_README": "CANONICAL DATA SOURCES. Check this + catalog/data.md BEFORE downloading anything. If an asset is here and catalog/data.md shows the date range you need, DO NOT re-download - load the CSV. To add a source, follow docs/runbooks/add-data-source.md.",
+  "assets": [
+    {"slug": "spx",        "name": "S&P 500",                    "ticker": "^GSPC",  "source": "Yahoo Finance", "lev_cap": "3x", "history": "1950-01-03",        "file": "spx_daily.csv",        "refresh": "cron update-market-data.yml"},
+    {"slug": "ndx",        "name": "Nasdaq 100",                 "ticker": "^NDX",   "source": "Yahoo Finance", "lev_cap": "3x", "history": "1985-10-01",        "file": "ndx_daily.csv",        "refresh": "cron update-market-data.yml"},
+    {"slug": "gold",       "name": "Gold (futures)",             "ticker": "GC=F",   "source": "Yahoo Finance", "lev_cap": "1x", "history": "inception",         "file": "gold_daily.csv",       "refresh": "cron update-market-data.yml"},
+    {"slug": "ftse250",    "name": "FTSE 250",                   "ticker": "^FTMC",  "source": "Yahoo Finance", "lev_cap": "1x", "history": "inception",         "file": "ftse250_daily.csv",    "refresh": "cron update-market-data.yml"},
+    {"slug": "dax",        "name": "DAX",                        "ticker": "^GDAXI", "source": "Yahoo Finance", "lev_cap": "1x", "history": "inception",         "file": "dax_daily.csv",        "refresh": "cron update-market-data.yml"},
+    {"slug": "msci_em",    "name": "MSCI Emerging Markets",      "ticker": "EEM",    "source": "Yahoo Finance", "lev_cap": "1x", "history": "inception",         "file": "msci_em_daily.csv",    "refresh": "cron update-market-data.yml"},
+    {"slug": "msci_world", "name": "MSCI World",                 "ticker": "SWDA.L", "source": "Yahoo Finance", "lev_cap": "1x", "history": "2009-12-01 (clamped; pre-2009 Yahoo data unreliable)", "file": "msci_world_daily.csv", "refresh": "cron update-market-data.yml"},
+    {"slug": "lqq3",       "name": "WisdomTree 3x Daily Nasdaq 100 ETP", "ticker": "LQQ3.L", "source": "Yahoo Finance", "lev_cap": "3x ETP (cash vs full)", "history": "2012-12-13", "file": "lqq3_daily.csv", "refresh": "cron update-market-data.yml"},
+    {"slug": "3bal",       "name": "WisdomTree EURO STOXX Banks 3x Daily Leveraged (GBX, ISIN IE00BLS09N40)", "ticker": "3BAL.L", "source": "Yahoo Finance", "lev_cap": "3x ETP", "history": "inception", "file": "3bal_daily.csv", "refresh": "cron update-market-data.yml"},
+    {"slug": "rut",        "name": "Russell 2000",               "ticker": "^RUT",   "source": "Yahoo Finance", "lev_cap": "3x", "history": "inception",         "file": "rut_daily.csv",        "refresh": "manual (download_missing_data / sweep)"},
+    {"slug": "spxew",      "name": "S&P 500 Equal Weight",       "ticker": "RSP",    "source": "Yahoo Finance", "lev_cap": "-",  "history": "RSP inception 2003", "file": "spxew_daily.csv",      "refresh": "manual"},
+    {"slug": "tlt",        "name": "20Y+ US Treasuries",         "ticker": "TLT",    "source": "Yahoo Finance", "lev_cap": "3x", "history": "TLT inception 2002", "file": "tlt_daily.csv",        "refresh": "manual"}
+  ],
+  "auxiliary": [
+    {"name": "T-bill rate (13-week)", "ticker": "^IRX", "source": "Yahoo Finance", "use": "risk-free rate + borrow-cost base; default 3% before history"},
+    {"name": "VIX",                   "ticker": "^VIX", "source": "Yahoo Finance", "use": "VIX-linked borrow spread; default 20.0 before history"}
+  ],
+  "etp_models": [
+    {"name": "3x S&P 500",   "ticker": "UPRO", "use": "real ETP daily returns in etp_leverage.py (synthetic daily-reset fallback pre-inception)"},
+    {"name": "3x Nasdaq 100","ticker": "TQQQ", "use": "real ETP daily returns"},
+    {"name": "1x Gold",      "ticker": "GLD",  "use": "real ETP daily returns"},
+    {"name": "2x Gold",      "ticker": "UGL",  "use": "real ETP daily returns"}
+  ],
+  "live_quotes": {
+    "worker": "cloudflare_spx_quote_worker.js",
+    "note": "Cloudflare Worker CORS proxy for intraday Yahoo quotes; used live only by the gold page."
+  },
+  "_data_notes": [
+    "spx_daily.csv / ndx_daily.csv cache only ~30 years (from ~1996) for the website. The FULL S&P history back to 1950-01-03 is downloaded on demand by backtest_spx_distance_scale.py and embedded in spx_distance_scale_site_data.json - it is NOT stored in spx_daily.csv. Need pre-1996 SPX? Reuse that JSON / script before re-downloading.",
+    "Two writers touch each *_daily.csv: the cron (full precision .12g) and backtests (.9g, ~30y) - expect churn; never hand-edit them.",
+    "gold uses GC=F (futures), which begins 2000-08; longer gold history needs a different proxy.",
+    "msci_world is deliberately clamped to 2009-12-01 (pre-2009 Yahoo SWDA.L data is unreliable)."
+  ]
+}

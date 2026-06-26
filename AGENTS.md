@@ -1,50 +1,53 @@
-# AGENTS.md — Systematic Backtester
+# AGENTS.md — Systematic Backtester (AI factory hub)
 
-> **Any AI/agent working on this repo: read this file first.** It is the durable map of
-> the project. Deeper detail lives in [`docs/`](docs/) — open only the one doc you need so
-> you don't burn context. This file + the right `docs/` page should make you productive in
-> ~2 minutes without reading source.
+> **Every AI/agent: read this first, then [`docs/runbooks/START-HERE.md`](docs/runbooks/START-HERE.md).**
+> This repo is edited **entirely by AIs in fresh, separate sessions**. Treat it like a factory: check what
+> already exists before you build, don't duplicate, don't clash with other agents, leave it clean.
+> The human only reads **results + the website** — everything underneath is ours to run.
 
----
+## ⚡ The loop (every session)
+1. **Sync** — `git fetch origin` (the cron and other agents push to `main`).
+2. **Check before building (no duplication):** [`catalog/data.md`](catalog/data.md) before downloading data ·
+   [`catalog/experiments.md`](catalog/experiments.md) before running a backtest.
+3. **Do the work** via the matching runbook in [`docs/runbooks/`](docs/runbooks/), obeying
+   [`docs/coding-standards.md`](docs/coding-standards.md).
+4. **Register → commit → deploy → verify** — `python tools/build_catalog.py`, commit *explicit* files,
+   deploy via [`docs/deploy.md`](docs/deploy.md), `curl` the live site.
+
+Full checklist: [`docs/runbooks/START-HERE.md`](docs/runbooks/START-HERE.md).
 
 ## What this is
-
-A personal, single-user **systematic leveraged backtesting + live-signal platform**. Two halves:
-
-1. **Python engine** (runs locally) — historical simulations → risk/return metrics → JSON / CSV / Excel.
-2. **Static website** (GitHub Pages) — live leverage signals, interactive charts, Monte Carlo, cross-asset comparison.
+A personal **systematic leveraged backtesting + live-signal platform**. Two halves:
+1. **Python engine** (local) — historical simulations → metrics → JSON/CSV/Excel.
+2. **Static website** (GitHub Pages) — live leverage signals, charts, Monte Carlo, cross-asset comparison.
 
 | | |
 |---|---|
 | **Live site** | https://rkarim25.github.io/Strategy/ |
-| **GitHub repo** | `rkarim25/Strategy` (branch `main`, deployed via GitHub Pages) |
+| **GitHub repo** | `rkarim25/Strategy` (branch `main`, GitHub Pages) |
 | **Local path** | `C:\Users\Reza Karim\OneDrive\Systematic_Backstester` |
-| **Sub-site** | `holdings_web/` is a **git submodule** (`rkarim25/holdings`) — separate repo, separate concerns |
-
----
+| **Sub-site** | `holdings_web/` is a **git submodule** (`rkarim25/holdings`) — separate repo |
 
 ## ⛔ Golden rules (break these and you break production)
-
-1. **The website is served from the repo ROOT.** `index.html`, `*_guarded.html` / `*_guarded.js`,
-   `*_daily.csv`, `*_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json` etc. **must stay at root** —
-   the HTML fetches them by relative path. **Do not relocate website or data files.**
-2. **Deploy only via the isolated git worktree — never a plain push.** OneDrive locks `.git` and open Excel.
-   Full procedure in [`docs/deploy.md`](docs/deploy.md).
-3. **Never `git add .` / `git add -A`.** Always stage an explicit file list and confirm
-   `git diff --cached --name-only` before committing. Over-pushing 21 files has happened here.
-4. **A second Cursor agent + cron jobs also push to this repo.** Expect `*_daily.csv`,
-   `latest_*_signal.json`, `holdings_*.json`, `news_score.json` to change under you — that's the automated
-   market-data refresh, **not your work**. Never bundle it into your commits; leave it alone.
-5. **Committed website pages are hand-hydrated snapshots, not raw builder output.** Re-running a page
-   builder can silently regress static Legacy/OOS tables. **Don't blindly commit builder output** — diff first.
-6. **Quant correctness is mandatory** (enforced by `.cursorrules`): 1-day signal lag (no look-ahead),
-   ≥10 bps cost per trade, VIX-linked borrow costs, vectorized Pandas/NumPy (never `.iterrows()`).
-7. **Do not read `archive/roohistory.md`** (~18k lines) unless you genuinely need deep history — it's a token sink.
-
----
+1. **The website is served from the repo ROOT.** `index.html`, `*_guarded.html/js`, `*_daily.csv`,
+   `*_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json` **must stay at root** — the HTML fetches
+   them by relative path. Don't relocate website or data files.
+2. **No duplication.** Check [`catalog/data.md`](catalog/data.md) before downloading and
+   [`catalog/experiments.md`](catalog/experiments.md) before backtesting. Reuse the engine
+   (`engine`/`metrics`/`etp_leverage`) — never re-implement it.
+3. **No clashing.** Sync first; respect ownership zones; claim shared work. See
+   [`docs/runbooks/coordination.md`](docs/runbooks/coordination.md).
+4. **Deploy via the isolated worktree, never a plain push** (OneDrive locks `.git`). See [`docs/deploy.md`](docs/deploy.md).
+5. **Never `git add .` / `-A`.** Stage explicit files; check `git diff --cached --name-only`.
+6. **The cron + other agents also push** (`*_daily.csv`, `latest_*_signal.json`, `holdings_*.json` churn) —
+   never bundle that into your commits; leave it alone.
+7. **Committed website pages are hand-hydrated snapshots** — re-running a builder can silently regress static
+   tables. Diff before committing.
+8. **Quant correctness is mandatory** — [`docs/coding-standards.md`](docs/coding-standards.md) (1-day signal
+   lag, ≥10 bps cost, VIX borrow, vectorized).
+9. **Don't read `archive/roohistory.md`** (~18k lines) unless you truly need deep history.
 
 ## 30-second architecture
-
 ```
 Yahoo Finance ──> *_daily.csv ──> Python engine (engine.py + strategies.py)
                                       │
@@ -54,108 +57,64 @@ Yahoo Finance ──> *_daily.csv ──> Python engine (engine.py + strategies.
           latest_*_signal.json   *.csv (sweep output)      (Water/Octane/Stillwater)
                   │
                   ▼
-   Static HTML/JS pages (root)  ──GitHub Pages──>  https://rkarim25.github.io/Strategy/
-                  ▲
-                  └── live intraday prices via Cloudflare Worker proxy (gold page)
+   Static HTML/JS (root)  ──GitHub Pages──> rkarim25.github.io/Strategy/  (+ Cloudflare Worker for live gold price)
 ```
-
-Two **separate** result pipelines exist — don't confuse them:
-- **Excel pipeline** — full history, per-asset costs, Water/Octane/Stillwater classification.
-- **Website summary pipeline** — shorter "real ETP" window, 3 cost levels, Balance-score view.
-
-See [`docs/backtesting.md`](docs/backtesting.md) and [`docs/strategies.md`](docs/strategies.md).
-
----
+Two **separate** result pipelines: the **Excel** (full history, per-asset costs, classification) and the
+**website summary** (shorter real-ETP window, Balance score). Don't conflate them — see [`docs/backtesting.md`](docs/backtesting.md).
 
 ## Assets & portfolio
+Target sleeves (Guarded A5/B25 + SMA20 guard): **S&P 500 40% (≤3x), Nasdaq 100 15% (≤3x), FTSE 250 16% (1x),
+MSCI EM 14% (1x), Gold 15% (1x).** Full table + sources: [`catalog/data.md`](catalog/data.md). Allocation: [`PORTFOLIO.md`](PORTFOLIO.md).
 
-Target five-sleeve allocation (Guarded A5/B25 + SMA20 lead guard): **S&P 500 40% (≤3x), Nasdaq 100 15% (≤3x),
-FTSE 250 16% (1x), MSCI EM 14% (1x), Gold 15% (1x).** Full detail in [`PORTFOLIO.md`](PORTFOLIO.md).
+12 datasets (spx, ndx, gold, ftse250, dax, msci_em, msci_world, lqq3, 3bal, rut, spxew, tlt). Pages:
+`index.html` (S&P, ≤3x), `ndx_guarded.html` (≤3x), `gold_guarded.html` (1x, live price), the 5 template
+pages (ftse250/dax/msci_em/msci_world/lqq3), `3bal_guarded.html`, `summary.html`, `instruments.html`.
 
-| Asset | Page | Lev cap | Notes |
-|-------|------|---------|-------|
-| S&P 500 | `index.html` | up to 3x | History from 1950. Tabs: Guarded, Momentum, SPX 3x Levered, + Octane `SMA200 ±3% Band + RSI>20 Exit 2x` |
-| Nasdaq 100 | `ndx_guarded.html` | up to 3x | From 1985 |
-| Gold | `gold_guarded.html` | 1x | Uses the Cloudflare Worker for **live** intraday price |
-| FTSE 250 | `ftse250_guarded.html` | 1x | `^FTMC` |
-| DAX | `dax_guarded.html` | 1x | `^GDAXI` |
-| MSCI EM | `msci_em_guarded.html` | 1x | `EEM` |
-| MSCI World | `msci_world_guarded.html` | 1x | `SWDA.L`, history clamped to 2009-12-01 |
-| LQQ3 (3x Nasdaq ETP) | `lqq3_guarded.html` | "1x" = cash vs full 3x ETP | `LQQ3.L` |
-| 3-asset balanced | `3bal_guarded.html` | — | Blended sleeve |
-| Cross-asset summary | `summary.html` | — | Overview table + per-asset drill-down |
-| Instruments browser | `instruments.html` | — | ETF / Halal instrument reference |
+## Repo map
+| Path | What | Move OK? |
+|------|------|----------|
+| `index.html`, `*_guarded.html/js`, `site-nav.js`, `instruments-*.js`, `etp-leverage.js`, `favicon.svg` | website (served at root) | ❌ |
+| `*_daily.csv`, `*_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json`, `summary_excel.json` | live data (root + cron-written) | ❌ |
+| `engine.py`, `strategies.py`, `metrics.py`, `indicators.py`, `data_manager.py`, `etp_leverage.py`, `price_cleaning.py`, `guarded_asset_registry.py`, `reporting.py` | core engine (imported widely) | ❌ |
+| `test_tiered_dd_recovery_guarded.py`, `test_guarded_balanced_candidate.py` | strategy libs (imported despite `test_` name) | ❌ |
+| `analyze_*.py`, `backtest_*.py`, `sweep_*.py`, `build_*.py`, `verify_*`, `validate_*` | research/build scripts | ⚠️ coordinate |
+| `update_static_market_data.py`, `refresh_holdings_prices.py` | cron entrypoints (`refresh_holdings_prices` is cross-repo) | ❌ |
+| **`catalog/`** | **data + experiment registries (anti-duplication) — generated by `tools/build_catalog.py`** | |
+| **`tools/`** | factory tooling (`build_catalog.py`) | |
+| **`docs/`** | references + **`docs/runbooks/`** (idiot-proof how-tos) | |
+| `output/strategy_results/` · `output/<analysis>/` | sweep CSVs · per-experiment outputs | 📦 |
+| `Results/` (+ `backups/`) · `scratch/` · `scripts/` · `archive/` · `plans/` · `workers/` | Excel · experiments · automation · old · plans · CF workers | |
+| `holdings_web/` | **git submodule** (`rkarim25/holdings`) | submodule |
+| `.github/workflows/` | `deploy-pages.yml`, `update-market-data.yml` | |
 
-The 5 template-driven guarded pages (ftse250, msci_em, dax, msci_world, lqq3) are generated from
-`guarded_asset_registry.py` + `build_guarded_asset_pages.py`. SPX/NDX/Gold/3bal have bespoke pages.
-
----
-
-## Repo map (top level)
-
-**Root files** (cluttered by necessity — see categories, don't move the live ones):
-
-| Group | Examples | Move OK? |
-|-------|----------|----------|
-| Website pages/JS | `*.html`, `site-nav.js`, `*_guarded.js`, `instruments-*.js`, `etp-leverage.js`, `favicon.svg` | ❌ served at root |
-| Live data | `*_daily.csv`, `*_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json`, `summary_excel.json` | ❌ fetched at root + cron-written |
-| Core engine modules | `engine.py`, `strategies.py`, `metrics.py`, `indicators.py`, `data_manager.py`, `etp_leverage.py`, `guarded_asset_registry.py`, `price_cleaning.py`, `reporting.py` | ❌ imported widely |
-| Strategy impl libs | `test_tiered_dd_recovery_guarded.py`, `test_guarded_balanced_candidate.py` (imported despite `test_` name) | ❌ imported widely |
-| Research/build scripts | `analyze_*.py`, `backtest_*.py`, `sweep_*.py`, `build_*.py`, `verify_*`, `validate_*`, `merge_*` | ⚠️ tracked — coordinate |
-| Cron entrypoints | `update_static_market_data.py`, `refresh_holdings_prices.py` (cross-repo) | ❌ referenced by workflow |
-| Cloudflare worker | `cloudflare_spx_quote_worker.js`, `wrangler.toml` | — |
-
-**Folders:**
-
-| Folder | Purpose |
-|--------|---------|
-| [`docs/`](docs/) | **AI-facing project documentation (this set)** |
-| `output/strategy_results/` | CSV outputs of the master sweep (feeds Excel + summary JSON) |
-| `output/<analysis>/` | Per-analysis outputs (one subdir per `analyze_*` script) |
-| `Results/` | Excel workbooks (`strategy_results.xlsx` is the main one); `Results/backups/` |
-| `scratch/` | Experiments, one-off scripts, logs, WIP — **put throwaway work here, not root** |
-| `scripts/` | Automation helpers (`run_backtests.py`, `collect_results.py`); mostly untracked temp |
-| `archive/` | Old research, `roohistory.md`, legacy docs |
-| `plans/` | Design / architecture plans |
-| `workers/` | Cloudflare Worker subprojects (`spx-signal-alert`) |
-| `holdings_web/` | **git submodule** (`rkarim25/holdings`) — separate site |
-| `.github/workflows/` | `deploy-pages.yml`, `update-market-data.yml` |
-
----
+## The factory floor — catalogs, runbooks, coordination
+- **[`catalog/`](catalog/)** — `data.md`/`data.json` (every dataset + source + coverage),
+  `experiments.md`/`experiments.json` (every backtest output dir), `sources.json` (curated sources).
+  **Generated** by `python tools/build_catalog.py` — re-run it after adding data or experiments.
+- **[`docs/runbooks/`](docs/runbooks/)** — `START-HERE.md`, `add-data-source.md`, `run-backtest.md`,
+  `add-website-feature.md`, `coordination.md`. Numbered, copy-paste, weak-model-safe.
+- **Coordination** — ownership zones + claims in [`docs/runbooks/coordination.md`](docs/runbooks/coordination.md).
 
 ## Docs index — open only what you need
+| Doc | When |
+|-----|------|
+| [`docs/runbooks/START-HERE.md`](docs/runbooks/START-HERE.md) | **start of every session** |
+| [`catalog/data.md`](catalog/data.md) · [`catalog/experiments.md`](catalog/experiments.md) | before downloading / backtesting |
+| [`docs/architecture.md`](docs/architecture.md) | engine + pipeline + module roles |
+| [`docs/website.md`](docs/website.md) | editing a page / live data flow |
+| [`docs/backtesting.md`](docs/backtesting.md) | engine params, costs, regeneration |
+| [`docs/strategies.md`](docs/strategies.md) | Guarded A5/B25, Water/Octane/Stillwater |
+| [`docs/coding-standards.md`](docs/coding-standards.md) | the mandatory quant rules |
+| [`docs/deploy.md`](docs/deploy.md) | before any commit/push |
+| [`docs/directory-map.md`](docs/directory-map.md) · [`docs/conventions.md`](docs/conventions.md) | "where is X?" / "where does new X go?" |
+| [`docs/session-notes/`](docs/session-notes/) | context on a past piece of work |
 
-| Doc | Read it when you're… |
-|-----|----------------------|
-| [`docs/architecture.md`](docs/architecture.md) | understanding the engine + data pipeline + module responsibilities |
-| [`docs/website.md`](docs/website.md) | editing a page, adding an asset, or touching live data flow / the Cloudflare worker |
-| [`docs/backtesting.md`](docs/backtesting.md) | changing strategies, running the sweep, regenerating the Excel, data sources/costs |
-| [`docs/strategies.md`](docs/strategies.md) | working with Guarded A5/B25 or Water / Octane / Stillwater classification |
-| [`docs/deploy.md`](docs/deploy.md) | committing or deploying anything to the live site (read this before you push) |
-| [`docs/directory-map.md`](docs/directory-map.md) | answering "where is X?" — exhaustive file/folder index |
-| [`docs/conventions.md`](docs/conventions.md) | adding new files and unsure where they go (keeps this repo from rotting) |
-| [`docs/session-notes/`](docs/session-notes/) | wanting context on a specific past piece of work |
-
-Other root docs: [`PORTFOLIO.md`](PORTFOLIO.md) (allocation), [`EMAIL_ALERTS.md`](EMAIL_ALERTS.md) (signal email alerts).
-
----
-
-## Common tasks → start here
-
-- **Change a strategy / re-run the sweep** → [`docs/backtesting.md`](docs/backtesting.md)
-- **Edit a website page or add an asset** → [`docs/website.md`](docs/website.md)
-- **Regenerate `strategy_results.xlsx`** → [`docs/backtesting.md`](docs/backtesting.md)
-- **Deploy a change to the live site** → [`docs/deploy.md`](docs/deploy.md)
-- **Understand Water/Octane/Stillwater** → [`docs/strategies.md`](docs/strategies.md)
-- **"Where does this new file go?"** → [`docs/conventions.md`](docs/conventions.md)
-
----
-
-## Current health / known drift (update as it changes)
-
+## Current health / known drift (keep this updated)
 - **`build_ndx` page builder fails *silently* on drift and is currently drifted**; `build_gold` fails *loud*.
-  Treat per-asset page builders with suspicion — diff their output before committing (see [`docs/deploy.md`](docs/deploy.md)).
-- **Summary classification counts:** S&P 500 has 11 Water + 11 Octane; **Nasdaq 100 structurally has no
-  Water/Octane** (its 16.5% CAGR needs 2x, which breaches the −45% DD gate) — don't go re-hunting for them.
-- Local `main` may trail `origin/main` by a few `Update static market data` commits (the concurrent
-  agent/cron) — that's benign. Resync with `git reset --mixed origin/main` (keeps your uncommitted work).
+  Diff builder output before committing.
+- **Classification counts:** S&P 500 = 11 Water + 11 Octane; **Nasdaq 100 structurally has none** (16.5% CAGR
+  needs 2x → breaches the −45% DD gate) — don't re-hunt.
+- **Data note:** `spx_daily.csv`/`ndx_daily.csv` cache only ~30y (1996+); full 1950 SPX history is fetched on
+  demand by `backtest_spx_distance_scale.py` (not cached). See [`catalog/data.md`](catalog/data.md).
+- Local `main` may trail `origin/main` by a few `Update static market data` commits (cron) — benign; resync with
+  `git reset --mixed origin/main`.
