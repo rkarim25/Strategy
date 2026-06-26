@@ -283,10 +283,16 @@
       const yz = yAt(0); ctx.strokeStyle = "rgba(0,0,0,.28)"; ctx.setLineDash([4, 3]);
       ctx.beginPath(); ctx.moveTo(padL, yz); ctx.lineTo(W - padR, yz); ctx.stroke(); ctx.setLineDash([]);
     }
-    // x labels (first / mid / last)
-    ctx.textAlign = "center"; ctx.fillStyle = "#6e6e73";
-    for (const i of [0, Math.floor((n - 1) / 2), n - 1]) {
-      if (i >= 0 && i < n && dates[i]) ctx.fillText(String(dates[i]).slice(0, 7), xAt(i), H - 7);
+    // x ticks + labels (adaptive count ~1 per 90px; MM-DD for short spans, else YYYY-MM)
+    ctx.textAlign = "center";
+    const nT = Math.max(2, Math.min(9, Math.floor(plotW / 90)));
+    const shortSpan = n <= 95;
+    for (let t = 0; t <= nT; t++) {
+      const i = n <= 1 ? 0 : Math.round((t / nT) * (n - 1));
+      if (i < 0 || i >= n || !dates[i]) continue;
+      const x = xAt(i);
+      ctx.strokeStyle = "rgba(0,0,0,.14)"; ctx.beginPath(); ctx.moveTo(x, padT + plotH); ctx.lineTo(x, padT + plotH + 4); ctx.stroke();
+      ctx.fillStyle = "#6e6e73"; ctx.fillText(String(dates[i]).slice(shortSpan ? 5 : 0, shortSpan ? 10 : 7), x, H - 6);
     }
     for (const s of series) {
       ctx.strokeStyle = s.color; ctx.lineWidth = s.width || 1.6; ctx.beginPath();
@@ -360,10 +366,22 @@
         const li = gi - lo; return { ...m, i: li, value: anchor[li] };
       }).filter(Boolean);
       lineChart(canvas, dslice, ser, { log, pct: rebasePct, markers });
+      canvas.style.cursor = (winHi - winLo) < dates.length ? "grab" : "default";
+    };
+    // Pan the visible window left/right, keeping its width (time scroll). frac<0 = back, >0 = forward.
+    const panBy = (frac) => {
+      const w = winHi - winLo; if (w >= dates.length) return;
+      let lo = winLo + Math.max(1, Math.round(Math.abs(w * frac))) * Math.sign(frac);
+      lo = Math.max(0, Math.min(lo, dates.length - w));
+      winLo = lo; winHi = lo + w; draw();
     };
 
     const rdiv = document.createElement("div"); rdiv.className = "ranges";
     const setActive = (btn) => rdiv.querySelectorAll("button[data-range]").forEach((x) => x.classList.toggle("active", x === btn));
+    const mkPan = (txt, frac, ttl) => { const b = document.createElement("button"); b.className = "pan"; b.textContent = txt; b.title = ttl; b.onclick = () => panBy(frac); return b; };
+    rdiv.appendChild(mkPan("‹", -0.5, "Scroll back in time"));
+    rdiv.appendChild(mkPan("›", 0.5, "Scroll forward in time"));
+    rdiv.appendChild(Object.assign(document.createElement("span"), { className: "sep" }));
     for (const [lbl, days] of ranges) {
       if (days > dates.length && lbl !== "Full") continue;
       const b = document.createElement("button"); b.dataset.range = lbl; b.textContent = lbl;
@@ -390,8 +408,22 @@
     }
     wrap.appendChild(rdiv);
 
-    // hover tooltip on markers
+    // hover tooltip on markers + drag-to-pan (scroll time)
+    let dragX = null, dragLo = 0;
+    canvas.addEventListener("mousedown", (e) => {
+      if ((winHi - winLo) >= dates.length) return;   // full view: nothing to scroll
+      dragX = e.clientX; dragLo = winLo; canvas.style.cursor = "grabbing"; e.preventDefault();
+    });
+    window.addEventListener("mouseup", () => { if (dragX != null) { dragX = null; draw(); } });
     canvas.addEventListener("mousemove", (e) => {
+      if (dragX != null && (e.buttons & 1)) {
+        tooltip().style.display = "none";
+        const w = winHi - winLo, plotPx = (canvas.clientWidth - 68) || 1;   // padL+padR = 68
+        let lo = dragLo - Math.round(((e.clientX - dragX) / plotPx) * w);
+        lo = Math.max(0, Math.min(lo, dates.length - w));
+        winLo = lo; winHi = lo + w; draw();
+        return;
+      }
       const rect = canvas.getBoundingClientRect();
       const mx = e.clientX - rect.left, my = e.clientY - rect.top;
       const hit = (canvas.__hits || []).find((h) => Math.abs(mx - h.x) <= h.r && Math.abs(my - h.y) <= 11);
