@@ -28,7 +28,7 @@ established research scripts only. Everything new and throwaway goes in a folder
 | A throwaway / one-off / debug script | `scratch/` (prefix `_` or `debug_`) — **never root** |
 | A new reusable strategy | `strategies.py` (extend `LeverageStrategy`) |
 | A new asset's guarded page | `guarded_asset_registry.py` + run `build_guarded_asset_pages.py` |
-| A committed research/backtest script | root with the right prefix (`analyze_/backtest_/sweep_`) — keep it lean |
+| An exploratory analysis / sweep / verify script | `research/` (run from repo root). Pipeline generators that write site data or are documented commands stay at root |
 | Generated CSV/data from an analysis | `output/<analysis-name>/` |
 | A new/updated Excel workbook | `Results/` (backups → `Results/backups/`, suffix `_backup_<YYYYMMDD>`) |
 | A design/plan doc | `plans/` |

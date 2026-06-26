@@ -5,6 +5,7 @@ Outputs a ranked CSV for direct comparison.
 """
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 import csv
 from dataclasses import dataclass
@@ -30,7 +31,7 @@ from strategies import (
 )
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = ROOT / "output" / "spx_1x_sweep"
 OUTPUT_CSV = OUTPUT_DIR / "spx_1x_sweep_results.csv"
 

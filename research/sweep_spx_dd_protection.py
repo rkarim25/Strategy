@@ -8,6 +8,7 @@ All new signal logic is implemented in this script; no existing files are modifi
 """
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 import csv
 from dataclasses import dataclass
@@ -29,7 +30,7 @@ from indicators import sma, ema, rsi, macd, enrich_prices
 from metrics import comprehensive_stats
 from strategies import _run_state_machine, MacdParams, TunableMacdStrategy
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = ROOT / "output" / "spx_dd_protection_sweep"
 OUTPUT_CSV = OUTPUT_DIR / "spx_dd_protection_results.csv"
 

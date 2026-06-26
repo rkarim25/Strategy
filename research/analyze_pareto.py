@@ -1,4 +1,5 @@
 """Quick Pareto analysis from saved CSV (encoding-safe, fixed vol logic)."""
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 import pandas as pd
 
 df = pd.read_csv('output/spx_pareto/spx_pareto_results.csv', encoding='latin-1')

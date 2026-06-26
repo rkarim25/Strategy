@@ -1,6 +1,7 @@
 """Five-sleeve portfolio: US full Guarded lev, others max 1x."""
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 from datetime import datetime, timedelta
 

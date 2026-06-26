@@ -14,6 +14,7 @@ Writes output/lqq3_sma_asymmetric_xy/.
 """
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 import json
 import sys
@@ -44,7 +45,7 @@ try:
 except Exception:
     pass
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = ROOT / "output" / "lqq3_sma_asymmetric_xy"
 
 EXIT_PCTS = [0.0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.05]

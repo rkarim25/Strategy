@@ -5,6 +5,7 @@ through the same PortfolioEngine used by the dashboard. Outputs a ranked CSV.
 """
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 import csv
 import sys
@@ -38,7 +39,7 @@ from strategies import (
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 from test_tiered_dd_recovery_guarded import ANNUAL_INFLOW_USD
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = ROOT / "output" / "spx_strategy_sweep"
 OUTPUT_CSV = OUTPUT_DIR / "spx_sweep_results.csv"
 

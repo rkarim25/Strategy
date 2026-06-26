@@ -1,6 +1,7 @@
 """Sweep SMA lookback periods (daily & month-based) for Sharpe and drawdown."""
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 import sys
 from pathlib import Path

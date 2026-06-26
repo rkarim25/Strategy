@@ -11,6 +11,7 @@ Writes output/ema20_vs_sma20/comparison.csv and summary.json.
 """
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 import json
 import sys

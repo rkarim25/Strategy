@@ -28,6 +28,7 @@ Outputs to output/ndx_guarded_ab_sweep/:
 """
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 import json
 import sys
@@ -47,7 +48,7 @@ from etp_leverage import NDX_ETP, build_etp_return_panel, etp_coverage_summary
 from metrics import comprehensive_stats
 from test_guarded_balanced_candidate import guarded_strategy_leverage
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = ROOT / "output" / "ndx_guarded_ab_sweep"
 
 A_GRID_PCT = [3, 4, 5, 7, 10, 12, 15]

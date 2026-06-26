@@ -16,6 +16,7 @@ All signal logic is self-contained; no existing files are modified.
 """
 
 from __future__ import annotations
+import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent.parent))  # repo root importable (moved into research/)
 
 import csv
 from dataclasses import dataclass
@@ -36,7 +37,7 @@ from etp_leverage import SPX_ETP, build_etp_return_panel
 from indicators import sma, rsi
 from metrics import comprehensive_stats
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = ROOT / "output" / "spx_pareto"
 OUTPUT_CSV = OUTPUT_DIR / "spx_pareto_results.csv"
 

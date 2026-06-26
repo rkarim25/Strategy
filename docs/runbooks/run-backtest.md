@@ -25,5 +25,6 @@
 ## Don't
 - Don't rebuild the engine or re-implement `metrics` / `etp_leverage`.
 - Don't dump outputs at repo root or inside another experiment's directory.
+- Put exploratory scripts in `research/` (run from repo root); only pipeline generators that write site data stay at root.
 - Don't blindly re-run a page builder and commit it (it can regress hand-hydrated tables — see
   [`add-website-feature.md`](add-website-feature.md)).
