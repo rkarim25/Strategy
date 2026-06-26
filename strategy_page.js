@@ -307,9 +307,14 @@
   // A chart card with range buttons, optional custom date pickers, optional %-rebasing and markers.
   // seriesDefs values are full-length, aligned to `dates`. markerDefs: [{date,dir,color,label,tip}].
   function chartBlock(title, dates, seriesDefs, opts = {}) {
-    const { log = false, rebasePct = false, markerDefs = [], customDates = false,
+    const { log = false, rebasePct = false, markerDefs = [], customDates = false, defaultRange = "Full",
       ranges = [["1M", 21], ["3M", 63], ["1Y", 252], ["5Y", 1260], ["10Y", 2520], ["Full", dates.length]] } = opts;
     const dateIdx = new Map(); dates.forEach((dt, i) => dateIdx.set(dt, i));
+    // Open at defaultRange (e.g. "1Y") so a rebased %-chart isn't a useless multi-decade scale;
+    // fall back to Full if the data is shorter than that window.
+    const _defDays = (ranges.find(([l]) => l === defaultRange) || ["Full", dates.length])[1];
+    const _useDefault = defaultRange !== "Full" && _defDays <= dates.length;
+    const _activeLbl = _useDefault ? defaultRange : "Full";
     const wrap = document.createElement("div"); wrap.className = "card";
     wrap.innerHTML = `<h2>${esc(title)}</h2>`;
     const cw = document.createElement("div"); cw.className = "chartwrap";
@@ -318,7 +323,7 @@
     legend.innerHTML = seriesDefs.map((s) => `<span><i style="background:${s.color}"></i>${esc(s.label)}</span>`).join("");
     wrap.appendChild(legend);
 
-    let winLo = 0, winHi = dates.length;
+    let winHi = dates.length, winLo = _useDefault ? Math.max(0, dates.length - _defDays) : 0;
     const draw = () => {
       const lo = Math.max(0, winLo), hi = Math.min(dates.length, winHi);
       const dslice = dates.slice(lo, hi);
@@ -343,7 +348,7 @@
     for (const [lbl, days] of ranges) {
       if (days > dates.length && lbl !== "Full") continue;
       const b = document.createElement("button"); b.dataset.range = lbl; b.textContent = lbl;
-      if (lbl === "Full") b.classList.add("active");
+      if (lbl === _activeLbl) b.classList.add("active");
       b.onclick = () => { winHi = dates.length; winLo = Math.max(0, dates.length - days); if (customStart) { customStart.value = ""; customEnd.value = ""; } setActive(b); draw(); };
       rdiv.appendChild(b);
     }
@@ -458,10 +463,10 @@
     // Rebased %-equity P&L chart on the Signal view (price + equity together, with markers).
     if (d.equity_curve) {
       const e = d.equity_curve;
-      vs.appendChild(chartBlock("Equity P&L vs buy & hold (rebased to 0%)", e.dates, [
+      vs.appendChild(chartBlock("Equity P&L vs buy & hold (% return, rebased to 0%)", e.dates, [
         { label: name, color: ACCENT, width: 2, values: e.strategy_equity },
         { label: "Buy & hold 1×", color: "#6e6e73", values: e.buy_hold_1x_equity },
-      ], { rebasePct: true, customDates: true, markerDefs }));
+      ], { rebasePct: true, customDates: true, markerDefs, defaultRange: "1Y" }));
     }
     // recent signal history
     const sh = (d.signal_history || []).slice(-14).reverse();
