@@ -1,0 +1,53 @@
+# Directory map
+
+The "where is everything" reference. Legend: 🚫 = do not move (breaks production) · 📦 = generated output ·
+🧪 = scratch/experimental. For *where new files should go*, see [`conventions.md`](conventions.md).
+
+## Repo root — file groups
+
+The root is busy on purpose: GitHub Pages serves the site from here and Python uses flat imports.
+~90 `.py`, 12 `.html`, 16 `.js`, ~29 `.json`, ~12 `.csv` at root. Categories:
+
+| Group | Pattern / files | |
+|-------|-----------------|---|
+| Website pages | `index.html`, `summary.html`, `instruments.html`, `*_guarded.html`, `live_guarded_sma20_leverage.html` | 🚫 |
+| Website scripts | `site-nav.js`, `site-scroll-init.js`, `*_guarded.js`, `instruments-*.js`, `all-instruments-data.js`, `halal-comparison-data.js`, `etp-leverage.js`, `favicon.svg` | 🚫 |
+| Live data | `*_daily.csv`, `*_guarded_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json`, `spx_*_site_data.json`, `summary_excel.json`, `news_score.json`, `holdings_*.json` | 🚫 📦 |
+| Core engine | `engine.py`, `strategies.py`, `metrics.py`, `indicators.py`, `data_manager.py`, `etp_leverage.py`, `guarded_asset_registry.py`, `price_cleaning.py`, `reporting.py`, `data_three_asset.py` | 🚫 |
+| Strategy libs | `test_tiered_dd_recovery_guarded.py`, `test_guarded_balanced_candidate.py` (imported widely) | 🚫 |
+| Cron entrypoints | `update_static_market_data.py`, `refresh_holdings_prices.py` (cross-repo) | 🚫 |
+| Research/build | `analyze_*.py` (~27), `backtest_*.py` (~13), `sweep_*.py` (~11), `build_*.py` (~7), `verify_*`, `validate_*`, `merge_*`, `monte_*`, `compare_*` | tracked |
+| Cloudflare worker | `cloudflare_spx_quote_worker.js`, `wrangler.toml` | |
+| Docs / meta | `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `PORTFOLIO.md`, `EMAIL_ALERTS.md`, `requirements.txt`, `docs/` | |
+| Transient | `HANDOVER.md` (current-session handover slot; not the project guide) | local |
+
+## Folders
+
+| Folder | Contents | |
+|--------|----------|---|
+| `docs/` | AI-facing docs (this set) + `docs/session-notes/` (archived handovers) | |
+| `output/strategy_results/` | `{slug}_results.csv` + `all_assets_combined.csv` from the master sweep | 📦 |
+| `output/<analysis>/` | One subdir per `analyze_*` script (e.g. `gold_market_structure/`, `cross_asset_guarded_1x/`) | 📦 |
+| `Results/` | Excel workbooks — `strategy_results.xlsx` (main), categorized sweeps, `strategy_classification_definitions.md` | |
+| `Results/backups/` | Timestamped/`pre_*` Excel backups | |
+| `scratch/` | Experiments, one-off scripts, logs, WIP backups — **put throwaway work here** | 🧪 |
+| `scripts/` | Automation (`run_backtests.py`, `collect_results.py`, `evaluate_pareto.py`) + temp CSVs (untracked) | |
+| `archive/` | Old research (`research_scripts/`, `output/`), `roohistory.md`, `legacy_project_guide_*.md`, `equity_comparison.pdf` | |
+| `plans/` | Design/architecture plans (`architecture_map.md`, `spx_3x_levered_tab_plan.md`) | |
+| `workers/` | Cloudflare Worker subprojects (`spx-signal-alert/`) | |
+| `holdings_web/` | **git submodule** → `rkarim25/holdings` (separate site, hosted on Cloudflare Pages, private repo) | submodule |
+| `.github/workflows/` | `deploy-pages.yml`, `update-market-data.yml` | |
+| `__pycache__/`, `.wrangler/` | gitignored build/cache | |
+
+## Git tracking at a glance
+
+~592 tracked files: `output/` (231) · `archive/` (163) · **root (157)** · `scratch/` (29) ·
+`workers/` (4) · `Results/` (4) · `plans/` (2) · `.github/` (2). `scripts/` is essentially untracked (temp).
+
+## holdings_web submodule (separate concerns)
+
+- Prices on `/holdings/` come from this main repo's `refresh_holdings_prices.py` (cross-repo via the holdings
+  `update-prices.yml`). The button reads static JSON, not a live feed.
+- The CGT tab hardcodes `TAXABLE_HOLDINGS` (Saba + Abbu); keep in sync with the family/abbu pages.
+- The holdings site is on **Cloudflare Pages** (`holdings-ct5.pages.dev`) behind a Cloudflare Access login; the
+  old `github.io` URL is dead and the holdings repo is private.

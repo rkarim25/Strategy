@@ -13,3 +13,8 @@ env/
 Thumbs.db
 _agent_*.txt
 .wrangler/
+
+# Repo hygiene (see docs/conventions.md)
+Results/backups/
+scripts/tmp_results_*.csv
+output.txt
