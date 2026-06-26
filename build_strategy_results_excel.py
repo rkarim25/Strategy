@@ -935,6 +935,78 @@ def auto_fit_columns(ws, min_width=8, max_width=40):
         ws.column_dimensions[col_letter].width = adjusted
 
 
+def build_lqq3_sheet(wb):
+    """LQQ3 dedicated backtest sheet: signal computed ON LQQ3 vs ON the underlying Nasdaq,
+    over real LQQ3 (2012+) and a synthetic 3x model (1990+). Flat table, no Water/Octane.
+    Reads output/lqq3_dedicated/results.csv (from research/analyze_lqq3_signal_source.py)."""
+    csv_path = ROOT / 'output' / 'lqq3_dedicated' / 'results.csv'
+    if not csv_path.exists():
+        print("  (skip LQQ3 sheet — run research/analyze_lqq3_signal_source.py first)", flush=True)
+        return
+    ldf = pd.read_csv(csv_path)
+    ws = wb.create_sheet(title='LQQ3', index=1)
+
+    cols = ['Strategy', 'Signal_Source', 'Data', 'Start', 'End', 'Trading_Days',
+            'CAGR_pct', 'Vol_pct', 'Sharpe', 'MaxDD_pct', 'Calmar', 'End_Value', 'Pct_Cash']
+    headers = ['Strategy', 'Signal source', 'Data', 'Start', 'End', 'Days',
+               'CAGR', 'Vol', 'Sharpe', 'MaxDD', 'Calmar', 'End $', '% Cash']
+    fmts = {'CAGR_pct': '0.00"%"', 'Vol_pct': '0.00"%"', 'MaxDD_pct': '0.00"%"',
+            'Pct_Cash': '0.0"%"', 'Sharpe': '0.000', 'Calmar': '0.000',
+            'End_Value': '$#,##0', 'Trading_Days': '#,##0'}
+    widths = {1: 32, 2: 24, 3: 20, 4: 12, 5: 12, 6: 7, 7: 9, 8: 8, 9: 8, 10: 9, 11: 8, 12: 12, 13: 8}
+    for ci, w in widths.items():
+        ws.column_dimensions[get_column_letter(ci)].width = w
+
+    side = Side(style='thin', color='D9D9D9')
+    thin = Border(left=side, right=side, top=side, bottom=side)
+    hdr_font = Font(name='Calibri', size=10, bold=True, color='FFFFFF')
+    hdr_fill = PatternFill('solid', fgColor='1F4E79')
+    base_font = Font(name='Calibri', size=10)
+    bh_font = Font(name='Calibri', size=10, italic=True, color='808080')
+    under_fill = PatternFill('solid', fgColor='E8F0FE')  # tint signal-on-underlying rows
+
+    cr = 1
+    c = ws.cell(cr, 1, 'LQQ3.L (3x Nasdaq ETP) — signal on LQQ3 vs on the underlying Nasdaq 100')
+    c.font = Font(name='Calibri', size=14, bold=True, color='1F4E79')
+    ws.merge_cells(start_row=cr, start_column=1, end_row=cr, end_column=len(cols)); cr += 1
+    sub = ("Each signal strategy run two ways — signal from the held 3x instrument's own price vs from the "
+           "underlying ^NDX index — over real LQQ3 (listing 2012-12-13) and a synthetic 3x daily-reset model on "
+           "^NDX (1990+). One flat table, no Water/Octane. Engine: 1-day signal lag, 0.10% cost, $100 + $10/yr "
+           "inflow. Shaded rows = signal on the underlying Nasdaq.")
+    c = ws.cell(cr, 1, sub); c.font = Font(name='Calibri', size=9, italic=True, color='808080')
+    c.alignment = Alignment(wrap_text=True, vertical='top')
+    ws.merge_cells(start_row=cr, start_column=1, end_row=cr, end_column=len(cols))
+    ws.row_dimensions[cr].height = 42; cr += 2
+
+    for regime in ['Real LQQ3 (2012+)', 'Synthetic 3x (1990+)']:
+        sub_rows = ldf[ldf['Data'] == regime]
+        if sub_rows.empty:
+            continue
+        c = ws.cell(cr, 1, regime)
+        c.font = Font(name='Calibri', size=11, bold=True, color='1F4E79')
+        ws.merge_cells(start_row=cr, start_column=1, end_row=cr, end_column=len(cols)); cr += 1
+        for ci, h in enumerate(headers, 1):
+            cell = ws.cell(cr, ci, h)
+            cell.font = hdr_font; cell.fill = hdr_fill
+            cell.alignment = Alignment(horizontal='center'); cell.border = thin
+        cr += 1
+        for _, r in sub_rows.iterrows():
+            is_under = str(r['Signal_Source']).startswith('Nasdaq')
+            is_bh = str(r['Strategy']).startswith('Buy & hold')
+            for ci, col in enumerate(cols, 1):
+                val = r[col]
+                cell = ws.cell(cr, ci, None if pd.isna(val) else val)
+                cell.font = bh_font if is_bh else base_font
+                cell.border = thin
+                if is_under:
+                    cell.fill = under_fill
+                if col in fmts and pd.notna(val):
+                    cell.number_format = fmts[col]
+            cr += 1
+        cr += 1
+    ws.freeze_panes = 'A4'
+
+
 def main():
     import sys
     sys.stdout.reconfigure(encoding='utf-8')
@@ -972,6 +1044,10 @@ def main():
     # Definitions sheet
     print("  Building Definitions sheet...", flush=True)
     build_definitions_sheet(wb)
+
+    # LQQ3 dedicated sheet (signal on LQQ3 vs underlying Nasdaq; real vs synthetic)
+    print("  Building LQQ3 sheet...", flush=True)
+    build_lqq3_sheet(wb)
 
     # Summary sheet
     print("  Building Summary sheet...", flush=True)

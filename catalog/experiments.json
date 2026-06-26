@@ -210,6 +210,15 @@
       ]
     },
     {
+      "experiment": "lqq3_dedicated",
+      "path": "output/lqq3_dedicated/",
+      "files": 2,
+      "key_files": [
+        "results.csv",
+        "summary.json"
+      ]
+    },
+    {
       "experiment": "lqq3_guarded",
       "path": "output/lqq3_guarded/",
       "files": 6,
@@ -517,6 +526,16 @@
       ]
     },
     {
+      "experiment": "spx_water_band",
+      "path": "output/spx_water_band/",
+      "files": 3,
+      "key_files": [
+        "spx_water_band_comparison.csv",
+        "spx_water_band_monte_carlo_paths.csv",
+        "spx_water_band_site_data.json"
+      ]
+    },
+    {
       "experiment": "strategies",
       "path": "output/strategies/",
       "files": 9,
@@ -532,14 +551,14 @@
     {
       "experiment": "strategy_results",
       "path": "output/strategy_results/",
-      "files": 38,
+      "files": 24,
       "key_files": [
         "additional_strategies_results.csv",
         "all_assets_combined.csv",
-        "all_assets_combined.csv",
-        "all_assets_combined.csv",
         "all_assets_pareto_combined.csv",
-        "comprehensive_all_assets_results.csv"
+        "comprehensive_all_assets_results.csv",
+        "dax_pareto_results.csv",
+        "dax_results.csv"
       ]
     },
     {

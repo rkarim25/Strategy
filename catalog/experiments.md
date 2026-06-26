@@ -31,6 +31,7 @@ this list** - if it already exists, build on it or re-check the result instead o
 | guarded_balanced_candidate | `output/guarded_balanced_candidate/` | 4 | `guarded_balanced_candidate_backtest.csv`, `guarded_balanced_candidate_monte_carlo_metadata.json`, `guarded_balanced_candidate_monte_carlo_paths.csv`, `guarded_balanced_candidate_monte_carlo_summary.csv` |
 | guarded_tiered_sma20_50_200 | `output/guarded_tiered_sma20_50_200/` | 2 | `guarded_tiered_sma20_50_200_chart_data.json`, `guarded_tiered_sma20_50_200_results.csv` |
 | long_hold_momentum_strategies | `output/long_hold_momentum_strategies/` | 2 | `long_hold_momentum_chart_data.json`, `long_hold_momentum_results.csv` |
+| lqq3_dedicated | `output/lqq3_dedicated/` | 2 | `results.csv`, `summary.json` |
 | lqq3_guarded | `output/lqq3_guarded/` | 6 | `lqq3_daily.csv`, `lqq3_guarded_comparison.csv`, `lqq3_guarded_site_data.json`, `lqq3_monte_carlo_paths.csv`, `lqq3_site_comparison.csv`, `summary.json` |
 | lqq3_sma_asymmetric_xy | `output/lqq3_sma_asymmetric_xy/` | 13 | `balanced_improvers_vs_guarded.csv`, `balanced_improvers_vs_sma20.csv`, `beats_any_vs_guarded.csv`, `beats_any_vs_sma20.csv`, `comparison.csv`, `no_sacrifice_vs_guarded.csv` |
 | lqq3_synthetic_guarded | `output/lqq3_synthetic_guarded/` | 3 | `comparison.csv`, `lqq3_synthetic_daily.csv`, `summary.json` |
@@ -61,8 +62,9 @@ this list** - if it already exists, build on it or re-check the result instead o
 | spx_pareto | `output/spx_pareto/` | 2 | `pareto_analysis.txt`, `spx_pareto_results.csv` |
 | spx_sma20_entry_exit | `output/spx_sma20_entry_exit/` | 6 | `comparison.csv`, `pareto_frontier.csv`, `ranked_cagr.csv`, `ranked_low_turnover.csv`, `strategy_plan.md`, `summary.json` |
 | spx_strategy_sweep | `output/spx_strategy_sweep/` | 1 | `spx_sweep_results.csv` |
+| spx_water_band | `output/spx_water_band/` | 3 | `spx_water_band_comparison.csv`, `spx_water_band_monte_carlo_paths.csv`, `spx_water_band_site_data.json` |
 | strategies | `output/strategies/` | 9 | `BB_Mean_Reversion_2x.pdf`, `DD_Recovery_3x.pdf`, `Golden_Cross_3x.pdf`, `MACD_Momentum_3x.pdf`, `MACD___SMA200_3x.pdf`, `RSI_Momentum_3x.pdf` |
-| strategy_results | `output/strategy_results/` | 38 | `additional_strategies_results.csv`, `all_assets_combined.csv`, `all_assets_combined.csv`, `all_assets_combined.csv`, `all_assets_pareto_combined.csv`, `comprehensive_all_assets_results.csv` |
+| strategy_results | `output/strategy_results/` | 24 | `additional_strategies_results.csv`, `all_assets_combined.csv`, `all_assets_pareto_combined.csv`, `comprehensive_all_assets_results.csv`, `dax_pareto_results.csv`, `dax_results.csv` |
 | tiered_dd_recovery_guarded | `output/tiered_dd_recovery_guarded/` | 1 | `tiered_dd_recovery_guarded_results.csv` |
 | tiered_vs_binary_guarded | `output/tiered_vs_binary_guarded/` | 11 | `final_report.md`, `summary.json`, `test1_full_period.csv`, `test2_tier_decomposition.csv`, `test3_walkforward.csv`, `test4_bootstrap.json` |
 
