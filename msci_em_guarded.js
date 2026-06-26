@@ -1,5 +1,7 @@
 const USE_WORKER_LIVE = false;
+  const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=msci_em";
   const ASSET_LABEL = "MSCI EM (EEM)";
+  const EXPECTED_TICKER = "EEM";
   const STATIC_DAILY_URL = "msci_em_daily.csv";
   const STATIC_SIGNAL_URL = "latest_msci_em_signal.json";
   const STATIC_SITE_DATA_URL = "msci_em_guarded_site_data.json";
@@ -326,19 +328,18 @@ const USE_WORKER_LIVE = false;
         const eodResult = computeSignal(rows);
         let livePriceInfo = null;
         let quoteWarning = "";
-        if ($("manualPrice")?.value) {
-          try {
-            livePriceInfo = await getLivePrice({ allowManualOverride: true });
-          } catch (quoteErr) {
-            quoteWarning = quoteErr.message || String(quoteErr);
-          }
+        try {
+          livePriceInfo = await getLivePrice({ allowManualOverride });
+        } catch (quoteErr) {
+          console.warn(quoteErr);
+          quoteWarning = quoteErr.message || String(quoteErr);
         }
         const liveRows = livePriceInfo?.price == null ? rows : appendIntradayRow(rows, livePriceInfo.price);
         const liveResult = computeSignal(liveRows);
         if (livePriceInfo?.price == null) {
           liveResult.explanation = "Showing last completed close from static daily CSV. Use manual price + Refresh for intraday override.";
         } else {
-          liveResult.explanation = `Manual intraday price applied (${livePriceInfo.source}).`;
+          liveResult.explanation = `Live intraday quote applied (${livePriceInfo.source}).`;
         }
         render(eodResult, liveResult);
         renderChart();
@@ -378,7 +379,7 @@ const USE_WORKER_LIVE = false;
     const parts = [];
     if (prefix) parts.push(prefix);
     parts.push(window.SiteNav?.AUTO_REFRESH_HOURS_LABEL || "Auto-refreshes every 30 minutes during UK LSE hours while this page is open.");
-    parts.push("Enter a manual MSCI EM (EEM) level then click refresh to override the live quote.");
+    parts.push("Enter a manual MSCI EM (EEM) (EEM) level then click refresh to override the live quote.");
     if (staticSignalMetadata?.generated_at_utc) parts.push(`Static data generated: ${formatMetadataTime(staticSignalMetadata.generated_at_utc)}.`);
     if (staticSignalMetadata?.data_asof) parts.push(`Static daily data through: ${staticSignalMetadata.data_asof}.`);
     if (staticSignalMetadata?.quote_price) {
@@ -528,6 +529,9 @@ const USE_WORKER_LIVE = false;
       }
     }
 
+    if (parsedJson && parsedJson.ticker && EXPECTED_TICKER && String(parsedJson.ticker) !== EXPECTED_TICKER) {
+      throw new Error(`Live quote ticker mismatch: got ${parsedJson.ticker}, expected ${EXPECTED_TICKER}. Worker may be stale — using last completed close.`);
+    }
     const price = Number(parsedJson?.price ?? parsedJson?.close ?? parsedJson?.last ?? parsedJson?.value);
     if (Number.isFinite(price) && price > 0) {
       return { price, source: parsedJson?.source || `${WORKER_QUOTE_URL} (HTTP ${response.status})` };

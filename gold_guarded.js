@@ -1,5 +1,6 @@
 const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=daily&symbol=gold";
   const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=gold";
+  const EXPECTED_TICKER = "GC=F";
   const STATIC_DAILY_URL = "gold_daily.csv";
   const STATIC_SIGNAL_URL = "latest_gold_signal.json";
   const STATIC_SITE_DATA_URL = "gold_guarded_site_data.json";
@@ -540,6 +541,9 @@ const WORKER_DAILY_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=dai
       }
     }
 
+    if (parsedJson && parsedJson.ticker && EXPECTED_TICKER && String(parsedJson.ticker) !== EXPECTED_TICKER) {
+      throw new Error(`Live quote ticker mismatch: got ${parsedJson.ticker}, expected ${EXPECTED_TICKER}. Worker may be stale — using last completed close.`);
+    }
     const price = Number(parsedJson?.price ?? parsedJson?.close ?? parsedJson?.last ?? parsedJson?.value);
     if (Number.isFinite(price) && price > 0) {
       return { price, source: parsedJson?.source || `${WORKER_QUOTE_URL} (HTTP ${response.status})` };

@@ -138,19 +138,18 @@ def build_js(spec: GuardedAssetSpec) -> str:
         const eodResult = computeSignal(rows);
         let livePriceInfo = null;
         let quoteWarning = "";
-        if ($("manualPrice")?.value) {{
-          try {{
-            livePriceInfo = await getLivePrice({{ allowManualOverride: true }});
-          }} catch (quoteErr) {{
-            quoteWarning = quoteErr.message || String(quoteErr);
-          }}
+        try {{
+          livePriceInfo = await getLivePrice({{ allowManualOverride }});
+        }} catch (quoteErr) {{
+          console.warn(quoteErr);
+          quoteWarning = quoteErr.message || String(quoteErr);
         }}
         const liveRows = livePriceInfo?.price == null ? rows : appendIntradayRow(rows, livePriceInfo.price);
         const liveResult = computeSignal(liveRows);
         if (livePriceInfo?.price == null) {{
           liveResult.explanation = "Showing last completed close from static daily CSV. Use manual price + Refresh for intraday override.";
         }} else {{
-          liveResult.explanation = `Manual intraday price applied (${{livePriceInfo.source}}).`;
+          liveResult.explanation = `Live intraday quote applied (${{livePriceInfo.source}}).`;
         }}
         render(eodResult, liveResult);
         renderChart();
@@ -171,7 +170,7 @@ def build_js(spec: GuardedAssetSpec) -> str:
         ),
         (
             'const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=gold";',
-            f"const ASSET_LABEL = {json_escape(spec.price_name)};",
+            f'const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol={spec.slug}";\n  const ASSET_LABEL = {json_escape(spec.price_name)};',
         ),
         ('const STATIC_DAILY_URL = "gold_daily.csv";', f'const STATIC_DAILY_URL = "{spec.slug}_daily.csv";'),
         (
@@ -183,6 +182,7 @@ def build_js(spec: GuardedAssetSpec) -> str:
             f'const STATIC_SITE_DATA_URL = "{spec.slug}_guarded_site_data.json";',
         ),
         ("latest_gold_signal.json", signal_file),
+        ("Enter a manual gold (GC=F) level", f"Enter a manual {spec.price_name} ({spec.yahoo_ticker}) level"),
         ('GC=F', spec.yahoo_ticker),
         ("Gold (GC=F)", spec.asset_label),
         ("Gold (GC=F) data", f"{spec.price_name} data"),

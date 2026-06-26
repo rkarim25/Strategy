@@ -1,4 +1,6 @@
 const USE_WORKER_LIVE = false;
+  const WORKER_QUOTE_URL = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=3bal";
+  const EXPECTED_TICKER = "3BAL.L";
   const ASSET_LABEL = "3BAL";
   const STATIC_DAILY_URL = "3bal_daily.csv";
   const STATIC_SIGNAL_URL = "latest_3bal_signal.json";
@@ -358,19 +360,18 @@ const USE_WORKER_LIVE = false;
         const eodResult = computeSignal(rows);
         let livePriceInfo = null;
         let quoteWarning = "";
-        if (allowManualOverride && $("manualIntradayPrice")?.value?.trim()) {
-          try {
-            livePriceInfo = await getLivePrice({ allowManualOverride });
-          } catch (quoteErr) {
-            quoteWarning = quoteErr.message || String(quoteErr);
-          }
+        try {
+          livePriceInfo = await getLivePrice({ allowManualOverride });
+        } catch (quoteErr) {
+          console.warn(quoteErr);
+          quoteWarning = quoteErr.message || String(quoteErr);
         }
         const liveRows = livePriceInfo?.price == null ? rows : appendIntradayRow(rows, livePriceInfo.price);
         const liveResult = computeSignal(liveRows);
         if (livePriceInfo?.price == null) {
           liveResult.explanation = "Showing last completed close from static daily CSV. Use manual price + Refresh for intraday override.";
         } else {
-          liveResult.explanation = `Manual intraday price applied (${livePriceInfo.source}).`;
+          liveResult.explanation = `Live intraday quote applied (${livePriceInfo.source}).`;
         }
         render(eodResult, liveResult);
         renderChart();
@@ -545,7 +546,7 @@ const USE_WORKER_LIVE = false;
       }
     }
 
-    const { response, text } = await fetchTextWithDiagnostics(WORKER_QUOTE_URL, "Intraday LQQ3 quote");
+    const { response, text } = await fetchTextWithDiagnostics(WORKER_QUOTE_URL, "Intraday 3BAL quote");
     let parsedJson = null;
     try {
       parsedJson = JSON.parse(text);
@@ -560,6 +561,9 @@ const USE_WORKER_LIVE = false;
       }
     }
 
+    if (parsedJson && parsedJson.ticker && EXPECTED_TICKER && String(parsedJson.ticker) !== EXPECTED_TICKER) {
+      throw new Error(`Live quote ticker mismatch: got ${parsedJson.ticker}, expected ${EXPECTED_TICKER}. Worker may be stale — using last completed close.`);
+    }
     const price = Number(parsedJson?.price ?? parsedJson?.close ?? parsedJson?.last ?? parsedJson?.value);
     if (Number.isFinite(price) && price > 0) {
       return { price, source: parsedJson?.source || `${WORKER_QUOTE_URL} (HTTP ${response.status})` };
