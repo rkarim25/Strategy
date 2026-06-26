@@ -50,6 +50,7 @@
     .badge.w { background: var(--water); color: var(--accent); }
     .badge.o { background: var(--octane); color: var(--good); }
     .badge.z { background: rgba(0,0,0,.05); color: var(--muted); }
+    .badge.s { background: rgba(120,80,200,.12); color: #6b3fa0; }
     #overview table { min-width: 760px; }
     #overview tbody tr { cursor: pointer; }
     #overview tbody tr:hover td { background: rgba(0,113,227,.05); }
@@ -62,6 +63,9 @@
     .sub.w { color: var(--accent); } .sub.o { color: var(--good); }
     .qtable tbody tr.w td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
     .qtable tbody tr.o td:first-child { box-shadow: inset 3px 0 0 var(--good); }
+    .qtable tbody tr.def td { background: rgba(245,166,35,.10); }
+    .qtable tbody tr.def td:first-child { box-shadow: inset 3px 0 0 #f5a623; font-weight: 700; }
+    .star { color: #f5a623; }
     .qtable tbody tr:hover td { background: rgba(0,0,0,.025); }
     .bh td { color: var(--muted); font-style: italic; }
     .foot { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
@@ -104,6 +108,9 @@
         below Buy &amp; Hold 1×. Surfaces defensive variants where strict Water/Octane is unreachable because the
         benchmark's high CAGR comes only with an extreme (−82%) drawdown.</li>
     </ul>
+    <p class="meta"><span class="star">★</span> marks the strategy this site features as its <strong>default / chosen</strong> pick for that asset
+      (S&amp;P <strong>Octane</strong> &amp; <strong>Water</strong> tabs; Nasdaq <strong>Stillwater</strong>). Other assets' pages run the
+      Guarded A5/B25 strategy, which is outside this Excel sweep universe.</p>
     <p class="meta" id="costNote"></p>
   </div>
 
@@ -126,6 +133,7 @@
     { key: "label", name: "Asset", l: true, sortable: true, get: (a) => a.label, render: (a) => esc(a.label) },
     { key: "octane_count", name: "Octane", sortable: true, get: (a) => a.octane_count, render: (a) => `<span class="badge ${a.octane_count ? "o" : "z"}">${a.octane_count}</span>` },
     { key: "water_count", name: "Water", sortable: true, get: (a) => a.water_count, render: (a) => `<span class="badge ${a.water_count ? "w" : "z"}">${a.water_count}</span>` },
+    { key: "stillwater_count", name: "Stillwater", sortable: true, get: (a) => a.stillwater_count || 0, render: (a) => `<span class="badge ${a.stillwater_count ? "s" : "z"}">${a.stillwater_count || 0}</span>` },
     { key: "neither_count", name: "Neither", sortable: true, get: (a) => a.neither_count, render: (a) => `<span class="pill">${a.neither_count}</span>` },
     { key: "best_octane", name: "Best Octane (Calmar)", l: true, sortable: false, render: (a) => a.best_octane ? `${esc(a.best_octane.name)} <span class="pill">${fmt3(a.best_octane.calmar)}</span>` : "—" },
     { key: "best_water", name: "Best Water (CAGR)", l: true, sortable: false, render: (a) => a.best_water ? `${esc(a.best_water.name)} <span class="pill">${fmtPct(a.best_water.cagr)}</span>` : "—" },
@@ -134,7 +142,7 @@
   ];
 
   const DETAIL_COLS = [
-    { key: "Strategy", name: "Strategy", l: true, render: (r) => esc(r.Strategy) },
+    { key: "Strategy", name: "Strategy", l: true, render: (r) => (r.default ? '<span class="star" title="Site default / chosen strategy">★</span> ' : '') + esc(r.Strategy) },
     { key: "Leverage_Max", name: "Lev", render: (r) => fmtLev(r.Leverage_Max) },
     { key: "CAGR_pct", name: "CAGR", render: (r) => fmtPct(r.CAGR_pct) },
     { key: "Vol_pct", name: "Vol", render: (r) => fmtPct(r.Vol_pct) },
@@ -183,7 +191,7 @@
 
   function detailTable(rows, kind) {
     const head = "<tr>" + DETAIL_COLS.map((c) => `<th class="${c.l ? "l" : ""}">${c.name}</th>`).join("") + "</tr>";
-    const body = rows.map((r) => `<tr class="${kind}">` + DETAIL_COLS.map((c) =>
+    const body = rows.map((r) => `<tr class="${kind}${r.default ? " def" : ""}">` + DETAIL_COLS.map((c) =>
       `<td class="${c.l ? "l" : "num"}">${c.render(r)}</td>`).join("") + "</tr>").join("");
     return `<div class="tbl-wrap"><table class="qtable"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
   }
@@ -211,8 +219,9 @@
       DATA = data;
       const tw = data.assets.reduce((s, a) => s + a.water_count, 0);
       const to = data.assets.reduce((s, a) => s + a.octane_count, 0);
+      const ts = data.assets.reduce((s, a) => s + (a.stillwater_count || 0), 0);
       document.getElementById("overviewMeta").textContent =
-        `${data.assets.length} asset classes · ${to} Octane and ${tw} Water strategies in total. Generated ${data.generated}.`;
+        `${data.assets.length} asset classes · ${to} Octane, ${tw} Water${ts ? ` and ${ts} Stillwater` : ""} strategies in total. Generated ${data.generated}.`;
       document.getElementById("costNote").textContent =
         "Per-asset trading cost (from mid-price): " + data.assets.map((a) => `${a.label} ${a.cost}`).join(" · ") + ".";
       renderOverview();

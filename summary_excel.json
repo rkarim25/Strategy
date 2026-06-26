@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-25T21:34:43Z",
+  "generated": "2026-06-26T10:13:19Z",
   "assets": [
     {
       "key": "spx",
@@ -11,6 +11,7 @@
       "water_count": 11,
       "octane_count": 11,
       "neither_count": 154,
+      "stillwater_count": 0,
       "best_water": {
         "name": "VIX Scale 1-3x",
         "cagr": 11.71
@@ -31,7 +32,8 @@
           "MaxDD_pct": -27.57,
           "Trades_Per_Year": 1.7,
           "Pct_Cash_Time": 29.3,
-          "End_Value": 317973.13
+          "End_Value": 317973.13,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 1x/cash",
@@ -44,7 +46,8 @@
           "MaxDD_pct": -19.82,
           "Trades_Per_Year": 1.0,
           "Pct_Cash_Time": 29.3,
-          "End_Value": 204255.04
+          "End_Value": 204255.04,
+          "default": true
         },
         {
           "Strategy": "VIX Scale 1-3x",
@@ -57,7 +60,8 @@
           "MaxDD_pct": -33.27,
           "Trades_Per_Year": 7.1,
           "Pct_Cash_Time": 28.9,
-          "End_Value": 473946.97
+          "End_Value": 473946.97,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + VIX Scale 1-3x",
@@ -70,7 +74,8 @@
           "MaxDD_pct": -33.27,
           "Trades_Per_Year": 7.1,
           "Pct_Cash_Time": 28.9,
-          "End_Value": 473946.97
+          "End_Value": 473946.97,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + RSI>30 Exit + VIX Scale 1-3x",
@@ -83,7 +88,8 @@
           "MaxDD_pct": -33.27,
           "Trades_Per_Year": 7.1,
           "Pct_Cash_Time": 28.9,
-          "End_Value": 473946.97
+          "End_Value": 473946.97,
+          "default": false
         },
         {
           "Strategy": "Guarded+ (200/2x/floor) 2x",
@@ -96,7 +102,8 @@
           "MaxDD_pct": -33.71,
           "Trades_Per_Year": 6.1,
           "Pct_Cash_Time": 29.3,
-          "End_Value": 392035.8
+          "End_Value": 392035.8,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + RSI>30 Exit 1x/cash",
@@ -109,7 +116,8 @@
           "MaxDD_pct": -33.27,
           "Trades_Per_Year": 1.0,
           "Pct_Cash_Time": 28.9,
-          "End_Value": 215239.96
+          "End_Value": 215239.96,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-1% Band 1x/cash",
@@ -122,7 +130,8 @@
           "MaxDD_pct": -20.18,
           "Trades_Per_Year": 2.5,
           "Pct_Cash_Time": 29.7,
-          "End_Value": 154725.76
+          "End_Value": 154725.76,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-5% Band 1x/cash",
@@ -135,7 +144,8 @@
           "MaxDD_pct": -23.84,
           "Trades_Per_Year": 0.7,
           "Pct_Cash_Time": 26.8,
-          "End_Value": 168485.02
+          "End_Value": 168485.02,
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when VIX<15",
@@ -148,7 +158,8 @@
           "MaxDD_pct": -35.08,
           "Trades_Per_Year": 5.9,
           "Pct_Cash_Time": 29.1,
-          "End_Value": 168523.43
+          "End_Value": 168523.43,
+          "default": false
         },
         {
           "Strategy": "SMA50/200 Golden Cross 1x/cash",
@@ -161,7 +172,8 @@
           "MaxDD_pct": -33.72,
           "Trades_Per_Year": 1.0,
           "Pct_Cash_Time": 29.1,
-          "End_Value": 166523.68
+          "End_Value": 166523.68,
+          "default": false
         }
       ],
       "octane_rows": [
@@ -176,7 +188,8 @@
           "MaxDD_pct": -41.52,
           "Trades_Per_Year": 1.0,
           "Pct_Cash_Time": 29.3,
-          "End_Value": 1407506.25
+          "End_Value": 1407506.25,
+          "default": true
         },
         {
           "Strategy": "SMA200 +-1% Band 2x",
@@ -189,7 +202,8 @@
           "MaxDD_pct": -40.19,
           "Trades_Per_Year": 2.5,
           "Pct_Cash_Time": 29.7,
-          "End_Value": 774157.57
+          "End_Value": 774157.57,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-5% Band 2x",
@@ -202,7 +216,8 @@
           "MaxDD_pct": -43.31,
           "Trades_Per_Year": 0.7,
           "Pct_Cash_Time": 26.8,
-          "End_Value": 693588.49
+          "End_Value": 693588.49,
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when VIX<20 & idxDD>-12%",
@@ -215,7 +230,8 @@
           "MaxDD_pct": -37.68,
           "Trades_Per_Year": 5.4,
           "Pct_Cash_Time": 29.1,
-          "End_Value": 164941.17
+          "End_Value": 164941.17,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-2% Band 2x",
@@ -228,7 +244,8 @@
           "MaxDD_pct": -44.84,
           "Trades_Per_Year": 1.6,
           "Pct_Cash_Time": 29.5,
-          "End_Value": 566236.85
+          "End_Value": 566236.85,
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when VIX<20",
@@ -241,7 +258,8 @@
           "MaxDD_pct": -37.68,
           "Trades_Per_Year": 6.4,
           "Pct_Cash_Time": 29.1,
-          "End_Value": 152102.25
+          "End_Value": 152102.25,
+          "default": false
         },
         {
           "Strategy": "SMA200 2x + VIX>20 de-lever to 1x",
@@ -254,7 +272,8 @@
           "MaxDD_pct": -40.44,
           "Trades_Per_Year": 10.8,
           "Pct_Cash_Time": 29.3,
-          "End_Value": 197642.01
+          "End_Value": 197642.01,
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when within 5% of high",
@@ -267,7 +286,8 @@
           "MaxDD_pct": -40.6,
           "Trades_Per_Year": 6.6,
           "Pct_Cash_Time": 29.1,
-          "End_Value": 199707.75
+          "End_Value": 199707.75,
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when within 7% of high",
@@ -280,7 +300,8 @@
           "MaxDD_pct": -42.95,
           "Trades_Per_Year": 4.7,
           "Pct_Cash_Time": 29.1,
-          "End_Value": 247098.68
+          "End_Value": 247098.68,
+          "default": false
         },
         {
           "Strategy": "SMA200 1x; +2x when 6m&12m mom>0",
@@ -293,7 +314,8 @@
           "MaxDD_pct": -44.25,
           "Trades_Per_Year": 9.3,
           "Pct_Cash_Time": 29.3,
-          "End_Value": 251061.29
+          "End_Value": 251061.29,
+          "default": false
         },
         {
           "Strategy": "SMA200 1x; +2x when 6m&12m mom>0 & VIX<22",
@@ -306,7 +328,8 @@
           "MaxDD_pct": -44.56,
           "Trades_Per_Year": 12.3,
           "Pct_Cash_Time": 29.3,
-          "End_Value": 176299.58
+          "End_Value": 176299.58,
+          "default": false
         }
       ],
       "stillwater_rows": []
@@ -321,6 +344,7 @@
       "water_count": 0,
       "octane_count": 13,
       "neither_count": 122,
+      "stillwater_count": 0,
       "best_water": null,
       "best_octane": {
         "name": "SMA200 +-3% Band + RSI>40 Exit 2x",
@@ -339,7 +363,8 @@
           "MaxDD_pct": -37.91,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 22.9,
-          "End_Value": 2760.66
+          "End_Value": 2760.66,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-2% Band 2x",
@@ -352,7 +377,8 @@
           "MaxDD_pct": -41.35,
           "Trades_Per_Year": 1.7,
           "Pct_Cash_Time": 24.2,
-          "End_Value": 2571.98
+          "End_Value": 2571.98,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + RSI>20 Exit 2x",
@@ -365,7 +391,8 @@
           "MaxDD_pct": -40.23,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 23.8,
-          "End_Value": 2170.11
+          "End_Value": 2170.11,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + RSI>35 Exit 2x",
@@ -378,7 +405,8 @@
           "MaxDD_pct": -40.76,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 23.2,
-          "End_Value": 2265.28
+          "End_Value": 2265.28,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + RSI>25 Exit 2x",
@@ -391,7 +419,8 @@
           "MaxDD_pct": -40.22,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 23.7,
-          "End_Value": 2097.58
+          "End_Value": 2097.58,
+          "default": false
         },
         {
           "Strategy": "SMA50/200 Cross +-3% Band 2x",
@@ -404,7 +433,8 @@
           "MaxDD_pct": -40.33,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 23.8,
-          "End_Value": 2064.46
+          "End_Value": 2064.46,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 2x + 15% trailing stop",
@@ -417,7 +447,8 @@
           "MaxDD_pct": -40.33,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 23.8,
-          "End_Value": 2064.46
+          "End_Value": 2064.46,
+          "default": false
         },
         {
           "Strategy": "SMA200 2x 3% band",
@@ -430,7 +461,8 @@
           "MaxDD_pct": -40.33,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 23.8,
-          "End_Value": 2064.46
+          "End_Value": 2064.46,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 2x/cash",
@@ -443,7 +475,8 @@
           "MaxDD_pct": -40.33,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 23.8,
-          "End_Value": 2064.46
+          "End_Value": 2064.46,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + RSI>30 Exit 2x/cash",
@@ -456,7 +489,8 @@
           "MaxDD_pct": -40.71,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 23.5,
-          "End_Value": 2035.86
+          "End_Value": 2035.86,
+          "default": false
         },
         {
           "Strategy": "SMA100 +-3% Band 2x",
@@ -469,7 +503,8 @@
           "MaxDD_pct": -44.97,
           "Trades_Per_Year": 2.1,
           "Pct_Cash_Time": 29.0,
-          "End_Value": 2591.6
+          "End_Value": 2591.6,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-1% Band 2x",
@@ -482,7 +517,8 @@
           "MaxDD_pct": -44.83,
           "Trades_Per_Year": 2.8,
           "Pct_Cash_Time": 24.4,
-          "End_Value": 2224.03
+          "End_Value": 2224.03,
+          "default": false
         },
         {
           "Strategy": "SMA20/100 Cross 2x",
@@ -495,7 +531,8 @@
           "MaxDD_pct": -44.84,
           "Trades_Per_Year": 2.6,
           "Pct_Cash_Time": 27.8,
-          "End_Value": 2164.15
+          "End_Value": 2164.15,
+          "default": false
         }
       ],
       "stillwater_rows": []
@@ -510,6 +547,7 @@
       "water_count": 0,
       "octane_count": 0,
       "neither_count": 176,
+      "stillwater_count": 6,
       "best_water": null,
       "best_octane": null,
       "water_rows": [],
@@ -526,7 +564,8 @@
           "MaxDD_pct": -39.95,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 26.5,
-          "End_Value": 41181.06
+          "End_Value": 41181.06,
+          "default": true
         },
         {
           "Strategy": "GC 50/200 1x; +2x when VIX<20 & idxDD>-12%",
@@ -539,7 +578,8 @@
           "MaxDD_pct": -39.95,
           "Trades_Per_Year": 8.6,
           "Pct_Cash_Time": 26.5,
-          "End_Value": 40633.56
+          "End_Value": 40633.56,
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when within 3% of high",
@@ -552,7 +592,8 @@
           "MaxDD_pct": -42.63,
           "Trades_Per_Year": 11.7,
           "Pct_Cash_Time": 26.5,
-          "End_Value": 48476.18
+          "End_Value": 48476.18,
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when within 5% of high",
@@ -565,7 +606,8 @@
           "MaxDD_pct": -44.86,
           "Trades_Per_Year": 9.4,
           "Pct_Cash_Time": 26.5,
-          "End_Value": 49511.86
+          "End_Value": 49511.86,
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when VIX<18",
@@ -578,7 +620,8 @@
           "MaxDD_pct": -44.2,
           "Trades_Per_Year": 12.0,
           "Pct_Cash_Time": 26.5,
-          "End_Value": 37677.36
+          "End_Value": 37677.36,
+          "default": false
         },
         {
           "Strategy": "SMA100/200 Golden Cross 1x/cash",
@@ -591,7 +634,8 @@
           "MaxDD_pct": -42.53,
           "Trades_Per_Year": 1.2,
           "Pct_Cash_Time": 26.5,
-          "End_Value": 28977.89
+          "End_Value": 28977.89,
+          "default": false
         }
       ]
     },
@@ -605,6 +649,7 @@
       "water_count": 0,
       "octane_count": 0,
       "neither_count": 135,
+      "stillwater_count": 0,
       "best_water": null,
       "best_octane": null,
       "water_rows": [],
@@ -621,6 +666,7 @@
       "water_count": 0,
       "octane_count": 0,
       "neither_count": 99,
+      "stillwater_count": 0,
       "best_water": null,
       "best_octane": null,
       "water_rows": [],
@@ -637,6 +683,7 @@
       "water_count": 0,
       "octane_count": 4,
       "neither_count": 131,
+      "stillwater_count": 0,
       "best_water": null,
       "best_octane": {
         "name": "RSI 30/70 2x",
@@ -655,7 +702,8 @@
           "MaxDD_pct": -9.54,
           "Trades_Per_Year": 4.9,
           "Pct_Cash_Time": 97.8,
-          "End_Value": 511.99
+          "End_Value": 511.99,
+          "default": false
         },
         {
           "Strategy": "SMA20/100 Cross 2x",
@@ -668,7 +716,8 @@
           "MaxDD_pct": -33.87,
           "Trades_Per_Year": 3.1,
           "Pct_Cash_Time": 42.6,
-          "End_Value": 877.79
+          "End_Value": 877.79,
+          "default": false
         },
         {
           "Strategy": "SMA10/50 Cross 2x",
@@ -681,7 +730,8 @@
           "MaxDD_pct": -36.29,
           "Trades_Per_Year": 6.4,
           "Pct_Cash_Time": 44.1,
-          "End_Value": 686.12
+          "End_Value": 686.12,
+          "default": false
         },
         {
           "Strategy": "SMA20/50 Cross 2x",
@@ -694,7 +744,8 @@
           "MaxDD_pct": -39.36,
           "Trades_Per_Year": 5.2,
           "Pct_Cash_Time": 44.0,
-          "End_Value": 700.97
+          "End_Value": 700.97,
+          "default": false
         }
       ],
       "stillwater_rows": []
@@ -709,6 +760,7 @@
       "water_count": 9,
       "octane_count": 9,
       "neither_count": 81,
+      "stillwater_count": 0,
       "best_water": {
         "name": "Sell in May (May-Oct -> cash, Nov-Apr -> 1x)",
         "cagr": 11.18
@@ -729,7 +781,8 @@
           "MaxDD_pct": -36.36,
           "Trades_Per_Year": 22.8,
           "Pct_Cash_Time": 40.3,
-          "End_Value": 6730.5
+          "End_Value": 6730.5,
+          "default": false
         },
         {
           "Strategy": "EMA20 1x/cash",
@@ -742,7 +795,8 @@
           "MaxDD_pct": -43.78,
           "Trades_Per_Year": 25.6,
           "Pct_Cash_Time": 38.8,
-          "End_Value": 4330.98
+          "End_Value": 4330.98,
+          "default": false
         },
         {
           "Strategy": "MACD 1x/cash",
@@ -755,7 +809,8 @@
           "MaxDD_pct": -36.68,
           "Trades_Per_Year": 18.0,
           "Pct_Cash_Time": 50.1,
-          "End_Value": 4334.73
+          "End_Value": 4334.73,
+          "default": false
         },
         {
           "Strategy": "EMA50 1x/cash",
@@ -768,7 +823,8 @@
           "MaxDD_pct": -37.46,
           "Trades_Per_Year": 16.4,
           "Pct_Cash_Time": 36.2,
-          "End_Value": 3366.68
+          "End_Value": 3366.68,
+          "default": false
         },
         {
           "Strategy": "SMA50 1x/cash",
@@ -781,7 +837,8 @@
           "MaxDD_pct": -37.81,
           "Trades_Per_Year": 14.1,
           "Pct_Cash_Time": 38.3,
-          "End_Value": 3273.77
+          "End_Value": 3273.77,
+          "default": false
         },
         {
           "Strategy": "Sell in May (May-Oct -> cash, Nov-Apr -> 1x)",
@@ -794,7 +851,8 @@
           "MaxDD_pct": -42.01,
           "Trades_Per_Year": 2.1,
           "Pct_Cash_Time": 50.5,
-          "End_Value": 7273.89
+          "End_Value": 7273.89,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + low VIX (<20) 2x",
@@ -807,7 +865,8 @@
           "MaxDD_pct": -36.09,
           "Trades_Per_Year": 9.3,
           "Pct_Cash_Time": 55.4,
-          "End_Value": 4116.71
+          "End_Value": 4116.71,
+          "default": false
         },
         {
           "Strategy": "DD Scale 1-2x",
@@ -820,7 +879,8 @@
           "MaxDD_pct": -21.67,
           "Trades_Per_Year": 2.4,
           "Pct_Cash_Time": 35.1,
-          "End_Value": 5282.78
+          "End_Value": 5282.78,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 1x/cash",
@@ -833,7 +893,8 @@
           "MaxDD_pct": -20.14,
           "Trades_Per_Year": 1.2,
           "Pct_Cash_Time": 35.1,
-          "End_Value": 3599.93
+          "End_Value": 3599.93,
+          "default": false
         }
       ],
       "octane_rows": [
@@ -848,7 +909,8 @@
           "MaxDD_pct": -37.79,
           "Trades_Per_Year": 1.2,
           "Pct_Cash_Time": 34.9,
-          "End_Value": 10278.06
+          "End_Value": 10278.06,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 2x/cash",
@@ -861,7 +923,8 @@
           "MaxDD_pct": -43.6,
           "Trades_Per_Year": 1.2,
           "Pct_Cash_Time": 35.1,
-          "End_Value": 8560.26
+          "End_Value": 8560.26,
+          "default": false
         },
         {
           "Strategy": "SMA200 2x 3% band",
@@ -874,7 +937,8 @@
           "MaxDD_pct": -43.6,
           "Trades_Per_Year": 1.2,
           "Pct_Cash_Time": 35.1,
-          "End_Value": 8560.26
+          "End_Value": 8560.26,
+          "default": false
         },
         {
           "Strategy": "SMA50/200 Cross +-3% Band 2x",
@@ -887,7 +951,8 @@
           "MaxDD_pct": -43.6,
           "Trades_Per_Year": 1.2,
           "Pct_Cash_Time": 35.1,
-          "End_Value": 8560.26
+          "End_Value": 8560.26,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 2x + 15% trailing stop",
@@ -900,7 +965,8 @@
           "MaxDD_pct": -43.6,
           "Trades_Per_Year": 1.2,
           "Pct_Cash_Time": 35.1,
-          "End_Value": 8560.26
+          "End_Value": 8560.26,
+          "default": false
         },
         {
           "Strategy": "Guarded+ (200/2x/floor) 2x",
@@ -913,7 +979,8 @@
           "MaxDD_pct": -39.82,
           "Trades_Per_Year": 6.6,
           "Pct_Cash_Time": 34.2,
-          "End_Value": 5565.49
+          "End_Value": 5565.49,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band + RSI>25 Exit 2x",
@@ -926,7 +993,8 @@
           "MaxDD_pct": -44.31,
           "Trades_Per_Year": 1.2,
           "Pct_Cash_Time": 34.5,
-          "End_Value": 7843.86
+          "End_Value": 7843.86,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 2x + VIX>25 de-lever to 1x",
@@ -939,7 +1007,8 @@
           "MaxDD_pct": -44.07,
           "Trades_Per_Year": 5.4,
           "Pct_Cash_Time": 35.1,
-          "End_Value": 7206.17
+          "End_Value": 7206.17,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 2x + 10% trailing stop",
@@ -952,7 +1021,8 @@
           "MaxDD_pct": -43.6,
           "Trades_Per_Year": 1.8,
           "Pct_Cash_Time": 35.2,
-          "End_Value": 6353.87
+          "End_Value": 6353.87,
+          "default": false
         }
       ],
       "stillwater_rows": []
@@ -967,6 +1037,7 @@
       "water_count": 3,
       "octane_count": 1,
       "neither_count": 95,
+      "stillwater_count": 0,
       "best_water": {
         "name": "DD Scale 1-2x",
         "cagr": 12.19
@@ -987,7 +1058,8 @@
           "MaxDD_pct": -38.79,
           "Trades_Per_Year": 2.1,
           "Pct_Cash_Time": 50.8,
-          "End_Value": 8113.54
+          "End_Value": 8113.54,
+          "default": false
         },
         {
           "Strategy": "DD Scale 1-2x",
@@ -1000,7 +1072,8 @@
           "MaxDD_pct": -34.56,
           "Trades_Per_Year": 1.9,
           "Pct_Cash_Time": 31.9,
-          "End_Value": 8336.81
+          "End_Value": 8336.81,
+          "default": false
         },
         {
           "Strategy": "SMA200 +-3% Band 1x/cash",
@@ -1013,7 +1086,8 @@
           "MaxDD_pct": -29.9,
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 31.9,
-          "End_Value": 5657.13
+          "End_Value": 5657.13,
+          "default": false
         }
       ],
       "octane_rows": [
@@ -1028,7 +1102,8 @@
           "MaxDD_pct": -41.17,
           "Trades_Per_Year": 6.0,
           "Pct_Cash_Time": 31.9,
-          "End_Value": 17562.03
+          "End_Value": 17562.03,
+          "default": false
         }
       ],
       "stillwater_rows": []
@@ -1043,6 +1118,7 @@
       "water_count": 0,
       "octane_count": 1,
       "neither_count": 98,
+      "stillwater_count": 0,
       "best_water": null,
       "best_octane": {
         "name": "RSI 30/70 2x",
@@ -1061,7 +1137,8 @@
           "MaxDD_pct": -23.74,
           "Trades_Per_Year": 5.1,
           "Pct_Cash_Time": 97.8,
-          "End_Value": 1177.68
+          "End_Value": 1177.68,
+          "default": false
         }
       ],
       "stillwater_rows": []
@@ -1076,6 +1153,7 @@
       "water_count": 0,
       "octane_count": 1,
       "neither_count": 98,
+      "stillwater_count": 0,
       "best_water": null,
       "best_octane": {
         "name": "SMA200 +-3% Band + low VIX (<20) 2x",
@@ -1094,7 +1172,8 @@
           "MaxDD_pct": -21.24,
           "Trades_Per_Year": 13.9,
           "Pct_Cash_Time": 35.4,
-          "End_Value": 1488.65
+          "End_Value": 1488.65,
+          "default": false
         }
       ],
       "stillwater_rows": []

@@ -28,6 +28,21 @@ DETAIL_FIELDS = [
     "Calmar", "MaxDD_pct", "Trades_Per_Year", "Pct_Cash_Time", "End_Value",
 ]
 
+# The strategy each asset's site page features as its DEFAULT/chosen pick — marked with a
+# star and row-highlight in the summary. Names must match the sweep exactly. NB: most guarded
+# asset pages deploy "Guarded A5/B25" which is NOT part of this Excel sweep universe, so only the
+# strategies that also appear in the sweep can be highlighted here (S&P Octane + Water, Nasdaq Stillwater).
+SITE_DEFAULTS = {
+    "spx": ["SMA200 +-3% Band + RSI>20 Exit 2x", "SMA200 +-3% Band 1x/cash"],  # Octane + Water tabs
+    "ndx": ["SMA50/200 Golden Cross 1x/cash"],  # top Nasdaq Stillwater
+}
+
+
+def mark_defaults(rows: list[dict], defaults: set[str]) -> list[dict]:
+    for r in rows:
+        r["default"] = r["Strategy"] in defaults
+    return rows
+
 
 def _num(v):
     if v is None or (isinstance(v, float) and v != v):
@@ -76,6 +91,11 @@ def main() -> int:
             swq = sw[sw["SW"].isin(["Stillwater-Water", "Stillwater-Octane"])].sort_values("Calmar", ascending=False)
             stillwater_rows = [row_to_dict(r) for _, r in swq.iterrows()]
 
+        defaults = set(SITE_DEFAULTS.get(key, []))
+        water_rows = mark_defaults([row_to_dict(r) for _, r in water.iterrows()], defaults)
+        octane_rows = mark_defaults([row_to_dict(r) for _, r in octane.iterrows()], defaults)
+        stillwater_rows = mark_defaults(stillwater_rows, defaults)
+
         assets.append({
             "key": key,
             "label": ASSET_LABELS[key],
@@ -86,10 +106,11 @@ def main() -> int:
             "water_count": int((strat["Classification"] == "Water").sum()),
             "octane_count": int((strat["Classification"] == "Octane").sum()),
             "neither_count": int((strat["Classification"] == "Neither").sum()),
+            "stillwater_count": len(stillwater_rows),
             "best_water": best_water,
             "best_octane": best_octane,
-            "water_rows": [row_to_dict(r) for _, r in water.iterrows()],
-            "octane_rows": [row_to_dict(r) for _, r in octane.iterrows()],
+            "water_rows": water_rows,
+            "octane_rows": octane_rows,
             "stillwater_rows": stillwater_rows,
         })
 
