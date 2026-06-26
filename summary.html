@@ -66,6 +66,7 @@
     .qtable tbody tr.def td { background: rgba(245,166,35,.10); }
     .qtable tbody tr.def td:first-child { box-shadow: inset 3px 0 0 #f5a623; font-weight: 700; }
     .star { color: #f5a623; }
+    .rolebadge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 1px 6px; border-radius: 999px; background: rgba(245,166,35,.18); color: #9a6a00; margin-left: 4px; vertical-align: middle; }
     .qtable tbody tr:hover td { background: rgba(0,0,0,.025); }
     .bh td { color: var(--muted); font-style: italic; }
     .foot { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
@@ -108,9 +109,9 @@
         below Buy &amp; Hold 1×. Surfaces defensive variants where strict Water/Octane is unreachable because the
         benchmark's high CAGR comes only with an extreme (−82%) drawdown.</li>
     </ul>
-    <p class="meta"><span class="star">★</span> marks the strategy this site features as its <strong>default / chosen</strong> pick for that asset
-      (S&amp;P <strong>Octane</strong> &amp; <strong>Water</strong> tabs; Nasdaq <strong>Stillwater</strong>). Other assets' pages run the
-      Guarded A5/B25 strategy, which is outside this Excel sweep universe.</p>
+    <p class="meta"><span class="star">★</span> marks the strategy this site features as its <strong>default / chosen</strong> pick, with a role badge:
+      S&amp;P (<strong>Octane</strong> + <strong>Water</strong> tabs), Nasdaq (<strong>Octane</strong> + <strong>Water*</strong>), DAX &amp; FTSE 250 (<strong>Water</strong>).
+      <strong>Water*</strong> = a Stillwater strategy serving as the Nasdaq Water pick — Nasdaq has no strict Water/Octane, so its CAGR is within 2pp of Buy &amp; Hold 1× rather than strictly beating it.</p>
     <p class="meta" id="costNote"></p>
   </div>
 
@@ -142,7 +143,7 @@
   ];
 
   const DETAIL_COLS = [
-    { key: "Strategy", name: "Strategy", l: true, render: (r) => (r.default ? '<span class="star" title="Site default / chosen strategy">★</span> ' : '') + esc(r.Strategy) },
+    { key: "Strategy", name: "Strategy", l: true, render: (r) => (r.default ? '<span class="star" title="Site default / chosen strategy">★</span> ' : '') + esc(r.Strategy) + (r.default_role ? ' <span class="rolebadge">' + esc(r.default_role) + '</span>' : '') },
     { key: "Leverage_Max", name: "Lev", render: (r) => fmtLev(r.Leverage_Max) },
     { key: "CAGR_pct", name: "CAGR", render: (r) => fmtPct(r.CAGR_pct) },
     { key: "Vol_pct", name: "Vol", render: (r) => fmtPct(r.Vol_pct) },

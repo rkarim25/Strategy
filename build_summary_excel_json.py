@@ -32,15 +32,32 @@ DETAIL_FIELDS = [
 # star and row-highlight in the summary. Names must match the sweep exactly. NB: most guarded
 # asset pages deploy "Guarded A5/B25" which is NOT part of this Excel sweep universe, so only the
 # strategies that also appear in the sweep can be highlighted here (S&P Octane + Water, Nasdaq Stillwater).
+# Maps asset -> {exact strategy name: role label}. The role shows as a badge next to the star.
+# "Water*" = a Stillwater strategy serving as the Water pick (Nasdaq has no strict Water/Octane).
 SITE_DEFAULTS = {
-    "spx": ["SMA200 +-3% Band + RSI>20 Exit 2x", "SMA200 +-3% Band 1x/cash"],  # Octane + Water tabs
-    "ndx": ["SMA50/200 Golden Cross 1x/cash"],  # top Nasdaq Stillwater
+    "spx": {
+        "SMA200 +-3% Band + RSI>20 Exit 2x": "Octane",
+        "SMA200 +-3% Band 1x/cash": "Water",
+    },
+    "ndx": {
+        "GC 50/200 1x; +2x when VIX<20 & idxDD>-12%": "Octane",
+        "SMA50/200 Golden Cross 1x/cash": "Water*",
+    },
+    "dax": {
+        "SMA200 +-3% Band 1x/cash": "Water",
+    },
+    "ftse250": {
+        "SMA20 1x/cash": "Water",
+    },
 }
 
 
-def mark_defaults(rows: list[dict], defaults: set[str]) -> list[dict]:
+def mark_defaults(rows: list[dict], defaults: dict[str, str]) -> list[dict]:
     for r in rows:
-        r["default"] = r["Strategy"] in defaults
+        role = defaults.get(r["Strategy"])
+        r["default"] = role is not None
+        if role:
+            r["default_role"] = role
     return rows
 
 
@@ -91,7 +108,7 @@ def main() -> int:
             swq = sw[sw["SW"].isin(["Stillwater-Water", "Stillwater-Octane"])].sort_values("Calmar", ascending=False)
             stillwater_rows = [row_to_dict(r) for _, r in swq.iterrows()]
 
-        defaults = set(SITE_DEFAULTS.get(key, []))
+        defaults = SITE_DEFAULTS.get(key, {})
         water_rows = mark_defaults([row_to_dict(r) for _, r in water.iterrows()], defaults)
         octane_rows = mark_defaults([row_to_dict(r) for _, r in octane.iterrows()], defaults)
         stillwater_rows = mark_defaults(stillwater_rows, defaults)
