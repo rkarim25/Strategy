@@ -1,10 +1,20 @@
 {
-  "generated": "2026-06-26T10:23:10Z",
+  "generated": "2026-06-26T19:11:49Z",
   "assets": [
     {
       "key": "spx",
       "label": "S&P 500",
       "cost": "0.10%",
+      "site_default": [
+        {
+          "name": "SMA200 +-3% Band + RSI>20 Exit 2x",
+          "role": "Octane"
+        },
+        {
+          "name": "SMA200 +-3% Band 1x/cash",
+          "role": "Water"
+        }
+      ],
       "bh_cagr": 9.99,
       "bh_maxdd": -55.13,
       "total": 176,
@@ -340,6 +350,7 @@
       "key": "spxew",
       "label": "S&P 500 EW",
       "cost": "0.12%",
+      "site_default": [],
       "bh_cagr": 13.85,
       "bh_maxdd": -55.62,
       "total": 135,
@@ -543,6 +554,16 @@
       "key": "ndx",
       "label": "Nasdaq 100",
       "cost": "0.10%",
+      "site_default": [
+        {
+          "name": "GC 50/200 1x; +2x when VIX<20 & idxDD>-12%",
+          "role": "Octane"
+        },
+        {
+          "name": "SMA50/200 Golden Cross 1x/cash",
+          "role": "Water*"
+        }
+      ],
       "bh_cagr": 16.46,
       "bh_maxdd": -82.55,
       "total": 176,
@@ -647,6 +668,7 @@
       "key": "rut",
       "label": "Russell 2000",
       "cost": "0.15%",
+      "site_default": [],
       "bh_cagr": 10.18,
       "bh_maxdd": -58.82,
       "total": 135,
@@ -664,6 +686,12 @@
       "key": "gold",
       "label": "Gold",
       "cost": "0.15%",
+      "site_default": [
+        {
+          "name": "SMA50/150 Golden Cross 1x/cash",
+          "role": "Trend"
+        }
+      ],
       "bh_cagr": 13.58,
       "bh_maxdd": -42.26,
       "total": 99,
@@ -681,6 +709,7 @@
       "key": "tlt",
       "label": "20Y+ Treasuries",
       "cost": "0.10%",
+      "site_default": [],
       "bh_cagr": 7.06,
       "bh_maxdd": -46.24,
       "total": 135,
@@ -758,6 +787,12 @@
       "key": "ftse250",
       "label": "FTSE 250",
       "cost": "0.20%",
+      "site_default": [
+        {
+          "name": "SMA20 1x/cash",
+          "role": "Water"
+        }
+      ],
       "bh_cagr": 8.87,
       "bh_maxdd": -54.94,
       "total": 99,
@@ -1036,6 +1071,12 @@
       "key": "dax",
       "label": "DAX",
       "cost": "0.20%",
+      "site_default": [
+        {
+          "name": "SMA200 +-3% Band 1x/cash",
+          "role": "Water"
+        }
+      ],
       "bh_cagr": 10.42,
       "bh_maxdd": -71.75,
       "total": 99,
@@ -1118,6 +1159,12 @@
       "key": "msci_em",
       "label": "MSCI EM",
       "cost": "0.20%",
+      "site_default": [
+        {
+          "name": "SMA100 1x/cash",
+          "role": "Trend"
+        }
+      ],
       "bh_cagr": 10.51,
       "bh_maxdd": -66.71,
       "total": 99,
@@ -1153,6 +1200,12 @@
       "key": "msci_world",
       "label": "MSCI World",
       "cost": "0.15%",
+      "site_default": [
+        {
+          "name": "SMA200 1x/cash",
+          "role": "Trend"
+        }
+      ],
       "bh_cagr": 16.32,
       "bh_maxdd": -25.6,
       "total": 99,

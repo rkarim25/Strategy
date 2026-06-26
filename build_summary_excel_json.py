@@ -28,12 +28,14 @@ DETAIL_FIELDS = [
     "Calmar", "MaxDD_pct", "Trades_Per_Year", "Pct_Cash_Time", "End_Value",
 ]
 
-# The strategy each asset's site page features as its DEFAULT/chosen pick — marked with a
-# star and row-highlight in the summary. Names must match the sweep exactly. NB: most guarded
-# asset pages deploy "Guarded A5/B25" which is NOT part of this Excel sweep universe, so only the
-# strategies that also appear in the sweep can be highlighted here (S&P Octane + Water, Nasdaq Stillwater).
-# Maps asset -> {exact strategy name: role label}. The role shows as a badge next to the star.
-# "Water*" = a Stillwater strategy serving as the Water pick (Nasdaq has no strict Water/Octane).
+# The strategy each asset's site page features as its DEFAULT/chosen pick. Maps asset ->
+# {exact strategy name: role label}; the role shows as a badge. Every asset's default is also
+# surfaced as a `site_default` line on the Summary page (even when it's not a strict Water/Octane,
+# so it can't earn the ★ row-highlight inside the Water/Octane drill-down tables).
+# Role labels: "Water" / "Octane" = strict classification; "Water*" = a Stillwater serving as the
+# Water pick (Nasdaq has no strict Water/Octane); "Trend" = the best available 1x/cash trend rule
+# where no strict Water/Octane/Stillwater exists (buy-&-hold is too strong) — see
+# core/site_default_strategy.py for the canonical per-asset config the live pages use.
 SITE_DEFAULTS = {
     "spx": {
         "SMA200 +-3% Band + RSI>20 Exit 2x": "Octane",
@@ -48,6 +50,15 @@ SITE_DEFAULTS = {
     },
     "ftse250": {
         "SMA20 1x/cash": "Water",
+    },
+    "gold": {
+        "SMA50/150 Golden Cross 1x/cash": "Trend",
+    },
+    "msci_em": {
+        "SMA100 1x/cash": "Trend",
+    },
+    "msci_world": {
+        "SMA200 1x/cash": "Trend",
     },
 }
 
@@ -117,6 +128,7 @@ def main() -> int:
             "key": key,
             "label": ASSET_LABELS[key],
             "cost": TRADING_COST_LABELS.get(key),
+            "site_default": [{"name": name, "role": role} for name, role in defaults.items()],
             "bh_cagr": bh_cagr,
             "bh_maxdd": bh_maxdd,
             "total": int(len(strat)),

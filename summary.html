@@ -200,11 +200,16 @@
   function renderDetails() {
     document.getElementById("details").innerHTML = DATA.assets.map((a) => {
       const bh = `B&H 1× ${fmtPct(a.bh_cagr)} / ${a.bh_maxdd != null ? a.bh_maxdd.toFixed(2) + "%" : "—"}`;
-      let body = "";
-      if (a.octane_rows.length) body += `<div class="sub o">Octane (${a.octane_rows.length})</div>` + detailTable(a.octane_rows, "o");
-      if (a.water_rows.length) body += `<div class="sub w">Water (${a.water_rows.length})</div>` + detailTable(a.water_rows, "w");
-      if (a.stillwater_rows && a.stillwater_rows.length) body += `<div class="sub o">Stillwater (${a.stillwater_rows.length}) — CAGR within 2pp of B&amp;H</div>` + detailTable(a.stillwater_rows, "o");
-      if (!body) body = `<p class="meta">No Water or Octane strategies for ${esc(a.label)} — all ${a.total} tested strategies were dominated by Buy &amp; Hold 1× on the full-history basis.</p>`;
+      const sd = (a.site_default && a.site_default.length)
+        ? `<div style="margin:0 0 12px;font-size:13px;font-weight:600">★ Site default${a.site_default.length > 1 ? "s" : ""}: `
+            + a.site_default.map((d) => `${esc(d.name)} <span class="rolebadge">${esc(d.role)}</span>`).join(" · ") + `</div>`
+        : "";
+      let tables = "";
+      if (a.octane_rows.length) tables += `<div class="sub o">Octane (${a.octane_rows.length})</div>` + detailTable(a.octane_rows, "o");
+      if (a.water_rows.length) tables += `<div class="sub w">Water (${a.water_rows.length})</div>` + detailTable(a.water_rows, "w");
+      if (a.stillwater_rows && a.stillwater_rows.length) tables += `<div class="sub o">Stillwater (${a.stillwater_rows.length}) — CAGR within 2pp of B&amp;H</div>` + detailTable(a.stillwater_rows, "o");
+      if (!tables) tables = `<p class="meta">No strict Water or Octane strategies for ${esc(a.label)} — all ${a.total} tested strategies were dominated by Buy &amp; Hold 1× on risk-adjusted metrics. The site default above is the best available 1×/cash trend rule.</p>`;
+      const body = sd + tables;
       return `<div class="card assetCard" id="asset-${a.key}">
         <h2 onclick="this.parentElement.classList.toggle('open')"><span class="chev">▶</span> ${esc(a.label)}
           <span class="badge o">${a.octane_count} O</span><span class="badge w">${a.water_count} W</span>
