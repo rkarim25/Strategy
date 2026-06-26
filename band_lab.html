@@ -4,20 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="site-scroll-init.js?v=20260610"></script>
-  <title>S&amp;P 500 Water — SMA200 ±3% Band 1x/cash</title>
+  <title>S&amp;P 500 Band Lab — interactive SMA-band backtest</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <script>
-    window.STRATEGY_DATA_URL = "spx_water_band_site_data.json";
-    window.STRATEGY_PAGE_TITLE = "S&P 500 Water — SMA200 ±3% Band 1x/cash";
-    window.STRATEGY_QUOTE = { symbol: "spx", ticker: "^GSPC" };
-  </script>
+  <script>window.STRATEGY_PAGE_TITLE = "S&P 500 Band Lab";</script>
 </head>
 <body>
 <main>
   <nav class="site-nav" aria-label="Strategies"></nav>
   <div id="app"><p>Loading…</p></div>
 </main>
+<!-- strategy_page.js is loaded for its shared chart engine (window.SP); with no STRATEGY_DATA_URL it
+     does not render a strategy page. band_lab.js drives the interactive lab. -->
 <script src="site-nav.js?v=20260626l"></script>
 <script src="strategy_page.js?v=20260626l"></script>
+<script src="band_lab.js?v=20260626a"></script>
 </body>
 </html>

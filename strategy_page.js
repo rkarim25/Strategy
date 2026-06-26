@@ -346,14 +346,16 @@
     const cw = document.createElement("div"); cw.className = "chartwrap";
     const canvas = document.createElement("canvas"); cw.appendChild(canvas); wrap.appendChild(cw);
     const legend = document.createElement("div"); legend.className = "legend";
-    legend.innerHTML = seriesDefs.map((s) => `<span><i style="background:${s.color}"></i>${esc(s.label)}</span>`).join("");
+    let _series = seriesDefs, _mdefs = markerDefs;   // mutable so wrap.update() can swap data in place
+    const renderLegend = () => { legend.innerHTML = _series.map((s) => `<span><i style="background:${s.color}"></i>${esc(s.label)}</span>`).join(""); };
+    renderLegend();
     wrap.appendChild(legend);
 
     let winHi = dates.length, winLo = _useDefault ? Math.max(0, dates.length - _defDays) : 0;
     const draw = () => {
       const lo = Math.max(0, winLo), hi = Math.min(dates.length, winHi);
       const dslice = dates.slice(lo, hi);
-      const ser = seriesDefs.map((s) => {
+      const ser = _series.map((s) => {
         let vals = s.values.slice(lo, hi);
         if (rebasePct) {
           const base = vals.find((v) => v != null && isFinite(v));
@@ -362,7 +364,7 @@
         return { color: s.color, width: s.width, values: vals };
       });
       const anchor = ser[0] ? ser[0].values : [];
-      const markers = markerDefs.map((m) => {
+      const markers = _mdefs.map((m) => {
         const gi = dateIdx.get(m.date); if (gi == null || gi < lo || gi >= hi) return null;
         const li = gi - lo; return { ...m, i: li, value: anchor[li] };
       }).filter(Boolean);
@@ -437,6 +439,8 @@
 
     setTimeout(draw, 0);
     window.addEventListener("resize", draw);
+    // Live update: swap series/markers in place (same date axis) without losing the current window.
+    wrap.update = (series, mdefs) => { if (series) _series = series; if (mdefs) _mdefs = mdefs; renderLegend(); draw(); };
     return wrap;
   }
 
@@ -627,6 +631,12 @@
       .catch((e) => { app.innerHTML = `<p class="err">Could not load ${esc(DATA_URL)} — ${esc(e.message)}</p>`; });
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
+  // Expose the chart engine + format helpers so other pages (e.g. the interactive Band Lab) can reuse
+  // the exact same charts. `chartBlock(...)` returns a card element with a `.update(series, markers)` method.
+  window.SP = { chartBlock, lineChart, kpi, esc, fmt, fmtLev, fmtNum, injectStyles };
+
+  // Only auto-boot a strategy page when a data URL is set; otherwise we were loaded purely for window.SP.
+  function start() { if (window.STRATEGY_DATA_URL) boot(); else injectStyles(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
 })();
