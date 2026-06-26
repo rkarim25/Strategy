@@ -20,4 +20,5 @@ scripts/tmp_results_*.csv
 output.txt
 
 # Multi-agent coordination claims (local, ephemeral — see docs/runbooks/coordination.md)
-.claims/
+.claims/*
+!.claims/README.md
