@@ -11,6 +11,81 @@
   "use strict";
   const DATA_URL = window.STRATEGY_DATA_URL;
   const ACCENT = "#0071e3";
+  const WORKER_QUOTE = "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=";
+
+  // Fetch a live intraday quote with a TICKER-MATCH SAFEGUARD: if the worker returns a
+  // different ticker than expected (e.g. a stale worker serving ^GSPC for everything),
+  // reject it so the page falls back to the last completed close instead of a wrong price.
+  async function fetchLiveQuote(symbol, expectedTicker) {
+    try {
+      const r = await fetch(WORKER_QUOTE + encodeURIComponent(symbol) + "&_=" + Date.now(), { cache: "no-store" });
+      if (!r.ok) return null;
+      const j = await r.json();
+      const price = Number(j.price ?? j.close ?? j.last);
+      if (!Number.isFinite(price) || price <= 0) return null;
+      if (expectedTicker && j.ticker && String(j.ticker) !== expectedTicker) return null;
+      return { price, ts: j.timestamp || null };
+    } catch (_) { return null; }
+  }
+
+  function smaLast(arr, n) {
+    const v = arr.filter((x) => x != null && isFinite(x));
+    if (v.length < n) return NaN;
+    let s = 0; for (let i = v.length - n; i < v.length; i++) s += v[i];
+    return s / n;
+  }
+
+  // Recompute current leverage from a live close, per strategy family.
+  function liveLeverage(d, livePrice, liveVix, priorLev) {
+    const p = d.price_sma_data || {}, sp = d.strategy_params || {};
+    const closes = (p.spx_close || []).concat([livePrice]);
+    if (p.sma200_upper_band) {                       // band strategy (S&P Water/Octane)
+      const w = sp.sma_window || 200, band = sp.band_pct || 0.03, lev = sp.leverage || 1;
+      const sma = smaLast(closes, w);
+      if (!isFinite(sma)) return priorLev;
+      if (livePrice > sma * (1 + band)) return lev;
+      if (livePrice < sma * (1 - band)) return 0;
+      return priorLev;                               // hysteresis: hold prior state in-band
+    }
+    if (p.sma50 && p.sma200) {                        // golden cross (Nasdaq Water*/Octane*)
+      if (smaLast(closes, 50) <= smaLast(closes, 200)) return 0;
+      if (!sp.octane) return 1;
+      const peak = Math.max(...closes.filter((x) => x != null && isFinite(x)));
+      const dd = livePrice / peak - 1;
+      if (liveVix == null) return priorLev >= 2 ? 2 : 1;   // no live VIX yet: keep prior bump
+      return (liveVix < 20 && dd > -0.12) ? 2 : 1;
+    }
+    return priorLev;
+  }
+
+  function setBanner(lev, asOf, live) {
+    const el = document.getElementById("signalBanner"); if (!el) return;
+    const isLong = lev > 0;
+    el.innerHTML = `<div class="signal-banner ${isLong ? "long" : "cash"}">
+      <div><div class="big">${isLong ? `IN — ${lev.toFixed(0)}× exposure` : "CASH"}</div>
+      <div class="sub">${live ? "● LIVE" : "Last close"} · ${esc(asOf)}</div></div></div>`;
+  }
+
+  async function maybeGoLive(d, sig) {
+    const q = window.STRATEGY_QUOTE, note = document.getElementById("signalNote");
+    const priorLev = sig ? Number(sig.leverage) : 0;
+    if (!q) { if (note) note.textContent = "Static signal."; return; }
+    const run = async () => {
+      const quote = await fetchLiveQuote(q.symbol, q.ticker);
+      if (!quote) {
+        if (note) note.textContent = "Live quote not available for this asset yet — showing the last completed close. It will go live automatically once the quote worker is deployed for it.";
+        return;
+      }
+      let liveVix = null;
+      if ((d.strategy_params || {}).octane) { const v = await fetchLiveQuote("vix", "^VIX"); liveVix = v ? v.price : null; }
+      const lev = liveLeverage(d, quote.price, liveVix, priorLev);
+      const when = quote.ts ? new Date(quote.ts).toLocaleString() : new Date().toLocaleString();
+      setBanner(lev, `live ${q.ticker} ${quote.price.toLocaleString()} · ${when}`, true);
+      if (note) note.textContent = "Live intraday quote via the Cloudflare proxy; auto-refreshes every 30 min during UK LSE hours. Falls back to last close if unavailable.";
+    };
+    await run();
+    window.SiteNav?.registerAutoRefresh?.(run, 30 * 60 * 1000);
+  }
 
   const fmt = (v) => (v == null || v === "" ? "—" : v);
   const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
@@ -169,12 +244,10 @@
     // --- Signal view ---
     const vs = document.getElementById("view-signal");
     const bann = document.createElement("div"); bann.className = "card";
-    bann.innerHTML = `<div class="signal-banner ${isLong ? "long" : "cash"}">
-      <div><div class="big">${isLong ? `IN — ${Number(sig.leverage).toFixed(0)}× exposure` : "CASH"}</div>
-      <div class="sub">As of ${esc(sig ? sig.date : "—")} · last close ${esc(sig && sig.spx_close != null ? sig.spx_close.toLocaleString() : "—")}</div></div>
-    </div>
-    <p class="meta">Signal recomputed daily from the precomputed history; for an intraday what-if, the page can be regenerated. This page does not auto-poll a live quote (only the Gold page does).</p>`;
+    bann.innerHTML = `<div id="signalBanner"></div><p class="meta" id="signalNote" style="margin-top:10px"></p>`;
     vs.appendChild(bann);
+    setBanner(sig ? Number(sig.leverage) : 0, sig ? `${esc(sig.date)} close ${sig.spx_close != null ? sig.spx_close.toLocaleString() : "—"}` : "—", false);
+    maybeGoLive(d, sig);
     if (d.price_sma_data) {
       const p = d.price_sma_data, defs = [{ label: asset + " close", color: "#1d1d1f", values: p.spx_close }];
       if (p.sma200) defs.push({ label: "SMA200", color: ACCENT, values: p.sma200 });
