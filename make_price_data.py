@@ -168,7 +168,8 @@ for aid, label, belly, w1, w2 in FLIES:
         print(f"!! fly {aid} FAILED: {e}")
 
 def build_fly_beta(aid, label, belly, w1, w2):
-    # OUT-OF-SAMPLE: hedge betas from an EXPANDING window of past Δyields (lagged), 50-50 fallback first MIN obs
+    # OUT-OF-SAMPLE: hedge betas from a ROLLING window (last WIN trading days) of past Δyields (lagged),
+    # so the hedge ratio tracks regime drift; 50-50 fallback until MIN obs accumulate.
     B, A, Cc = cache.get(belly), cache.get(w1), cache.get(w2)
     if not (B and A and Cc):
         print(f"!! flyRW {aid}: missing leg"); return
@@ -177,8 +178,9 @@ def build_fly_beta(aid, label, belly, w1, w2):
     if len(common) < 320:
         print(f"!! flyRW {aid}: short"); return
     yb = [B[5][Bi[d]] for d in common]; y1 = [A[5][Ai[d]] for d in common]; y2 = [Cc[5][Ci[d]] for d in common]
-    MIN = 252
+    MIN, WIN = 252, 756  # min obs to estimate; ~3y rolling window
     n = 0; s1 = s2 = sb = s11 = s22 = s12 = s1b = s2b = 0.0
+    d1s = []; d2s = []; dbs = []; dropped = 0  # diff history for the rolling window
     b1 = b2 = 0.5; lb1 = lb2 = 0.5
     s = [[], [], [], [], [], [], []]
     for i, d in enumerate(common):
@@ -197,7 +199,12 @@ def build_fly_beta(aid, label, belly, w1, w2):
         s[0].append(d); s[1].append(B[1][ib]); s[2].append(round(o, 4)); s[3].append(round(h, 4)); s[4].append(round(lo, 4)); s[5].append(round(c, 4)); s[6].append(0)
         if i > 0:
             d1 = y1[i] - y1[i - 1]; d2 = y2[i] - y2[i - 1]; db = yb[i] - yb[i - 1]
+            d1s.append(d1); d2s.append(d2); dbs.append(db)
             n += 1; s1 += d1; s2 += d2; sb += db; s11 += d1 * d1; s22 += d2 * d2; s12 += d1 * d2; s1b += d1 * db; s2b += d2 * db
+            if n > WIN:  # drop the oldest diff so the window stays ~3y
+                o1 = d1s[dropped]; o2 = d2s[dropped]; ob = dbs[dropped]
+                s1 -= o1; s2 -= o2; sb -= ob; s11 -= o1 * o1; s22 -= o2 * o2; s12 -= o1 * o2; s1b -= o1 * ob; s2b -= o2 * ob
+                n -= 1; dropped += 1
     write(aid, f"{label} (hedge ~{lb1:.2f}/{lb2:.2f})", "Butterfly", f"{belly}-rw-{w1}-{w2}", "spread", tuple(s),
           legs=[{"t": belly, "w": 1}, {"t": w1, "w": round(-lb1, 3)}, {"t": w2, "w": round(-lb2, 3)}])
 
@@ -224,6 +231,37 @@ for c in curve:
     c["roll3m"] = round((c["yield"] - interp(max(0.083, c["years"] - 0.25))) * 100, 1)
     c["carry3m"] = round((c["yield"] - short) * 0.25 * 100, 1)
 json.dump(curve, open("ust_curve.json", "w"))
+
+# Curve-inversion ranges (for the chart shading): union of 2s10s (^TNX-2YY=F, 2021+) and the
+# longer-history 3m10y (^TNX-^IRX) inverted periods. ISO date strings sort lexically.
+def inv_ranges(long_t, short_t):
+    L, S = cache.get(long_t), cache.get(short_t)
+    if not (L and S): return []
+    Si = {d: i for i, d in enumerate(S[0])}; out = []; start = None; prev = None; cnt = 0
+    for i, d in enumerate(L[0]):
+        if d not in Si: continue
+        sp = L[5][i] - S[5][Si[d]]
+        if sp < 0:
+            if start is None: start = d; cnt = 0
+            cnt += 1
+        elif start is not None:
+            out.append([start, prev, cnt]); start = None
+        prev = d
+    if start is not None: out.append([start, prev, cnt])
+    return out
+def _days(a, b):
+    return (dt.datetime.strptime(b, "%Y-%m-%d") - dt.datetime.strptime(a, "%Y-%m-%d")).days
+def merge_ranges(rs):  # merge ranges within ~30 calendar days, then keep only sustained (>=5d) inversions
+    out = []
+    for a, b, n in sorted(rs):
+        if out and _days(out[-1][1], a) <= 30:
+            if b > out[-1][1]: out[-1][1] = b
+            out[-1][2] += n
+        else: out.append([a, b, n])
+    return [[a, b] for a, b, n in out if n >= 5]
+inv = merge_ranges(inv_ranges("^TNX", "2YY=F") + inv_ranges("^TNX", "^IRX"))
+json.dump(inv, open("ust_inversions.json", "w"))
+print(f"ust_inversions.json: {len(inv)} sustained inverted ranges (latest {inv[-1] if inv else '-'})")
 print(f"ust_curve.json: {len(curve)} tenors")
 
 reg.sort(key=lambda r: ORDER.index(r["id"]) if r["id"] in ORDER else 999)

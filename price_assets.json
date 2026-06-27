@@ -185,7 +185,7 @@
 },
 {
 "id": "f2s5s10sb",
-"label": "2s5s10s RW-fly (hedge ~0.32/0.81)",
+"label": "2s5s10s RW-fly (hedge ~0.23/0.88)",
 "klass": "Butterfly",
 "ticker": "^FVX-rw-2YY=F-^TNX",
 "kind": "spread",
@@ -193,7 +193,7 @@
 },
 {
 "id": "f5s10s30sb",
-"label": "5s10s30s RW-fly (hedge ~0.49/0.54)",
+"label": "5s10s30s RW-fly (hedge ~0.52/0.53)",
 "klass": "Butterfly",
 "ticker": "^TNX-rw-^FVX-^TYX",
 "kind": "spread",

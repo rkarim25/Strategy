@@ -15,6 +15,8 @@
   const CLOUD_KEY = "lab_cloud_key";
   const TICKER_DV01 = { "^IRX": 0.25, "2YY=F": 1.9, "^FVX": 4.7, "^TNX": 8.6, "^TYX": 18.5 }; // ≈ modified duration (DV01 per $100)
   const RECESSIONS = [["1953-07-01", "1954-05-31"], ["1957-08-01", "1958-04-30"], ["1960-04-01", "1961-02-28"], ["1969-12-01", "1970-11-30"], ["1973-11-01", "1975-03-31"], ["1980-01-01", "1980-07-31"], ["1981-07-01", "1982-11-30"], ["1990-07-01", "1991-03-31"], ["2001-03-01", "2001-11-30"], ["2007-12-01", "2009-06-30"], ["2020-02-01", "2020-04-30"]].map(([s, e]) => [Date.parse(s), Date.parse(e)]); // NBER US recessions
+  const TICK2ID = { "^IRX": "ust3m", "2YY=F": "ust2y", "^FVX": "ust5y", "^TNX": "ust10y", "^TYX": "ust30y" }; // curve leg ticker → curve id
+  let INVERSIONS = []; // 2s10s/3m10y inverted ranges (loaded from ust_inversions.json)
   const UP = "#15803d", DN = "#b42318";
   const RANGES = [["1M", 21], ["3M", 63], ["6M", 126], ["1Y", 252], ["2Y", 504], ["5Y", 1260], ["Max", null]];
   const TFS = [
@@ -185,6 +187,22 @@
         },
       });
     } catch (_) {}
+    try {
+      klinecharts.registerIndicator({
+        name: "INVERSION", figures: [], calc: (dataList) => dataList.map(() => ({})),
+        draw: ({ ctx, kLineDataList, visibleRange, xAxis, bounding }) => {
+          if (!INVERSIONS.length) return false;
+          const from = Math.max(0, visibleRange.from), to = visibleRange.to, H = (bounding && bounding.height) || 2000;
+          ctx.fillStyle = "rgba(214,138,18,0.14)"; // amber = curve inverted (2s10s/3m10y)
+          for (const [s, e] of INVERSIONS) {
+            let x0 = null, x1 = null;
+            for (let i = from; i < to; i++) { const d = kLineDataList[i]; if (!d) continue; if (d.timestamp >= s && d.timestamp <= e) { const x = xAxis.convertToPixel(i); if (x0 === null) x0 = x; x1 = x; } }
+            if (x0 !== null) ctx.fillRect(x0 - 1, 0, (x1 - x0) + 2, H);
+          }
+          return false;
+        },
+      });
+    } catch (_) {}
   }
 
   function injectStyles() {
@@ -251,7 +269,7 @@
       indParams: Object.fromEntries(Object.entries(DEFAULTS).map(([k, v]) => [k, v.slice()])),
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
-      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false };
+      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false, inversion: false, carry: false };
     const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], CURVE = [], pendingBest = null;
 
@@ -280,7 +298,7 @@
         </details>
         <div class="cbar">
           <div><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
-          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="recBtn">▦ Recessions</button></div>
+          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="recBtn">▦ Recessions</button><button id="invBtn">⊘ Inversions</button></div>
         </div>
         <div id="chart"></div>
         <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points on the chart.</p>
@@ -308,6 +326,7 @@
         <div class="cbar" id="pnlBar" style="display:none;margin:2px 0 4px">
           <div><span class="lbl">P&amp;L unit</span><span class="seg" id="pnlSeg"></span></div>
           <span id="pnlPerBp" style="display:none;font-size:12px;color:#6e6e73">$ per bp (trade DV01) <input id="perBpInput" type="number" step="50" style="width:88px;font:inherit;font-size:12px;padding:3px 6px;border-radius:7px;border:1px solid var(--line)"></span>
+          <label style="font-size:12px;color:#6e6e73;display:inline-flex;align-items:center;gap:5px;cursor:pointer"><input type="checkbox" id="carryChk"> carry/roll in P&amp;L</label>
         </div>
         <div id="playbook"><p class="meta">Loading…</p></div>
       </div>
@@ -343,6 +362,8 @@
     $("undoBtn").onclick = undoDrawing;
     $("clearBtn").onclick = clearDrawings;
     $("recBtn").onclick = () => { state.recession = !state.recession; $("recBtn").classList.toggle("active", state.recession); safe(() => { if (state.recession) chart.createIndicator("RECESSION", true, { id: "candle_pane" }); else chart.removeIndicator("candle_pane", "RECESSION"); }); };
+    $("invBtn").onclick = () => { state.inversion = !state.inversion; $("invBtn").classList.toggle("active", state.inversion); safe(() => { if (state.inversion) chart.createIndicator("INVERSION", true, { id: "candle_pane" }); else chart.removeIndicator("candle_pane", "INVERSION"); }); };
+    $("carryChk").onchange = () => { state.carry = $("carryChk").checked; renderPlaybook(); };
 
     // leverage / costs controls (drive the playbook backtests)
     function syncLevUI() { const L = state.lev; segActive($("levSeg"), findBtn($("levSeg"), String(L.mult))); segActive($("costSeg"), findBtn($("costSeg"), L.costs ? "1" : "0")); $("levSafe").style.display = L.mult > 1 ? "" : "none"; $("levMultLbl").textContent = L.mult + "×"; $("levDD").value = L.ddThr; $("levVol").value = L.volThr; }
@@ -492,13 +513,22 @@
       const isY = D.kind === "yield", isS = D.kind === "spread", L = state.lev;
       $("levBar").style.display = (isY || isS) ? "none" : "";
       const levArr = (pos) => (L.mult > 1 && !isY && !isS && D.ddh.length === c.length) ? pos.map((p, i) => (p ? ((D.ddh[i] > L.ddThr / 100 && D.rv[i] < L.volThr / 100) ? L.mult : 1) : 0)) : pos;
+      let crStep = 0; // per-day carry+roll in series units (set below when the carry toggle is on)
       function spreadStats(pos) {
         let cum = 0, peak = 0, mdd = 0, hit = 0, days = 0; const pnl = [];
-        for (let i = 1; i < c.length; i++) { const dir = pos[i - 1] ? 1 : -1, x = dir * (c[i] - c[i - 1]); pnl.push(x); cum += x; if (cum > peak) peak = cum; if (cum - peak < mdd) mdd = cum - peak; if (x > 0) hit++; days++; }
+        for (let i = 1; i < c.length; i++) { const dir = pos[i - 1] ? 1 : -1, x = dir * (c[i] - c[i - 1] + crStep); pnl.push(x); cum += x; if (cum > peak) peak = cum; if (cum - peak < mdd) mdd = cum - peak; if (x > 0) hit++; days++; }
         const yrs = c.length / 252, m = pnl.reduce((a, b) => a + b, 0) / pnl.length; let v = 0; for (const x of pnl) v += (x - m) ** 2; const vol = Math.sqrt(v / Math.max(1, pnl.length - 1));
         return { annbps: (cum * 100) / yrs, maxddbps: mdd * 100, sharpe: vol ? (m / vol) * Math.sqrt(252) : 0, hit: days ? hit / days : 0, total: cum * 100 };
       }
       const isDelta = isS || isY;   // UST instruments trade directionally: P&L = position × change-in-series (bps)
+      if (isDelta && state.carry && CURVE.length) {
+        // bake carry+roll into the backtest: long S earns CR = −Σ wᵢ·(roll+carry)ᵢ per 3m (long rates/steepener PAY carry on an upward curve)
+        const crBy = {}; CURVE.forEach((q) => { crBy[q.id] = (q.roll3m || 0) + (q.carry3m || 0); });
+        let cr = 0;
+        if (D.legs && D.legs.length) { for (const lg of D.legs) { const id = TICK2ID[lg.t]; if (id && crBy[id] != null) cr += lg.w * crBy[id]; } cr = -cr; }
+        else if (isY && crBy[D.id] != null) cr = -crBy[D.id];
+        crStep = cr / 63 / 100;   // CR is bps per ~3m (63 trading days); /100 → series units
+      } else crStep = 0;
       const evalp = (pos) => { if (isDelta) return spreadStats(pos); const la = levArr(pos); const r = btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
       const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isDelta) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
       $("pnlBar").style.display = isDelta ? "" : "none";
@@ -529,6 +559,7 @@
       if (isY) caps.push(`<b>Rate trade</b> (bps). <b>Long (+1) = long rates</b> — profit when the yield <i>rises</i> (short duration); <b>short (−1) = long duration</b> — profit when it falls. P&L = position × daily change in the yield. Strategies signal on the <i>yield level</i>. <b>Hit %</b> = share of days the position made money.`);
       if (isS) caps.push(`<b>Steepness spread</b> (% points; ×100 = bps). <b>Long the steepener</b> when the rule fires, <b>short (flattener)</b> when not; P&L = position × change in the spread. Strategies signal on the <i>spread level</i>. <b>Hit %</b> = share of days the position made money.`);
       if (usd) caps.push(`<b>DV01 $ P&L</b> at <b>$${(state.pnl.perBp || 0).toLocaleString()}/bp</b> (≈ this trade's DV01, edit above). Sharpe &amp; Hit % are scale-free; bps × $/bp = dollars.`);
+      if (isDelta && state.carry) caps.push(`<b>Carry/roll ON</b> — each day adds the position's carry+roll drift (long rates / long steepener <i>pay</i> carry on an upward curve; long duration / flattener <i>earn</i> it). Uses the <b>current</b> curve's carry+roll held constant — an approximation, not a historical carry series.`);
       if (!isDelta && L.mult > 1) caps.push(`<b>${L.mult}× when safe</b> — levered while in trend AND drawdown &gt; ${L.ddThr}% AND 20-day vol &lt; ${L.volThr}%, else 1× (cash when out). ${L.costs ? "Costs ON (5bps/switch + 4%/yr financing)." : "No costs."} Leverage lifts CAGR but <b>deepens drawdowns and usually lowers Sharpe</b> — that's the trade-off; the “% in” column shows average leverage.`);
       else if (!isDelta && L.costs) caps.push(`Costs ON — 5 bps per switch.`);
       const cap = caps.length ? `<p class="meta" style="margin:0 0 6px">${caps.join(" ")}</p>` : "";
@@ -569,7 +600,7 @@
       renderPlaybook(); refreshSignals(); scheduleSave();
       if (scroll) { const pb = $("playbook"); if (pb) pb.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
     }
-    function syncPnlUI() { if (!$("pnlSeg")) return; segActive($("pnlSeg"), findBtn($("pnlSeg"), state.pnl.mode)); $("pnlPerBp").style.display = state.pnl.mode === "usd" ? "" : "none"; $("perBpInput").value = state.pnl.perBp || 0; }
+    function syncPnlUI() { if (!$("pnlSeg")) return; segActive($("pnlSeg"), findBtn($("pnlSeg"), state.pnl.mode)); $("pnlPerBp").style.display = state.pnl.mode === "usd" ? "" : "none"; $("perBpInput").value = state.pnl.perBp || 0; if ($("carryChk")) $("carryChk").checked = state.carry; }
     function renderCurve() {
       const card = $("curveCard"); const isUST = ["Rates", "Steepness", "Butterfly"].includes(D.klass);
       card.style.display = (isUST && CURVE.length) ? "" : "none";
@@ -620,6 +651,7 @@
       .catch(() => { ASSETS = [{ id: "spx", label: "S&P 500", klass: "Indices", ticker: "^GSPC" }, { id: "ndx", label: "Nasdaq 100", klass: "Indices", ticker: "^NDX" }]; })
       .then(() => fetch("ust_strategies.json?v=" + Date.now()).then((r) => r.json()).then((l) => { LEADER = l || []; }).catch(() => { LEADER = []; }))
       .then(() => fetch("ust_curve.json?v=" + Date.now()).then((r) => r.json()).then((l) => { CURVE = l || []; }).catch(() => { CURVE = []; }))
+      .then(() => fetch("ust_inversions.json?v=" + Date.now()).then((r) => r.json()).then((l) => { INVERSIONS = (l || []).map(([s, e]) => [Date.parse(s), Date.parse(e)]); }).catch(() => { INVERSIONS = []; }))
       .then(() => { const sel = $("assetSel"), groups = {}; ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); }); sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join(""); sel.value = state.asset; sel.onchange = () => loadAsset(sel.value); loadAsset(state.asset); });
   }
 

@@ -206,7 +206,7 @@
 "asof": "2026-06-18"
 },
 "explain": "The 2s10s (10Y-2Y) oscillates around its range, so RSI reversion fades extremes \u2014 buy a flat curve, sell a steep one.",
-"topFamily": "reversion",
+"topFamily": "trend",
 "rows": 26
 },
 {
@@ -363,7 +363,7 @@
 },
 {
 "id": "f2s5s10sb",
-"label": "2s5s10s RW-fly (hedge ~0.32/0.81)",
+"label": "2s5s10s RW-fly (hedge ~0.23/0.88)",
 "klass": "Butterfly",
 "kind": "spread",
 "best": {
@@ -376,12 +376,12 @@
 },
 "family": "reversion",
 "metrics": {
-"primary": 138.32000000000008,
-"sharpe": 0.9595920649315275,
-"annbps": 28.641446179129023,
+"primary": 121.02000000000001,
+"sharpe": 0.8507266746595601,
+"annbps": 25.059194741166806,
 "maxddbps": -61.220000000000006,
-"hit": 0.5337171052631579,
-"total": 138.32000000000008,
+"hit": 0.5263157894736842,
+"total": 121.02000000000001,
 "unit": "bps"
 },
 "signalNow": 0,
@@ -394,7 +394,7 @@
 },
 {
 "id": "f5s10s30sb",
-"label": "5s10s30s RW-fly (hedge ~0.49/0.54)",
+"label": "5s10s30s RW-fly (hedge ~0.52/0.53)",
 "klass": "Butterfly",
 "kind": "spread",
 "best": {
@@ -407,12 +407,12 @@
 },
 "family": "reversion",
 "metrics": {
-"primary": 1106.7800000000027,
-"sharpe": 0.7293591506828471,
-"annbps": 22.563591942399537,
-"maxddbps": -134.3600000000002,
-"hit": 0.514967637540453,
-"total": 1106.7800000000027,
+"primary": 1173.9299999999942,
+"sharpe": 0.7601950399189484,
+"annbps": 23.932558854461494,
+"maxddbps": -120.38000000000007,
+"hit": 0.5132686084142395,
+"total": 1173.9299999999942,
 "unit": "bps"
 },
 "signalNow": 1,
