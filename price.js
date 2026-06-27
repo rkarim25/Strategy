@@ -521,14 +521,8 @@
         return { annbps: (cum * 100) / yrs, maxddbps: mdd * 100, sharpe: vol ? (m / vol) * Math.sqrt(252) : 0, hit: days ? hit / days : 0, total: cum * 100 };
       }
       const isDelta = isS || isY;   // UST instruments trade directionally: P&L = position × change-in-series (bps)
-      if (isDelta && state.carry && CURVE.length) {
-        // bake carry+roll into the backtest: long S earns CR = −Σ wᵢ·(roll+carry)ᵢ per 3m (long rates/steepener PAY carry on an upward curve)
-        const crBy = {}; CURVE.forEach((q) => { crBy[q.id] = (q.roll3m || 0) + (q.carry3m || 0); });
-        let cr = 0;
-        if (D.legs && D.legs.length) { for (const lg of D.legs) { const id = TICK2ID[lg.t]; if (id && crBy[id] != null) cr += lg.w * crBy[id]; } cr = -cr; }
-        else if (isY && crBy[D.id] != null) cr = -crBy[D.id];
-        crStep = cr / 63 / 100;   // CR is bps per ~3m (63 trading days); /100 → series units
-      } else crStep = 0;
+      // bake carry+roll into the backtest: long S earns CR = −Σ wᵢ·(roll+carry)ᵢ per 3m (long rates/steepener PAY carry on an upward curve)
+      crStep = (isDelta && state.carry) ? (instrCR() || 0) / 63 / 100 : 0;   // CR bps per ~3m (63 trading days); /100 → series units
       const evalp = (pos) => { if (isDelta) return spreadStats(pos); const la = levArr(pos); const r = btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
       const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isDelta) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
       $("pnlBar").style.display = isDelta ? "" : "none";
@@ -577,6 +571,14 @@
     }
 
     // ---- curve strategy leaderboard (best backtested rule per UST instrument) ----
+    function instrCR() {  // carry+roll (bps per ~3m) of being LONG this instrument (long rates / long steepener / long fly), from the live curve
+      if (!CURVE.length) return null;
+      const crBy = {}; CURVE.forEach((q) => { crBy[q.id] = (q.roll3m || 0) + (q.carry3m || 0); });
+      let cr = 0;
+      if (D.legs && D.legs.length) { for (const lg of D.legs) { const id = TICK2ID[lg.t]; if (id && crBy[id] != null) cr += lg.w * crBy[id]; } return -cr; }
+      if (D.kind === "yield" && crBy[D.id] != null) return -crBy[D.id];
+      return null;
+    }
     function renderLeader() {
       const card = $("leaderCard"), host = $("leader"), note = $("leaderNote");
       const isUST = ["Rates", "Steepness", "Butterfly"].includes(D.klass);
@@ -585,7 +587,10 @@
       const sigCell = (b) => `<span style="color:${b.signalNow ? UP : DN};font-weight:700;white-space:nowrap">${b.signalNow ? "▲" : "▼"} ${esc(b.signalLabel)}</span>`;
       const rc = (() => { const c = D.close; if (!c || c.length < 60) return ""; const n = c.length, cv = c[n - 1]; let m = 0; for (const x of c) m += x; m /= n; let v = 0; for (const x of c) v += (x - m) ** 2; const sd = Math.sqrt(v / n); let bl = 0; for (const x of c) if (x <= cv) bl++; const last = c.slice(-252), lo = Math.min(...last), hi = Math.max(...last); const z = sd ? (cv - m) / sd : 0; const u = (x) => D.kind === "spread" ? (x * 100).toFixed(0) + "bps" : x.toFixed(2) + (D.kind === "yield" ? "%" : ""); return `Now <b>${u(cv)}</b> · z-score <b style="color:${Math.abs(z) > 1.5 ? (z > 0 ? DN : UP) : "#444"}">${z >= 0 ? "+" : ""}${z.toFixed(2)}σ</b> · <b>${(bl / n * 100).toFixed(0)}th</b> percentile of history · 1y range ${u(lo)}–${u(hi)}`; })();
       const cur = LEADER.find((e) => e.id === D.id);
-      note.innerHTML = (cur ? `<b>${esc(cur.label)}:</b> ${cur.explain} <span style="color:#8a8a8e">(best: ${esc(cur.best.name)} — ${esc(Object.entries(cur.best.params).map(([k, v]) => k + " " + v).join(", "))}, Sharpe ${f2(cur.best.metrics.sharpe)})</span> · <b>Now: ${sigCell(cur.best)}</b> <span class="meta">as of ${esc(cur.best.asof || "")}</span>` : "") + (rc ? `<br><span style="color:#444">${rc}</span>` : "");
+      const crq = instrCR();  // bps/3m for long-the-instrument; the live trade may be short → flip
+      let carryTxt = "";
+      if (crq != null && cur) { const cy = (cur.best.signalNow ? 1 : -1) * crq * 4; carryTxt = ` · carry/roll on the live trade <b style="color:${cy >= 0 ? UP : DN}">${cy >= 0 ? "earns" : "pays"} ~${Math.abs(cy).toFixed(0)} bps/yr</b>`; }
+      note.innerHTML = (cur ? `<b>${esc(cur.label)}:</b> ${cur.explain} <span style="color:#8a8a8e">(best: ${esc(cur.best.name)} — ${esc(Object.entries(cur.best.params).map(([k, v]) => k + " " + v).join(", "))}, Sharpe ${f2(cur.best.metrics.sharpe)})</span> · <b>Now: ${sigCell(cur.best)}</b> <span class="meta">as of ${esc(cur.best.asof || "")}</span>` : "") + (rc ? `<br><span style="color:#444">${rc}${carryTxt}</span>` : "");
       const rows = LEADER.slice().sort((a, b) => b.best.metrics.sharpe - a.best.metrics.sharpe);
       const head = `<tr><th>Instrument</th><th>Best rule</th><th>Sharpe</th><th>Ann bps</th><th>Total bps</th><th>Hit %</th><th>Signal now</th><th></th></tr>`;
       const body = rows.map((e) => { const m = e.best.metrics, pr = Object.entries(e.best.params).map(([k, v]) => k + " " + v).join(", ");
