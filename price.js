@@ -21,7 +21,7 @@
   let STUDY_SIG = { buys: new Set(), sells: new Set() }; // "add buy/sell signals" from a study (drawn by the STUDYSIG indicator)
   const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // UK date format dd-MMM-yy
   const p2 = (n) => String(n).padStart(2, "0");
-  function ukTs(ts, withTime) { const d = new Date(ts); const s = p2(d.getDate()) + "-" + MON[d.getMonth()] + "-" + String(d.getFullYear()).slice(-2); return withTime ? s + " " + p2(d.getHours()) + ":" + p2(d.getMinutes()) : s; }
+  function ukTs(ts, withTime) { const d = new Date(ts); if (!isFinite(d.getTime())) return ""; const s = p2(d.getDate()) + "-" + MON[d.getMonth()] + "-" + String(d.getFullYear()).slice(-2); return withTime ? s + " " + p2(d.getHours()) + ":" + p2(d.getMinutes()) : s; }
   function ukd(str) { if (!str) return ""; const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str); return m ? p2(+m[3]) + "-" + MON[+m[2] - 1] + "-" + m[1].slice(-2) : str; } // "YYYY-MM-DD" → "dd-MMM-yy"
   function isoOf(ts) { const d = new Date(ts); return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); }
   const UP = "#15803d", DN = "#b42318";
@@ -77,7 +77,7 @@
   };
   const MAIN_SET = new Set(MAIN_INDS.map(([v]) => v));
   const DEFAULTS = { MA: [5, 10, 30, 60], EMA: [6, 12, 20], SMA: [12, 2], BOLL: [20, 2], BBI: [3, 6, 12, 24], SAR: [2, 2, 20],
-    VOL: [5, 10, 20], MACD: [12, 26, 9], RSI: [6, 12, 24], KDJ: [9, 3, 3], CCI: [13], WR: [6, 10, 14], DMI: [14, 6], OBV: [30],
+    VOL: [5, 10, 20], MACD: [12, 26, 9], RSI: [14], KDJ: [9, 3, 3], CCI: [13], WR: [6, 10, 14], DMI: [14, 6], OBV: [30],
     ROC: [12, 6], TRIX: [12, 9], BIAS: [6, 12, 24], MTM: [6, 10], PSY: [12, 6], BRAR: [26], CR: [26, 10, 20, 40, 60],
     VR: [24, 30], EMV: [14, 9], DMA: [10, 50, 10], AO: [5, 34], PVT: [] };
   const TOOLS = [
@@ -252,6 +252,30 @@
             else { ctx.moveTo(x, yy + 8); ctx.lineTo(x - 5, yy - 2); ctx.lineTo(x + 5, yy - 2); }
             ctx.closePath(); ctx.fill();
           }
+          return false;
+        },
+      });
+    } catch (_) {}
+    try {
+      klinecharts.registerIndicator({   // override KLineChart's 3-line RSI with the classic single line + 30/50/70 bands
+        name: "RSI", shortName: "RSI", calcParams: [14], minValue: 0, maxValue: 100,
+        figures: [{ key: "rsi", title: "RSI: ", type: "line" }],
+        calc: (dataList, indi) => {
+          const n = (indi.calcParams && indi.calcParams[0]) || 14; const out = []; let g = 0, l = 0;
+          for (let i = 0; i < dataList.length; i++) {
+            if (i === 0) { out.push({}); continue; }
+            const ch = dataList[i].close - dataList[i - 1].close, gg = Math.max(ch, 0), ll = Math.max(-ch, 0);
+            if (i <= n) { g += gg; l += ll; if (i === n) { g /= n; l /= n; out.push({ rsi: 100 - 100 / (1 + (l === 0 ? 1e9 : g / l)) }); } else out.push({}); }
+            else { g = (g * (n - 1) + gg) / n; l = (l * (n - 1) + ll) / n; out.push({ rsi: 100 - 100 / (1 + (l === 0 ? 1e9 : g / l)) }); }
+          }
+          return out;
+        },
+        draw: ({ ctx, bounding, yAxis }) => {
+          [[70, DN], [50, "#bbbbc0"], [30, UP]].forEach(([lvl, col]) => {
+            const y = yAxis.convertToPixel(lvl); ctx.strokeStyle = col; ctx.setLineDash(lvl === 50 ? [2, 3] : [4, 3]); ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(bounding.width, y); ctx.stroke(); ctx.setLineDash([]);
+            ctx.fillStyle = col; ctx.font = "10px -apple-system,sans-serif"; ctx.textAlign = "left"; ctx.fillText(String(lvl), 2, y - 2);
+          });
           return false;
         },
       });
@@ -457,7 +481,8 @@
       candle: { type: state.type, bar: { upColor: UP, downColor: DN, noChangeColor: "#888", upBorderColor: UP, downBorderColor: DN, upWickColor: UP, downWickColor: DN }, priceMark: { last: { show: true }, high: { show: true }, low: { show: true } }, tooltip: { showRule: "always", showType: "rect" } },
       indicator: { lastValueMark: { show: false } }, yAxis: { type: state.yAxis }, xAxis: { tickText: { color: "#8a8a8e" } },
     });
-    safe(() => chart.setCustomApi({ formatDate: ({ timestamp }) => ukTs(timestamp, state.tf !== "D") })); // UK dd-MMM-yy (+ time on intraday)
+    // KLineChart's formatDate is positional (dateTimeFormat, timestamp, …) — find the epoch-ms arg robustly.
+    safe(() => chart.setCustomApi({ formatDate: function () { var ts = null; for (var i = 0; i < arguments.length; i++) { var a = arguments[i]; if (typeof a === "number" && a > 1e11) { ts = a; break; } if (a && typeof a === "object" && typeof a.timestamp === "number") { ts = a.timestamp; break; } } return ts == null ? "" : ukTs(ts, state.tf !== "D"); } }));
     $("chart").addEventListener("contextmenu", (ev) => { ev.preventDefault(); setTimeout(() => { if (drawMenuEl) return; addNoteHere(); }, 0); }); // right-click empty space → add a note
     window.addEventListener("resize", () => chart && chart.resize());
     setTimeout(() => chart && chart.resize(), 60);
@@ -466,7 +491,13 @@
     makeSeg($("typeSeg"), TYPES, (v) => v === state.type, (v, b) => { state.type = v; safe(() => chart.setStyles({ candle: { type: v } })); segActive($("typeSeg"), b); scheduleSave(); });
     makeSeg($("axisSeg"), AXES, (v) => v === state.yAxis, (v, b) => { state.yAxis = v; safe(() => chart.setStyles({ yAxis: { type: v } })); segActive($("axisSeg"), b); scheduleSave(); });
     function applyGrid() { const g = state.grid; safe(() => chart.setStyles({ grid: { show: g !== "off", horizontal: { show: g !== "off" }, vertical: { show: g === "both" } } })); }
-    function autoDec() { const cl = D.close || []; let mx = 0; for (let i = Math.max(0, cl.length - 60); i < cl.length; i++) { const s = String(cl[i]); const d = s.includes(".") ? s.split(".")[1].length : 0; if (d > mx) mx = d; } return Math.min(6, Math.max(2, mx)); } // read real precision from data (FX→4, indices→2)
+    function autoDec() {   // ~6 significant figures by magnitude, capped by the data's own precision (indices→2, FX→4, BTC→1, yields→1-2)
+      const cl = D.close || []; if (!cl.length) return 2;
+      const last = Math.abs(cl[cl.length - 1]) || 1;
+      let dataDec = 0; for (let i = Math.max(0, cl.length - 60); i < cl.length; i++) { const s = String(cl[i]); const d = s.includes(".") ? s.split(".")[1].length : 0; if (d > dataDec) dataDec = d; }
+      const intDigits = last >= 1 ? Math.floor(Math.log10(last)) + 1 : 0;
+      return Math.max(0, Math.min(6, dataDec, 6 - intDigits));
+    }
     function applyDecimals() { const d = state.decimals === "auto" ? autoDec() : +state.decimals; safe(() => chart.setPriceVolumePrecision(d, 0)); }
     makeSeg($("gridSeg"), [["both", "Both"], ["h", "Horiz"], ["off", "Off"]], (v) => v === state.grid, (v, b) => { state.grid = v; applyGrid(); segActive($("gridSeg"), b); scheduleSave(); });
     makeSeg($("decSeg"), [["auto", "Auto"], ["0", "0"], ["2", "2"], ["4", "4"]], (v) => v === state.decimals, (v, b) => { state.decimals = v; applyDecimals(); segActive($("decSeg"), b); scheduleSave(); });
@@ -726,8 +757,13 @@
     }
     // STICKY: re-arm the same tool after each drawing so it stays selected until you pick another tool / Cursor.
     function armTool(name) {
-      let extend; if (name === "noteText") extend = (window.prompt("Note text:") || "").trim() || "note";
-      pendingOverlayId = mkOverlay({ name, extendData: extend, onDrawEnd: (e) => { recordDrawing(e.overlay); pendingOverlayId = null; if (state.tool === name && name !== "cursor") armTool(name); return false; } });
+      pendingOverlayId = mkOverlay({ name, extendData: name === "noteText" ? " " : undefined, onDrawEnd: (e) => {
+        pendingOverlayId = null;
+        if (name === "noteText") { const pts = (e.overlay.points || []).map((p) => ({ timestamp: p.timestamp, value: p.value })); inlineNote(lastMouse.x, lastMouse.y, "", e.overlay.id, pts); }
+        else recordDrawing(e.overlay);
+        if (state.tool === name && name !== "cursor") armTool(name);
+        return false;
+      } });
     }
     function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; } }
     function showDrawMenu(overlay) {
@@ -741,16 +777,32 @@
       setTimeout(() => document.addEventListener("mousedown", closeDrawMenu, { once: true }), 0);
     }
     function eraseOverlay(o) { safe(() => chart.removeOverlay(o.id)); const i = drawings.findIndex((d) => d.id === o.id); if (i >= 0) drawings.splice(i, 1); scheduleSave(); }
-    function editAnnotation(o) { const t = (window.prompt("Edit note:", o.extendData || "") || "").trim(); if (!t) return; safe(() => chart.overrideOverlay({ id: o.id, extendData: t })); const d = drawings.find((d) => d.id === o.id); if (d) d.extendData = t; scheduleSave(); }
-    // right-click empty chart → drop a note at that point
+    function editAnnotation(o) { const pts = (o.points || []).map((p) => ({ timestamp: p.timestamp, value: p.value })); inlineNote(lastMouse.x, lastMouse.y, o.extendData || "", o.id, pts); }
+    // a small text box at the click point; the note shows in-chart LIVE as you type — Enter / click-away saves, Esc cancels, no OK
+    function inlineNote(px, py, initial, id, pts) {
+      const inp = document.createElement("input"); inp.type = "text"; inp.value = initial || ""; inp.placeholder = "type a note…";
+      inp.style.cssText = `position:fixed;left:${Math.min(Math.max(8, px), innerWidth - 210)}px;top:${Math.min(Math.max(8, py), innerHeight - 44)}px;z-index:10001;font:inherit;font-size:13px;padding:6px 10px;border:1.5px solid ${UP};border-radius:8px;background:rgba(255,251,228,.99);box-shadow:0 8px 26px rgba(0,0,0,.22);min-width:170px`;
+      document.body.appendChild(inp); inp.focus(); inp.select();
+      let done = false;
+      inp.oninput = () => safe(() => chart.overrideOverlay({ id, extendData: inp.value || " " }));   // live in-chart preview
+      const finish = (commit) => {
+        if (done) return; done = true; const v = inp.value.trim(); inp.remove();
+        const existed = drawings.some((x) => x.id === id);
+        if (commit && v) { safe(() => chart.overrideOverlay({ id, extendData: v })); if (existed) { const d = drawings.find((x) => x.id === id); if (d) d.extendData = v; } else recordDrawing({ id, name: "noteText", extendData: v, points: pts }); scheduleSave(); }
+        else if (existed) safe(() => chart.overrideOverlay({ id, extendData: initial || "note" }));   // cancel an edit → restore
+        else safe(() => chart.removeOverlay(id));   // cancel a brand-new note → remove
+      };
+      inp.onkeydown = (e) => { e.stopPropagation(); if (e.key === "Enter") finish(true); else if (e.key === "Escape") finish(false); };
+      inp.onblur = () => finish(true);
+    }
+    // right-click empty chart → drop a note there and inline-edit it (no top-of-page prompt)
     function addNoteHere() {
-      const t = (window.prompt("Note text:") || "").trim(); if (!t) return;
       const rect = $("chart").getBoundingClientRect();
       const dp = safe(() => chart.convertFromPixel({ x: lastMouse.x - rect.left, y: lastMouse.y - rect.top }, { paneId: "candle_pane" }));
       if (!dp || dp.value == null) return;
       const pts = [{ timestamp: dp.timestamp, value: dp.value }];
-      const id = mkOverlay({ name: "noteText", extendData: t, points: pts });
-      if (id) recordDrawing({ id, name: "noteText", extendData: t, points: pts });
+      const id = mkOverlay({ name: "noteText", extendData: " ", points: pts });
+      if (id) inlineNote(lastMouse.x, lastMouse.y, "", id, pts);
     }
     const validDraw = (d) => d && d.name && Array.isArray(d.points) && d.points.length && d.points.every((p) => p && p.value != null && isFinite(p.value));
     function recordDrawing(o) { if (restoring || !o || !o.points || !o.points.length) return; const pts = o.points.map((p) => ({ timestamp: p.timestamp, value: p.value })); if (pts.some((p) => p.value == null)) return; const i = drawings.findIndex((d) => d.id === o.id), rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData }; if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave(); }
