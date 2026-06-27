@@ -94,14 +94,18 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
   P&L = position × daily Δ(series) in bps** (`isDelta` path): yield long = *long rates* (profit when yield rises),
   spread long = *steepener*, fly = *RV reversion*. Columns switch to Ann bps/Max DD bps/Sharpe/Hit %/Total bps, or
   **DV01 $** (toggle + editable $/bp = trade DV01 from `TICKER_DV01`).
-- **RW-flies** (`build_fly_beta`): belly hedged by wings via an **expanding-window OLS** (out-of-sample, lagged).
-  Honest finding: OOS the simple 50-50 fly (= equal-weight `2×belly−wings`) **beats** the regression fly.
+- **RW-flies** (`build_fly_beta`): belly hedged by wings via a **rolling ~3y-window OLS** (out-of-sample, lagged,
+  tracks regime drift). Honest finding: OOS the simple 50-50 fly (= equal-weight `2×belly−wings`) **beats** the
+  regression fly. **Carry/roll** can be baked into the UST backtest (toggle): each day adds CR = −Σ wᵢ·(roll+carry)ᵢ
+  from the live curve (long rates/steepener pay carry on an upward curve) — an approximation (current curve held).
 - **Chart:** candle/bar/area · linear/log/% axis (spreads forced linear — they go negative) · range presets ·
   **timeframes** 1m/5m/15m/30m/1h/4h/1D (intraday via quote-proxy `?mode=intraday`; **spreads/flies combine each
   leg's intraday client-side** via `fetchIntradayBars`/`combineLegs`; 4h aggregated; 60 s auto-refresh) · live price.
 - **Indicators:** 6 overlays + 20 studies w/ editable calcParams. **Drawing:** trend/ray/lines/price/parallel/
   fibonacci/text + custom **Measure %** overlay (tracked in JS — v9 has no `getOverlays` — re-applied after every
-  `applyNewData`). **NBER recession shading** = custom `RECESSION` indicator (`draw` callback) + "▦ Recessions" toggle.
+  `applyNewData`). **NBER recession shading** (`RECESSION`, "▦ Recessions") + **curve-inversion shading** (`INVERSION`,
+  "⊘ Inversions"; amber bands over the 16 sustained 2s10s/3m10y inverted periods in `ust_inversions.json`) — both
+  custom `draw`-callback indicators; they paint only over the visible window (verify by slicing data to end mid-band).
 - **Signal Playbook (14 rules):** Golden/EMA Cross, Trend, Band trend (Water), MACD/MACD-zero, RSI momentum/reversion,
   Bollinger, Donchian, Williams %R, Stochastic, CCI, RSI-dip+SMA-exit. Live param inputs → live backtest; **plot**
   (draws the indicator), **signals** (▲/▼ markers via custom-indicator `draw`), **notes** (preloaded why). Optional
