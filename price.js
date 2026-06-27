@@ -18,6 +18,7 @@
   const TICK2ID = { "^IRX": "ust3m", "2YY=F": "ust2y", "^FVX": "ust5y", "^TNX": "ust10y", "^TYX": "ust30y" }; // curve leg ticker → curve id
   let INVERSIONS = []; // 2s10s/3m10y inverted ranges (loaded from ust_inversions.json)
   let AUTO_SIG = { buys: new Set(), sells: new Set() }; // auto-analysis buy/sell timestamps (drawn by the AUTOTA indicator)
+  let STUDY_SIG = { buys: new Set(), sells: new Set() }; // "add buy/sell signals" from a study (drawn by the STUDYSIG indicator)
   const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // UK date format dd-MMM-yy
   const p2 = (n) => String(n).padStart(2, "0");
   function ukTs(ts, withTime) { const d = new Date(ts); const s = p2(d.getDate()) + "-" + MON[d.getMonth()] + "-" + String(d.getFullYear()).slice(-2); return withTime ? s + " " + p2(d.getHours()) + ":" + p2(d.getMinutes()) : s; }
@@ -69,6 +70,10 @@
     DMA: ["Difference of MAs (DMA)", "The gap between a fast and a slow moving average, plotted with its own signal-line average.<br><br><b>Signals:</b> DMA crossing <b>above</b> its signal/zero line = buy, <b>below</b> = sell. A widening DMA means the trend is strengthening; a narrowing one means it's losing steam and may reverse."],
     AO: ["Awesome Oscillator (AO)", "The difference between a 5- and 34-period average of the bar's median price — momentum measured against the broader trend, shown as a histogram.<br><br><b>Signals:</b> histogram crossing <b>zero</b> (up = buy, down = sell); the <b>twin-peaks</b> pattern (two pushes below/above zero) flags reversals; a <b>saucer</b> (colour change without crossing zero) is an early continuation signal."],
     PVT: ["Price Volume Trend (PVT)", "Like OBV but it weights each bar's volume by the <b>percentage</b> price change, so big moves count more — a cumulative money-flow line.<br><br><b>Signals:</b> PVT trending with price <b>confirms</b> the move; divergence warns of a reversal. Because it scales by the size of the move, PVT often turns or breaks out slightly ahead of price."],
+    fibonacciLine: ["Fibonacci retracement", "After a strong move, markets rarely run straight on — they <b>retrace</b> part of it before continuing. Fibonacci retracement marks the levels where that pullback most often stalls, taken from the Fibonacci ratios <b>23.6 · 38.2 · 50 · 61.8 · 78.6%</b>. The diagram above shows price impulsing up, pulling back to the 61.8% level, and bouncing.<br><br><b>How to draw it:</b> pick the <b>Fibonacci</b> tool, then click the two ends of the move — for an up-move click the swing <b>low</b> then the swing <b>high</b>; the levels appear between them (0% at the high, 100% at the low).<br><br><b>What each level means:</b><br>• <b>23.6 / 38.2%</b> — shallow pullback; a strong trend often holds here.<br>• <b>50%</b> — not a true Fibonacci ratio but widely watched: a 'half-back' of the move.<br>• <b>61.8%</b> — the <b>golden ratio</b> and the key decision level: hold it and the trend usually resumes; lose it and the move may be over.<br>• <b>78.6%</b> — last line of defence; beyond it the prior move is generally negated.<br><br><b>How to trade it:</b> in an <b>uptrend</b> the 38.2–61.8% band is a <b>buy-the-dip</b> zone — wait for price to reach a level and show a bounce (e.g. a bullish candle), buy, and stop just below the next level. In a <b>downtrend</b> the same levels are <b>sell-the-rally</b> resistance. <b>Confluence</b> is everything: a Fib level that lines up with a moving average, a prior high/low, or a trend line is where the highest-odds entries cluster.<br><br><b>Extensions</b> (127.2 / 161.8%) project <i>beyond</i> the move to estimate take-profit targets. Tip: the chart's <b>⚡ Auto-analysis</b> button draws the Fibonacci of the dominant recent swing for you automatically."],
+    segment: ["Trend line", "A straight line between two points that maps support or resistance. <b>Draw:</b> pick the Trend tool, click the start, then the end (the tool stays selected so you can draw several). <b>Use:</b> connect two or more swing <b>lows</b> for an up-trend support line — buy near it, and treat a decisive close <b>below</b> as a breakdown; connect swing <b>highs</b> for resistance, where a close <b>above</b> is a breakout. The more times price touches a line, the more it matters. <b>Right-click</b> a line to edit or erase it."],
+    noteText: ["Note", "A draggable sticky-note pinned to the chart. <b>Add:</b> pick the Note tool and click where you want it, or <b>right-click empty chart space</b>. <b>Drag</b> to reposition, <b>right-click → Edit</b> to change the text, or <b>Erase</b> to remove. Notes are saved with your private chart (passphrase), so they're there next time."],
+    measurePct: ["Measure %", "Measures the move between two points. Pick <b>Measure %</b>, click the start and end, and it draws a box with the <b>% change</b>, the price change, and the number of bars/days between them — handy for sizing a rally or drawdown, or checking how far away a target is."],
   };
   const MAIN_SET = new Set(MAIN_INDS.map(([v]) => v));
   const DEFAULTS = { MA: [5, 10, 30, 60], EMA: [6, 12, 20], SMA: [12, 2], BOLL: [20, 2], BBI: [3, 6, 12, 24], SAR: [2, 2, 20],
@@ -234,6 +239,24 @@
       });
     } catch (_) {}
     try {
+      klinecharts.registerIndicator({   // "Add buy/sell signals" from a study → ▲/▼ triangles
+        name: "STUDYSIG", figures: [], calc: (dataList) => dataList.map(() => ({})),
+        draw: ({ ctx, kLineDataList, visibleRange, xAxis, yAxis }) => {
+          const buys = STUDY_SIG.buys, sells = STUDY_SIG.sells; if (!buys.size && !sells.size) return false;
+          for (let i = Math.max(0, visibleRange.from); i < visibleRange.to; i++) {
+            const d = kLineDataList[i]; if (!d) continue;
+            const isB = buys.has(d.timestamp), isS = sells.has(d.timestamp); if (!isB && !isS) continue;
+            const x = xAxis.convertToPixel(i), y = yAxis.convertToPixel(isB ? d.low : d.high), yy = isB ? y + 11 : y - 11;
+            ctx.fillStyle = isB ? UP : DN; ctx.beginPath();
+            if (isB) { ctx.moveTo(x, yy - 8); ctx.lineTo(x - 5, yy + 2); ctx.lineTo(x + 5, yy + 2); }
+            else { ctx.moveTo(x, yy + 8); ctx.lineTo(x - 5, yy - 2); ctx.lineTo(x + 5, yy - 2); }
+            ctx.closePath(); ctx.fill();
+          }
+          return false;
+        },
+      });
+    } catch (_) {}
+    try {
       klinecharts.registerIndicator({
         name: "RECESSION", figures: [], calc: (dataList) => dataList.map(() => ({})),
         draw: ({ ctx, kLineDataList, visibleRange, xAxis, bounding }) => {
@@ -335,7 +358,7 @@
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
       lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false, inversion: false, carry: false,
-      grid: "both", decimals: "auto", ylab: "out", crosshair: true, autoTA: false };
+      grid: "both", decimals: "auto", ylab: "out", crosshair: true, autoTA: false, studySig: null };
     const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, cr: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], CURVE = [], pendingBest = null;
 
@@ -363,7 +386,7 @@
             </span></div>
         </div>
         <details class="ind-panel">
-          <summary>Indicators — overlays &amp; studies · click to expand &amp; edit params · <b>right-click any for help</b></summary>
+          <summary>Indicators — overlays &amp; studies · click to expand &amp; edit params · <b>right-click any for help, examples &amp; one-click signals</b></summary>
           <div class="ind-grp"><span class="lbl">On&nbsp;price</span><span class="seg" id="indMain"></span></div>
           <div class="ind-grp"><span class="lbl">Studies</span><span class="seg" id="indSub"></span></div>
           <div class="ind-grp" id="indParams"></div>
@@ -454,21 +477,82 @@
     $("rngFrom").onchange = $("rngTo").onchange = () => { if ($("rngFrom").value && $("rngTo").value) setDateRange(); };
     makeSeg($("indMain"), MAIN_INDS, (v) => state.indicators[v], (v, b) => { toggleIndicator(v); b.classList.toggle("active", state.indicators[v]); scheduleSave(); });
     makeSeg($("indSub"), SUB_INDS, (v) => state.indicators[v], (v, b) => { toggleIndicator(v); b.classList.toggle("active", state.indicators[v]); scheduleSave(); });
+    // ---- "Add buy/sell signals" from a study (standard rule per indicator) ----
+    function bbiArr(c) { const a = sma(c, 3), b = sma(c, 6), d = sma(c, 12), e = sma(c, 24); return c.map((_, i) => (a[i] != null && b[i] != null && d[i] != null && e[i] != null) ? (a[i] + b[i] + d[i] + e[i]) / 4 : null); }
+    function studyPos(id) {   // 0/1 position from the study's standard rule (null = this study confirms/visualises, no one-click rule)
+      const c = D.close, hi = D.high, lo = D.low, n = c ? c.length : 0, cp = state.indParams[id] || [];
+      if (!c || n < 30) return null;
+      const above = (a, b) => c.map((_, i) => (a[i] != null && b[i] != null) ? (a[i] >= b[i] ? 1 : 0) : 0);
+      const pAbove = (m) => c.map((x, i) => (m[i] != null && x >= m[i]) ? 1 : 0);
+      switch (id) {
+        case "MA": return above(sma(c, cp[0] || 10), sma(c, cp[cp.length - 1] || 60));
+        case "EMA": return above(ema(c, cp[0] || 12), ema(c, cp[cp.length - 1] || 26));
+        case "SMA": return pAbove(sma(c, cp[0] || 12));
+        case "BBI": return pAbove(bbiArr(c));
+        case "BOLL": { const w = cp[0] || 20, k = cp[1] || 2, mid = sma(c, w), sd = rstd(c, w); let s = 0; return c.map((x, i) => { if (mid[i] == null) return 0; if (s === 0 && x < mid[i] - k * sd[i]) s = 1; else if (s === 1 && x > mid[i]) s = 0; return s; }); }
+        case "MACD": { const m = macdP(c, cp[0] || 12, cp[1] || 26, cp[2] || 9); return c.map((_, i) => (m.macd[i] != null && m.signal[i] != null && m.macd[i] >= m.signal[i]) ? 1 : 0); }
+        case "RSI": { const r = rsiArr(c, cp[0] || 14); let s = 0; return c.map((_, i) => { if (r[i] == null) return s; if (r[i] < 30) s = 1; else if (r[i] > 70) s = 0; return s; }); }
+        case "KDJ": { const k = stoch(c, hi, lo, cp[0] || 9, cp[1] || 3); return c.map((_, i) => (k.k[i] != null && k.d[i] != null && k.k[i] >= k.d[i]) ? 1 : 0); }
+        case "CCI": { const x = cci(c, hi, lo, cp[0] || 20); let s = 0; return c.map((_, i) => { if (x[i] == null) return s; if (x[i] < -100) s = 1; else if (x[i] > 100) s = 0; return s; }); }
+        case "WR": { const w = willR(c, hi, lo, cp[0] || 14); let s = 0; return c.map((_, i) => { if (w[i] == null) return s; if (w[i] < -80) s = 1; else if (w[i] > -20) s = 0; return s; }); }
+        case "ROC": { const p = cp[0] || 12; return c.map((x, i) => (i >= p && c[i - p]) ? ((x / c[i - p] - 1) >= 0 ? 1 : 0) : 0); }
+        case "MTM": { const p = cp[0] || 12; return c.map((x, i) => (i >= p) ? (x - c[i - p] >= 0 ? 1 : 0) : 0); }
+        case "TRIX": { const p = cp[0] || 12; const e1 = ema(c, p), e2 = ema(e1.map((v) => v == null ? 0 : v), p), e3 = ema(e2.map((v) => v == null ? 0 : v), p); return e3.map((v, i) => (i > 0 && v != null && e3[i - 1] != null) ? (v - e3[i - 1] >= 0 ? 1 : 0) : 0); }
+        case "BIAS": return pAbove(sma(c, cp[0] || 12));
+        case "DMA": return above(sma(c, cp[0] || 10), sma(c, cp[1] || 50));
+        case "AO": { const md = (hi && lo) ? c.map((x, i) => (hi[i] + lo[i]) / 2) : c; return above(sma(md, 5), sma(md, 34)); }
+        case "PSY": { const p = cp[0] || 12; const ups = c.map((x, i) => (i > 0 && x > c[i - 1]) ? 1 : 0); const ps = sma(ups, p); let s = 0; return ps.map((v) => { if (v == null) return s; const pv = v * 100; if (pv < 25) s = 1; else if (pv > 75) s = 0; return s; }); }
+        case "OBV": { const vol = (D.daily || []).map((b) => b.volume || 0); if (!vol.some((v) => v > 0)) return null; let o = 0; const obv = c.map((x, i) => { if (i > 0) o += (x > c[i - 1] ? 1 : x < c[i - 1] ? -1 : 0) * vol[i]; return o; }); return above(obv, ema(obv, 30)); }
+        default: return null;
+      }
+    }
+    function studyMarks(pos) { const buys = new Set(), sells = new Set(), ts = (D.daily || []).map((b) => b.timestamp); for (let i = 1; i < pos.length; i++) { if (pos[i - 1] === 0 && pos[i] === 1) buys.add(ts[i]); else if (pos[i - 1] === 1 && pos[i] === 0) sells.add(ts[i]); } return { buys, sells }; }
+    function addStudySignals(id) { const pos = studyPos(id); if (!pos) { status("this study confirms rather than signals — no one-click markers"); return; } STUDY_SIG = studyMarks(pos); state.studySig = id; safe(() => { chart.removeIndicator("candle_pane", "STUDYSIG"); chart.createIndicator("STUDYSIG", true, { id: "candle_pane" }); }); status(STUDY_SIG.buys.size + " buys / " + STUDY_SIG.sells.size + " sells from " + (HELP[id] ? HELP[id][0] : id)); }
+    function removeStudySignals() { STUDY_SIG = { buys: new Set(), sells: new Set() }; state.studySig = null; safe(() => chart.removeIndicator("candle_pane", "STUDYSIG")); }
+    function signalExample(id) { const pos = studyPos(id); if (!pos) return ""; const m = studyMarks(pos), ts = (D.daily || []).map((b) => b.timestamp); let last = null, type = ""; for (let i = ts.length - 1; i >= 1; i--) { if (m.buys.has(ts[i])) { last = ts[i]; type = "buy"; break; } if (m.sells.has(ts[i])) { last = ts[i]; type = "sell"; break; } } if (last == null) return ""; return `<b>On ${esc(D.label)} now:</b> the latest signal was a <b style="color:${type === "buy" ? UP : DN}">${type === "buy" ? "▲ buy" : "▼ sell"}</b> on <b>${ukTs(last, false)}</b>.`; }
+    // mini SVG diagrams illustrating the indicator + where it fires
+    const DIAG = { RSI: "osc", KDJ: "osc", CCI: "osc", WR: "osc", PSY: "osc", BIAS: "osc", BRAR: "osc", CR: "osc", VR: "osc", MA: "cross", EMA: "cross", SMA: "cross", BBI: "cross", MACD: "cross", DMA: "cross", AO: "cross", DMI: "cross", BOLL: "bands", SAR: "sar", VOL: "vol", ROC: "zero", MTM: "zero", TRIX: "zero", EMV: "zero", OBV: "zero", PVT: "zero" };
+    function indDiagram(id) {
+      const up = UP, dn = DN, W = 320, H = 134;
+      const wrap = (inner) => `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto;display:block;margin:8px auto 12px;background:#fafafa;border:1px solid var(--line);border-radius:10px">${inner}</svg>`;
+      const buyA = (x, y) => `<path d="M${x},${y} l-5,9 l10,0 z" fill="${up}"/><text x="${x}" y="${y + 24}" font-size="9" fill="${up}" text-anchor="middle" font-weight="700">BUY</text>`;
+      const sellA = (x, y) => `<path d="M${x},${y} l-5,-9 l10,0 z" fill="${dn}"/><text x="${x}" y="${y - 14}" font-size="9" fill="${dn}" text-anchor="middle" font-weight="700">SELL</text>`;
+      if (id === "fibonacciLine" || id === "fibonacci") {
+        const lv = [["0%", 30], ["23.6%", 51], ["38.2%", 64], ["50%", 75], ["61.8%", 86], ["78.6%", 101], ["100%", 120]];
+        let lines = lv.map(([t, y]) => `<line x1="150" y1="${y}" x2="300" y2="${y}" stroke="${t === "61.8%" ? up : "#c9c9cf"}" stroke-width="${t === "61.8%" ? 1.6 : 1}"/><text x="304" y="${y + 3}" font-size="8.5" fill="#6e6e73">${t}</text>`).join("");
+        return wrap(`${lines}<path d="M20,120 L150,30" fill="none" stroke="#0071e3" stroke-width="2"/><path d="M150,30 C170,52 185,80 200,86 C220,93 240,60 300,40" fill="none" stroke="#0071e3" stroke-width="2"/>${buyA(200, 92)}<text x="60" y="84" font-size="9" fill="#0071e3" transform="rotate(-32 60 84)">impulse up</text><text x="150" y="20" font-size="8.5" fill="#6e6e73">swing high</text><text x="6" y="123" font-size="8.5" fill="#6e6e73">low</text>`);
+      }
+      const t = DIAG[id] || "cross";
+      if (t === "osc") return wrap(`<line x1="20" y1="34" x2="290" y2="34" stroke="${dn}" stroke-dasharray="4 3"/><text x="24" y="30" font-size="9" fill="${dn}">overbought (sell zone)</text><line x1="20" y1="100" x2="290" y2="100" stroke="${up}" stroke-dasharray="4 3"/><text x="24" y="114" font-size="9" fill="${up}">oversold (buy zone)</text><path d="M20,70 C55,40 80,30 110,34 C140,40 150,98 185,100 C215,101 232,48 262,40 C285,34 295,52 300,62" fill="none" stroke="#0071e3" stroke-width="2"/>${buyA(185, 106)}${sellA(110, 28)}`);
+      if (t === "cross") return wrap(`<path d="M20,98 C70,86 110,68 160,56 C210,44 260,38 300,34" fill="none" stroke="#0071e3" stroke-width="2"/><path d="M20,68 C70,72 120,68 160,64 C210,58 260,50 300,46" fill="none" stroke="#ff9500" stroke-width="2"/><text x="306" y="34" font-size="9" fill="#0071e3" text-anchor="end">fast</text><text x="306" y="58" font-size="9" fill="#ff9500" text-anchor="end">slow</text>${buyA(152, 70)}<text x="120" y="120" font-size="9" fill="#6e6e73">fast crosses above slow → buy (and vice-versa)</text>`);
+      if (t === "bands") return wrap(`<path d="M20,38 C90,38 140,34 300,32" fill="none" stroke="#bbb" stroke-width="1.4"/><text x="22" y="34" font-size="8.5" fill="#999">upper</text><path d="M20,98 C90,98 140,102 300,104" fill="none" stroke="#bbb" stroke-width="1.4"/><text x="22" y="113" font-size="8.5" fill="#999">lower</text><path d="M20,68 C90,68 140,68 300,68" fill="none" stroke="#999" stroke-dasharray="3 3"/><path d="M20,80 C55,96 88,100 118,93 C158,83 175,38 212,34 C248,31 272,56 300,60" fill="none" stroke="#0071e3" stroke-width="2"/>${buyA(112, 104)}${sellA(208, 28)}`);
+      if (t === "zero") return wrap(`<line x1="20" y1="66" x2="300" y2="66" stroke="#999" stroke-dasharray="3 3"/><text x="24" y="62" font-size="9" fill="#999">zero line</text><path d="M20,82 C60,86 90,74 120,66 C150,58 180,42 210,40 C246,38 272,54 300,60" fill="none" stroke="#0071e3" stroke-width="2"/>${buyA(118, 74)}<text x="120" y="120" font-size="9" fill="#6e6e73">crosses up through zero → buy</text>`);
+      if (t === "sar") return wrap(`<path d="M20,92 C70,82 110,62 160,52 C210,42 252,54 300,72" fill="none" stroke="#0071e3" stroke-width="2"/><circle cx="50" cy="102" r="2.5" fill="${up}"/><circle cx="82" cy="98" r="2.5" fill="${up}"/><circle cx="114" cy="88" r="2.5" fill="${up}"/><circle cx="146" cy="76" r="2.5" fill="${up}"/><circle cx="206" cy="30" r="2.5" fill="${dn}"/><circle cx="238" cy="34" r="2.5" fill="${dn}"/><circle cx="270" cy="46" r="2.5" fill="${dn}"/>${buyA(46, 112)}${sellA(202, 24)}<text x="120" y="125" font-size="9" fill="#6e6e73">dots flip side = trend reversal</text>`);
+      if (t === "vol") { let bars = ""; const hs = [28, 48, 24, 66, 92, 38, 33, 58, 78, 44]; hs.forEach((h, i) => { bars += `<rect x="${26 + i * 28}" y="${114 - h}" width="16" height="${h}" fill="${i === 4 ? up : "#c7c7cc"}"/>`; }); return wrap(`${bars}<text x="160" y="20" font-size="9" fill="${up}" text-anchor="middle">a breakout on a tall (high-volume) bar = confirmed</text>`); }
+      return wrap("");
+    }
     // right-click any overlay/study chip → detailed help (what it is + trading signals)
     function closeIndHelp() { const e = $("indHelpOv"); if (e) e.remove(); document.removeEventListener("keydown", indHelpEsc); }
     function indHelpEsc(e) { if (e.key === "Escape") closeIndHelp(); }
     function showIndHelp(id) {
       const h = HELP[id]; if (!h) return; closeIndHelp();
+      const diag = indDiagram(id), ex = signalExample(id), hasSig = studyPos(id) != null, active = state.studySig === id;
+      const noSig = !hasSig && (id === "VOL" || id === "SAR" || id === "DMI" || id === "BRAR" || id === "CR" || id === "VR" || id === "EMV" || id === "PVT");
+      const sigBtn = hasSig
+        ? `<button id="indHelpSig" style="margin-top:14px;width:100%;padding:11px;border:0;border-radius:10px;background:${active ? "#48484a" : UP};color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer">${active ? "✕ Remove these signals from the chart" : "➕ Add buy/sell signals to the chart"}</button>`
+        : (noSig ? `<p class="meta" style="margin-top:12px">This study <b>confirms or visualises</b> rather than firing discrete buy/sell points — read it alongside a signalling study rather than trading it on its own.</p>` : "");
       const ov = document.createElement("div"); ov.id = "indHelpOv";
       ov.style.cssText = "position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.42);display:flex;align-items:center;justify-content:center;padding:18px;";
-      ov.innerHTML = `<div style="background:#fff;border-radius:16px;max-width:540px;width:100%;max-height:82vh;overflow:auto;padding:22px 24px;box-shadow:0 24px 70px rgba(0,0,0,.32)"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px"><h3 style="margin:0;font-size:19px;color:#1d1d1f">${esc(h[0])}</h3><button id="indHelpX" style="border:0;background:#f0f0f3;border-radius:50%;width:30px;height:30px;font-size:18px;line-height:1;cursor:pointer;flex:none;color:#48484a">×</button></div><div style="font-size:14px;line-height:1.62;color:#333">${h[1]}</div></div>`;
+      ov.innerHTML = `<div style="background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:86vh;overflow:auto;padding:22px 24px;box-shadow:0 24px 70px rgba(0,0,0,.32)"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px"><h3 style="margin:0;font-size:19px;color:#1d1d1f">${esc(h[0])}</h3><button id="indHelpX" style="border:0;background:#f0f0f3;border-radius:50%;width:30px;height:30px;font-size:18px;line-height:1;cursor:pointer;flex:none;color:#48484a">×</button></div>${diag}<div style="font-size:14px;line-height:1.62;color:#333">${h[1]}</div>${ex ? `<p style="font-size:13px;background:#f0fbf4;border:1px solid #cfeede;border-radius:9px;padding:9px 12px;margin:12px 0 0;color:#333">${ex}</p>` : ""}${sigBtn}</div>`;
       document.body.appendChild(ov);
       ov.onclick = (e) => { if (e.target === ov) closeIndHelp(); };
       $("indHelpX").onclick = closeIndHelp;
+      if ($("indHelpSig")) $("indHelpSig").onclick = () => { if (state.studySig === id) removeStudySignals(); else addStudySignals(id); closeIndHelp(); };
       document.addEventListener("keydown", indHelpEsc);
     }
     [$("indMain"), $("indSub")].forEach((seg) => seg && seg.addEventListener("contextmenu", (e) => { const b = e.target.closest("button[data-v]"); if (!b) return; e.preventDefault(); showIndHelp(b.dataset.v); }));
     makeSeg($("toolSeg"), TOOLS, (v) => v === state.tool, (v, b) => { pickTool(v); segActive($("toolSeg"), b); }, "tool");
+    $("toolSeg").addEventListener("contextmenu", (e) => { const b = e.target.closest("button[data-v]"); if (!b || !HELP[b.dataset.v]) return; e.preventDefault(); showIndHelp(b.dataset.v); }); // right-click a draw tool (e.g. Fibonacci) → help
     $("undoBtn").onclick = undoDrawing;
     $("clearBtn").onclick = clearDrawings;
     $("recBtn").onclick = () => { state.recession = !state.recession; $("recBtn").classList.toggle("active", state.recession); safe(() => { if (state.recession) chart.createIndicator("RECESSION", true, { id: "candle_pane" }); else chart.removeIndicator("candle_pane", "RECESSION"); }); };
@@ -874,7 +958,7 @@
         $("cTitle").textContent = D.label + " — chart";
         if ($("rngFrom") && D.dates.length) { $("rngFrom").min = $("rngTo").min = D.dates[0]; $("rngFrom").max = $("rngTo").max = D.dates[D.n - 1]; $("rngFrom").value = ""; $("rngTo").value = ""; }
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
-        safe(() => chart.removeOverlay()); drawings = [];
+        safe(() => chart.removeOverlay()); drawings = []; removeStudySignals();
         applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader(); renderCurve(); syncPnlUI();
         if (pendingBest) { applyStrategy(pendingBest, true); pendingBest = null; }
         else { const e = LEADER.find((x) => x.id === D.id); if (e && ["Rates", "Steepness", "Butterfly"].includes(D.klass)) applyStrategy(e.best, false); }   // best rule = default for every UST trade
