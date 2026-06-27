@@ -17,10 +17,12 @@
   const RECESSIONS = [["1953-07-01", "1954-05-31"], ["1957-08-01", "1958-04-30"], ["1960-04-01", "1961-02-28"], ["1969-12-01", "1970-11-30"], ["1973-11-01", "1975-03-31"], ["1980-01-01", "1980-07-31"], ["1981-07-01", "1982-11-30"], ["1990-07-01", "1991-03-31"], ["2001-03-01", "2001-11-30"], ["2007-12-01", "2009-06-30"], ["2020-02-01", "2020-04-30"]].map(([s, e]) => [Date.parse(s), Date.parse(e)]); // NBER US recessions
   const TICK2ID = { "^IRX": "ust3m", "2YY=F": "ust2y", "^FVX": "ust5y", "^TNX": "ust10y", "^TYX": "ust30y" }; // curve leg ticker → curve id
   let INVERSIONS = []; // 2s10s/3m10y inverted ranges (loaded from ust_inversions.json)
+  let AUTO_SIG = { buys: new Set(), sells: new Set() }; // auto-analysis buy/sell timestamps (drawn by the AUTOTA indicator)
   const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // UK date format dd-MMM-yy
   const p2 = (n) => String(n).padStart(2, "0");
   function ukTs(ts, withTime) { const d = new Date(ts); const s = p2(d.getDate()) + "-" + MON[d.getMonth()] + "-" + String(d.getFullYear()).slice(-2); return withTime ? s + " " + p2(d.getHours()) + ":" + p2(d.getMinutes()) : s; }
   function ukd(str) { if (!str) return ""; const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str); return m ? p2(+m[3]) + "-" + MON[+m[2] - 1] + "-" + m[1].slice(-2) : str; } // "YYYY-MM-DD" → "dd-MMM-yy"
+  function isoOf(ts) { const d = new Date(ts); return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); }
   const UP = "#15803d", DN = "#b42318";
   const RANGES = [[5, "1W"], [21, "1M"], [63, "3M"], [252, "1Y"], [1260, "5Y"], [2520, "10Y"]]; // [days, label] — makeSeg renders label, passes days
   const TFS = [
@@ -216,6 +218,22 @@
       });
     } catch (_) {}
     try {
+      klinecharts.registerIndicator({   // auto-analysis buy/sell markers (circles + arrow), distinct from the playbook STRATSIGNAL
+        name: "AUTOTA", figures: [], calc: (dataList) => dataList.map(() => ({})),
+        draw: ({ ctx, kLineDataList, visibleRange, xAxis, yAxis }) => {
+          const buys = AUTO_SIG.buys, sells = AUTO_SIG.sells; if (!buys.size && !sells.size) return false;
+          for (let i = Math.max(0, visibleRange.from); i < visibleRange.to; i++) {
+            const d = kLineDataList[i]; if (!d) continue;
+            const isB = buys.has(d.timestamp), isS = sells.has(d.timestamp); if (!isB && !isS) continue;
+            const x = xAxis.convertToPixel(i), y = yAxis.convertToPixel(isB ? d.low : d.high), yy = isB ? y + 16 : y - 16;
+            ctx.fillStyle = isB ? UP : DN; ctx.beginPath(); ctx.arc(x, yy, 7, 0, 2 * Math.PI); ctx.fill();
+            ctx.fillStyle = "#fff"; ctx.font = "bold 9px -apple-system,sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(isB ? "B" : "S", x, yy + 0.5);
+          }
+          return false;
+        },
+      });
+    } catch (_) {}
+    try {
       klinecharts.registerIndicator({
         name: "RECESSION", figures: [], calc: (dataList) => dataList.map(() => ({})),
         draw: ({ ctx, kLineDataList, visibleRange, xAxis, bounding }) => {
@@ -317,7 +335,7 @@
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
       lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false, inversion: false, carry: false,
-      grid: "both", decimals: "auto", ylab: "out", crosshair: true };
+      grid: "both", decimals: "auto", ylab: "out", crosshair: true, autoTA: false };
     const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, cr: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], CURVE = [], pendingBest = null;
 
@@ -361,10 +379,14 @@
         </details>
         <div class="cbar">
           <div><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
-          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="recBtn"><span style="color:#9a9aa2">▦</span> Recessions</button><button id="invBtn"><span style="color:#d68a12">⊘</span> Inversions</button></div>
+          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="autoBtn">⚡ Auto-analysis</button><button id="recBtn"><span style="color:#9a9aa2">▦</span> Recessions</button><button id="invBtn"><span style="color:#d68a12">⊘</span> Inversions</button></div>
         </div>
         <div id="chart"></div>
         <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points on the chart.</p>
+        <details id="autoCard" class="ind-panel" style="display:none;margin-top:8px">
+          <summary>Auto-analysis notes — trend lines, Fibonacci &amp; signals · click to expand</summary>
+          <div id="autoNotes" style="font-size:13px;line-height:1.6"></div>
+        </details>
       </div>
       <div class="card" id="curveCard" style="display:none">
         <h2 style="margin-bottom:2px">US Treasury curve <span class="meta" id="curveAsof" style="font-weight:400"></span></h2>
@@ -451,6 +473,46 @@
     $("clearBtn").onclick = clearDrawings;
     $("recBtn").onclick = () => { state.recession = !state.recession; $("recBtn").classList.toggle("active", state.recession); safe(() => { if (state.recession) chart.createIndicator("RECESSION", true, { id: "candle_pane" }); else chart.removeIndicator("candle_pane", "RECESSION"); }); };
     $("invBtn").onclick = () => { state.inversion = !state.inversion; $("invBtn").classList.toggle("active", state.inversion); safe(() => { if (state.inversion) chart.createIndicator("INVERSION", true, { id: "candle_pane" }); else chart.removeIndicator("candle_pane", "INVERSION"); }); };
+    // ---- Auto-analysis: swing pivots → support/resistance trend lines + Fibonacci + buy/sell signals, all with notes ----
+    let autoIds = [];
+    function clearAutoTA() { autoIds.forEach((id) => safe(() => chart.removeOverlay(id))); autoIds = []; AUTO_SIG = { buys: new Set(), sells: new Set() }; safe(() => chart.removeIndicator("candle_pane", "AUTOTA")); $("autoCard").style.display = "none"; $("autoNotes").innerHTML = ""; }
+    function computeAutoTA() {
+      const daily = D.daily || []; if (daily.length < 40) return null;
+      const seg = daily.slice(Math.max(0, daily.length - 252)); // analyse the last ~year
+      const hi = seg.map((b) => b.high), lo = seg.map((b) => b.low), cl = seg.map((b) => b.close), ts = seg.map((b) => b.timestamp);
+      const k = 6, ph = [], pl = []; // swing pivots (fractals): extreme within ±k bars
+      for (let i = k; i < seg.length - k; i++) { let isH = true, isL = true; for (let j = i - k; j <= i + k; j++) { if (j === i) continue; if (hi[j] >= hi[i]) isH = false; if (lo[j] <= lo[i]) isL = false; } if (isH) ph.push(i); if (isL) pl.push(i); }
+      let Hi = 0, Lo = 0; for (let i = 0; i < seg.length; i++) { if (hi[i] > hi[Hi]) Hi = i; if (lo[i] < lo[Lo]) Lo = i; }
+      const dir = Hi > Lo ? "up" : "down", hiV = hi[Hi], loV = lo[Lo], span = hiV - loV || 1;
+      const levels = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1].map((r) => ({ r, v: dir === "up" ? hiV - span * r : loV + span * r }));
+      const tl = [];
+      if (ph.length >= 2) { const a = ph[ph.length - 2], b = ph[ph.length - 1]; tl.push({ kind: "resistance", p0: { timestamp: ts[a], value: hi[a] }, p1: { timestamp: ts[b], value: hi[b] }, d0: ts[a], d1: ts[b] }); }
+      if (pl.length >= 2) { const a = pl[pl.length - 2], b = pl[pl.length - 1]; tl.push({ kind: "support", p0: { timestamp: ts[a], value: lo[a] }, p1: { timestamp: ts[b], value: lo[b] }, d0: ts[a], d1: ts[b] }); }
+      const mid = levels[3].v, sig = []; // signals: reclaim/lose the 50% retracement after the dominant swing
+      for (let i = Math.max(Hi, Lo) + 1; i < seg.length; i++) { if (cl[i - 1] <= mid && cl[i] > mid) sig.push({ ts: ts[i], type: "buy" }); else if (cl[i - 1] >= mid && cl[i] < mid) sig.push({ ts: ts[i], type: "sell" }); }
+      return { tl, dir, hiV, loV, hiTs: ts[Hi], loTs: ts[Lo], levels, sig: sig.slice(-6) };
+    }
+    function applyAutoTA() {
+      clearAutoTA();
+      const a = computeAutoTA(); if (!a) { status("not enough data for auto-analysis"); return; }
+      a.tl.forEach((t) => { const col = t.kind === "resistance" ? DN : UP; const id = safe(() => chart.createOverlay({ name: "segment", points: [t.p0, t.p1], lock: true, styles: { line: { color: col, size: 2, style: "dashed" } } })); if (id) autoIds.push(id); });
+      const fid = safe(() => chart.createOverlay({ name: "fibonacciLine", points: [{ timestamp: a.dir === "up" ? a.loTs : a.hiTs, value: a.dir === "up" ? a.loV : a.hiV }, { timestamp: a.dir === "up" ? a.hiTs : a.loTs, value: a.dir === "up" ? a.hiV : a.loV }], lock: true })); if (fid) autoIds.push(fid);
+      AUTO_SIG = { buys: new Set(a.sig.filter((s) => s.type === "buy").map((s) => s.ts)), sells: new Set(a.sig.filter((s) => s.type === "sell").map((s) => s.ts)) };
+      safe(() => { chart.removeIndicator("candle_pane", "AUTOTA"); chart.createIndicator("AUTOTA", true, { id: "candle_pane" }); });
+      renderAutoNotes(a);
+    }
+    function renderAutoNotes(a) {
+      const dec = (v) => nfmt(v), L = a.levels;
+      const note = (title, body) => `<details style="border-bottom:1px solid var(--line);padding:7px 0"><summary style="cursor:pointer;font-weight:600;color:#1d1d1f">${title}</summary><div style="color:#444;margin:5px 0 2px;padding-left:4px">${body}</div></details>`;
+      let html = `<p class="meta" style="margin:6px 0 8px">Detected from the last ~year of daily bars. These are mechanical guides, not advice — always confirm with your own read.</p>`;
+      a.tl.forEach((t) => { html += note(`${t.kind === "resistance" ? "🔻 Resistance trend line" : "🔺 Support trend line"}`, `Drawn through the last two swing ${t.kind === "resistance" ? "highs" : "lows"} (${ukd(isoOf(t.d0))} → ${ukd(isoOf(t.d1))}). <b>Signal:</b> a decisive close ${t.kind === "resistance" ? "<b>above</b> it is a breakout (buy)" : "<b>below</b> it is a breakdown (sell)"}; until then it tends to ${t.kind === "resistance" ? "cap rallies" : "support dips"}.`); });
+      html += note("📐 Fibonacci retracement", `Of the dominant ${a.dir === "up" ? "up-leg" : "down-leg"} from <b>${dec(a.loV)}</b> to <b>${dec(a.hiV)}</b>. Key levels: 38.2% ${dec(L[2].v)} · 50% ${dec(L[3].v)} · 61.8% ${dec(L[4].v)}. <b>Signal:</b> in an uptrend these act as pullback <b>support</b> (buy-the-dip zones); in a downtrend as <b>resistance</b> (sell-the-rally zones). A bounce from 61.8% that holds is the classic continuation entry.`);
+      const buys = a.sig.filter((s) => s.type === "buy"), sells = a.sig.filter((s) => s.type === "sell");
+      html += note(`🟢 Buy signals (${buys.length})`, buys.length ? `Triggered when price <b>reclaimed the 50% retracement (${dec(L[3].v)})</b> from below — momentum turning up. Most recent: ${buys.slice(-3).map((s) => ukd(isoOf(s.ts))).join(", ")}.` : "None in the current window.");
+      html += note(`🔴 Sell signals (${sells.length})`, sells.length ? `Triggered when price <b>lost the 50% retracement (${dec(L[3].v)})</b> from above — momentum turning down. Most recent: ${sells.slice(-3).map((s) => ukd(isoOf(s.ts))).join(", ")}.` : "None in the current window.");
+      $("autoNotes").innerHTML = html; $("autoCard").style.display = "";
+    }
+    $("autoBtn").onclick = () => { state.autoTA = !state.autoTA; $("autoBtn").classList.toggle("active", state.autoTA); if (state.autoTA) applyAutoTA(); else clearAutoTA(); };
     $("carryChk").onchange = () => { state.carry = $("carryChk").checked; renderPlaybook(); };
 
     // leverage / costs controls (drive the playbook backtests)
@@ -476,7 +538,7 @@
       if (state.dispAggMs !== aggMs || state.tf !== "D") {   // resolution (or timeframe) changed → re-apply the data
         if (state.tf !== "D") { state.tf = "D"; stopPoll(); segActive($("tfSeg"), findBtn($("tfSeg"), "D")); }
         state.dispAggMs = aggMs;
-        safe(() => { chart.applyNewData(bars); chart.resize(); }); setCur(bars); reapplyDrawings(); refreshSignals();
+        safe(() => { chart.applyNewData(bars); chart.resize(); }); setCur(bars); reapplyDrawings(); refreshSignals(); if (state.autoTA) applyAutoTA();
         $("hint").textContent = (aggMs ? (aggMs >= 30 * 86400000 ? "Monthly" : "Weekly") + " bars (long range)" : "Daily bars") + " · scroll to zoom · drag to pan.";
       }
       const loTs = daily[loIdx].timestamp, hiTs = daily[hiIdx - 1].timestamp;
@@ -522,7 +584,7 @@
     function applyTF() {
       stopPoll();
       const tf = TFS.find((t) => t.id === state.tf) || TFS[TFS.length - 1];
-      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); state.dispAggMs = 0; setCur(D.daily || []); setRange(252); reapplyDrawings(); refreshSignals(); state.tfLastTs = 0; $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points."; return; }
+      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); state.dispAggMs = 0; setCur(D.daily || []); setRange(252); reapplyDrawings(); refreshSignals(); if (state.autoTA) applyAutoTA(); state.tfLastTs = 0; $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points."; return; }
       status("loading " + tf.label + "…");
       fetchIntradayBars(tf)
         .then(({ bars: raw, ticker }) => {
