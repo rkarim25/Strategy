@@ -82,7 +82,25 @@ export default {
         });
       }
 
-      return new Response(JSON.stringify({ error: "Use ?mode=daily or ?mode=quote" }), {
+      if (mode === "intraday") {
+        const interval = url.searchParams.get("interval") || "5m";
+        const range = url.searchParams.get("range") || "60d";
+        const intradayUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${encodedTicker}?interval=${encodeURIComponent(interval)}&range=${encodeURIComponent(range)}&includePrePost=false`;
+        const res = await fetch(intradayUrl, { headers: { "user-agent": "Mozilla/5.0" } });
+        const text = await res.text();
+        if (!res.ok) {
+          throw new Error(`Yahoo intraday failed ${res.status}: ${text.slice(0, 300)}`);
+        }
+        const bars = yahooChartOhlcv(JSON.parse(text));
+        return new Response(JSON.stringify({ ticker: tickerName, interval, bars }), {
+          headers: {
+            ...corsHeaders,
+            "content-type": "application/json"
+          }
+        });
+      }
+
+      return new Response(JSON.stringify({ error: "Use ?mode=daily|quote|intraday" }), {
         status: 400,
         headers: {
           ...corsHeaders,
@@ -100,6 +118,24 @@ export default {
     }
   }
 };
+
+function yahooChartOhlcv(data) {
+  const result = data?.chart?.result?.[0];
+  const ts = result?.timestamp || [];
+  const q = result?.indicators?.quote?.[0] || {};
+  const o = q.open || [], h = q.high || [], l = q.low || [], c = q.close || [], v = q.volume || [];
+  const out = [];
+  for (let i = 0; i < ts.length; i++) {
+    if (o[i] == null || h[i] == null || l[i] == null || c[i] == null) continue;
+    if (!(Number.isFinite(c[i]) && c[i] > 0 && h[i] >= l[i])) continue;
+    out.push({
+      timestamp: ts[i] * 1000,
+      open: Number(o[i]), high: Number(h[i]), low: Number(l[i]), close: Number(c[i]),
+      volume: v[i] ? Math.round(v[i]) : 0
+    });
+  }
+  return out;
+}
 
 function yahooChartToCsv(data) {
   const rows = yahooChartRows(data);

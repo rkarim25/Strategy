@@ -12,6 +12,15 @@
   const CLOUD_KEY = "lab_cloud_key"; // shared passphrase login with the Lab
   const UP = "#15803d", DN = "#b42318";
   const RANGES = [["1M", 21], ["3M", 63], ["6M", 126], ["1Y", 252], ["2Y", 504], ["5Y", 1260], ["Max", null]];
+  // intraday timeframes (Yahoo via the quote proxy); 1D = the static full-history file
+  const TFS = [
+    { id: "1m", label: "1m", interval: "1m", range: "7d", show: 180 },
+    { id: "5m", label: "5m", interval: "5m", range: "60d", show: 160 },
+    { id: "15m", label: "15m", interval: "15m", range: "60d", show: 170 },
+    { id: "1h", label: "1h", interval: "60m", range: "730d", show: 200 },
+    { id: "D", label: "1D", interval: null },
+  ];
+  const POLL_MS = 60000;
   const TYPES = [["candle_solid", "Candles"], ["ohlc", "Bars"], ["area", "Area"]];
   const AXES = [["normal", "Linear"], ["log", "Log"], ["percentage", "%"]];
   const MAIN_INDS = [["MA", "MA"], ["EMA", "EMA"], ["BOLL", "Bollinger"]];
@@ -78,10 +87,10 @@
     injectStyles(); registerMeasure();
     if (window.STRATEGY_PAGE_TITLE) document.title = window.STRATEGY_PAGE_TITLE;
 
-    const state = { asset: "spx", type: "candle_solid", yAxis: "normal", tool: "cursor",
+    const state = { asset: "spx", tf: "D", type: "candle_solid", yAxis: "normal", tool: "cursor", tfLastTs: 0,
       indicators: { MA: false, EMA: false, BOLL: false, VOL: false, MACD: false, RSI: false } };
-    const D = { id: "", ticker: "", label: "", n: 0, dates: [], close: [] };
-    let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false;
+    const D = { id: "", ticker: "", label: "", n: 0, dates: [], close: [], daily: [] };
+    let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null;
 
     const app = document.getElementById("app");
     app.innerHTML = `
@@ -94,6 +103,7 @@
           <div class="live" id="live"><span class="dot"></span><span id="liveTxt">live —</span></div>
         </div>
         <div class="cbar">
+          <div><span class="lbl">Timeframe</span><span class="seg" id="tfSeg"></span></div>
           <div><span class="lbl">Type</span><span class="seg" id="typeSeg"></span></div>
           <div><span class="lbl">Axis</span><span class="seg" id="axisSeg"></span></div>
           <div><span class="lbl">Range</span><span class="seg" id="rangeSeg"></span></div>
@@ -143,6 +153,7 @@
     setTimeout(() => chart && chart.resize(), 60);  // ensure canvases size to the laid-out container
 
     // ---- controls ----
+    makeSeg($("tfSeg"), TFS.map((t) => [t.id, t.label]), (v) => v === state.tf, (v, b) => { state.tf = v; segActive($("tfSeg"), b); applyTF(); });
     makeSeg($("typeSeg"), TYPES, (v) => v === state.type, (v, b) => { state.type = v; chart.setStyles({ candle: { type: v } }); segActive($("typeSeg"), b); scheduleSave(); });
     makeSeg($("axisSeg"), AXES, (v) => v === state.yAxis, (v, b) => { state.yAxis = v; chart.setStyles({ yAxis: { type: v } }); segActive($("axisSeg"), b); scheduleSave(); });
     makeSeg($("rangeSeg"), RANGES, () => false, (days, b) => { setRange(days); segActive($("rangeSeg"), b); });
@@ -157,6 +168,40 @@
       const n = days ? Math.min(days, D.n) : D.n;
       chart.setBarSpace(Math.max(0.5, Math.min(40, w / n)));
       chart.scrollToRealTime(0);
+    }
+    // ---- timeframe: 1D = static full history; intraday = live from the quote proxy ----
+    function stopPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
+    function applyTF() {
+      stopPoll();
+      const tf = TFS.find((t) => t.id === state.tf) || TFS[TFS.length - 1];
+      if (!tf.interval) {
+        chart.applyNewData(D.daily || []); chart.resize(); setRange(126); state.tfLastTs = 0;
+        $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points.";
+        return;
+      }
+      status("loading " + tf.label + "…");
+      fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=" + tf.interval + "&range=" + tf.range + "&_=" + Date.now())
+        .then((r) => r.json())
+        .then((j) => {
+          const bars = j.bars || []; if (!bars.length) throw new Error("no intraday data");
+          chart.applyNewData(bars); chart.resize();
+          const w = Math.max(200, $("chart").clientWidth - 70), show = Math.min(bars.length, tf.show || 180);
+          chart.setBarSpace(Math.max(1, Math.min(14, w / show))); chart.scrollToRealTime(0);
+          state.tfLastTs = bars[bars.length - 1].timestamp;
+          status(tf.label + " · " + bars.length + " bars");
+          $("hint").textContent = tf.label + " intraday · auto-refreshing every " + (POLL_MS / 1000) + "s · " + (j.ticker || D.ticker);
+          pollTimer = setInterval(() => refreshTF(tf), POLL_MS);
+        })
+        .catch((e) => { status("intraday unavailable: " + e.message); });
+    }
+    function refreshTF(tf) {
+      fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=" + tf.interval + "&range=" + tf.range + "&_=" + Date.now())
+        .then((r) => r.json())
+        .then((j) => {
+          const bars = j.bars || []; let n = 0;
+          for (const b of bars) { if (b.timestamp >= state.tfLastTs) { chart.updateData(b); state.tfLastTs = Math.max(state.tfLastTs, b.timestamp); n++; } }
+          if (n) fetchLive();
+        }).catch(() => {});
     }
     const PANE = { VOL: "pane_vol", MACD: "pane_macd", RSI: "pane_rsi" };
     function toggleIndicator(name) {
@@ -267,10 +312,8 @@
         .then((d) => {
           D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.n = d.close.length; D.dates = d.dates; D.close = d.close;
           $("cTitle").textContent = D.label + " — chart";
-          const data = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
-          chart.applyNewData(data);
-          chart.resize();
-          setRange(126);
+          D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
+          applyTF();
           loadNotes();
           fetchLive();
         })
