@@ -47,7 +47,7 @@
     { id: "lqq3", asset: "LQQ3 3x Nasdaq", strategy: "SMA200 1x/cash", group: "strategies", href: "lqq3_guarded.html#signalPage" },
     { id: "3bal", asset: "3BAL 3x EU Banks", strategy: "SMA20 1x/cash", group: "strategies", href: "3bal_guarded.html#signalPage" },
     { id: "lab", asset: "Lab", strategy: "Interactive strategy builder", group: "tools", href: "lab.html" },
-    { id: "price", asset: "Prices", strategy: "High/low/close charts", group: "tools", href: "price.html" },
+    { id: "price", asset: "Charts", strategy: "Candles, indicators & drawing tools", group: "tools", href: "price.html" },
     { id: "summary", asset: "Summary results", strategy: "Cross-asset backtests", group: "tools", href: "summary.html" },
     { id: "instruments", asset: "Tools", strategy: "Instruments", group: "tools", href: "instruments.html", secondary: true },
   ];

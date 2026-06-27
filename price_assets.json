@@ -1,0 +1,79 @@
+[
+{
+"id": "spx",
+"label": "S&P 500",
+"klass": "Indices",
+"ticker": "^GSPC",
+"url": "price_spx.json"
+},
+{
+"id": "ndx",
+"label": "Nasdaq 100",
+"klass": "Indices",
+"ticker": "^NDX",
+"url": "price_ndx.json"
+},
+{
+"id": "ixic",
+"label": "Nasdaq Composite",
+"klass": "Indices",
+"ticker": "^IXIC",
+"url": "price_ixic.json"
+},
+{
+"id": "ftse",
+"label": "FTSE 100",
+"klass": "Indices",
+"ticker": "^FTSE",
+"url": "price_ftse.json"
+},
+{
+"id": "dax",
+"label": "DAX",
+"klass": "Indices",
+"ticker": "^GDAXI",
+"url": "price_dax.json"
+},
+{
+"id": "gold",
+"label": "Gold (front)",
+"klass": "Commodities",
+"ticker": "GC=F",
+"url": "price_gold.json"
+},
+{
+"id": "oil",
+"label": "WTI Crude (front)",
+"klass": "Commodities",
+"ticker": "CL=F",
+"url": "price_oil.json"
+},
+{
+"id": "btc",
+"label": "Bitcoin",
+"klass": "Crypto",
+"ticker": "BTC-USD",
+"url": "price_btc.json"
+},
+{
+"id": "eth",
+"label": "Ethereum",
+"klass": "Crypto",
+"ticker": "ETH-USD",
+"url": "price_eth.json"
+},
+{
+"id": "eurusd",
+"label": "EUR / USD",
+"klass": "FX",
+"ticker": "EURUSD=X",
+"url": "price_eurusd.json"
+},
+{
+"id": "gbpusd",
+"label": "GBP / USD",
+"klass": "FX",
+"ticker": "GBPUSD=X",
+"url": "price_gbpusd.json"
+}
+]

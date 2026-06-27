@@ -2,9 +2,12 @@
  * lab-strategy-store — tiny KV-backed store for the Strategy Lab's "Save to cloud".
  *
  *   POST /api/strategy   body {name?, notes?, config}  -> { id }    (persists; server-side, cross-device)
- *   GET  /api/strategy/:id                              -> { name, notes, config, savedAt }
+ *   GET  /api/strategy/:id                              -> { name, notes, config, savedAt }   (public read)
+ *   POST /api/chart/:asset  body {notes?, drawings?, settings?}  -> { ok }   (gated: write)
+ *   GET  /api/chart/:asset                              -> {notes,drawings,settings,savedAt}|{}  (gated: PRIVATE read)
  *
- * KV binding: LAB (namespace "lab-strategies"). CORS open (data is public strategy configs, no PII).
+ * KV binding: LAB (namespace "lab-strategies"). Strategy shares are public; chart notes are
+ * passphrase-gated for BOTH read and write so a visitor never sees the owner's private annotations.
  * Deployed separately from spx-quote-proxy via wrangler.lab-store.toml.
  */
 const CORS = {
@@ -28,7 +31,31 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
     const url = new URL(req.url);
     const m = url.pathname.match(/^\/api\/strategy\/([a-z2-9]{4,16})$/i);
+    const cm = url.pathname.match(/^\/api\/chart\/([a-z0-9_]{1,32})$/i);
     try {
+      if (cm) {                                  // private per-asset chart notes + drawings
+        if (!authed(req, env)) return json({ error: "unauthorized" }, 401);
+        const k = "chart:" + cm[1].toLowerCase();
+        if (req.method === "GET") {
+          const v = await env.LAB.get(k);
+          return json(v ? JSON.parse(v) : {});
+        }
+        if (req.method === "POST") {
+          let body;
+          try { body = await req.json(); } catch (_) { return json({ error: "bad json" }, 400); }
+          const rec = {
+            notes: String((body && body.notes) || "").slice(0, 20000),
+            drawings: Array.isArray(body && body.drawings) ? body.drawings.slice(0, 500) : [],
+            settings: (body && body.settings && typeof body.settings === "object") ? body.settings : {},
+            savedAt: new Date().toISOString().slice(0, 19) + "Z",
+          };
+          const payload = JSON.stringify(rec);
+          if (payload.length > 300000) return json({ error: "too large" }, 413);
+          await env.LAB.put(k, payload);
+          return json({ ok: true, savedAt: rec.savedAt });
+        }
+        return json({ error: "method" }, 405);
+      }
       if (req.method === "GET" && m) {
         const v = await env.LAB.get("s:" + m[1].toLowerCase());
         if (!v) return json({ error: "not found" }, 404);
