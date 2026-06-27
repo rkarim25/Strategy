@@ -10,9 +10,10 @@
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Headers": "Content-Type,X-Lab-Key",
   "Access-Control-Max-Age": "86400",
 };
+const authed = (req, env) => !!(env.LAB_SECRET && (req.headers.get("X-Lab-Key") || "").trim() === String(env.LAB_SECRET).trim());
 const json = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: { "Content-Type": "application/json", ...CORS } });
 function newId(n = 8) {
   const alpha = "abcdefghijkmnpqrstuvwxyz23456789"; // no l/o/0/1 to avoid confusion
@@ -33,7 +34,11 @@ export default {
         if (!v) return json({ error: "not found" }, 404);
         return json(JSON.parse(v));
       }
+      if (req.method === "POST" && url.pathname === "/api/auth") {
+        return json({ ok: authed(req, env) }, authed(req, env) ? 200 : 401);
+      }
       if (req.method === "POST" && url.pathname === "/api/strategy") {
+        if (!authed(req, env)) return json({ error: "unauthorized" }, 401);
         let body;
         try { body = await req.json(); } catch (_) { return json({ error: "bad json" }, 400); }
         const cfg = body && body.config;

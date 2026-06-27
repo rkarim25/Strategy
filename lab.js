@@ -192,10 +192,11 @@
           <button id="saveBtn" class="apply">Save here</button>
           <button id="cloudBtn">☁ Save to cloud &amp; copy link</button>
           <button id="shareBtn">Copy offline link</button>
+          <span class="meta" id="cloudAuth"></span>
           <span class="meta" id="saveFlash" style="color:var(--good)"></span>
         </div>
         <textarea id="stratNotes" rows="3" placeholder="Notes about this strategy…"></textarea>
-        <p class="meta" style="margin-top:8px"><b>Save here</b> = this browser (localStorage). <b>☁ Save to cloud</b> = saved on the site (Cloudflare), giving a short <code>?id=</code> link that opens the strategy + notes on any device. <b>Offline link</b> packs everything into a <code>#s=</code> URL with no server.</p>
+        <p class="meta" style="margin-top:8px"><b>Save here</b> = this browser (localStorage). <b>☁ Save to cloud</b> = saved on the site (Cloudflare), giving a short <code>?id=</code> link that opens the strategy + notes on any device. Saving needs your <b>passphrase</b> (one-time login per browser); anyone can <i>open</i> a shared link, only you can save. <b>Offline link</b> packs everything into a <code>#s=</code> URL with no server.</p>
         <div id="savedList"></div>
       </div>
       <div id="charts"></div>`;
@@ -388,17 +389,37 @@
     document.getElementById("saveBtn").onclick = () => { const name = (document.getElementById("stratName").value || "").trim() || ("Strategy " + (loadSaved().length + 1)); const notes = document.getElementById("stratNotes").value || ""; const arr = loadSaved(); arr.unshift({ name, notes, config: currentConfig(), savedAt: new Date().toISOString().slice(0, 10) }); writeSaved(arr); renderSavedList(); flash("Saved “" + name + "”"); };
     document.getElementById("shareBtn").onclick = () => copyShare({ name: (document.getElementById("stratName").value || "").trim(), notes: document.getElementById("stratNotes").value || "", config: currentConfig() });
 
-    // ---- cloud save (server-side, persists & cross-device) ----
-    const cloudBtn = document.getElementById("cloudBtn");
+    // ---- cloud save (server-side, persists & cross-device; passphrase-gated writes) ----
+    const cloudBtn = document.getElementById("cloudBtn"), CLOUD_KEY = "lab_cloud_key";
+    const getKey = () => { try { return localStorage.getItem(CLOUD_KEY) || ""; } catch (_) { return ""; } };
+    function setKey(k) { try { k ? localStorage.setItem(CLOUD_KEY, k) : localStorage.removeItem(CLOUD_KEY); } catch (_) {} updateCloudAuth(); }
+    function updateCloudAuth() {
+      const el = document.getElementById("cloudAuth");
+      if (getKey()) { el.innerHTML = `signed in · <a href="#" id="cloudLogout">log out</a>`; el.querySelector("#cloudLogout").onclick = (e) => { e.preventDefault(); setKey(""); flash("Logged out"); }; }
+      else el.textContent = "";
+    }
+    function ensureKey() {
+      const k = getKey();
+      if (k) return Promise.resolve(k);
+      const entry = (window.prompt("Cloud-save passphrase (one-time login for this browser):") || "").trim();
+      if (!entry) return Promise.resolve("");
+      return fetch(STORE + "/api/auth", { method: "POST", headers: { "X-Lab-Key": entry } })
+        .then((r) => { if (!r.ok) { flash("Wrong passphrase"); return ""; } setKey(entry); flash("Signed in"); return entry; })
+        .catch(() => { flash("Login failed — network?"); return ""; });
+    }
     cloudBtn.onclick = () => {
-      const name = (document.getElementById("stratName").value || "").trim(), notes = document.getElementById("stratNotes").value || "";
-      cloudBtn.disabled = true; flash("Saving to cloud…");
-      fetch(STORE + "/api/strategy", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, notes, config: currentConfig() }) })
-        .then((r) => r.json().then((j) => { if (!r.ok || !j.id) throw new Error(j.error || ("HTTP " + r.status)); return j.id; }))
-        .then((cid) => { const url = location.origin + location.pathname + "?id=" + cid; const done = () => flash("Cloud link copied  ·  /?id=" + cid); navigator.clipboard ? navigator.clipboard.writeText(url).then(done).catch(done) : done(); })
-        .catch((e) => flash("Cloud save failed: " + e.message))
-        .finally(() => { cloudBtn.disabled = false; });
+      ensureKey().then((key) => {
+        if (!key) return;
+        const name = (document.getElementById("stratName").value || "").trim(), notes = document.getElementById("stratNotes").value || "";
+        cloudBtn.disabled = true; flash("Saving to cloud…");
+        fetch(STORE + "/api/strategy", { method: "POST", headers: { "Content-Type": "application/json", "X-Lab-Key": key }, body: JSON.stringify({ name, notes, config: currentConfig() }) })
+          .then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired — click again"); } return r.json().then((j) => { if (!r.ok || !j.id) throw new Error(j.error || ("HTTP " + r.status)); return j.id; }); })
+          .then((cid) => { const url = location.origin + location.pathname + "?id=" + cid; const done = () => flash("Cloud link copied  ·  /?id=" + cid); navigator.clipboard ? navigator.clipboard.writeText(url).then(done).catch(done) : done(); })
+          .catch((e) => flash("Cloud save failed: " + e.message))
+          .finally(() => { cloudBtn.disabled = false; });
+      });
     };
+    updateCloudAuth();
     function loadCloud(cid) {
       flash("Loading shared strategy…");
       fetch(STORE + "/api/strategy/" + encodeURIComponent(cid))
