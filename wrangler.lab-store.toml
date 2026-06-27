@@ -1,0 +1,8 @@
+name = "lab-strategy-store"
+main = "cloudflare_lab_store_worker.js"
+compatibility_date = "2024-01-01"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "LAB"
+id = "310d4195dedb40ea8bfa809ba52b0500"

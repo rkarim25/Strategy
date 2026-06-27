@@ -14,6 +14,7 @@
   "use strict";
   const TD = 252, COST = 0.001, CLOSE_C = "#1d1d1f";
   const ASSETS = { spx: { label: "S&P 500", url: "band_lab_spx.json" }, ndx: { label: "Nasdaq", url: "lab_ndx.json" } };
+  const STORE = "https://lab-strategy-store.rkarim88.workers.dev"; // Cloudflare Worker + KV ("Save to cloud")
   const fmtLev = (x) => (x > 0 ? x.toFixed(0) + "x" : "0x");
   const pct = (x) => (x == null || !isFinite(x) ? "—" : (x * 100).toFixed(2) + "%");
   const f3 = (x) => (x == null || !isFinite(x) ? "—" : x.toFixed(3));
@@ -188,12 +189,13 @@
         <h2>Save &amp; notes</h2>
         <div class="save-row">
           <input id="stratName" placeholder="Strategy name…" />
-          <button id="saveBtn" class="apply">Save</button>
-          <button id="shareBtn">Copy share link</button>
+          <button id="saveBtn" class="apply">Save here</button>
+          <button id="cloudBtn">☁ Save to cloud &amp; copy link</button>
+          <button id="shareBtn">Copy offline link</button>
           <span class="meta" id="saveFlash" style="color:var(--good)"></span>
         </div>
         <textarea id="stratNotes" rows="3" placeholder="Notes about this strategy…"></textarea>
-        <p class="meta" style="margin-top:8px">Saved in this browser (localStorage); use <b>Copy share link</b> to bookmark or send a strategy + its notes.</p>
+        <p class="meta" style="margin-top:8px"><b>Save here</b> = this browser (localStorage). <b>☁ Save to cloud</b> = saved on the site (Cloudflare), giving a short <code>?id=</code> link that opens the strategy + notes on any device. <b>Offline link</b> packs everything into a <code>#s=</code> URL with no server.</p>
         <div id="savedList"></div>
       </div>
       <div id="charts"></div>`;
@@ -385,12 +387,33 @@
     }
     document.getElementById("saveBtn").onclick = () => { const name = (document.getElementById("stratName").value || "").trim() || ("Strategy " + (loadSaved().length + 1)); const notes = document.getElementById("stratNotes").value || ""; const arr = loadSaved(); arr.unshift({ name, notes, config: currentConfig(), savedAt: new Date().toISOString().slice(0, 10) }); writeSaved(arr); renderSavedList(); flash("Saved “" + name + "”"); };
     document.getElementById("shareBtn").onclick = () => copyShare({ name: (document.getElementById("stratName").value || "").trim(), notes: document.getElementById("stratNotes").value || "", config: currentConfig() });
+
+    // ---- cloud save (server-side, persists & cross-device) ----
+    const cloudBtn = document.getElementById("cloudBtn");
+    cloudBtn.onclick = () => {
+      const name = (document.getElementById("stratName").value || "").trim(), notes = document.getElementById("stratNotes").value || "";
+      cloudBtn.disabled = true; flash("Saving to cloud…");
+      fetch(STORE + "/api/strategy", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, notes, config: currentConfig() }) })
+        .then((r) => r.json().then((j) => { if (!r.ok || !j.id) throw new Error(j.error || ("HTTP " + r.status)); return j.id; }))
+        .then((cid) => { const url = location.origin + location.pathname + "?id=" + cid; const done = () => flash("Cloud link copied  ·  /?id=" + cid); navigator.clipboard ? navigator.clipboard.writeText(url).then(done).catch(done) : done(); })
+        .catch((e) => flash("Cloud save failed: " + e.message))
+        .finally(() => { cloudBtn.disabled = false; });
+    };
+    function loadCloud(cid) {
+      flash("Loading shared strategy…");
+      fetch(STORE + "/api/strategy/" + encodeURIComponent(cid))
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.status === 404 ? "not found" : "HTTP " + r.status))))
+        .then((rec) => { if (!rec || !rec.config) throw new Error("bad record"); document.getElementById("stratName").value = rec.name || ""; document.getElementById("stratNotes").value = rec.notes || ""; applyConfig(rec.config); flash("Loaded shared strategy “" + (rec.name || cid) + "”"); })
+        .catch((e) => { loadAsset(state.asset); flash("Could not load /?id=" + cid + " — " + e.message); });
+    }
     renderSavedList();
 
-    // initial: load from a #s= share link if present, else the default asset
+    // initial: cloud ?id= link → offline #s= link → default asset
+    const cloudId = new URLSearchParams(location.search).get("id");
     let bootRec = null;
     try { if (location.hash.indexOf("#s=") === 0) bootRec = dec(location.hash.slice(3)); } catch (_) {}
-    if (bootRec && bootRec.config) { document.getElementById("stratName").value = bootRec.name || ""; document.getElementById("stratNotes").value = bootRec.notes || ""; applyConfig(bootRec.config); }
+    if (cloudId) loadCloud(cloudId);
+    else if (bootRec && bootRec.config) { document.getElementById("stratName").value = bootRec.name || ""; document.getElementById("stratNotes").value = bootRec.notes || ""; applyConfig(bootRec.config); }
     else loadAsset(state.asset);
   }
 
