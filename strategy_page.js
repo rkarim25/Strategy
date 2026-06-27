@@ -201,7 +201,7 @@
       h2{margin:0 0 10px;font-size:17px;font-weight:600;letter-spacing:-.012em;line-height:1.25;}
       h3{font-size:15px;font-weight:650;letter-spacing:-.01em;}
       p{color:#3f4046;line-height:1.6;font-size:14.5px;}
-      .lede{font-size:16px;line-height:1.62;color:#52535a;max-width:68ch;font-weight:400;}
+      .lede{font-size:16px;line-height:1.6;color:#52535a;font-weight:400;margin:2px 0 10px;}
       .lede b,.lede strong{color:var(--text);font-weight:600;}
       .card{border:1px solid var(--line);border-radius:22px;background:var(--panel);padding:20px 22px;
         box-shadow:var(--shadow);backdrop-filter:blur(20px);margin:18px 0;}
