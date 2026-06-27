@@ -52,7 +52,7 @@
     dateToIndex: null,
 
     async load(url) {
-      const response = await fetch(url, { cache: "no-store" });
+      const response = await fetch(url);   // cache via ETag/max-age (was no-store → re-downloaded every page load)
       if (!response.ok) throw new Error(`ETP returns ${url}: HTTP ${response.status}`);
       const data = await response.json();
       const map = new Map();

@@ -862,9 +862,10 @@
         + `<br><span style="color:#8a8a8e">3m carry vs the 3M bill (bps): ${carry} — grows with tenor on an upward curve.</span>`;
     }
 
+    const ASSET_CACHE = {};   // in-memory: switching back to an already-loaded asset is instant (no re-fetch)
     function loadAsset(id) {
       state.asset = id;
-      fetch("price_" + id + ".json?v=" + Date.now()).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then((d) => {
+      const apply = (d) => {
         D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.klass = d.klass || ""; D.legs = d.legs || null; D.cr = d.cr || null; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
         D.ddh = ddFromHigh(d.close, 252); D.rv = rvol(d.close, 20);
         D.dv01 = D.legs ? Math.max(...D.legs.map((l) => TICKER_DV01[l.t] || 1)) : (TICKER_DV01[D.ticker] || 8.6);
@@ -877,17 +878,26 @@
         applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader(); renderCurve(); syncPnlUI();
         if (pendingBest) { applyStrategy(pendingBest, true); pendingBest = null; }
         else { const e = LEADER.find((x) => x.id === D.id); if (e && ["Rates", "Steepness", "Butterfly"].includes(D.klass)) applyStrategy(e.best, false); }   // best rule = default for every UST trade
-      }).catch((e) => { status("could not load " + id + " — " + e.message); });
+      };
+      if (ASSET_CACHE[id]) return apply(ASSET_CACHE[id]);
+      fetch("price_" + id + ".json").then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then((d) => { ASSET_CACHE[id] = d; apply(d); }).catch((e) => { status("could not load " + id + " — " + e.message); });
     }
 
     updateAuth();
-    fetch("price_assets.json?v=" + Date.now()).then((r) => r.json())
-      .then((list) => { ASSETS = list; })
-      .catch(() => { ASSETS = [{ id: "spx", label: "S&P 500", klass: "Indices", ticker: "^GSPC" }, { id: "ndx", label: "Nasdaq 100", klass: "Indices", ticker: "^NDX" }]; })
-      .then(() => fetch("ust_strategies.json?v=" + Date.now()).then((r) => r.json()).then((l) => { LEADER = l || []; }).catch(() => { LEADER = []; }))
-      .then(() => fetch("ust_curve.json?v=" + Date.now()).then((r) => r.json()).then((l) => { CURVE = l || []; }).catch(() => { CURVE = []; }))
-      .then(() => fetch("ust_inversions.json?v=" + Date.now()).then((r) => r.json()).then((l) => { INVERSIONS = (l || []).map(([s, e]) => [Date.parse(s), Date.parse(e)]); }).catch(() => { INVERSIONS = []; }))
-      .then(() => { const sel = $("assetSel"), groups = {}; ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); }); sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join(""); sel.value = state.asset; sel.onchange = () => loadAsset(sel.value); loadAsset(state.asset); });
+    // Load the registry + curve data AND the default asset all in parallel (was sequential), and drop the
+    // ?v=Date.now() cache-busters so the browser actually caches (GitHub Pages: max-age=600 + ETag revalidation).
+    Promise.all([
+      fetch("price_assets.json").then((r) => r.json()).catch(() => [{ id: "spx", label: "S&P 500", klass: "Indices", ticker: "^GSPC" }, { id: "ndx", label: "Nasdaq 100", klass: "Indices", ticker: "^NDX" }]),
+      fetch("ust_strategies.json").then((r) => r.json()).catch(() => []),
+      fetch("ust_curve.json").then((r) => r.json()).catch(() => []),
+      fetch("ust_inversions.json").then((r) => r.json()).catch(() => []),
+      fetch("price_" + state.asset + ".json").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d) ASSET_CACHE[state.asset] = d; }).catch(() => {}),
+    ]).then(([assets, leader, curve, inv]) => {
+      ASSETS = assets || []; LEADER = leader || []; CURVE = curve || []; INVERSIONS = (inv || []).map(([s, e]) => [Date.parse(s), Date.parse(e)]);
+      const sel = $("assetSel"), groups = {}; ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); });
+      sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join("");
+      sel.value = state.asset; sel.onchange = () => loadAsset(sel.value); loadAsset(state.asset);
+    });
   }
 
   function boot() { if (!window.klinecharts || !document.getElementById("app")) { setTimeout(boot, 30); return; } if (window.SP && SP.injectStyles) SP.injectStyles(); run(); }

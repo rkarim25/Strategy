@@ -342,7 +342,7 @@
     function loadAsset(id) {
       state.asset = id;
       document.getElementById("charts").innerHTML = '<p class="meta">Loading…</p>';
-      fetch(ASSETS[id].url + "?v=" + Date.now(), { cache: "no-store" })
+      fetch(ASSETS[id].url)   // cache via ETag/max-age (was no-store → full re-download on every asset switch)
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
         .then((data) => {
           D.dates = data.dates; D.close = data.close; D.tbill = data.tbill; D.label = data.asset_label || ASSETS[id].label; D.n = data.close.length;

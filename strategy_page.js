@@ -659,7 +659,7 @@
     if (window.STRATEGY_PAGE_TITLE) document.title = window.STRATEGY_PAGE_TITLE;
     const app = document.getElementById("app");
     if (!DATA_URL) { app.innerHTML = '<p class="err">No STRATEGY_DATA_URL set.</p>'; return; }
-    fetch(DATA_URL + "?v=" + Date.now(), { cache: "no-store" })
+    fetch(DATA_URL)   // let the browser cache (GitHub Pages max-age=600 + ETag); was no-store, which re-downloaded the whole file every visit
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(render)
       .catch((e) => { app.innerHTML = `<p class="err">Could not load ${esc(DATA_URL)} — ${esc(e.message)}</p>`; });
