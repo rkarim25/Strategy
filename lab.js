@@ -19,6 +19,7 @@
   const f3 = (x) => (x == null || !isFinite(x) ? "—" : x.toFixed(3));
   const f2 = (x) => (x == null || !isFinite(x) ? "—" : x.toFixed(2));
   const money = (x) => (x == null || !isFinite(x) ? "—" : "$" + Math.round(x).toLocaleString());
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   // ---------------- indicator math ----------------
   function sma(c, n) { const o = Array(c.length).fill(null); let s = 0; for (let i = 0; i < c.length; i++) { s += c[i]; if (i >= n) s -= c[i - n]; if (i >= n - 1) o[i] = s / n; } return o; }
@@ -129,6 +130,17 @@
       .lab-bar .lbl{font-size:12px;font-weight:600;color:#6e6e73;margin-right:6px;}
       .lab-bar select,.lab-bar input[type=date]{font:inherit;font-size:13px;padding:6px 9px;border-radius:9px;border:1px solid var(--line);background:#fff;}
       .lab-bar .apply{font:inherit;font-size:12px;font-weight:600;padding:6px 12px;border-radius:9px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;}
+      .save-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
+      .save-row input{font:inherit;font-size:13px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);min-width:200px;flex:1;}
+      .save-row button{font:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;}
+      .save-row button.apply{background:var(--accent);color:#fff;border-color:var(--accent);}
+      #stratNotes{font:inherit;font-size:13px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);width:100%;resize:vertical;box-sizing:border-box;}
+      .saved-item{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;}
+      .saved-item .sh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+      .saved-item .nm{font-weight:700;}
+      .saved-item .meta2{font-size:12px;color:var(--muted);flex:1;}
+      .saved-item .notes{font-size:12.5px;color:var(--muted);margin-top:5px;white-space:pre-wrap;}
+      .saved-item button{font:inherit;font-size:12px;font-weight:600;padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;}
     `;
     document.head.appendChild(s);
   }
@@ -172,6 +184,18 @@
       </div>
       <div class="card"><div class="kpis" id="kpis"></div>
         <p class="meta" id="bhNote" style="margin-top:10px"></p></div>
+      <div class="card">
+        <h2>Save &amp; notes</h2>
+        <div class="save-row">
+          <input id="stratName" placeholder="Strategy name…" />
+          <button id="saveBtn" class="apply">Save</button>
+          <button id="shareBtn">Copy share link</button>
+          <span class="meta" id="saveFlash" style="color:var(--good)"></span>
+        </div>
+        <textarea id="stratNotes" rows="3" placeholder="Notes about this strategy…"></textarea>
+        <p class="meta" style="margin-top:8px">Saved in this browser (localStorage); use <b>Copy share link</b> to bookmark or send a strategy + its notes.</p>
+        <div id="savedList"></div>
+      </div>
       <div id="charts"></div>`;
 
     const KPI = [["CAGR", "cagr"], ["Max drawdown", "maxdd"], ["Calmar", "calmar"], ["Sortino", "sortino"],
@@ -327,7 +351,47 @@
         })
         .catch((e) => { document.getElementById("charts").innerHTML = `<p class="err">Could not load ${ASSETS[id].url} — ${e.message}</p>`; });
     }
-    loadAsset(state.asset);
+    // ---- save / notes / share (browser localStorage + portable links) ----
+    const LS_KEY = "lab_saved_v1";
+    const enc = (rec) => btoa(encodeURIComponent(JSON.stringify(rec)));
+    const dec = (str) => JSON.parse(decodeURIComponent(atob(str)));
+    const loadSaved = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch (_) { return []; } };
+    const writeSaved = (arr) => { try { localStorage.setItem(LS_KEY, JSON.stringify(arr)); } catch (_) {} };
+    const currentConfig = () => ({ asset: state.asset, period: state.period, cs: state.cs, ce: state.ce, lev: state.lev, layout: state.layout, entry: state.entry, exit: state.exit });
+    const findBtn = (c, t) => [...c.querySelectorAll("button")].find((b) => b.textContent === t);
+    function applyConfig(cfg) {
+      if (!cfg || !cfg.entry || !cfg.exit) return;
+      state.entry = cfg.entry; state.exit = cfg.exit; state.lev = +cfg.lev || 1; state.layout = cfg.layout === "separate" ? "separate" : "combined";
+      state.period = cfg.period || "full"; state.cs = cfg.cs || ""; state.ce = cfg.ce || "";
+      renderGroup("entry"); renderGroup("exit");
+      const lb = findBtn(levSeg, state.lev + "x"); if (lb) seg(levSeg, lb);
+      const yb = findBtn(layoutSeg, state.layout === "separate" ? "Separate entry/exit" : "Combined"); if (yb) seg(layoutSeg, yb);
+      const id = ASSETS[cfg.asset] ? cfg.asset : "spx"; const ab = findBtn(assetSeg, ASSETS[id].label); if (ab) seg(assetSeg, ab);
+      loadAsset(id);
+    }
+    function flash(msg) { const el = document.getElementById("saveFlash"); if (el) { el.textContent = msg; setTimeout(() => { el.textContent = ""; }, 2600); } }
+    function copyShare(rec) { const url = location.origin + location.pathname + "#s=" + enc(rec); if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => flash("Share link copied")).catch(() => flash("Could not copy")); else flash("Copy from address bar"); }
+    function renderSavedList() {
+      const host = document.getElementById("savedList"), arr = loadSaved();
+      if (!arr.length) { host.innerHTML = `<p class="meta">No saved strategies yet.</p>`; return; }
+      host.innerHTML = arr.map((s, i) => `<div class="saved-item"><div class="sh">
+        <span class="nm">${esc(s.name)}</span>
+        <span class="meta2">${(s.config.entry.conds || []).length} entry · ${(s.config.exit.conds || []).length} exit · ${esc((ASSETS[s.config.asset] || {}).label || "")} · ${s.config.lev}× · ${esc(s.savedAt || "")}</span>
+        <button data-load="${i}">Load</button><button data-share="${i}">Share</button><button data-del="${i}">Delete</button></div>
+        ${s.notes ? `<div class="notes">${esc(s.notes)}</div>` : ""}</div>`).join("");
+      host.querySelectorAll("[data-load]").forEach((b) => (b.onclick = () => { const s = loadSaved()[+b.dataset.load]; document.getElementById("stratName").value = s.name || ""; document.getElementById("stratNotes").value = s.notes || ""; applyConfig(s.config); flash("Loaded “" + (s.name || "") + "”"); }));
+      host.querySelectorAll("[data-del]").forEach((b) => (b.onclick = () => { const a = loadSaved(); a.splice(+b.dataset.del, 1); writeSaved(a); renderSavedList(); }));
+      host.querySelectorAll("[data-share]").forEach((b) => (b.onclick = () => { const s = loadSaved()[+b.dataset.share]; copyShare({ name: s.name, notes: s.notes, config: s.config }); }));
+    }
+    document.getElementById("saveBtn").onclick = () => { const name = (document.getElementById("stratName").value || "").trim() || ("Strategy " + (loadSaved().length + 1)); const notes = document.getElementById("stratNotes").value || ""; const arr = loadSaved(); arr.unshift({ name, notes, config: currentConfig(), savedAt: new Date().toISOString().slice(0, 10) }); writeSaved(arr); renderSavedList(); flash("Saved “" + name + "”"); };
+    document.getElementById("shareBtn").onclick = () => copyShare({ name: (document.getElementById("stratName").value || "").trim(), notes: document.getElementById("stratNotes").value || "", config: currentConfig() });
+    renderSavedList();
+
+    // initial: load from a #s= share link if present, else the default asset
+    let bootRec = null;
+    try { if (location.hash.indexOf("#s=") === 0) bootRec = dec(location.hash.slice(3)); } catch (_) {}
+    if (bootRec && bootRec.config) { document.getElementById("stratName").value = bootRec.name || ""; document.getElementById("stratNotes").value = bootRec.notes || ""; applyConfig(bootRec.config); }
+    else loadAsset(state.asset);
   }
 
   function boot() {
