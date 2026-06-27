@@ -17,6 +17,10 @@
   const RECESSIONS = [["1953-07-01", "1954-05-31"], ["1957-08-01", "1958-04-30"], ["1960-04-01", "1961-02-28"], ["1969-12-01", "1970-11-30"], ["1973-11-01", "1975-03-31"], ["1980-01-01", "1980-07-31"], ["1981-07-01", "1982-11-30"], ["1990-07-01", "1991-03-31"], ["2001-03-01", "2001-11-30"], ["2007-12-01", "2009-06-30"], ["2020-02-01", "2020-04-30"]].map(([s, e]) => [Date.parse(s), Date.parse(e)]); // NBER US recessions
   const TICK2ID = { "^IRX": "ust3m", "2YY=F": "ust2y", "^FVX": "ust5y", "^TNX": "ust10y", "^TYX": "ust30y" }; // curve leg ticker → curve id
   let INVERSIONS = []; // 2s10s/3m10y inverted ranges (loaded from ust_inversions.json)
+  const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // UK date format dd-MMM-yy
+  const p2 = (n) => String(n).padStart(2, "0");
+  function ukTs(ts, withTime) { const d = new Date(ts); const s = p2(d.getDate()) + "-" + MON[d.getMonth()] + "-" + String(d.getFullYear()).slice(-2); return withTime ? s + " " + p2(d.getHours()) + ":" + p2(d.getMinutes()) : s; }
+  function ukd(str) { if (!str) return ""; const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str); return m ? p2(+m[3]) + "-" + MON[+m[2] - 1] + "-" + m[1].slice(-2) : str; } // "YYYY-MM-DD" → "dd-MMM-yy"
   const UP = "#15803d", DN = "#b42318";
   const RANGES = [[5, "1W"], [21, "1M"], [63, "3M"], [252, "1Y"], [1260, "5Y"], [2520, "10Y"]]; // [days, label] — makeSeg renders label, passes days
   const TFS = [
@@ -234,6 +238,7 @@
       #notes{width:100%;box-sizing:border-box;font:inherit;font-size:13px;padding:11px 13px;border-radius:10px;border:1px solid var(--line);resize:vertical;}
       table.pb{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
       table.pb th,table.pb td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top;}
+      table.pb td:last-child{vertical-align:middle;}
       table.pb th:first-child,table.pb td:first-child{text-align:left;white-space:normal;}
       table.pb th{font-size:11px;color:#6e6e73;text-transform:uppercase;letter-spacing:.03em;font-weight:700;}
       table.pb tr.bh{background:rgba(0,0,0,.035);font-weight:700;}
@@ -243,18 +248,21 @@
       .pbp{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px;}
       .pbp label{font-size:11px;color:#6e6e73;display:inline-flex;align-items:center;gap:4px;}
       .pbp input{font:inherit;font-size:12px;width:56px;padding:4px 6px;border-radius:7px;border:1px solid var(--line);}
-      .pbacts{display:flex;flex-direction:column;gap:4px;align-items:stretch;min-width:74px;}
-      .pb-btn{font:inherit;font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;white-space:nowrap;}
-      .pb-btn:hover{border-color:var(--accent);}
-      .pb-btn.on{background:var(--accent);color:#fff;border-color:var(--accent);}
-      .pb-btn.sig.on{background:#1d1d1f;border-color:#1d1d1f;}
-      .pb-btn:disabled{opacity:.35;cursor:default;}
+      .pbacts{display:flex;flex-direction:column;gap:5px;align-items:stretch;min-width:84px;}
+      .pb-btn{font:inherit;font-size:11.5px;font-weight:600;padding:6px 10px;border-radius:999px;border:1px solid transparent;background:#f0f0f3;color:#48484a;cursor:pointer;white-space:nowrap;text-align:center;transition:background .12s,color .12s;}
+      .pb-btn:hover:not(:disabled){background:#e4e4ea;}
+      .pb-btn.pb-plot.on{background:var(--accent);color:#fff;}
+      .pb-btn.sig.on{background:#34c759;color:#fff;}
+      .pb-btn.pb-note.on{background:#5856d6;color:#fff;}
+      .pb-btn:disabled{opacity:.4;cursor:default;}
       tr.noterow td{background:rgba(0,113,227,.05);border-bottom:2px solid var(--line);font-size:12.5px;line-height:1.55;color:#333;padding:10px 14px;}
       #playbook,#leader{overflow-x:auto;-webkit-overflow-scrolling:touch;}
       @media(max-width:680px){
-        table.pb th,table.pb td{padding:7px 7px;font-size:12px;}
-        .pbacts{min-width:64px;} .pb-btn{padding:5px 7px;font-size:11px;}
-        .cbar{gap:10px;} .pbp input{width:48px;}
+        table.pb th,table.pb td{padding:7px 6px;font-size:12px;}
+        .pbacts{min-width:0;flex-direction:row;flex-wrap:wrap;gap:4px;justify-content:flex-end;}
+        .pb-btn{padding:6px 9px;font-size:11px;}
+        .cbar{gap:10px;} .pbp input{width:46px;} .pbp label{font-size:10.5px;}
+        table.pb .sig{font-size:11px;white-space:normal;}
         h1{font-size:24px;} h2{font-size:18px;}
       }
     `;
@@ -355,6 +363,8 @@
       candle: { type: state.type, bar: { upColor: UP, downColor: DN, noChangeColor: "#888", upBorderColor: UP, downBorderColor: DN, upWickColor: UP, downWickColor: DN }, priceMark: { last: { show: true }, high: { show: true }, low: { show: true } }, tooltip: { showRule: "always", showType: "rect" } },
       indicator: { lastValueMark: { show: false } }, yAxis: { type: state.yAxis }, xAxis: { tickText: { color: "#8a8a8e" } },
     });
+    safe(() => chart.setCustomApi({ formatDate: ({ timestamp }) => ukTs(timestamp, state.tf !== "D") })); // UK dd-MMM-yy (+ time on intraday)
+    $("chart").addEventListener("contextmenu", (ev) => { ev.preventDefault(); setTimeout(() => { if (drawMenuEl) return; addNoteHere(); }, 0); }); // right-click empty space → add a note
     window.addEventListener("resize", () => chart && chart.resize());
     setTimeout(() => chart && chart.resize(), 60);
 
@@ -488,10 +498,47 @@
     function toggleSignals(key) { state.signalKey = state.signalKey === key ? null : key; refreshSignals(); renderPlaybook(); }
 
     // ---- drawing ----
-    function pickTool(name) { state.tool = name; if (name === "cursor") return; let extend; if (name === "simpleAnnotation") extend = (window.prompt("Annotation text:") || "").trim() || "note"; safe(() => chart.createOverlay({ name, extendData: extend, onDrawEnd: (e) => { recordDrawing(e.overlay); pickTool("cursor"); segActive($("toolSeg"), findBtn($("toolSeg"), "cursor")); return false; } })); }
+    let pendingOverlayId = null, drawMenuEl = null, lastMouse = { x: 120, y: 120 };
+    document.addEventListener("mousemove", (e) => { lastMouse = { x: e.clientX, y: e.clientY }; });
+    // every overlay gets a right-click handler → edit/erase menu (used by new draws AND restored ones)
+    function mkOverlay(spec) { return safe(() => chart.createOverlay({ ...spec, onRightClick: (e) => { showDrawMenu(e.overlay); return true; } })); }
+    function pickTool(name) {
+      state.tool = name;
+      if (pendingOverlayId != null) { safe(() => chart.removeOverlay(pendingOverlayId)); pendingOverlayId = null; } // cancel any in-progress draw
+      if (name === "cursor") return;
+      armTool(name);
+    }
+    // STICKY: re-arm the same tool after each drawing so it stays selected until you pick another tool / Cursor.
+    function armTool(name) {
+      let extend; if (name === "simpleAnnotation") extend = (window.prompt("Note text:") || "").trim() || "note";
+      pendingOverlayId = mkOverlay({ name, extendData: extend, onDrawEnd: (e) => { recordDrawing(e.overlay); pendingOverlayId = null; if (state.tool === name && name !== "cursor") armTool(name); return false; } });
+    }
+    function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; } }
+    function showDrawMenu(overlay) {
+      closeDrawMenu();
+      const m = document.createElement("div");
+      m.style.cssText = `position:fixed;left:${Math.min(lastMouse.x, innerWidth - 160)}px;top:${Math.min(lastMouse.y, innerHeight - 90)}px;z-index:9999;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;min-width:140px;`;
+      const item = (label, fn, danger) => { const b = document.createElement("button"); b.textContent = label; b.style.cssText = `display:block;width:100%;text-align:left;padding:9px 16px;border:0;background:#fff;cursor:pointer;font:inherit;font-size:13px;color:${danger ? "#d70015" : "#1d1d1f"}`; b.onmouseenter = () => (b.style.background = "#f2f2f7"); b.onmouseleave = () => (b.style.background = "#fff"); b.onclick = (ev) => { ev.stopPropagation(); closeDrawMenu(); fn(); }; return b; };
+      if (overlay.name === "simpleAnnotation") m.appendChild(item("✎  Edit note", () => editAnnotation(overlay)));
+      m.appendChild(item("🗑  Erase", () => eraseOverlay(overlay), true));
+      document.body.appendChild(m); drawMenuEl = m;
+      setTimeout(() => document.addEventListener("mousedown", closeDrawMenu, { once: true }), 0);
+    }
+    function eraseOverlay(o) { safe(() => chart.removeOverlay(o.id)); const i = drawings.findIndex((d) => d.id === o.id); if (i >= 0) drawings.splice(i, 1); scheduleSave(); }
+    function editAnnotation(o) { const t = (window.prompt("Edit note:", o.extendData || "") || "").trim(); if (!t) return; safe(() => chart.overrideOverlay({ id: o.id, extendData: t })); const d = drawings.find((d) => d.id === o.id); if (d) d.extendData = t; scheduleSave(); }
+    // right-click empty chart → drop a note at that point
+    function addNoteHere() {
+      const t = (window.prompt("Note text:") || "").trim(); if (!t) return;
+      const rect = $("chart").getBoundingClientRect();
+      const dp = safe(() => chart.convertFromPixel({ x: lastMouse.x - rect.left, y: lastMouse.y - rect.top }, { paneId: "candle_pane" }));
+      if (!dp || dp.value == null) return;
+      const pts = [{ timestamp: dp.timestamp, value: dp.value }];
+      const id = mkOverlay({ name: "simpleAnnotation", extendData: t, points: pts });
+      if (id) recordDrawing({ id, name: "simpleAnnotation", extendData: t, points: pts });
+    }
     const validDraw = (d) => d && d.name && Array.isArray(d.points) && d.points.length && d.points.every((p) => p && p.value != null && isFinite(p.value));
     function recordDrawing(o) { if (restoring || !o || !o.points || !o.points.length) return; const pts = o.points.map((p) => ({ timestamp: p.timestamp, value: p.value })); if (pts.some((p) => p.value == null)) return; const i = drawings.findIndex((d) => d.id === o.id), rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData }; if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave(); }
-    function reapplyDrawings() { restoring = true; safe(() => chart.removeOverlay()); const keep = drawings.filter(validDraw); drawings = []; keep.forEach((d) => { const id = safe(() => chart.createOverlay({ name: d.name, points: d.points, extendData: d.extendData })); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); }); restoring = false; }
+    function reapplyDrawings() { restoring = true; safe(() => chart.removeOverlay()); const keep = drawings.filter(validDraw); drawings = []; keep.forEach((d) => { const id = mkOverlay({ name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); }); restoring = false; }
     function undoDrawing() { const last = drawings.pop(); if (last) safe(() => chart.removeOverlay(last.id)); scheduleSave(); }
     function clearDrawings() { safe(() => chart.removeOverlay()); drawings = []; scheduleSave(); }
 
@@ -522,7 +569,7 @@
       syncPnlUI();
       syncIndicators(st.indicators); renderIndParams();
       drawings = [];
-      (snap.drawings || []).filter(validDraw).forEach((d) => { const id = safe(() => chart.createOverlay({ name: d.name, points: d.points, extendData: d.extendData })); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); });
+      (snap.drawings || []).filter(validDraw).forEach((d) => { const id = mkOverlay({ name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); });
       restoring = false; renderPlaybook();
     }
     function loadNotes() {
@@ -551,7 +598,7 @@
       syncIndChips(); renderIndParams(); renderPlaybook(); scheduleSave();
     }
     function renderPlaybook() {
-      const c = D.close, host = $("playbook"); $("pbAsset").textContent = D.dates.length ? "· " + D.label + " · " + D.dates[0] + " → " + D.dates[D.n - 1] : "";
+      const c = D.close, host = $("playbook"); $("pbAsset").textContent = D.dates.length ? "· " + D.label + " · " + ukd(D.dates[0]) + " → " + ukd(D.dates[D.n - 1]) : "";
       if (!c || c.length < 250) { host.innerHTML = `<p class="meta">Not enough history for a meaningful backtest.</p>`; return; }
       const isY = D.kind === "yield", isS = D.kind === "spread", L = state.lev;
       $("levBar").style.display = (isY || isS) ? "none" : "";
@@ -588,9 +635,9 @@
       const body = STRATS.map((st) => {
         const p = state.stratParams[st.key], pos = st.sig(c, p, D.high, D.low), s = evalp(pos);
         const inputs = st.params.map((q) => `<label>${esc(q.label)}<input type="number" data-k="${st.key}" data-p="${q.k}" value="${p[q.k]}" min="${q.min}" max="${q.max}" step="${q.step || 1}"></label>`).join("");
-        const plotBtn = st.plot ? `<button class="pb-btn ${state.plotted[st.key] ? "on" : ""}" data-plot="${st.key}">${state.plotted[st.key] ? "✓ plot" : "plot"}</button>` : `<button class="pb-btn" disabled title="no chart overlay">plot</button>`;
+        const plotBtn = st.plot ? `<button class="pb-btn pb-plot ${state.plotted[st.key] ? "on" : ""}" data-plot="${st.key}">${state.plotted[st.key] ? "✓ plot" : "plot"}</button>` : `<button class="pb-btn pb-plot" disabled title="no chart overlay">plot</button>`;
         const sigBtn = `<button class="pb-btn sig ${state.signalKey === st.key ? "on" : ""}" data-sig="${st.key}">${state.signalKey === st.key ? "✓ signals" : "signals"}</button>`;
-        const noteBtn = `<button class="pb-btn ${state.notesOpen[st.key] ? "on" : ""}" data-note="${st.key}">notes</button>`;
+        const noteBtn = `<button class="pb-btn pb-note ${state.notesOpen[st.key] ? "on" : ""}" data-note="${st.key}">${state.notesOpen[st.key] ? "✓ notes" : "notes"}</button>`;
         const sigTxt = isDelta ? `▲ ${isY ? "long rates" : "long steepener"}: ${esc(st.buy(p))} · ▼ ${isY ? "long duration" : "flattener"}: ${esc(st.sell(p))}` : `▲ ${esc(st.buy(p))} · ▼ ${esc(st.sell(p))}`;
         const cells = COLS.map(([, f], idx) => (idx === 0 ? `<td class="num ${s[winKey] > bh[winKey] ? "win" : ""}">${f(s)}</td>` : `<td class="num">${f(s)}</td>`)).join("");
         const row = `<tr><td><b>${esc(st.name)}</b><div class="sig">${sigTxt}</div><div class="pbp">${inputs}</div></td>${cells}<td><div class="pbacts">${plotBtn}${sigBtn}${noteBtn}</div></td></tr>`;
@@ -640,7 +687,7 @@
       const crq = instrCR();  // bps/3m for long-the-instrument; the live trade may be short → flip
       let carryTxt = "";
       if (crq != null && cur) { const cy = (cur.best.signalNow ? 1 : -1) * crq * 4; carryTxt = ` · carry/roll on the live trade <b style="color:${cy >= 0 ? UP : DN}">${cy >= 0 ? "earns" : "pays"} ~${Math.abs(cy).toFixed(0)} bps/yr</b>`; }
-      note.innerHTML = (cur ? `<b>${esc(cur.label)}:</b> ${cur.explain} <span style="color:#8a8a8e">(best: ${esc(cur.best.name)} — ${esc(Object.entries(cur.best.params).map(([k, v]) => k + " " + v).join(", "))}, Sharpe ${f2(cur.best.metrics.sharpe)})</span> · <b>Now: ${sigCell(cur.best)}</b> <span class="meta">as of ${esc(cur.best.asof || "")}</span>` : "") + (rc ? `<br><span style="color:#444">${rc}${carryTxt}</span>` : "");
+      note.innerHTML = (cur ? `<b>${esc(cur.label)}:</b> ${cur.explain} <span style="color:#8a8a8e">(best: ${esc(cur.best.name)} — ${esc(Object.entries(cur.best.params).map(([k, v]) => k + " " + v).join(", "))}, Sharpe ${f2(cur.best.metrics.sharpe)})</span> · <b>Now: ${sigCell(cur.best)}</b> <span class="meta">as of ${esc(ukd(cur.best.asof))}</span>` : "") + (rc ? `<br><span style="color:#444">${rc}${carryTxt}</span>` : "");
       const rows = LEADER.slice().sort((a, b) => b.best.metrics.sharpe - a.best.metrics.sharpe);
       const head = `<tr><th>Instrument</th><th>Best rule</th><th>Sharpe</th><th>Ann bps</th><th>Total bps</th><th>Hit %</th><th>Signal now</th><th></th></tr>`;
       const body = rows.map((e) => { const m = e.best.metrics, pr = Object.entries(e.best.params).map(([k, v]) => k + " " + v).join(", ");
@@ -660,7 +707,7 @@
       const card = $("curveCard"); const isUST = ["Rates", "Steepness", "Butterfly"].includes(D.klass);
       card.style.display = (isUST && CURVE.length) ? "" : "none";
       if (!isUST || !CURVE.length) return;
-      $("curveAsof").textContent = "as of " + (CURVE[CURVE.length - 1].date || "");
+      $("curveAsof").textContent = "as of " + ukd(CURVE[CURVE.length - 1].date || "");
       const W = 620, H = 190, padL = 46, padR = 18, padT = 16, padB = 30;
       const ys = CURVE.map((c) => c.yield); let ymin = Math.min(...ys), ymax = Math.max(...ys); const pad = (ymax - ymin) * 0.18 || 0.2; ymin -= pad; ymax += pad;
       const lx = Math.log(0.25), rx = Math.log(30);
