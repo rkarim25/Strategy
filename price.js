@@ -270,7 +270,7 @@
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
       lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false, inversion: false, carry: false };
-    const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
+    const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, cr: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], CURVE = [], pendingBest = null;
 
     const app = document.getElementById("app");
@@ -516,16 +516,21 @@
       const isY = D.kind === "yield", isS = D.kind === "spread", L = state.lev;
       $("levBar").style.display = (isY || isS) ? "none" : "";
       const levArr = (pos) => (L.mult > 1 && !isY && !isS && D.ddh.length === c.length) ? pos.map((p, i) => (p ? ((D.ddh[i] > L.ddThr / 100 && D.rv[i] < L.volThr / 100) ? L.mult : 1) : 0)) : pos;
-      let crStep = 0; // per-day carry+roll in series units (set below when the carry toggle is on)
+      let crArr = null; // per-day carry+roll in series units (set below when the carry toggle is on)
       function spreadStats(pos) {
         let cum = 0, peak = 0, mdd = 0, hit = 0, days = 0; const pnl = [];
-        for (let i = 1; i < c.length; i++) { const dir = pos[i - 1] ? 1 : -1, x = dir * (c[i] - c[i - 1] + crStep); pnl.push(x); cum += x; if (cum > peak) peak = cum; if (cum - peak < mdd) mdd = cum - peak; if (x > 0) hit++; days++; }
+        for (let i = 1; i < c.length; i++) { const dir = pos[i - 1] ? 1 : -1, cs = crArr ? crArr[i] : 0, x = dir * (c[i] - c[i - 1] + cs); pnl.push(x); cum += x; if (cum > peak) peak = cum; if (cum - peak < mdd) mdd = cum - peak; if (x > 0) hit++; days++; }
         const yrs = c.length / 252, m = pnl.reduce((a, b) => a + b, 0) / pnl.length; let v = 0; for (const x of pnl) v += (x - m) ** 2; const vol = Math.sqrt(Math.max(0, v / Math.max(1, pnl.length - 1)));
         return { annbps: (cum * 100) / yrs, maxddbps: mdd * 100, sharpe: vol ? (m / vol) * Math.sqrt(252) : 0, hit: days ? hit / days : 0, total: cum * 100 };
       }
       const isDelta = isS || isY;   // UST instruments trade directionally: P&L = position × change-in-series (bps)
-      // bake carry+roll into the backtest: long S earns CR = −Σ wᵢ·(roll+carry)ᵢ per 3m (long rates/steepener PAY carry on an upward curve)
-      crStep = (isDelta && state.carry) ? (instrCR() || 0) / 63 / 100 : 0;   // CR bps per ~3m (63 trading days); /100 → series units
+      // bake carry+roll into the backtest. D.cr = per-date carry+roll (bps/3m) for LONG the instrument, from the
+      // actual curve on each date; falls back to today's curve held flat if the historical series is absent.
+      crArr = null;
+      if (isDelta && state.carry) {
+        if (D.cr && D.cr.length === c.length) crArr = D.cr.map((v) => (v == null ? 0 : v) / 63 / 100); // CR bps/3m → /63 days /100 → series units
+        else { const k = (instrCR() || 0) / 63 / 100; crArr = c.map(() => k); }
+      }
       const evalp = (pos) => { if (isDelta) return spreadStats(pos); const la = levArr(pos); const r = btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
       const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isDelta) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
       $("pnlBar").style.display = isDelta ? "" : "none";
@@ -556,7 +561,9 @@
       if (isY) caps.push(`<b>Rate trade</b> (bps). <b>Long (+1) = long rates</b> — profit when the yield <i>rises</i> (short duration); <b>short (−1) = long duration</b> — profit when it falls. P&L = position × daily change in the yield. Strategies signal on the <i>yield level</i>. <b>Hit %</b> = share of days the position made money.`);
       if (isS) caps.push(`<b>Steepness spread</b> (% points; ×100 = bps). <b>Long the steepener</b> when the rule fires, <b>short (flattener)</b> when not; P&L = position × change in the spread. Strategies signal on the <i>spread level</i>. <b>Hit %</b> = share of days the position made money.`);
       if (usd) caps.push(`<b>DV01 $ P&L</b> at <b>$${(state.pnl.perBp || 0).toLocaleString()}/bp</b> (≈ this trade's DV01, edit above). Sharpe &amp; Hit % are scale-free; bps × $/bp = dollars.`);
-      if (isDelta && state.carry) caps.push(`<b>Carry/roll ON</b> — each day adds the position's carry+roll drift (long rates / long steepener <i>pay</i> carry on an upward curve; long duration / flattener <i>earn</i> it). Uses the <b>current</b> curve's carry+roll held constant — an approximation, not a historical carry series.`);
+      if (isDelta && state.carry) caps.push((D.cr && D.cr.length === c.length)
+        ? `<b>Carry/roll ON (historical)</b> — each day adds the position's carry+roll <b>computed from the actual curve on that date</b>, so the drift flips sign with the regime (a long-rates trade <i>earns</i> carry when the curve is inverted, <i>pays</i> when it's normal). Carry uses exact yield levels; the roll term interpolates the available tenors (cruder pre-2021).`
+        : `<b>Carry/roll ON</b> — each day adds the position's carry+roll drift from the <b>current</b> curve held constant (historical series unavailable for this instrument).`);
       if (!isDelta && L.mult > 1) caps.push(`<b>${L.mult}× when safe</b> — levered while in trend AND drawdown &gt; ${L.ddThr}% AND 20-day vol &lt; ${L.volThr}%, else 1× (cash when out). ${L.costs ? "Costs ON (5bps/switch + 4%/yr financing)." : "No costs."} Leverage lifts CAGR but <b>deepens drawdowns and usually lowers Sharpe</b> — that's the trade-off; the “% in” column shows average leverage.`);
       else if (!isDelta && L.costs) caps.push(`Costs ON — 5 bps per switch.`);
       const cap = caps.length ? `<p class="meta" style="margin:0 0 6px">${caps.join(" ")}</p>` : "";
@@ -639,7 +646,7 @@
     function loadAsset(id) {
       state.asset = id;
       fetch("price_" + id + ".json?v=" + Date.now()).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then((d) => {
-        D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.klass = d.klass || ""; D.legs = d.legs || null; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
+        D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.klass = d.klass || ""; D.legs = d.legs || null; D.cr = d.cr || null; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
         D.ddh = ddFromHigh(d.close, 252); D.rv = rvol(d.close, 20);
         D.dv01 = D.legs ? Math.max(...D.legs.map((l) => TICKER_DV01[l.t] || 1)) : (TICKER_DV01[D.ticker] || 8.6);
         state.pnl.perBp = Math.round(D.dv01 * 1000);   // ≈ trade DV01 in $/bp (per ~$10mm); user-editable

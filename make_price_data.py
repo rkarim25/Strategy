@@ -262,6 +262,55 @@ def merge_ranges(rs):  # merge ranges within ~30 calendar days, then keep only s
 inv = merge_ranges(inv_ranges("^TNX", "2YY=F") + inv_ranges("^TNX", "^IRX"))
 json.dump(inv, open("ust_inversions.json", "w"))
 print(f"ust_inversions.json: {len(inv)} sustained inverted ranges (latest {inv[-1] if inv else '-'})")
+
+# ---- Historical carry+roll: a per-date 'cr' series (bps per ~3m for LONG the instrument) written into
+# each UST file, so the carry toggle uses the actual curve shape on each date (not today's curve held flat).
+# carry term uses exact yield levels (accurate); roll term interpolates the available tenors (3M/2Y/5Y/10Y/30Y)
+# — crude pre-2021 where the curve is sparse, but carry dominates CR for the longer tenors anyway.
+def add_carry_history():
+    TY = {"^IRX": 0.25, "2YY=F": 2.0, "^FVX": 5.0, "^TNX": 10.0, "^TYX": 30.0}  # real curve tenors
+    YBYID = {"ust3m": 0.25, "ust2y": 2.0, "ust5y": 5.0, "ust7y": 7.0, "ust10y": 10.0, "ust30y": 30.0}
+    YBYTK = {"^IRX": 0.25, "2YY=F": 2.0, "^FVX": 5.0, "^FVX+^TNX": 7.0, "^TNX": 10.0, "^TYX": 30.0}
+    curve_pts = {}  # date -> sorted [(years, yield)] of the available curve that day
+    raw = {}
+    for tk, yrs in TY.items():
+        c = cache.get(tk)
+        if not c: continue
+        for i, d in enumerate(c[0]): raw.setdefault(d, {})[yrs] = c[5][i]
+    for d, pd in raw.items():
+        if 0.25 in pd and len(pd) >= 2: curve_pts[d] = sorted(pd.items())
+    def interpc(pts, t):
+        if t <= pts[0][0]: return pts[0][1]
+        if t >= pts[-1][0]: return pts[-1][1]
+        for k in range(1, len(pts)):
+            if pts[k][0] >= t:
+                (x0, y0), (x1, y1) = pts[k - 1], pts[k]; return y0 + (y1 - y0) * (t - x0) / (x1 - x0)
+        return pts[-1][1]
+    def tenor_cr(yrs, d):  # carry+roll (bps/3m) of LONG the bond at this tenor on this date
+        pts = curve_pts.get(d)
+        if not pts: return None
+        y3m = pts[0][1]; yT = interpc(pts, yrs); yroll = interpc(pts, max(0.083, yrs - 0.25))
+        return (yT - yroll + (yT - y3m) * 0.25) * 100.0
+    n = 0
+    for r in reg:
+        if r["klass"] not in ("Rates", "Steepness", "Butterfly"): continue
+        try: d = json.load(open(r["url"]))
+        except Exception: continue
+        legs = d.get("legs")
+        tw = [(YBYTK.get(lg["t"]), lg["w"]) for lg in legs] if legs else [(YBYID.get(r["id"]), 1.0)]
+        cr = []
+        for dt in d["dates"]:
+            tot = 0.0; ok = True
+            for yrs, w in tw:
+                v = tenor_cr(yrs, dt) if yrs is not None else None
+                if v is None: ok = False; break
+                tot += w * v
+            cr.append(round(-tot, 3) if ok else None)  # LONG-the-instrument carry+roll, bps/3m
+        d["cr"] = cr
+        json.dump(d, open(r["url"], "w"), separators=(",", ":"))
+        n += 1
+    print(f"carry history: wrote per-date 'cr' into {n} UST files (bps/3m, long-the-instrument)")
+add_carry_history()
 print(f"ust_curve.json: {len(curve)} tenors")
 
 reg.sort(key=lambda r: ORDER.index(r["id"]) if r["id"] in ORDER else 999)
