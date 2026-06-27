@@ -182,5 +182,21 @@
 "ticker": "2*^TNX-^FVX-^TYX",
 "kind": "spread",
 "url": "price_f5s10s30s.json"
+},
+{
+"id": "f2s5s10sb",
+"label": "2s5s10s RW-fly (hedge 0.32/0.81)",
+"klass": "Butterfly",
+"ticker": "^FVX-rw-2YY=F-^TNX",
+"kind": "spread",
+"url": "price_f2s5s10sb.json"
+},
+{
+"id": "f5s10s30sb",
+"label": "5s10s30s RW-fly (hedge 0.49/0.54)",
+"klass": "Butterfly",
+"ticker": "^TNX-rw-^FVX-^TYX",
+"kind": "spread",
+"url": "price_f5s10s30sb.json"
 }
 ]

@@ -206,7 +206,7 @@
 "asof": "2026-06-18"
 },
 "explain": "The 2s10s (10Y-2Y) oscillates around its range, so RSI reversion fades extremes \u2014 buy a flat curve, sell a steep one.",
-"topFamily": "trend",
+"topFamily": "reversion",
 "rows": 26
 },
 {
@@ -351,6 +351,68 @@
 "maxddbps": -263.0999999999901,
 "hit": 0.48956310679611653,
 "total": 2453.200000000009,
+"unit": "bps"
+},
+"signalNow": 1,
+"signalLabel": "long the fly",
+"asof": "2026-06-18"
+},
+"explain": "A butterfly is a pure relative-value trade with little directional drift, so it mean-reverts: RSI reversion fades a rich/cheap belly back to fair \u2014 the strongest risk-adjusted edge on the curve.",
+"topFamily": "reversion",
+"rows": 26
+},
+{
+"id": "f2s5s10sb",
+"label": "2s5s10s RW-fly (hedge 0.32/0.81)",
+"klass": "Butterfly",
+"kind": "spread",
+"best": {
+"key": "rsirev",
+"name": "RSI reversion",
+"params": {
+"period": 2,
+"lower": 25,
+"upper": 70
+},
+"family": "reversion",
+"metrics": {
+"primary": 205.95999999999998,
+"sharpe": 1.7940850926059788,
+"annbps": 42.64742810188989,
+"maxddbps": -14.44,
+"hit": 0.5386513157894737,
+"total": 205.95999999999998,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "short the fly",
+"asof": "2026-06-18"
+},
+"explain": "A butterfly is a pure relative-value trade with little directional drift, so it mean-reverts: RSI reversion fades a rich/cheap belly back to fair \u2014 the strongest risk-adjusted edge on the curve.",
+"topFamily": "reversion",
+"rows": 26
+},
+{
+"id": "f5s10s30sb",
+"label": "5s10s30s RW-fly (hedge 0.49/0.54)",
+"klass": "Butterfly",
+"kind": "spread",
+"best": {
+"key": "rsirev",
+"name": "RSI reversion",
+"params": {
+"period": 2,
+"lower": 25,
+"upper": 70
+},
+"family": "reversion",
+"metrics": {
+"primary": 1330.53,
+"sharpe": 1.0750635066147842,
+"annbps": 27.12511609093115,
+"maxddbps": -87.43000000000052,
+"hit": 0.5248381877022654,
+"total": 1330.53,
 "unit": "bps"
 },
 "signalNow": 1,

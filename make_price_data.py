@@ -4,6 +4,7 @@ kind: 'price' (equities/commodities/crypto/FX) or 'yield' (UST rates — backtes
 US 7Y has no Yahoo series, so it is synthesised by interpolating 5Y(^FVX) and 10Y(^TNX).
 Output feeds KLineChart: parallel arrays dates / timestamp(ms) / open/high/low/close/volume."""
 import json, urllib.request, datetime as dt
+import numpy as np
 
 # id, label, asset class, Yahoo ticker, kind
 ASSETS = [
@@ -36,8 +37,13 @@ FLIES = [
     ("f2s5s10s",  "2s5s10s fly",  "^FVX", "2YY=F", "^TNX"),   # belly 5Y, wings 2Y/10Y
     ("f5s10s30s", "5s10s30s fly", "^TNX", "^FVX", "^TYX"),    # belly 10Y, wings 5Y/30Y (1977+)
 ]
+# regression (beta) weighted flies: belly hedged by wings via full-sample OLS hedge ratios (RV residual)
+FLIES_BETA = [
+    ("f2s5s10sb",  "2s5s10s RW-fly",  "^FVX", "2YY=F", "^TNX"),
+    ("f5s10s30sb", "5s10s30s RW-fly", "^TNX", "^FVX", "^TYX"),
+]
 ORDER = ([a[0] for a in ASSETS[:11]] + ["ust3m", "ust2y", "ust5y", "ust7y", "ust10y", "ust30y"]
-         + [s[0] for s in SPREADS] + [f[0] for f in FLIES])
+         + [s[0] for s in SPREADS] + [f[0] for f in FLIES] + [f[0] for f in FLIES_BETA])
 
 EPOCH = dt.datetime(1970, 1, 1)
 def ymd(t):  # handles pre-1970 (negative) timestamps on Windows
@@ -160,6 +166,38 @@ for aid, label, belly, w1, w2 in FLIES:
         build_fly(aid, label, belly, w1, w2)
     except Exception as e:
         print(f"!! fly {aid} FAILED: {e}")
+
+def build_fly_beta(aid, label, belly, w1, w2):
+    B, A, Cc = cache.get(belly), cache.get(w1), cache.get(w2)
+    if not (B and A and Cc):
+        print(f"!! flyβ {aid}: missing leg"); return
+    Bi = {d: i for i, d in enumerate(B[0])}; Ai = {d: i for i, d in enumerate(A[0])}; Ci = {d: i for i, d in enumerate(Cc[0])}
+    common = [d for d in B[0] if d in Ai and d in Ci]
+    if len(common) < 260:
+        print(f"!! flyβ {aid}: short"); return
+    yb = np.array([B[5][Bi[d]] for d in common]); y1 = np.array([A[5][Ai[d]] for d in common]); y2 = np.array([Cc[5][Ci[d]] for d in common])
+    X = np.column_stack([np.diff(y1), np.diff(y2), np.ones(len(common) - 1)])
+    beta = np.linalg.lstsq(X, np.diff(yb), rcond=None)[0]
+    b1, b2 = float(beta[0]), float(beta[1])
+    legs = [(B, Bi, 1.0), (A, Ai, -b1), (Cc, Ci, -b2)]
+    s = [[], [], [], [], [], [], []]
+    for d in common:
+        s[0].append(d); s[1].append(B[1][Bi[d]])
+        o = h = lo = c = 0.0
+        for leg, idx, w in legs:
+            i = idx[d]
+            o += w * leg[2][i]; c += w * leg[5][i]
+            h += w * leg[3][i] if w > 0 else w * leg[4][i]
+            lo += w * leg[4][i] if w > 0 else w * leg[3][i]
+        s[2].append(round(o, 4)); s[3].append(round(h, 4)); s[4].append(round(lo, 4)); s[5].append(round(c, 4)); s[6].append(0)
+    write(aid, f"{label} (hedge {b1:.2f}/{b2:.2f})", "Butterfly", f"{belly}-rw-{w1}-{w2}", "spread", tuple(s),
+          legs=[{"t": belly, "w": 1}, {"t": w1, "w": round(-b1, 3)}, {"t": w2, "w": round(-b2, 3)}])
+
+for aid, label, belly, w1, w2 in FLIES_BETA:
+    try:
+        build_fly_beta(aid, label, belly, w1, w2)
+    except Exception as e:
+        print(f"!! flyRW {aid} FAILED: {e}")
 
 # live curve snapshot: latest yield per tenor (+ approx modified-duration DV01 per $100)
 TENORS = [("ust3m", 0.25, 0.25), ("ust2y", 2, 1.9), ("ust5y", 5, 4.7), ("ust7y", 7, 6.4), ("ust10y", 10, 8.6), ("ust30y", 30, 18.5)]

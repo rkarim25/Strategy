@@ -528,8 +528,9 @@
       card.style.display = isUST ? "" : "none";
       if (!isUST || !LEADER.length) return;
       const sigCell = (b) => `<span style="color:${b.signalNow ? UP : DN};font-weight:700;white-space:nowrap">${b.signalNow ? "▲" : "▼"} ${esc(b.signalLabel)}</span>`;
+      const rc = (() => { const c = D.close; if (!c || c.length < 60) return ""; const n = c.length, cv = c[n - 1]; let m = 0; for (const x of c) m += x; m /= n; let v = 0; for (const x of c) v += (x - m) ** 2; const sd = Math.sqrt(v / n); let bl = 0; for (const x of c) if (x <= cv) bl++; const last = c.slice(-252), lo = Math.min(...last), hi = Math.max(...last); const z = sd ? (cv - m) / sd : 0; const u = (x) => D.kind === "spread" ? (x * 100).toFixed(0) + "bps" : x.toFixed(2) + (D.kind === "yield" ? "%" : ""); return `Now <b>${u(cv)}</b> · z-score <b style="color:${Math.abs(z) > 1.5 ? (z > 0 ? DN : UP) : "#444"}">${z >= 0 ? "+" : ""}${z.toFixed(2)}σ</b> · <b>${(bl / n * 100).toFixed(0)}th</b> percentile of history · 1y range ${u(lo)}–${u(hi)}`; })();
       const cur = LEADER.find((e) => e.id === D.id);
-      note.innerHTML = cur ? `<b>${esc(cur.label)}:</b> ${cur.explain} <span style="color:#8a8a8e">(best: ${esc(cur.best.name)} — ${esc(Object.entries(cur.best.params).map(([k, v]) => k + " " + v).join(", "))}, Sharpe ${f2(cur.best.metrics.sharpe)})</span> · <b>Now: ${sigCell(cur.best)}</b> <span class="meta">as of ${esc(cur.best.asof || "")}</span>` : "";
+      note.innerHTML = (cur ? `<b>${esc(cur.label)}:</b> ${cur.explain} <span style="color:#8a8a8e">(best: ${esc(cur.best.name)} — ${esc(Object.entries(cur.best.params).map(([k, v]) => k + " " + v).join(", "))}, Sharpe ${f2(cur.best.metrics.sharpe)})</span> · <b>Now: ${sigCell(cur.best)}</b> <span class="meta">as of ${esc(cur.best.asof || "")}</span>` : "") + (rc ? `<br><span style="color:#444">${rc}</span>` : "");
       const rows = LEADER.slice().sort((a, b) => b.best.metrics.sharpe - a.best.metrics.sharpe);
       const head = `<tr><th>Instrument</th><th>Best rule</th><th>Sharpe</th><th>Ann bps</th><th>Total bps</th><th>Hit %</th><th>Signal now</th><th></th></tr>`;
       const body = rows.map((e) => { const m = e.best.metrics, pr = Object.entries(e.best.params).map(([k, v]) => k + " " + v).join(", ");
@@ -573,6 +574,7 @@
         D.ddh = ddFromHigh(d.close, 252); D.rv = rvol(d.close, 20);
         D.dv01 = D.legs ? Math.max(...D.legs.map((l) => TICKER_DV01[l.t] || 1)) : (TICKER_DV01[D.ticker] || 8.6);
         state.pnl.perBp = Math.round(D.dv01 * 1000);   // ≈ trade DV01 in $/bp (per ~$10mm); user-editable
+        if (D.kind === "spread" && state.yAxis !== "normal") { state.yAxis = "normal"; safe(() => chart.setStyles({ yAxis: { type: "normal" } })); segActive($("axisSeg"), findBtn($("axisSeg"), "normal")); }  // log/% invalid for spreads that go negative
         $("cTitle").textContent = D.label + " — chart";
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
         safe(() => chart.removeOverlay()); drawings = [];
