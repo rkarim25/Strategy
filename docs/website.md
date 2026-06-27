@@ -58,7 +58,7 @@ shows asset + the **actual default strategy name** (kept in sync with the page's
 | Gold | SMA50/150 Golden Cross 1x/cash | gc |
 | LQQ3 3x Nasdaq | SMA200 1x/cash | sma_cash |
 | 3BAL 3x EU Banks | SMA20 1x/cash | sma_cash |
-| *Tools* | Summary results, Instruments | — |
+| *Tools* | Lab, Charts, Summary results, Instruments | — |
 
 The `\*` on the Nasdaq tabs flags Stillwater picks (strict Water unreachable). Gold/MSCI EM/MSCI World/LQQ3
 have **no strict Water** either (their buy-&-hold is too strong) — they use the best available 1x/cash trend.
@@ -79,12 +79,42 @@ either file, or the browser serves a stale cached copy.
 To change an asset's default: edit `SITE_DEFAULT_STRATEGY`, re-run its emitter (below), update the nav label +
 the page's `<title>`/`STRATEGY_PAGE_TITLE`, and bump `?v=`.
 
+## Charts workstation (`price.html` / `price.js`, Tools → "Charts")
+
+A standalone TradingView/Bloomberg-style charting app on **vendored KLineChart v9.8.12** (`klinecharts.min.js`,
+MIT, ~205 KB — keep vendored, no CDN runtime dependency). Self-contained (only reuses `window.SP` styles).
+
+- **Assets:** config-driven registry `price_assets.json` (16 across Indices / Commodities / Crypto / FX / **Rates**),
+  grouped in the picker. **Add an asset = one row in `make_price_data.py`** (Yahoo OHLCV → `price_<id>.json` with
+  `dates/timestamp(ms)/open/high/low/close/volume/kind`). `kind` is `price` or `yield`.
+- **Rates (UST yields):** 5Y `^FVX`, 10Y `^TNX`, 30Y `^TYX` (real, deep history); 2Y `2YY=F` (2021+); **7Y is
+  synthesised** by interpolating 5Y/10Y. For `kind:"yield"` the playbook backtests with **yield-as-PnL** (earn
+  `rate ÷ 252` per day while long; bond price moves ignored) so CAGR ≈ the average yield captured, DD ≈ 0.
+- **Chart:** candle/bar/area · linear/log/% axis · range presets · **timeframes** 1m/5m/15m/30m/1h/**4h**/1D
+  (intraday from the quote-proxy `?mode=intraday`; 4h aggregated client-side; 60 s auto-refresh) · live last price.
+- **Indicators:** 6 price overlays + 20 studies, each with **editable calcParams** (`overrideIndicator`).
+- **Drawing:** trend/ray/h-line/v-line/price/parallel/fibonacci/text + custom **Measure %** overlay; tracked in JS
+  (`getOverlays` doesn't exist in v9) and **re-applied after every `applyNewData`** so they survive timeframe switches;
+  validated (`validDraw`) before re-create.
+- **Signal Playbook:** 12 parameterised rules (Golden Cross, Trend, MACD, RSI momentum/reversion, Bollinger,
+  Donchian, EMA Cross, MACD zero, Williams %R, Stochastic, CCI). Each row has param inputs whose **backtest
+  recomputes live**, a **plot** toggle (draws the indicator with the same params), a **signals** toggle (▲/▼ markers
+  via a custom-indicator `draw` callback), and a **notes** toggle (preloaded buy/sell explanation + why).
+- **Persistence:** private per-asset notes + drawings + indicator/strategy params via the **`lab-strategy-store`
+  worker** (`GET`/`POST /api/chart/:asset`, **both passphrase-gated** → private), localStorage fallback + autosave.
+- **Preview gotcha:** KLineChart renders via `requestAnimationFrame`, which the headless preview throttles → canvases
+  stay blank. NOT a bug — force `requestAnimationFrame` synchronous in an isolated `init`+`applyNewData` to verify;
+  it renders fine in a real browser.
+
 ## Scripts (`*.js`, root)
 
 | File | Role |
 |------|------|
 | `strategy_page.js` | **Shared renderer** (Signal/Back-test/MC; markers, %-equity, manual-price; sma_cash/band/gc families) |
 | `site-nav.js` | Shared left sidebar nav + `STRATEGY_NAV_ITEMS` (bump `?v=` everywhere on change) |
+| `lab.js` | **Lab** — interactive strategy builder (AND/OR conditions, cloud save) on `band_lab_*`/`lab_ndx.json` |
+| `price.js` + `klinecharts.min.js` | **Charts** workstation (KLineChart) — see the Charts section above |
+| `cloudflare_lab_store_worker.js` | **Not part of Pages** — `lab-strategy-store` Worker (KV) for Lab cloud-save + private chart notes (`wrangler.lab-store.toml`) |
 | `site-scroll-init.js` | Scroll/section init shared across pages |
 | `{slug}_guarded.js` | **Dead** — legacy thick-client logic, no longer referenced (kept on disk) |
 | `etp-leverage.js`, `all-instruments-data.js`, `instruments-*.js`, `halal-comparison-data.js` | `instruments.html` data/render |
@@ -99,6 +129,8 @@ the page's `<title>`/`STRATEGY_PAGE_TITLE`, and bump `?v=`.
 - `spx_distance_scale_site_data.json` (+ `*_etp_returns.json`) — the bespoke `index.html`.
 - `{slug}_daily.csv`, `latest_{slug}_signal.json` — cron-refreshed price/signal data (don't bundle in feature commits).
 - `summary_excel.json` — feeds `summary.html`.
+- `price_assets.json` + `price_<id>.json` (16) — the **Charts** page registry + per-asset OHLCV (regenerate with
+  `python make_price_data.py`). `band_lab_spx.json` / `lab_ndx.json` — the **Lab** datasets.
 
 ## Backtest emitters (regenerate the payloads)
 

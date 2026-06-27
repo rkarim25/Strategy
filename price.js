@@ -1,16 +1,18 @@
 /**
  * Charts — a TradingView/Bloomberg-style charting workstation built on KLineChart (vendored v9.8.12).
- * Asset registry grouped by class (price_assets.json) · candle/bar/area · linear/log/% axis · range presets ·
- * timeframes 1m/5m/15m/30m/1h/4h/1D (intraday from the quote proxy, 4h aggregated client-side, 60s auto-refresh) ·
- * comprehensive indicators (overlays + ~20 studies) · drawing palette + custom "Measure %" overlay (retained
- * across timeframe/zoom) · live last price · private per-asset notes + drawings (passphrase-gated, localStorage
- * fallback) · a Signal Playbook backtesting common indicator buy/sell rules on the current asset.
+ * Asset registry (price_assets.json, grouped by class) · candle/bar/area · linear/log/% axis · range presets ·
+ * timeframes 1m/5m/15m/30m/1h/4h/1D (intraday via the quote proxy, 4h aggregated, 60s auto-refresh) ·
+ * comprehensive indicators with editable parameters · drawing palette + custom "Measure %" overlay (retained
+ * across timeframe/zoom) · live last price · private per-asset notes + drawings (passphrase-gated, localStorage).
+ * Interactive Signal Playbook: each rule has parameter inputs whose backtest recomputes live, a "plot" toggle
+ * (draws the indicator with the same params), a "signals" toggle (▲ buy / ▼ sell markers on the chart, via a
+ * custom-indicator draw callback), and a "notes" toggle (preloaded explanation of the buy/sell logic and why).
  */
 (function () {
   "use strict";
   const QUOTE = "https://spx-quote-proxy.rkarim88.workers.dev";
   const STORE = "https://lab-strategy-store.rkarim88.workers.dev";
-  const CLOUD_KEY = "lab_cloud_key"; // shared passphrase login with the Lab
+  const CLOUD_KEY = "lab_cloud_key";
   const UP = "#15803d", DN = "#b42318";
   const RANGES = [["1M", 21], ["3M", 63], ["6M", 126], ["1Y", 252], ["2Y", 504], ["5Y", 1260], ["Max", null]];
   const TFS = [
@@ -30,6 +32,10 @@
     ["DMI", "DMI/ADX"], ["OBV", "OBV"], ["ROC", "ROC"], ["TRIX", "TRIX"], ["BIAS", "BIAS"], ["MTM", "Momentum"],
     ["PSY", "PSY"], ["BRAR", "BRAR"], ["CR", "CR"], ["VR", "VR"], ["EMV", "EMV"], ["DMA", "DMA"], ["AO", "AO"], ["PVT", "PVT"]];
   const MAIN_SET = new Set(MAIN_INDS.map(([v]) => v));
+  const DEFAULTS = { MA: [5, 10, 30, 60], EMA: [6, 12, 20], SMA: [12, 2], BOLL: [20, 2], BBI: [3, 6, 12, 24], SAR: [2, 2, 20],
+    VOL: [5, 10, 20], MACD: [12, 26, 9], RSI: [6, 12, 24], KDJ: [9, 3, 3], CCI: [13], WR: [6, 10, 14], DMI: [14, 6], OBV: [30],
+    ROC: [12, 6], TRIX: [12, 9], BIAS: [6, 12, 24], MTM: [6, 10], PSY: [12, 6], BRAR: [26], CR: [26, 10, 20, 40, 60],
+    VR: [24, 30], EMV: [14, 9], DMA: [10, 50, 10], AO: [5, 34], PVT: [] };
   const TOOLS = [
     ["cursor", "Cursor"], ["segment", "Trend line"], ["rayLine", "Ray"], ["horizontalStraightLine", "Horizontal"],
     ["verticalStraightLine", "Vertical"], ["priceLine", "Price line"], ["parallelStraightLine", "Parallel"],
@@ -40,35 +46,83 @@
   const f2 = (x) => (x == null || !isFinite(x) ? "—" : x.toFixed(2));
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-  // ---------- indicator math (for the Signal Playbook backtests) ----------
+  // ---------- indicator math (Signal Playbook backtests) ----------
   function sma(a, n) { const o = Array(a.length).fill(null); let s = 0; for (let i = 0; i < a.length; i++) { s += a[i]; if (i >= n) s -= a[i - n]; if (i >= n - 1) o[i] = s / n; } return o; }
   function ema(a, n) { const o = Array(a.length).fill(null); const k = 2 / (n + 1); let e = null; for (let i = 0; i < a.length; i++) { e = e == null ? a[i] : a[i] * k + e * (1 - k); if (i >= n - 1) o[i] = e; } return o; }
   function rstd(a, n) { const o = Array(a.length).fill(null); for (let i = n - 1; i < a.length; i++) { let m = 0; for (let j = i - n + 1; j <= i; j++) m += a[j]; m /= n; let v = 0; for (let j = i - n + 1; j <= i; j++) v += (a[j] - m) ** 2; o[i] = Math.sqrt(v / n); } return o; }
   function rsiArr(a, n) { const o = Array(a.length).fill(null); let g = 0, l = 0; for (let i = 1; i < a.length; i++) { const ch = a[i] - a[i - 1], gg = Math.max(ch, 0), ll = Math.max(-ch, 0); if (i <= n) { g += gg; l += ll; if (i === n) { g /= n; l /= n; o[i] = 100 - 100 / (1 + (l === 0 ? 1e9 : g / l)); } } else { g = (g * (n - 1) + gg) / n; l = (l * (n - 1) + ll) / n; o[i] = 100 - 100 / (1 + (l === 0 ? 1e9 : g / l)); } } return o; }
-  function macdArr(a) { const ef = ema(a, 12), es = ema(a, 26); const m = a.map((_, i) => (ef[i] == null || es[i] == null ? null : ef[i] - es[i])); const sig = ema(m.map((v) => v == null ? 0 : v), 9).map((v, i) => (m[i] == null ? null : v)); return { macd: m, signal: sig }; }
+  function macdP(a, f, s, sig) { const ef = ema(a, f), es = ema(a, s); const m = a.map((_, i) => (ef[i] == null || es[i] == null ? null : ef[i] - es[i])); const g = ema(m.map((v) => v == null ? 0 : v), sig).map((v, i) => (m[i] == null ? null : v)); return { macd: m, signal: g }; }
   function rollMax(a, n) { const o = Array(a.length).fill(null); for (let i = n - 1; i < a.length; i++) { let x = -Infinity; for (let j = i - n + 1; j <= i; j++) if (a[j] > x) x = a[j]; o[i] = x; } return o; }
   function rollMin(a, n) { const o = Array(a.length).fill(null); for (let i = n - 1; i < a.length; i++) { let x = Infinity; for (let j = i - n + 1; j <= i; j++) if (a[j] < x) x = a[j]; o[i] = x; } return o; }
+  function stoch(c, hi, lo, kn, dn) { const k = Array(c.length).fill(null); if (!hi || !lo) return { k, d: k }; for (let i = kn - 1; i < c.length; i++) { let h = -Infinity, l = Infinity; for (let j = i - kn + 1; j <= i; j++) { if (hi[j] > h) h = hi[j]; if (lo[j] < l) l = lo[j]; } k[i] = h > l ? ((c[i] - l) / (h - l)) * 100 : 50; } const d = sma(k.map((x) => (x == null ? 0 : x)), dn).map((x, i) => (k[i] == null ? null : x)); return { k, d }; }
+  function willR(c, hi, lo, n) { const o = Array(c.length).fill(null); if (!hi || !lo) return o; for (let i = n - 1; i < c.length; i++) { let h = -Infinity, l = Infinity; for (let j = i - n + 1; j <= i; j++) { if (hi[j] > h) h = hi[j]; if (lo[j] < l) l = lo[j]; } o[i] = h > l ? ((h - c[i]) / (h - l)) * -100 : -50; } return o; }
+  function cci(c, hi, lo, n) { if (!hi || !lo) return Array(c.length).fill(null); const tp = c.map((x, i) => (hi[i] + lo[i] + x) / 3); const ma = sma(tp, n); const o = Array(c.length).fill(null); for (let i = n - 1; i < c.length; i++) { let md = 0; for (let j = i - n + 1; j <= i; j++) md += Math.abs(tp[j] - ma[i]); md /= n; o[i] = md ? (tp[i] - ma[i]) / (0.015 * md) : 0; } return o; }
   function backtest(c, posArr) { const n = c.length, eq = Array(n), ret = Array(n); let e = 100; for (let i = 0; i < n; i++) { const r = i ? (posArr[i - 1] || 0) * (c[i] / c[i - 1] - 1) : 0; e *= 1 + r; eq[i] = e; ret[i] = r; } return { eq, ret }; }
+  // yield-as-PnL: while invested you earn the yield as daily carry (rate% / 252), ignoring bond price moves
+  function btYield(y, posArr) { const n = y.length, eq = Array(n), ret = Array(n); let e = 100; for (let i = 0; i < n; i++) { const r = i ? (posArr[i - 1] || 0) * ((y[i - 1] || 0) / 100 / 252) : 0; e *= 1 + r; eq[i] = e; ret[i] = r; } return { eq, ret }; }
   function stats(eq, ret, posArr) { const n = eq.length; if (n < 30) return { cagr: NaN, vol: NaN, sharpe: NaN, maxdd: NaN, end: eq[n - 1], pin: NaN }; const yrs = n / 252, cagr = Math.pow(eq[n - 1] / 100, 1 / yrs) - 1; let m = 0; for (const r of ret) m += r; m /= n; let v = 0; for (const r of ret) v += (r - m) ** 2; const vol = Math.sqrt(v / (n - 1)) * Math.sqrt(252); let pk = -1e9, mdd = 0; for (const x of eq) { if (x > pk) pk = x; const dd = x / pk - 1; if (dd < mdd) mdd = dd; } let inn = 0; for (const p of posArr) inn += p > 0 ? 1 : 0; return { cagr, vol, sharpe: vol ? (m * 252) / vol : NaN, maxdd: mdd, end: eq[n - 1], pin: inn / n }; }
+
   const STRATS = [
-    { name: "Golden Cross 50/200", buy: "SMA50 crosses above SMA200", sell: "SMA50 crosses below SMA200", pos: (c) => { const a = sma(c, 50), b = sma(c, 200); return c.map((_, i) => (a[i] != null && b[i] != null && a[i] >= b[i]) ? 1 : 0); } },
-    { name: "Trend filter (Close > SMA200)", buy: "Close rises above its 200-day average", sell: "Close falls below SMA200", pos: (c) => { const b = sma(c, 200); return c.map((x, i) => (b[i] != null && x >= b[i]) ? 1 : 0); } },
-    { name: "MACD 12/26/9", buy: "MACD line crosses above signal", sell: "MACD line crosses below signal", pos: (c) => { const m = macdArr(c); return c.map((_, i) => (m.macd[i] != null && m.signal[i] != null && m.macd[i] >= m.signal[i]) ? 1 : 0); } },
-    { name: "RSI(14) momentum", buy: "RSI rises above 50", sell: "RSI falls below 50", pos: (c) => { const r = rsiArr(c, 14); return c.map((_, i) => (r[i] != null && r[i] >= 50) ? 1 : 0); } },
-    { name: "Bollinger(20,2) reversion", buy: "Close dips below the lower band", sell: "Close returns above the mid (SMA20)", pos: (c) => { const mid = sma(c, 20), sd = rstd(c, 20); let p = 0; return c.map((x, i) => { if (mid[i] == null) return 0; if (p === 0 && x < mid[i] - 2 * sd[i]) p = 1; else if (p === 1 && x > mid[i]) p = 0; return p; }); } },
-    { name: "Donchian 20 breakout", buy: "Close makes a new 20-day high", sell: "Close makes a new 20-day low", pos: (c) => { const hi = rollMax(c, 20), lo = rollMin(c, 20); let p = 0; return c.map((x, i) => { if (i < 20) return 0; if (x >= hi[i - 1]) p = 1; else if (x <= lo[i - 1]) p = 0; return p; }); } },
+    { key: "gc", name: "Golden Cross", params: [{ k: "fast", label: "Fast SMA", d: 50, min: 2, max: 300 }, { k: "slow", label: "Slow SMA", d: 200, min: 5, max: 400 }],
+      sig: (c, p) => { const a = sma(c, p.fast), b = sma(c, p.slow); return c.map((_, i) => (a[i] != null && b[i] != null && a[i] >= b[i]) ? 1 : 0); },
+      plot: { ind: "MA", cp: (p) => [p.fast, p.slow] }, buy: (p) => `SMA${p.fast} crosses above SMA${p.slow}`, sell: (p) => `SMA${p.fast} below SMA${p.slow}`,
+      note: "Buy when the faster average crosses above the slower one; sell when it crosses back below. <b>Why:</b> the crossover confirms recent prices have decisively overtaken the long-run trend, so you ride sustained advances and step aside in sustained declines. <b>Trade-off:</b> it lags turning points and gets whipsawed in flat, choppy markets." },
+    { key: "trend", name: "Trend filter", params: [{ k: "win", label: "SMA", d: 200, min: 5, max: 400 }],
+      sig: (c, p) => { const b = sma(c, p.win); return c.map((x, i) => (b[i] != null && x >= b[i]) ? 1 : 0); },
+      plot: { ind: "MA", cp: (p) => [p.win] }, buy: (p) => `Close rises above SMA${p.win}`, sell: (p) => `Close falls below SMA${p.win}`,
+      note: "Hold only while price closes above its long moving average; go to cash below it. <b>Why:</b> bear markets spend most of their time under the trend line, so this simple filter sidesteps the deepest drawdowns. <b>Trade-off:</b> frequent small whipsaws when price oscillates around the line." },
+    { key: "macd", name: "MACD", params: [{ k: "fast", label: "Fast", d: 12, min: 2, max: 50 }, { k: "slow", label: "Slow", d: 26, min: 3, max: 100 }, { k: "signal", label: "Signal", d: 9, min: 2, max: 50 }],
+      sig: (c, p) => { const m = macdP(c, p.fast, p.slow, p.signal); return c.map((_, i) => (m.macd[i] != null && m.signal[i] != null && m.macd[i] >= m.signal[i]) ? 1 : 0); },
+      plot: { ind: "MACD", cp: (p) => [p.fast, p.slow, p.signal] }, buy: (p) => `MACD(${p.fast},${p.slow}) crosses above signal ${p.signal}`, sell: () => "MACD crosses below signal",
+      note: "Buy when the MACD line (fast EMA − slow EMA) crosses above its signal line; sell when it crosses below. <b>Why:</b> the difference of two EMAs reacts to momentum shifts earlier than a single moving average. <b>Trade-off:</b> noisy and prone to false signals in range-bound markets." },
+    { key: "rsi", name: "RSI momentum", params: [{ k: "period", label: "Period", d: 14, min: 2, max: 50 }, { k: "level", label: "Level", d: 50, min: 1, max: 99 }],
+      sig: (c, p) => { const r = rsiArr(c, p.period); return c.map((_, i) => (r[i] != null && r[i] >= p.level) ? 1 : 0); },
+      plot: { ind: "RSI", cp: (p) => [p.period] }, buy: (p) => `RSI(${p.period}) rises above ${p.level}`, sell: (p) => `RSI falls below ${p.level}`,
+      note: "Stay long while RSI is above the midline (50) and in cash below it. <b>Why:</b> RSI above 50 means average gains outweigh average losses — a clean momentum-regime filter. <b>Note:</b> the famous 30/70 oversold/overbought reading is a <i>mean-reversion</i> signal instead (buy oversold, sell overbought)." },
+    { key: "boll", name: "Bollinger reversion", params: [{ k: "win", label: "Window", d: 20, min: 5, max: 100 }, { k: "mult", label: "Std×", d: 2, min: 0.5, max: 4, step: 0.1 }],
+      sig: (c, p) => { const mid = sma(c, p.win), sd = rstd(c, p.win); let s = 0; return c.map((x, i) => { if (mid[i] == null) return 0; if (s === 0 && x < mid[i] - p.mult * sd[i]) s = 1; else if (s === 1 && x > mid[i]) s = 0; return s; }); },
+      plot: { ind: "BOLL", cp: (p) => [p.win, p.mult] }, buy: (p) => `Close dips below the lower band (${p.win}, ${p.mult}σ)`, sell: () => "Close returns above the mid band",
+      note: "Buy when price stretches below the lower band (statistically cheap) and exit when it reverts to the middle band. <b>Why:</b> prices tend to snap back toward their average after extreme moves. <b>Trade-off:</b> dangerous in strong trends, where 'cheap' just keeps getting cheaper." },
+    { key: "donch", name: "Donchian breakout", params: [{ k: "win", label: "Window", d: 20, min: 3, max: 200 }],
+      sig: (c, p) => { const hi = rollMax(c, p.win), lo = rollMin(c, p.win); let s = 0; return c.map((x, i) => { if (i < p.win) return 0; if (x >= hi[i - 1]) s = 1; else if (x <= lo[i - 1]) s = 0; return s; }); },
+      plot: null, buy: (p) => `Close makes a new ${p.win}-day high`, sell: (p) => `Close makes a new ${p.win}-day low`,
+      note: "Buy when price breaks to a new N-day high; sell when it breaks to a new N-day low. <b>Why:</b> a fresh extreme means the move has overcome all recent resistance/support — the core of classic turtle trend-following. <b>Trade-off:</b> many false breakouts in sideways ranges." },
+    { key: "emacross", name: "EMA Cross", params: [{ k: "fast", label: "Fast EMA", d: 12, min: 2, max: 100 }, { k: "slow", label: "Slow EMA", d: 26, min: 3, max: 200 }],
+      sig: (c, p) => { const a = ema(c, p.fast), b = ema(c, p.slow); return c.map((_, i) => (a[i] != null && b[i] != null && a[i] >= b[i]) ? 1 : 0); },
+      plot: { ind: "EMA", cp: (p) => [p.fast, p.slow] }, buy: (p) => `EMA${p.fast} crosses above EMA${p.slow}`, sell: (p) => `EMA${p.fast} below EMA${p.slow}`,
+      note: "Like the Golden Cross but with exponential averages that weight recent prices more, so it turns a touch faster. <b>Why:</b> quicker trend confirmation, at the cost of a few more whipsaws than plain SMAs." },
+    { key: "rsirev", name: "RSI reversion", params: [{ k: "period", label: "Period", d: 14, min: 2, max: 50 }, { k: "lower", label: "Buy <", d: 30, min: 1, max: 49 }, { k: "upper", label: "Exit >", d: 70, min: 51, max: 99 }],
+      sig: (c, p) => { const r = rsiArr(c, p.period); let s = 0; return c.map((_, i) => { if (r[i] == null) return 0; if (s === 0 && r[i] < p.lower) s = 1; else if (s === 1 && r[i] > p.upper) s = 0; return s; }); },
+      plot: { ind: "RSI", cp: (p) => [p.period] }, buy: (p) => `RSI(${p.period}) drops below ${p.lower} (oversold)`, sell: (p) => `RSI rises above ${p.upper} (overbought)`,
+      note: "The classic oversold/overbought rule: buy when RSI falls below the lower band, sell when it pushes above the upper. <b>Why:</b> momentum extremes often precede short-term snapbacks. <b>Trade-off:</b> fights strong trends — oversold can stay oversold for a long time." },
+    { key: "macdzero", name: "MACD zero-line", params: [{ k: "fast", label: "Fast", d: 12, min: 2, max: 50 }, { k: "slow", label: "Slow", d: 26, min: 3, max: 100 }],
+      sig: (c, p) => { const m = macdP(c, p.fast, p.slow, 9); return c.map((_, i) => (m.macd[i] != null && m.macd[i] >= 0) ? 1 : 0); },
+      plot: { ind: "MACD", cp: (p) => [p.fast, p.slow, 9] }, buy: (p) => `MACD(${p.fast},${p.slow}) rises above zero`, sell: () => "MACD falls below zero",
+      note: "Hold while the MACD line is above zero (fast EMA above slow EMA), exit below it. <b>Why:</b> the zero line is a pure trend gauge — above zero, the shorter average leads. Smoother than the signal-line cross, with fewer trades." },
+    { key: "willr", name: "Williams %R", params: [{ k: "period", label: "Period", d: 14, min: 2, max: 50 }, { k: "level", label: "Long ≥", d: -50, min: -99, max: -1 }],
+      sig: (c, p, hi, lo) => { const w = willR(c, hi, lo, p.period); return c.map((_, i) => (w[i] != null && w[i] >= p.level) ? 1 : 0); },
+      plot: { ind: "WR", cp: (p) => [p.period] }, buy: (p) => `Williams %R(${p.period}) above ${p.level}`, sell: (p) => `%R below ${p.level}`,
+      note: "Williams %R shows where the close sits in the recent high–low range (0 = top, −100 = bottom). Hold in the upper half. <b>Why:</b> closing near recent highs signals buying pressure. <b>Trade-off:</b> a fast oscillator, prone to whipsaws." },
+    { key: "stoch", name: "Stochastic %K/%D", params: [{ k: "kp", label: "%K", d: 14, min: 2, max: 50 }, { k: "dp", label: "%D", d: 3, min: 1, max: 20 }],
+      sig: (c, p, hi, lo) => { const s = stoch(c, hi, lo, p.kp, p.dp); return c.map((_, i) => (s.k[i] != null && s.d[i] != null && s.k[i] >= s.d[i]) ? 1 : 0); },
+      plot: { ind: "KDJ", cp: (p) => [p.kp, p.dp, p.dp] }, buy: () => "%K crosses above %D", sell: () => "%K crosses below %D",
+      note: "The Stochastic oscillator compares the close to its recent range; trade the %K-vs-%D crossover. <b>Why:</b> %K leading %D flags building momentum within the range. <b>Trade-off:</b> best in ranges, noisy in strong trends." },
+    { key: "cci", name: "CCI", params: [{ k: "period", label: "Period", d: 20, min: 3, max: 100 }, { k: "level", label: "Long ≥", d: 0, min: -200, max: 200 }],
+      sig: (c, p, hi, lo) => { const v = cci(c, hi, lo, p.period); return c.map((_, i) => (v[i] != null && v[i] >= p.level) ? 1 : 0); },
+      plot: { ind: "CCI", cp: (p) => [p.period] }, buy: (p) => `CCI(${p.period}) above ${p.level}`, sell: (p) => `CCI below ${p.level}`,
+      note: "The Commodity Channel Index measures how far price is from its average in units of mean deviation. Hold while CCI is above the threshold. <b>Why:</b> positive CCI marks an uptrend bias; ±100 are common breakout markers. <b>Trade-off:</b> unbounded and jumpy." },
   ];
 
-  // ---------- custom "Measure %" overlay ----------
-  function registerMeasure() {
-    if (!window.klinecharts || !klinecharts.registerOverlay) return;
+  // shared with the custom signal-marker indicator (set per active strategy in run())
+  let ACTIVE_SIGNAL = null;
+  function registerIndicators() {
+    if (!window.klinecharts) return;
     try {
       klinecharts.registerOverlay({
         name: "measurePct", totalStep: 3, needDefaultPointFigure: true, needDefaultXAxisFigure: true, needDefaultYAxisFigure: true,
         createPointFigures: ({ overlay, coordinates }) => {
           if (coordinates.length < 2) return [];
-          const p = overlay.points; const v0 = p[0].value, v1 = p[1].value;
-          if (v0 == null || v1 == null) return [];
+          const p = overlay.points; const v0 = p[0].value, v1 = p[1].value; if (v0 == null || v1 == null) return [];
           const diff = v1 - v0, pc = v0 ? (diff / v0) * 100 : 0, up = diff >= 0;
           const days = (p[0].timestamp != null && p[1].timestamp != null) ? Math.round(Math.abs(p[1].timestamp - p[0].timestamp) / 864e5) : null;
           const bars = (p[0].dataIndex != null && p[1].dataIndex != null) ? Math.abs(p[1].dataIndex - p[0].dataIndex) : null;
@@ -83,55 +137,93 @@
         },
       });
     } catch (_) {}
+    try {
+      klinecharts.registerIndicator({
+        name: "STRATSIGNAL", figures: [], calc: (dataList) => dataList.map(() => ({})),
+        draw: ({ ctx, kLineDataList, visibleRange, xAxis, yAxis }) => {
+          if (!ACTIVE_SIGNAL) return false;
+          const buys = ACTIVE_SIGNAL.buys, sells = ACTIVE_SIGNAL.sells;
+          for (let i = Math.max(0, visibleRange.from); i < visibleRange.to; i++) {
+            const d = kLineDataList[i]; if (!d) continue;
+            const isB = buys.has(d.timestamp), isS = sells.has(d.timestamp); if (!isB && !isS) continue;
+            const x = xAxis.convertToPixel(i), y = yAxis.convertToPixel(isB ? d.low : d.high);
+            const yy = isB ? y + 11 : y - 11; ctx.fillStyle = isB ? UP : DN; ctx.beginPath();
+            if (isB) { ctx.moveTo(x, yy - 8); ctx.lineTo(x - 5, yy + 2); ctx.lineTo(x + 5, yy + 2); }
+            else { ctx.moveTo(x, yy + 8); ctx.lineTo(x - 5, yy - 2); ctx.lineTo(x + 5, yy - 2); }
+            ctx.closePath(); ctx.fill();
+          }
+          return false;
+        },
+      });
+    } catch (_) {}
   }
 
   function injectStyles() {
     if (document.getElementById("charts-styles")) return;
     const s = document.createElement("style"); s.id = "charts-styles";
     s.textContent = `
-      .cbar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:4px 0;}
-      .cbar .lbl{font-size:12px;font-weight:600;color:#6e6e73;margin-right:5px;}
-      .cbar select{font:inherit;font-size:14px;font-weight:600;padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;}
+      .cbar{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:6px 0;}
+      .cbar .lbl{font-size:11.5px;font-weight:700;color:#6e6e73;margin-right:6px;text-transform:uppercase;letter-spacing:.03em;}
+      .cbar select{font:inherit;font-size:14px;font-weight:600;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;}
       .seg{display:inline-flex;gap:5px;flex-wrap:wrap;}
-      .seg button{font:inherit;font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;}
+      .seg button{font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:all .12s;}
+      .seg button:hover{border-color:var(--accent);}
       .seg button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
       .seg button.tool.active{background:#1d1d1f;border-color:#1d1d1f;}
       .live{display:inline-flex;align-items:center;gap:7px;font-size:13px;margin-left:auto;}
       .live .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);}
       .live.on .dot{background:var(--good);box-shadow:0 0 0 3px rgba(48,209,88,.18);}
-      #chart{width:100%;height:540px;}
-      @media(max-width:680px){#chart{height:60vh;}}
-      details.ind-panel{margin:4px 0;border:1px solid var(--line);border-radius:12px;padding:4px 12px;background:rgba(255,255,255,.5);}
-      details.ind-panel summary{font-size:13px;font-weight:700;cursor:pointer;padding:5px 0;color:#1d1d1f;}
-      .ind-grp{display:flex;gap:8px;align-items:flex-start;margin:6px 0;flex-wrap:wrap;}
+      #chart{width:100%;height:560px;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+      @media(max-width:680px){#chart{height:62vh;}}
+      details.ind-panel{margin:6px 0;border:1px solid var(--line);border-radius:12px;padding:2px 14px;background:rgba(255,255,255,.6);}
+      details.ind-panel summary{font-size:12.5px;font-weight:700;cursor:pointer;padding:8px 0;color:#1d1d1f;}
+      details.ind-panel[open] summary{border-bottom:1px solid var(--line);margin-bottom:6px;}
+      .ind-grp{display:flex;gap:8px;align-items:center;margin:7px 0;flex-wrap:wrap;}
+      .ipar{font-size:12px;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:8px;padding:3px 8px;background:#fff;}
+      .ipar input{font:inherit;font-size:12px;border:none;width:84px;outline:none;}
       .notes-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;}
-      .notes-row button{font:inherit;font-size:13px;font-weight:600;padding:8px 13px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;}
+      .notes-row button{font:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;}
       .notes-row button.apply{background:var(--accent);color:#fff;border-color:var(--accent);}
-      #notes{width:100%;box-sizing:border-box;font:inherit;font-size:13px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);resize:vertical;}
-      table.pb{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
-      table.pb th,table.pb td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap;}
+      #notes{width:100%;box-sizing:border-box;font:inherit;font-size:13px;padding:11px 13px;border-radius:10px;border:1px solid var(--line);resize:vertical;}
+      table.pb{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
+      table.pb th,table.pb td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top;}
       table.pb th:first-child,table.pb td:first-child{text-align:left;white-space:normal;}
-      table.pb th{font-size:11.5px;color:#6e6e73;text-transform:uppercase;letter-spacing:.03em;}
-      table.pb tr.bh{background:rgba(0,0,0,.03);font-weight:600;}
-      table.pb .sig{font-size:11.5px;color:#6e6e73;}
+      table.pb th{font-size:11px;color:#6e6e73;text-transform:uppercase;letter-spacing:.03em;font-weight:700;}
+      table.pb tr.bh{background:rgba(0,0,0,.035);font-weight:700;}
+      table.pb .sig{font-size:11.5px;color:#6e6e73;margin:3px 0 5px;}
+      table.pb .num{font-variant-numeric:tabular-nums;}
       table.pb .win{color:${UP};font-weight:700;}
+      .pbp{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px;}
+      .pbp label{font-size:11px;color:#6e6e73;display:inline-flex;align-items:center;gap:4px;}
+      .pbp input{font:inherit;font-size:12px;width:56px;padding:4px 6px;border-radius:7px;border:1px solid var(--line);}
+      .pbacts{display:flex;flex-direction:column;gap:4px;align-items:stretch;min-width:74px;}
+      .pb-btn{font:inherit;font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;white-space:nowrap;}
+      .pb-btn:hover{border-color:var(--accent);}
+      .pb-btn.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+      .pb-btn.sig.on{background:#1d1d1f;border-color:#1d1d1f;}
+      .pb-btn:disabled{opacity:.35;cursor:default;}
+      tr.noterow td{background:rgba(0,113,227,.05);border-bottom:2px solid var(--line);font-size:12.5px;line-height:1.55;color:#333;padding:10px 14px;}
     `;
     document.head.appendChild(s);
   }
 
   function run() {
-    injectStyles(); registerMeasure();
+    injectStyles(); registerIndicators();
     if (window.STRATEGY_PAGE_TITLE) document.title = window.STRATEGY_PAGE_TITLE;
     const state = { asset: "spx", tf: "D", type: "candle_solid", yAxis: "normal", tool: "cursor", tfLastTs: 0,
-      indicators: Object.fromEntries(MAIN_INDS.concat(SUB_INDS).map(([v]) => [v, false])) };
-    const D = { id: "", ticker: "", label: "", n: 0, dates: [], close: [], daily: [] };
+      indicators: Object.fromEntries(MAIN_INDS.concat(SUB_INDS).map(([v]) => [v, false])),
+      indParams: Object.fromEntries(Object.entries(DEFAULTS).map(([k, v]) => [k, v.slice()])),
+      stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
+      plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [] };
+    const D = { id: "", ticker: "", label: "", kind: "price", n: 0, dates: [], close: [], high: [], low: [], daily: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null;
 
     const app = document.getElementById("app");
     app.innerHTML = `
       <h1 id="cTitle">Charts</h1>
-      <p class="lede">Candles with indicators and drawing tools across timeframes. Pick an asset, draw trend lines and levels,
-        use <b>Measure %</b> for the change between two points, layer studies, and save private notes (passphrase).</p>
+      <p class="lede">Candlestick charts with indicators, drawing tools and multiple timeframes. Tune any indicator's
+        parameters, and the <b>Signal Playbook</b> below backtests common buy/sell rules on this asset — plot the indicator,
+        show ▲ buy / ▼ sell markers on the chart, and read what each signal means, all from the same parameters.</p>
       <div class="card">
         <div class="cbar">
           <div><span class="lbl">Asset</span><select id="assetSel"></select></div>
@@ -144,9 +236,10 @@
           <div><span class="lbl">Range</span><span class="seg" id="rangeSeg"></span></div>
         </div>
         <details class="ind-panel">
-          <summary>Indicators — overlays &amp; studies</summary>
-          <div class="ind-grp"><span class="lbl">On price</span><span class="seg" id="indMain"></span></div>
+          <summary>Indicators — overlays &amp; studies · click to expand, then edit parameters of active ones</summary>
+          <div class="ind-grp"><span class="lbl">On&nbsp;price</span><span class="seg" id="indMain"></span></div>
           <div class="ind-grp"><span class="lbl">Studies</span><span class="seg" id="indSub"></span></div>
+          <div class="ind-grp" id="indParams"></div>
         </details>
         <div class="cbar">
           <div><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
@@ -156,41 +249,33 @@
         <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points on the chart.</p>
       </div>
       <div class="card">
-        <h2>Signal playbook <span class="meta" id="pbAsset" style="font-weight:400"></span></h2>
-        <p class="meta">Common indicator buy/sell rules and how each would have <b>backtested on this asset's full daily history</b>
-          (long-or-cash, next-day execution, cash earns 0%, no costs). Educational only — not investment advice.</p>
+        <h2 style="margin-bottom:2px">Signal playbook <span class="meta" id="pbAsset" style="font-weight:400"></span></h2>
+        <p class="meta" style="margin-top:4px">Edit a rule's parameters → its <b>backtest updates live</b> (long-or-cash, next-day fills, cash 0%, no costs, full daily history).
+          <b>plot</b> = draw the indicator · <b>signals</b> = ▲/▼ markers on the chart · <b>notes</b> = what the buy/sell signal means. Educational only — not advice.</p>
         <div id="playbook"><p class="meta">Loading…</p></div>
       </div>
       <div class="card">
         <h2>Notes <span class="meta" id="notesStatus" style="font-weight:400"></span></h2>
-        <div class="notes-row">
-          <button id="cloudBtn" class="apply">☁ Save to cloud</button>
-          <span class="meta" id="cloudAuth"></span>
-        </div>
-        <textarea id="notes" rows="5" placeholder="Private notes for this asset (saved locally; ☁ for cross-device)…"></textarea>
-        <p class="meta" style="margin-top:8px">Notes &amp; drawings are <b>private</b> — they need your passphrase to view or save, and auto-save in this browser meanwhile.</p>
+        <div class="notes-row"><button id="cloudBtn" class="apply">☁ Save to cloud</button><span class="meta" id="cloudAuth"></span></div>
+        <textarea id="notes" rows="5" placeholder="Your private notes for this asset (saved locally; ☁ for cross-device)…"></textarea>
+        <p class="meta" style="margin-top:8px">Your notes, drawings, indicator &amp; strategy parameters are <b>private</b> and saved per asset — passphrase to view/save, auto-saved in this browser meanwhile.</p>
       </div>`;
 
     const $ = (id) => document.getElementById(id);
     const segActive = (c, b) => c.querySelectorAll("button").forEach((x) => x.classList.toggle("active", x === b));
     const findBtn = (c, v) => [...c.querySelectorAll("button")].find((b) => b.dataset.v === v);
-    function makeSeg(host, items, isActive, onPick, cls) {
-      host.innerHTML = "";
-      items.forEach(([val, label]) => { const b = document.createElement("button"); if (cls) b.className = cls; b.textContent = label; b.dataset.v = val; if (isActive(val)) b.classList.add("active"); b.onclick = () => onPick(val, b); host.appendChild(b); });
-    }
+    function makeSeg(host, items, isActive, onPick, cls) { host.innerHTML = ""; items.forEach(([val, label]) => { const b = document.createElement("button"); if (cls) b.className = cls; b.textContent = label; b.dataset.v = val; if (isActive(val)) b.classList.add("active"); b.onclick = () => onPick(val, b); host.appendChild(b); }); }
+    function safe(fn) { try { return fn(); } catch (e) { status("error: " + (e.message || e)); } }
 
-    // ---- chart ----
     chart = klinecharts.init($("chart"));
     chart.setStyles({
       grid: { horizontal: { color: "#eee" }, vertical: { color: "#f4f4f4" } },
       candle: { type: state.type, bar: { upColor: UP, downColor: DN, noChangeColor: "#888", upBorderColor: UP, downBorderColor: DN, upWickColor: UP, downWickColor: DN }, priceMark: { last: { show: true }, high: { show: true }, low: { show: true } }, tooltip: { showRule: "always", showType: "rect" } },
-      indicator: { lastValueMark: { show: false } },
-      yAxis: { type: state.yAxis }, xAxis: { tickText: { color: "#8a8a8e" } },
+      indicator: { lastValueMark: { show: false } }, yAxis: { type: state.yAxis }, xAxis: { tickText: { color: "#8a8a8e" } },
     });
     window.addEventListener("resize", () => chart && chart.resize());
     setTimeout(() => chart && chart.resize(), 60);
 
-    // ---- controls ----
     makeSeg($("tfSeg"), TFS.map((t) => [t.id, t.label]), (v) => v === state.tf, (v, b) => { state.tf = v; segActive($("tfSeg"), b); applyTF(); });
     makeSeg($("typeSeg"), TYPES, (v) => v === state.type, (v, b) => { state.type = v; safe(() => chart.setStyles({ candle: { type: v } })); segActive($("typeSeg"), b); scheduleSave(); });
     makeSeg($("axisSeg"), AXES, (v) => v === state.yAxis, (v, b) => { state.yAxis = v; safe(() => chart.setStyles({ yAxis: { type: v } })); segActive($("axisSeg"), b); scheduleSave(); });
@@ -201,92 +286,65 @@
     $("undoBtn").onclick = undoDrawing;
     $("clearBtn").onclick = clearDrawings;
 
-    function safe(fn) { try { return fn(); } catch (e) { status("error: " + (e.message || e)); } }
-    function setRange(days) {
-      if (!D.n && !chart) return;
-      const w = Math.max(200, $("chart").clientWidth - 70);
-      const n = days ? Math.min(days, D.n || days) : (D.n || days || 250);
-      safe(() => { chart.setBarSpace(Math.max(0.5, Math.min(40, w / n))); chart.scrollToRealTime(0); });
-    }
+    function setRange(days) { const w = Math.max(200, $("chart").clientWidth - 70); const n = days ? Math.min(days, D.n || days) : (D.n || days || 250); safe(() => { chart.setBarSpace(Math.max(0.5, Math.min(40, w / n))); chart.scrollToRealTime(0); }); }
 
     // ---- timeframe / intraday ----
-    function aggregate(bars, ms) {
-      if (!ms) return bars; const out = []; let cur = null, key = null;
-      for (const b of bars) { const k = Math.floor(b.timestamp / ms); if (k !== key) { if (cur) out.push(cur); cur = { timestamp: k * ms, open: b.open, high: b.high, low: b.low, close: b.close, volume: b.volume || 0 }; key = k; } else { cur.high = Math.max(cur.high, b.high); cur.low = Math.min(cur.low, b.low); cur.close = b.close; cur.volume += b.volume || 0; } }
-      if (cur) out.push(cur); return out;
-    }
+    function aggregate(bars, ms) { if (!ms) return bars; const out = []; let cur = null, key = null; for (const b of bars) { const k = Math.floor(b.timestamp / ms); if (k !== key) { if (cur) out.push(cur); cur = { timestamp: k * ms, open: b.open, high: b.high, low: b.low, close: b.close, volume: b.volume || 0 }; key = k; } else { cur.high = Math.max(cur.high, b.high); cur.low = Math.min(cur.low, b.low); cur.close = b.close; cur.volume += b.volume || 0; } } if (cur) out.push(cur); return out; }
+    function setCur(bars) { state.curClose = bars.map((b) => b.close); state.curTs = bars.map((b) => b.timestamp); state.curHigh = bars.map((b) => b.high); state.curLow = bars.map((b) => b.low); }
     function stopPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
     function applyTF() {
       stopPoll();
       const tf = TFS.find((t) => t.id === state.tf) || TFS[TFS.length - 1];
-      if (!tf.interval) {
-        safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); setRange(126); reapplyDrawings(); state.tfLastTs = 0;
-        $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points.";
-        return;
-      }
+      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); setRange(126); reapplyDrawings(); setCur(D.daily || []); refreshSignals(); state.tfLastTs = 0; $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points."; return; }
       status("loading " + tf.label + "…");
       fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=" + tf.interval + "&range=" + tf.range + "&_=" + Date.now())
         .then((r) => r.json())
         .then((j) => {
-          let bars = j.bars || []; if (!bars.length) throw new Error("no intraday data");
-          if (tf.aggMs) bars = aggregate(bars, tf.aggMs);
+          let bars = j.bars || []; if (!bars.length) throw new Error("no intraday data"); if (tf.aggMs) bars = aggregate(bars, tf.aggMs);
           safe(() => { chart.applyNewData(bars); chart.resize(); });
           const w = Math.max(200, $("chart").clientWidth - 70), show = Math.min(bars.length, tf.show || 180);
           safe(() => { chart.setBarSpace(Math.max(1, Math.min(14, w / show))); chart.scrollToRealTime(0); });
-          reapplyDrawings();
-          state.tfLastTs = bars[bars.length - 1].timestamp;
+          reapplyDrawings(); setCur(bars); refreshSignals(); state.tfLastTs = bars[bars.length - 1].timestamp;
           status(tf.label + " · " + bars.length + " bars");
           $("hint").textContent = tf.label + " intraday · auto-refreshing every " + (POLL_MS / 1000) + "s · " + (j.ticker || D.ticker);
           pollTimer = setInterval(() => refreshTF(tf), POLL_MS);
         })
         .catch((e) => { status("intraday unavailable: " + e.message); });
     }
-    function refreshTF(tf) {
-      fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=" + tf.interval + "&range=" + tf.range + "&_=" + Date.now())
-        .then((r) => r.json())
-        .then((j) => {
-          let bars = j.bars || []; if (tf.aggMs) bars = aggregate(bars, tf.aggMs);
-          let n = 0; for (const b of bars) { if (b.timestamp >= state.tfLastTs) { safe(() => chart.updateData(b)); state.tfLastTs = Math.max(state.tfLastTs, b.timestamp); n++; } }
-          if (n) fetchLive();
-        }).catch(() => {});
-    }
+    function refreshTF(tf) { fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=" + tf.interval + "&range=" + tf.range + "&_=" + Date.now()).then((r) => r.json()).then((j) => { let bars = j.bars || []; if (tf.aggMs) bars = aggregate(bars, tf.aggMs); let n = 0; for (const b of bars) { if (b.timestamp >= state.tfLastTs) { safe(() => chart.updateData(b)); state.tfLastTs = Math.max(state.tfLastTs, b.timestamp); n++; } } if (n) { setCur(bars); refreshSignals(); fetchLive(); } }).catch(() => {}); }
 
     // ---- indicators ----
     const paneId = (name) => "pane_" + name.toLowerCase();
-    function toggleIndicator(name) {
-      const on = !state.indicators[name]; state.indicators[name] = on;
-      safe(() => {
-        if (MAIN_SET.has(name)) { if (on) chart.createIndicator(name, true, { id: "candle_pane" }); else chart.removeIndicator("candle_pane", name); }
-        else { if (on) chart.createIndicator(name, false, { id: paneId(name) }); else chart.removeIndicator(paneId(name), name); }
-      });
+    const indPane = (name) => (MAIN_SET.has(name) ? "candle_pane" : paneId(name));
+    function createInd(name) { const cp = state.indParams[name]; const v = cp && cp.length ? { name, calcParams: cp } : name; safe(() => chart.createIndicator(v, MAIN_SET.has(name), { id: indPane(name) })); }
+    function overrideInd(name) { safe(() => chart.overrideIndicator({ name, calcParams: state.indParams[name] }, indPane(name))); }
+    function toggleIndicator(name) { const on = !state.indicators[name]; state.indicators[name] = on; if (on) createInd(name); else safe(() => chart.removeIndicator(indPane(name), name)); renderIndParams(); }
+    function renderIndParams() {
+      const host = $("indParams"); const active = Object.keys(state.indicators).filter((n) => state.indicators[n] && DEFAULTS[n] && DEFAULTS[n].length);
+      if (!active.length) { host.innerHTML = ""; return; }
+      host.innerHTML = `<span class="lbl">Params</span>` + active.map((n) => `<span class="ipar"><b>${n}</b><input data-ind="${n}" value="${state.indParams[n].join(",")}" title="comma-separated calc params"></span>`).join("");
+      host.querySelectorAll("input[data-ind]").forEach((inp) => { inp.onchange = () => { const arr = inp.value.split(",").map((x) => parseFloat(x)).filter((x) => isFinite(x)); if (arr.length) { state.indParams[inp.dataset.ind] = arr; overrideInd(inp.dataset.ind); scheduleSave(); } }; });
     }
-    function syncIndicators(target) {
-      Object.keys(state.indicators).forEach((name) => { const want = !!(target && target[name]); if (state.indicators[name] !== want) toggleIndicator(name); });
-      [...$("indMain").querySelectorAll("button"), ...$("indSub").querySelectorAll("button")].forEach((b) => b.classList.toggle("active", !!state.indicators[b.dataset.v]));
-    }
+    function syncIndChips() { [...$("indMain").querySelectorAll("button"), ...$("indSub").querySelectorAll("button")].forEach((b) => b.classList.toggle("active", !!state.indicators[b.dataset.v])); }
+    function syncIndicators(target) { Object.keys(state.indicators).forEach((name) => { const want = !!(target && target[name]); if (state.indicators[name] !== want) toggleIndicator(name); }); syncIndChips(); }
 
-    // ---- drawing (retained across timeframe/zoom via reapplyDrawings) ----
-    function pickTool(name) {
-      state.tool = name; if (name === "cursor") return;
-      let extend; if (name === "simpleAnnotation") extend = (window.prompt("Annotation text:") || "").trim() || "note";
-      safe(() => chart.createOverlay({
-        name, extendData: extend,
-        onDrawEnd: (e) => { recordDrawing(e.overlay); pickTool("cursor"); segActive($("toolSeg"), findBtn($("toolSeg"), "cursor")); return false; },
-      }));
+    // ---- signal markers (custom-indicator draw callback) ----
+    function refreshSignals() {
+      if (!state.signalKey) { ACTIVE_SIGNAL = null; safe(() => chart.removeIndicator("candle_pane", "STRATSIGNAL")); return; }
+      const st = STRATS.find((s) => s.key === state.signalKey); const c = state.curClose;
+      if (!st || !c || !c.length) { ACTIVE_SIGNAL = null; return; }
+      const pos = st.sig(c, state.stratParams[st.key], state.curHigh, state.curLow); const buys = new Set(), sells = new Set();
+      for (let i = 1; i < pos.length; i++) { if (pos[i] === pos[i - 1]) continue; (pos[i] === 1 ? buys : sells).add(state.curTs[i]); }
+      ACTIVE_SIGNAL = { buys, sells };
+      safe(() => { chart.removeIndicator("candle_pane", "STRATSIGNAL"); chart.createIndicator("STRATSIGNAL", true, { id: "candle_pane" }); });
     }
-    function recordDrawing(o) {
-      if (restoring || !o) return;
-      const pts = (o.points || []).map((p) => ({ timestamp: p.timestamp, value: p.value }));
-      const i = drawings.findIndex((d) => d.id === o.id), rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData };
-      if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave();
-    }
-    function reapplyDrawings() {
-      restoring = true;
-      safe(() => chart.removeOverlay());
-      const keep = drawings.slice(); drawings = [];
-      keep.forEach((d) => { const id = safe(() => chart.createOverlay({ name: d.name, points: d.points, extendData: d.extendData })); drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); });
-      restoring = false;
-    }
+    function toggleSignals(key) { state.signalKey = state.signalKey === key ? null : key; refreshSignals(); renderPlaybook(); }
+
+    // ---- drawing ----
+    function pickTool(name) { state.tool = name; if (name === "cursor") return; let extend; if (name === "simpleAnnotation") extend = (window.prompt("Annotation text:") || "").trim() || "note"; safe(() => chart.createOverlay({ name, extendData: extend, onDrawEnd: (e) => { recordDrawing(e.overlay); pickTool("cursor"); segActive($("toolSeg"), findBtn($("toolSeg"), "cursor")); return false; } })); }
+    const validDraw = (d) => d && d.name && Array.isArray(d.points) && d.points.length && d.points.every((p) => p && p.value != null && isFinite(p.value));
+    function recordDrawing(o) { if (restoring || !o || !o.points || !o.points.length) return; const pts = o.points.map((p) => ({ timestamp: p.timestamp, value: p.value })); if (pts.some((p) => p.value == null)) return; const i = drawings.findIndex((d) => d.id === o.id), rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData }; if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave(); }
+    function reapplyDrawings() { restoring = true; safe(() => chart.removeOverlay()); const keep = drawings.filter(validDraw); drawings = []; keep.forEach((d) => { const id = safe(() => chart.createOverlay({ name: d.name, points: d.points, extendData: d.extendData })); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); }); restoring = false; }
     function undoDrawing() { const last = drawings.pop(); if (last) safe(() => chart.removeOverlay(last.id)); scheduleSave(); }
     function clearDrawings() { safe(() => chart.removeOverlay()); drawings = []; scheduleSave(); }
 
@@ -295,17 +353,9 @@
     const getKey = () => { try { return localStorage.getItem(CLOUD_KEY) || ""; } catch (_) { return ""; } };
     function setKey(k) { try { k ? localStorage.setItem(CLOUD_KEY, k) : localStorage.removeItem(CLOUD_KEY); } catch (_) {} updateAuth(); }
     function status(msg) { $("notesStatus").textContent = msg ? "· " + msg : ""; }
-    function updateAuth() {
-      const el = $("cloudAuth");
-      if (getKey()) { el.innerHTML = `signed in · <a href="#" id="logout">log out</a>`; el.querySelector("#logout").onclick = (e) => { e.preventDefault(); setKey(""); status("logged out"); }; }
-      else el.textContent = "not signed in";
-    }
-    function ensureKey() {
-      const k = getKey(); if (k) return Promise.resolve(k);
-      const entry = (window.prompt("Passphrase to save/view private notes:") || "").trim(); if (!entry) return Promise.resolve("");
-      return fetch(STORE + "/api/auth", { method: "POST", headers: { "X-Lab-Key": entry } }).then((r) => { if (!r.ok) { status("wrong passphrase"); return ""; } setKey(entry); return entry; }).catch(() => { status("login failed"); return ""; });
-    }
-    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, ...d }) => d), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators } }; }
+    function updateAuth() { const el = $("cloudAuth"); if (getKey()) { el.innerHTML = `signed in · <a href="#" id="logout">log out</a>`; el.querySelector("#logout").onclick = (e) => { e.preventDefault(); setKey(""); status("logged out"); }; } else el.textContent = "not signed in"; }
+    function ensureKey() { const k = getKey(); if (k) return Promise.resolve(k); const entry = (window.prompt("Passphrase to save/view private notes:") || "").trim(); if (!entry) return Promise.resolve(""); return fetch(STORE + "/api/auth", { method: "POST", headers: { "X-Lab-Key": entry } }).then((r) => { if (!r.ok) { status("wrong passphrase"); return ""; } setKey(entry); return entry; }).catch(() => { status("login failed"); return ""; }); }
+    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, ...d }) => d), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams } }; }
     function saveLocal() { try { localStorage.setItem(lsKey(D.id), JSON.stringify(snapshot())); } catch (_) {} }
     function scheduleSave() { if (saveTimer) clearTimeout(saveTimer); saveTimer = setTimeout(() => { saveTimer = null; saveLocal(); status("saved locally"); }, 600); }
     $("cloudBtn").onclick = () => { ensureKey().then((key) => { if (!key) return; updateAuth(); status("saving…"); fetch(STORE + "/api/chart/" + D.id, { method: "POST", headers: { "Content-Type": "application/json", "X-Lab-Key": key }, body: JSON.stringify(snapshot()) }).then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired"); } if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then(() => status("saved to cloud ✓")).catch((e) => status("cloud save failed: " + e.message)); }); };
@@ -317,88 +367,88 @@
       const st = snap.settings || {};
       if (st.type) { state.type = st.type; safe(() => chart.setStyles({ candle: { type: st.type } })); segActive($("typeSeg"), findBtn($("typeSeg"), st.type)); }
       if (st.yAxis) { state.yAxis = st.yAxis; safe(() => chart.setStyles({ yAxis: { type: st.yAxis } })); segActive($("axisSeg"), findBtn($("axisSeg"), st.yAxis)); }
-      syncIndicators(st.indicators);
+      if (st.indParams) Object.keys(st.indParams).forEach((k) => { if (Array.isArray(st.indParams[k])) state.indParams[k] = st.indParams[k].slice(); });
+      if (st.stratParams) Object.keys(st.stratParams).forEach((k) => { if (state.stratParams[k]) Object.assign(state.stratParams[k], st.stratParams[k]); });
+      syncIndicators(st.indicators); renderIndParams();
       drawings = [];
-      (snap.drawings || []).forEach((d) => { const id = safe(() => chart.createOverlay({ name: d.name, points: d.points, extendData: d.extendData })); drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); });
-      restoring = false;
+      (snap.drawings || []).filter(validDraw).forEach((d) => { const id = safe(() => chart.createOverlay({ name: d.name, points: d.points, extendData: d.extendData })); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); });
+      restoring = false; renderPlaybook();
     }
     function loadNotes() {
       safe(() => chart.removeOverlay()); drawings = [];
       const local = (() => { try { return JSON.parse(localStorage.getItem(lsKey(D.id))) || null; } catch (_) { return null; } })();
       const key = getKey();
-      if (key) {
-        status("loading…");
-        fetch(STORE + "/api/chart/" + D.id, { headers: { "X-Lab-Key": key } })
-          .then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired"); } return r.json(); })
-          .then((snap) => { const has = snap && (snap.notes || (snap.drawings && snap.drawings.length) || snap.settings); applySnapshot(has ? snap : (local || {})); status(has && snap.savedAt ? "from cloud" : ""); })
-          .catch(() => { applySnapshot(local || {}); status("offline — local"); });
-      } else applySnapshot(local || {});
+      if (key) { status("loading…"); fetch(STORE + "/api/chart/" + D.id, { headers: { "X-Lab-Key": key } }).then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired"); } return r.json(); }).then((snap) => { const has = snap && (snap.notes || (snap.drawings && snap.drawings.length) || snap.settings); applySnapshot(has ? snap : (local || {})); status(has && snap.savedAt ? "from cloud" : ""); }).catch(() => { applySnapshot(local || {}); status("offline — local"); }); }
+      else applySnapshot(local || {});
     }
 
-    // ---- live ----
     function fetchLive() {
       const live = $("live"), txt = $("liveTxt"); txt.textContent = "live —"; live.classList.remove("on");
-      fetch(QUOTE + "/?mode=quote&symbol=" + encodeURIComponent(D.ticker) + "&_=" + Date.now())
-        .then((r) => r.json())
-        .then((q) => {
-          if (!q || !(q.price > 0) || (q.ticker || "").toUpperCase() !== D.ticker.toUpperCase()) { txt.textContent = "live unavailable"; return; }
-          const prev = D.close[D.n - 1], chg = (q.price / prev - 1) * 100, s = chg >= 0 ? "+" : "";
-          live.classList.add("on");
-          txt.innerHTML = `<b>${esc(D.ticker)} ${nfmt(q.price)}</b> <span style="color:${chg >= 0 ? UP : DN}">${s}${chg.toFixed(2)}%</span> <span style="color:#8a8a8e">· ${esc(q.timestamp || "")}</span>`;
-        }).catch(() => { txt.textContent = "live unavailable"; });
+      fetch(QUOTE + "/?mode=quote&symbol=" + encodeURIComponent(D.ticker) + "&_=" + Date.now()).then((r) => r.json()).then((q) => {
+        if (!q || !(q.price > 0) || (q.ticker || "").toUpperCase() !== D.ticker.toUpperCase()) { txt.textContent = "live unavailable"; return; }
+        const prev = D.close[D.n - 1], chg = (q.price / prev - 1) * 100, s = chg >= 0 ? "+" : "";
+        live.classList.add("on"); txt.innerHTML = `<b>${esc(D.ticker)} ${nfmt(q.price)}</b> <span style="color:${chg >= 0 ? UP : DN}">${s}${chg.toFixed(2)}%</span> <span style="color:#8a8a8e">· ${esc(q.timestamp || "")}</span>`;
+      }).catch(() => { txt.textContent = "live unavailable"; });
     }
 
-    // ---- signal playbook ----
+    // ---- interactive signal playbook ----
+    function plotStrategy(key) {
+      const st = STRATS.find((s) => s.key === key); if (!st || !st.plot) return; const ind = st.plot.ind;
+      if (state.plotted[key]) { delete state.plotted[key]; if (state.indicators[ind]) { state.indicators[ind] = false; safe(() => chart.removeIndicator(indPane(ind), ind)); } }
+      else { state.plotted[key] = true; state.indParams[ind] = st.plot.cp(state.stratParams[key]); if (state.indicators[ind]) safe(() => chart.removeIndicator(indPane(ind), ind)); state.indicators[ind] = true; createInd(ind); }
+      syncIndChips(); renderIndParams(); renderPlaybook(); scheduleSave();
+    }
     function renderPlaybook() {
-      const c = D.close; const host = $("playbook"); $("pbAsset").textContent = D.dates.length ? "· " + D.label + " · " + D.dates[0] + " → " + D.dates[D.n - 1] : "";
+      const c = D.close, host = $("playbook"); $("pbAsset").textContent = D.dates.length ? "· " + D.label + " · " + D.dates[0] + " → " + D.dates[D.n - 1] : "";
       if (!c || c.length < 250) { host.innerHTML = `<p class="meta">Not enough history for a meaningful backtest.</p>`; return; }
-      const bh = stats(backtest(c, c.map(() => 1)).eq, backtest(c, c.map(() => 1)).ret, c.map(() => 1));
-      const rows = STRATS.map((st) => { const p = st.pos(c); const r = backtest(c, p); const s = stats(r.eq, r.ret, p); return { st, s }; });
-      const cell = (s, key, fmt) => fmt(s[key]);
-      const head = `<tr><th>Strategy &amp; signal</th><th>CAGR</th><th>Max DD</th><th>Sharpe</th><th>% in</th><th>$100→</th></tr>`;
-      const bhRow = `<tr class="bh"><td>Buy &amp; hold<div class="sig">always invested</div></td><td>${pct(bh.cagr)}</td><td>${pct(bh.maxdd)}</td><td>${f2(bh.sharpe)}</td><td>100%</td><td>$${Math.round(bh.end).toLocaleString()}</td></tr>`;
-      const body = rows.map(({ st, s }) => `<tr><td><b>${esc(st.name)}</b><div class="sig">▲ ${esc(st.buy)} · ▼ ${esc(st.sell)}</div></td>
-        <td class="${s.cagr > bh.cagr ? "win" : ""}">${pct(s.cagr)}</td><td>${pct(s.maxdd)}</td><td>${f2(s.sharpe)}</td><td>${pct(s.pin)}</td><td>$${Math.round(s.end).toLocaleString()}</td></tr>`).join("");
-      host.innerHTML = `<table class="pb"><thead>${head}</thead><tbody>${bhRow}${body}</tbody></table>`;
+      const isY = D.kind === "yield", bt = isY ? btYield : backtest;
+      const ones = c.map(() => 1), bhr = bt(c, ones), bh = stats(bhr.eq, bhr.ret, ones);
+      const head = `<tr><th>Strategy, signal &amp; parameters</th><th>CAGR</th><th>Max DD</th><th>Sharpe</th><th>% in</th><th>$100→</th><th>Show</th></tr>`;
+      const bhRow = `<tr class="bh"><td>Buy &amp; hold<div class="sig">always invested</div></td><td class="num">${pct(bh.cagr)}</td><td class="num">${pct(bh.maxdd)}</td><td class="num">${f2(bh.sharpe)}</td><td class="num">100%</td><td class="num">$${Math.round(bh.end).toLocaleString()}</td><td></td></tr>`;
+      const body = STRATS.map((st) => {
+        const p = state.stratParams[st.key], pos = st.sig(c, p, D.high, D.low), r = bt(c, pos), s = stats(r.eq, r.ret, pos);
+        const inputs = st.params.map((q) => `<label>${esc(q.label)}<input type="number" data-k="${st.key}" data-p="${q.k}" value="${p[q.k]}" min="${q.min}" max="${q.max}" step="${q.step || 1}"></label>`).join("");
+        const plotBtn = st.plot ? `<button class="pb-btn ${state.plotted[st.key] ? "on" : ""}" data-plot="${st.key}">${state.plotted[st.key] ? "✓ plot" : "plot"}</button>` : `<button class="pb-btn" disabled title="no chart overlay">plot</button>`;
+        const sigBtn = `<button class="pb-btn sig ${state.signalKey === st.key ? "on" : ""}" data-sig="${st.key}">${state.signalKey === st.key ? "✓ signals" : "signals"}</button>`;
+        const noteBtn = `<button class="pb-btn ${state.notesOpen[st.key] ? "on" : ""}" data-note="${st.key}">notes</button>`;
+        const row = `<tr><td><b>${esc(st.name)}</b><div class="sig">▲ ${esc(st.buy(p))} · ▼ ${esc(st.sell(p))}</div><div class="pbp">${inputs}</div></td>
+          <td class="num ${s.cagr > bh.cagr ? "win" : ""}">${pct(s.cagr)}</td><td class="num">${pct(s.maxdd)}</td><td class="num">${f2(s.sharpe)}</td><td class="num">${pct(s.pin)}</td><td class="num">$${Math.round(s.end).toLocaleString()}</td>
+          <td><div class="pbacts">${plotBtn}${sigBtn}${noteBtn}</div></td></tr>`;
+        const noteRow = state.notesOpen[st.key] ? `<tr class="noterow"><td colspan="7">${st.note}</td></tr>` : "";
+        return row + noteRow;
+      }).join("");
+      const cap = isY ? `<p class="meta" style="margin:0 0 6px"><b>Yield asset</b> — P&L is the <b>yield earned while invested</b> (carry: rate ÷ 252 per day, bond price moves ignored); the candles show the rate itself, and CAGR ≈ the average yield captured.</p>` : "";
+      host.innerHTML = cap + `<table class="pb"><thead>${head}</thead><tbody>${bhRow}${body}</tbody></table>`;
+      host.querySelectorAll("input[data-k]").forEach((inp) => { inp.onchange = () => {
+        const v = parseFloat(inp.value); if (!isFinite(v)) return; const key = inp.dataset.k, pk = inp.dataset.p; state.stratParams[key][pk] = v;
+        const st = STRATS.find((s) => s.key === key);
+        if (state.plotted[key] && st.plot) { state.indParams[st.plot.ind] = st.plot.cp(state.stratParams[key]); overrideInd(st.plot.ind); renderIndParams(); }
+        if (state.signalKey === key) refreshSignals();
+        renderPlaybook(); scheduleSave();
+      }; });
+      host.querySelectorAll("button[data-plot]").forEach((b) => { b.onclick = () => plotStrategy(b.dataset.plot); });
+      host.querySelectorAll("button[data-sig]").forEach((b) => { b.onclick = () => toggleSignals(b.dataset.sig); });
+      host.querySelectorAll("button[data-note]").forEach((b) => { b.onclick = () => { state.notesOpen[b.dataset.note] = !state.notesOpen[b.dataset.note]; renderPlaybook(); }; });
     }
 
-    // ---- asset load ----
     function loadAsset(id) {
       state.asset = id;
-      fetch("price_" + id + ".json?v=" + Date.now())
-        .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-        .then((d) => {
-          D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.n = d.close.length; D.dates = d.dates; D.close = d.close;
-          $("cTitle").textContent = D.label + " — chart";
-          D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
-          safe(() => chart.removeOverlay()); drawings = [];
-          applyTF();
-          loadNotes();
-          fetchLive();
-          renderPlaybook();
-        })
-        .catch((e) => { status("could not load " + id + " — " + e.message); });
+      fetch("price_" + id + ".json?v=" + Date.now()).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then((d) => {
+        D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
+        $("cTitle").textContent = D.label + " — chart";
+        D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
+        safe(() => chart.removeOverlay()); drawings = [];
+        applyTF(); loadNotes(); fetchLive(); renderPlaybook();
+      }).catch((e) => { status("could not load " + id + " — " + e.message); });
     }
 
-    // ---- asset registry ----
     updateAuth();
     fetch("price_assets.json?v=" + Date.now()).then((r) => r.json())
       .then((list) => { ASSETS = list; })
       .catch(() => { ASSETS = [{ id: "spx", label: "S&P 500", klass: "Indices", ticker: "^GSPC" }, { id: "ndx", label: "Nasdaq 100", klass: "Indices", ticker: "^NDX" }]; })
-      .then(() => {
-        const sel = $("assetSel"), groups = {};
-        ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); });
-        sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join("");
-        sel.value = state.asset; sel.onchange = () => loadAsset(sel.value);
-        loadAsset(state.asset);
-      });
+      .then(() => { const sel = $("assetSel"), groups = {}; ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); }); sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join(""); sel.value = state.asset; sel.onchange = () => loadAsset(sel.value); loadAsset(state.asset); });
   }
 
-  function boot() {
-    if (!window.klinecharts || !document.getElementById("app")) { setTimeout(boot, 30); return; }
-    if (window.SP && SP.injectStyles) SP.injectStyles();
-    run();
-  }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
+  function boot() { if (!window.klinecharts || !document.getElementById("app")) { setTimeout(boot, 30); return; } if (window.SP && SP.injectStyles) SP.injectStyles(); run(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();
