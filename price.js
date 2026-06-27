@@ -431,7 +431,7 @@
           <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="autoBtn">⚡ Auto-analysis</button><button id="recBtn" title="Shade US recessions · right-click: what they are &amp; what to expect"><span style="color:#9a9aa2">▦</span> Recessions</button><button id="invBtn" title="Shade yield-curve inversions · right-click: what an inversion means &amp; what to expect"><span style="color:#d68a12">⊘</span> Inversions</button></div>
         </div>
         <div id="chart"></div>
-        <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points on the chart.</p>
+        <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points · <b>right-click a drawing</b> to edit / erase / set a price alert · hover a drawing and press <b>Delete</b> to remove it.</p>
         <details id="autoCard" class="ind-panel" style="display:none;margin-top:8px">
           <summary>Auto-analysis notes — trend lines, Fibonacci &amp; signals · click to expand</summary>
           <div id="autoNotes" style="font-size:13px;line-height:1.6"></div>
@@ -732,7 +732,7 @@
     function applyTF() {
       stopPoll();
       const tf = TFS.find((t) => t.id === state.tf) || TFS[TFS.length - 1];
-      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); state.dispAggMs = 0; setCur(D.daily || []); setRange(252); reapplyDrawings(); refreshSignals(); if (state.autoTA) applyAutoTA(); state.tfLastTs = 0; $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points."; return; }
+      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); state.dispAggMs = 0; setCur(D.daily || []); setRange(252); reapplyDrawings(); refreshSignals(); if (state.autoTA) applyAutoTA(); state.tfLastTs = 0; $("hint").innerHTML = "Daily bars · scroll to zoom · drag to pan · <b>right-click a drawing</b> to edit / erase / set a price alert · hover one and press <b>Delete</b> to remove."; return; }
       status("loading " + tf.label + "…");
       fetchIntradayBars(tf)
         .then(({ bars: raw, ticker }) => {
@@ -778,10 +778,26 @@
     function toggleSignals(key) { state.signalKey = state.signalKey === key ? null : key; refreshSignals(); renderPlaybook(); }
 
     // ---- drawing ----
-    let pendingOverlayId = null, drawMenuEl = null, lastMouse = { x: 120, y: 120 };
+    let pendingOverlayId = null, drawMenuEl = null, lastMouse = { x: 120, y: 120 }, hoverOverlayId = null, selOverlayId = null, ALERTS = [];
     document.addEventListener("mousemove", (e) => { lastMouse = { x: e.clientX, y: e.clientY }; });
-    // every overlay gets a right-click handler → edit/erase menu (used by new draws AND restored ones)
-    function mkOverlay(spec) { return safe(() => chart.createOverlay({ ...spec, onRightClick: (e) => { showDrawMenu(e.overlay); return true; }, onPressedMoveEnd: (e) => { recordDrawing(e.overlay); return false; } })); } // onPressedMoveEnd persists drags
+    // every overlay: right-click → edit/erase/alert menu; track hover + selection so the Delete key can remove it
+    function mkOverlay(spec) {
+      return safe(() => chart.createOverlay({ ...spec,
+        onRightClick: (e) => { showDrawMenu(e.overlay); return true; },
+        onPressedMoveEnd: (e) => { recordDrawing(e.overlay); return false; },
+        onMouseEnter: (e) => { hoverOverlayId = e.overlay.id; return false; },
+        onMouseLeave: (e) => { if (hoverOverlayId === e.overlay.id) hoverOverlayId = null; return false; },
+        onSelected: (e) => { selOverlayId = e.overlay.id; return false; },
+        onDeselected: (e) => { if (selOverlayId === e.overlay.id) selOverlayId = null; return false; },
+      }));
+    }
+    // Delete / Backspace removes the selected (or hovered) drawing — unless you're typing in a field
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Delete" && e.key !== "Backspace") return;
+      const t = e.target; if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      const id = selOverlayId || hoverOverlayId; if (id == null) return;
+      e.preventDefault(); eraseOverlay({ id }); selOverlayId = hoverOverlayId = null; closeDrawMenu();
+    });
     function pickTool(name) {
       state.tool = name;
       if (pendingOverlayId != null) { safe(() => chart.removeOverlay(pendingOverlayId)); pendingOverlayId = null; } // cancel any in-progress draw
@@ -798,18 +814,24 @@
         return false;
       } });
     }
-    function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; } }
+    function drawMenuOutside(e) { if (drawMenuEl && !drawMenuEl.contains(e.target)) closeDrawMenu(); }
+    function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; document.removeEventListener("mousedown", drawMenuOutside); } }
     function showDrawMenu(overlay) {
       closeDrawMenu();
+      const isNote = overlay.name === "noteText" || overlay.name === "simpleAnnotation";
       const m = document.createElement("div");
-      m.style.cssText = `position:fixed;left:${Math.min(lastMouse.x, innerWidth - 160)}px;top:${Math.min(lastMouse.y, innerHeight - 90)}px;z-index:9999;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;min-width:140px;`;
+      m.style.cssText = `position:fixed;left:${Math.min(lastMouse.x, innerWidth - 190)}px;top:${Math.min(lastMouse.y, innerHeight - 130)}px;z-index:9999;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;min-width:172px;`;
       const item = (label, fn, danger) => { const b = document.createElement("button"); b.textContent = label; b.style.cssText = `display:block;width:100%;text-align:left;padding:9px 16px;border:0;background:#fff;cursor:pointer;font:inherit;font-size:13px;color:${danger ? "#d70015" : "#1d1d1f"}`; b.onmouseenter = () => (b.style.background = "#f2f2f7"); b.onmouseleave = () => (b.style.background = "#fff"); b.onclick = (ev) => { ev.stopPropagation(); closeDrawMenu(); fn(); }; return b; };
-      if (overlay.name === "noteText" || overlay.name === "simpleAnnotation") m.appendChild(item("✎  Edit note", () => editAnnotation(overlay)));
-      m.appendChild(item("🗑  Erase", () => eraseOverlay(overlay), true));
+      if (isNote) m.appendChild(item("✎  Edit note", () => editAnnotation(overlay)));
+      else if (overlayLevels({ name: overlay.name, points: (overlay.points || []) }, Date.now()).length) {  // line-type → can alert
+        const on = ALERTS.some((a) => a.id === overlay.id);
+        m.appendChild(item(on ? "🔕  Remove price alert" : "🔔  Set price alert", () => toggleAlert(overlay)));
+      }
+      m.appendChild(item("🗑  Erase  (or press Delete)", () => eraseOverlay(overlay), true));
       document.body.appendChild(m); drawMenuEl = m;
-      setTimeout(() => document.addEventListener("mousedown", closeDrawMenu, { once: true }), 0);
+      setTimeout(() => document.addEventListener("mousedown", drawMenuOutside), 0);   // close on OUTSIDE click only (was closing before the button click registered)
     }
-    function eraseOverlay(o) { safe(() => chart.removeOverlay(o.id)); const i = drawings.findIndex((d) => d.id === o.id); if (i >= 0) drawings.splice(i, 1); scheduleSave(); }
+    function eraseOverlay(o) { safe(() => chart.removeOverlay(o.id)); const i = drawings.findIndex((d) => d.id === o.id); if (i >= 0) drawings.splice(i, 1); removeAlert(o.id); scheduleSave(); }
     function editAnnotation(o) { const pts = (o.points || []).map((p) => ({ timestamp: p.timestamp, value: p.value })); inlineNote(lastMouse.x, lastMouse.y, o.extendData || "", o.id, pts); }
     // a small text box at the click point; the note shows in-chart LIVE as you type — Enter / click-away saves, Esc cancels, no OK
     function inlineNote(px, py, initial, id, pts) {
@@ -837,6 +859,52 @@
       const id = mkOverlay({ name: "noteText", extendData: " ", points: pts });
       if (id) inlineNote(lastMouse.x, lastMouse.y, "", id, pts);
     }
+    // ---- Price alerts on drawings (varies by drawing): the "level(s)" a drawing represents at the latest bar ----
+    let lastLivePrice = null, toastTimer = null;
+    function overlayLevels(d, ts) {
+      const p = d.points || []; if (!p.length) return [];
+      const nm = d.name;
+      const at = (a, b, t) => (a.timestamp === b.timestamp ? b.value : a.value + (b.value - a.value) * (t - a.timestamp) / (b.timestamp - a.timestamp));
+      if (nm === "horizontalStraightLine" || nm === "priceLine") return [{ value: p[0].value, label: "horizontal level" }];
+      if (nm === "verticalStraightLine" || nm === "noteText" || nm === "simpleAnnotation" || nm === "measurePct") return [];
+      if (nm === "fibonacciLine" && p.length >= 2) { const hi = Math.max(p[0].value, p[1].value), lo = Math.min(p[0].value, p[1].value), sp = hi - lo; return [0.236, 0.382, 0.5, 0.618, 0.786].map((r) => ({ value: hi - sp * r, label: (r * 100).toFixed(1) + "% Fib" })); }
+      if (p.length >= 2) { const out = [{ value: at(p[0], p[1], ts), label: "trend line" }]; if (nm === "parallelStraightLine" && p[2]) { const off = p[2].value - at(p[0], p[1], p[2].timestamp); out.push({ value: at(p[0], p[1], ts) + off, label: "channel rail" }); } return out; }
+      return [{ value: p[0].value, label: "level" }];
+    }
+    function toggleAlert(o) {
+      if (ALERTS.some((a) => a.id === o.id)) { removeAlert(o.id); status("🔕 alert removed"); return; }
+      const lbl = o.name === "fibonacciLine" ? "Fibonacci levels" : (o.name === "horizontalStraightLine" || o.name === "priceLine") ? "price level" : "trend line";
+      ALERTS.push({ id: o.id, sides: [] });
+      if (window.Notification && Notification.permission === "default") { try { Notification.requestPermission(); } catch (_) {} }
+      if (lastLivePrice != null) checkAlerts(lastLivePrice);   // seed the current side so it doesn't fire immediately
+      status("🔔 Alert set on this " + lbl + " — you'll be pinged when price crosses it (while this tab is open).");
+    }
+    function removeAlert(id) { const i = ALERTS.findIndex((a) => a.id === id); if (i >= 0) ALERTS.splice(i, 1); }
+    function checkAlerts(price) {
+      if (price == null || !isFinite(price) || !ALERTS.length) return;
+      const ts = (state.curTs && state.curTs.length) ? state.curTs[state.curTs.length - 1] : Date.now();
+      ALERTS.forEach((al) => {
+        const d = drawings.find((x) => x.id === al.id); if (!d) { removeAlert(al.id); return; }
+        overlayLevels(d, ts).forEach((lv, k) => {
+          if (!isFinite(lv.value)) return;
+          const side = price >= lv.value ? 1 : -1;
+          if (al.sides[k] != null && al.sides[k] !== side) fireAlert(lv, side, price);
+          al.sides[k] = side;
+        });
+      });
+    }
+    function fireAlert(lv, side, price) {
+      const msg = `${D.label}: price broke ${side > 0 ? "ABOVE" : "BELOW"} your ${lv.label} (${nfmt(lv.value)}) — now ${nfmt(price)}`;
+      status("🔔 " + msg); showToast(msg); beep();
+      try { if (window.Notification && Notification.permission === "granted") new Notification("Chart alert", { body: msg }); } catch (_) {}
+    }
+    function showToast(msg) {
+      let t = $("alertToast");
+      if (!t) { t = document.createElement("div"); t.id = "alertToast"; t.style.cssText = "position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:10002;background:#1d1d1f;color:#fff;font:inherit;font-size:14px;font-weight:600;padding:12px 20px;border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,.32);max-width:90vw;text-align:center;cursor:pointer"; t.onclick = () => (t.style.display = "none"); document.body.appendChild(t); }
+      t.textContent = "🔔 " + msg; t.style.display = "block";
+      clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.style.display = "none"; }, 8000);
+    }
+    function beep() { try { const a = new (window.AudioContext || window.webkitAudioContext)(); const o = a.createOscillator(), g = a.createGain(); o.connect(g); g.connect(a.destination); o.frequency.value = 880; g.gain.value = 0.05; o.start(); setTimeout(() => { o.stop(); a.close(); }, 170); } catch (_) {} }
     const validDraw = (d) => d && d.name && Array.isArray(d.points) && d.points.length && d.points.every((p) => p && p.value != null && isFinite(p.value));
     function recordDrawing(o) { if (restoring || !o || !o.points || !o.points.length) return; const pts = o.points.map((p) => ({ timestamp: p.timestamp, value: p.value })); if (pts.some((p) => p.value == null)) return; const i = drawings.findIndex((d) => d.id === o.id), rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData }; if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave(); }
     function reapplyDrawings() { restoring = true; safe(() => chart.removeOverlay()); const keep = drawings.filter(validDraw); drawings = []; keep.forEach((d) => { const id = mkOverlay({ name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); }); restoring = false; }
@@ -888,6 +956,7 @@
         if (!q || !(q.price > 0) || (q.ticker || "").toUpperCase() !== D.ticker.toUpperCase()) { txt.textContent = "live unavailable"; return; }
         const prev = D.close[D.n - 1], chg = (q.price / prev - 1) * 100, s = chg >= 0 ? "+" : "";
         live.classList.add("on"); txt.innerHTML = `<b>${esc(D.ticker)} ${nfmt(q.price)}</b> <span style="color:${chg >= 0 ? UP : DN}">${s}${chg.toFixed(2)}%</span> <span style="color:#8a8a8e">· ${esc(q.timestamp || "")}</span>`;
+        lastLivePrice = q.price; checkAlerts(q.price);   // alert when the live price crosses any alerted drawing
       }).catch(() => { txt.textContent = "live unavailable"; });
     }
 
