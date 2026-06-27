@@ -630,10 +630,10 @@
       const tn = (c) => c.id.replace("ust", "").toUpperCase();
       const roll = CURVE.map((c) => `${tn(c)} ${c.roll3m >= 0 ? "+" : ""}${c.roll3m}`).join(" · ");
       const bestRoll = CURVE.reduce((a, b) => (b.roll3m > a.roll3m ? b : a), CURVE[0]);
-      const c30 = CURVE.find((c) => c.id === "ust30y");
+      const carry = CURVE.filter((c) => c.id !== "ust3m").map((c) => `${tn(c)} ${c.carry3m >= 0 ? "+" : ""}${c.carry3m}`).join(" · ");
       $("curveFlags").innerHTML = "Slope: " + flags
         + `<br><span style="color:#444">3m roll-down (bps): ${roll} — richest in the <b>${tn(bestRoll)}</b>.</span>`
-        + (c30 ? ` <span style="color:#8a8a8e">3m carry vs the 3M bill: 30Y ${c30.carry3m >= 0 ? "+" : ""}${c30.carry3m}bps (grows with tenor on an upward curve).</span>` : "");
+        + `<br><span style="color:#8a8a8e">3m carry vs the 3M bill (bps): ${carry} — grows with tenor on an upward curve.</span>`;
     }
 
     function loadAsset(id) {
