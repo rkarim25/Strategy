@@ -327,6 +327,32 @@
       hits.push({ x: px + pw / 2, y: py + ph / 2, r: Math.max(11, pw / 2 + 2), html: m.tip });
     }
     canvas.__hits = hits;
+    canvas.__geo = { padL, padR, plotW, n };   // so the hover handler maps mouse-x → bar index exactly as xAt does
+    // crosshair + value readout (set canvas.__hoverI / __hoverY on mousemove, then redraw)
+    const hvI = canvas.__hoverI, hvY = canvas.__hoverY;
+    if (hvI != null && hvI >= 0 && hvI < n) {
+      const cx = xAt(hvI);
+      ctx.save();
+      ctx.strokeStyle = "rgba(0,0,0,.34)"; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(cx, padT); ctx.lineTo(cx, padT + plotH); ctx.stroke();
+      if (hvY != null && hvY >= padT && hvY <= padT + plotH) {
+        ctx.beginPath(); ctx.moveTo(padL, hvY); ctx.lineTo(W - padR, hvY); ctx.stroke(); ctx.setLineDash([]);
+        const tv = thi - ((hvY - padT) / plotH) * (thi - tlo), yval = log ? Math.pow(10, tv) : tv;
+        ctx.fillStyle = "#1d1d1f"; roundRect(ctx, 1, hvY - 8, padL - 5, 16, 3); ctx.fill();
+        ctx.fillStyle = "#fff"; ctx.font = "10px system-ui"; ctx.textAlign = "right"; ctx.textBaseline = "middle"; ctx.fillText(fmtY(yval), padL - 6, hvY);
+      }
+      ctx.setLineDash([]);
+      const rows = [];
+      for (const s of series) { const v = s.values[hvI]; if (v == null || !isFinite(v)) continue; ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(cx, yAt(v), 3.2, 0, 2 * Math.PI); ctx.fill(); rows.push({ c: s.color, t: fmtY(v) }); }
+      ctx.font = "11px system-ui"; ctx.textBaseline = "middle";
+      const dlab = String(dates[hvI] || "");
+      let bw = ctx.measureText(dlab).width + 14; rows.forEach((r) => (bw += ctx.measureText(r.t).width + 18));
+      const bx = Math.min(Math.max(cx - bw / 2, padL), W - padR - bw), by = padT + 2, bh = 19;
+      ctx.fillStyle = "rgba(255,255,255,.96)"; ctx.strokeStyle = "rgba(0,0,0,.14)"; ctx.lineWidth = 1; roundRect(ctx, bx, by, bw, bh, 5); ctx.fill(); ctx.stroke();
+      ctx.textAlign = "left"; ctx.fillStyle = "#1d1d1f"; let tx = bx + 7; ctx.fillText(dlab, tx, by + bh / 2 + 0.5); tx += ctx.measureText(dlab).width + 11;
+      rows.forEach((r) => { ctx.fillStyle = r.c; ctx.beginPath(); ctx.arc(tx + 3, by + bh / 2, 3, 0, 2 * Math.PI); ctx.fill(); ctx.fillStyle = "#1d1d1f"; ctx.fillText(r.t, tx + 9, by + bh / 2 + 0.5); tx += ctx.measureText(r.t).width + 18; });
+      ctx.restore(); ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+    }
   }
 
   // A chart card with range buttons, optional custom date pickers, optional %-rebasing and markers.
@@ -422,7 +448,7 @@
     window.addEventListener("mouseup", () => { if (dragX != null) { dragX = null; draw(); } });
     canvas.addEventListener("mousemove", (e) => {
       if (dragX != null && (e.buttons & 1)) {
-        tooltip().style.display = "none";
+        tooltip().style.display = "none"; canvas.__hoverI = null;
         const w = winHi - winLo, plotPx = (canvas.clientWidth - 68) || 1;   // padL+padR = 68
         let lo = dragLo - Math.round(((e.clientX - dragX) / plotPx) * w);
         lo = Math.max(0, Math.min(lo, dates.length - w));
@@ -431,12 +457,16 @@
       }
       const rect = canvas.getBoundingClientRect();
       const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+      const geo = canvas.__geo;   // crosshair: snap to the nearest bar exactly as the renderer placed it
+      if (geo && geo.n > 0 && mx >= geo.padL - 4 && mx <= geo.padL + geo.plotW + 4) { canvas.__hoverI = Math.max(0, Math.min(geo.n - 1, Math.round(((mx - geo.padL) / (geo.plotW || 1)) * (geo.n - 1)))); canvas.__hoverY = my; }
+      else { canvas.__hoverI = null; canvas.__hoverY = null; }
+      draw();
       const hit = (canvas.__hits || []).find((h) => Math.abs(mx - h.x) <= h.r && Math.abs(my - h.y) <= 11);
       const t = tooltip();
       if (hit) { t.innerHTML = hit.html; t.style.display = "block"; t.style.left = (e.clientX + 13) + "px"; t.style.top = (e.clientY + 13) + "px"; }
       else t.style.display = "none";
     });
-    canvas.addEventListener("mouseleave", () => { tooltip().style.display = "none"; });
+    canvas.addEventListener("mouseleave", () => { tooltip().style.display = "none"; canvas.__hoverI = null; canvas.__hoverY = null; draw(); });
 
     setTimeout(draw, 0);
     window.addEventListener("resize", draw);
