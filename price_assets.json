@@ -88,6 +88,14 @@
 "url": "price_gbpusd.json"
 },
 {
+"id": "ust3m",
+"label": "US 3M yield",
+"klass": "Rates",
+"ticker": "^IRX",
+"kind": "yield",
+"url": "price_ust3m.json"
+},
+{
 "id": "ust2y",
 "label": "US 2Y yield",
 "klass": "Rates",
@@ -126,5 +134,53 @@
 "ticker": "^TYX",
 "kind": "yield",
 "url": "price_ust30y.json"
+},
+{
+"id": "s2s10s",
+"label": "2s10s (10Y-2Y)",
+"klass": "Steepness",
+"ticker": "^TNX/2YY=F",
+"kind": "spread",
+"url": "price_s2s10s.json"
+},
+{
+"id": "s3m10y",
+"label": "3m10y (10Y-3M)",
+"klass": "Steepness",
+"ticker": "^TNX/^IRX",
+"kind": "spread",
+"url": "price_s3m10y.json"
+},
+{
+"id": "s5s10s",
+"label": "5s10s (10Y-5Y)",
+"klass": "Steepness",
+"ticker": "^TNX/^FVX",
+"kind": "spread",
+"url": "price_s5s10s.json"
+},
+{
+"id": "s5s30s",
+"label": "5s30s (30Y-5Y)",
+"klass": "Steepness",
+"ticker": "^TYX/^FVX",
+"kind": "spread",
+"url": "price_s5s30s.json"
+},
+{
+"id": "f2s5s10s",
+"label": "2s5s10s fly",
+"klass": "Butterfly",
+"ticker": "2*^FVX-2YY=F-^TNX",
+"kind": "spread",
+"url": "price_f2s5s10s.json"
+},
+{
+"id": "f5s10s30s",
+"label": "5s10s30s fly",
+"klass": "Butterfly",
+"ticker": "2*^TNX-^FVX-^TYX",
+"kind": "spread",
+"url": "price_f5s10s30s.json"
 }
 ]

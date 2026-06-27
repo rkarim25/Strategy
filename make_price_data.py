@@ -18,12 +18,26 @@ ASSETS = [
     ("eth",     "Ethereum",         "Crypto",      "ETH-USD",  "price"),
     ("eurusd",  "EUR / USD",        "FX",          "EURUSD=X", "price"),
     ("gbpusd",  "GBP / USD",        "FX",          "GBPUSD=X", "price"),
+    ("ust3m",   "US 3M yield",      "Rates",       "^IRX",     "yield"),
     ("ust2y",   "US 2Y yield",      "Rates",       "2YY=F",    "yield"),
     ("ust5y",   "US 5Y yield",      "Rates",       "^FVX",     "yield"),
     ("ust10y",  "US 10Y yield",     "Rates",       "^TNX",     "yield"),
     ("ust30y",  "US 30Y yield",     "Rates",       "^TYX",     "yield"),
 ]
-ORDER = [a[0] for a in ASSETS[:11]] + ["ust2y", "ust5y", "ust7y", "ust10y", "ust30y"]
+# curve-steepness spreads (long-tenor minus short-tenor yield); kind 'spread' -> backtested as P&L = pos x change-in-spread
+SPREADS = [
+    ("s2s10s", "2s10s (10Y-2Y)", "^TNX", "2YY=F"),
+    ("s3m10y", "3m10y (10Y-3M)", "^TNX", "^IRX"),
+    ("s5s10s", "5s10s (10Y-5Y)", "^TNX", "^FVX"),
+    ("s5s30s", "5s30s (30Y-5Y)", "^TYX", "^FVX"),
+]
+# curve butterflies (RV): 2*belly - wing_short - wing_long; kind 'spread' (P&L = pos x change-in-fly)
+FLIES = [
+    ("f2s5s10s",  "2s5s10s fly",  "^FVX", "2YY=F", "^TNX"),   # belly 5Y, wings 2Y/10Y
+    ("f5s10s30s", "5s10s30s fly", "^TNX", "^FVX", "^TYX"),    # belly 10Y, wings 5Y/30Y (1977+)
+]
+ORDER = ([a[0] for a in ASSETS[:11]] + ["ust3m", "ust2y", "ust5y", "ust7y", "ust10y", "ust30y"]
+         + [s[0] for s in SPREADS] + [f[0] for f in FLIES])
 
 EPOCH = dt.datetime(1970, 1, 1)
 def ymd(t):  # handles pre-1970 (negative) timestamps on Windows
@@ -85,6 +99,61 @@ try:
         write("ust7y", "US 7Y yield (interp)", "Rates", "^FVX+^TNX", "yield", tuple(s))
 except Exception as e:
     print(f"!! ust7y interp FAILED: {e}")
+
+# steepness spreads = long-tenor minus short-tenor, date-aligned (high = longHigh-shortLow, low = longLow-shortHigh)
+def build_spread(aid, label, long_sym, short_sym):
+    Lg, Sh = cache.get(long_sym), cache.get(short_sym)
+    if not Lg or not Sh:
+        print(f"!! spread {aid}: missing leg ({long_sym} or {short_sym})"); return
+    Li = {d: i for i, d in enumerate(Lg[0])}; Si = {d: i for i, d in enumerate(Sh[0])}
+    s = [[], [], [], [], [], [], []]
+    for d in Lg[0]:
+        j = Si.get(d)
+        if j is None:
+            continue
+        i = Li[d]
+        s[0].append(d); s[1].append(Lg[1][i])
+        s[2].append(round(Lg[2][i] - Sh[2][j], 4))
+        s[3].append(round(Lg[3][i] - Sh[4][j], 4))
+        s[4].append(round(Lg[4][i] - Sh[3][j], 4))
+        s[5].append(round(Lg[5][i] - Sh[5][j], 4))
+        s[6].append(0)
+    if len(s[0]) < 60:
+        print(f"!! spread {aid}: too few aligned rows"); return
+    write(aid, label, "Steepness", f"{long_sym}/{short_sym}", "spread", tuple(s))
+
+for aid, label, lng, sht in SPREADS:
+    try:
+        build_spread(aid, label, lng, sht)
+    except Exception as e:
+        print(f"!! spread {aid} FAILED: {e}")
+
+def build_fly(aid, label, belly, w1, w2):
+    B, A, Cc = cache.get(belly), cache.get(w1), cache.get(w2)
+    if not (B and A and Cc):
+        print(f"!! fly {aid}: missing leg"); return
+    Ai = {d: i for i, d in enumerate(A[0])}; Ci = {d: i for i, d in enumerate(Cc[0])}; Bi = {d: i for i, d in enumerate(B[0])}
+    s = [[], [], [], [], [], [], []]
+    for d in B[0]:
+        j = Ai.get(d); k = Ci.get(d)
+        if j is None or k is None:
+            continue
+        i = Bi[d]
+        s[0].append(d); s[1].append(B[1][i])
+        s[2].append(round(2 * B[2][i] - A[2][j] - Cc[2][k], 4))
+        s[3].append(round(2 * B[3][i] - A[4][j] - Cc[4][k], 4))
+        s[4].append(round(2 * B[4][i] - A[3][j] - Cc[3][k], 4))
+        s[5].append(round(2 * B[5][i] - A[5][j] - Cc[5][k], 4))
+        s[6].append(0)
+    if len(s[0]) < 60:
+        print(f"!! fly {aid}: too few rows"); return
+    write(aid, label, "Butterfly", f"2*{belly}-{w1}-{w2}", "spread", tuple(s))
+
+for aid, label, belly, w1, w2 in FLIES:
+    try:
+        build_fly(aid, label, belly, w1, w2)
+    except Exception as e:
+        print(f"!! fly {aid} FAILED: {e}")
 
 reg.sort(key=lambda r: ORDER.index(r["id"]) if r["id"] in ORDER else 999)
 with open("price_assets.json", "w") as f:

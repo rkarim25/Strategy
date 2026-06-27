@@ -411,6 +411,7 @@
 
     function fetchLive() {
       const live = $("live"), txt = $("liveTxt"); txt.textContent = "live —"; live.classList.remove("on");
+      if (D.kind === "spread") { txt.textContent = "curve spread (computed)"; return; }
       fetch(QUOTE + "/?mode=quote&symbol=" + encodeURIComponent(D.ticker) + "&_=" + Date.now()).then((r) => r.json()).then((q) => {
         if (!q || !(q.price > 0) || (q.ticker || "").toUpperCase() !== D.ticker.toUpperCase()) { txt.textContent = "live unavailable"; return; }
         const prev = D.close[D.n - 1], chg = (q.price / prev - 1) * 100, s = chg >= 0 ? "+" : "";
@@ -428,29 +429,41 @@
     function renderPlaybook() {
       const c = D.close, host = $("playbook"); $("pbAsset").textContent = D.dates.length ? "· " + D.label + " · " + D.dates[0] + " → " + D.dates[D.n - 1] : "";
       if (!c || c.length < 250) { host.innerHTML = `<p class="meta">Not enough history for a meaningful backtest.</p>`; return; }
-      const isY = D.kind === "yield", L = state.lev;
-      const levArr = (pos) => (L.mult > 1 && !isY && D.ddh.length === c.length) ? pos.map((p, i) => (p ? ((D.ddh[i] > L.ddThr / 100 && D.rv[i] < L.volThr / 100) ? L.mult : 1) : 0)) : pos;
-      const evalp = (pos) => { const la = levArr(pos); const r = isY ? btYield(c, pos) : btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
-      const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isY) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
+      const isY = D.kind === "yield", isS = D.kind === "spread", L = state.lev;
+      $("levBar").style.display = (isY || isS) ? "none" : "";
+      const levArr = (pos) => (L.mult > 1 && !isY && !isS && D.ddh.length === c.length) ? pos.map((p, i) => (p ? ((D.ddh[i] > L.ddThr / 100 && D.rv[i] < L.volThr / 100) ? L.mult : 1) : 0)) : pos;
+      function spreadStats(pos) {
+        let cum = 0, peak = 0, mdd = 0, hit = 0, days = 0; const pnl = [];
+        for (let i = 1; i < c.length; i++) { const dir = pos[i - 1] ? 1 : -1, x = dir * (c[i] - c[i - 1]); pnl.push(x); cum += x; if (cum > peak) peak = cum; if (cum - peak < mdd) mdd = cum - peak; if (x > 0) hit++; days++; }
+        const yrs = c.length / 252, m = pnl.reduce((a, b) => a + b, 0) / pnl.length; let v = 0; for (const x of pnl) v += (x - m) ** 2; const vol = Math.sqrt(v / Math.max(1, pnl.length - 1));
+        return { annbps: (cum * 100) / yrs, maxddbps: mdd * 100, sharpe: vol ? (m / vol) * Math.sqrt(252) : 0, hit: days ? hit / days : 0, total: cum * 100 };
+      }
+      const evalp = (pos) => { if (isS) return spreadStats(pos); const la = levArr(pos); const r = isY ? btYield(c, pos) : btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
+      const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isY && !isS) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
+      const COLS = isS
+        ? [["Ann bps", (m) => Math.round(m.annbps)], ["Max DD bps", (m) => Math.round(m.maxddbps)], ["Sharpe", (m) => f2(m.sharpe)], ["Hit %", (m) => pct(m.hit)], ["Total bps", (m) => Math.round(m.total).toLocaleString()]]
+        : [["CAGR", (m) => pct(m.cagr)], ["Max DD", (m) => pct(m.maxdd)], ["Sharpe", (m) => f2(m.sharpe)], ["% in", (m) => lc(m)], ["$100→", (m) => "$" + Math.round(m.end).toLocaleString()]];
+      const winKey = isS ? "total" : "cagr";
       const ones = c.map(() => 1), bh = evalp(ones);
-      const head = `<tr><th>Strategy, signal &amp; parameters</th><th>CAGR</th><th>Max DD</th><th>Sharpe</th><th>% in</th><th>$100→</th><th>Show</th></tr>`;
-      const bhRow = `<tr class="bh"><td>Buy &amp; hold<div class="sig">always invested</div></td><td class="num">${pct(bh.cagr)}</td><td class="num">${pct(bh.maxdd)}</td><td class="num">${f2(bh.sharpe)}</td><td class="num">${lc(bh)}</td><td class="num">$${Math.round(bh.end).toLocaleString()}</td><td></td></tr>`;
+      const head = `<tr><th>Strategy, signal &amp; parameters</th>${COLS.map(([h]) => `<th>${h}</th>`).join("")}<th>Show</th></tr>`;
+      const bhRow = `<tr class="bh"><td>${isS ? "Static steepener" : "Buy &amp; hold"}<div class="sig">${isS ? "always long steepener" : "always invested"}</div></td>${COLS.map(([, f]) => `<td class="num">${f(bh)}</td>`).join("")}<td></td></tr>`;
       const body = STRATS.map((st) => {
         const p = state.stratParams[st.key], pos = st.sig(c, p, D.high, D.low), s = evalp(pos);
         const inputs = st.params.map((q) => `<label>${esc(q.label)}<input type="number" data-k="${st.key}" data-p="${q.k}" value="${p[q.k]}" min="${q.min}" max="${q.max}" step="${q.step || 1}"></label>`).join("");
         const plotBtn = st.plot ? `<button class="pb-btn ${state.plotted[st.key] ? "on" : ""}" data-plot="${st.key}">${state.plotted[st.key] ? "✓ plot" : "plot"}</button>` : `<button class="pb-btn" disabled title="no chart overlay">plot</button>`;
         const sigBtn = `<button class="pb-btn sig ${state.signalKey === st.key ? "on" : ""}" data-sig="${st.key}">${state.signalKey === st.key ? "✓ signals" : "signals"}</button>`;
         const noteBtn = `<button class="pb-btn ${state.notesOpen[st.key] ? "on" : ""}" data-note="${st.key}">notes</button>`;
-        const row = `<tr><td><b>${esc(st.name)}</b><div class="sig">▲ ${esc(st.buy(p))} · ▼ ${esc(st.sell(p))}</div><div class="pbp">${inputs}</div></td>
-          <td class="num ${s.cagr > bh.cagr ? "win" : ""}">${pct(s.cagr)}</td><td class="num">${pct(s.maxdd)}</td><td class="num">${f2(s.sharpe)}</td><td class="num">${lc(s)}</td><td class="num">$${Math.round(s.end).toLocaleString()}</td>
-          <td><div class="pbacts">${plotBtn}${sigBtn}${noteBtn}</div></td></tr>`;
+        const sigTxt = isS ? `▲ long steepener: ${esc(st.buy(p))} · ▼ flattener: ${esc(st.sell(p))}` : `▲ ${esc(st.buy(p))} · ▼ ${esc(st.sell(p))}`;
+        const cells = COLS.map(([, f], idx) => (idx === 0 ? `<td class="num ${s[winKey] > bh[winKey] ? "win" : ""}">${f(s)}</td>` : `<td class="num">${f(s)}</td>`)).join("");
+        const row = `<tr><td><b>${esc(st.name)}</b><div class="sig">${sigTxt}</div><div class="pbp">${inputs}</div></td>${cells}<td><div class="pbacts">${plotBtn}${sigBtn}${noteBtn}</div></td></tr>`;
         const noteRow = state.notesOpen[st.key] ? `<tr class="noterow"><td colspan="7">${st.note}</td></tr>` : "";
         return row + noteRow;
       }).join("");
       const caps = [];
+      if (isS) caps.push(`<b>Steepness spread</b> (% points; ×100 = bps). A trade goes <b>long the steepener</b> when the rule fires and <b>short (flattener)</b> when it doesn't; daily P&L = position × the change in the spread. Strategies signal on the <i>spread level</i> (its SMA / RSI / MACD …). “Static steepener” = always long the spread. <b>Hit %</b> = share of days the position made money.`);
       if (isY) caps.push(`<b>Yield asset</b> — P&L is the <b>yield earned while invested</b> (carry: rate ÷ 252 per day, bond price moves ignored); candles show the rate, CAGR ≈ average yield captured.`);
-      if (!isY && L.mult > 1) caps.push(`<b>${L.mult}× when safe</b> — levered while in trend AND drawdown &gt; ${L.ddThr}% AND 20-day vol &lt; ${L.volThr}%, else 1× (cash when out). ${L.costs ? "Costs ON (5bps/switch + 4%/yr financing)." : "No costs."} Leverage lifts CAGR but <b>deepens drawdowns and usually lowers Sharpe</b> — that's the trade-off; the “% in” column shows average leverage.`);
-      else if (!isY && L.costs) caps.push(`Costs ON — 5 bps per switch.`);
+      if (!isY && !isS && L.mult > 1) caps.push(`<b>${L.mult}× when safe</b> — levered while in trend AND drawdown &gt; ${L.ddThr}% AND 20-day vol &lt; ${L.volThr}%, else 1× (cash when out). ${L.costs ? "Costs ON (5bps/switch + 4%/yr financing)." : "No costs."} Leverage lifts CAGR but <b>deepens drawdowns and usually lowers Sharpe</b> — that's the trade-off; the “% in” column shows average leverage.`);
+      else if (!isY && !isS && L.costs) caps.push(`Costs ON — 5 bps per switch.`);
       const cap = caps.length ? `<p class="meta" style="margin:0 0 6px">${caps.join(" ")}</p>` : "";
       host.innerHTML = cap + `<table class="pb"><thead>${head}</thead><tbody>${bhRow}${body}</tbody></table>`;
       host.querySelectorAll("input[data-k]").forEach((inp) => { inp.onchange = () => {
