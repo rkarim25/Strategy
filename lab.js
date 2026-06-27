@@ -323,7 +323,7 @@
       const ctx = computeStrategy();
       const host = document.getElementById("charts"); host.innerHTML = "";
       const specs = makeDescriptors(ctx);
-      descs = specs.map((sp) => { const card = SP.chartBlock(sp.title, D.dates, sp.series(ctx), { rebasePct: !!sp.rebase, customDates: true, markerDefs: ctx.mk[sp.mk], onWindow: sync }); host.appendChild(card); return { card, spec: sp }; });
+      descs = specs.map((sp) => { const card = SP.chartBlock(sp.title, D.dates, sp.series(ctx), { rebasePct: !!sp.rebase, customDates: true, markerDefs: ctx.mk[sp.mk], onWindow: sync, defaultRange: "Full" }); host.appendChild(card); return { card, spec: sp }; });   // Lab is a backtester → full history; its period dropdown controls the window
       descs.forEach((d) => d.card.setWindow(savedWin[0], savedWin[1]));
       lastSig = sigOf(ctx); setKPIsForWindow();
     }

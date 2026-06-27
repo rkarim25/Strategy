@@ -197,10 +197,12 @@
         background:radial-gradient(circle at top left,rgba(0,113,227,.12),transparent 32rem),linear-gradient(180deg,#fbfbfd,var(--bg) 42%,#fff);
         color:var(--text);-webkit-font-smoothing:antialiased;}
       main{margin:40px auto 72px;}
-      h1{margin:0 0 6px;font-size:clamp(28px,4.4vw,46px);letter-spacing:-.04em;font-weight:800;line-height:1.04;}
-      h2{margin:0 0 8px;font-size:19px;letter-spacing:-.02em;}
-      p{color:var(--muted);line-height:1.55;}
-      .lede{font-size:16px;max-width:74ch;}
+      h1{margin:0 0 8px;font-size:clamp(25px,2.9vw,33px);letter-spacing:-.021em;font-weight:700;line-height:1.14;color:var(--text);}
+      h2{margin:0 0 10px;font-size:17px;font-weight:600;letter-spacing:-.012em;line-height:1.25;}
+      h3{font-size:15px;font-weight:650;letter-spacing:-.01em;}
+      p{color:#3f4046;line-height:1.6;font-size:14.5px;}
+      .lede{font-size:16px;line-height:1.62;color:#52535a;max-width:68ch;font-weight:400;}
+      .lede b,.lede strong{color:var(--text);font-weight:600;}
       .card{border:1px solid var(--line);border-radius:22px;background:var(--panel);padding:20px 22px;
         box-shadow:var(--shadow);backdrop-filter:blur(20px);margin:18px 0;}
       .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px;}
@@ -211,11 +213,11 @@
       .signal-banner{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 22px;border-radius:18px;color:#fff;}
       .signal-banner.long{background:linear-gradient(120deg,#248a3d,#1c6e31);}
       .signal-banner.cash{background:linear-gradient(120deg,#6e6e73,#4b4b50);}
-      .signal-banner .big{font-size:30px;font-weight:800;letter-spacing:-.02em;}
+      .signal-banner .big{font-size:27px;font-weight:700;letter-spacing:-.018em;}
       .signal-banner .sub{font-size:13px;opacity:.92;}
       .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:6px;}
       .kpi{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;}
-      .kpi .k{font-size:12px;color:var(--muted);font-weight:600;} .kpi .v{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-top:2px;}
+      .kpi .k{font-size:12px;color:var(--muted);font-weight:600;} .kpi .v{font-size:21px;font-weight:700;letter-spacing:-.018em;margin-top:2px;}
       .kpi .vs{font-size:11.5px;color:var(--muted);margin-top:2px;}
       table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;margin-top:6px;}
       th,td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;}
@@ -358,7 +360,7 @@
   // A chart card with range buttons, optional custom date pickers, optional %-rebasing and markers.
   // seriesDefs values are full-length, aligned to `dates`. markerDefs: [{date,dir,color,label,tip}].
   function chartBlock(title, dates, seriesDefs, opts = {}) {
-    const { log = false, rebasePct = false, markerDefs = [], customDates = false, defaultRange = "Full",
+    const { log = false, rebasePct = false, markerDefs = [], customDates = false, defaultRange = "1Y",
       onWindow = null,
       ranges = [["1M", 21], ["3M", 63], ["1Y", 252], ["5Y", 1260], ["10Y", 2520], ["Full", dates.length]] } = opts;
     const dateIdx = new Map(); dates.forEach((dt, i) => dateIdx.set(dt, i));
