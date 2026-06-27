@@ -13,6 +13,7 @@
   const QUOTE = "https://spx-quote-proxy.rkarim88.workers.dev";
   const STORE = "https://lab-strategy-store.rkarim88.workers.dev";
   const CLOUD_KEY = "lab_cloud_key";
+  const TICKER_DV01 = { "^IRX": 0.25, "2YY=F": 1.9, "^FVX": 4.7, "^TNX": 8.6, "^TYX": 18.5 }; // ≈ modified duration (DV01 per $100)
   const UP = "#15803d", DN = "#b42318";
   const RANGES = [["1M", 21], ["3M", 63], ["6M", 126], ["1Y", 252], ["2Y", 504], ["5Y", 1260], ["Max", null]];
   const TFS = [
@@ -227,9 +228,9 @@
       indParams: Object.fromEntries(Object.entries(DEFAULTS).map(([k, v]) => [k, v.slice()])),
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
-      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false } };
-    const D = { id: "", ticker: "", label: "", kind: "price", klass: "", n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
-    let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], pendingBest = null;
+      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 } };
+    const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
+    let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], CURVE = [], pendingBest = null;
 
     const app = document.getElementById("app");
     app.innerHTML = `
@@ -261,6 +262,11 @@
         <div id="chart"></div>
         <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points on the chart.</p>
       </div>
+      <div class="card" id="curveCard" style="display:none">
+        <h2 style="margin-bottom:2px">US Treasury curve <span class="meta" id="curveAsof" style="font-weight:400"></span></h2>
+        <div id="curveSvg" style="overflow-x:auto"></div>
+        <div id="curveFlags" class="meta" style="margin-top:6px"></div>
+      </div>
       <div class="card" id="leaderCard" style="display:none">
         <h2 style="margin-bottom:2px">Curve strategy leaderboard <span class="meta" style="font-weight:400">— best backtested rule per UST instrument</span></h2>
         <p class="meta" style="margin-top:4px">A comprehensive sweep (26 strategy/parameter configs × 12 instruments) over each instrument's full history, ranked by <b>Sharpe</b> of the directional P&L (bps). <b>Load</b> applies a rule to the chart + playbook below. Educational only — not advice.</p>
@@ -275,6 +281,10 @@
           <div><span class="lbl">Leverage</span><span class="seg" id="levSeg"></span></div>
           <span id="levSafe" style="display:none;font-size:12px;color:#6e6e73">go <b id="levMultLbl">2×</b> when DD &gt; <input id="levDD" type="number" step="1" style="width:48px;font:inherit;font-size:12px;padding:3px 5px;border-radius:7px;border:1px solid var(--line)"> % &amp; 20-day vol &lt; <input id="levVol" type="number" step="1" style="width:48px;font:inherit;font-size:12px;padding:3px 5px;border-radius:7px;border:1px solid var(--line)"> %</span>
           <div><span class="lbl">Costs</span><span class="seg" id="costSeg"></span></div>
+        </div>
+        <div class="cbar" id="pnlBar" style="display:none;margin:2px 0 4px">
+          <div><span class="lbl">P&amp;L unit</span><span class="seg" id="pnlSeg"></span></div>
+          <span id="pnlPerBp" style="display:none;font-size:12px;color:#6e6e73">$ per bp (trade DV01) <input id="perBpInput" type="number" step="50" style="width:88px;font:inherit;font-size:12px;padding:3px 6px;border-radius:7px;border:1px solid var(--line)"></span>
         </div>
         <div id="playbook"><p class="meta">Loading…</p></div>
       </div>
@@ -317,6 +327,8 @@
     $("levDD").onchange = () => { const x = parseFloat($("levDD").value); if (isFinite(x)) { state.lev.ddThr = x; renderPlaybook(); scheduleSave(); } };
     $("levVol").onchange = () => { const x = parseFloat($("levVol").value); if (isFinite(x)) { state.lev.volThr = x; renderPlaybook(); scheduleSave(); } };
     syncLevUI();
+    makeSeg($("pnlSeg"), [["bps", "Yield Δ (bps)"], ["usd", "DV01 $"]], (v) => v === state.pnl.mode, (v) => { state.pnl.mode = v; syncPnlUI(); renderPlaybook(); scheduleSave(); });
+    $("perBpInput").onchange = () => { const x = parseFloat($("perBpInput").value); if (isFinite(x) && x > 0) { state.pnl.perBp = x; renderPlaybook(); } };
 
     function setRange(days) { const w = Math.max(200, $("chart").clientWidth - 70); const n = days ? Math.min(days, D.n || days) : (D.n || days || 250); safe(() => { chart.setBarSpace(Math.max(0.5, Math.min(40, w / n))); chart.scrollToRealTime(0); }); }
 
@@ -324,26 +336,44 @@
     function aggregate(bars, ms) { if (!ms) return bars; const out = []; let cur = null, key = null; for (const b of bars) { const k = Math.floor(b.timestamp / ms); if (k !== key) { if (cur) out.push(cur); cur = { timestamp: k * ms, open: b.open, high: b.high, low: b.low, close: b.close, volume: b.volume || 0 }; key = k; } else { cur.high = Math.max(cur.high, b.high); cur.low = Math.min(cur.low, b.low); cur.close = b.close; cur.volume += b.volume || 0; } } if (cur) out.push(cur); return out; }
     function setCur(bars) { state.curClose = bars.map((b) => b.close); state.curTs = bars.map((b) => b.timestamp); state.curHigh = bars.map((b) => b.high); state.curLow = bars.map((b) => b.low); }
     function stopPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
+    function combineLegs(legBars) {   // align legs by timestamp, combine to one OHLC series (spread/fly)
+      const maps = legBars.map((l) => { const m = new Map(); l.bars.forEach((b) => m.set(b.timestamp, b)); return { w: l.w, m }; });
+      const out = [];
+      for (const t of maps[0].m.keys()) {
+        if (!maps.every((mm) => mm.m.has(t))) continue;
+        let o = 0, h = 0, lo = 0, c = 0;
+        for (const { w, m } of maps) { const b = m.get(t); o += w * b.open; c += w * b.close; h += w > 0 ? w * b.high : w * b.low; lo += w > 0 ? w * b.low : w * b.high; }
+        out.push({ timestamp: t, open: +o.toFixed(4), high: +h.toFixed(4), low: +lo.toFixed(4), close: +c.toFixed(4), volume: 0 });
+      }
+      out.sort((a, b) => a.timestamp - b.timestamp); return out;
+    }
+    function fetchIntradayBars(tf) {
+      const url = (sym) => QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(sym) + "&interval=" + tf.interval + "&range=" + tf.range + "&_=" + Date.now();
+      if (D.legs && D.legs.length) {
+        return Promise.all(D.legs.map((leg) => fetch(url(leg.t)).then((r) => r.json()).then((j) => ({ w: leg.w, bars: j.bars || [] }))))
+          .then((legBars) => { if (legBars.some((l) => !l.bars.length)) throw new Error("a leg lacks intraday"); return { bars: combineLegs(legBars), ticker: D.ticker }; });
+      }
+      return fetch(url(D.ticker)).then((r) => r.json()).then((j) => ({ bars: j.bars || [], ticker: j.ticker || D.ticker }));
+    }
     function applyTF() {
       stopPoll();
       const tf = TFS.find((t) => t.id === state.tf) || TFS[TFS.length - 1];
       if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); setRange(126); reapplyDrawings(); setCur(D.daily || []); refreshSignals(); state.tfLastTs = 0; $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points."; return; }
       status("loading " + tf.label + "…");
-      fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=" + tf.interval + "&range=" + tf.range + "&_=" + Date.now())
-        .then((r) => r.json())
-        .then((j) => {
-          let bars = j.bars || []; if (!bars.length) throw new Error("no intraday data"); if (tf.aggMs) bars = aggregate(bars, tf.aggMs);
+      fetchIntradayBars(tf)
+        .then(({ bars: raw, ticker }) => {
+          let bars = raw || []; if (!bars.length) throw new Error("no intraday data"); if (tf.aggMs) bars = aggregate(bars, tf.aggMs);
           safe(() => { chart.applyNewData(bars); chart.resize(); });
           const w = Math.max(200, $("chart").clientWidth - 70), show = Math.min(bars.length, tf.show || 180);
           safe(() => { chart.setBarSpace(Math.max(1, Math.min(14, w / show))); chart.scrollToRealTime(0); });
           reapplyDrawings(); setCur(bars); refreshSignals(); state.tfLastTs = bars[bars.length - 1].timestamp;
-          status(tf.label + " · " + bars.length + " bars");
-          $("hint").textContent = tf.label + " intraday · auto-refreshing every " + (POLL_MS / 1000) + "s · " + (j.ticker || D.ticker);
+          status(tf.label + " · " + bars.length + " bars" + (D.legs ? " (computed)" : ""));
+          $("hint").textContent = tf.label + " intraday · auto-refreshing every " + (POLL_MS / 1000) + "s · " + (ticker || D.ticker);
           pollTimer = setInterval(() => refreshTF(tf), POLL_MS);
         })
         .catch((e) => { status("intraday unavailable: " + e.message); });
     }
-    function refreshTF(tf) { fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=" + tf.interval + "&range=" + tf.range + "&_=" + Date.now()).then((r) => r.json()).then((j) => { let bars = j.bars || []; if (tf.aggMs) bars = aggregate(bars, tf.aggMs); let n = 0; for (const b of bars) { if (b.timestamp >= state.tfLastTs) { safe(() => chart.updateData(b)); state.tfLastTs = Math.max(state.tfLastTs, b.timestamp); n++; } } if (n) { setCur(bars); refreshSignals(); fetchLive(); } }).catch(() => {}); }
+    function refreshTF(tf) { fetchIntradayBars(tf).then(({ bars: raw }) => { let bars = raw || []; if (tf.aggMs) bars = aggregate(bars, tf.aggMs); let n = 0; for (const b of bars) { if (b.timestamp >= state.tfLastTs) { safe(() => chart.updateData(b)); state.tfLastTs = Math.max(state.tfLastTs, b.timestamp); n++; } } if (n) { setCur(bars); refreshSignals(); fetchLive(); } }).catch(() => {}); }
 
     // ---- indicators ----
     const paneId = (name) => "pane_" + name.toLowerCase();
@@ -447,8 +477,12 @@
       const isDelta = isS || isY;   // UST instruments trade directionally: P&L = position × change-in-series (bps)
       const evalp = (pos) => { if (isDelta) return spreadStats(pos); const la = levArr(pos); const r = btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
       const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isDelta) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
+      $("pnlBar").style.display = isDelta ? "" : "none";
+      const usd = isDelta && state.pnl.mode === "usd", pb = state.pnl.perBp || 1;
       const COLS = isDelta
-        ? [["Ann bps", (m) => Math.round(m.annbps)], ["Max DD bps", (m) => Math.round(m.maxddbps)], ["Sharpe", (m) => f2(m.sharpe)], ["Hit %", (m) => pct(m.hit)], ["Total bps", (m) => Math.round(m.total).toLocaleString()]]
+        ? (usd
+          ? [["Ann $", (m) => "$" + Math.round(m.annbps * pb).toLocaleString()], ["Max DD $", (m) => "$" + Math.round(m.maxddbps * pb).toLocaleString()], ["Sharpe", (m) => f2(m.sharpe)], ["Hit %", (m) => pct(m.hit)], ["Total $", (m) => "$" + Math.round(m.total * pb).toLocaleString()]]
+          : [["Ann bps", (m) => Math.round(m.annbps)], ["Max DD bps", (m) => Math.round(m.maxddbps)], ["Sharpe", (m) => f2(m.sharpe)], ["Hit %", (m) => pct(m.hit)], ["Total bps", (m) => Math.round(m.total).toLocaleString()]])
         : [["CAGR", (m) => pct(m.cagr)], ["Max DD", (m) => pct(m.maxdd)], ["Sharpe", (m) => f2(m.sharpe)], ["% in", (m) => lc(m)], ["$100→", (m) => "$" + Math.round(m.end).toLocaleString()]];
       const winKey = isDelta ? "total" : "cagr";
       const ones = c.map(() => 1), bh = evalp(ones);
@@ -470,6 +504,7 @@
       const caps = [];
       if (isY) caps.push(`<b>Rate trade</b> (bps). <b>Long (+1) = long rates</b> — profit when the yield <i>rises</i> (short duration); <b>short (−1) = long duration</b> — profit when it falls. P&L = position × daily change in the yield. Strategies signal on the <i>yield level</i>. <b>Hit %</b> = share of days the position made money.`);
       if (isS) caps.push(`<b>Steepness spread</b> (% points; ×100 = bps). <b>Long the steepener</b> when the rule fires, <b>short (flattener)</b> when not; P&L = position × change in the spread. Strategies signal on the <i>spread level</i>. <b>Hit %</b> = share of days the position made money.`);
+      if (usd) caps.push(`<b>DV01 $ P&L</b> at <b>$${(state.pnl.perBp || 0).toLocaleString()}/bp</b> (≈ this trade's DV01, edit above). Sharpe &amp; Hit % are scale-free; bps × $/bp = dollars.`);
       if (!isDelta && L.mult > 1) caps.push(`<b>${L.mult}× when safe</b> — levered while in trend AND drawdown &gt; ${L.ddThr}% AND 20-day vol &lt; ${L.volThr}%, else 1× (cash when out). ${L.costs ? "Costs ON (5bps/switch + 4%/yr financing)." : "No costs."} Leverage lifts CAGR but <b>deepens drawdowns and usually lowers Sharpe</b> — that's the trade-off; the “% in” column shows average leverage.`);
       else if (!isDelta && L.costs) caps.push(`Costs ON — 5 bps per switch.`);
       const cap = caps.length ? `<p class="meta" style="margin:0 0 6px">${caps.join(" ")}</p>` : "";
@@ -509,16 +544,39 @@
       renderPlaybook(); refreshSignals(); scheduleSave();
       if (scroll) { const pb = $("playbook"); if (pb) pb.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
     }
+    function syncPnlUI() { if (!$("pnlSeg")) return; segActive($("pnlSeg"), findBtn($("pnlSeg"), state.pnl.mode)); $("pnlPerBp").style.display = state.pnl.mode === "usd" ? "" : "none"; $("perBpInput").value = state.pnl.perBp || 0; }
+    function renderCurve() {
+      const card = $("curveCard"); const isUST = ["Rates", "Steepness", "Butterfly"].includes(D.klass);
+      card.style.display = (isUST && CURVE.length) ? "" : "none";
+      if (!isUST || !CURVE.length) return;
+      $("curveAsof").textContent = "as of " + (CURVE[CURVE.length - 1].date || "");
+      const W = 620, H = 190, padL = 46, padR = 18, padT = 16, padB = 30;
+      const ys = CURVE.map((c) => c.yield); let ymin = Math.min(...ys), ymax = Math.max(...ys); const pad = (ymax - ymin) * 0.18 || 0.2; ymin -= pad; ymax += pad;
+      const lx = Math.log(0.25), rx = Math.log(30);
+      const X = (yr) => padL + (Math.log(yr) - lx) / (rx - lx) * (W - padL - padR);
+      const Y = (v) => padT + (1 - (v - ymin) / (ymax - ymin)) * (H - padT - padB);
+      let grid = "";
+      for (let k = 0; k <= 4; k++) { const v = ymin + (ymax - ymin) * k / 4, y = Y(v).toFixed(1); grid += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#eee"/><text x="${padL - 6}" y="${(+y + 3).toFixed(1)}" text-anchor="end" font-size="10" fill="#8a8a8e">${v.toFixed(2)}</text>`; }
+      const poly = CURVE.map((c) => `${X(c.years).toFixed(1)},${Y(c.yield).toFixed(1)}`).join(" ");
+      let dots = "";
+      CURVE.forEach((c) => { const x = X(c.years).toFixed(1), y = Y(c.yield).toFixed(1); dots += `<circle cx="${x}" cy="${y}" r="3.5" fill="#0071e3"/><text x="${x}" y="${(+y - 8).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1d1d1f">${c.yield.toFixed(2)}</text><text x="${x}" y="${H - padB + 14}" text-anchor="middle" font-size="10" fill="#8a8a8e">${esc(c.id.replace("ust", "").toUpperCase())}</text>`; });
+      $("curveSvg").innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto">${grid}<polyline points="${poly}" fill="none" stroke="#0071e3" stroke-width="2"/>${dots}</svg>`;
+      const yv = (id) => { const c = CURVE.find((x) => x.id === id); return c ? c.yield : null; };
+      const flags = [["2s10s", "ust2y", "ust10y"], ["3m10y", "ust3m", "ust10y"], ["5s30s", "ust5y", "ust30y"]].map(([nm, a, b]) => { const v = (yv(b) - yv(a)) * 100, inv = v < 0; return `<b>${nm}</b> ${v >= 0 ? "+" : ""}${v.toFixed(0)}bps <span style="color:${inv ? DN : UP};font-weight:600">${inv ? "INVERTED" : v > 60 ? "steep" : "flat-ish"}</span>`; }).join(" &nbsp;·&nbsp; ");
+      $("curveFlags").innerHTML = "Slope: " + flags;
+    }
 
     function loadAsset(id) {
       state.asset = id;
       fetch("price_" + id + ".json?v=" + Date.now()).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then((d) => {
-        D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.klass = d.klass || ""; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
+        D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.klass = d.klass || ""; D.legs = d.legs || null; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
         D.ddh = ddFromHigh(d.close, 252); D.rv = rvol(d.close, 20);
+        D.dv01 = D.legs ? Math.max(...D.legs.map((l) => TICKER_DV01[l.t] || 1)) : (TICKER_DV01[D.ticker] || 8.6);
+        state.pnl.perBp = Math.round(D.dv01 * 1000);   // ≈ trade DV01 in $/bp (per ~$10mm); user-editable
         $("cTitle").textContent = D.label + " — chart";
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
         safe(() => chart.removeOverlay()); drawings = [];
-        applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader();
+        applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader(); renderCurve(); syncPnlUI();
         if (pendingBest) { applyStrategy(pendingBest, true); pendingBest = null; }
         else { const e = LEADER.find((x) => x.id === D.id); if (e && ["Rates", "Steepness", "Butterfly"].includes(D.klass)) applyStrategy(e.best, false); }   // best rule = default for every UST trade
       }).catch((e) => { status("could not load " + id + " — " + e.message); });
@@ -529,6 +587,7 @@
       .then((list) => { ASSETS = list; })
       .catch(() => { ASSETS = [{ id: "spx", label: "S&P 500", klass: "Indices", ticker: "^GSPC" }, { id: "ndx", label: "Nasdaq 100", klass: "Indices", ticker: "^NDX" }]; })
       .then(() => fetch("ust_strategies.json?v=" + Date.now()).then((r) => r.json()).then((l) => { LEADER = l || []; }).catch(() => { LEADER = []; }))
+      .then(() => fetch("ust_curve.json?v=" + Date.now()).then((r) => r.json()).then((l) => { CURVE = l || []; }).catch(() => { CURVE = []; }))
       .then(() => { const sel = $("assetSel"), groups = {}; ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); }); sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join(""); sel.value = state.asset; sel.onchange = () => loadAsset(sel.value); loadAsset(state.asset); });
   }
 

@@ -64,18 +64,22 @@ def fetch(sym):
     return dates, T, O, H, L, C, V
 
 
-def write(aid, label, klass, ticker, kind, series):
+def write(aid, label, klass, ticker, kind, series, legs=None):
     dates, T, O, H, L, C, V = series
     out = f"price_{aid}.json"
     payload = {"id": aid, "ticker": ticker, "asset_label": label, "klass": klass, "kind": kind,
                "dates": dates, "timestamp": T, "open": O, "high": H, "low": L, "close": C, "volume": V}
+    if legs: payload["legs"] = legs
     with open(out, "w") as f:
         json.dump(payload, f, separators=(",", ":"))
-    reg.append({"id": aid, "label": label, "klass": klass, "ticker": ticker, "kind": kind, "url": out})
+    r = {"id": aid, "label": label, "klass": klass, "ticker": ticker, "kind": kind, "url": out}
+    if legs: r["legs"] = legs
+    reg.append(r)
+    if kind == "yield": LATEST[aid] = {"date": dates[-1], "yield": C[-1]}
     print(f"{out}: {label} [{klass}/{kind}] ({ticker})  {len(dates)} rows  {dates[0]}..{dates[-1]}  last {C[-1]}")
 
 
-reg = []; cache = {}
+reg = []; cache = {}; LATEST = {}
 for aid, label, klass, sym, kind in ASSETS:
     try:
         cache[sym] = fetch(sym)
@@ -120,7 +124,8 @@ def build_spread(aid, label, long_sym, short_sym):
         s[6].append(0)
     if len(s[0]) < 60:
         print(f"!! spread {aid}: too few aligned rows"); return
-    write(aid, label, "Steepness", f"{long_sym}/{short_sym}", "spread", tuple(s))
+    write(aid, label, "Steepness", f"{long_sym}/{short_sym}", "spread", tuple(s),
+          legs=[{"t": long_sym, "w": 1}, {"t": short_sym, "w": -1}])
 
 for aid, label, lng, sht in SPREADS:
     try:
@@ -147,13 +152,20 @@ def build_fly(aid, label, belly, w1, w2):
         s[6].append(0)
     if len(s[0]) < 60:
         print(f"!! fly {aid}: too few rows"); return
-    write(aid, label, "Butterfly", f"2*{belly}-{w1}-{w2}", "spread", tuple(s))
+    write(aid, label, "Butterfly", f"2*{belly}-{w1}-{w2}", "spread", tuple(s),
+          legs=[{"t": belly, "w": 2}, {"t": w1, "w": -1}, {"t": w2, "w": -1}])
 
 for aid, label, belly, w1, w2 in FLIES:
     try:
         build_fly(aid, label, belly, w1, w2)
     except Exception as e:
         print(f"!! fly {aid} FAILED: {e}")
+
+# live curve snapshot: latest yield per tenor (+ approx modified-duration DV01 per $100)
+TENORS = [("ust3m", 0.25, 0.25), ("ust2y", 2, 1.9), ("ust5y", 5, 4.7), ("ust7y", 7, 6.4), ("ust10y", 10, 8.6), ("ust30y", 30, 18.5)]
+curve = [{"id": k, "years": yr, "dv01": dv, "yield": LATEST[k]["yield"], "date": LATEST[k]["date"]} for k, yr, dv in TENORS if k in LATEST]
+json.dump(curve, open("ust_curve.json", "w"))
+print(f"ust_curve.json: {len(curve)} tenors")
 
 reg.sort(key=lambda r: ORDER.index(r["id"]) if r["id"] in ORDER else 999)
 with open("price_assets.json", "w") as f:
