@@ -232,6 +232,13 @@
       .pb-btn.sig.on{background:#1d1d1f;border-color:#1d1d1f;}
       .pb-btn:disabled{opacity:.35;cursor:default;}
       tr.noterow td{background:rgba(0,113,227,.05);border-bottom:2px solid var(--line);font-size:12.5px;line-height:1.55;color:#333;padding:10px 14px;}
+      #playbook,#leader{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+      @media(max-width:680px){
+        table.pb th,table.pb td{padding:7px 7px;font-size:12px;}
+        .pbacts{min-width:64px;} .pb-btn{padding:5px 7px;font-size:11px;}
+        .cbar{gap:10px;} .pbp input{width:48px;}
+        h1{font-size:24px;} h2{font-size:18px;}
+      }
     `;
     document.head.appendChild(s);
   }
