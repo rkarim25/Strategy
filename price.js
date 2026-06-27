@@ -76,7 +76,7 @@
   const TOOLS = [
     ["cursor", "Cursor"], ["segment", "Trend line"], ["rayLine", "Ray"], ["horizontalStraightLine", "Horizontal"],
     ["verticalStraightLine", "Vertical"], ["priceLine", "Price line"], ["parallelStraightLine", "Parallel"],
-    ["fibonacciLine", "Fibonacci"], ["simpleAnnotation", "Text"], ["measurePct", "Measure %"],
+    ["fibonacciLine", "Fibonacci"], ["noteText", "Note"], ["measurePct", "Measure %"],
   ];
   const nfmt = (x) => (x == null || !isFinite(x) ? "—" : Math.abs(x) < 10 ? x.toLocaleString(undefined, { maximumFractionDigits: 4 }) : x.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
   const pct = (x) => (x == null || !isFinite(x) ? "—" : (x * 100).toFixed(1) + "%");
@@ -183,6 +183,16 @@
             { type: "rect", attrs: { x, y, width: w, height: h }, styles: { style: "stroke_fill", color: up ? "rgba(21,128,61,.10)" : "rgba(180,35,24,.10)", borderColor: col, borderSize: 1, borderStyle: "dashed" }, ignoreEvent: true },
             { type: "text", attrs: { x: (c0.x + c1.x) / 2, y: y - 4, text: label, align: "center", baseline: "bottom" }, styles: { color: "#fff", backgroundColor: col, size: 12, weight: "bold", paddingLeft: 7, paddingRight: 7, paddingTop: 3, paddingBottom: 3, borderRadius: 4 } },
           ];
+        },
+      });
+    } catch (_) {}
+    try {
+      klinecharts.registerOverlay({   // draggable sticky-note (needDefaultPointFigure → its point is a drag handle)
+        name: "noteText", totalStep: 2, needDefaultPointFigure: true, needDefaultXAxisFigure: true, needDefaultYAxisFigure: true,
+        createPointFigures: ({ overlay, coordinates }) => {
+          if (!coordinates.length || !coordinates[0]) return [];
+          const c = coordinates[0], text = String(overlay.extendData || "note");
+          return [{ type: "text", attrs: { x: c.x, y: c.y, text, align: "left", baseline: "middle" }, styles: { color: "#1d1d1f", backgroundColor: "rgba(255,221,120,.96)", borderColor: "rgba(176,138,20,.7)", borderSize: 1, size: 12, paddingLeft: 8, paddingRight: 8, paddingTop: 4, paddingBottom: 4, borderRadius: 7 } }];
         },
       });
     } catch (_) {}
@@ -306,7 +316,8 @@
       indParams: Object.fromEntries(Object.entries(DEFAULTS).map(([k, v]) => [k, v.slice()])),
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
-      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false, inversion: false, carry: false };
+      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false, inversion: false, carry: false,
+      grid: "both", decimals: "auto", ylab: "out", crosshair: true };
     const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, cr: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], CURVE = [], pendingBest = null;
 
@@ -338,6 +349,15 @@
           <div class="ind-grp"><span class="lbl">On&nbsp;price</span><span class="seg" id="indMain"></span></div>
           <div class="ind-grp"><span class="lbl">Studies</span><span class="seg" id="indSub"></span></div>
           <div class="ind-grp" id="indParams"></div>
+        </details>
+        <details class="ind-panel">
+          <summary>Axis &amp; format — grid density · decimals · y-axis labels · crosshair</summary>
+          <div class="ind-grp" style="flex-wrap:wrap;gap:14px">
+            <span><span class="lbl">Grid</span><span class="seg" id="gridSeg"></span></span>
+            <span><span class="lbl">Decimals</span><span class="seg" id="decSeg"></span></span>
+            <span><span class="lbl">Y&nbsp;labels</span><span class="seg" id="ylabSeg"></span></span>
+            <span><span class="lbl">Crosshair</span><span class="seg" id="xhairSeg"></span></span>
+          </div>
         </details>
         <div class="cbar">
           <div><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
@@ -400,6 +420,13 @@
     makeSeg($("tfSeg"), TFS.map((t) => [t.id, t.label]), (v) => v === state.tf, (v, b) => { state.tf = v; segActive($("tfSeg"), b); applyTF(); });
     makeSeg($("typeSeg"), TYPES, (v) => v === state.type, (v, b) => { state.type = v; safe(() => chart.setStyles({ candle: { type: v } })); segActive($("typeSeg"), b); scheduleSave(); });
     makeSeg($("axisSeg"), AXES, (v) => v === state.yAxis, (v, b) => { state.yAxis = v; safe(() => chart.setStyles({ yAxis: { type: v } })); segActive($("axisSeg"), b); scheduleSave(); });
+    function applyGrid() { const g = state.grid; safe(() => chart.setStyles({ grid: { show: g !== "off", horizontal: { show: g !== "off" }, vertical: { show: g === "both" } } })); }
+    function autoDec() { const cl = D.close || []; let mx = 0; for (let i = Math.max(0, cl.length - 60); i < cl.length; i++) { const s = String(cl[i]); const d = s.includes(".") ? s.split(".")[1].length : 0; if (d > mx) mx = d; } return Math.min(6, Math.max(2, mx)); } // read real precision from data (FX→4, indices→2)
+    function applyDecimals() { const d = state.decimals === "auto" ? autoDec() : +state.decimals; safe(() => chart.setPriceVolumePrecision(d, 0)); }
+    makeSeg($("gridSeg"), [["both", "Both"], ["h", "Horiz"], ["off", "Off"]], (v) => v === state.grid, (v, b) => { state.grid = v; applyGrid(); segActive($("gridSeg"), b); scheduleSave(); });
+    makeSeg($("decSeg"), [["auto", "Auto"], ["0", "0"], ["2", "2"], ["4", "4"]], (v) => v === state.decimals, (v, b) => { state.decimals = v; applyDecimals(); segActive($("decSeg"), b); scheduleSave(); });
+    makeSeg($("ylabSeg"), [["out", "Outside"], ["in", "Inside"]], (v) => v === state.ylab, (v, b) => { state.ylab = v; safe(() => chart.setStyles({ yAxis: { inside: v === "in" } })); segActive($("ylabSeg"), b); scheduleSave(); });
+    makeSeg($("xhairSeg"), [["1", "On"], ["0", "Off"]], (v) => (v === "1") === state.crosshair, (v, b) => { state.crosshair = v === "1"; safe(() => chart.setStyles({ crosshair: { show: state.crosshair } })); segActive($("xhairSeg"), b); scheduleSave(); });
     makeSeg($("rangeSeg"), RANGES, () => false, (days, b) => { if ($("rngFrom")) { $("rngFrom").value = ""; $("rngTo").value = ""; } setRange(days); segActive($("rangeSeg"), b); });
     $("rngApply").onclick = setDateRange;
     $("rngFrom").onchange = $("rngTo").onchange = () => { if ($("rngFrom").value && $("rngTo").value) setDateRange(); };
@@ -471,7 +498,7 @@
 
     // ---- timeframe / intraday ----
     function aggregate(bars, ms) { if (!ms) return bars; const out = []; let cur = null, key = null; for (const b of bars) { const k = Math.floor(b.timestamp / ms); if (k !== key) { if (cur) out.push(cur); cur = { timestamp: k * ms, open: b.open, high: b.high, low: b.low, close: b.close, volume: b.volume || 0 }; key = k; } else { cur.high = Math.max(cur.high, b.high); cur.low = Math.min(cur.low, b.low); cur.close = b.close; cur.volume += b.volume || 0; } } if (cur) out.push(cur); return out; }
-    function setCur(bars) { state.curClose = bars.map((b) => b.close); state.curTs = bars.map((b) => b.timestamp); state.curHigh = bars.map((b) => b.high); state.curLow = bars.map((b) => b.low); }
+    function setCur(bars) { state.curClose = bars.map((b) => b.close); state.curTs = bars.map((b) => b.timestamp); state.curHigh = bars.map((b) => b.high); state.curLow = bars.map((b) => b.low); applyDecimals(); } // re-assert y-axis precision (applyNewData resets it)
     function stopPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
     function combineLegs(legBars) {   // align legs by timestamp, combine to one OHLC series (spread/fly)
       const maps = legBars.map((l) => { const m = new Map(); l.bars.forEach((b) => m.set(b.timestamp, b)); return { w: l.w, m }; });
@@ -544,7 +571,7 @@
     let pendingOverlayId = null, drawMenuEl = null, lastMouse = { x: 120, y: 120 };
     document.addEventListener("mousemove", (e) => { lastMouse = { x: e.clientX, y: e.clientY }; });
     // every overlay gets a right-click handler → edit/erase menu (used by new draws AND restored ones)
-    function mkOverlay(spec) { return safe(() => chart.createOverlay({ ...spec, onRightClick: (e) => { showDrawMenu(e.overlay); return true; } })); }
+    function mkOverlay(spec) { return safe(() => chart.createOverlay({ ...spec, onRightClick: (e) => { showDrawMenu(e.overlay); return true; }, onPressedMoveEnd: (e) => { recordDrawing(e.overlay); return false; } })); } // onPressedMoveEnd persists drags
     function pickTool(name) {
       state.tool = name;
       if (pendingOverlayId != null) { safe(() => chart.removeOverlay(pendingOverlayId)); pendingOverlayId = null; } // cancel any in-progress draw
@@ -553,7 +580,7 @@
     }
     // STICKY: re-arm the same tool after each drawing so it stays selected until you pick another tool / Cursor.
     function armTool(name) {
-      let extend; if (name === "simpleAnnotation") extend = (window.prompt("Note text:") || "").trim() || "note";
+      let extend; if (name === "noteText") extend = (window.prompt("Note text:") || "").trim() || "note";
       pendingOverlayId = mkOverlay({ name, extendData: extend, onDrawEnd: (e) => { recordDrawing(e.overlay); pendingOverlayId = null; if (state.tool === name && name !== "cursor") armTool(name); return false; } });
     }
     function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; } }
@@ -562,7 +589,7 @@
       const m = document.createElement("div");
       m.style.cssText = `position:fixed;left:${Math.min(lastMouse.x, innerWidth - 160)}px;top:${Math.min(lastMouse.y, innerHeight - 90)}px;z-index:9999;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;min-width:140px;`;
       const item = (label, fn, danger) => { const b = document.createElement("button"); b.textContent = label; b.style.cssText = `display:block;width:100%;text-align:left;padding:9px 16px;border:0;background:#fff;cursor:pointer;font:inherit;font-size:13px;color:${danger ? "#d70015" : "#1d1d1f"}`; b.onmouseenter = () => (b.style.background = "#f2f2f7"); b.onmouseleave = () => (b.style.background = "#fff"); b.onclick = (ev) => { ev.stopPropagation(); closeDrawMenu(); fn(); }; return b; };
-      if (overlay.name === "simpleAnnotation") m.appendChild(item("✎  Edit note", () => editAnnotation(overlay)));
+      if (overlay.name === "noteText" || overlay.name === "simpleAnnotation") m.appendChild(item("✎  Edit note", () => editAnnotation(overlay)));
       m.appendChild(item("🗑  Erase", () => eraseOverlay(overlay), true));
       document.body.appendChild(m); drawMenuEl = m;
       setTimeout(() => document.addEventListener("mousedown", closeDrawMenu, { once: true }), 0);
@@ -576,8 +603,8 @@
       const dp = safe(() => chart.convertFromPixel({ x: lastMouse.x - rect.left, y: lastMouse.y - rect.top }, { paneId: "candle_pane" }));
       if (!dp || dp.value == null) return;
       const pts = [{ timestamp: dp.timestamp, value: dp.value }];
-      const id = mkOverlay({ name: "simpleAnnotation", extendData: t, points: pts });
-      if (id) recordDrawing({ id, name: "simpleAnnotation", extendData: t, points: pts });
+      const id = mkOverlay({ name: "noteText", extendData: t, points: pts });
+      if (id) recordDrawing({ id, name: "noteText", extendData: t, points: pts });
     }
     const validDraw = (d) => d && d.name && Array.isArray(d.points) && d.points.length && d.points.every((p) => p && p.value != null && isFinite(p.value));
     function recordDrawing(o) { if (restoring || !o || !o.points || !o.points.length) return; const pts = o.points.map((p) => ({ timestamp: p.timestamp, value: p.value })); if (pts.some((p) => p.value == null)) return; const i = drawings.findIndex((d) => d.id === o.id), rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData }; if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave(); }
