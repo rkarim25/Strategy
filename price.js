@@ -18,7 +18,7 @@
   const TICK2ID = { "^IRX": "ust3m", "2YY=F": "ust2y", "^FVX": "ust5y", "^TNX": "ust10y", "^TYX": "ust30y" }; // curve leg ticker → curve id
   let INVERSIONS = []; // 2s10s/3m10y inverted ranges (loaded from ust_inversions.json)
   const UP = "#15803d", DN = "#b42318";
-  const RANGES = [["1M", 21], ["3M", 63], ["6M", 126], ["1Y", 252], ["2Y", 504], ["5Y", 1260], ["Max", null]];
+  const RANGES = [[5, "1W"], [21, "1M"], [63, "3M"], [252, "1Y"], [1260, "5Y"], [2520, "10Y"]]; // [days, label] — makeSeg renders label, passes days
   const TFS = [
     { id: "1m", label: "1m", interval: "1m", range: "7d", show: 180 },
     { id: "5m", label: "5m", interval: "5m", range: "60d", show: 160 },
@@ -264,7 +264,7 @@
   function run() {
     injectStyles(); registerIndicators();
     if (window.STRATEGY_PAGE_TITLE) document.title = window.STRATEGY_PAGE_TITLE;
-    const state = { asset: "spx", tf: "D", type: "candle_solid", yAxis: "normal", tool: "cursor", tfLastTs: 0,
+    const state = { asset: "spx", tf: "D", dispAggMs: 0, type: "candle_solid", yAxis: "normal", tool: "cursor", tfLastTs: 0,
       indicators: Object.fromEntries(MAIN_INDS.concat(SUB_INDS).map(([v]) => [v, false])),
       indParams: Object.fromEntries(Object.entries(DEFAULTS).map(([k, v]) => [k, v.slice()])),
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
@@ -288,7 +288,13 @@
           <div><span class="lbl">Timeframe</span><span class="seg" id="tfSeg"></span></div>
           <div><span class="lbl">Type</span><span class="seg" id="typeSeg"></span></div>
           <div><span class="lbl">Axis</span><span class="seg" id="axisSeg"></span></div>
-          <div><span class="lbl">Range</span><span class="seg" id="rangeSeg"></span></div>
+          <div><span class="lbl">Range</span><span class="seg" id="rangeSeg"></span>
+            <span style="display:inline-flex;align-items:center;gap:4px;margin-left:6px;font-size:12px;color:#6e6e73">
+              <input id="rngFrom" type="date" style="font:inherit;font-size:12px;padding:3px 6px;border-radius:7px;border:1px solid var(--line)">
+              <span>→</span>
+              <input id="rngTo" type="date" style="font:inherit;font-size:12px;padding:3px 6px;border-radius:7px;border:1px solid var(--line)">
+              <button id="rngApply" class="seg" style="padding:4px 10px">Go</button>
+            </span></div>
         </div>
         <details class="ind-panel">
           <summary>Indicators — overlays &amp; studies · click to expand, then edit parameters of active ones</summary>
@@ -355,7 +361,9 @@
     makeSeg($("tfSeg"), TFS.map((t) => [t.id, t.label]), (v) => v === state.tf, (v, b) => { state.tf = v; segActive($("tfSeg"), b); applyTF(); });
     makeSeg($("typeSeg"), TYPES, (v) => v === state.type, (v, b) => { state.type = v; safe(() => chart.setStyles({ candle: { type: v } })); segActive($("typeSeg"), b); scheduleSave(); });
     makeSeg($("axisSeg"), AXES, (v) => v === state.yAxis, (v, b) => { state.yAxis = v; safe(() => chart.setStyles({ yAxis: { type: v } })); segActive($("axisSeg"), b); scheduleSave(); });
-    makeSeg($("rangeSeg"), RANGES, () => false, (days, b) => { setRange(days); segActive($("rangeSeg"), b); });
+    makeSeg($("rangeSeg"), RANGES, () => false, (days, b) => { if ($("rngFrom")) { $("rngFrom").value = ""; $("rngTo").value = ""; } setRange(days); segActive($("rangeSeg"), b); });
+    $("rngApply").onclick = setDateRange;
+    $("rngFrom").onchange = $("rngTo").onchange = () => { if ($("rngFrom").value && $("rngTo").value) setDateRange(); };
     makeSeg($("indMain"), MAIN_INDS, (v) => state.indicators[v], (v, b) => { toggleIndicator(v); b.classList.toggle("active", state.indicators[v]); scheduleSave(); });
     makeSeg($("indSub"), SUB_INDS, (v) => state.indicators[v], (v, b) => { toggleIndicator(v); b.classList.toggle("active", state.indicators[v]); scheduleSave(); });
     makeSeg($("toolSeg"), TOOLS, (v) => v === state.tool, (v, b) => { pickTool(v); segActive($("toolSeg"), b); }, "tool");
@@ -375,7 +383,38 @@
     makeSeg($("pnlSeg"), [["bps", "Yield Δ (bps)"], ["usd", "DV01 $"]], (v) => v === state.pnl.mode, (v) => { state.pnl.mode = v; syncPnlUI(); renderPlaybook(); scheduleSave(); });
     $("perBpInput").onchange = () => { const x = parseFloat($("perBpInput").value); if (isFinite(x) && x > 0) { state.pnl.perBp = x; renderPlaybook(); } };
 
-    function setRange(days) { const w = Math.max(200, $("chart").clientWidth - 70); const n = days ? Math.min(days, D.n || days) : (D.n || days || 250); safe(() => { chart.setBarSpace(Math.max(0.5, Math.min(40, w / n))); chart.scrollToRealTime(0); }); }
+    // Zoom to the last `days` bars. resize() forces a re-measure+render (fixes a stalled/blank chart that
+    // otherwise needs another click), and we re-assert on the next frame so the scroll lands after setBarSpace.
+    // Show a daily-index window [loIdx, hiIdx). KLineChart can't render more than ~650 daily bars at its 1px
+    // floor, so long windows auto-aggregate to weekly/monthly (like a real charting platform). resize() +
+    // re-asserting the scroll on the next frame fixes the "needs a second click" stall.
+    function showRange(loIdx, hiIdx) {
+      const daily = D.daily || []; if (!daily.length || !chart) return;
+      loIdx = Math.max(0, Math.min(loIdx, daily.length - 2)); hiIdx = Math.min(daily.length, Math.max(hiIdx, loIdx + 2));
+      const span = hiIdx - loIdx, aggMs = span <= 650 ? 0 : (span <= 3500 ? 7 * 86400000 : 30 * 86400000); // daily / weekly / monthly
+      const bars = aggMs ? aggregate(daily, aggMs) : daily;
+      if (state.dispAggMs !== aggMs || state.tf !== "D") {   // resolution (or timeframe) changed → re-apply the data
+        if (state.tf !== "D") { state.tf = "D"; stopPoll(); segActive($("tfSeg"), findBtn($("tfSeg"), "D")); }
+        state.dispAggMs = aggMs;
+        safe(() => { chart.applyNewData(bars); chart.resize(); }); setCur(bars); reapplyDrawings(); refreshSignals();
+        $("hint").textContent = (aggMs ? (aggMs >= 30 * 86400000 ? "Monthly" : "Weekly") + " bars (long range)" : "Daily bars") + " · scroll to zoom · drag to pan.";
+      }
+      const loTs = daily[loIdx].timestamp, hiTs = daily[hiIdx - 1].timestamp;
+      let a = 0; while (a < bars.length - 1 && bars[a].timestamp < loTs) a++;
+      let b = bars.length - 1; while (b > 0 && bars[b].timestamp > hiTs) b--;
+      const n = Math.max(2, b - a + 1), atEnd = b >= bars.length - 1;
+      const apply = () => { const w = Math.max(200, $("chart").clientWidth - 70); safe(() => { chart.resize(); chart.setBarSpace(Math.max(0.5, Math.min(40, w / n))); if (atEnd) chart.scrollToRealTime(0); else chart.scrollToTimestamp(bars[b].timestamp, 0); }); };
+      apply(); requestAnimationFrame(apply);
+    }
+    function setRange(days) { const daily = D.daily || []; if (!daily.length) return; const hi = daily.length; showRange(days ? hi - days : 0, hi); }
+    function setDateRange() {
+      const fromV = $("rngFrom").value, toV = $("rngTo").value, daily = D.daily || [];
+      if (!daily.length || (!fromV && !toV)) return;
+      const fromMs = fromV ? Date.parse(fromV) : daily[0].timestamp, toMs = toV ? Date.parse(toV) + 86400000 : daily[daily.length - 1].timestamp;
+      let lo = 0; while (lo < daily.length - 1 && daily[lo].timestamp < fromMs) lo++;
+      let hi = daily.length; while (hi > lo + 1 && daily[hi - 1].timestamp > toMs) hi--;
+      segActive($("rangeSeg"), null); showRange(lo, hi);
+    }
 
     // ---- timeframe / intraday ----
     function aggregate(bars, ms) { if (!ms) return bars; const out = []; let cur = null, key = null; for (const b of bars) { const k = Math.floor(b.timestamp / ms); if (k !== key) { if (cur) out.push(cur); cur = { timestamp: k * ms, open: b.open, high: b.high, low: b.low, close: b.close, volume: b.volume || 0 }; key = k; } else { cur.high = Math.max(cur.high, b.high); cur.low = Math.min(cur.low, b.low); cur.close = b.close; cur.volume += b.volume || 0; } } if (cur) out.push(cur); return out; }
@@ -403,11 +442,12 @@
     function applyTF() {
       stopPoll();
       const tf = TFS.find((t) => t.id === state.tf) || TFS[TFS.length - 1];
-      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); setRange(126); reapplyDrawings(); setCur(D.daily || []); refreshSignals(); state.tfLastTs = 0; $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points."; return; }
+      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); state.dispAggMs = 0; setCur(D.daily || []); setRange(252); reapplyDrawings(); refreshSignals(); state.tfLastTs = 0; $("hint").textContent = "Daily bars · scroll to zoom · drag to pan · pick a draw tool then click points."; return; }
       status("loading " + tf.label + "…");
       fetchIntradayBars(tf)
         .then(({ bars: raw, ticker }) => {
           let bars = raw || []; if (!bars.length) throw new Error("no intraday data"); if (tf.aggMs) bars = aggregate(bars, tf.aggMs);
+          state.dispAggMs = -1;   // intraday display → a range click will rebuild the daily/aggregated view
           safe(() => { chart.applyNewData(bars); chart.resize(); });
           const w = Math.max(200, $("chart").clientWidth - 70), show = Math.min(bars.length, tf.show || 180);
           safe(() => { chart.setBarSpace(Math.max(1, Math.min(14, w / show))); chart.scrollToRealTime(0); });
@@ -652,6 +692,7 @@
         state.pnl.perBp = Math.round(D.dv01 * 1000);   // ≈ trade DV01 in $/bp (per ~$10mm); user-editable
         if (D.kind === "spread" && state.yAxis !== "normal") { state.yAxis = "normal"; safe(() => chart.setStyles({ yAxis: { type: "normal" } })); segActive($("axisSeg"), findBtn($("axisSeg"), "normal")); }  // log/% invalid for spreads that go negative
         $("cTitle").textContent = D.label + " — chart";
+        if ($("rngFrom") && D.dates.length) { $("rngFrom").min = $("rngTo").min = D.dates[0]; $("rngFrom").max = $("rngTo").max = D.dates[D.n - 1]; $("rngFrom").value = ""; $("rngTo").value = ""; }
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
         safe(() => chart.removeOverlay()); drawings = [];
         applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader(); renderCurve(); syncPnlUI();
