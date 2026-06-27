@@ -13,7 +13,7 @@
   const QUOTE = "https://spx-quote-proxy.rkarim88.workers.dev";
   const STORE = "https://lab-strategy-store.rkarim88.workers.dev";
   const CLOUD_KEY = "lab_cloud_key";
-  const TICKER_DV01 = { "^IRX": 0.25, "2YY=F": 1.9, "^FVX": 4.7, "^TNX": 8.6, "^TYX": 18.5 }; // ≈ modified duration (DV01 per $100)
+  const TICKER_DV01 = { "^IRX": 0.25, "2YY=F": 1.9, "^FVX": 4.7, "^FVX+^TNX": 6.3, "^TNX": 8.6, "^TYX": 18.5 }; // ≈ modified duration (DV01 per $100); 7Y interpolated 5Y/10Y
   const RECESSIONS = [["1953-07-01", "1954-05-31"], ["1957-08-01", "1958-04-30"], ["1960-04-01", "1961-02-28"], ["1969-12-01", "1970-11-30"], ["1973-11-01", "1975-03-31"], ["1980-01-01", "1980-07-31"], ["1981-07-01", "1982-11-30"], ["1990-07-01", "1991-03-31"], ["2001-03-01", "2001-11-30"], ["2007-12-01", "2009-06-30"], ["2020-02-01", "2020-04-30"]].map(([s, e]) => [Date.parse(s), Date.parse(e)]); // NBER US recessions
   const TICK2ID = { "^IRX": "ust3m", "2YY=F": "ust2y", "^FVX": "ust5y", "^TNX": "ust10y", "^TYX": "ust30y" }; // curve leg ticker → curve id
   let INVERSIONS = []; // 2s10s/3m10y inverted ranges (loaded from ust_inversions.json)
@@ -298,7 +298,7 @@
         </details>
         <div class="cbar">
           <div><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
-          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="recBtn">▦ Recessions</button><button id="invBtn">⊘ Inversions</button></div>
+          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="recBtn"><span style="color:#9a9aa2">▦</span> Recessions</button><button id="invBtn"><span style="color:#d68a12">⊘</span> Inversions</button></div>
         </div>
         <div id="chart"></div>
         <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points on the chart.</p>
@@ -462,7 +462,7 @@
     function status(msg) { $("notesStatus").textContent = msg ? "· " + msg : ""; }
     function updateAuth() { const el = $("cloudAuth"); if (getKey()) { el.innerHTML = `signed in · <a href="#" id="logout">log out</a>`; el.querySelector("#logout").onclick = (e) => { e.preventDefault(); setKey(""); status("logged out"); }; } else el.textContent = "not signed in"; }
     function ensureKey() { const k = getKey(); if (k) return Promise.resolve(k); const entry = (window.prompt("Passphrase to save/view private notes:") || "").trim(); if (!entry) return Promise.resolve(""); return fetch(STORE + "/api/auth", { method: "POST", headers: { "X-Lab-Key": entry } }).then((r) => { if (!r.ok) { status("wrong passphrase"); return ""; } setKey(entry); return entry; }).catch(() => { status("login failed"); return ""; }); }
-    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, ...d }) => d), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams, lev: state.lev } }; }
+    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, ...d }) => d), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams, lev: state.lev, carry: state.carry, pnl: { mode: state.pnl.mode, perBp: state.pnl.perBp } } }; }
     function saveLocal() { try { localStorage.setItem(lsKey(D.id), JSON.stringify(snapshot())); } catch (_) {} }
     function scheduleSave() { if (saveTimer) clearTimeout(saveTimer); saveTimer = setTimeout(() => { saveTimer = null; saveLocal(); status("saved locally"); }, 600); }
     $("cloudBtn").onclick = () => { ensureKey().then((key) => { if (!key) return; updateAuth(); status("saving…"); fetch(STORE + "/api/chart/" + D.id, { method: "POST", headers: { "Content-Type": "application/json", "X-Lab-Key": key }, body: JSON.stringify(snapshot()) }).then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired"); } if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then(() => status("saved to cloud ✓")).catch((e) => status("cloud save failed: " + e.message)); }); };
@@ -477,6 +477,9 @@
       if (st.indParams) Object.keys(st.indParams).forEach((k) => { if (Array.isArray(st.indParams[k])) state.indParams[k] = st.indParams[k].slice(); });
       if (st.stratParams) Object.keys(st.stratParams).forEach((k) => { if (state.stratParams[k]) Object.assign(state.stratParams[k], st.stratParams[k]); });
       if (st.lev && typeof st.lev === "object") { Object.assign(state.lev, st.lev); syncLevUI(); }
+      if (typeof st.carry === "boolean") state.carry = st.carry;
+      if (st.pnl && typeof st.pnl === "object") { if (st.pnl.mode) state.pnl.mode = st.pnl.mode; if (isFinite(st.pnl.perBp) && st.pnl.perBp > 0) state.pnl.perBp = st.pnl.perBp; }
+      syncPnlUI();
       syncIndicators(st.indicators); renderIndParams();
       drawings = [];
       (snap.drawings || []).filter(validDraw).forEach((d) => { const id = safe(() => chart.createOverlay({ name: d.name, points: d.points, extendData: d.extendData })); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); });
@@ -517,7 +520,7 @@
       function spreadStats(pos) {
         let cum = 0, peak = 0, mdd = 0, hit = 0, days = 0; const pnl = [];
         for (let i = 1; i < c.length; i++) { const dir = pos[i - 1] ? 1 : -1, x = dir * (c[i] - c[i - 1] + crStep); pnl.push(x); cum += x; if (cum > peak) peak = cum; if (cum - peak < mdd) mdd = cum - peak; if (x > 0) hit++; days++; }
-        const yrs = c.length / 252, m = pnl.reduce((a, b) => a + b, 0) / pnl.length; let v = 0; for (const x of pnl) v += (x - m) ** 2; const vol = Math.sqrt(v / Math.max(1, pnl.length - 1));
+        const yrs = c.length / 252, m = pnl.reduce((a, b) => a + b, 0) / pnl.length; let v = 0; for (const x of pnl) v += (x - m) ** 2; const vol = Math.sqrt(Math.max(0, v / Math.max(1, pnl.length - 1)));
         return { annbps: (cum * 100) / yrs, maxddbps: mdd * 100, sharpe: vol ? (m / vol) * Math.sqrt(252) : 0, hit: days ? hit / days : 0, total: cum * 100 };
       }
       const isDelta = isS || isY;   // UST instruments trade directionally: P&L = position × change-in-series (bps)
