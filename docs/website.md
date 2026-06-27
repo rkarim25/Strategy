@@ -79,32 +79,44 @@ either file, or the browser serves a stale cached copy.
 To change an asset's default: edit `SITE_DEFAULT_STRATEGY`, re-run its emitter (below), update the nav label +
 the page's `<title>`/`STRATEGY_PAGE_TITLE`, and bump `?v=`.
 
-## Charts workstation (`price.html` / `price.js`, Tools → "Charts")
+## Charts workstation + US-curve desk (`price.html` / `price.js`, Tools → "Charts")
 
 A standalone TradingView/Bloomberg-style charting app on **vendored KLineChart v9.8.12** (`klinecharts.min.js`,
-MIT, ~205 KB — keep vendored, no CDN runtime dependency). Self-contained (only reuses `window.SP` styles).
+MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses `window.SP` styles).
+**Regenerate all data with `python make_price_data.py`** (Yahoo); it writes every `price_<id>.json`,
+`price_assets.json` (the registry), `ust_curve.json` (live curve) — all at root.
 
-- **Assets:** config-driven registry `price_assets.json` (16 across Indices / Commodities / Crypto / FX / **Rates**),
-  grouped in the picker. **Add an asset = one row in `make_price_data.py`** (Yahoo OHLCV → `price_<id>.json` with
-  `dates/timestamp(ms)/open/high/low/close/volume/kind`). `kind` is `price` or `yield`.
-- **Rates (UST yields):** 5Y `^FVX`, 10Y `^TNX`, 30Y `^TYX` (real, deep history); 2Y `2YY=F` (2021+); **7Y is
-  synthesised** by interpolating 5Y/10Y. For `kind:"yield"` the playbook backtests with **yield-as-PnL** (earn
-  `rate ÷ 252` per day while long; bond price moves ignored) so CAGR ≈ the average yield captured, DD ≈ 0.
-- **Chart:** candle/bar/area · linear/log/% axis · range presets · **timeframes** 1m/5m/15m/30m/1h/**4h**/1D
-  (intraday from the quote-proxy `?mode=intraday`; 4h aggregated client-side; 60 s auto-refresh) · live last price.
-- **Indicators:** 6 price overlays + 20 studies, each with **editable calcParams** (`overrideIndicator`).
-- **Drawing:** trend/ray/h-line/v-line/price/parallel/fibonacci/text + custom **Measure %** overlay; tracked in JS
-  (`getOverlays` doesn't exist in v9) and **re-applied after every `applyNewData`** so they survive timeframe switches;
-  validated (`validDraw`) before re-create.
-- **Signal Playbook:** 12 parameterised rules (Golden Cross, Trend, MACD, RSI momentum/reversion, Bollinger,
-  Donchian, EMA Cross, MACD zero, Williams %R, Stochastic, CCI). Each row has param inputs whose **backtest
-  recomputes live**, a **plot** toggle (draws the indicator with the same params), a **signals** toggle (▲/▼ markers
-  via a custom-indicator `draw` callback), and a **notes** toggle (preloaded buy/sell explanation + why).
-- **Persistence:** private per-asset notes + drawings + indicator/strategy params via the **`lab-strategy-store`
-  worker** (`GET`/`POST /api/chart/:asset`, **both passphrase-gated** → private), localStorage fallback + autosave.
-- **Preview gotcha:** KLineChart renders via `requestAnimationFrame`, which the headless preview throttles → canvases
-  stay blank. NOT a bug — force `requestAnimationFrame` synchronous in an isolated `init`+`applyNewData` to verify;
-  it renders fine in a real browser.
+- **Assets (23, registry `price_assets.json`):** Indices / Commodities / Crypto / FX (`kind:"price"`),
+  **Rates** = UST yields 3M `^IRX` / 2Y `2YY=F` / 5Y `^FVX` / 7Y(interp) / 10Y `^TNX` / 30Y `^TYX` (`kind:"yield"`),
+  **Steepness** = 2s10s/3m10y/5s10s/5s30s and **Butterfly** = 2s5s10s/5s10s30s + RW-fly variants (`kind:"spread"`,
+  carry `legs:[{t,w}]`). **Add an asset = one row in `make_price_data.py`.**
+- **Backtest models (per `kind`):** price → long/cash, %-returns, $100 growth. **UST (`yield`+`spread`) → DIRECTIONAL,
+  P&L = position × daily Δ(series) in bps** (`isDelta` path): yield long = *long rates* (profit when yield rises),
+  spread long = *steepener*, fly = *RV reversion*. Columns switch to Ann bps/Max DD bps/Sharpe/Hit %/Total bps, or
+  **DV01 $** (toggle + editable $/bp = trade DV01 from `TICKER_DV01`).
+- **RW-flies** (`build_fly_beta`): belly hedged by wings via an **expanding-window OLS** (out-of-sample, lagged).
+  Honest finding: OOS the simple 50-50 fly (= equal-weight `2×belly−wings`) **beats** the regression fly.
+- **Chart:** candle/bar/area · linear/log/% axis (spreads forced linear — they go negative) · range presets ·
+  **timeframes** 1m/5m/15m/30m/1h/4h/1D (intraday via quote-proxy `?mode=intraday`; **spreads/flies combine each
+  leg's intraday client-side** via `fetchIntradayBars`/`combineLegs`; 4h aggregated; 60 s auto-refresh) · live price.
+- **Indicators:** 6 overlays + 20 studies w/ editable calcParams. **Drawing:** trend/ray/lines/price/parallel/
+  fibonacci/text + custom **Measure %** overlay (tracked in JS — v9 has no `getOverlays` — re-applied after every
+  `applyNewData`). **NBER recession shading** = custom `RECESSION` indicator (`draw` callback) + "▦ Recessions" toggle.
+- **Signal Playbook (14 rules):** Golden/EMA Cross, Trend, Band trend (Water), MACD/MACD-zero, RSI momentum/reversion,
+  Bollinger, Donchian, Williams %R, Stochastic, CCI, RSI-dip+SMA-exit. Live param inputs → live backtest; **plot**
+  (draws the indicator), **signals** (▲/▼ markers via custom-indicator `draw`), **notes** (preloaded why). Optional
+  **2×/3× when-safe leverage** (DD+vol gated) + costs toggle for `price` assets.
+- **Curve strategy leaderboard** (`ust_strategies.json` ← `scratch/ust_strategy_sweep.py`): best rule per UST instrument
+  ranked by Sharpe + explanation + **live signal** + Load; the **best rule is auto-applied as the default** for each
+  UST trade. Plus a **live curve snapshot** (`ust_curve.json`: SVG 3M→30Y + 2s10s/3m10y/5s30s slope/inversion flags +
+  3m **roll-down**/carry per tenor) and a **rich/cheap** readout (z-score, percentile, 1y range).
+- **Persistence:** private per-asset notes + drawings + params via the **`lab-strategy-store` worker**
+  (`GET`/`POST /api/chart/:asset`, **both passphrase-gated**), localStorage fallback + autosave. **Mobile:** wide tables
+  scroll inside their cards (`overflow-x:auto`); chart 60vh.
+- **⚠ Preview gotcha:** KLineChart renders via `requestAnimationFrame`, which the headless preview throttles → the
+  page's canvases stay blank (300×150). NOT a bug — verify by forcing `requestAnimationFrame` synchronous in an
+  **isolated fresh `klinecharts.init`+`applyNewData`** (then candles paint); it renders fine in a real browser.
+- **⚠ Windows:** non-ASCII chars (β, −) in Python `print`/labels crash on cp1252 — use ASCII (`RW`, `-`).
 
 ## Scripts (`*.js`, root)
 
@@ -151,8 +163,12 @@ All dump with `allow_nan=False` (fail loud rather than write invalid JSON).
 3. **Ticker-match safeguard:** the quote is used only if `ticker === STRATEGY_QUOTE.ticker`, else it falls back to
    the last completed close (this is what fixed the old Gold-shows-SPX bug).
 4. Auto-refresh every 30 min during UK LSE hours via `SiteNav.registerAutoRefresh`.
-5. **Claude cannot deploy the worker** — any change to `cloudflare_spx_quote_worker.js` needs the user to run
-   `npx wrangler deploy`.
+5. **Deploying the Workers (AI can do this here):** `npx --no-install wrangler` works and the user is already
+   OAuth-logged-in (account `3554b8ca…`, rkarim88@gmail.com). Quote proxy: `npx --no-install wrangler deploy`
+   (root `wrangler.toml`). Store/notes worker (`cloudflare_lab_store_worker.js`):
+   `npx --no-install wrangler deploy -c wrangler.lab-store.toml`. A **Cloudflare MCP** is also connected for KV/D1.
+   (The store worker is passphrase-gated via the `LAB_SECRET` secret; rotate with `wrangler secret put LAB_SECRET`.)
+   The intraday feed (`?mode=intraday&symbol&interval&range`) and `?mode=quote` both come from the quote proxy.
 
 ## ⚠️ Gotchas
 

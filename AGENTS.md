@@ -30,8 +30,14 @@ A personal **systematic leveraged backtesting + live-signal platform**. Two halv
 
 ## ⛔ Golden rules (break these and you break production)
 1. **The website is served from the repo ROOT.** `index.html`, `*_guarded.html/js`, `*_daily.csv`,
-   `*_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json` **must stay at root** — the HTML fetches
-   them by relative path. Don't relocate website or data files.
+   `*_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json`, and the **Tools apps**
+   (`price.html`/`price.js`/`klinecharts.min.js` + `price_*.json`/`price_assets.json`/`ust_curve.json`/
+   `ust_strategies.json` for **Charts**; `lab.html`/`lab.js` + `band_lab_*`/`lab_ndx.json` for the **Lab**)
+   **must stay at root** — the HTML fetches them by relative path. Don't relocate website or data files.
+   Two Tools pages run on their own engines (NOT `strategy_page.js`): **Charts** = a KLineChart workstation +
+   US-curve backtester (yields/steepeners/butterflies, leaderboard, DV01 P&L, intraday) — see
+   [`docs/website.md`](docs/website.md#charts-workstation--us-curve-desk-pricehtml--pricejs-tools--charts);
+   **Lab** = an interactive strategy builder. Both persist to the `lab-strategy-store` Cloudflare Worker.
 2. **No duplication.** Check [`catalog/data.md`](catalog/data.md) before downloading and
    [`catalog/experiments.md`](catalog/experiments.md) before backtesting. Reuse the engine
    (`from core import engine, metrics, etp_leverage`) — never re-implement it.
