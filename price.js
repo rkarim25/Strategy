@@ -592,25 +592,52 @@
     let autoIds = [];
     function clearAutoTA() { autoIds.forEach((id) => safe(() => chart.removeOverlay(id))); autoIds = []; AUTO_SIG = { buys: new Set(), sells: new Set() }; safe(() => chart.removeIndicator("candle_pane", "AUTOTA")); $("autoCard").style.display = "none"; $("autoNotes").innerHTML = ""; }
     function computeAutoTA() {
-      const daily = D.daily || []; if (daily.length < 40) return null;
-      const seg = daily.slice(Math.max(0, daily.length - 252)); // analyse the last ~year
-      const hi = seg.map((b) => b.high), lo = seg.map((b) => b.low), cl = seg.map((b) => b.close), ts = seg.map((b) => b.timestamp);
-      const k = 6, ph = [], pl = []; // swing pivots (fractals): extreme within ±k bars
-      for (let i = k; i < seg.length - k; i++) { let isH = true, isL = true; for (let j = i - k; j <= i + k; j++) { if (j === i) continue; if (hi[j] >= hi[i]) isH = false; if (lo[j] <= lo[i]) isL = false; } if (isH) ph.push(i); if (isL) pl.push(i); }
-      let Hi = 0, Lo = 0; for (let i = 0; i < seg.length; i++) { if (hi[i] > hi[Hi]) Hi = i; if (lo[i] < lo[Lo]) Lo = i; }
+      const daily = D.daily || []; if (daily.length < 60) return null;
+      const seg = daily.slice(Math.max(0, daily.length - 300)); // ~14 months of daily bars
+      const N = seg.length, hi = seg.map((b) => b.high), lo = seg.map((b) => b.low), cl = seg.map((b) => b.close), ts = seg.map((b) => b.timestamp);
+      const range = Math.max(...hi) - Math.min(...lo) || 1, tol = range * 0.012; // ~1.2% of range = a "touch"
+      const pivotsOf = (vals, isHigh) => { const k = 5, p = []; for (let i = k; i < N - k; i++) { let ext = true; for (let j = i - k; j <= i + k; j++) { if (j === i) continue; if (isHigh ? vals[j] >= vals[i] : vals[j] <= vals[i]) { ext = false; break; } } if (ext) p.push(i); } return p; };
+      const ph = pivotsOf(hi, true), pl = pivotsOf(lo, false);
+      // Best-fit trend lines: score every pivot-pair line by touches + non-violation + length + recency, keep the top 2 distinct.
+      function fit(piv, vals, isRes) {
+        if (piv.length < 2) return [];
+        const cand = [];
+        for (let a = 0; a < piv.length - 1; a++) for (let b = a + 1; b < piv.length; b++) {
+          const i1 = piv[a], i2 = piv[b]; if (i2 - i1 < 10) continue;
+          const slope = (vals[i2] - vals[i1]) / (i2 - i1), at = (x) => vals[i1] + slope * (x - i1);
+          let viol = 0, touches = 0;
+          for (let x = i1; x < N; x++) { const d = vals[x] - at(x); if (isRes ? d > tol * 1.5 : d < -tol * 1.5) viol++; }
+          for (const pp of piv) if (pp >= i1 && Math.abs(vals[pp] - at(pp)) <= tol) touches++;
+          if (viol > N * 0.05) continue;
+          cand.push({ i1, i2, slope, at, touches, score: touches * 3 + (i2 / N) * 2 + (i2 - i1) / N + (viol === 0 ? 1.5 : 0) });
+        }
+        cand.sort((x, y) => y.score - x.score);
+        const out = [];
+        for (const c of cand) { if (out.some((o) => Math.abs(o.at(N - 1) - c.at(N - 1)) < tol * 3 && Math.abs(o.slope - c.slope) < (range / N) * 0.4)) continue; out.push(c); if (out.length >= 2) break; }
+        return out.map((c) => ({ kind: isRes ? "resistance" : "support", touches: c.touches, slope: c.slope, at: c.at, i1: c.i1, i2: c.i2, p0: { timestamp: ts[c.i1], value: vals[c.i1] }, p1: { timestamp: ts[c.i2], value: vals[c.i2] }, d0: ts[c.i1], d1: ts[c.i2] }));
+      }
+      const resLines = fit(ph, hi, true), supLines = fit(pl, lo, false), tl = resLines.concat(supLines);
+      // Channel: take the strongest line and project a parallel rail to the farthest opposite extreme.
+      let channel = null;
+      const best = (resLines[0] && (!supLines[0] || resLines[0].touches >= supLines[0].touches)) ? resLines[0] : supLines[0];
+      if (best) {
+        const opp = best.kind === "resistance" ? lo : hi, sign = best.kind === "resistance" ? -1 : 1; let off = 0;
+        for (let x = best.i1; x < N; x++) { const dd = sign * (opp[x] - best.at(x)); if (dd > off) off = dd; }
+        if (off > range * 0.05) channel = { kind: best.kind, width: off, p0: { timestamp: ts[best.i1], value: best.at(best.i1) + sign * off }, p1: { timestamp: ts[best.i2], value: best.at(best.i2) + sign * off } };
+      }
+      let Hi = 0, Lo = 0; for (let i = 0; i < N; i++) { if (hi[i] > hi[Hi]) Hi = i; if (lo[i] < lo[Lo]) Lo = i; }
       const dir = Hi > Lo ? "up" : "down", hiV = hi[Hi], loV = lo[Lo], span = hiV - loV || 1;
       const levels = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1].map((r) => ({ r, v: dir === "up" ? hiV - span * r : loV + span * r }));
-      const tl = [];
-      if (ph.length >= 2) { const a = ph[ph.length - 2], b = ph[ph.length - 1]; tl.push({ kind: "resistance", p0: { timestamp: ts[a], value: hi[a] }, p1: { timestamp: ts[b], value: hi[b] }, d0: ts[a], d1: ts[b] }); }
-      if (pl.length >= 2) { const a = pl[pl.length - 2], b = pl[pl.length - 1]; tl.push({ kind: "support", p0: { timestamp: ts[a], value: lo[a] }, p1: { timestamp: ts[b], value: lo[b] }, d0: ts[a], d1: ts[b] }); }
-      const mid = levels[3].v, sig = []; // signals: reclaim/lose the 50% retracement after the dominant swing
-      for (let i = Math.max(Hi, Lo) + 1; i < seg.length; i++) { if (cl[i - 1] <= mid && cl[i] > mid) sig.push({ ts: ts[i], type: "buy" }); else if (cl[i - 1] >= mid && cl[i] < mid) sig.push({ ts: ts[i], type: "sell" }); }
-      return { tl, dir, hiV, loV, hiTs: ts[Hi], loTs: ts[Lo], levels, sig: sig.slice(-6) };
+      const mid = levels[3].v, sig = [];
+      for (let i = Math.max(Hi, Lo) + 1; i < N; i++) { if (cl[i - 1] <= mid && cl[i] > mid) sig.push({ ts: ts[i], type: "buy" }); else if (cl[i - 1] >= mid && cl[i] < mid) sig.push({ ts: ts[i], type: "sell" }); }
+      return { tl, channel, dir, hiV, loV, hiTs: ts[Hi], loTs: ts[Lo], levels, sig: sig.slice(-6) };
     }
     function applyAutoTA() {
       clearAutoTA();
       const a = computeAutoTA(); if (!a) { status("not enough data for auto-analysis"); return; }
-      a.tl.forEach((t) => { const col = t.kind === "resistance" ? DN : UP; const id = safe(() => chart.createOverlay({ name: "segment", points: [t.p0, t.p1], lock: true, styles: { line: { color: col, size: 2, style: "dashed" } } })); if (id) autoIds.push(id); });
+      // trend lines as forward-projecting RAYS (rayLine extends through p1 into the future)
+      a.tl.forEach((t) => { const col = t.kind === "resistance" ? DN : UP; const id = safe(() => chart.createOverlay({ name: "rayLine", points: [t.p0, t.p1], lock: true, styles: { line: { color: col, size: 2 } } })); if (id) autoIds.push(id); });
+      if (a.channel) { const col = a.channel.kind === "resistance" ? DN : UP; const id = safe(() => chart.createOverlay({ name: "rayLine", points: [a.channel.p0, a.channel.p1], lock: true, styles: { line: { color: col, size: 1, style: "dashed" } } })); if (id) autoIds.push(id); }
       const fid = safe(() => chart.createOverlay({ name: "fibonacciLine", points: [{ timestamp: a.dir === "up" ? a.loTs : a.hiTs, value: a.dir === "up" ? a.loV : a.hiV }, { timestamp: a.dir === "up" ? a.hiTs : a.loTs, value: a.dir === "up" ? a.hiV : a.loV }], lock: true })); if (fid) autoIds.push(fid);
       AUTO_SIG = { buys: new Set(a.sig.filter((s) => s.type === "buy").map((s) => s.ts)), sells: new Set(a.sig.filter((s) => s.type === "sell").map((s) => s.ts)) };
       safe(() => { chart.removeIndicator("candle_pane", "AUTOTA"); chart.createIndicator("AUTOTA", true, { id: "candle_pane" }); });
@@ -619,12 +646,12 @@
     function renderAutoNotes(a) {
       const dec = (v) => nfmt(v), L = a.levels;
       const note = (title, body) => `<details style="border-bottom:1px solid var(--line);padding:7px 0"><summary style="cursor:pointer;font-weight:600;color:#1d1d1f">${title}</summary><div style="color:#444;margin:5px 0 2px;padding-left:4px">${body}</div></details>`;
-      let html = `<p class="meta" style="margin:6px 0 8px">Detected from the last ~year of daily bars. These are mechanical guides, not advice — always confirm with your own read.</p>`;
-      a.tl.forEach((t) => { html += note(`${t.kind === "resistance" ? "🔻 Resistance trend line" : "🔺 Support trend line"}`, `Drawn through the last two swing ${t.kind === "resistance" ? "highs" : "lows"} (${ukd(isoOf(t.d0))} → ${ukd(isoOf(t.d1))}). <b>Signal:</b> a decisive close ${t.kind === "resistance" ? "<b>above</b> it is a breakout (buy)" : "<b>below</b> it is a breakdown (sell)"}; until then it tends to ${t.kind === "resistance" ? "cap rallies" : "support dips"}.`); });
-      html += note("📐 Fibonacci retracement", `Of the dominant ${a.dir === "up" ? "up-leg" : "down-leg"} from <b>${dec(a.loV)}</b> to <b>${dec(a.hiV)}</b>. Key levels: 38.2% ${dec(L[2].v)} · 50% ${dec(L[3].v)} · 61.8% ${dec(L[4].v)}. <b>Signal:</b> in an uptrend these act as pullback <b>support</b> (buy-the-dip zones); in a downtrend as <b>resistance</b> (sell-the-rally zones). A bounce from 61.8% that holds is the classic continuation entry.`);
+      let html = `<p class="meta" style="margin:6px 0 8px">Detected from the last ~14 months of daily bars: best-fit support/resistance lines (ranked by touches), a channel if price is trending in one, plus Fibonacci and momentum signals. Mechanical guides — confirm with your own read.</p>`;
+      a.tl.forEach((t) => { const slopeWord = t.slope > 0 ? "rising" : t.slope < 0 ? "falling" : "flat"; html += note(`${t.kind === "resistance" ? "🔻 Resistance" : "🔺 Support"} line — ${t.touches} touch${t.touches === 1 ? "" : "es"}`, `A ${slopeWord} ${t.kind} line, validated by <b>${t.touches}</b> swing ${t.kind === "resistance" ? "highs" : "lows"} from <b>${ukd(isoOf(t.d0))}</b> onward and projected forward as a ray. <b>Signal:</b> a decisive close ${t.kind === "resistance" ? "<b>above</b> it is a breakout (buy); until then it caps rallies" : "<b>below</b> it is a breakdown (sell); until then it supports dips"}. More touches = a more reliable line.`); });
+      if (a.channel) html += note("📏 Channel", `Price is travelling in a <b>${a.channel.kind === "resistance" ? "descending" : "ascending"} channel</b> — the ${a.channel.kind} line with a parallel rail ${dec(a.channel.width)} away. <b>Use:</b> buy near the lower rail, sell/trim near the upper rail, and treat a clean break of either rail as the channel ending (often the start of the next trend).`);
+      html += note("📐 Fibonacci retracement", `Of the dominant ${a.dir === "up" ? "up-leg" : "down-leg"} from <b>${dec(a.loV)}</b> to <b>${dec(a.hiV)}</b>. Key levels: 38.2% ${dec(L[2].v)} · 50% ${dec(L[3].v)} · 61.8% ${dec(L[4].v)}. <b>Signal:</b> in an uptrend these are pullback <b>support</b> (buy-the-dip); in a downtrend <b>resistance</b> (sell-the-rally). A bounce from 61.8% that holds is the classic continuation entry.`);
       const buys = a.sig.filter((s) => s.type === "buy"), sells = a.sig.filter((s) => s.type === "sell");
-      html += note(`🟢 Buy signals (${buys.length})`, buys.length ? `Triggered when price <b>reclaimed the 50% retracement (${dec(L[3].v)})</b> from below — momentum turning up. Most recent: ${buys.slice(-3).map((s) => ukd(isoOf(s.ts))).join(", ")}.` : "None in the current window.");
-      html += note(`🔴 Sell signals (${sells.length})`, sells.length ? `Triggered when price <b>lost the 50% retracement (${dec(L[3].v)})</b> from above — momentum turning down. Most recent: ${sells.slice(-3).map((s) => ukd(isoOf(s.ts))).join(", ")}.` : "None in the current window.");
+      html += note(`🟢 Buy / 🔴 Sell signals (${buys.length}/${sells.length})`, `Fire when price <b>reclaims (buy)</b> or <b>loses (sell)</b> the 50% retracement (${dec(L[3].v)}) — a simple momentum trigger. Most recent buy: ${buys.length ? ukd(isoOf(buys[buys.length - 1].ts)) : "—"}; sell: ${sells.length ? ukd(isoOf(sells[sells.length - 1].ts)) : "—"}.`);
       $("autoNotes").innerHTML = html; $("autoCard").style.display = "";
     }
     $("autoBtn").onclick = () => { state.autoTA = !state.autoTA; $("autoBtn").classList.toggle("active", state.autoTA); if (state.autoTA) applyAutoTA(); else clearAutoTA(); };
