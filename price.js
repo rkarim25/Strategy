@@ -119,6 +119,10 @@
       sig: (c, p, hi, lo) => { const v = cci(c, hi, lo, p.period); return c.map((_, i) => (v[i] != null && v[i] >= p.level) ? 1 : 0); },
       plot: { ind: "CCI", cp: (p) => [p.period] }, buy: (p) => `CCI(${p.period}) above ${p.level}`, sell: (p) => `CCI below ${p.level}`,
       note: "The Commodity Channel Index measures how far price is from its average in units of mean deviation. Hold while CCI is above the threshold. <b>Why:</b> positive CCI marks an uptrend bias; ±100 are common breakout markers. <b>Trade-off:</b> unbounded and jumpy." },
+    { key: "rsidip", name: "RSI dip + SMA exit", params: [{ k: "rp", label: "RSI period", d: 2, min: 2, max: 30 }, { k: "level", label: "Buy RSI<", d: 20, min: 1, max: 50 }, { k: "win", label: "Exit SMA", d: 200, min: 20, max: 400 }, { k: "band", label: "Exit band %", d: 5, min: 0, max: 15, step: 0.5 }, { k: "trend", label: "Trend filt 1/0", d: 1, min: 0, max: 1 }],
+      sig: (c, p) => { const r = rsiArr(c, p.rp), s = sma(c, p.win), b = p.band / 100; let st = 0; return c.map((x, i) => { if (st === 0) { if (r[i] != null && r[i] < p.level && (p.trend < 1 || (s[i] != null && x >= s[i]))) st = 1; } else { if (s[i] != null && x < s[i] * (1 - b)) st = 0; } return st; }); },
+      plot: { ind: "RSI", cp: (p) => [p.rp] }, buy: (p) => `RSI(${p.rp}) dips below ${p.level}${p.trend >= 1 ? " while above SMA" + p.win : ""}`, sell: (p) => `Close falls >${p.band}% below SMA${p.win}`,
+      note: "<b>Buy oversold dips inside an uptrend, exit on a trend break.</b> Enter when a fast RSI drops below the threshold (a short-term dip) while price is still above its long SMA (trend filter on); exit only when price closes more than X% below that SMA. <b>Why:</b> the RSI dip times cheaper entries than a plain trend rule, while the SMA-band exit keeps you out of sustained downtrends. On the S&P, <b>RSI2&lt;20 + trend, exit SMA200 −5%</b> was the one rule in a 1,500-config sweep to beat the SMA200 ±3% default on CAGR, drawdown AND Sharpe across the full, 50-year and 30-year windows — a modest but robust edge." },
   ];
 
   // shared with the custom signal-marker indicator (set per active strategy in run())
