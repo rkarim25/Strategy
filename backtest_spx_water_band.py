@@ -33,8 +33,8 @@ SITE_DATA_JSON = ROOT / "spx_water_band_site_data.json"
 ETP_JSON = ROOT / "spx_water_band_etp_returns.json"
 
 WATER_SPEC = {
-    "strategy": "SMA200 ±3% Band 1x/cash",
-    "sma_window": 200,
+    "strategy": "SMA175 ±3% Band 1x/cash",
+    "sma_window": 175,  # shortened from 200: ~equal CAGR, lower DD, higher Sharpe/Calmar (scratch/spx_water_octane_improve.py)
     "band_pct": 0.03,
     "leverage": 1.0,
     "rsi_threshold": None,  # plain band, no RSI exit (Water = no metric sacrificed)

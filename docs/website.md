@@ -47,7 +47,7 @@ shows asset + the **actual default strategy name** (kept in sync with the page's
 
 | Tab | Default strategy | Family |
 |-----|------------------|--------|
-| S&P 500 Water | SMA200 ±3% Band 1x/cash | band |
+| S&P 500 Water | SMA175 ±3% Band 1x/cash | band |
 | S&P 500 Octane | SMA200 ±3% Band + RSI>20 Exit 2x | *(bespoke `index.html`)* |
 | Nasdaq 100 Water\* | SMA50/200 Golden Cross 1x/cash | gc |
 | Nasdaq 100 Octane\* | GC 50/200 1x; +2x when VIX<20 & idxDD>-12% | gc (octane) |
