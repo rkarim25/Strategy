@@ -60,6 +60,10 @@
   function backtest(c, posArr) { const n = c.length, eq = Array(n), ret = Array(n); let e = 100; for (let i = 0; i < n; i++) { const r = i ? (posArr[i - 1] || 0) * (c[i] / c[i - 1] - 1) : 0; e *= 1 + r; eq[i] = e; ret[i] = r; } return { eq, ret }; }
   // yield-as-PnL: while invested you earn the yield as daily carry (rate% / 252), ignoring bond price moves
   function btYield(y, posArr) { const n = y.length, eq = Array(n), ret = Array(n); let e = 100; for (let i = 0; i < n; i++) { const r = i ? (posArr[i - 1] || 0) * ((y[i - 1] || 0) / 100 / 252) : 0; e *= 1 + r; eq[i] = e; ret[i] = r; } return { eq, ret }; }
+  // leveraged backtest with costs: financing FIN/yr on the borrowed (>1x) portion + COST per unit of leverage change
+  function btLev(c, lev, costs) { const n = c.length, eq = Array(n), ret = Array(n); let e = 100; const FIN = 0.04, COST = costs ? 0.0005 : 0; for (let i = 0; i < n; i++) { const held = i ? lev[i - 1] : 0, chg = Math.abs((i ? lev[i - 1] : 0) - (i > 1 ? lev[i - 2] : 0)); const r = i ? held * (c[i] / c[i - 1] - 1) - Math.max(0, held - 1) * (FIN / 252) - chg * COST : 0; e *= 1 + r; eq[i] = e; ret[i] = r; } return { eq, ret }; }
+  function ddFromHigh(c, w) { const hi = rollMax(c, w); return c.map((x, i) => (hi[i] ? x / hi[i] - 1 : 0)); }
+  function rvol(c, w) { const r = c.map((x, i) => (i ? x / c[i - 1] - 1 : 0)); const o = Array(c.length).fill(0); for (let i = w; i < c.length; i++) { let m = 0; for (let j = i - w + 1; j <= i; j++) m += r[j]; m /= w; let v = 0; for (let j = i - w + 1; j <= i; j++) v += (r[j] - m) ** 2; o[i] = Math.sqrt(v / w) * Math.sqrt(252); } return o; }
   function stats(eq, ret, posArr) { const n = eq.length; if (n < 30) return { cagr: NaN, vol: NaN, sharpe: NaN, maxdd: NaN, end: eq[n - 1], pin: NaN }; const yrs = n / 252, cagr = Math.pow(eq[n - 1] / 100, 1 / yrs) - 1; let m = 0; for (const r of ret) m += r; m /= n; let v = 0; for (const r of ret) v += (r - m) ** 2; const vol = Math.sqrt(v / (n - 1)) * Math.sqrt(252); let pk = -1e9, mdd = 0; for (const x of eq) { if (x > pk) pk = x; const dd = x / pk - 1; if (dd < mdd) mdd = dd; } let inn = 0; for (const p of posArr) inn += p > 0 ? 1 : 0; return { cagr, vol, sharpe: vol ? (m * 252) / vol : NaN, maxdd: mdd, end: eq[n - 1], pin: inn / n }; }
 
   const STRATS = [
@@ -218,8 +222,9 @@
       indicators: Object.fromEntries(MAIN_INDS.concat(SUB_INDS).map(([v]) => [v, false])),
       indParams: Object.fromEntries(Object.entries(DEFAULTS).map(([k, v]) => [k, v.slice()])),
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
-      plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [] };
-    const D = { id: "", ticker: "", label: "", kind: "price", n: 0, dates: [], close: [], high: [], low: [], daily: [] };
+      plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
+      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false } };
+    const D = { id: "", ticker: "", label: "", kind: "price", n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null;
 
     const app = document.getElementById("app");
@@ -256,6 +261,11 @@
         <h2 style="margin-bottom:2px">Signal playbook <span class="meta" id="pbAsset" style="font-weight:400"></span></h2>
         <p class="meta" style="margin-top:4px">Edit a rule's parameters → its <b>backtest updates live</b> (long-or-cash, next-day fills, cash 0%, no costs, full daily history).
           <b>plot</b> = draw the indicator · <b>signals</b> = ▲/▼ markers on the chart · <b>notes</b> = what the buy/sell signal means. Educational only — not advice.</p>
+        <div class="cbar" id="levBar" style="margin:2px 0 4px">
+          <div><span class="lbl">Leverage</span><span class="seg" id="levSeg"></span></div>
+          <span id="levSafe" style="display:none;font-size:12px;color:#6e6e73">go <b id="levMultLbl">2×</b> when DD &gt; <input id="levDD" type="number" step="1" style="width:48px;font:inherit;font-size:12px;padding:3px 5px;border-radius:7px;border:1px solid var(--line)"> % &amp; 20-day vol &lt; <input id="levVol" type="number" step="1" style="width:48px;font:inherit;font-size:12px;padding:3px 5px;border-radius:7px;border:1px solid var(--line)"> %</span>
+          <div><span class="lbl">Costs</span><span class="seg" id="costSeg"></span></div>
+        </div>
         <div id="playbook"><p class="meta">Loading…</p></div>
       </div>
       <div class="card">
@@ -289,6 +299,14 @@
     makeSeg($("toolSeg"), TOOLS, (v) => v === state.tool, (v, b) => { pickTool(v); segActive($("toolSeg"), b); }, "tool");
     $("undoBtn").onclick = undoDrawing;
     $("clearBtn").onclick = clearDrawings;
+
+    // leverage / costs controls (drive the playbook backtests)
+    function syncLevUI() { const L = state.lev; segActive($("levSeg"), findBtn($("levSeg"), String(L.mult))); segActive($("costSeg"), findBtn($("costSeg"), L.costs ? "1" : "0")); $("levSafe").style.display = L.mult > 1 ? "" : "none"; $("levMultLbl").textContent = L.mult + "×"; $("levDD").value = L.ddThr; $("levVol").value = L.volThr; }
+    makeSeg($("levSeg"), [["1", "1×/cash"], ["2", "2× safe"], ["3", "3× safe"]], (v) => +v === state.lev.mult, (v) => { state.lev.mult = +v; syncLevUI(); renderPlaybook(); scheduleSave(); });
+    makeSeg($("costSeg"), [["0", "Off"], ["1", "On"]], (v) => (+v === 1) === state.lev.costs, (v) => { state.lev.costs = +v === 1; syncLevUI(); renderPlaybook(); scheduleSave(); });
+    $("levDD").onchange = () => { const x = parseFloat($("levDD").value); if (isFinite(x)) { state.lev.ddThr = x; renderPlaybook(); scheduleSave(); } };
+    $("levVol").onchange = () => { const x = parseFloat($("levVol").value); if (isFinite(x)) { state.lev.volThr = x; renderPlaybook(); scheduleSave(); } };
+    syncLevUI();
 
     function setRange(days) { const w = Math.max(200, $("chart").clientWidth - 70); const n = days ? Math.min(days, D.n || days) : (D.n || days || 250); safe(() => { chart.setBarSpace(Math.max(0.5, Math.min(40, w / n))); chart.scrollToRealTime(0); }); }
 
@@ -359,7 +377,7 @@
     function status(msg) { $("notesStatus").textContent = msg ? "· " + msg : ""; }
     function updateAuth() { const el = $("cloudAuth"); if (getKey()) { el.innerHTML = `signed in · <a href="#" id="logout">log out</a>`; el.querySelector("#logout").onclick = (e) => { e.preventDefault(); setKey(""); status("logged out"); }; } else el.textContent = "not signed in"; }
     function ensureKey() { const k = getKey(); if (k) return Promise.resolve(k); const entry = (window.prompt("Passphrase to save/view private notes:") || "").trim(); if (!entry) return Promise.resolve(""); return fetch(STORE + "/api/auth", { method: "POST", headers: { "X-Lab-Key": entry } }).then((r) => { if (!r.ok) { status("wrong passphrase"); return ""; } setKey(entry); return entry; }).catch(() => { status("login failed"); return ""; }); }
-    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, ...d }) => d), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams } }; }
+    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, ...d }) => d), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams, lev: state.lev } }; }
     function saveLocal() { try { localStorage.setItem(lsKey(D.id), JSON.stringify(snapshot())); } catch (_) {} }
     function scheduleSave() { if (saveTimer) clearTimeout(saveTimer); saveTimer = setTimeout(() => { saveTimer = null; saveLocal(); status("saved locally"); }, 600); }
     $("cloudBtn").onclick = () => { ensureKey().then((key) => { if (!key) return; updateAuth(); status("saving…"); fetch(STORE + "/api/chart/" + D.id, { method: "POST", headers: { "Content-Type": "application/json", "X-Lab-Key": key }, body: JSON.stringify(snapshot()) }).then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired"); } if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then(() => status("saved to cloud ✓")).catch((e) => status("cloud save failed: " + e.message)); }); };
@@ -373,6 +391,7 @@
       if (st.yAxis) { state.yAxis = st.yAxis; safe(() => chart.setStyles({ yAxis: { type: st.yAxis } })); segActive($("axisSeg"), findBtn($("axisSeg"), st.yAxis)); }
       if (st.indParams) Object.keys(st.indParams).forEach((k) => { if (Array.isArray(st.indParams[k])) state.indParams[k] = st.indParams[k].slice(); });
       if (st.stratParams) Object.keys(st.stratParams).forEach((k) => { if (state.stratParams[k]) Object.assign(state.stratParams[k], st.stratParams[k]); });
+      if (st.lev && typeof st.lev === "object") { Object.assign(state.lev, st.lev); syncLevUI(); }
       syncIndicators(st.indicators); renderIndParams();
       drawings = [];
       (snap.drawings || []).filter(validDraw).forEach((d) => { const id = safe(() => chart.createOverlay({ name: d.name, points: d.points, extendData: d.extendData })); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); });
@@ -405,23 +424,30 @@
     function renderPlaybook() {
       const c = D.close, host = $("playbook"); $("pbAsset").textContent = D.dates.length ? "· " + D.label + " · " + D.dates[0] + " → " + D.dates[D.n - 1] : "";
       if (!c || c.length < 250) { host.innerHTML = `<p class="meta">Not enough history for a meaningful backtest.</p>`; return; }
-      const isY = D.kind === "yield", bt = isY ? btYield : backtest;
-      const ones = c.map(() => 1), bhr = bt(c, ones), bh = stats(bhr.eq, bhr.ret, ones);
+      const isY = D.kind === "yield", L = state.lev;
+      const levArr = (pos) => (L.mult > 1 && !isY && D.ddh.length === c.length) ? pos.map((p, i) => (p ? ((D.ddh[i] > L.ddThr / 100 && D.rv[i] < L.volThr / 100) ? L.mult : 1) : 0)) : pos;
+      const evalp = (pos) => { const la = levArr(pos); const r = isY ? btYield(c, pos) : btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
+      const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isY) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
+      const ones = c.map(() => 1), bh = evalp(ones);
       const head = `<tr><th>Strategy, signal &amp; parameters</th><th>CAGR</th><th>Max DD</th><th>Sharpe</th><th>% in</th><th>$100→</th><th>Show</th></tr>`;
-      const bhRow = `<tr class="bh"><td>Buy &amp; hold<div class="sig">always invested</div></td><td class="num">${pct(bh.cagr)}</td><td class="num">${pct(bh.maxdd)}</td><td class="num">${f2(bh.sharpe)}</td><td class="num">100%</td><td class="num">$${Math.round(bh.end).toLocaleString()}</td><td></td></tr>`;
+      const bhRow = `<tr class="bh"><td>Buy &amp; hold<div class="sig">always invested</div></td><td class="num">${pct(bh.cagr)}</td><td class="num">${pct(bh.maxdd)}</td><td class="num">${f2(bh.sharpe)}</td><td class="num">${lc(bh)}</td><td class="num">$${Math.round(bh.end).toLocaleString()}</td><td></td></tr>`;
       const body = STRATS.map((st) => {
-        const p = state.stratParams[st.key], pos = st.sig(c, p, D.high, D.low), r = bt(c, pos), s = stats(r.eq, r.ret, pos);
+        const p = state.stratParams[st.key], pos = st.sig(c, p, D.high, D.low), s = evalp(pos);
         const inputs = st.params.map((q) => `<label>${esc(q.label)}<input type="number" data-k="${st.key}" data-p="${q.k}" value="${p[q.k]}" min="${q.min}" max="${q.max}" step="${q.step || 1}"></label>`).join("");
         const plotBtn = st.plot ? `<button class="pb-btn ${state.plotted[st.key] ? "on" : ""}" data-plot="${st.key}">${state.plotted[st.key] ? "✓ plot" : "plot"}</button>` : `<button class="pb-btn" disabled title="no chart overlay">plot</button>`;
         const sigBtn = `<button class="pb-btn sig ${state.signalKey === st.key ? "on" : ""}" data-sig="${st.key}">${state.signalKey === st.key ? "✓ signals" : "signals"}</button>`;
         const noteBtn = `<button class="pb-btn ${state.notesOpen[st.key] ? "on" : ""}" data-note="${st.key}">notes</button>`;
         const row = `<tr><td><b>${esc(st.name)}</b><div class="sig">▲ ${esc(st.buy(p))} · ▼ ${esc(st.sell(p))}</div><div class="pbp">${inputs}</div></td>
-          <td class="num ${s.cagr > bh.cagr ? "win" : ""}">${pct(s.cagr)}</td><td class="num">${pct(s.maxdd)}</td><td class="num">${f2(s.sharpe)}</td><td class="num">${pct(s.pin)}</td><td class="num">$${Math.round(s.end).toLocaleString()}</td>
+          <td class="num ${s.cagr > bh.cagr ? "win" : ""}">${pct(s.cagr)}</td><td class="num">${pct(s.maxdd)}</td><td class="num">${f2(s.sharpe)}</td><td class="num">${lc(s)}</td><td class="num">$${Math.round(s.end).toLocaleString()}</td>
           <td><div class="pbacts">${plotBtn}${sigBtn}${noteBtn}</div></td></tr>`;
         const noteRow = state.notesOpen[st.key] ? `<tr class="noterow"><td colspan="7">${st.note}</td></tr>` : "";
         return row + noteRow;
       }).join("");
-      const cap = isY ? `<p class="meta" style="margin:0 0 6px"><b>Yield asset</b> — P&L is the <b>yield earned while invested</b> (carry: rate ÷ 252 per day, bond price moves ignored); the candles show the rate itself, and CAGR ≈ the average yield captured.</p>` : "";
+      const caps = [];
+      if (isY) caps.push(`<b>Yield asset</b> — P&L is the <b>yield earned while invested</b> (carry: rate ÷ 252 per day, bond price moves ignored); candles show the rate, CAGR ≈ average yield captured.`);
+      if (!isY && L.mult > 1) caps.push(`<b>${L.mult}× when safe</b> — levered while in trend AND drawdown &gt; ${L.ddThr}% AND 20-day vol &lt; ${L.volThr}%, else 1× (cash when out). ${L.costs ? "Costs ON (5bps/switch + 4%/yr financing)." : "No costs."} Leverage lifts CAGR but <b>deepens drawdowns and usually lowers Sharpe</b> — that's the trade-off; the “% in” column shows average leverage.`);
+      else if (!isY && L.costs) caps.push(`Costs ON — 5 bps per switch.`);
+      const cap = caps.length ? `<p class="meta" style="margin:0 0 6px">${caps.join(" ")}</p>` : "";
       host.innerHTML = cap + `<table class="pb"><thead>${head}</thead><tbody>${bhRow}${body}</tbody></table>`;
       host.querySelectorAll("input[data-k]").forEach((inp) => { inp.onchange = () => {
         const v = parseFloat(inp.value); if (!isFinite(v)) return; const key = inp.dataset.k, pk = inp.dataset.p; state.stratParams[key][pk] = v;
@@ -439,6 +465,7 @@
       state.asset = id;
       fetch("price_" + id + ".json?v=" + Date.now()).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then((d) => {
         D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
+        D.ddh = ddFromHigh(d.close, 252); D.rv = rvol(d.close, 20);
         $("cTitle").textContent = D.label + " — chart";
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
         safe(() => chart.removeOverlay()); drawings = [];
