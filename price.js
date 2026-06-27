@@ -228,8 +228,8 @@
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
       lev: { mult: 1, ddThr: -10, volThr: 18, costs: false } };
-    const D = { id: "", ticker: "", label: "", kind: "price", n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
-    let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null;
+    const D = { id: "", ticker: "", label: "", kind: "price", klass: "", n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
+    let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], pendingBest = null;
 
     const app = document.getElementById("app");
     app.innerHTML = `
@@ -260,6 +260,12 @@
         </div>
         <div id="chart"></div>
         <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points on the chart.</p>
+      </div>
+      <div class="card" id="leaderCard" style="display:none">
+        <h2 style="margin-bottom:2px">Curve strategy leaderboard <span class="meta" style="font-weight:400">— best backtested rule per UST instrument</span></h2>
+        <p class="meta" style="margin-top:4px">A comprehensive sweep (26 strategy/parameter configs × 12 instruments) over each instrument's full history, ranked by <b>Sharpe</b> of the directional P&L (bps). <b>Load</b> applies a rule to the chart + playbook below. Educational only — not advice.</p>
+        <div id="leaderNote" class="meta" style="margin:4px 0 2px"></div>
+        <div id="leader"></div>
       </div>
       <div class="card">
         <h2 style="margin-bottom:2px">Signal playbook <span class="meta" id="pbAsset" style="font-weight:400"></span></h2>
@@ -438,32 +444,34 @@
         const yrs = c.length / 252, m = pnl.reduce((a, b) => a + b, 0) / pnl.length; let v = 0; for (const x of pnl) v += (x - m) ** 2; const vol = Math.sqrt(v / Math.max(1, pnl.length - 1));
         return { annbps: (cum * 100) / yrs, maxddbps: mdd * 100, sharpe: vol ? (m / vol) * Math.sqrt(252) : 0, hit: days ? hit / days : 0, total: cum * 100 };
       }
-      const evalp = (pos) => { if (isS) return spreadStats(pos); const la = levArr(pos); const r = isY ? btYield(c, pos) : btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
-      const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isY && !isS) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
-      const COLS = isS
+      const isDelta = isS || isY;   // UST instruments trade directionally: P&L = position × change-in-series (bps)
+      const evalp = (pos) => { if (isDelta) return spreadStats(pos); const la = levArr(pos); const r = btLev(c, la, L.costs); const s = stats(r.eq, r.ret, la); s.avglev = la.reduce((a, b) => a + b, 0) / la.length; return s; };
+      const lc = (s) => `${pct(s.pin)}${(L.mult > 1 && !isDelta) ? ` · ${s.avglev.toFixed(2)}×` : ""}`;
+      const COLS = isDelta
         ? [["Ann bps", (m) => Math.round(m.annbps)], ["Max DD bps", (m) => Math.round(m.maxddbps)], ["Sharpe", (m) => f2(m.sharpe)], ["Hit %", (m) => pct(m.hit)], ["Total bps", (m) => Math.round(m.total).toLocaleString()]]
         : [["CAGR", (m) => pct(m.cagr)], ["Max DD", (m) => pct(m.maxdd)], ["Sharpe", (m) => f2(m.sharpe)], ["% in", (m) => lc(m)], ["$100→", (m) => "$" + Math.round(m.end).toLocaleString()]];
-      const winKey = isS ? "total" : "cagr";
+      const winKey = isDelta ? "total" : "cagr";
       const ones = c.map(() => 1), bh = evalp(ones);
       const head = `<tr><th>Strategy, signal &amp; parameters</th>${COLS.map(([h]) => `<th>${h}</th>`).join("")}<th>Show</th></tr>`;
-      const bhRow = `<tr class="bh"><td>${isS ? "Static steepener" : "Buy &amp; hold"}<div class="sig">${isS ? "always long steepener" : "always invested"}</div></td>${COLS.map(([, f]) => `<td class="num">${f(bh)}</td>`).join("")}<td></td></tr>`;
+      const bhName = isY ? "Static long rates" : isS ? "Static steepener" : "Buy &amp; hold", bhSub = isY ? "always long rates" : isS ? "always long steepener" : "always invested";
+      const bhRow = `<tr class="bh"><td>${bhName}<div class="sig">${bhSub}</div></td>${COLS.map(([, f]) => `<td class="num">${f(bh)}</td>`).join("")}<td></td></tr>`;
       const body = STRATS.map((st) => {
         const p = state.stratParams[st.key], pos = st.sig(c, p, D.high, D.low), s = evalp(pos);
         const inputs = st.params.map((q) => `<label>${esc(q.label)}<input type="number" data-k="${st.key}" data-p="${q.k}" value="${p[q.k]}" min="${q.min}" max="${q.max}" step="${q.step || 1}"></label>`).join("");
         const plotBtn = st.plot ? `<button class="pb-btn ${state.plotted[st.key] ? "on" : ""}" data-plot="${st.key}">${state.plotted[st.key] ? "✓ plot" : "plot"}</button>` : `<button class="pb-btn" disabled title="no chart overlay">plot</button>`;
         const sigBtn = `<button class="pb-btn sig ${state.signalKey === st.key ? "on" : ""}" data-sig="${st.key}">${state.signalKey === st.key ? "✓ signals" : "signals"}</button>`;
         const noteBtn = `<button class="pb-btn ${state.notesOpen[st.key] ? "on" : ""}" data-note="${st.key}">notes</button>`;
-        const sigTxt = isS ? `▲ long steepener: ${esc(st.buy(p))} · ▼ flattener: ${esc(st.sell(p))}` : `▲ ${esc(st.buy(p))} · ▼ ${esc(st.sell(p))}`;
+        const sigTxt = isDelta ? `▲ ${isY ? "long rates" : "long steepener"}: ${esc(st.buy(p))} · ▼ ${isY ? "long duration" : "flattener"}: ${esc(st.sell(p))}` : `▲ ${esc(st.buy(p))} · ▼ ${esc(st.sell(p))}`;
         const cells = COLS.map(([, f], idx) => (idx === 0 ? `<td class="num ${s[winKey] > bh[winKey] ? "win" : ""}">${f(s)}</td>` : `<td class="num">${f(s)}</td>`)).join("");
         const row = `<tr><td><b>${esc(st.name)}</b><div class="sig">${sigTxt}</div><div class="pbp">${inputs}</div></td>${cells}<td><div class="pbacts">${plotBtn}${sigBtn}${noteBtn}</div></td></tr>`;
         const noteRow = state.notesOpen[st.key] ? `<tr class="noterow"><td colspan="7">${st.note}</td></tr>` : "";
         return row + noteRow;
       }).join("");
       const caps = [];
-      if (isS) caps.push(`<b>Steepness spread</b> (% points; ×100 = bps). A trade goes <b>long the steepener</b> when the rule fires and <b>short (flattener)</b> when it doesn't; daily P&L = position × the change in the spread. Strategies signal on the <i>spread level</i> (its SMA / RSI / MACD …). “Static steepener” = always long the spread. <b>Hit %</b> = share of days the position made money.`);
-      if (isY) caps.push(`<b>Yield asset</b> — P&L is the <b>yield earned while invested</b> (carry: rate ÷ 252 per day, bond price moves ignored); candles show the rate, CAGR ≈ average yield captured.`);
-      if (!isY && !isS && L.mult > 1) caps.push(`<b>${L.mult}× when safe</b> — levered while in trend AND drawdown &gt; ${L.ddThr}% AND 20-day vol &lt; ${L.volThr}%, else 1× (cash when out). ${L.costs ? "Costs ON (5bps/switch + 4%/yr financing)." : "No costs."} Leverage lifts CAGR but <b>deepens drawdowns and usually lowers Sharpe</b> — that's the trade-off; the “% in” column shows average leverage.`);
-      else if (!isY && !isS && L.costs) caps.push(`Costs ON — 5 bps per switch.`);
+      if (isY) caps.push(`<b>Rate trade</b> (bps). <b>Long (+1) = long rates</b> — profit when the yield <i>rises</i> (short duration); <b>short (−1) = long duration</b> — profit when it falls. P&L = position × daily change in the yield. Strategies signal on the <i>yield level</i>. <b>Hit %</b> = share of days the position made money.`);
+      if (isS) caps.push(`<b>Steepness spread</b> (% points; ×100 = bps). <b>Long the steepener</b> when the rule fires, <b>short (flattener)</b> when not; P&L = position × change in the spread. Strategies signal on the <i>spread level</i>. <b>Hit %</b> = share of days the position made money.`);
+      if (!isDelta && L.mult > 1) caps.push(`<b>${L.mult}× when safe</b> — levered while in trend AND drawdown &gt; ${L.ddThr}% AND 20-day vol &lt; ${L.volThr}%, else 1× (cash when out). ${L.costs ? "Costs ON (5bps/switch + 4%/yr financing)." : "No costs."} Leverage lifts CAGR but <b>deepens drawdowns and usually lowers Sharpe</b> — that's the trade-off; the “% in” column shows average leverage.`);
+      else if (!isDelta && L.costs) caps.push(`Costs ON — 5 bps per switch.`);
       const cap = caps.length ? `<p class="meta" style="margin:0 0 6px">${caps.join(" ")}</p>` : "";
       host.innerHTML = cap + `<table class="pb"><thead>${head}</thead><tbody>${bhRow}${body}</tbody></table>`;
       host.querySelectorAll("input[data-k]").forEach((inp) => { inp.onchange = () => {
@@ -478,15 +486,41 @@
       host.querySelectorAll("button[data-note]").forEach((b) => { b.onclick = () => { state.notesOpen[b.dataset.note] = !state.notesOpen[b.dataset.note]; renderPlaybook(); }; });
     }
 
+    // ---- curve strategy leaderboard (best backtested rule per UST instrument) ----
+    function renderLeader() {
+      const card = $("leaderCard"), host = $("leader"), note = $("leaderNote");
+      const isUST = ["Rates", "Steepness", "Butterfly"].includes(D.klass);
+      card.style.display = isUST ? "" : "none";
+      if (!isUST || !LEADER.length) return;
+      const sigCell = (b) => `<span style="color:${b.signalNow ? UP : DN};font-weight:700;white-space:nowrap">${b.signalNow ? "▲" : "▼"} ${esc(b.signalLabel)}</span>`;
+      const cur = LEADER.find((e) => e.id === D.id);
+      note.innerHTML = cur ? `<b>${esc(cur.label)}:</b> ${cur.explain} <span style="color:#8a8a8e">(best: ${esc(cur.best.name)} — ${esc(Object.entries(cur.best.params).map(([k, v]) => k + " " + v).join(", "))}, Sharpe ${f2(cur.best.metrics.sharpe)})</span> · <b>Now: ${sigCell(cur.best)}</b> <span class="meta">as of ${esc(cur.best.asof || "")}</span>` : "";
+      const rows = LEADER.slice().sort((a, b) => b.best.metrics.sharpe - a.best.metrics.sharpe);
+      const head = `<tr><th>Instrument</th><th>Best rule</th><th>Sharpe</th><th>Ann bps</th><th>Total bps</th><th>Hit %</th><th>Signal now</th><th></th></tr>`;
+      const body = rows.map((e) => { const m = e.best.metrics, pr = Object.entries(e.best.params).map(([k, v]) => k + " " + v).join(", ");
+        return `<tr class="${e.id === D.id ? "bh" : ""}"><td><b>${esc(e.label)}</b> <span class="meta">${esc(e.klass)}</span></td><td>${esc(e.best.name)}<div class="sig">${esc(pr)}</div></td><td class="num">${f2(m.sharpe)}</td><td class="num">${Math.round(m.annbps)}</td><td class="num">${Math.round(m.total).toLocaleString()}</td><td class="num">${pct(m.hit)}</td><td>${sigCell(e.best)}</td><td><button class="pb-btn" data-load="${esc(e.id)}">Load</button></td></tr>`; }).join("");
+      host.innerHTML = `<table class="pb"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+      host.querySelectorAll("button[data-load]").forEach((b) => (b.onclick = () => applyBest(LEADER.find((e) => e.id === b.dataset.load))));
+    }
+    function applyBest(e) { if (!e) return; if (e.id === D.id) applyStrategy(e.best, true); else { pendingBest = e.best; $("assetSel").value = e.id; loadAsset(e.id); } }
+    function applyStrategy(best, scroll) {
+      if (state.stratParams[best.key]) Object.assign(state.stratParams[best.key], best.params);
+      state.signalKey = best.key; state.notesOpen[best.key] = true;
+      renderPlaybook(); refreshSignals(); scheduleSave();
+      if (scroll) { const pb = $("playbook"); if (pb) pb.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
+    }
+
     function loadAsset(id) {
       state.asset = id;
       fetch("price_" + id + ".json?v=" + Date.now()).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then((d) => {
-        D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
+        D.id = id; D.ticker = d.ticker; D.label = d.asset_label || id; D.kind = d.kind || "price"; D.klass = d.klass || ""; D.n = d.close.length; D.dates = d.dates; D.close = d.close; D.high = d.high; D.low = d.low;
         D.ddh = ddFromHigh(d.close, 252); D.rv = rvol(d.close, 20);
         $("cTitle").textContent = D.label + " — chart";
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
         safe(() => chart.removeOverlay()); drawings = [];
-        applyTF(); loadNotes(); fetchLive(); renderPlaybook();
+        applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader();
+        if (pendingBest) { applyStrategy(pendingBest, true); pendingBest = null; }
+        else { const e = LEADER.find((x) => x.id === D.id); if (e && ["Rates", "Steepness", "Butterfly"].includes(D.klass)) applyStrategy(e.best, false); }   // best rule = default for every UST trade
       }).catch((e) => { status("could not load " + id + " — " + e.message); });
     }
 
@@ -494,6 +528,7 @@
     fetch("price_assets.json?v=" + Date.now()).then((r) => r.json())
       .then((list) => { ASSETS = list; })
       .catch(() => { ASSETS = [{ id: "spx", label: "S&P 500", klass: "Indices", ticker: "^GSPC" }, { id: "ndx", label: "Nasdaq 100", klass: "Indices", ticker: "^NDX" }]; })
+      .then(() => fetch("ust_strategies.json?v=" + Date.now()).then((r) => r.json()).then((l) => { LEADER = l || []; }).catch(() => { LEADER = []; }))
       .then(() => { const sel = $("assetSel"), groups = {}; ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); }); sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join(""); sel.value = state.asset; sel.onchange = () => loadAsset(sel.value); loadAsset(state.asset); });
   }
 

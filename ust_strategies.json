@@ -1,0 +1,364 @@
+[
+{
+"id": "ust3m",
+"label": "US 3M yield",
+"klass": "Rates",
+"kind": "yield",
+"best": {
+"key": "rsi",
+"name": "RSI momentum",
+"params": {
+"period": 14,
+"level": 55
+},
+"family": "trend",
+"metrics": {
+"primary": 6101.199999999971,
+"sharpe": 0.6762315800019743,
+"annbps": 92.65969987344015,
+"maxddbps": -715.9999999999975,
+"hit": 0.44985535197685633,
+"total": 6101.199999999971,
+"unit": "bps"
+},
+"signalNow": 1,
+"signalLabel": "long rates",
+"asof": "2026-06-18"
+},
+"explain": "Rates trend with the policy cycle, so directional momentum pays: RSI momentum goes long rates when the yield's own momentum turns up and long duration when it rolls over.",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "ust2y",
+"label": "US 2Y yield",
+"klass": "Rates",
+"kind": "yield",
+"best": {
+"key": "donch",
+"name": "Donchian breakout",
+"params": {
+"win": 50
+},
+"family": "breakout",
+"metrics": {
+"primary": 366.6999999999997,
+"sharpe": 0.7103867046653956,
+"annbps": 75.55878986099749,
+"maxddbps": -182.70000000000007,
+"hit": 0.43044189852700493,
+"total": 366.6999999999997,
+"unit": "bps"
+},
+"signalNow": 1,
+"signalLabel": "long rates",
+"asof": "2026-06-26"
+},
+"explain": "Rates trend with the policy cycle, so directional momentum pays: Donchian breakout goes long rates when the yield's own momentum turns up and long duration when it rolls over. The belly (5Y/7Y) times the cleanest.",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "ust5y",
+"label": "US 5Y yield",
+"klass": "Rates",
+"kind": "yield",
+"best": {
+"key": "rsi",
+"name": "RSI momentum",
+"params": {
+"period": 14,
+"level": 55
+},
+"family": "trend",
+"metrics": {
+"primary": 6320.899999999977,
+"sharpe": 0.881342040253803,
+"annbps": 98.91739427435846,
+"maxddbps": -326.3000000000005,
+"hit": 0.48571606011675567,
+"total": 6320.899999999977,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "long duration",
+"asof": "2026-06-18"
+},
+"explain": "Rates trend with the policy cycle, so directional momentum pays: RSI momentum goes long rates when the yield's own momentum turns up and long duration when it rolls over. The belly (5Y/7Y) times the cleanest.",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "ust7y",
+"label": "US 7Y yield (interp)",
+"klass": "Rates",
+"kind": "yield",
+"best": {
+"key": "rsi",
+"name": "RSI momentum",
+"params": {
+"period": 14,
+"level": 55
+},
+"family": "trend",
+"metrics": {
+"primary": 5680.500000000011,
+"sharpe": 0.8338968906329624,
+"annbps": 88.89560951375537,
+"maxddbps": -434.2800000000018,
+"hit": 0.5081977394112532,
+"total": 5680.500000000011,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "long duration",
+"asof": "2026-06-18"
+},
+"explain": "Rates trend with the policy cycle, so directional momentum pays: RSI momentum goes long rates when the yield's own momentum turns up and long duration when it rolls over. The belly (5Y/7Y) times the cleanest.",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "ust10y",
+"label": "US 10Y yield",
+"klass": "Rates",
+"kind": "yield",
+"best": {
+"key": "rsi",
+"name": "RSI momentum",
+"params": {
+"period": 14,
+"level": 55
+},
+"family": "trend",
+"metrics": {
+"primary": 4049.6999999999575,
+"sharpe": 0.6166207773934596,
+"annbps": 63.374799726758326,
+"maxddbps": -406.7000000000071,
+"hit": 0.47348155508632467,
+"total": 4049.6999999999575,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "long duration",
+"asof": "2026-06-18"
+},
+"explain": "Rates trend with the policy cycle, so directional momentum pays: RSI momentum goes long rates when the yield's own momentum turns up and long duration when it rolls over.",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "ust30y",
+"label": "US 30Y yield",
+"klass": "Rates",
+"kind": "yield",
+"best": {
+"key": "rsi",
+"name": "RSI momentum",
+"params": {
+"period": 14,
+"level": 55
+},
+"family": "trend",
+"metrics": {
+"primary": 2092.49999999998,
+"sharpe": 0.41441928266883676,
+"annbps": 42.659169970066735,
+"maxddbps": -410.80000000000575,
+"hit": 0.48818770226537217,
+"total": 2092.49999999998,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "long duration",
+"asof": "2026-06-18"
+},
+"explain": "Rates trend with the policy cycle, so directional momentum pays: RSI momentum goes long rates when the yield's own momentum turns up and long duration when it rolls over.",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "s2s10s",
+"label": "2s10s (10Y-2Y)",
+"klass": "Steepness",
+"kind": "spread",
+"best": {
+"key": "rsirev",
+"name": "RSI reversion",
+"params": {
+"period": 2,
+"lower": 25,
+"upper": 70
+},
+"family": "reversion",
+"metrics": {
+"primary": 466.89999999999986,
+"sharpe": 1.284203102606469,
+"annbps": 96.6793755135579,
+"maxddbps": -72.70000000000003,
+"hit": 0.5304276315789473,
+"total": 466.89999999999986,
+"unit": "bps"
+},
+"signalNow": 1,
+"signalLabel": "long steepener",
+"asof": "2026-06-18"
+},
+"explain": "The 2s10s (10Y-2Y) oscillates around its range, so RSI reversion fades extremes \u2014 buy a flat curve, sell a steep one.",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "s3m10y",
+"label": "3m10y (10Y-3M)",
+"klass": "Steepness",
+"kind": "spread",
+"best": {
+"key": "rsi",
+"name": "RSI momentum",
+"params": {
+"period": 14,
+"level": 50
+},
+"family": "trend",
+"metrics": {
+"primary": 3330.499999999973,
+"sharpe": 0.39977714517145146,
+"annbps": 52.142519880715284,
+"maxddbps": -496.10000000002333,
+"hit": 0.47654551102826964,
+"total": 3330.499999999973,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "flattener",
+"asof": "2026-06-18"
+},
+"explain": "The 3m10y (10Y-3M) steepens in easing cycles and flattens in hiking cycles \u2014 long, persistent moves that RSI momentum follows (long the steepener when the slope's momentum is up).",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "s5s10s",
+"label": "5s10s (10Y-5Y)",
+"klass": "Steepness",
+"kind": "spread",
+"best": {
+"key": "emacross",
+"name": "EMA Cross",
+"params": {
+"fast": 12,
+"slow": 26
+},
+"family": "trend",
+"metrics": {
+"primary": 78.59999999999955,
+"sharpe": 0.029491461158837225,
+"annbps": 1.2300316711171762,
+"maxddbps": -350.60000000000014,
+"hit": 0.438827474847845,
+"total": 78.59999999999955,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "flattener",
+"asof": "2026-06-18"
+},
+"explain": "The 5s10s (10Y-5Y) steepens in easing cycles and flattens in hiking cycles \u2014 long, persistent moves that EMA Cross follows (long the steepener when the slope's momentum is up).",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "s5s30s",
+"label": "5s30s (30Y-5Y)",
+"klass": "Steepness",
+"kind": "spread",
+"best": {
+"key": "rsi",
+"name": "RSI momentum",
+"params": {
+"period": 14,
+"level": 50
+},
+"family": "trend",
+"metrics": {
+"primary": 837.2,
+"sharpe": 0.2696595207681053,
+"annbps": 17.06774532804789,
+"maxddbps": -352.99999999999994,
+"hit": 0.4767799352750809,
+"total": 837.2,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "flattener",
+"asof": "2026-06-18"
+},
+"explain": "The 5s30s (30Y-5Y) steepens in easing cycles and flattens in hiking cycles \u2014 long, persistent moves that RSI momentum follows (long the steepener when the slope's momentum is up).",
+"topFamily": "trend",
+"rows": 26
+},
+{
+"id": "f2s5s10s",
+"label": "2s5s10s fly",
+"klass": "Butterfly",
+"kind": "spread",
+"best": {
+"key": "rsirev",
+"name": "RSI reversion",
+"params": {
+"period": 2,
+"lower": 25,
+"upper": 70
+},
+"family": "reversion",
+"metrics": {
+"primary": 505.90000000000066,
+"sharpe": 1.6465437185567693,
+"annbps": 104.7549712407561,
+"maxddbps": -57.299999999999685,
+"hit": 0.5394736842105263,
+"total": 505.90000000000066,
+"unit": "bps"
+},
+"signalNow": 0,
+"signalLabel": "short the fly",
+"asof": "2026-06-18"
+},
+"explain": "A butterfly is a pure relative-value trade with little directional drift, so it mean-reverts: RSI reversion fades a rich/cheap belly back to fair \u2014 the strongest risk-adjusted edge on the curve.",
+"topFamily": "reversion",
+"rows": 26
+},
+{
+"id": "f5s10s30s",
+"label": "5s10s30s fly",
+"klass": "Butterfly",
+"kind": "spread",
+"best": {
+"key": "rsirev",
+"name": "RSI reversion",
+"params": {
+"period": 2,
+"lower": 25,
+"upper": 70
+},
+"family": "reversion",
+"metrics": {
+"primary": 2453.200000000009,
+"sharpe": 0.9850726154027168,
+"annbps": 50.01265269800196,
+"maxddbps": -263.0999999999901,
+"hit": 0.48956310679611653,
+"total": 2453.200000000009,
+"unit": "bps"
+},
+"signalNow": 1,
+"signalLabel": "long the fly",
+"asof": "2026-06-18"
+},
+"explain": "A butterfly is a pure relative-value trade with little directional drift, so it mean-reverts: RSI reversion fades a rich/cheap belly back to fair \u2014 the strongest risk-adjusted edge on the curve.",
+"topFamily": "reversion",
+"rows": 26
+}
+]
