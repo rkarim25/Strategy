@@ -4,20 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="site-scroll-init.js?v=20260610"></script>
-  <title>FTSE 250 — SMA20 1x/cash</title>
+  <title>Prices — high/low/close · S&amp;P 500 &amp; Nasdaq</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <script>
-    window.STRATEGY_DATA_URL = "ftse250_guarded_site_data.json";
-    window.STRATEGY_PAGE_TITLE = "FTSE 250 — SMA20 1x/cash";
-    window.STRATEGY_QUOTE = { symbol: "ftse250", ticker: "^FTMC" };
-  </script>
+  <script>window.STRATEGY_PAGE_TITLE = "Prices — high/low/close";</script>
 </head>
 <body>
 <main>
   <nav class="site-nav" aria-label="Strategies"></nav>
   <div id="app"><p>Loading…</p></div>
 </main>
+<!-- strategy_page.js loaded only for its shared styles (window.SP); no STRATEGY_DATA_URL = no strategy page. -->
 <script src="site-nav.js?v=20260627n"></script>
 <script src="strategy_page.js?v=20260626m"></script>
+<script src="price.js?v=20260627a"></script>
 </body>
 </html>
