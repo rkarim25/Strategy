@@ -46,7 +46,7 @@
     { id: "gold", asset: "Gold", strategy: "SMA50/150 Golden Cross 1x/cash", group: "strategies", href: "gold_guarded.html#signalPage" },
     { id: "lqq3", asset: "LQQ3 3x Nasdaq", strategy: "SMA200 1x/cash", group: "strategies", href: "lqq3_guarded.html#signalPage" },
     { id: "3bal", asset: "3BAL 3x EU Banks", strategy: "SMA20 1x/cash", group: "strategies", href: "3bal_guarded.html#signalPage" },
-    { id: "band_lab", asset: "Band Lab", strategy: "Interactive SMA-band backtest", group: "tools", href: "band_lab.html" },
+    { id: "lab", asset: "Lab", strategy: "Interactive strategy builder", group: "tools", href: "lab.html" },
     { id: "summary", asset: "Summary results", strategy: "Cross-asset backtests", group: "tools", href: "summary.html" },
     { id: "instruments", asset: "Tools", strategy: "Instruments", group: "tools", href: "instruments.html", secondary: true },
   ];
@@ -187,7 +187,7 @@
     // reused the raw current page id, so clicking e.g. "S&P 500" from a momentum
     // page pointed back at #momentumSignalPage instead of the guarded #signalPage.
     let targetHash;
-    if (item.id === "instruments" || item.id === "summary" || item.id === "spx" || item.id === "band_lab") {
+    if (item.id === "instruments" || item.id === "summary" || item.id === "spx" || item.id === "lab") {
       targetHash = "";   // thin-host / tool pages — no section hash
     } else if (item.id === "momentum") {
       targetHash = pageForStrategy("momentum", sectionOf(currentPageId));

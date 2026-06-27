@@ -352,6 +352,7 @@
     wrap.appendChild(legend);
 
     let winHi = dates.length, winLo = _useDefault ? Math.max(0, dates.length - _defDays) : 0;
+    let _suppressOW = false;   // suppress the onWindow callback while a sync sets the window externally
     const draw = () => {
       const lo = Math.max(0, winLo), hi = Math.min(dates.length, winHi);
       const dslice = dates.slice(lo, hi);
@@ -370,7 +371,7 @@
       }).filter(Boolean);
       lineChart(canvas, dslice, ser, { log, pct: rebasePct, markers });
       canvas.style.cursor = (winHi - winLo) < dates.length ? "grab" : "default";
-      if (onWindow) onWindow(lo, hi);
+      if (onWindow && !_suppressOW) onWindow(lo, hi);
     };
     // Pan the visible window left/right, keeping its width (time scroll). frac<0 = back, >0 = forward.
     const panBy = (frac) => {
@@ -441,6 +442,9 @@
     window.addEventListener("resize", draw);
     // Live update: swap series/markers in place (same date axis) without losing the current window.
     wrap.update = (series, mdefs) => { if (series) _series = series; if (mdefs) _mdefs = mdefs; renderLegend(); draw(); };
+    // Window get/set for cross-chart linking (setWindow won't re-fire onWindow, so syncs don't loop).
+    wrap.getWindow = () => [winLo, winHi];
+    wrap.setWindow = (lo, hi) => { _suppressOW = true; winLo = Math.max(0, lo); winHi = Math.min(dates.length, hi); setActive(null); draw(); _suppressOW = false; };
     return wrap;
   }
 
