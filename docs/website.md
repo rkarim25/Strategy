@@ -96,8 +96,11 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
   **DV01 $** (toggle + editable $/bp = trade DV01 from `TICKER_DV01`).
 - **RW-flies** (`build_fly_beta`): belly hedged by wings via a **rolling ~3y-window OLS** (out-of-sample, lagged,
   tracks regime drift). Honest finding: OOS the simple 50-50 fly (= equal-weight `2×belly−wings`) **beats** the
-  regression fly. **Carry/roll** can be baked into the UST backtest (toggle): each day adds CR = −Σ wᵢ·(roll+carry)ᵢ
-  from the live curve (long rates/steepener pay carry on an upward curve) — an approximation (current curve held).
+  regression fly. **Carry/roll** can be baked into the UST backtest (toggle): each day adds the position's carry+roll
+  drift. **Historical/time-varying** — `make_price_data.add_carry_history()` writes a per-date `cr` series (bps/3m,
+  long-the-instrument, from the curve on *that* date) into each UST file, so the drift flips sign with the regime
+  (long rates *earns* carry when the curve is inverted, *pays* when normal). Carry term uses exact yield levels; the
+  roll term interpolates the available tenors (cruder pre-2021). Falls back to today's-curve-held-flat if `cr` absent.
 - **Chart:** candle/bar/area · linear/log/% axis (spreads forced linear — they go negative) · range presets ·
   **timeframes** 1m/5m/15m/30m/1h/4h/1D (intraday via quote-proxy `?mode=intraday`; **spreads/flies combine each
   leg's intraday client-side** via `fetchIntradayBars`/`combineLegs`; 4h aggregated; 60 s auto-refresh) · live price.
