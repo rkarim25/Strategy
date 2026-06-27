@@ -14,6 +14,7 @@
   const STORE = "https://lab-strategy-store.rkarim88.workers.dev";
   const CLOUD_KEY = "lab_cloud_key";
   const TICKER_DV01 = { "^IRX": 0.25, "2YY=F": 1.9, "^FVX": 4.7, "^TNX": 8.6, "^TYX": 18.5 }; // ≈ modified duration (DV01 per $100)
+  const RECESSIONS = [["1953-07-01", "1954-05-31"], ["1957-08-01", "1958-04-30"], ["1960-04-01", "1961-02-28"], ["1969-12-01", "1970-11-30"], ["1973-11-01", "1975-03-31"], ["1980-01-01", "1980-07-31"], ["1981-07-01", "1982-11-30"], ["1990-07-01", "1991-03-31"], ["2001-03-01", "2001-11-30"], ["2007-12-01", "2009-06-30"], ["2020-02-01", "2020-04-30"]].map(([s, e]) => [Date.parse(s), Date.parse(e)]); // NBER US recessions
   const UP = "#15803d", DN = "#b42318";
   const RANGES = [["1M", 21], ["3M", 63], ["6M", 126], ["1Y", 252], ["2Y", 504], ["5Y", 1260], ["Max", null]];
   const TFS = [
@@ -169,6 +170,21 @@
         },
       });
     } catch (_) {}
+    try {
+      klinecharts.registerIndicator({
+        name: "RECESSION", figures: [], calc: (dataList) => dataList.map(() => ({})),
+        draw: ({ ctx, kLineDataList, visibleRange, xAxis, bounding }) => {
+          const from = Math.max(0, visibleRange.from), to = visibleRange.to, H = (bounding && bounding.height) || 2000;
+          ctx.fillStyle = "rgba(110,110,120,0.13)";
+          for (const [s, e] of RECESSIONS) {
+            let x0 = null, x1 = null;
+            for (let i = from; i < to; i++) { const d = kLineDataList[i]; if (!d) continue; if (d.timestamp >= s && d.timestamp <= e) { const x = xAxis.convertToPixel(i); if (x0 === null) x0 = x; x1 = x; } }
+            if (x0 !== null) ctx.fillRect(x0 - 1, 0, (x1 - x0) + 2, H);
+          }
+          return false;
+        },
+      });
+    } catch (_) {}
   }
 
   function injectStyles() {
@@ -228,7 +244,7 @@
       indParams: Object.fromEntries(Object.entries(DEFAULTS).map(([k, v]) => [k, v.slice()])),
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
-      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 } };
+      lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false };
     const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], CURVE = [], pendingBest = null;
 
@@ -257,7 +273,7 @@
         </details>
         <div class="cbar">
           <div><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
-          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button></div>
+          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="recBtn">▦ Recessions</button></div>
         </div>
         <div id="chart"></div>
         <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points on the chart.</p>
@@ -319,6 +335,7 @@
     makeSeg($("toolSeg"), TOOLS, (v) => v === state.tool, (v, b) => { pickTool(v); segActive($("toolSeg"), b); }, "tool");
     $("undoBtn").onclick = undoDrawing;
     $("clearBtn").onclick = clearDrawings;
+    $("recBtn").onclick = () => { state.recession = !state.recession; $("recBtn").classList.toggle("active", state.recession); safe(() => { if (state.recession) chart.createIndicator("RECESSION", true, { id: "candle_pane" }); else chart.removeIndicator("candle_pane", "RECESSION"); }); };
 
     // leverage / costs controls (drive the playbook backtests)
     function syncLevUI() { const L = state.lev; segActive($("levSeg"), findBtn($("levSeg"), String(L.mult))); segActive($("costSeg"), findBtn($("costSeg"), L.costs ? "1" : "0")); $("levSafe").style.display = L.mult > 1 ? "" : "none"; $("levMultLbl").textContent = L.mult + "×"; $("levDD").value = L.ddThr; $("levVol").value = L.volThr; }
@@ -564,7 +581,13 @@
       $("curveSvg").innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto">${grid}<polyline points="${poly}" fill="none" stroke="#0071e3" stroke-width="2"/>${dots}</svg>`;
       const yv = (id) => { const c = CURVE.find((x) => x.id === id); return c ? c.yield : null; };
       const flags = [["2s10s", "ust2y", "ust10y"], ["3m10y", "ust3m", "ust10y"], ["5s30s", "ust5y", "ust30y"]].map(([nm, a, b]) => { const v = (yv(b) - yv(a)) * 100, inv = v < 0; return `<b>${nm}</b> ${v >= 0 ? "+" : ""}${v.toFixed(0)}bps <span style="color:${inv ? DN : UP};font-weight:600">${inv ? "INVERTED" : v > 60 ? "steep" : "flat-ish"}</span>`; }).join(" &nbsp;·&nbsp; ");
-      $("curveFlags").innerHTML = "Slope: " + flags;
+      const tn = (c) => c.id.replace("ust", "").toUpperCase();
+      const roll = CURVE.map((c) => `${tn(c)} ${c.roll3m >= 0 ? "+" : ""}${c.roll3m}`).join(" · ");
+      const bestRoll = CURVE.reduce((a, b) => (b.roll3m > a.roll3m ? b : a), CURVE[0]);
+      const c30 = CURVE.find((c) => c.id === "ust30y");
+      $("curveFlags").innerHTML = "Slope: " + flags
+        + `<br><span style="color:#444">3m roll-down (bps): ${roll} — richest in the <b>${tn(bestRoll)}</b>.</span>`
+        + (c30 ? ` <span style="color:#8a8a8e">3m carry vs the 3M bill: 30Y ${c30.carry3m >= 0 ? "+" : ""}${c30.carry3m}bps (grows with tenor on an upward curve).</span>` : "");
     }
 
     function loadAsset(id) {

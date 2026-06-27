@@ -168,30 +168,38 @@ for aid, label, belly, w1, w2 in FLIES:
         print(f"!! fly {aid} FAILED: {e}")
 
 def build_fly_beta(aid, label, belly, w1, w2):
+    # OUT-OF-SAMPLE: hedge betas from an EXPANDING window of past Δyields (lagged), 50-50 fallback first MIN obs
     B, A, Cc = cache.get(belly), cache.get(w1), cache.get(w2)
     if not (B and A and Cc):
-        print(f"!! flyβ {aid}: missing leg"); return
+        print(f"!! flyRW {aid}: missing leg"); return
     Bi = {d: i for i, d in enumerate(B[0])}; Ai = {d: i for i, d in enumerate(A[0])}; Ci = {d: i for i, d in enumerate(Cc[0])}
     common = [d for d in B[0] if d in Ai and d in Ci]
-    if len(common) < 260:
-        print(f"!! flyβ {aid}: short"); return
-    yb = np.array([B[5][Bi[d]] for d in common]); y1 = np.array([A[5][Ai[d]] for d in common]); y2 = np.array([Cc[5][Ci[d]] for d in common])
-    X = np.column_stack([np.diff(y1), np.diff(y2), np.ones(len(common) - 1)])
-    beta = np.linalg.lstsq(X, np.diff(yb), rcond=None)[0]
-    b1, b2 = float(beta[0]), float(beta[1])
-    legs = [(B, Bi, 1.0), (A, Ai, -b1), (Cc, Ci, -b2)]
+    if len(common) < 320:
+        print(f"!! flyRW {aid}: short"); return
+    yb = [B[5][Bi[d]] for d in common]; y1 = [A[5][Ai[d]] for d in common]; y2 = [Cc[5][Ci[d]] for d in common]
+    MIN = 252
+    n = 0; s1 = s2 = sb = s11 = s22 = s12 = s1b = s2b = 0.0
+    b1 = b2 = 0.5; lb1 = lb2 = 0.5
     s = [[], [], [], [], [], [], []]
-    for d in common:
-        s[0].append(d); s[1].append(B[1][Bi[d]])
+    for i, d in enumerate(common):
+        if n >= MIN:
+            S11 = s11 - s1 * s1 / n; S22 = s22 - s2 * s2 / n; S12 = s12 - s1 * s2 / n; S1b = s1b - s1 * sb / n; S2b = s2b - s2 * sb / n
+            det = S11 * S22 - S12 * S12
+            if abs(det) > 1e-12:
+                b1 = (S22 * S1b - S12 * S2b) / det; b2 = (S11 * S2b - S12 * S1b) / det
+        lb1, lb2 = b1, b2
+        ib, ia, ic = Bi[d], Ai[d], Ci[d]
         o = h = lo = c = 0.0
-        for leg, idx, w in legs:
-            i = idx[d]
-            o += w * leg[2][i]; c += w * leg[5][i]
-            h += w * leg[3][i] if w > 0 else w * leg[4][i]
-            lo += w * leg[4][i] if w > 0 else w * leg[3][i]
-        s[2].append(round(o, 4)); s[3].append(round(h, 4)); s[4].append(round(lo, 4)); s[5].append(round(c, 4)); s[6].append(0)
-    write(aid, f"{label} (hedge {b1:.2f}/{b2:.2f})", "Butterfly", f"{belly}-rw-{w1}-{w2}", "spread", tuple(s),
-          legs=[{"t": belly, "w": 1}, {"t": w1, "w": round(-b1, 3)}, {"t": w2, "w": round(-b2, 3)}])
+        for leg, ii, w in [(B, ib, 1.0), (A, ia, -b1), (Cc, ic, -b2)]:
+            o += w * leg[2][ii]; c += w * leg[5][ii]
+            h += w * leg[3][ii] if w > 0 else w * leg[4][ii]
+            lo += w * leg[4][ii] if w > 0 else w * leg[3][ii]
+        s[0].append(d); s[1].append(B[1][ib]); s[2].append(round(o, 4)); s[3].append(round(h, 4)); s[4].append(round(lo, 4)); s[5].append(round(c, 4)); s[6].append(0)
+        if i > 0:
+            d1 = y1[i] - y1[i - 1]; d2 = y2[i] - y2[i - 1]; db = yb[i] - yb[i - 1]
+            n += 1; s1 += d1; s2 += d2; sb += db; s11 += d1 * d1; s22 += d2 * d2; s12 += d1 * d2; s1b += d1 * db; s2b += d2 * db
+    write(aid, f"{label} (hedge ~{lb1:.2f}/{lb2:.2f})", "Butterfly", f"{belly}-rw-{w1}-{w2}", "spread", tuple(s),
+          legs=[{"t": belly, "w": 1}, {"t": w1, "w": round(-lb1, 3)}, {"t": w2, "w": round(-lb2, 3)}])
 
 for aid, label, belly, w1, w2 in FLIES_BETA:
     try:
@@ -202,6 +210,19 @@ for aid, label, belly, w1, w2 in FLIES_BETA:
 # live curve snapshot: latest yield per tenor (+ approx modified-duration DV01 per $100)
 TENORS = [("ust3m", 0.25, 0.25), ("ust2y", 2, 1.9), ("ust5y", 5, 4.7), ("ust7y", 7, 6.4), ("ust10y", 10, 8.6), ("ust30y", 30, 18.5)]
 curve = [{"id": k, "years": yr, "dv01": dv, "yield": LATEST[k]["yield"], "date": LATEST[k]["date"]} for k, yr, dv in TENORS if k in LATEST]
+# 3-month roll-down (yield pickup as the bond ages down the curve) + carry vs the 3M bill, in bps
+pts = sorted((c["years"], c["yield"]) for c in curve)
+def interp(t):
+    if t <= pts[0][0]: return pts[0][1]
+    if t >= pts[-1][0]: return pts[-1][1]
+    for j in range(1, len(pts)):
+        if pts[j][0] >= t:
+            (x0, y0), (x1, y1) = pts[j - 1], pts[j]; return y0 + (y1 - y0) * (t - x0) / (x1 - x0)
+    return pts[-1][1]
+short = curve[0]["yield"]
+for c in curve:
+    c["roll3m"] = round((c["yield"] - interp(max(0.083, c["years"] - 0.25))) * 100, 1)
+    c["carry3m"] = round((c["yield"] - short) * 0.25 * 100, 1)
 json.dump(curve, open("ust_curve.json", "w"))
 print(f"ust_curve.json: {len(curve)} tenors")
 
