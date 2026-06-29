@@ -972,6 +972,7 @@
       const oid = spec.id || ("dw_" + Date.now().toString(36) + "_" + Math.floor(Math.random() * 1e9).toString(36));   // stable, unique → survives reapply so note↔drawing links hold
       const colorStyles = spec.color ? { styles: overlayColorStyles(spec.color) } : {};   // restore a custom colour on (re)create
       return safe(() => chart.createOverlay({ ...spec, ...colorStyles, id: oid,
+        needDefaultXAxisFigure: false, needDefaultYAxisFigure: false,   // suppress the blue per-endpoint date/price tags on the axes (they overlap into unreadable blocks for 2-point lines)
         onClick: (e) => { if (state.tool === "erase") { eraseOverlay(e.overlay); status("🗑 erased"); return true; } return false; },
         onRightClick: (e) => { showDrawMenu(e.overlay); return true; },
         onPressedMoveStart: (e) => { if (ALERTS.some((a) => a.id === e.overlay.id)) safe(() => chart.removeIndicator("candle_pane", "ALERTLINE")); return false; },   // hide the 🔔 marker while dragging an alerted drawing
