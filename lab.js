@@ -160,7 +160,7 @@
       asset: "spx", period: "full", cs: "", ce: "",
       entry: { op: "and", conds: [{ ind: "sma", params: { window: 100, offset: -2 }, st: "above" }] },
       exit: { op: "and", conds: [{ ind: "sma", params: { window: 100, offset: 2 }, st: "below" }] },
-      lev: 1, basis: "index", layout: "combined",
+      lev: 1, basis: "index", stop: 0, target: 0, layout: "combined",
     };
     let savedWin = [0, 0], lastBt = null, descs = [], lastSig = null, tmr = null;
 
@@ -188,6 +188,8 @@
         <div class="lab-bar">
           <div><span class="lbl">Leverage</span><span class="seg" id="levSeg"></span></div>
           <div><span class="lbl">Leverage on</span><span class="seg" id="basisSeg"></span></div>
+          <div><span class="lbl">Stop loss %</span><input type="number" id="stopInp" min="0" max="90" step="1" value="0" style="width:62px" title="Exit if price falls this % below the entry close (0 = off)"></div>
+          <div><span class="lbl">Target %</span><input type="number" id="tgtInp" min="0" max="500" step="1" value="0" style="width:62px" title="Exit if price rises this % above the entry close (0 = off)"></div>
           <div><span class="lbl">Charts</span><span class="seg" id="layoutSeg"></span></div>
         </div>
       </div>
@@ -220,6 +222,9 @@
     [1, 2, 3].forEach((L) => { const b = document.createElement("button"); b.textContent = L + "x"; if (L === state.lev) b.classList.add("active"); b.onclick = () => { state.lev = L; seg(levSeg, b); applyBasis(); schedule(); }; levSeg.appendChild(b); });
     const basisSeg = document.getElementById("basisSeg");
     [["index", "Index"], ["synthetic", "Synthetic"]].forEach(([v, t]) => { const b = document.createElement("button"); b.textContent = t; b.dataset.v = v; if (v === state.basis) b.classList.add("active"); b.onclick = () => { state.basis = v; seg(basisSeg, b); applyBasis(); schedule(); }; basisSeg.appendChild(b); });
+    const stopInp = document.getElementById("stopInp"), tgtInp = document.getElementById("tgtInp");
+    stopInp.oninput = () => { state.stop = Math.max(0, +stopInp.value || 0); schedule(); };
+    tgtInp.oninput = () => { state.target = Math.max(0, +tgtInp.value || 0); schedule(); };
     const layoutSeg = document.getElementById("layoutSeg");
     [["combined", "Combined"], ["separate", "Separate entry/exit"]].forEach(([id, t]) => { const b = document.createElement("button"); b.textContent = t; if (id === state.layout) b.classList.add("active"); b.onclick = () => { state.layout = id; seg(layoutSeg, b); rebuild(); }; layoutSeg.appendChild(b); });
 
@@ -291,8 +296,18 @@
     // ---- compute / kpis ----
     function computeStrategy() {
       const e = groupSignal(D.sig, state.entry), x = groupSignal(D.sig, state.exit);
-      const lev = Array(D.n).fill(0); let st = 0;
-      for (let i = 0; i < D.n; i++) { if (st === 0 && e.fires[i]) st = D.posMult; else if (st > 0 && x.fires[i]) st = 0; lev[i] = st; }
+      const stop = state.stop > 0 ? state.stop / 100 : 0, tgt = state.target > 0 ? state.target / 100 : 0;   // % from entry close
+      const lev = Array(D.n).fill(0); let st = 0, entryPx = 0;
+      for (let i = 0; i < D.n; i++) {
+        if (st === 0) { if (e.fires[i]) { st = D.posMult; entryPx = D.sig[i]; } }
+        else {
+          let exit = x.fires[i];
+          if (!exit && stop && entryPx && D.sig[i] <= entryPx * (1 - stop)) exit = true;   // stop-loss
+          if (!exit && tgt && entryPx && D.sig[i] >= entryPx * (1 + tgt)) exit = true;      // profit target
+          if (exit) st = 0;
+        }
+        lev[i] = st;
+      }
       const bt = backtest(D.sig, D.tbill, lev); lastBt = { equity: bt.equity, ret: bt.ret, lev };
       return { entryComps: e.comps, exitComps: x.comps, mk: transitions(lev, D.dates, D.sig) };
     }
@@ -380,13 +395,15 @@
     const dec = (str) => JSON.parse(decodeURIComponent(atob(str)));
     const loadSaved = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch (_) { return []; } };
     const writeSaved = (arr) => { try { localStorage.setItem(LS_KEY, JSON.stringify(arr)); } catch (_) {} };
-    const currentConfig = () => ({ asset: state.asset, period: state.period, cs: state.cs, ce: state.ce, lev: state.lev, basis: state.basis, layout: state.layout, entry: state.entry, exit: state.exit });
+    const currentConfig = () => ({ asset: state.asset, period: state.period, cs: state.cs, ce: state.ce, lev: state.lev, basis: state.basis, stop: state.stop, target: state.target, layout: state.layout, entry: state.entry, exit: state.exit });
     const findBtn = (c, t) => [...c.querySelectorAll("button")].find((b) => b.textContent === t);
     function applyConfig(cfg) {
       if (!cfg || !cfg.entry || !cfg.exit) return;
       state.entry = cfg.entry; state.exit = cfg.exit; state.lev = +cfg.lev || 1; state.basis = cfg.basis === "synthetic" ? "synthetic" : "index"; state.layout = cfg.layout === "separate" ? "separate" : "combined";
+      state.stop = +cfg.stop || 0; state.target = +cfg.target || 0;
       state.period = cfg.period || "full"; state.cs = cfg.cs || ""; state.ce = cfg.ce || "";
       renderGroup("entry"); renderGroup("exit");
+      stopInp.value = state.stop || 0; tgtInp.value = state.target || 0;
       const lb = findBtn(levSeg, state.lev + "x"); if (lb) seg(levSeg, lb);
       const bb = [...basisSeg.querySelectorAll("button")].find((b) => b.dataset.v === state.basis); if (bb) seg(basisSeg, bb);
       const yb = findBtn(layoutSeg, state.layout === "separate" ? "Separate entry/exit" : "Combined"); if (yb) seg(layoutSeg, yb);
