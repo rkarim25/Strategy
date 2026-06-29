@@ -866,7 +866,7 @@
     function applyTF() {
       stopPoll();
       const tf = TFS.find((t) => t.id === state.tf) || TFS[TFS.length - 1];
-      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); state.dispAggMs = 0; setCur(D.daily || []); setRange(252); reapplyDrawings(); refreshSignals(); if (state.autoTA) applyAutoTA(); state.tfLastTs = 0; $("hint").innerHTML = "Daily bars · scroll to zoom · drag to pan · <b>right-click a drawing</b> to edit / erase / set a price alert · hover one and press <b>Delete</b> to remove."; return; }
+      if (!tf.interval) { safe(() => { chart.applyNewData(D.daily || []); chart.resize(); }); state.dispAggMs = 0; setCur(D.daily || []); setRange(252); reapplyDrawings(); refreshSignals(); if (state.autoTA) applyAutoTA(); state.tfLastTs = 0; $("hint").innerHTML = "Daily bars · live, auto-refreshing every " + (POLL_MS / 1000) + "s · scroll to zoom · drag to pan · <b>right-click a drawing</b> to edit / erase / set a price alert · hover one and press <b>Delete</b> to remove."; extendDailyLive(); pollTimer = setInterval(() => { extendDailyLive(); fetchLive(); }, POLL_MS); return; }
       status("loading " + tf.label + "…");
       fetchIntradayBars(tf)
         .then(({ bars: raw, ticker }) => {
@@ -883,6 +883,33 @@
         .catch((e) => { status("intraday unavailable: " + e.message); });
     }
     function refreshTF(tf) { fetchIntradayBars(tf).then(({ bars: raw }) => { let bars = raw || []; if (tf.aggMs) bars = aggregate(bars, tf.aggMs); let n = 0; for (const b of bars) { if (b.timestamp >= state.tfLastTs) { safe(() => chart.updateData(b)); state.tfLastTs = Math.max(state.tfLastTs, b.timestamp); n++; } } if (n) { setCur(bars); refreshSignals(); fetchLive(); } }).catch(() => {}); }
+    // Keep the daily (1D) view real-time: the committed price_<id>.json lags a few days, so merge fresh daily bars
+    // (incl. today's forming bar) straight from the free quote proxy — same Yahoo source as intraday, no paid feed.
+    function extendDailyLive() {
+      if (D.kind !== "price" || (D.legs && D.legs.length)) return;   // UST yields / computed spreads aren't on the proxy
+      fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=1d&range=3mo&_=" + Date.now()).then((r) => r.json()).then((j) => {
+        if (!j || (j.ticker || "").toUpperCase() !== (D.ticker || "").toUpperCase()) return;   // ticker-match safeguard (proxy may fall back to a wrong symbol's last close)
+        const live = (j.bars || []).filter((b) => b && b.close > 0); if (!live.length) return;
+        const byTs = new Map(D.daily.map((b) => [b.timestamp, b]));
+        const dateOf = new Map(D.daily.map((b, i) => [b.timestamp, D.dates[i]]));
+        const changed = [];
+        for (const b of live) {
+          const bar = { timestamp: b.timestamp, open: b.open, high: b.high, low: b.low, close: b.close, volume: b.volume || 0 };
+          const ex = byTs.get(b.timestamp);
+          if (!ex) { byTs.set(b.timestamp, bar); dateOf.set(b.timestamp, isoOf(b.timestamp)); changed.push(bar); }
+          else if (ex.close !== bar.close || ex.high !== bar.high || ex.low !== bar.low || ex.open !== bar.open) { byTs.set(b.timestamp, bar); changed.push(bar); }
+        }
+        if (!changed.length) return;
+        const merged = [...byTs.values()].sort((a, b) => a.timestamp - b.timestamp);
+        D.daily = merged; D.n = merged.length;
+        D.dates = merged.map((b) => dateOf.get(b.timestamp) || isoOf(b.timestamp));
+        D.close = merged.map((b) => b.close); D.high = merged.map((b) => b.high); D.low = merged.map((b) => b.low);
+        D.ddh = ddFromHigh(D.close, 252); D.rv = rvol(D.close, 20);
+        const c = ASSET_CACHE[D.id]; if (c) { c.dates = D.dates; c.timestamp = merged.map((b) => b.timestamp); c.open = merged.map((b) => b.open); c.high = D.high; c.low = D.low; c.close = D.close; c.volume = merged.map((b) => b.volume); }
+        if (state.tf === "D") { changed.sort((a, b) => a.timestamp - b.timestamp).forEach((b) => safe(() => chart.updateData(b))); setCur(merged); refreshSignals(); }
+        renderPlaybook();
+      }).catch(() => {});
+    }
 
     // ---- indicators ----
     const paneId = (name) => "pane_" + name.toLowerCase();
