@@ -35,6 +35,8 @@
   function ukd(str) { if (!str) return ""; const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str); return m ? p2(+m[3]) + "-" + MON[+m[2] - 1] + "-" + m[1].slice(-2) : str; } // "YYYY-MM-DD" → "dd-MMM-yy"
   function isoOf(ts) { const d = new Date(ts); return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); }
   const UP = "#15803d", DN = "#b42318";
+  const TRANSP = "rgba(0,0,0,0)"; // KLineChart's built-in candle bars are hidden in Bars mode; the HLOC indicator draws symmetric H/L/O/C bars instead
+  let BAR_MODE = true; // true ⇒ "Bars" (ohlc) type active ⇒ the HLOC indicator renders
   const RANGES = [[5, "1W"], [21, "1M"], [63, "3M"], [252, "1Y"], [1260, "5Y"], [2520, "10Y"]]; // [days, label] — makeSeg renders label, passes days
   const TFS = [
     { id: "1m", label: "1m", interval: "1m", range: "7d", show: 180 },
@@ -239,6 +241,32 @@
           if (coordinates.length < 2) return [];
           const a = coordinates[0], b = coordinates[1], r = Math.max(1, Math.hypot(b.x - a.x, b.y - a.y));
           return [{ type: "circle", attrs: { x: a.x, y: a.y, r }, styles: { style: "stroke_fill", color: "rgba(0,113,227,.05)", borderColor: "#0071e3", borderSize: 1.5 } }];
+        },
+      });
+    } catch (_) {}
+    try {
+      klinecharts.registerIndicator({   // symmetric HLOC bars — KLineChart's built-in ohlc draws a stunted close tick; we draw H/L line + equal-length open(left)/close(right) ticks
+        name: "HLOC", figures: [], calc: (dataList) => dataList.map(() => ({})),
+        draw: ({ ctx, kLineDataList, visibleRange, xAxis, yAxis }) => {
+          if (!BAR_MODE) return false;
+          const from = Math.max(0, visibleRange.from), to = visibleRange.to; if (to - from < 1) return false;
+          let pitch = 6; if (to - from >= 2) pitch = Math.abs(xAxis.convertToPixel(from + 1) - xAxis.convertToPixel(from)) || pitch;
+          const tick = Math.max(1, Math.min(pitch * 0.42, 11));            // open/close tick length, each side, symmetric — capped so it never spills into the neighbour
+          const lw = pitch >= 5 ? Math.min(Math.max(Math.round(pitch * 0.12), 1), 2.5) : 1; // high-low line thickness
+          const thin = lw <= 1; ctx.lineCap = "butt"; ctx.setLineDash([]); // clear any dash left on the shared ctx by a prior indicator (ALERTLINE/RSI)
+          for (let i = from; i < to; i++) {
+            const d = kLineDataList[i]; if (!d) continue;
+            const x = xAxis.convertToPixel(i);
+            const xc = thin ? Math.round(x) + 0.5 : x;                     // crisp 1px line on a half-pixel
+            const yH = yAxis.convertToPixel(d.high), yL = yAxis.convertToPixel(d.low);
+            const yO = thin ? Math.round(yAxis.convertToPixel(d.open)) + 0.5 : yAxis.convertToPixel(d.open);
+            const yC = thin ? Math.round(yAxis.convertToPixel(d.close)) + 0.5 : yAxis.convertToPixel(d.close);
+            ctx.strokeStyle = d.close > d.open ? UP : (d.close < d.open ? DN : "#888"); ctx.lineWidth = lw;
+            ctx.beginPath(); ctx.moveTo(xc, yH); ctx.lineTo(xc, yL); ctx.stroke();        // high → low
+            ctx.beginPath(); ctx.moveTo(xc - tick, yO); ctx.lineTo(xc, yO); ctx.stroke();  // open tick (left)
+            ctx.beginPath(); ctx.moveTo(xc, yC); ctx.lineTo(xc + tick, yC); ctx.stroke();  // close tick (right)
+          }
+          return false;
         },
       });
     } catch (_) {}
@@ -585,7 +613,16 @@
     setTimeout(() => chart && chart.resize(), 60);
 
     makeSeg($("tfSeg"), TFS.map((t) => [t.id, t.label]), (v) => v === state.tf, (v, b) => { state.tf = v; segActive($("tfSeg"), b); applyTF(); });
-    makeSeg($("typeSeg"), TYPES, (v) => v === state.type, (v, b) => { state.type = v; safe(() => chart.setStyles({ candle: { type: v } })); segActive($("typeSeg"), b); scheduleSave(); });
+    function applyBarMode() {   // Bars (ohlc) ⇒ hide KLineChart's built-in candle bars + draw symmetric HLOC via the indicator; Candles/Area ⇒ restore real colours, drop the indicator
+      BAR_MODE = state.type === "ohlc";
+      const bar = BAR_MODE
+        ? { upColor: TRANSP, downColor: TRANSP, noChangeColor: TRANSP, upBorderColor: TRANSP, downBorderColor: TRANSP, noChangeBorderColor: TRANSP, upWickColor: TRANSP, downWickColor: TRANSP, noChangeWickColor: TRANSP }
+        : { upColor: UP, downColor: DN, noChangeColor: "#888", upBorderColor: UP, downBorderColor: DN, upWickColor: UP, downWickColor: DN };
+      safe(() => chart.setStyles({ candle: { type: state.type, bar } }));
+      safe(() => { chart.removeIndicator("candle_pane", "HLOC"); if (BAR_MODE) chart.createIndicator("HLOC", true, { id: "candle_pane" }); }); // remove-then-add so repeated calls (asset switches) never stack duplicate HLOC instances
+    }
+    makeSeg($("typeSeg"), TYPES, (v) => v === state.type, (v, b) => { state.type = v; applyBarMode(); segActive($("typeSeg"), b); scheduleSave(); });
+    applyBarMode();   // forced to Bars on load — install the HLOC renderer immediately
     makeSeg($("axisSeg"), AXES, (v) => v === state.yAxis, (v, b) => { state.yAxis = v; safe(() => chart.setStyles({ yAxis: { type: v } })); segActive($("axisSeg"), b); scheduleSave(); });
     function applyGrid() { const g = state.grid; safe(() => chart.setStyles({ grid: { show: g !== "off", horizontal: { show: g !== "off" }, vertical: { show: g === "both" } } })); }
     function autoDec() {   // ~6 significant figures by magnitude, capped by the data's own precision (indices→2, FX→4, BTC→1, yields→1-2)
@@ -1314,7 +1351,7 @@
       restoring = true;
       $("notes").value = snap.notes || "";
       const st = snap.settings || {};
-      if (st.type) { state.type = st.type; safe(() => chart.setStyles({ candle: { type: st.type } })); segActive($("typeSeg"), findBtn($("typeSeg"), st.type)); }
+      state.type = "ohlc"; applyBarMode(); segActive($("typeSeg"), findBtn($("typeSeg"), "ohlc")); // chart type is forced to Bars on every load — saved st.type is intentionally ignored
       if (st.yAxis) { state.yAxis = st.yAxis; safe(() => chart.setStyles({ yAxis: { type: st.yAxis } })); segActive($("axisSeg"), findBtn($("axisSeg"), st.yAxis)); }
       if (st.indParams) Object.keys(st.indParams).forEach((k) => { if (Array.isArray(st.indParams[k])) state.indParams[k] = st.indParams[k].slice(); });
       if (st.stratParams) Object.keys(st.stratParams).forEach((k) => { if (state.stratParams[k]) Object.assign(state.stratParams[k], st.stratParams[k]); });
