@@ -112,6 +112,14 @@
 "url": "price_3bal.json"
 },
 {
+"id": "xs2d",
+"label": "XS2D \u00b7 2x S&P 500",
+"klass": "Leveraged ETPs",
+"ticker": "XS2D.L",
+"kind": "price",
+"url": "price_xs2d.json"
+},
+{
 "id": "ust3m",
 "label": "US 3M yield",
 "klass": "Rates",

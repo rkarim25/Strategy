@@ -22,6 +22,7 @@ ASSETS = [
     ("gbpusd",  "GBP / USD",        "FX",          "GBPUSD=X", "price"),
     ("lqq3",    "LQQ3 · 3x Nasdaq 100",  "Leveraged ETPs", "LQQ3.L", "price"),
     ("3bal",    "3BAL · 3x Euro Banks",  "Leveraged ETPs", "3BAL.L", "price"),
+    ("xs2d",    "XS2D · 2x S&P 500",     "Leveraged ETPs", "XS2D.L", "price"),
     ("ust3m",   "US 3M yield",      "Rates",       "^IRX",     "yield"),
     ("ust2y",   "US 2Y yield",      "Rates",       "2YY=F",    "yield"),
     ("ust5y",   "US 5Y yield",      "Rates",       "^FVX",     "yield"),
