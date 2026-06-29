@@ -1,0 +1,656 @@
+{
+  "asset": "spx",
+  "asset_label": "S&P 500",
+  "generated_at_utc": "2026-06-29T06:09:52Z",
+  "source": "output/comprehensive_sweep/spx_ndx_comprehensive.csv (+ spx_1x_sweep)",
+  "benchmark": {
+    "label": "Buy & Hold 1x",
+    "cagr": 9.99,
+    "vol": 15.86,
+    "sharpe": 0.357,
+    "calmar": 0.181,
+    "maxdd": -55.13,
+    "sample": "1950-01-03 to 2026-06-24 (76y)"
+  },
+  "current": {
+    "net": 0.565,
+    "label": "Risk-On",
+    "suggested_leverage": 2.0,
+    "risk_budget": 0.915,
+    "longs": 7,
+    "total_votes": 12,
+    "asof": "2026-06-18",
+    "price": 7500.58
+  },
+  "signals": [
+    {
+      "id": "sma200_band",
+      "name": "200-day SMA \u00b13% Band",
+      "category": "trend",
+      "kind": "vote",
+      "rule": "ma_band",
+      "params": {
+        "window": 200,
+        "band": 0.03,
+        "type": "sma"
+      },
+      "plot": {
+        "indicator": "MA",
+        "params": [
+          200
+        ]
+      },
+      "data": null,
+      "why": "A 3% dead-band around the 200-day SMA filters out whipsaw crossings. Best risk-adjusted trend rule in the book \u2014 highest Calmar and the shallowest drawdown of the simple filters.",
+      "grade": "A",
+      "reliability": 0.866,
+      "evidence": {
+        "strategy_label": "SMA200 +-3% Band 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 10.48,
+        "vol": 10.63,
+        "sharpe": 0.516,
+        "sortino": 0.581,
+        "calmar": 0.529,
+        "maxdd": -19.82,
+        "pct_cash": 29.3,
+        "trades_per_year": 1.0,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": true
+        },
+        "grade": "A",
+        "reliability": 0.866
+      },
+      "state": {
+        "dir": 1,
+        "strength": 90.0,
+        "read": "7,501 vs 200-day band [6,696 \u2013 7,110]"
+      }
+    },
+    {
+      "id": "sma200_trend",
+      "name": "Price vs 200-day SMA",
+      "category": "trend",
+      "kind": "vote",
+      "rule": "ma_trend",
+      "params": {
+        "window": 200,
+        "type": "sma"
+      },
+      "plot": {
+        "indicator": "MA",
+        "params": [
+          200
+        ]
+      },
+      "data": null,
+      "why": "The canonical trend filter. Long while price holds above its 200-day average, cash below. Historically slashes the worst-case drawdown by more than half while giving up little long-run return.",
+      "grade": "A",
+      "reliability": 0.865,
+      "evidence": {
+        "strategy_label": "SMA200 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 9.71,
+        "vol": 10.45,
+        "sharpe": 0.508,
+        "sortino": 0.568,
+        "calmar": 0.415,
+        "maxdd": -23.43,
+        "pct_cash": 29.3,
+        "trades_per_year": 5.9,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "A",
+        "reliability": 0.865
+      },
+      "state": {
+        "dir": 1,
+        "strength": 97.0,
+        "read": "7,501 vs 200-day SMA 6,903 (+8.7%)"
+      }
+    },
+    {
+      "id": "dd_from_high",
+      "name": "Drawdown From High",
+      "category": "risk",
+      "kind": "overlay",
+      "rule": "dd_from_high",
+      "params": {},
+      "plot": null,
+      "data": null,
+      "why": "Sizes exposure by how far price sits below its all-time high. Leaning in after controlled pullbacks (not crashes) has been a high-Calmar way to add leverage.",
+      "grade": "A",
+      "reliability": 0.866,
+      "evidence": {
+        "strategy_label": "DD Scale 1-3x",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 11.12,
+        "vol": 12.19,
+        "sharpe": 0.52,
+        "sortino": 0.569,
+        "calmar": 0.403,
+        "maxdd": -27.57,
+        "pct_cash": 29.3,
+        "trades_per_year": 1.7,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": true
+        },
+        "grade": "A",
+        "reliability": 0.866
+      },
+      "state": {
+        "dir": 1,
+        "strength": 91.5,
+        "read": "-1.4% from high"
+      }
+    },
+    {
+      "id": "ema200_trend",
+      "name": "Price vs 200-day EMA",
+      "category": "trend",
+      "kind": "vote",
+      "rule": "ma_trend",
+      "params": {
+        "window": 200,
+        "type": "ema"
+      },
+      "plot": {
+        "indicator": "EMA",
+        "params": [
+          200
+        ]
+      },
+      "data": null,
+      "why": "The exponential cousin of the 200-day filter \u2014 weights recent price more, so it turns a little sooner around major tops and bottoms.",
+      "grade": "B",
+      "reliability": 0.616,
+      "evidence": {
+        "strategy_label": "EMA200 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 9.74,
+        "vol": 10.71,
+        "sharpe": 0.515,
+        "sortino": 0.59,
+        "calmar": 0.366,
+        "maxdd": -26.6,
+        "pct_cash": 25.9,
+        "trades_per_year": 7.1,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "B",
+        "reliability": 0.616
+      },
+      "state": {
+        "dir": 1,
+        "strength": 97.3,
+        "read": "7,501 vs 200-day EMA 6,885 (+8.9%)"
+      }
+    },
+    {
+      "id": "band_rsi_exit",
+      "name": "SMA200 Band + RSI Exit",
+      "category": "trend",
+      "kind": "vote",
+      "rule": "ma_band",
+      "params": {
+        "window": 200,
+        "band": 0.03,
+        "type": "sma"
+      },
+      "plot": {
+        "indicator": "MA",
+        "params": [
+          200
+        ]
+      },
+      "data": null,
+      "why": "The 200-day band with an RSI-based exit refinement \u2014 stays invested through shallow oversold dips that the plain band would whipsaw out of.",
+      "grade": "B",
+      "reliability": 0.615,
+      "evidence": {
+        "strategy_label": "SMA200 +-3% Band + RSI>30 Exit 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 10.56,
+        "vol": 11.08,
+        "sharpe": 0.506,
+        "sortino": 0.542,
+        "calmar": 0.317,
+        "maxdd": -33.27,
+        "pct_cash": 28.9,
+        "trades_per_year": 1.0,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": true
+        },
+        "grade": "B",
+        "reliability": 0.615
+      },
+      "state": {
+        "dir": 1,
+        "strength": 90.0,
+        "read": "7,501 vs 200-day band [6,696 \u2013 7,110]"
+      }
+    },
+    {
+      "id": "golden_cross",
+      "name": "Golden Cross (50/200)",
+      "category": "trend",
+      "kind": "vote",
+      "rule": "cross",
+      "params": {
+        "fast": 50,
+        "slow": 200,
+        "type": "sma"
+      },
+      "plot": {
+        "indicator": "MA",
+        "params": [
+          50,
+          200
+        ]
+      },
+      "data": null,
+      "why": "Long when the 50-day SMA sits above the 200-day. Slow and low-turnover (~1 trade/yr), so it sidesteps chop and rides the big trends.",
+      "grade": "B",
+      "reliability": 0.61,
+      "evidence": {
+        "strategy_label": "SMA50/200 Golden Cross 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 10.19,
+        "vol": 11.84,
+        "sharpe": 0.454,
+        "sortino": 0.473,
+        "calmar": 0.302,
+        "maxdd": -33.72,
+        "pct_cash": 29.1,
+        "trades_per_year": 1.0,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": true
+        },
+        "grade": "B",
+        "reliability": 0.61
+      },
+      "state": {
+        "dir": 1,
+        "strength": 91.6,
+        "read": "50-day 7,316 > 200-day 6,903"
+      }
+    },
+    {
+      "id": "sell_in_may",
+      "name": "Seasonality (Sell in May)",
+      "category": "seasonal",
+      "kind": "vote",
+      "rule": "sell_in_may",
+      "params": {},
+      "plot": null,
+      "data": null,
+      "why": "Invested Nov\u2013Apr, cash May\u2013Oct. The seasonal effect is real in the long record \u2014 most of the index's return has historically arrived in the winter half \u2014 but it's a calendar tilt, not a market read.",
+      "grade": "B",
+      "reliability": 0.61,
+      "evidence": {
+        "strategy_label": "Sell in May (May-Oct -> cash, Nov-Apr -> 1x)",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 9.81,
+        "vol": 10.94,
+        "sharpe": 0.462,
+        "sortino": 0.423,
+        "calmar": 0.291,
+        "maxdd": -33.72,
+        "pct_cash": 50.7,
+        "trades_per_year": 2.0,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "B",
+        "reliability": 0.61
+      },
+      "state": {
+        "dir": -1,
+        "strength": 68.0,
+        "read": "Summer half (May\u2013Oct): seasonally weak"
+      }
+    },
+    {
+      "id": "vix_regime",
+      "name": "Volatility Regime (VIX)",
+      "category": "risk",
+      "kind": "overlay",
+      "rule": "vix_regime",
+      "params": {
+        "calm": 15,
+        "stress": 25
+      },
+      "plot": null,
+      "data": "vix",
+      "why": "Scales exposure up when volatility is calm and down when it spikes. Low-vol regimes have historically delivered the best risk-adjusted returns \u2014 one of the strongest single leverage-sizing inputs.",
+      "grade": "B",
+      "reliability": 0.616,
+      "evidence": {
+        "strategy_label": "VIX Scale 1-3x",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 11.71,
+        "vol": 15.24,
+        "sharpe": 0.514,
+        "sortino": 0.516,
+        "calmar": 0.352,
+        "maxdd": -33.27,
+        "pct_cash": 28.9,
+        "trades_per_year": 7.1,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": true
+        },
+        "grade": "B",
+        "reliability": 0.616
+      },
+      "state": null
+    },
+    {
+      "id": "sma50_trend",
+      "name": "Price vs 50-day SMA",
+      "category": "trend",
+      "kind": "vote",
+      "rule": "ma_trend",
+      "params": {
+        "window": 50,
+        "type": "sma"
+      },
+      "plot": {
+        "indicator": "MA",
+        "params": [
+          50
+        ]
+      },
+      "data": null,
+      "why": "A faster trend gauge \u2014 quicker to react than the 200-day but pays for it in whipsaw. Useful as a confirming, shorter-horizon read.",
+      "grade": "C",
+      "reliability": 0.361,
+      "evidence": {
+        "strategy_label": "SMA50 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 7.91,
+        "vol": 9.84,
+        "sharpe": 0.463,
+        "sortino": 0.492,
+        "calmar": 0.205,
+        "maxdd": -38.52,
+        "pct_cash": 35.6,
+        "trades_per_year": 15.5,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "C",
+        "reliability": 0.361
+      },
+      "state": {
+        "dir": 1,
+        "strength": 73.3,
+        "read": "7,501 vs 50-day SMA 7,316 (+2.5%)"
+      }
+    },
+    {
+      "id": "momentum_12m",
+      "name": "12-Month Momentum",
+      "category": "momentum",
+      "kind": "vote",
+      "rule": "momentum",
+      "params": {
+        "lookback": 252
+      },
+      "plot": {
+        "indicator": "MA",
+        "params": [
+          252
+        ]
+      },
+      "data": null,
+      "why": "Long while price is above where it sat 12 months ago \u2014 the classic time-series momentum effect. A genuinely independent edge from the moving-average filters.",
+      "grade": "C",
+      "reliability": 0.354,
+      "evidence": {
+        "strategy_label": "Momentum 12m 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 9.31,
+        "vol": 11.78,
+        "sharpe": 0.397,
+        "sortino": 0.422,
+        "calmar": 0.226,
+        "maxdd": -41.24,
+        "pct_cash": 26.4,
+        "trades_per_year": 3.7,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": true,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "C",
+        "reliability": 0.354
+      },
+      "state": {
+        "dir": 1,
+        "strength": 96.7,
+        "read": "7,501 vs 12-mo-ago 5,983 (+25.4%)"
+      }
+    },
+    {
+      "id": "macd",
+      "name": "MACD (12/26/9)",
+      "category": "momentum",
+      "kind": "vote",
+      "rule": "macd",
+      "params": {
+        "fast": 12,
+        "slow": 26,
+        "signal": 9
+      },
+      "plot": {
+        "indicator": "MACD",
+        "params": [
+          12,
+          26,
+          9
+        ]
+      },
+      "data": null,
+      "why": "A textbook momentum oscillator. On a trending index it beats buy-and-hold on a risk-adjusted basis but trades far too often to add real return \u2014 treat it as a tactical tell, not a core driver.",
+      "grade": "C",
+      "reliability": 0.354,
+      "evidence": {
+        "strategy_label": "MACD 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 6.83,
+        "vol": 9.74,
+        "sharpe": 0.395,
+        "sortino": 0.375,
+        "calmar": 0.158,
+        "maxdd": -43.28,
+        "pct_cash": 49.2,
+        "trades_per_year": 19.6,
+        "beats_bh": {
+          "sharpe": true,
+          "calmar": false,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "C",
+        "reliability": 0.354
+      },
+      "state": {
+        "dir": -1,
+        "strength": 40.3,
+        "read": "MACD 38.7 < signal 53.4"
+      }
+    },
+    {
+      "id": "bollinger",
+      "name": "Bollinger Mean-Reversion",
+      "category": "meanrev",
+      "kind": "vote",
+      "rule": "bollinger",
+      "params": {
+        "window": 20,
+        "std": 2.0
+      },
+      "plot": {
+        "indicator": "BOLL",
+        "params": [
+          20,
+          2
+        ]
+      },
+      "data": null,
+      "why": "Buys pierces below the lower band, exits back at the mid-line. Works in range-bound tape and cushions drawdowns, but sits in cash ~80% of the time so it lags in strong trends.",
+      "grade": "C",
+      "reliability": 0.336,
+      "evidence": {
+        "strategy_label": "BB Mean Reversion 1x/cash",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 7.12,
+        "vol": 10.24,
+        "sharpe": 0.222,
+        "sortino": 0.129,
+        "calmar": 0.217,
+        "maxdd": -32.79,
+        "pct_cash": 79.5,
+        "trades_per_year": 8.5,
+        "beats_bh": {
+          "sharpe": false,
+          "calmar": true,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "C",
+        "reliability": 0.336
+      },
+      "state": {
+        "dir": -1,
+        "strength": 55.7,
+        "read": "%B 54% (band 7,308\u20137,663)"
+      }
+    },
+    {
+      "id": "rsi_oversold_bounce",
+      "name": "RSI Oversold Bounce",
+      "category": "meanrev",
+      "kind": "vote",
+      "rule": "rsi_oversold",
+      "params": {
+        "period": 14,
+        "low": 30,
+        "smaWin": 200
+      },
+      "plot": {
+        "indicator": "RSI",
+        "params": [
+          14
+        ]
+      },
+      "data": null,
+      "why": "Buys oversold dips (RSI<30) only while the long-term trend is up, exits on the bounce. The single best-behaved tactical rule on the S&P \u2014 a 94% daily win-rate over its (brief, episodic) holding periods.",
+      "grade": "C",
+      "reliability": 0.331,
+      "evidence": {
+        "strategy_label": "RSI Oversold Bounce 1x",
+        "sample": "1994 to 2026 (~30y)",
+        "cagr": 7.35,
+        "vol": 11.43,
+        "sharpe": 0.4173303640997531,
+        "sortino": 0.1942310318978279,
+        "calmar": 0.2594985267073668,
+        "maxdd": -28.32,
+        "pct_cash": 88.8,
+        "trades_per_year": null,
+        "win_rate": 94.9,
+        "beats_bh": {
+          "sharpe": false,
+          "calmar": true,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "C",
+        "reliability": 0.331
+      },
+      "state": {
+        "dir": -1,
+        "strength": 89.0,
+        "read": "RSI(14) 55, above 200-day"
+      }
+    },
+    {
+      "id": "rsi_oscillator",
+      "name": "RSI 30/70 Oscillator",
+      "category": "meanrev",
+      "kind": "vote",
+      "rule": "rsi_osc",
+      "params": {
+        "period": 14,
+        "low": 30,
+        "high": 70
+      },
+      "plot": {
+        "indicator": "RSI",
+        "params": [
+          14
+        ]
+      },
+      "data": null,
+      "why": "The most-watched oscillator \u2014 and a cautionary tale. Selling strength at RSI 70 and buying weakness at 30 fails to beat buy-and-hold on a trending index. Shown for completeness, weighted accordingly.",
+      "grade": "D",
+      "reliability": 0.132,
+      "evidence": {
+        "strategy_label": "RSI 30/70 2x",
+        "sample": "1950-01-03 to 2026-06-24 (76y)",
+        "cagr": 6.47,
+        "vol": 11.2,
+        "sharpe": 0.172,
+        "sortino": 0.041,
+        "calmar": 0.142,
+        "maxdd": -45.49,
+        "pct_cash": 96.6,
+        "trades_per_year": 6.0,
+        "beats_bh": {
+          "sharpe": false,
+          "calmar": false,
+          "dd": true,
+          "cagr": false
+        },
+        "grade": "D",
+        "reliability": 0.132
+      },
+      "state": {
+        "dir": -1,
+        "strength": 41.6,
+        "read": "RSI(14) 55"
+      }
+    }
+  ]
+}

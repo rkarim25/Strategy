@@ -19,6 +19,7 @@
   let INVERSIONS = []; // 2s10s/3m10y inverted ranges (loaded from ust_inversions.json)
   let AUTO_SIG = { buys: new Set(), sells: new Set() }; // auto-analysis buy/sell timestamps (drawn by the AUTOTA indicator)
   let STUDY_SIG = { buys: new Set(), sells: new Set() }; // "add buy/sell signals" from a study (drawn by the STUDYSIG indicator)
+  let ALERT_LINES = []; // [{value,label}] active price-alert levels, drawn on the chart by the ALERTLINE indicator
   const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // UK date format dd-MMM-yy
   const p2 = (n) => String(n).padStart(2, "0");
   function ukTs(ts, withTime) { const d = new Date(ts); if (!isFinite(d.getTime())) return ""; const s = p2(d.getDate()) + "-" + MON[d.getMonth()] + "-" + String(d.getFullYear()).slice(-2); return withTime ? s + " " + p2(d.getHours()) + ":" + p2(d.getMinutes()) : s; }
@@ -83,9 +84,10 @@
     ROC: [12, 6], TRIX: [12, 9], BIAS: [6, 12, 24], MTM: [6, 10], PSY: [12, 6], BRAR: [26], CR: [26, 10, 20, 40, 60],
     VR: [24, 30], EMV: [14, 9], DMA: [10, 50, 10], AO: [5, 34], PVT: [] };
   const TOOLS = [
-    ["cursor", "Cursor"], ["segment", "Trend line"], ["rayLine", "Ray"], ["horizontalStraightLine", "Horizontal"],
+    ["cursor", "Cursor"], ["erase", "🗑 Erase"], ["segment", "Trend line"], ["rayLine", "Ray"], ["horizontalStraightLine", "Horizontal"],
     ["verticalStraightLine", "Vertical"], ["priceLine", "Price line"], ["parallelStraightLine", "Parallel"],
     ["fibonacciLine", "Fibonacci"], ["noteText", "Note"], ["measurePct", "Measure %"],
+    ["freeDraw", "✎ Free draw"], ["rectShape", "▭ Rectangle"], ["circleShape", "◯ Circle"],
   ];
   const nfmt = (x) => (x == null || !isFinite(x) ? "—" : Math.abs(x) < 10 ? x.toLocaleString(undefined, { maximumFractionDigits: 4 }) : x.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
   const pct = (x) => (x == null || !isFinite(x) ? "—" : (x * 100).toFixed(1) + "%");
@@ -205,6 +207,32 @@
         },
       });
     } catch (_) {}
+    try {   // freehand stroke (drawn via the capture layer, then right-click → enhance into a shape)
+      klinecharts.registerOverlay({
+        name: "freeDraw", totalStep: 2, needDefaultPointFigure: false, needDefaultXAxisFigure: false, needDefaultYAxisFigure: false,
+        createPointFigures: ({ coordinates }) => (coordinates.length < 2 ? [] : [{ type: "line", attrs: { coordinates }, styles: { color: "#0071e3", size: 2 } }]),
+      });
+    } catch (_) {}
+    try {   // rectangle / square (two opposite corners)
+      klinecharts.registerOverlay({
+        name: "rectShape", totalStep: 3, needDefaultPointFigure: true, needDefaultXAxisFigure: true, needDefaultYAxisFigure: true,
+        createPointFigures: ({ coordinates }) => {
+          if (coordinates.length < 2) return [];
+          const a = coordinates[0], b = coordinates[1], x = Math.min(a.x, b.x), y = Math.min(a.y, b.y), w = Math.max(1, Math.abs(b.x - a.x)), h = Math.max(1, Math.abs(b.y - a.y));
+          return [{ type: "rect", attrs: { x, y, width: w, height: h }, styles: { style: "stroke_fill", color: "rgba(0,113,227,.05)", borderColor: "#0071e3", borderSize: 1.5 } }];
+        },
+      });
+    } catch (_) {}
+    try {   // circle (centre + edge → pixel radius)
+      klinecharts.registerOverlay({
+        name: "circleShape", totalStep: 3, needDefaultPointFigure: true, needDefaultXAxisFigure: true, needDefaultYAxisFigure: true,
+        createPointFigures: ({ coordinates }) => {
+          if (coordinates.length < 2) return [];
+          const a = coordinates[0], b = coordinates[1], r = Math.max(1, Math.hypot(b.x - a.x, b.y - a.y));
+          return [{ type: "circle", attrs: { x: a.x, y: a.y, r }, styles: { style: "stroke_fill", color: "rgba(0,113,227,.05)", borderColor: "#0071e3", borderSize: 1.5 } }];
+        },
+      });
+    } catch (_) {}
     try {
       klinecharts.registerIndicator({
         name: "STRATSIGNAL", figures: [], calc: (dataList) => dataList.map(() => ({})),
@@ -313,6 +341,26 @@
         },
       });
     } catch (_) {}
+    try {
+      klinecharts.registerIndicator({
+        name: "ALERTLINE", figures: [], calc: (dataList) => dataList.map(() => ({})),
+        draw: ({ ctx, bounding, yAxis }) => {
+          if (!ALERT_LINES.length) return false;
+          const W = (bounding && bounding.width) || 0;
+          ALERT_LINES.forEach((a) => {
+            const y = yAxis.convertToPixel(a.value); if (!isFinite(y)) return;
+            ctx.strokeStyle = "rgba(214,138,18,0.55)"; ctx.setLineDash([5, 4]); ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.sloped ? W * 0.55 : 0, y); ctx.lineTo(W, y); ctx.stroke(); ctx.setLineDash([]);
+            const tag = "🔔 " + a.label + (a.sloped ? " ↗" : "");
+            ctx.font = "11px -apple-system,sans-serif"; ctx.textAlign = "right"; ctx.textBaseline = "middle";
+            const tw = ctx.measureText(tag).width + 12;
+            ctx.fillStyle = "#d68a12"; ctx.fillRect(W - tw - 3, y - 9, tw, 18);
+            ctx.fillStyle = "#fff"; ctx.fillText(tag, W - 9, y);
+          });
+          return false;
+        },
+      });
+    } catch (_) {}
   }
 
   function injectStyles() {
@@ -363,6 +411,32 @@
       .pb-btn:disabled{opacity:.4;cursor:default;}
       tr.noterow td{background:rgba(0,113,227,.05);border-bottom:2px solid var(--line);font-size:12.5px;line-height:1.55;color:#333;padding:10px 14px;}
       #playbook,#leader{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+      .dash-comp{display:flex;gap:18px;flex-wrap:wrap;align-items:stretch;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:8px 0 14px;background:rgba(255,255,255,.6);}
+      .dash-state{flex:1;min-width:230px;}
+      .dash-lev{text-align:right;min-width:140px;display:flex;flex-direction:column;justify-content:center;}
+      .dash-lev .big{font-size:46px;font-weight:800;line-height:1;color:#1d1d1f;font-variant-numeric:tabular-nums;}
+      .dash-net{height:8px;border-radius:999px;background:#ececf0;position:relative;margin:9px 0 5px;}
+      .dash-net .fill{position:absolute;height:8px;border-radius:999px;}
+      .dash-net .mid{position:absolute;left:50%;top:-3px;width:1px;height:14px;background:#c7c7cc;}
+      .dsig{border-bottom:1px solid var(--line);padding:10px 2px;}
+      .dsig>summary{display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;}
+      .dsig>summary::-webkit-details-marker{display:none;}
+      .dsig>summary:hover{background:rgba(0,0,0,.018);}
+      .dgrade{font-size:11.5px;font-weight:800;width:22px;height:22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;flex:none;}
+      .dbar{height:6px;border-radius:999px;background:#ececf0;overflow:hidden;}
+      .dbar i{display:block;height:6px;border-radius:999px;}
+      .dbtn{font:inherit;font-size:12px;font-weight:600;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#48484a;cursor:pointer;}
+      .dbtn:hover:not(:disabled){border-color:var(--accent);}
+      .dbtn.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+      .dbtn:disabled{opacity:.4;cursor:default;}
+      @media(max-width:680px){.dash-lev{text-align:left;min-width:0;}.dsig>summary{flex-wrap:wrap;}}
+      .alert-row{display:flex;align-items:center;gap:11px;padding:10px 2px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+      .alert-row .a-bell{color:#d68a12;font-size:16px;flex:none;}
+      .alert-row .a-acts{margin-left:auto;display:flex;gap:6px;}
+      .alert-row .a-acts button{font:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#48484a;cursor:pointer;}
+      .alert-row .a-acts button:hover{border-color:var(--accent);}
+      .alert-row .a-acts button.del:hover{border-color:var(--bad);color:var(--bad);}
+      .alert-row input.a-edit{font:inherit;font-size:13px;padding:5px 9px;border-radius:8px;border:1px solid var(--accent);width:130px;}
       @media(max-width:680px){
         table.pb th,table.pb td{padding:7px 6px;font-size:12px;}
         .pbacts{min-width:0;flex-direction:row;flex-wrap:wrap;gap:4px;justify-content:flex-end;}
@@ -378,13 +452,13 @@
   function run() {
     injectStyles(); registerIndicators();
     if (window.STRATEGY_PAGE_TITLE) document.title = window.STRATEGY_PAGE_TITLE;
-    const state = { asset: "spx", tf: "D", dispAggMs: 0, type: "candle_solid", yAxis: "normal", tool: "cursor", tfLastTs: 0,
+    const state = { asset: "spx", tf: "D", dispAggMs: 0, type: "ohlc", yAxis: "normal", tool: "cursor", tfLastTs: 0,
       indicators: Object.fromEntries(MAIN_INDS.concat(SUB_INDS).map(([v]) => [v, false])),
       indParams: Object.fromEntries(Object.entries(DEFAULTS).map(([k, v]) => [k, v.slice()])),
       stratParams: Object.fromEntries(STRATS.map((s) => [s.key, Object.fromEntries(s.params.map((q) => [q.k, q.d]))])),
       plotted: {}, signalKey: null, notesOpen: {}, curClose: [], curTs: [], curHigh: [], curLow: [],
       lev: { mult: 1, ddThr: -10, volThr: 18, costs: false }, pnl: { mode: "bps", perBp: 0 }, recession: false, inversion: false, carry: false,
-      grid: "both", decimals: "auto", ylab: "out", crosshair: true, autoTA: false, studySig: null };
+      grid: "both", decimals: "auto", ylab: "out", crosshair: true, autoTA: false, studySig: null, drawingsHidden: false, alertsHidden: false };
     const D = { id: "", ticker: "", label: "", kind: "price", klass: "", legs: null, cr: null, dv01: 1, n: 0, dates: [], close: [], high: [], low: [], daily: [], ddh: [], rv: [] };
     let chart = null, ASSETS = [], drawings = [], saveTimer = null, restoring = false, pollTimer = null, LEADER = [], CURVE = [], pendingBest = null;
 
@@ -428,14 +502,26 @@
         </details>
         <div class="cbar">
           <div><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
-          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="autoBtn">⚡ Auto-analysis</button><button id="recBtn" title="Shade US recessions · right-click: what they are &amp; what to expect"><span style="color:#9a9aa2">▦</span> Recessions</button><button id="invBtn" title="Shade yield-curve inversions · right-click: what an inversion means &amp; what to expect"><span style="color:#d68a12">⊘</span> Inversions</button></div>
+          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="autoBtn">⚡ Auto-analysis</button><button id="recBtn" title="Shade US recessions · right-click: what they are &amp; what to expect"><span style="color:#9a9aa2">▦</span> Recessions</button><button id="invBtn" title="Shade yield-curve inversions · right-click: what an inversion means &amp; what to expect"><span style="color:#d68a12">⊘</span> Inversions</button><button id="drawToggle" class="active" title="Show or hide all your drawings">👁 Drawings</button><button id="alertToggle" class="active" title="Show or hide price-alert markers on the chart (alerts still fire)">🔔 Alerts</button></div>
         </div>
         <div id="chart"></div>
-        <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points · <b>right-click a drawing</b> to edit / erase / set a price alert · hover a drawing and press <b>Delete</b> to remove it.</p>
+        <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points · <b>✎ Free draw</b> to sketch freehand, then <b>right-click → Enhance</b> to snap it into a clean circle / square / rectangle / trend / ray / channel · <b>🗑 Erase</b> tool: click a drawing to delete it, or drag a box to erase everything inside · <b>right-click the chart</b> to set a price alert at that level (or add a note) · <b>right-click any drawing</b> to enhance / erase / set a price alert / <b>📝 Attach a linked note</b> that moves with it · hover a drawing and press <b>Delete</b> to remove it.</p>
         <details id="autoCard" class="ind-panel" style="display:none;margin-top:8px">
           <summary>Auto-analysis notes — trend lines, Fibonacci &amp; signals · click to expand</summary>
           <div id="autoNotes" style="font-size:13px;line-height:1.6"></div>
         </details>
+      </div>
+      <div class="card" id="alertCard" style="display:none">
+        <h2 style="margin-bottom:2px">Price alerts <span class="meta" id="alertCount" style="font-weight:400"></span></h2>
+        <p class="meta" style="margin-top:4px">Alerts set on your drawings — a toast + beep fires when price crosses the level (while this tab is open). The level is marked on the chart with a 🔔. Edit or delete here, or by right-clicking the drawing.</p>
+        <div id="alertList"></div>
+      </div>
+      <div class="card" id="dashCard" style="display:none">
+        <h2 style="margin-bottom:2px">Signal dashboard <span class="meta" id="dashAsof" style="font-weight:400"></span></h2>
+        <p class="meta" style="margin-top:4px">Each indicator is graded by its <b>backtested edge</b> vs buy &amp; hold (<b>A</b> strong → <b>D</b> weak), and the <b>strength</b> bar shows how hard it's firing right now. The composite is a trust-weighted read of all signals → an <b>independent suggested leverage</b>. Click a row for the evidence, to plot it on the chart, or to open its backtest. Educational only — not advice.</p>
+        <div style="margin:2px 0 10px"><button id="analystBtn" style="font:inherit;font-size:13.5px;font-weight:700;padding:10px 16px;border-radius:11px;border:0;background:#1d1d1f;color:#fff;cursor:pointer">🧠 Run one-click Analyst — full read + action plan</button></div>
+        <div id="dashComposite"></div>
+        <div id="dashList"></div>
       </div>
       <div class="card" id="curveCard" style="display:none">
         <h2 style="margin-bottom:2px">US Treasury curve <span class="meta" id="curveAsof" style="font-weight:400"></span></h2>
@@ -485,7 +571,7 @@
     });
     // KLineChart's formatDate is positional (dateTimeFormat, timestamp, …) — find the epoch-ms arg robustly.
     safe(() => chart.setCustomApi({ formatDate: function () { var ts = null; for (var i = 0; i < arguments.length; i++) { var a = arguments[i]; if (typeof a === "number" && a > 1e11) { ts = a; break; } if (a && typeof a === "object" && typeof a.timestamp === "number") { ts = a.timestamp; break; } } return ts == null ? "" : ukTs(ts, state.tf !== "D"); } }));
-    $("chart").addEventListener("contextmenu", (ev) => { ev.preventDefault(); setTimeout(() => { if (drawMenuEl) return; addNoteHere(); }, 0); }); // right-click empty space → add a note
+    $("chart").addEventListener("contextmenu", (ev) => { ev.preventDefault(); setTimeout(() => { if (drawMenuEl) return; if (showAlertMenuAt(ev)) return; showEmptyMenu(); }, 0); }); // right-click: overlay menu → alert marker → empty = set-alert / note menu
     window.addEventListener("resize", () => chart && chart.resize());
     setTimeout(() => chart && chart.resize(), 60);
 
@@ -594,6 +680,8 @@
     $("invBtn").onclick = () => { state.inversion = !state.inversion; $("invBtn").classList.toggle("active", state.inversion); if (state.inversion) status("Amber = yield-curve inversions (recession warning) · right-click to learn more"); safe(() => { if (state.inversion) chart.createIndicator("INVERSION", true, { id: "candle_pane" }); else chart.removeIndicator("candle_pane", "INVERSION"); }); };
     $("recBtn").oncontextmenu = (e) => { e.preventDefault(); showIndHelp("recessions"); };
     $("invBtn").oncontextmenu = (e) => { e.preventDefault(); showIndHelp("inversions"); };
+    $("drawToggle").onclick = () => { state.drawingsHidden = !state.drawingsHidden; const show = !state.drawingsHidden; $("drawToggle").classList.toggle("active", show); if (show) reapplyDrawings(); else safe(() => chart.removeOverlay()); status(show ? "drawings shown" : "all drawings hidden"); };
+    $("alertToggle").onclick = () => { state.alertsHidden = !state.alertsHidden; const show = !state.alertsHidden; $("alertToggle").classList.toggle("active", show); refreshAlertLines(); status(show ? "price-alert markers shown" : "alert markers hidden (alerts still fire)"); };
     // ---- Auto-analysis: swing pivots → support/resistance trend lines + Fibonacci + buy/sell signals, all with notes ----
     let autoIds = [];
     function clearAutoTA() { autoIds.forEach((id) => safe(() => chart.removeOverlay(id))); autoIds = []; AUTO_SIG = { buys: new Set(), sells: new Set() }; safe(() => chart.removeIndicator("candle_pane", "AUTOTA")); $("autoCard").style.display = "none"; $("autoNotes").innerHTML = ""; }
@@ -778,13 +866,16 @@
     function toggleSignals(key) { state.signalKey = state.signalKey === key ? null : key; refreshSignals(); renderPlaybook(); }
 
     // ---- drawing ----
-    let pendingOverlayId = null, drawMenuEl = null, lastMouse = { x: 120, y: 120 }, hoverOverlayId = null, selOverlayId = null, ALERTS = [];
+    let pendingOverlayId = null, drawMenuEl = null, lastMouse = { x: 120, y: 120 }, hoverOverlayId = null, selOverlayId = null, ALERTS = [], pendingLink = null;
     document.addEventListener("mousemove", (e) => { lastMouse = { x: e.clientX, y: e.clientY }; });
     // every overlay: right-click → edit/erase/alert menu; track hover + selection so the Delete key can remove it
     function mkOverlay(spec) {
-      return safe(() => chart.createOverlay({ ...spec,
+      const oid = spec.id || ("dw_" + Date.now().toString(36) + "_" + Math.floor(Math.random() * 1e9).toString(36));   // stable, unique → survives reapply so note↔drawing links hold
+      return safe(() => chart.createOverlay({ ...spec, id: oid,
+        onClick: (e) => { if (state.tool === "erase") { eraseOverlay(e.overlay); status("🗑 erased"); return true; } return false; },
         onRightClick: (e) => { showDrawMenu(e.overlay); return true; },
-        onPressedMoveEnd: (e) => { recordDrawing(e.overlay); return false; },
+        onPressedMoveStart: (e) => { if (ALERTS.some((a) => a.id === e.overlay.id)) safe(() => chart.removeIndicator("candle_pane", "ALERTLINE")); return false; },   // hide the 🔔 marker while dragging an alerted drawing
+        onPressedMoveEnd: (e) => { recordDrawing(e.overlay); repositionLinkedNotes(e.overlay.id); return false; },
         onMouseEnter: (e) => { hoverOverlayId = e.overlay.id; return false; },
         onMouseLeave: (e) => { if (hoverOverlayId === e.overlay.id) hoverOverlayId = null; return false; },
         onSelected: (e) => { selOverlayId = e.overlay.id; return false; },
@@ -801,7 +892,9 @@
     function pickTool(name) {
       state.tool = name;
       if (pendingOverlayId != null) { safe(() => chart.removeOverlay(pendingOverlayId)); pendingOverlayId = null; } // cancel any in-progress draw
-      if (name === "cursor") return;
+      const host = $("chart"); if (host) host.style.cursor = name === "erase" ? "crosshair" : "";
+      if (name === "erase") status("🗑 Erase mode: click a drawing to delete it, or drag a box to erase everything inside · pick Cursor to pan/draw again");
+      if (name === "cursor" || name === "freeDraw" || name === "erase") return;   // these aren't click-to-draw tools
       armTool(name);
     }
     // STICKY: re-arm the same tool after each drawing so it stays selected until you pick another tool / Cursor.
@@ -814,6 +907,129 @@
         return false;
       } });
     }
+    // ---- freehand capture (Free draw tool): capture-phase pointer events block the chart's own pan,
+    // we draw the live stroke on a transient canvas, then turn it into a freeDraw overlay on release ----
+    let freeCap = null;
+    function freeStart(e) {
+      if (state.tool !== "freeDraw" || e.button !== 0) return;
+      const host = $("chart"); if (!host) return;
+      e.stopPropagation(); e.preventDefault();
+      const rect = host.getBoundingClientRect(); host.style.position = host.style.position || "relative";
+      const cv = document.createElement("canvas"); cv.width = host.clientWidth; cv.height = host.clientHeight;
+      cv.style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5";
+      host.appendChild(cv);
+      freeCap = { cv, ctx: cv.getContext("2d"), rect, pts: [[e.clientX - rect.left, e.clientY - rect.top]] };
+    }
+    function freeMove(e) {
+      if (!freeCap) return; e.stopPropagation();
+      const x = e.clientX - freeCap.rect.left, y = e.clientY - freeCap.rect.top, last = freeCap.pts[freeCap.pts.length - 1];
+      if (Math.hypot(x - last[0], y - last[1]) < 3) return;
+      freeCap.pts.push([x, y]);
+      const c = freeCap.ctx; c.clearRect(0, 0, freeCap.cv.width, freeCap.cv.height); c.strokeStyle = "#0071e3"; c.lineWidth = 2; c.lineJoin = "round"; c.lineCap = "round"; c.beginPath();
+      freeCap.pts.forEach((p, i) => (i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1]))); c.stroke();
+    }
+    function freeEnd(e) {
+      if (!freeCap) return; e.stopPropagation();
+      const cap = freeCap; freeCap = null; cap.cv.remove();
+      if (cap.pts.length < 2) return;
+      const points = cap.pts.map(([x, y]) => safe(() => chart.convertFromPixel({ x, y }, { paneId: "candle_pane" })))
+        .filter((p) => p && p.value != null && isFinite(p.value)).map((p) => ({ timestamp: p.timestamp, value: p.value }));
+      if (points.length < 2) return;
+      const id = mkOverlay({ name: "freeDraw", points });
+      if (id) { recordDrawing({ id, name: "freeDraw", points }); status("Free-draw added — right-click it to enhance into a clean shape"); }
+    }
+    $("chart").addEventListener("pointerdown", freeStart, true);
+    window.addEventListener("pointermove", freeMove, true);
+    window.addEventListener("pointerup", freeEnd, true);
+    // ---- Erase tool: click a drawing to delete it, or drag a box to erase everything inside ----
+    let eraseSel = null;
+    const pxOf = (p, ts) => safe(() => chart.convertToPixel({ timestamp: (p.timestamp != null ? p.timestamp : ts), value: p.value }, { paneId: "candle_pane" }));
+    const ptIn = (p, b) => p && p.x >= b.x0 && p.x <= b.x1 && p.y >= b.y0 && p.y <= b.y1;
+    function segRect(x0, y0, x1, y1, b) {   // Liang–Barsky segment-vs-rect intersection
+      let t0 = 0, t1 = 1; const dx = x1 - x0, dy = y1 - y0, P = [-dx, dx, -dy, dy], Q = [x0 - b.x0, b.x1 - x0, y0 - b.y0, b.y1 - y0];
+      for (let i = 0; i < 4; i++) { if (P[i] === 0) { if (Q[i] < 0) return false; } else { const r = Q[i] / P[i]; if (P[i] < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; } } }
+      return true;
+    }
+    function overlayHit(d, box) {
+      const ts = (state.curTs && state.curTs.length) ? state.curTs[state.curTs.length - 1] : Date.now(), pts = d.points || [];
+      const yOf = (value) => { const p = safe(() => chart.convertToPixel({ timestamp: ts, value }, { paneId: "candle_pane" })); return p ? p.y : null; };
+      if (d.name === "horizontalStraightLine" || d.name === "priceLine") { const y = yOf(pts[0].value); return y != null && y >= box.y0 && y <= box.y1; }
+      if (d.name === "fibonacciLine" && pts.length >= 2) return overlayLevels(d, ts).some((lv) => { const y = yOf(lv.value); return y != null && y >= box.y0 && y <= box.y1; });
+      const pix = pts.map((p) => pxOf(p, ts)).filter(Boolean); if (!pix.length) return false;
+      if (d.name === "circleShape" && pix.length >= 2) { const c = pix[0], r = Math.hypot(pix[1].x - c.x, pix[1].y - c.y), cx = Math.max(box.x0, Math.min(c.x, box.x1)), cy = Math.max(box.y0, Math.min(c.y, box.y1)); return Math.hypot(c.x - cx, c.y - cy) <= r; }
+      if (d.name === "rectShape" && pix.length >= 2) { const rx0 = Math.min(pix[0].x, pix[1].x), rx1 = Math.max(pix[0].x, pix[1].x), ry0 = Math.min(pix[0].y, pix[1].y), ry1 = Math.max(pix[0].y, pix[1].y); return !(rx1 < box.x0 || rx0 > box.x1 || ry1 < box.y0 || ry0 > box.y1); }
+      if (pix.some((p) => ptIn(p, box))) return true;
+      for (let i = 1; i < pix.length; i++) if (segRect(pix[i - 1].x, pix[i - 1].y, pix[i].x, pix[i].y, box)) return true;
+      return false;
+    }
+    function eraseStart(e) {
+      if (state.tool !== "erase" || e.button !== 0) return;
+      const host = $("chart"); if (!host) return;
+      e.stopPropagation(); e.preventDefault();
+      const rect = host.getBoundingClientRect(); host.style.position = host.style.position || "relative";
+      const cv = document.createElement("canvas"); cv.width = host.clientWidth; cv.height = host.clientHeight;
+      cv.style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:6";
+      host.appendChild(cv);
+      eraseSel = { cv, ctx: cv.getContext("2d"), rect, x0: e.clientX - rect.left, y0: e.clientY - rect.top, x1: e.clientX - rect.left, y1: e.clientY - rect.top, moved: false };
+    }
+    function eraseMove(e) {
+      if (!eraseSel) return; e.stopPropagation();
+      eraseSel.x1 = e.clientX - eraseSel.rect.left; eraseSel.y1 = e.clientY - eraseSel.rect.top;
+      if (Math.hypot(eraseSel.x1 - eraseSel.x0, eraseSel.y1 - eraseSel.y0) > 4) eraseSel.moved = true;
+      const c = eraseSel.ctx, x = Math.min(eraseSel.x0, eraseSel.x1), y = Math.min(eraseSel.y0, eraseSel.y1), w = Math.abs(eraseSel.x1 - eraseSel.x0), h = Math.abs(eraseSel.y1 - eraseSel.y0);
+      c.clearRect(0, 0, eraseSel.cv.width, eraseSel.cv.height); c.fillStyle = "rgba(215,0,21,0.08)"; c.strokeStyle = "rgba(215,0,21,0.7)"; c.lineWidth = 1; c.setLineDash([4, 3]); c.fillRect(x, y, w, h); c.strokeRect(x, y, w, h); c.setLineDash([]);
+    }
+    function eraseEnd(e) {
+      if (!eraseSel) return; e.stopPropagation();
+      const sel = eraseSel; eraseSel = null; sel.cv.remove();
+      const box = { x0: Math.min(sel.x0, sel.x1), y0: Math.min(sel.y0, sel.y1), x1: Math.max(sel.x0, sel.x1), y1: Math.max(sel.y0, sel.y1) };
+      if (!sel.moved) { box.x0 -= 7; box.y0 -= 7; box.x1 += 7; box.y1 += 7; }   // a click → small hit area around the point
+      const hits = drawings.filter((d) => overlayHit(d, box));
+      if (!hits.length) { if (sel.moved) status("nothing in the box to erase"); return; }
+      hits.slice().forEach((d) => eraseOverlay({ id: d.id, name: d.name }));
+      status("🗑 erased " + hits.length + (hits.length === 1 ? " drawing" : " drawings"));
+    }
+    $("chart").addEventListener("pointerdown", eraseStart, true);
+    window.addEventListener("pointermove", eraseMove, true);
+    window.addEventListener("pointerup", eraseEnd, true);
+    // ---- enhance: turn any drawing (esp. a freehand) into a proper circle/square/rect/trend/ray/channel ----
+    const ENHANCE = [["circle", "○ Circle"], ["square", "□ Square"], ["rect", "▭ Rectangle"], ["trend", "／ Trend line"], ["ray", "→ Ray"], ["channel", "▤ Channel"]];
+    const ENHANCEABLE = new Set(["freeDraw", "rectShape", "circleShape", "segment", "rayLine", "parallelStraightLine"]);
+    function squarePoints(minT, maxT, minV, maxV) {
+      const a = safe(() => chart.convertToPixel({ timestamp: minT, value: maxV }, { paneId: "candle_pane" }));
+      const b = safe(() => chart.convertToPixel({ timestamp: maxT, value: minV }, { paneId: "candle_pane" }));
+      if (!a || !b) return [{ timestamp: minT, value: maxV }, { timestamp: maxT, value: minV }];
+      const s = Math.min(Math.abs(b.x - a.x), Math.abs(b.y - a.y));
+      const corner = safe(() => chart.convertFromPixel({ x: a.x + (b.x >= a.x ? s : -s), y: a.y + (b.y >= a.y ? s : -s) }, { paneId: "candle_pane" }));
+      return corner ? [{ timestamp: minT, value: maxV }, { timestamp: corner.timestamp, value: corner.value }] : [{ timestamp: minT, value: maxV }, { timestamp: maxT, value: minV }];
+    }
+    function circlePoints(minT, maxT, minV, maxV) {
+      const cT = (minT + maxT) / 2, cV = (minV + maxV) / 2;
+      const ctr = safe(() => chart.convertToPixel({ timestamp: cT, value: cV }, { paneId: "candle_pane" }));
+      const cor = safe(() => chart.convertToPixel({ timestamp: maxT, value: maxV }, { paneId: "candle_pane" }));
+      let edge = { timestamp: maxT, value: cV };
+      if (ctr && cor) { const r = Math.max(Math.abs(cor.x - ctr.x), Math.abs(cor.y - ctr.y)); const ep = safe(() => chart.convertFromPixel({ x: ctr.x + r, y: ctr.y }, { paneId: "candle_pane" })); if (ep) edge = { timestamp: ep.timestamp, value: ep.value }; }
+      return [{ timestamp: cT, value: cV }, edge];
+    }
+    function enhanceTo(overlay, shape) {
+      const rec = drawings.find((d) => d.id === overlay.id) || { points: (overlay.points || []).map((p) => ({ timestamp: p.timestamp, value: p.value })) };
+      const pts = rec.points; if (!pts || pts.length < 2) return;
+      const ts = pts.map((p) => p.timestamp), vs = pts.map((p) => p.value);
+      const minT = Math.min(...ts), maxT = Math.max(...ts), minV = Math.min(...vs), maxV = Math.max(...vs), start = pts[0], end = pts[pts.length - 1];
+      const seg = [{ timestamp: start.timestamp, value: start.value }, { timestamp: end.timestamp, value: end.value }];
+      let name, np;
+      if (shape === "trend") { name = "segment"; np = seg; }
+      else if (shape === "ray") { name = "rayLine"; np = seg; }
+      else if (shape === "channel") { name = "parallelStraightLine"; np = seg.concat([{ timestamp: start.timestamp, value: (start.value <= (minV + maxV) / 2 ? maxV : minV) }]); }
+      else if (shape === "rect") { name = "rectShape"; np = [{ timestamp: minT, value: maxV }, { timestamp: maxT, value: minV }]; }
+      else if (shape === "square") { name = "rectShape"; np = squarePoints(minT, maxT, minV, maxV); }
+      else if (shape === "circle") { name = "circleShape"; np = circlePoints(minT, maxT, minV, maxV); }
+      else return;
+      safe(() => chart.removeOverlay(overlay.id)); const i = drawings.findIndex((d) => d.id === overlay.id); if (i >= 0) drawings.splice(i, 1); removeAlert(overlay.id);
+      const id = mkOverlay({ name, points: np }); if (id) recordDrawing({ id, name, points: np }); scheduleSave();
+      pickTool("cursor"); segActive($("toolSeg"), findBtn($("toolSeg"), "cursor"));   // land in Cursor so the new shape can be dragged/resized immediately
+      status("Enhanced ✓ — drag the shape to move it, drag a handle to resize, right-click to change");
+    }
     function drawMenuOutside(e) { if (drawMenuEl && !drawMenuEl.contains(e.target)) closeDrawMenu(); }
     function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; document.removeEventListener("mousedown", drawMenuOutside); } }
     function showDrawMenu(overlay) {
@@ -823,15 +1039,48 @@
       m.style.cssText = `position:fixed;left:${Math.min(lastMouse.x, innerWidth - 190)}px;top:${Math.min(lastMouse.y, innerHeight - 130)}px;z-index:9999;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;min-width:172px;`;
       const item = (label, fn, danger) => { const b = document.createElement("button"); b.textContent = label; b.style.cssText = `display:block;width:100%;text-align:left;padding:9px 16px;border:0;background:#fff;cursor:pointer;font:inherit;font-size:13px;color:${danger ? "#d70015" : "#1d1d1f"}`; b.onmouseenter = () => (b.style.background = "#f2f2f7"); b.onmouseleave = () => (b.style.background = "#fff"); b.onclick = (ev) => { ev.stopPropagation(); closeDrawMenu(); fn(); }; return b; };
       if (isNote) m.appendChild(item("✎  Edit note", () => editAnnotation(overlay)));
-      else if (overlayLevels({ name: overlay.name, points: (overlay.points || []) }, Date.now()).length) {  // line-type → can alert
-        const on = ALERTS.some((a) => a.id === overlay.id);
-        m.appendChild(item(on ? "🔕  Remove price alert" : "🔔  Set price alert", () => toggleAlert(overlay)));
+      else {
+        const aTs = (state.curTs && state.curTs.length) ? state.curTs[state.curTs.length - 1] : Date.now();
+        const aLv = overlayLevels({ name: overlay.name, points: (overlay.points || []) }, aTs);
+        if (aLv.length) {   // line-type → can alert; show the actual price(s) it triggers at
+          const on = ALERTS.some((a) => a.id === overlay.id);
+          const at = aLv.length === 1 ? "at " + nfmt(aLv[0].value) : aLv.length + " levels (" + aLv.map((x) => nfmt(x.value)).join(", ") + ")";
+          if (on) {
+            m.appendChild(item("✎  Rename alert", () => editAlertFromMenu(overlay.id, "name")));
+            if (aLv.length === 1 && (overlay.name === "horizontalStraightLine" || overlay.name === "priceLine")) m.appendChild(item("✎  Edit alert price", () => editAlertLevel(overlay.id)));
+            m.appendChild(item("🔕  Remove price alert (" + at + ")", () => toggleAlert(overlay)));
+          } else m.appendChild(item("🔔  Set price alert — " + at, () => toggleAlert(overlay)));
+        }
       }
+      if (!isNote) m.appendChild(item("📝  Attach linked note", () => attachNote(overlay)));   // note rides along when this drawing moves
+      if (isNote) { const nr = drawings.find((d) => d.id === overlay.id); if (nr && nr.linkedTo) m.appendChild(item("🔗  Detach from drawing", () => { nr.linkedTo = undefined; nr.offset = undefined; scheduleSave(); status("note detached — now free-standing"); })); }
+      if (ENHANCEABLE.has(overlay.name)) ENHANCE.forEach(([k, lbl]) => m.appendChild(item("Enhance → " + lbl, () => enhanceTo(overlay, k))));
       m.appendChild(item("🗑  Erase  (or press Delete)", () => eraseOverlay(overlay), true));
       document.body.appendChild(m); drawMenuEl = m;
       setTimeout(() => document.addEventListener("mousedown", drawMenuOutside), 0);   // close on OUTSIDE click only (was closing before the button click registered)
     }
-    function eraseOverlay(o) { safe(() => chart.removeOverlay(o.id)); const i = drawings.findIndex((d) => d.id === o.id); if (i >= 0) drawings.splice(i, 1); removeAlert(o.id); scheduleSave(); }
+    function eraseOverlay(o) {
+      safe(() => chart.removeOverlay(o.id)); const i = drawings.findIndex((d) => d.id === o.id); if (i >= 0) drawings.splice(i, 1);
+      drawings.filter((d) => d.linkedTo === o.id).slice().forEach((n) => { safe(() => chart.removeOverlay(n.id)); const j = drawings.findIndex((d) => d.id === n.id); if (j >= 0) drawings.splice(j, 1); removeAlert(n.id); });   // remove notes linked to it
+      if (pendingLink && pendingLink.linkedTo === o.id) pendingLink = null;
+      removeAlert(o.id); scheduleSave(); syncAlerts();
+    }
+    // attach a note that's pinned to a drawing — it rides along when the drawing is moved
+    function attachNote(parent) {
+      const rec = drawings.find((d) => d.id === parent.id) || { points: (parent.points || []).map((p) => ({ timestamp: p.timestamp, value: p.value })) };
+      const a = rec.points && rec.points[0]; if (!a) return;
+      const r = $("chart").getBoundingClientRect();
+      const dp = safe(() => chart.convertFromPixel({ x: lastMouse.x - r.left, y: lastMouse.y - r.top }, { paneId: "candle_pane" }));
+      const pt = (dp && dp.value != null) ? { timestamp: dp.timestamp, value: dp.value } : { timestamp: a.timestamp, value: a.value };
+      const id = mkOverlay({ name: "noteText", extendData: " ", points: [pt] }); if (!id) return;
+      pendingLink = { noteId: id, linkedTo: parent.id, offset: { dt: pt.timestamp - a.timestamp, dv: pt.value - a.value } };
+      inlineNote(lastMouse.x, lastMouse.y, "", id, [pt]);
+    }
+    function repositionLinkedNotes(parentId) {
+      const parent = drawings.find((d) => d.id === parentId); if (!parent || !parent.points || !parent.points[0]) return;
+      const a = parent.points[0];
+      drawings.filter((d) => d.linkedTo === parentId).forEach((note) => { const off = note.offset || { dt: 0, dv: 0 }, np = { timestamp: a.timestamp + off.dt, value: a.value + off.dv }; note.points = [np]; safe(() => chart.overrideOverlay({ id: note.id, points: [np] })); });
+    }
     function editAnnotation(o) { const pts = (o.points || []).map((p) => ({ timestamp: p.timestamp, value: p.value })); inlineNote(lastMouse.x, lastMouse.y, o.extendData || "", o.id, pts); }
     // a small text box at the click point; the note shows in-chart LIVE as you type — Enter / click-away saves, Esc cancels, no OK
     function inlineNote(px, py, initial, id, pts) {
@@ -859,6 +1108,31 @@
       const id = mkOverlay({ name: "noteText", extendData: " ", points: pts });
       if (id) inlineNote(lastMouse.x, lastMouse.y, "", id, pts);
     }
+    // right-click empty chart space → drop a price line at that level and set an alert on it
+    function addAlertHere() {
+      const rect = $("chart").getBoundingClientRect();
+      const dp = safe(() => chart.convertFromPixel({ x: lastMouse.x - rect.left, y: lastMouse.y - rect.top }, { paneId: "candle_pane" }));
+      if (!dp || dp.value == null) { status("couldn't read a price there — try again on the chart"); return; }
+      const pts = [{ timestamp: dp.timestamp, value: dp.value }];
+      const id = mkOverlay({ name: "priceLine", points: pts });
+      if (!id) return;
+      recordDrawing({ id, name: "priceLine", points: pts });
+      toggleAlert({ id, name: "priceLine", points: pts });
+    }
+    // right-click on empty chart → choose: set a price alert here, or add a note
+    function showEmptyMenu() {
+      closeDrawMenu();
+      const rect = $("chart").getBoundingClientRect();
+      const dp = safe(() => chart.convertFromPixel({ x: lastMouse.x - rect.left, y: lastMouse.y - rect.top }, { paneId: "candle_pane" }));
+      const price = (dp && dp.value != null) ? dp.value : null;
+      const m = document.createElement("div");
+      m.style.cssText = `position:fixed;left:${Math.min(lastMouse.x, innerWidth - 230)}px;top:${Math.min(lastMouse.y, innerHeight - 110)}px;z-index:9999;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;min-width:208px;`;
+      const item = (label, fn) => { const b = document.createElement("button"); b.textContent = label; b.style.cssText = "display:block;width:100%;text-align:left;padding:9px 16px;border:0;background:#fff;cursor:pointer;font:inherit;font-size:13px;color:#1d1d1f"; b.onmouseenter = () => (b.style.background = "#f2f2f7"); b.onmouseleave = () => (b.style.background = "#fff"); b.onclick = (e) => { e.stopPropagation(); closeDrawMenu(); fn(); }; return b; };
+      if (price != null) m.appendChild(item("🔔  Set price alert here — at " + nfmt(price), addAlertHere));
+      m.appendChild(item("📝  Add note here", addNoteHere));
+      document.body.appendChild(m); drawMenuEl = m;
+      setTimeout(() => document.addEventListener("mousedown", drawMenuOutside), 0);
+    }
     // ---- Price alerts on drawings (varies by drawing): the "level(s)" a drawing represents at the latest bar ----
     let lastLivePrice = null, toastTimer = null;
     function overlayLevels(d, ts) {
@@ -872,12 +1146,17 @@
       return [{ value: p[0].value, label: "level" }];
     }
     function toggleAlert(o) {
-      if (ALERTS.some((a) => a.id === o.id)) { removeAlert(o.id); status("🔕 alert removed"); return; }
-      const lbl = o.name === "fibonacciLine" ? "Fibonacci levels" : (o.name === "horizontalStraightLine" || o.name === "priceLine") ? "price level" : "trend line";
+      if (ALERTS.some((a) => a.id === o.id)) { removeAlert(o.id); syncAlerts(); status("🔕 alert removed"); return; }
+      const ts = (state.curTs && state.curTs.length) ? state.curTs[state.curTs.length - 1] : Date.now();
+      const lv = overlayLevels(o, ts), vals = lv.map((x) => nfmt(x.value)).join(" · ");
+      const sloping = o.name === "segment" || o.name === "rayLine" || o.name === "parallelStraightLine" || o.name === "straightLine";
       ALERTS.push({ id: o.id, sides: [] });
       if (window.Notification && Notification.permission === "default") { try { Notification.requestPermission(); } catch (_) {} }
       if (lastLivePrice != null) checkAlerts(lastLivePrice);   // seed the current side so it doesn't fire immediately
-      status("🔔 Alert set on this " + lbl + " — you'll be pinged when price crosses it (while this tab is open).");
+      const where = sloping ? "where this line sits now (" + vals + ") — and because it slopes, the trigger updates each bar as the line moves"
+        : (lv.length > 1 ? "each of these levels: " + vals : vals);
+      syncAlerts();
+      status("🔔 Alert set at " + where + ". You'll get a toast + beep when price crosses" + (lv.length > 1 ? " any of them" : " it") + " (while this tab is open). See the Price alerts section below to manage it.");
     }
     function removeAlert(id) { const i = ALERTS.findIndex((a) => a.id === id); if (i >= 0) ALERTS.splice(i, 1); }
     function checkAlerts(price) {
@@ -905,11 +1184,100 @@
       clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.style.display = "none"; }, 8000);
     }
     function beep() { try { const a = new (window.AudioContext || window.webkitAudioContext)(); const o = a.createOscillator(), g = a.createGain(); o.connect(g); g.connect(a.destination); o.frequency.value = 880; g.gain.value = 0.05; o.start(); setTimeout(() => { o.stop(); a.close(); }, 170); } catch (_) {} }
+    // ---- price-alert denotation (🔔 on chart) + the dedicated Price alerts section ----
+    const alertTs = () => (state.curTs && state.curTs.length) ? state.curTs[state.curTs.length - 1] : Date.now();
+    const isSloping = (name) => name === "segment" || name === "rayLine" || name === "parallelStraightLine" || name === "straightLine";
+    const drawingTypeLabel = (name) => ({ horizontalStraightLine: "Horizontal line", priceLine: "Price line", segment: "Trend line", rayLine: "Ray", parallelStraightLine: "Channel", fibonacciLine: "Fibonacci", rectShape: "Rectangle", circleShape: "Circle", freeDraw: "Freehand", noteText: "Note" }[name]) || "Drawing";
+    function refreshAlertLines() {
+      const ts = alertTs(), lines = [];
+      ALERTS.forEach((a) => { const d = drawings.find((x) => x.id === a.id); if (!d) return; const sloped = isSloping(d.name); overlayLevels(d, ts).forEach((lv) => { if (isFinite(lv.value)) lines.push({ value: lv.value, label: nfmt(lv.value), sloped }); }); });
+      ALERT_LINES = lines;
+      safe(() => { chart.removeIndicator("candle_pane", "ALERTLINE"); if (lines.length && !state.alertsHidden) chart.createIndicator("ALERTLINE", true, { id: "candle_pane" }); });
+    }
+    function syncAlerts() { refreshAlertLines(); renderAlerts(); }
+    function renderAlerts() {
+      const card = $("alertCard"), host = $("alertList"); if (!card || !host) return;
+      ALERTS = ALERTS.filter((a) => drawings.some((d) => d.id === a.id));   // drop alerts whose drawing is gone
+      if (!ALERTS.length) { card.style.display = "none"; host.innerHTML = ""; if ($("alertCount")) $("alertCount").textContent = ""; return; }
+      card.style.display = ""; if ($("alertCount")) $("alertCount").textContent = "· " + ALERTS.length + (ALERTS.length === 1 ? " alert" : " alerts");
+      const ts = alertTs();
+      host.innerHTML = ALERTS.map((a) => {
+        const d = drawings.find((x) => x.id === a.id), lv = overlayLevels(d, ts), t = drawingTypeLabel(d.name), levels = lv.map((x) => nfmt(x.value)).join(" · ");
+        const editable = lv.length === 1 && (d.name === "horizontalStraightLine" || d.name === "priceLine");
+        const where = isSloping(d.name) ? "tracks the line — now " + levels : (lv.length > 1 ? levels : "at " + levels);
+        return `<div class="alert-row" data-id="${esc(a.id)}"><span class="a-bell">🔔</span><span style="min-width:0"><b>${esc(a.label || t)}</b><div class="meta">${esc(t)} · ${esc(where)}</div></span><span class="a-acts">${editable ? `<button data-ap="${esc(a.id)}">Edit price</button>` : ""}<button data-an="${esc(a.id)}">Rename</button><button class="del" data-ad="${esc(a.id)}">Delete</button></span></div>`;
+      }).join("");
+      host.querySelectorAll("button[data-ad]").forEach((b) => (b.onclick = () => { removeAlert(b.dataset.ad); syncAlerts(); status("alert deleted"); }));
+      host.querySelectorAll("button[data-an]").forEach((b) => (b.onclick = () => alertInlineEdit(b, "name")));
+      host.querySelectorAll("button[data-ap]").forEach((b) => (b.onclick = () => alertInlineEdit(b, "price")));
+    }
+    function alertInlineEdit(btn, mode) {
+      const row = btn.closest(".alert-row"), id = row.dataset.id, a = ALERTS.find((x) => x.id === id), d = drawings.find((x) => x.id === id); if (!a || !d) return;
+      const acts = row.querySelector(".a-acts"), cur = mode === "price" ? nfmt(overlayLevels(d, alertTs())[0].value) : (a.label || drawingTypeLabel(d.name));
+      acts.innerHTML = `<input class="a-edit" value="${esc(cur)}" placeholder="${mode === "price" ? "price" : "name"}"><button data-save>Save</button><button data-cancel>Cancel</button>`;
+      const inp = acts.querySelector("input"); inp.focus(); inp.select();
+      const save = () => {
+        if (mode === "name") a.label = inp.value.trim() || undefined;
+        else { const v = parseFloat(inp.value.replace(/[^0-9.\-]/g, "")); if (isFinite(v)) { d.points = [{ timestamp: d.points[0].timestamp, value: v }]; safe(() => chart.overrideOverlay({ id, points: d.points })); a.sides = []; } }
+        scheduleSave(); syncAlerts();
+      };
+      acts.querySelector("[data-save]").onclick = save;
+      acts.querySelector("[data-cancel]").onclick = () => renderAlerts();
+      inp.onkeydown = (e) => { e.stopPropagation(); if (e.key === "Enter") save(); else if (e.key === "Escape") renderAlerts(); };
+    }
+    function editAlertFromMenu(id, mode) {
+      syncAlerts(); const card = $("alertCard"); if (card) card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      setTimeout(() => { const row = $("alertList").querySelector('.alert-row[data-id="' + id + '"]'); if (!row) return; const b = row.querySelector(mode === "price" ? "button[data-ap]" : "button[data-an]"); if (b) b.click(); }, 80);
+    }
+    // inline editor for an alert's level (price) — opens right where you clicked
+    function editAlertLevel(id) {
+      const a = ALERTS.find((x) => x.id === id), d = drawings.find((x) => x.id === id); if (!a || !d) return;
+      const lv = overlayLevels(d, alertTs()), editable = lv.length === 1 && (d.name === "horizontalStraightLine" || d.name === "priceLine");
+      if (!editable) { status("this alert tracks a sloped/multi-level drawing — move the drawing to change its level"); return; }
+      const inp = document.createElement("input"); inp.type = "text"; inp.value = nfmt(lv[0].value); inp.placeholder = "new price";
+      inp.style.cssText = `position:fixed;left:${Math.min(Math.max(8, lastMouse.x), innerWidth - 160)}px;top:${Math.min(Math.max(8, lastMouse.y), innerHeight - 44)}px;z-index:10001;font:inherit;font-size:13px;padding:6px 10px;border:1.5px solid #d68a12;border-radius:8px;background:#fff;box-shadow:0 8px 26px rgba(0,0,0,.22);width:120px`;
+      document.body.appendChild(inp); inp.focus(); inp.select();
+      let done = false;
+      const finish = (commit) => { if (done) return; done = true; inp.remove(); if (!commit) return; const v = parseFloat(inp.value.replace(/[^0-9.\-]/g, "")); if (!isFinite(v)) return; d.points = [{ timestamp: d.points[0].timestamp, value: v }]; safe(() => chart.overrideOverlay({ id: d.id, points: d.points })); a.sides = []; scheduleSave(); syncAlerts(); status("alert level → " + nfmt(v)); };
+      inp.onkeydown = (e) => { e.stopPropagation(); if (e.key === "Enter") finish(true); else if (e.key === "Escape") finish(false); };
+      inp.onblur = () => finish(true);
+    }
+    // right-click ON the alert marker (the 🔔 line) → edit its level / delete it
+    function showAlertMenuAt(ev) {
+      if (state.alertsHidden || !ALERTS.length) return false;
+      const rect = $("chart").getBoundingClientRect(), cy = ev.clientY - rect.top, ts = alertTs();
+      let best = null, bestDy = 7;
+      ALERTS.forEach((a) => { const d = drawings.find((x) => x.id === a.id); if (!d) return; overlayLevels(d, ts).forEach((lv) => { const p = safe(() => chart.convertToPixel({ timestamp: ts, value: lv.value }, { paneId: "candle_pane" })); if (!p) return; const dy = Math.abs(p.y - cy); if (dy < bestDy) { bestDy = dy; best = { alert: a, drawing: d, value: lv.value, editable: (overlayLevels(d, ts).length === 1 && (d.name === "horizontalStraightLine" || d.name === "priceLine")) }; } }); });
+      if (!best) return false;
+      closeDrawMenu();
+      const m = document.createElement("div");
+      m.style.cssText = `position:fixed;left:${Math.min(ev.clientX, innerWidth - 200)}px;top:${Math.min(ev.clientY, innerHeight - 120)}px;z-index:9999;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;min-width:188px;`;
+      const item = (label, fn, danger) => { const b = document.createElement("button"); b.textContent = label; b.style.cssText = `display:block;width:100%;text-align:left;padding:9px 16px;border:0;background:#fff;cursor:pointer;font:inherit;font-size:13px;color:${danger ? "#d70015" : "#1d1d1f"}`; b.onmouseenter = () => (b.style.background = "#f2f2f7"); b.onmouseleave = () => (b.style.background = "#fff"); b.onclick = (e) => { e.stopPropagation(); closeDrawMenu(); fn(); }; return b; };
+      const head = document.createElement("div"); head.textContent = "🔔 Alert · " + nfmt(best.value); head.style.cssText = "padding:8px 16px;font-size:11.5px;font-weight:700;color:#6e6e73;border-bottom:1px solid var(--line)"; m.appendChild(head);
+      if (best.editable) m.appendChild(item("✎  Edit level", () => editAlertLevel(best.alert.id)));
+      m.appendChild(item("✎  Rename alert", () => editAlertFromMenu(best.alert.id, "name")));
+      m.appendChild(item("🔕  Delete alert", () => { removeAlert(best.alert.id); syncAlerts(); status("alert deleted"); }, true));
+      document.body.appendChild(m); drawMenuEl = m;
+      setTimeout(() => document.addEventListener("mousedown", drawMenuOutside), 0);
+      return true;
+    }
     const validDraw = (d) => d && d.name && Array.isArray(d.points) && d.points.length && d.points.every((p) => p && p.value != null && isFinite(p.value));
-    function recordDrawing(o) { if (restoring || !o || !o.points || !o.points.length) return; const pts = o.points.map((p) => ({ timestamp: p.timestamp, value: p.value })); if (pts.some((p) => p.value == null)) return; const i = drawings.findIndex((d) => d.id === o.id), rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData }; if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave(); }
-    function reapplyDrawings() { restoring = true; safe(() => chart.removeOverlay()); const keep = drawings.filter(validDraw); drawings = []; keep.forEach((d) => { const id = mkOverlay({ name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); }); restoring = false; }
-    function undoDrawing() { const last = drawings.pop(); if (last) safe(() => chart.removeOverlay(last.id)); scheduleSave(); }
-    function clearDrawings() { safe(() => chart.removeOverlay()); drawings = []; scheduleSave(); }
+    function recordDrawing(o) {
+      if (restoring || !o || !o.points || !o.points.length) return;
+      const pts = o.points.map((p) => ({ timestamp: p.timestamp, value: p.value })); if (pts.some((p) => p.value == null)) return;
+      const i = drawings.findIndex((d) => d.id === o.id), prev = i >= 0 ? drawings[i] : null, rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData };
+      const link = (pendingLink && pendingLink.noteId === o.id) ? pendingLink : null;   // a freshly-attached note
+      if (link) { rec.linkedTo = link.linkedTo; rec.offset = link.offset; pendingLink = null; }
+      else if (prev && prev.linkedTo) {   // an existing linked note got moved → re-anchor its offset to the parent
+        rec.linkedTo = prev.linkedTo; const par = drawings.find((d) => d.id === prev.linkedTo);
+        rec.offset = (par && par.points && par.points[0]) ? { dt: pts[0].timestamp - par.points[0].timestamp, dv: pts[0].value - par.points[0].value } : prev.offset;
+      }
+      if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave();
+      const movedAlert = ALERTS.find((a) => a.id === o.id); if (movedAlert) { movedAlert.sides = []; syncAlerts(); }   // alerted drawing moved → re-anchor its trigger level (re-seed so it doesn't fire from the move itself)
+    }
+    function reapplyDrawings() { restoring = true; safe(() => chart.removeOverlay()); if (state.drawingsHidden) { restoring = false; syncAlerts(); return; } const keep = drawings.filter(validDraw); drawings = []; keep.forEach((d) => { const id = mkOverlay({ id: d.id, name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData, linkedTo: d.linkedTo, offset: d.offset }); }); restoring = false; syncAlerts(); }
+    function undoDrawing() { const last = drawings.pop(); if (last) { safe(() => chart.removeOverlay(last.id)); removeAlert(last.id); } scheduleSave(); syncAlerts(); }
+    function clearDrawings() { safe(() => chart.removeOverlay()); drawings = []; ALERTS = []; scheduleSave(); syncAlerts(); }
 
     // ---- persistence ----
     const lsKey = (id) => "chart_" + id;
@@ -918,7 +1286,7 @@
     function status(msg) { $("notesStatus").textContent = msg ? "· " + msg : ""; }
     function updateAuth() { const el = $("cloudAuth"); if (getKey()) { el.innerHTML = `signed in · <a href="#" id="logout">log out</a>`; el.querySelector("#logout").onclick = (e) => { e.preventDefault(); setKey(""); status("logged out"); }; } else el.textContent = "not signed in"; }
     function ensureKey() { const k = getKey(); if (k) return Promise.resolve(k); const entry = (window.prompt("Passphrase to save/view private notes:") || "").trim(); if (!entry) return Promise.resolve(""); return fetch(STORE + "/api/auth", { method: "POST", headers: { "X-Lab-Key": entry } }).then((r) => { if (!r.ok) { status("wrong passphrase"); return ""; } setKey(entry); return entry; }).catch(() => { status("login failed"); return ""; }); }
-    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, ...d }) => d), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams, lev: state.lev, carry: state.carry, pnl: { mode: state.pnl.mode, perBp: state.pnl.perBp } } }; }
+    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, name, points, extendData, linkedTo, offset }) => ({ id, name, points, extendData, linkedTo, offset })), alerts: ALERTS.map((a) => ({ id: a.id, label: a.label })), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams, lev: state.lev, carry: state.carry, pnl: { mode: state.pnl.mode, perBp: state.pnl.perBp } } }; }
     function saveLocal() { try { localStorage.setItem(lsKey(D.id), JSON.stringify(snapshot())); } catch (_) {} }
     function scheduleSave() { if (saveTimer) clearTimeout(saveTimer); saveTimer = setTimeout(() => { saveTimer = null; saveLocal(); status("saved locally"); }, 600); }
     $("cloudBtn").onclick = () => { ensureKey().then((key) => { if (!key) return; updateAuth(); status("saving…"); fetch(STORE + "/api/chart/" + D.id, { method: "POST", headers: { "Content-Type": "application/json", "X-Lab-Key": key }, body: JSON.stringify(snapshot()) }).then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired"); } if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then(() => status("saved to cloud ✓")).catch((e) => status("cloud save failed: " + e.message)); }); };
@@ -938,8 +1306,9 @@
       syncPnlUI();
       syncIndicators(st.indicators); renderIndParams();
       drawings = [];
-      (snap.drawings || []).filter(validDraw).forEach((d) => { const id = mkOverlay({ name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData }); });
-      restoring = false; renderPlaybook();
+      (snap.drawings || []).filter(validDraw).forEach((d) => { const id = mkOverlay({ id: d.id, name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData, linkedTo: d.linkedTo, offset: d.offset }); });
+      ALERTS = (snap.alerts || []).filter((a) => drawings.some((d) => d.id === a.id)).map((a) => ({ id: a.id, label: a.label, sides: [] }));
+      restoring = false; renderPlaybook(); syncAlerts();
     }
     function loadNotes() {
       safe(() => chart.removeOverlay()); drawings = [];
@@ -957,6 +1326,7 @@
         const prev = D.close[D.n - 1], chg = (q.price / prev - 1) * 100, s = chg >= 0 ? "+" : "";
         live.classList.add("on"); txt.innerHTML = `<b>${esc(D.ticker)} ${nfmt(q.price)}</b> <span style="color:${chg >= 0 ? UP : DN}">${s}${chg.toFixed(2)}%</span> <span style="color:#8a8a8e">· ${esc(q.timestamp || "")}</span>`;
         lastLivePrice = q.price; checkAlerts(q.price);   // alert when the live price crosses any alerted drawing
+        renderDashboard();   // refresh the signal dashboard against the live price (spx/ndx only)
       }).catch(() => { txt.textContent = "live unavailable"; });
     }
 
@@ -1037,6 +1407,300 @@
       host.querySelectorAll("button[data-note]").forEach((b) => { b.onclick = () => { state.notesOpen[b.dataset.note] = !state.notesOpen[b.dataset.note]; renderPlaybook(); }; });
     }
 
+    // ---- Technical-indicator signal dashboard (S&P 500 & Nasdaq 100 only) ----
+    // Reads signals_<asset>.json (graded backtest evidence) and evaluates each signal's CURRENT
+    // direction + 0-100 strength live from price (evaluators mirror research/signal_state.py), then
+    // a trust-weighted composite → independent suggested leverage.
+    const SIG_CACHE = {}; let DASH_VIX = null;
+    const GRADE_C = { A: ["#e3f4ea", "var(--good)"], B: ["#e4f0fb", "var(--accent)"], C: ["#fbf0d8", "#9a6b00"], D: ["#fbe9e9", "var(--bad)"] };
+    const sq = (x, sc) => Math.round((50 + 50 * Math.tanh(x / sc)) * 10) / 10;
+    const smaL = (c, n) => { if (c.length < n) return null; let s = 0; for (let i = c.length - n; i < c.length; i++) s += c[i]; return s / n; };
+    const lastNN = (a) => { for (let i = a.length - 1; i >= 0; i--) if (a[i] != null) return a[i]; return null; };
+    const emaL = (c, n) => lastNN(ema(c, n));
+    const rsiL = (c, n) => lastNN(rsiArr(c, n));
+    function beatTxt(ev) { const f = ev.beats_bh || {}, y = []; if (f.sharpe) y.push("Sharpe"); if (f.calmar) y.push("Calmar"); if (f.dd) y.push("drawdown"); if (f.cagr) y.push("return"); if (!y.length) return "does not beat buy & hold risk-adjusted"; const last = y.pop(); return "beats buy & hold on " + (y.length ? y.join(", ") + " & " + last : last); }
+    function dashEval(sig, c, month, vix) {
+      const last = c[c.length - 1], p = sig.params || {}, g = (x) => (x >= 0 ? "+" : "") + (x * 100).toFixed(1) + "%";
+      switch (sig.rule) {
+        case "ma_trend": { const n = p.window, ma = p.type === "ema" ? emaL(c, n) : smaL(c, n); if (ma == null) return null; const x = last / ma - 1; return { dir: last >= ma ? 1 : -1, strength: sq(x, 0.05), read: `${nfmt(last)} vs ${n}-day ${p.type === "ema" ? "EMA" : "SMA"} ${nfmt(ma)} (${g(x)})` }; }
+        case "ma_band": { const n = p.window, b = p.band, ma = p.type === "ema" ? emaL(c, n) : smaL(c, n); if (ma == null) return null; const up = ma * (1 + b), lo = ma * (1 - b); let d, x; if (last >= up) { d = 1; x = last / up - 1; } else if (last <= lo) { d = -1; x = last / lo - 1; } else { d = last >= ma ? 1 : -1; x = (last / ma - 1) * 0.5; } return { dir: d, strength: sq(x, 0.05), read: `${nfmt(last)} vs ${n}-day band [${nfmt(lo)} – ${nfmt(up)}]` }; }
+        case "cross": { const f = p.fast, s = p.slow, e = p.type === "ema", mf = e ? emaL(c, f) : smaL(c, f), ms = e ? emaL(c, s) : smaL(c, s); if (mf == null || ms == null) return null; const x = mf / ms - 1; return { dir: mf >= ms ? 1 : -1, strength: sq(x, 0.05), read: `${f}-day ${nfmt(mf)} ${mf >= ms ? "›" : "‹"} ${s}-day ${nfmt(ms)}` }; }
+        case "momentum": { const lb = p.lookback; if (c.length <= lb) return null; const ref = c[c.length - 1 - lb], x = last / ref - 1; return { dir: x >= 0 ? 1 : -1, strength: sq(x, 0.15), read: `${nfmt(last)} vs ${Math.round(lb / 21)}-mo-ago ${nfmt(ref)} (${g(x)})` }; }
+        case "macd": { const m = macdP(c, p.fast, p.slow, p.signal), ml = lastNN(m.macd), sl = lastNN(m.signal); if (ml == null || sl == null) return null; const x = (ml - sl) / (0.01 * last); return { dir: ml >= sl ? 1 : -1, strength: sq(x, 1), read: `MACD ${nfmt(ml)} ${ml >= sl ? "›" : "‹"} signal ${nfmt(sl)}` }; }
+        case "bollinger": { const n = p.window, sd = p.std, mid = smaL(c, n); if (mid == null) return null; const std = lastNN(rstd(c, n)) || 1, lo = mid - sd * std, up = mid + sd * std, pb = up > lo ? (last - lo) / (up - lo) : 0.5; let d, x; if (last <= lo) { d = 1; x = (lo - last) / std; } else if (last >= mid) { d = -1; x = (last - mid) / std; } else { d = 1; x = (mid - last) / std * 0.4; } return { dir: d, strength: sq(x, 1.5), read: `%B ${Math.round(pb * 100)}% (band ${nfmt(lo)}–${nfmt(up)})` }; }
+        case "rsi_osc": { const r = rsiL(c, p.period || 14); if (r == null) return null; const lo = p.low || 30, hi = p.high || 70; let d; if (r <= lo) d = 1; else if (r >= hi) d = -1; else d = r < 50 ? 1 : -1; return { dir: d, strength: sq((50 - r) / 50, 0.6), read: `RSI(${p.period || 14}) ${Math.round(r)}` }; }
+        case "rsi_oversold": { const r = rsiL(c, p.period || 14), ma = smaL(c, p.smaWin || 200); if (r == null || ma == null) return null; const lo = p.low || 30, ok = last >= ma; let d, x; if (r <= lo && ok) { d = 1; x = (lo - r) / 30; } else { d = -1; x = (r - lo) / 40; } return { dir: d, strength: sq(x, 0.6), read: `RSI(14) ${Math.round(r)}, ${ok ? "above" : "below"} 200-day` }; }
+        case "sell_in_may": { const inS = [11, 12, 1, 2, 3, 4].includes(month); return { dir: inS ? 1 : -1, strength: 68, read: inS ? "Winter half (Nov–Apr): invested" : "Summer half (May–Oct): seasonally weak" }; }
+        case "vix_regime": { if (vix == null) return null; const calm = p.calm, stress = p.stress; let d, x; if (vix <= calm) { d = 1; x = (calm - vix) / 10; } else if (vix >= stress) { d = -1; x = (vix - stress) / 15; } else { d = vix < (calm + stress) / 2 ? 1 : -1; x = 0; } return { dir: d, strength: sq(x, 0.8), read: `VIX ${vix.toFixed(1)}` }; }
+        case "dd_from_high": { let hi = -Infinity; for (const v of c) if (v > hi) hi = v; const dd = last / hi - 1; let d, x; if (dd >= -0.05) { d = 1; x = (0.05 + dd) / 0.05; } else if (dd >= -0.20) { d = 1; x = (0.20 + dd) / 0.30; } else { d = -1; x = (-0.20 - dd) / 0.30; } return { dir: d, strength: sq(x, 0.6), read: `${dd >= 0 ? "+" : ""}${(dd * 100).toFixed(1)}% from high` }; }
+      }
+      return null;
+    }
+    function dashComposite(sigs) {
+      let num = 0, den = 0, longs = 0, votes = 0;
+      sigs.forEach((s) => { if (s.kind !== "vote" || !s.st) return; votes++; if (s.st.dir > 0) longs++; const w = (s.st.strength / 100) * s.reliability; num += s.st.dir * w; den += w; });
+      const net = den ? num / den : 0;
+      let onum = 0, oden = 0;
+      sigs.forEach((s) => { if (s.kind !== "overlay" || !s.st) return; const w = s.reliability, b = s.st.dir > 0 ? s.st.strength / 100 : 1 - s.st.strength / 100; onum += b * w; oden += w; });
+      const budget = oden ? onum / oden : 0.6;
+      let base; if (net <= -0.2) base = 0; else if (net < 0.25) base = 1; else if (net < 0.6) base = 2; else base = 3;
+      if (base === 3 && (net < 0.70 || budget < 0.80)) base = 2.5;
+      if (base >= 2 && budget < 0.50) base -= 0.5;
+      const lev = Math.round(Math.max(0, Math.min(3, base)) * 2) / 2;
+      let label; if (net >= 0.6) label = "Strong Risk-On"; else if (net >= 0.25) label = "Risk-On"; else if (net > -0.25) label = "Neutral"; else if (net > -0.6) label = "Risk-Off"; else label = "Strong Risk-Off";
+      return { net, label, lev, budget, longs, votes };
+    }
+    function dashPos(sig) {   // full-history 0/1 position for the ▲/▼ chart markers
+      const c = D.close, p = sig.params || {}; if (!c || c.length < 60) return null;
+      switch (sig.rule) {
+        case "ma_trend": { const ma = p.type === "ema" ? ema(c, p.window) : sma(c, p.window); return c.map((x, i) => (ma[i] != null && x >= ma[i]) ? 1 : 0); }
+        case "ma_band": { const s = p.type === "ema" ? ema(c, p.window) : sma(c, p.window), b = p.band; let st = 0; return c.map((x, i) => { if (s[i] != null) { if (x > s[i] * (1 + b)) st = 1; else if (x < s[i] * (1 - b)) st = 0; } return st; }); }
+        case "cross": { const a = p.type === "ema" ? ema(c, p.fast) : sma(c, p.fast), bb = p.type === "ema" ? ema(c, p.slow) : sma(c, p.slow); return c.map((_, i) => (a[i] != null && bb[i] != null && a[i] >= bb[i]) ? 1 : 0); }
+        case "momentum": { const lb = p.lookback; return c.map((x, i) => (i >= lb && c[i - lb]) ? (x / c[i - lb] - 1 >= 0 ? 1 : 0) : 0); }
+        case "macd": { const m = macdP(c, p.fast, p.slow, p.signal); return c.map((_, i) => (m.macd[i] != null && m.signal[i] != null && m.macd[i] >= m.signal[i]) ? 1 : 0); }
+        case "bollinger": { const mid = sma(c, p.window), sd = rstd(c, p.window); let st = 0; return c.map((x, i) => { if (mid[i] == null) return 0; if (st === 0 && x < mid[i] - p.std * sd[i]) st = 1; else if (st === 1 && x > mid[i]) st = 0; return st; }); }
+        case "rsi_osc": { const r = rsiArr(c, p.period || 14); let st = 0; return c.map((_, i) => { if (r[i] == null) return st; if (r[i] < (p.low || 30)) st = 1; else if (r[i] > (p.high || 70)) st = 0; return st; }); }
+        case "rsi_oversold": { const r = rsiArr(c, p.period || 14), s = sma(c, p.smaWin || 200); let st = 0; return c.map((x, i) => { if (st === 0) { if (r[i] != null && r[i] < (p.low || 30) && s[i] != null && x >= s[i]) st = 1; } else { if (s[i] != null && (x < s[i] || (r[i] != null && r[i] > 70))) st = 0; } return st; }); }
+        case "sell_in_may": { return (D.dates || []).map((ds) => ([11, 12, 1, 2, 3, 4].includes(+String(ds).slice(5, 7)) ? 1 : 0)); }
+        default: return null;   // risk overlays (VIX, drawdown) have no buy/sell marker series
+      }
+    }
+    function dashShow(sig) {
+      if (!sig) return; const data = SIG_CACHE[state.asset]; if (!data) return;
+      const clearPlot = (s) => { if (s && s.plot) { const ind = s.plot.indicator; if (state.indicators[ind]) { state.indicators[ind] = false; safe(() => chart.removeIndicator(indPane(ind), ind)); } } };
+      if (state.dashShown === sig.id) {
+        state.dashShown = null; removeStudySignals(); clearPlot(sig);
+      } else {
+        if (state.dashShown) clearPlot(data.signals.find((s) => s.id === state.dashShown));
+        state.dashShown = sig.id;
+        const pos = dashPos(sig);
+        if (pos) { STUDY_SIG = studyMarks(pos); state.studySig = null; safe(() => { chart.removeIndicator("candle_pane", "STUDYSIG"); chart.createIndicator("STUDYSIG", true, { id: "candle_pane" }); }); }
+        else removeStudySignals();
+        if (sig.plot) { const ind = sig.plot.indicator; state.indParams[ind] = sig.plot.params.slice(); if (state.indicators[ind]) safe(() => chart.removeIndicator(indPane(ind), ind)); state.indicators[ind] = true; createInd(ind); }
+        status("Showing " + sig.name + " on the chart"); const ch = $("chart"); if (ch) ch.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+      syncIndChips(); renderIndParams();
+      $("dashList").querySelectorAll("button[data-show]").forEach((b) => { const on = state.dashShown === b.dataset.show; b.classList.toggle("on", on); b.textContent = on ? "✓ on chart" : "Show on chart"; });
+    }
+    function dashBacktest(sig) {
+      const data = SIG_CACHE[state.asset], ev = sig.evidence, b = data.benchmark; const old = $("dashBtOv"); if (old) old.remove();
+      const row = (l, v) => `<tr><td style="padding:4px 0;color:var(--muted)">${l}</td><td style="padding:4px 0;text-align:right;font-weight:600">${v}</td></tr>`;
+      const ov = document.createElement("div"); ov.id = "dashBtOv";
+      ov.style.cssText = "position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.42);display:flex;align-items:center;justify-content:center;padding:18px;";
+      ov.innerHTML = `<div style="background:#fff;border-radius:16px;max-width:540px;width:100%;max-height:86vh;overflow:auto;padding:22px 24px;box-shadow:0 24px 70px rgba(0,0,0,.32)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px"><div><h3 style="margin:0;font-size:19px;color:#1d1d1f">${esc(sig.name)}</h3><div class="meta" style="margin-top:2px">Grade ${sig.grade} · backtested as <b>${esc(ev.strategy_label)}</b></div></div><button id="dashBtX" style="border:0;background:#f0f0f3;border-radius:50%;width:30px;height:30px;font-size:18px;line-height:1;cursor:pointer;flex:none;color:#48484a">×</button></div>
+        <div style="font-size:13.5px;line-height:1.6;color:#333;margin-bottom:12px">${esc(sig.why || "")}</div>
+        <table style="width:100%;font-size:13px;border-collapse:collapse">${row("Sample", esc(ev.sample))}${row("CAGR", pct(ev.cagr / 100))}${row("Volatility", ev.vol != null ? ev.vol.toFixed(1) + "%" : "—")}${row("Sharpe", f2(ev.sharpe))}${row("Sortino", f2(ev.sortino))}${row("Calmar", f2(ev.calmar))}${row("Max drawdown", ev.maxdd != null ? ev.maxdd.toFixed(1) + "%" : "—")}${ev.win_rate != null ? row("Daily win rate", ev.win_rate.toFixed(0) + "%") : ""}${ev.pct_cash != null ? row("Time in cash", ev.pct_cash.toFixed(0) + "%") : ""}</table>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12.5px;color:#444">vs <b>${esc(b.label)}</b> over ${esc(b.sample)}: Sharpe ${f2(b.sharpe)} · Calmar ${f2(b.calmar)} · Max DD ${b.maxdd != null ? b.maxdd.toFixed(0) + "%" : "—"}. This rule <b>${beatTxt(ev)}</b>.</div>
+        <p class="meta" style="margin:12px 0 0">Source: ${esc(data.source)}. Cost-aware, lagged, out-of-sample. Educational only — not advice.</p></div>`;
+      document.body.appendChild(ov); ov.onclick = (e) => { if (e.target === ov) ov.remove(); }; $("dashBtX").onclick = () => ov.remove();
+      document.addEventListener("keydown", function k(e) { if (e.key === "Escape") { ov.remove(); document.removeEventListener("keydown", k); } });
+    }
+    function renderDashboard() {
+      const card = $("dashCard"); if (!card) return; const data = SIG_CACHE[state.asset], c = D.close;
+      if (!data || (state.asset !== "spx" && state.asset !== "ndx") || !c || c.length < 60) { card.style.display = "none"; return; }
+      card.style.display = "";
+      const cEval = c.slice(); if (typeof lastLivePrice === "number" && lastLivePrice > 0 && state.tf === "D") cEval[cEval.length - 1] = lastLivePrice;
+      const month = +String(D.dates[D.n - 1] || "").slice(5, 7);
+      const sigs = data.signals.map((s) => Object.assign({}, s, { st: dashEval(s, cEval, month, DASH_VIX) }));
+      const comp = dashComposite(sigs);
+      $("dashAsof").textContent = "· " + D.label + " · live read";
+      const pos = comp.net >= 0, w = (Math.abs(comp.net) * 50).toFixed(1), col = pos ? "var(--good)" : "var(--bad)";
+      const fillStyle = pos ? `left:50%;width:${w}%` : `left:${50 - w}%;width:${w}%`;
+      $("dashComposite").innerHTML = `<div class="dash-comp">
+        <div class="dash-state">
+          <div class="meta" style="margin-bottom:3px">Composite market read</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:10px;height:10px;border-radius:50%;background:${col}"></span><span style="font-size:20px;font-weight:700;color:#1d1d1f">${esc(comp.label)}</span></div>
+          <div class="dash-net"><div class="mid"></div><div class="fill" style="${fillStyle};background:${col}"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>Risk-off</span><span>net ${comp.net >= 0 ? "+" : ""}${comp.net.toFixed(2)}</span><span>Risk-on</span></div>
+          <div style="font-size:13px;color:#444;margin-top:9px"><b>${comp.longs} of ${comp.votes}</b> directional signals long · risk budget <b>${Math.round(comp.budget * 100)}%</b></div>
+        </div>
+        <div class="dash-lev"><div class="meta" style="margin-bottom:2px">Suggested leverage</div><div class="big">${comp.lev.toFixed(1)}×</div><div class="meta" style="margin-top:5px">independent composite</div></div></div>`;
+      const open = new Set([...$("dashList").querySelectorAll("details[open]")].map((d) => d.dataset.id));
+      $("dashList").innerHTML = sigs.map((s) => {
+        const st = s.st, isLong = st && st.dir > 0, gc = GRADE_C[s.grade] || GRADE_C.C, ev = s.evidence;
+        const dirTxt = !st ? "—" : (isLong ? "Long" : "Cash"), dirCol = !st ? "var(--muted)" : (isLong ? "var(--good)" : "var(--muted)"), barCol = isLong ? "var(--good)" : "#b0b0b6", str = st ? Math.round(st.strength) : 0;
+        const shown = state.dashShown === s.id, canShow = s.kind === "vote";
+        return `<details class="dsig" data-id="${esc(s.id)}"${open.has(s.id) ? " open" : ""}>
+          <summary>
+            <span class="dgrade" style="background:${gc[0]};color:${gc[1]}">${s.grade}</span>
+            <span style="flex:1;min-width:0"><span style="font-size:14px;color:#1d1d1f">${esc(s.name)}</span><span style="display:block;font-size:12px;color:var(--muted)">${st ? esc(st.read) : "awaiting data"}</span></span>
+            <span style="width:118px;flex:none"><span style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px"><span style="color:${dirCol};font-weight:600">${dirTxt}</span><span>${st ? str : "–"}</span></span><span class="dbar"><i style="width:${str}%;background:${barCol}"></i></span></span>
+            <span style="color:var(--muted);font-size:12px">▾</span>
+          </summary>
+          <div style="padding:11px 0 3px 34px">
+            <div style="font-size:13px;color:#444;line-height:1.6;margin-bottom:9px">${esc(s.why || "")}</div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:#444;margin-bottom:11px"><span>Sharpe <b>${f2(ev.sharpe)}</b></span><span>Calmar <b>${f2(ev.calmar)}</b></span><span>Max DD <b>${ev.maxdd != null ? ev.maxdd.toFixed(0) + "%" : "—"}</b></span><span style="color:var(--muted)">${beatTxt(ev)}</span></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="dbtn ${shown ? "on" : ""}" data-show="${esc(s.id)}"${canShow ? "" : " disabled title=\"risk overlay — no chart series\""}>${shown ? "✓ on chart" : "Show on chart"}</button><button class="dbtn" data-bt="${esc(s.id)}">View backtest</button></div>
+          </div></details>`;
+      }).join("");
+      $("dashList").querySelectorAll("button[data-show]").forEach((b) => { b.onclick = (e) => { e.preventDefault(); dashShow(data.signals.find((s) => s.id === b.dataset.show)); }; });
+      $("dashList").querySelectorAll("button[data-bt]").forEach((b) => { b.onclick = (e) => { e.preventDefault(); dashBacktest(data.signals.find((s) => s.id === b.dataset.bt)); }; });
+    }
+    function loadDashboard(id) {
+      state.dashShown = null;
+      const fin = () => renderDashboard();
+      if (id === "spx" || id === "ndx") {
+        if (!SIG_CACHE[id]) fetch("signals_" + id + ".json").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d) SIG_CACHE[id] = d; fin(); }).catch(fin);
+        else fin();
+        if (DASH_VIX == null) fetch(QUOTE + "/?mode=quote&symbol=vix&_=" + Date.now()).then((r) => r.json()).then((q) => { if (q && q.price > 0) { DASH_VIX = q.price; renderDashboard(); } }).catch(() => {});
+      } else fin();
+    }
+
+    // ---- One-click Analyst: live bundle (both assets) → quant report + copy-prompt (+ optional worker) ----
+    // Set ANALYST_WORKER to a deployed worker URL (cloudflare_market_analyst_worker.js) to render the
+    // Claude-written narrative inline; left empty, the copy-prompt route runs the same analysis in any
+    // Claude window. The shared brain is analyst_prompt.md (also used by the skill + the worker).
+    const ANALYST_WORKER = "";
+    let ANALYST_PROMPT = null;
+    const aJson = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const getAsset = (id) => (ASSET_CACHE[id] ? Promise.resolve(ASSET_CACHE[id]) : aJson("price_" + id + ".json").then((d) => { if (d) ASSET_CACHE[id] = d; return d; }));
+    const daysSince = (iso) => { if (!iso) return null; const d = new Date(String(iso).slice(0, 10) + "T00:00:00Z"); return isNaN(d) ? null : Math.floor((Date.now() - d.getTime()) / 864e5); };
+    const liveQuote = (s) => fetch(QUOTE + "/?mode=quote&symbol=" + s + "&_=" + Date.now()).then((r) => r.json()).then((j) => (j && j.price > 0 ? j.price : null)).catch(() => null);
+    // Capture WHAT THE USER IS LOOKING AT: timeframe, the visible window's price action, their
+    // drawings/levels, and the overlays they've turned on — so the Analyst reads the actual chart.
+    function buildChartView() {
+      const r1 = (x) => (isFinite(x) ? Math.round(x * 10) / 10 : null), r2 = (x) => (isFinite(x) ? Math.round(x * 100) / 100 : null);
+      const tfLbl = (TFS.find((t) => t.id === state.tf) || {}).label || state.tf;
+      const v = { asset: state.asset, ticker: D.ticker, label: D.label, timeframe: tfLbl, chart_type: state.type, axis: state.yAxis,
+        active_overlays: Object.keys(state.indicators).filter((n) => state.indicators[n]).map((n) => ({ indicator: n, params: state.indParams[n] })) };
+      let dl = null, vr = null;
+      try { dl = chart && chart.getDataList ? chart.getDataList() : null; } catch (_) {}
+      try { vr = chart && chart.getVisibleRange ? chart.getVisibleRange() : null; } catch (_) {}
+      if (dl && dl.length) {
+        let from = vr ? Math.max(0, vr.from | 0) : 0, to = vr ? Math.min(dl.length, vr.to | 0) : dl.length;
+        if (to <= from) { from = 0; to = dl.length; }
+        const seg = dl.slice(from, to), last = dl[dl.length - 1];
+        const highs = seg.map((b) => b.high), lows = seg.map((b) => b.low), vHi = Math.max(...highs), vLo = Math.min(...lows);
+        v.visible = { from_date: isoOf(seg[0].timestamp), to_date: isoOf(seg[seg.length - 1].timestamp), bars_shown: seg.length,
+          last: r2(last.close), visible_high: r2(vHi), visible_low: r2(vLo),
+          pct_from_visible_high: r1((last.close / vHi - 1) * 100), pct_above_visible_low: r1((last.close / vLo - 1) * 100),
+          visible_range_pct: r1((vHi / vLo - 1) * 100), change_across_window_pct: r1((seg[seg.length - 1].close / seg[0].close - 1) * 100) };
+      }
+      const c = D.close;
+      if (c && c.length > 5) {
+        const last = c[c.length - 1], w = c.slice(-252), hi52 = Math.max(...w), lo52 = Math.min(...w), chg = (n) => (c.length > n ? r1((last / c[c.length - 1 - n] - 1) * 100) : null);
+        v.price_action = { last: r2(last), dist_from_52w_high_pct: r1((last / hi52 - 1) * 100), above_52w_low_pct: r1((last / lo52 - 1) * 100),
+          change_5d_pct: chg(5), change_21d_pct: chg(21), change_63d_pct: chg(63),
+          ann_vol_20d_pct: (D.rv && D.rv.length) ? r1(D.rv[D.rv.length - 1] * 100) : null,
+          drawdown_from_high_pct: (D.ddh && D.ddh.length) ? r1(D.ddh[D.ddh.length - 1] * 100) : null };
+      }
+      const ts = (state.curTs && state.curTs.length) ? state.curTs[state.curTs.length - 1] : Date.now();
+      v.drawings = (drawings || []).map((d) => {
+        const o = { type: d.name }; const lv = overlayLevels({ name: d.name, points: d.points || [] }, ts);
+        if (d.name === "noteText" || d.name === "simpleAnnotation") o.note = d.extendData || "";
+        if (lv.length) o.levels = lv.map((x) => ({ label: x.label, value: r2(x.value) }));
+        if (d.points && d.points.length >= 2) { o.from_date = isoOf(d.points[0].timestamp); o.to_date = isoOf(d.points[d.points.length - 1].timestamp); }
+        return o;
+      });
+      if (state.autoTA && (AUTO_SIG.buys.size || AUTO_SIG.sells.size)) v.auto_analysis = { buy_markers: AUTO_SIG.buys.size, sell_markers: AUTO_SIG.sells.size };
+      return v;
+    }
+    function chartImageUrl() { try { return chart && chart.getConvertPictureUrl ? chart.getConvertPictureUrl(true, "png", "#ffffff") : null; } catch (_) { return null; } }
+    async function buildClientBundle() {
+      await Promise.all([
+        SIG_CACHE.spx ? 0 : aJson("signals_spx.json").then((d) => { if (d) SIG_CACHE.spx = d; }),
+        SIG_CACHE.ndx ? 0 : aJson("signals_ndx.json").then((d) => { if (d) SIG_CACHE.ndx = d; }),
+        ANALYST_PROMPT != null ? 0 : fetch("analyst_prompt.md").then((r) => r.text()).then((t) => { ANALYST_PROMPT = t; }).catch(() => { ANALYST_PROMPT = ""; }),
+      ]);
+      const [psp, pnd, osp, ond, news, lsp, lnd, lvix] = await Promise.all([
+        getAsset("spx"), getAsset("ndx"), aJson("latest_signal.json"), aJson("latest_ndx_signal.json"),
+        aJson("news_score.json"), liveQuote("spx"), liveQuote("ndx"), liveQuote("vix")]);
+      const health = [];
+      const block = (id, pj, oj, live) => {
+        const sj = SIG_CACHE[id]; if (!sj || !pj || !pj.close) { health.push({ check: id + " data", status: "FAIL", detail: "signals or price file missing" }); return null; }
+        const c = pj.close.slice(); if (live) c[c.length - 1] = live;
+        const month = +String((pj.dates || [])[pj.dates.length - 1] || "").slice(5, 7);
+        const sigs = sj.signals.map((s) => Object.assign({}, s, { st: dashEval(s, c, month, lvix) }));
+        const k = dashComposite(sigs);
+        const comp = { net: k.net, label: k.label, suggested_leverage: k.lev, risk_budget: k.budget, longs: k.longs, total_votes: k.votes, price: Math.round((live || c[c.length - 1]) * 100) / 100, vix: lvix, asof: live ? "live" : "snapshot" };
+        const dd = daysSince((pj.dates || [])[pj.dates.length - 1]);
+        health.push({ check: id + " price freshness", status: dd != null && dd <= 5 ? "PASS" : (dd != null && dd <= 14 ? "WARN" : "FAIL"), detail: "last bar " + (pj.dates || [])[pj.dates.length - 1] + " (" + dd + "d)" });
+        health.push({ check: id + " live fetch", status: live ? "PASS" : "WARN", detail: live ? id.toUpperCase() + " " + nfmt(live) : "worker unreachable; snapshot close" });
+        return { label: sj.asset_label, current: comp, benchmark: sj.benchmark, official_signal: (oj && oj.official_signal) || {},
+          signals: sigs.map((s) => ({ id: s.id, name: s.name, grade: s.grade, kind: s.kind, reliability: s.reliability, why: s.why, state: s.st, evidence: { sharpe: s.evidence.sharpe, calmar: s.evidence.calmar, maxdd: s.evidence.maxdd, beats_bh: s.evidence.beats_bh, strategy_label: s.evidence.strategy_label, sample: s.evidence.sample } })) };
+      };
+      health.push({ check: "live VIX fetch", status: lvix ? "PASS" : "WARN", detail: lvix ? "VIX " + lvix.toFixed(1) : "worker unreachable; no live VIX" });
+      return { generated_at: new Date().toISOString(), scope: ["spx", "ndx"], data_health: health,
+        assets: { spx: block("spx", psp, osp, lsp), ndx: block("ndx", pnd, ond, lnd) },
+        chart_view: buildChartView(),   // the chart the user is currently looking at
+        chart_image: chartImageUrl(),   // PNG data URL (worker vision / copy-image button); stripped from the copy text
+        news: news ? { score: news.score, label: news.label, explanation: news.explanation } : null };
+    }
+    function mdToHtml(md) {
+      const lines = esc(md).split(/\r?\n/); let html = "", inList = false; const close = () => { if (inList) { html += "</ul>"; inList = false; } };
+      for (let ln of lines) {
+        ln = ln.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`(.+?)`/g, "<code>$1</code>");
+        if (/^### /.test(ln)) { close(); html += `<h4 style="margin:12px 0 4px;font-size:14px">${ln.slice(4)}</h4>`; }
+        else if (/^## /.test(ln)) { close(); html += `<h3 style="margin:14px 0 6px;font-size:16px">${ln.slice(3)}</h3>`; }
+        else if (/^# /.test(ln)) { close(); html += `<h3 style="margin:14px 0 6px;font-size:16px">${ln.slice(2)}</h3>`; }
+        else if (/^[-*] /.test(ln)) { if (!inList) { html += `<ul style="margin:4px 0 8px 20px">`; inList = true; } html += `<li>${ln.slice(2)}</li>`; }
+        else if (ln.trim() === "") close();
+        else { close(); html += `<p style="margin:6px 0">${ln}</p>`; }
+      }
+      close(); return html;
+    }
+    function analystAssetHtml(a) {
+      if (!a || !a.current) return "";
+      const c = a.current, off = a.official_signal || {};
+      const top = (a.signals || []).filter((s) => s.grade === "A" || s.grade === "B").slice(0, 5).map((s) => { const st = s.state, isL = st && st.dir > 0; return `<li style="margin:2px 0"><b style="color:${isL ? UP : "#6e6e73"}">${isL ? "long" : "cash"}</b> · ${esc(s.name)} <span style="color:#8a8a8e">— grade ${s.grade}${st ? ", " + esc(st.read) : ""}</span></li>`; }).join("");
+      let div = "";
+      if (c.suggested_leverage != null && off.targetLeverage != null) {
+        div = c.suggested_leverage !== off.targetLeverage
+          ? `<div style="font-size:12.5px;color:#444;margin-top:6px;background:#fff7e6;border:1px solid #f0d9a0;border-radius:8px;padding:7px 10px">Composite <b>${c.suggested_leverage}×</b> vs official mechanical <b>${off.targetLeverage}×</b>${off.regime ? " (" + esc(off.regime) + ")" : ""} — ${esc(off.explanation || "the mechanical rule is the more conservative trade.")}</div>`
+          : `<div style="font-size:12.5px;color:#444;margin-top:6px">Composite agrees with the official mechanical signal at <b>${off.targetLeverage}×</b>.</div>`;
+      }
+      const stCol = c.net >= 0.25 ? UP : (c.net <= -0.25 ? DN : "#6e6e73");
+      return `<div style="margin:12px 0 4px;padding-top:10px;border-top:1px solid var(--line)">
+        <div style="font-size:15px;font-weight:700;color:#1d1d1f">${esc(a.label)} — <span style="color:${stCol}">${esc(c.label)}</span> · net ${c.net >= 0 ? "+" : ""}${(+c.net).toFixed(2)} · suggested ${(+c.suggested_leverage).toFixed(1)}× · ${c.longs}/${c.total_votes} long${c.asof === "snapshot" ? ' <span class="meta">(snapshot — worker offline)</span>' : ""}</div>
+        <ul style="margin:6px 0 4px 20px;font-size:13px;color:#333">${top}</ul>${div}</div>`;
+    }
+    function analystReportHtml(b) {
+      const hc = (s) => ({ PASS: "#248a3d", WARN: "#b8860b", FAIL: "#d70015" }[s] || "#6e6e73");
+      const worst = (b.data_health || []).some((h) => h.status === "FAIL") ? "FAIL" : ((b.data_health || []).some((h) => h.status === "WARN") ? "WARN" : "PASS");
+      const health = (b.data_health || []).map((h) => `<span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;margin:2px 10px 2px 0"><span style="width:7px;height:7px;border-radius:50%;background:${hc(h.status)}"></span>${esc(h.check)}</span>`).join("");
+      const assets = ["spx", "ndx"].map((id) => analystAssetHtml(b.assets && b.assets[id])).join("");
+      const cv = b.chart_view;
+      const cvLine = cv ? `<div style="font-size:12px;color:#444;margin:8px 0 2px;background:#f0f6ff;border:1px solid #d7e6fb;border-radius:8px;padding:7px 10px">📈 Reading your chart: <b>${esc(cv.label)}</b> · ${esc(cv.timeframe)}${cv.visible ? " · " + cv.visible.bars_shown + " bars " + esc(cv.visible.from_date) + "→" + esc(cv.visible.to_date) : ""}${(cv.drawings && cv.drawings.length) ? " · <b>" + cv.drawings.length + "</b> of your drawings" : ""}${(cv.active_overlays && cv.active_overlays.length) ? " · overlays: " + esc(cv.active_overlays.map((o) => o.indicator).join(", ")) : ""}${b.chart_image ? " · screenshot captured" : ""}</div>` : "";
+      const news = b.news ? `<p class="meta" style="margin:10px 0 0">News (7d): <b>${esc(b.news.label || "")}</b> ${b.news.score != null ? "(" + b.news.score + "/10)" : ""} — colour only, not a signal.</p>` : "";
+      const gen = ANALYST_WORKER ? `<button id="analystGen" class="seg" style="padding:9px 14px;font-weight:700">✨ Generate AI assessment</button>` : "";
+      const copyBtns = b.chart_image
+        ? `<button id="analystCopyBoth" class="seg" style="padding:9px 14px;font-weight:700">📋 Copy prompt + chart image</button><button id="analystCopy" class="seg" style="padding:9px 14px">Prompt only</button><button id="analystImg" class="seg" style="padding:9px 14px">Image only</button>`
+        : `<button id="analystCopy" class="seg" style="padding:9px 14px;font-weight:700">📋 Copy analyst prompt</button>`;
+      return `<div style="margin-bottom:4px"><span style="font-size:11px;font-weight:700;color:${hc(worst)};text-transform:uppercase">Data health: ${worst}</span><div style="margin-top:4px">${health}</div></div>${cvLine}${assets}${news}
+        <div id="analystNarr" style="margin-top:10px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;border-top:1px solid var(--line);padding-top:12px">${gen}${copyBtns}</div>
+        <p class="meta" style="margin:10px 0 0">${ANALYST_WORKER ? "One click runs Claude on the server. " : ""}Paste into any Claude chat — the prompt drops in as text and the chart attaches as an image. If a chat only takes one per paste, use <b>Prompt only</b> / <b>Image only</b>. Same quality as the API. Educational only — not advice.</p>`;
+    }
+    async function callAnalystWorker(bundle) {
+      if (!ANALYST_WORKER) return null;
+      try { const r = await fetch(ANALYST_WORKER, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(bundle) }); if (!r.ok) return null; const j = await r.json(); return j.markdown || j.text || null; } catch (_) { return null; }
+    }
+    async function openAnalyst() {
+      const old = $("analystOv"); if (old) old.remove();
+      const ov = document.createElement("div"); ov.id = "analystOv";
+      ov.style.cssText = "position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow:auto;";
+      ov.innerHTML = `<div style="background:#fff;border-radius:16px;max-width:680px;width:100%;padding:22px 24px;box-shadow:0 24px 70px rgba(0,0,0,.32)"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px"><h3 style="margin:0;font-size:20px;color:#1d1d1f">🧠 Market Analyst</h3><button id="analystX" style="border:0;background:#f0f0f3;border-radius:50%;width:30px;height:30px;font-size:18px;cursor:pointer;color:#48484a">×</button></div><div id="analystBody"><p class="meta">Pulling live data, validating it, and reading every signal…</p></div></div>`;
+      document.body.appendChild(ov); ov.onclick = (e) => { if (e.target === ov) ov.remove(); }; $("analystX").onclick = () => ov.remove();
+      document.addEventListener("keydown", function k(e) { if (e.key === "Escape") { ov.remove(); document.removeEventListener("keydown", k); } });
+      let bundle; try { bundle = await buildClientBundle(); } catch (e) { const bd = $("analystBody"); if (bd) bd.innerHTML = `<p class="meta">Analyst failed to assemble the data: ${esc(e.message || e)}</p>`; return; }
+      const body = $("analystBody"); if (!body) return; body.innerHTML = analystReportHtml(bundle);
+      const cp = $("analystCopy"); if (cp) cp.onclick = () => { const slim = Object.assign({}, bundle); delete slim.chart_image; const imgNote = bundle.chart_image ? "\n\n(A screenshot of the chart the user is viewing is available — click \"Copy chart image\" and paste it alongside this for a visual read.)" : ""; const text = (ANALYST_PROMPT || "") + "\n\n---\n## analyst_bundle (live data)\n```json\n" + JSON.stringify(slim, null, 2) + "\n```" + imgNote + "\n\nProduce the assessment now, following the system prompt above."; navigator.clipboard.writeText(text).then(() => { cp.textContent = "✓ Copied — paste into any Claude chat"; }).catch(() => { cp.textContent = "copy failed — select & copy the page data"; }); };
+      const ib = $("analystImg"); if (ib && bundle.chart_image) ib.onclick = async () => { try { const blob = await (await fetch(bundle.chart_image)).blob(); await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]); ib.textContent = "✓ Image copied — paste into Claude"; } catch (_) { const a = document.createElement("a"); a.href = bundle.chart_image; a.download = (D.id || "chart") + ".png"; a.click(); ib.textContent = "✓ Image downloaded"; } };
+      const cb = $("analystCopyBoth"); if (cb && bundle.chart_image) cb.onclick = async () => {
+        const slim = Object.assign({}, bundle); delete slim.chart_image;
+        const text = (ANALYST_PROMPT || "") + "\n\n---\n## analyst_bundle (live data)\n```json\n" + JSON.stringify(slim, null, 2) + "\n```\n\nA screenshot of the chart the user is viewing is attached — read it visually. Produce the assessment now, following the system prompt above.";
+        try {
+          if (!window.ClipboardItem) throw new Error("no ClipboardItem");
+          const imgBlob = await (await fetch(bundle.chart_image)).blob();
+          await navigator.clipboard.write([new ClipboardItem({ "text/plain": new Blob([text], { type: "text/plain" }), "image/png": imgBlob })]);
+          cb.textContent = "✓ Copied prompt + image — paste into Claude";
+        } catch (_) { try { await navigator.clipboard.writeText(text); cb.textContent = "✓ Prompt copied — use ‘Image only’ for the chart"; } catch (e2) { cb.textContent = "copy failed"; } }
+      };
+      const gen = $("analystGen"); if (gen) gen.onclick = async () => { gen.disabled = true; gen.textContent = "Generating…"; const md = await callAnalystWorker(bundle); if (md) { $("analystNarr").innerHTML = `<div style="background:#f7f9fc;border:1px solid var(--line);border-radius:12px;padding:14px 16px">${mdToHtml(md)}</div>`; gen.textContent = "✓ AI assessment generated"; } else { gen.textContent = "AI worker unavailable — use Copy prompt"; gen.disabled = false; } };
+    }
+    if ($("analystBtn")) $("analystBtn").onclick = openAnalyst;
+
     // ---- curve strategy leaderboard (best backtested rule per UST instrument) ----
     function instrCR() {  // carry+roll (bps per ~3m) of being LONG this instrument (long rates / long steepener / long fly), from the live curve
       if (!CURVE.length) return null;
@@ -1113,7 +1777,7 @@
         if ($("rngFrom") && D.dates.length) { $("rngFrom").min = $("rngTo").min = D.dates[0]; $("rngFrom").max = $("rngTo").max = D.dates[D.n - 1]; $("rngFrom").value = ""; $("rngTo").value = ""; }
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
         safe(() => chart.removeOverlay()); drawings = []; removeStudySignals();
-        applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader(); renderCurve(); syncPnlUI();
+        applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader(); renderCurve(); syncPnlUI(); loadDashboard(id);
         if (pendingBest) { applyStrategy(pendingBest, true); pendingBest = null; }
         else { const e = LEADER.find((x) => x.id === D.id); if (e && ["Rates", "Steepness", "Butterfly"].includes(D.klass)) applyStrategy(e.best, false); }   // best rule = default for every UST trade
       };
