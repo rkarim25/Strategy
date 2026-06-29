@@ -1095,7 +1095,7 @@
     window.addEventListener("pointerup", eraseEnd, true);
     // ---- enhance: turn any drawing (esp. a freehand) into a proper circle/square/rect/trend/ray/channel ----
     const ENHANCE = [["circle", "○ Circle"], ["square", "□ Square"], ["rect", "▭ Rectangle"], ["trend", "／ Trend line"], ["ray", "→ Ray"], ["channel", "▤ Channel"]];
-    const ENHANCEABLE = new Set(["freeDraw", "rectShape", "circleShape", "segment", "rayLine", "parallelStraightLine"]);
+    const ENHANCEABLE = new Set(["freeDraw"]);   // Enhance = snap a freehand sketch into a clean shape; it's meaningless for already-precise drawings
     function squarePoints(minT, maxT, minV, maxV) {
       const a = safe(() => chart.convertToPixel({ timestamp: minT, value: maxV }, { paneId: "candle_pane" }));
       const b = safe(() => chart.convertToPixel({ timestamp: maxT, value: minV }, { paneId: "candle_pane" }));
