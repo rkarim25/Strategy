@@ -13,12 +13,15 @@ ASSETS = [
     ("ixic",    "Nasdaq Composite", "Indices",     "^IXIC",    "price"),
     ("ftse",    "FTSE 100",         "Indices",     "^FTSE",    "price"),
     ("dax",     "DAX",              "Indices",     "^GDAXI",   "price"),
+    ("ftse250", "FTSE 250",         "Indices",     "^FTMC",    "price"),
     ("gold",    "Gold (front)",     "Commodities", "GC=F",     "price"),
     ("oil",     "WTI Crude (front)","Commodities", "CL=F",     "price"),
     ("btc",     "Bitcoin",          "Crypto",      "BTC-USD",  "price"),
     ("eth",     "Ethereum",         "Crypto",      "ETH-USD",  "price"),
     ("eurusd",  "EUR / USD",        "FX",          "EURUSD=X", "price"),
     ("gbpusd",  "GBP / USD",        "FX",          "GBPUSD=X", "price"),
+    ("lqq3",    "LQQ3 · 3x Nasdaq 100",  "Leveraged ETPs", "LQQ3.L", "price"),
+    ("3bal",    "3BAL · 3x Euro Banks",  "Leveraged ETPs", "3BAL.L", "price"),
     ("ust3m",   "US 3M yield",      "Rates",       "^IRX",     "yield"),
     ("ust2y",   "US 2Y yield",      "Rates",       "2YY=F",    "yield"),
     ("ust5y",   "US 5Y yield",      "Rates",       "^FVX",     "yield"),
@@ -42,7 +45,7 @@ FLIES_BETA = [
     ("f2s5s10sb",  "2s5s10s RW-fly",  "^FVX", "2YY=F", "^TNX"),
     ("f5s10s30sb", "5s10s30s RW-fly", "^TNX", "^FVX", "^TYX"),
 ]
-ORDER = ([a[0] for a in ASSETS[:11]] + ["ust3m", "ust2y", "ust5y", "ust7y", "ust10y", "ust30y"]
+ORDER = ([a[0] for a in ASSETS if a[4] == "price"] + ["ust3m", "ust2y", "ust5y", "ust7y", "ust10y", "ust30y"]
          + [s[0] for s in SPREADS] + [f[0] for f in FLIES] + [f[0] for f in FLIES_BETA])
 
 EPOCH = dt.datetime(1970, 1, 1)

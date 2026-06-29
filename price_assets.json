@@ -40,6 +40,14 @@
 "url": "price_dax.json"
 },
 {
+"id": "ftse250",
+"label": "FTSE 250",
+"klass": "Indices",
+"ticker": "^FTMC",
+"kind": "price",
+"url": "price_ftse250.json"
+},
+{
 "id": "gold",
 "label": "Gold (front)",
 "klass": "Commodities",
@@ -86,6 +94,22 @@
 "ticker": "GBPUSD=X",
 "kind": "price",
 "url": "price_gbpusd.json"
+},
+{
+"id": "lqq3",
+"label": "LQQ3 \u00b7 3x Nasdaq 100",
+"klass": "Leveraged ETPs",
+"ticker": "LQQ3.L",
+"kind": "price",
+"url": "price_lqq3.json"
+},
+{
+"id": "3bal",
+"label": "3BAL \u00b7 3x Euro Banks",
+"klass": "Leveraged ETPs",
+"ticker": "3BAL.L",
+"kind": "price",
+"url": "price_3bal.json"
 },
 {
 "id": "ust3m",
