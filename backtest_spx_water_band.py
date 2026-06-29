@@ -33,12 +33,18 @@ SITE_DATA_JSON = ROOT / "spx_water_band_site_data.json"
 ETP_JSON = ROOT / "spx_water_band_etp_returns.json"
 
 WATER_SPEC = {
-    "strategy": "SMA175 ±3% Band 1x/cash",
-    "sma_window": 175,  # shortened from 200: ~equal CAGR, lower DD, higher Sharpe/Calmar (scratch/spx_water_octane_improve.py)
+    "strategy": "SMA200 ±3% Band + Accel-Exit (N10) 1x/cash",
+    "sma_window": 200,
     "band_pct": 0.03,
     "leverage": 1.0,
-    "rsi_threshold": None,  # plain band, no RSI exit (Water = no metric sacrificed)
+    "rsi_threshold": None,  # no RSI exit
     "rsi_period": 14,
+    # "must-accelerate" exit (the new S&P Water winner): cut a trade that fails to make a
+    # new band-high >= accel_step above the entry premium within accel_n days. Beats the plain
+    # SMA200 band Water on Sharpe/Calmar/MaxDD (no-regret) — see docs/strategy-lab.md.
+    "exit_mode": "accel",
+    "accel_n": 10,
+    "accel_step": 0.02,
 }
 
 

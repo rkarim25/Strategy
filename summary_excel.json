@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-26T19:11:49Z",
+  "generated": "2026-06-29T21:48:18Z",
   "assets": [
     {
       "key": "spx",
@@ -11,15 +11,15 @@
           "role": "Octane"
         },
         {
-          "name": "SMA200 +-3% Band 1x/cash",
+          "name": "SMA200 +-3% Band + Accel-Exit N10 1x/cash",
           "role": "Water"
         }
       ],
       "bh_cagr": 9.99,
       "bh_maxdd": -55.13,
-      "total": 176,
-      "water_count": 11,
-      "octane_count": 11,
+      "total": 181,
+      "water_count": 13,
+      "octane_count": 14,
       "neither_count": 154,
       "stillwater_count": 0,
       "best_water": {
@@ -27,10 +27,39 @@
         "cagr": 11.71
       },
       "best_octane": {
-        "name": "SMA200 +-3% Band + RSI>20 Exit 2x",
-        "calmar": 0.32
+        "name": "SMA200 +-3% Band + Accel-Exit N10 2x",
+        "calmar": 0.338
       },
       "water_rows": [
+        {
+          "Strategy": "SMA200 +-3% Band + Accel-Exit N10 1x/cash",
+          "Leverage_Max": 1.0,
+          "CAGR_pct": 10.51,
+          "Vol_pct": 10.51,
+          "Sharpe": 0.538,
+          "Sortino": 0.597,
+          "Calmar": 0.581,
+          "MaxDD_pct": -18.1,
+          "Trades_Per_Year": 2.6,
+          "Pct_Cash_Time": 31.1,
+          "End_Value": 208479.57,
+          "default": true,
+          "default_role": "Water"
+        },
+        {
+          "Strategy": "SMA200 +-3% Band + Accel-Exit N20 1x/cash",
+          "Leverage_Max": 1.0,
+          "CAGR_pct": 10.51,
+          "Vol_pct": 10.57,
+          "Sharpe": 0.526,
+          "Sortino": 0.586,
+          "Calmar": 0.53,
+          "MaxDD_pct": -19.82,
+          "Trades_Per_Year": 1.5,
+          "Pct_Cash_Time": 30.5,
+          "End_Value": 208077.61,
+          "default": false
+        },
         {
           "Strategy": "DD Scale 1-3x",
           "Leverage_Max": 3.0,
@@ -57,8 +86,7 @@
           "Trades_Per_Year": 1.0,
           "Pct_Cash_Time": 29.3,
           "End_Value": 204255.04,
-          "default": true,
-          "default_role": "Water"
+          "default": false
         },
         {
           "Strategy": "VIX Scale 1-3x",
@@ -75,7 +103,7 @@
           "default": false
         },
         {
-          "Strategy": "SMA200 +-3% Band + VIX Scale 1-3x",
+          "Strategy": "SMA200 +-3% Band + RSI>30 Exit + VIX Scale 1-3x",
           "Leverage_Max": 3.0,
           "CAGR_pct": 11.71,
           "Vol_pct": 15.24,
@@ -89,7 +117,7 @@
           "default": false
         },
         {
-          "Strategy": "SMA200 +-3% Band + RSI>30 Exit + VIX Scale 1-3x",
+          "Strategy": "SMA200 +-3% Band + VIX Scale 1-3x",
           "Leverage_Max": 3.0,
           "CAGR_pct": 11.71,
           "Vol_pct": 15.24,
@@ -188,6 +216,48 @@
         }
       ],
       "octane_rows": [
+        {
+          "Strategy": "SMA200 +-3% Band + Accel-Exit N10 2x",
+          "Leverage_Max": 2.0,
+          "CAGR_pct": 13.2,
+          "Vol_pct": 20.72,
+          "Sharpe": 0.491,
+          "Sortino": 0.545,
+          "Calmar": 0.338,
+          "MaxDD_pct": -39.05,
+          "Trades_Per_Year": 2.6,
+          "Pct_Cash_Time": 31.1,
+          "End_Value": 1309906.35,
+          "default": false
+        },
+        {
+          "Strategy": "SMA200 +-3% Band + Accel-Exit N20 2x",
+          "Leverage_Max": 2.0,
+          "CAGR_pct": 13.17,
+          "Vol_pct": 20.83,
+          "Sharpe": 0.478,
+          "Sortino": 0.534,
+          "Calmar": 0.337,
+          "MaxDD_pct": -39.07,
+          "Trades_Per_Year": 1.5,
+          "Pct_Cash_Time": 30.5,
+          "End_Value": 1287477.07,
+          "default": false
+        },
+        {
+          "Strategy": "SMA200 +5%/-3% Band 2x",
+          "Leverage_Max": 2.0,
+          "CAGR_pct": 12.71,
+          "Vol_pct": 20.51,
+          "Sharpe": 0.456,
+          "Sortino": 0.5,
+          "Calmar": 0.33,
+          "MaxDD_pct": -38.53,
+          "Trades_Per_Year": 0.9,
+          "Pct_Cash_Time": 32.9,
+          "End_Value": 938991.66,
+          "default": false
+        },
         {
           "Strategy": "SMA200 +-3% Band + RSI>20 Exit 2x",
           "Leverage_Max": 2.0,
@@ -560,22 +630,139 @@
           "role": "Octane"
         },
         {
-          "name": "SMA50/200 Golden Cross 1x/cash",
+          "name": "SMA100 +1/-3% Band + 8% Trailing 1x/cash",
           "role": "Water*"
         }
       ],
       "bh_cagr": 16.46,
       "bh_maxdd": -82.55,
-      "total": 176,
+      "total": 181,
       "water_count": 0,
-      "octane_count": 0,
-      "neither_count": 176,
-      "stillwater_count": 6,
+      "octane_count": 3,
+      "neither_count": 178,
+      "stillwater_count": 11,
       "best_water": null,
-      "best_octane": null,
+      "best_octane": {
+        "name": "SMA200 +5/-3% Band + 8% Trailing 2x",
+        "calmar": 0.559
+      },
       "water_rows": [],
-      "octane_rows": [],
+      "octane_rows": [
+        {
+          "Strategy": "SMA200 +5/-3% Band + 8% Trailing 2x",
+          "Leverage_Max": 2.0,
+          "CAGR_pct": 17.68,
+          "Vol_pct": 21.47,
+          "Sharpe": 0.668,
+          "Sortino": 0.544,
+          "Calmar": 0.559,
+          "MaxDD_pct": -31.63,
+          "Trades_Per_Year": 1.4,
+          "Pct_Cash_Time": 63.6,
+          "End_Value": 75647.35,
+          "default": false
+        },
+        {
+          "Strategy": "SMA200 +5/-5% Band + 8% Trailing 2x",
+          "Leverage_Max": 2.0,
+          "CAGR_pct": 17.09,
+          "Vol_pct": 20.42,
+          "Sharpe": 0.663,
+          "Sortino": 0.526,
+          "Calmar": 0.54,
+          "MaxDD_pct": -31.62,
+          "Trades_Per_Year": 1.3,
+          "Pct_Cash_Time": 65.3,
+          "End_Value": 61606.84,
+          "default": false
+        },
+        {
+          "Strategy": "SMA200 +5/-3% Band + 8% Trailing 3x",
+          "Leverage_Max": 3.0,
+          "CAGR_pct": 22.3,
+          "Vol_pct": 32.19,
+          "Sharpe": 0.662,
+          "Sortino": 0.54,
+          "Calmar": 0.497,
+          "MaxDD_pct": -44.91,
+          "Trades_Per_Year": 1.4,
+          "Pct_Cash_Time": 63.6,
+          "End_Value": 363639.74,
+          "default": false
+        }
+      ],
       "stillwater_rows": [
+        {
+          "Strategy": "SMA100 +1/-3% Band + 8% Trailing 1x/cash",
+          "Leverage_Max": 1.0,
+          "CAGR_pct": 14.69,
+          "Vol_pct": 13.98,
+          "Sharpe": 0.755,
+          "Sortino": 0.783,
+          "Calmar": 0.562,
+          "MaxDD_pct": -26.15,
+          "Trades_Per_Year": 2.9,
+          "Pct_Cash_Time": 40.3,
+          "End_Value": 26542.21,
+          "default": true,
+          "default_role": "Water*"
+        },
+        {
+          "Strategy": "SMA200 +5/-3% Band + 8% Trailing 2x",
+          "Leverage_Max": 2.0,
+          "CAGR_pct": 17.68,
+          "Vol_pct": 21.47,
+          "Sharpe": 0.668,
+          "Sortino": 0.544,
+          "Calmar": 0.559,
+          "MaxDD_pct": -31.63,
+          "Trades_Per_Year": 1.4,
+          "Pct_Cash_Time": 63.6,
+          "End_Value": 75647.35,
+          "default": false
+        },
+        {
+          "Strategy": "SMA200 +5/-5% Band + 8% Trailing 2x",
+          "Leverage_Max": 2.0,
+          "CAGR_pct": 17.09,
+          "Vol_pct": 20.42,
+          "Sharpe": 0.663,
+          "Sortino": 0.526,
+          "Calmar": 0.54,
+          "MaxDD_pct": -31.62,
+          "Trades_Per_Year": 1.3,
+          "Pct_Cash_Time": 65.3,
+          "End_Value": 61606.84,
+          "default": false
+        },
+        {
+          "Strategy": "SMA200 +5/-3% Band + 8% Trailing 3x",
+          "Leverage_Max": 3.0,
+          "CAGR_pct": 22.3,
+          "Vol_pct": 32.19,
+          "Sharpe": 0.662,
+          "Sortino": 0.54,
+          "Calmar": 0.497,
+          "MaxDD_pct": -44.91,
+          "Trades_Per_Year": 1.4,
+          "Pct_Cash_Time": 63.6,
+          "End_Value": 363639.74,
+          "default": false
+        },
+        {
+          "Strategy": "SMA200 RSI>50 Entry +1% Band Exit 1x/cash",
+          "Leverage_Max": 1.0,
+          "CAGR_pct": 15.82,
+          "Vol_pct": 17.3,
+          "Sharpe": 0.721,
+          "Sortino": 0.797,
+          "Calmar": 0.484,
+          "MaxDD_pct": -32.71,
+          "Trades_Per_Year": 8.8,
+          "Pct_Cash_Time": 31.2,
+          "End_Value": 39560.19,
+          "default": false
+        },
         {
           "Strategy": "SMA50/200 Golden Cross 1x/cash",
           "Leverage_Max": 1.0,
@@ -588,8 +775,7 @@
           "Trades_Per_Year": 1.3,
           "Pct_Cash_Time": 26.5,
           "End_Value": 41181.06,
-          "default": true,
-          "default_role": "Water*"
+          "default": false
         },
         {
           "Strategy": "GC 50/200 1x; +2x when VIX<20 & idxDD>-12%",

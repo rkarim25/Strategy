@@ -53,6 +53,28 @@
   function liveLeverage(d, livePrice, liveVix, priorLev) {
     const p = d.price_sma_data || {}, sp = d.strategy_params || {};
     const closes = (p.spx_close || []).concat([livePrice]);
+    if (sp.exit_mode === "accel") {                  // S&P Water: band entry + must-accelerate exit
+      // Stateful family: replay the signal over the full daily close history (+ the live point)
+      // because the leverage depends on days-since-entry and the max premium since entry, not just
+      // the current price. Mirrors backtest_spx_distance_scale.accel_band_signal exactly.
+      const w = sp.sma_window || 200, band = sp.band_pct || 0.03, lev = sp.leverage || 1;
+      const N = sp.accel_n || 10, step = sp.accel_step || 0.02, c = closes;
+      let inPos = false, entryPrem = 0, maxp = 0, age = 0, cur = 0, rs = 0;
+      for (let i = 0; i < c.length; i++) {
+        const v = c[i];
+        if (v == null || !isFinite(v)) { rs = 0; continue; }
+        rs += v; if (i >= w) rs -= c[i - w];
+        if (i < w - 1) continue;
+        const sv = rs / w, prem = v / sv - 1;
+        if (!inPos) {
+          if (v > sv * (1 + band)) { inPos = true; entryPrem = maxp = prem; age = 0; cur = lev; } else cur = 0;
+        } else {
+          age++; if (prem > maxp) maxp = prem;
+          if ((age >= N && maxp < entryPrem + step) || v < sv * (1 - band)) { inPos = false; cur = 0; } else cur = lev;
+        }
+      }
+      return cur;
+    }
     if (p.sma200_upper_band) {                       // band strategy (S&P Water/Octane)
       const w = sp.sma_window || 200, band = sp.band_pct || 0.03, lev = sp.leverage || 1;
       const sma = smaLast(closes, w);

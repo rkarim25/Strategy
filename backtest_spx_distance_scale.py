@@ -199,6 +199,51 @@ def distance_leverage_scale(
 # ---------------------------------------------------------------------------
 
 
+def accel_band_signal(
+    prices: pd.DataFrame,
+    window: int = 200,
+    band_pct: float = 0.03,
+    accel_n: int = 10,
+    accel_step: float = 0.02,
+) -> pd.Series:
+    """Band entry + "must-accelerate" exit (Water winner family). Enter long when
+    close > SMA*(1+band); exit when, accel_n days after entry, the price has NOT made
+    a NEW band-high at least accel_step above the entry premium (momentum stalled), OR
+    it breaks below SMA*(1-band). Mirrors research/strategy_lab/signals.variant_b_accel
+    (conv entry) exactly, so the page matches the Excel/CSV."""
+    close = prices["spx_close"]
+    s = sma(close, window)
+    n = len(prices)
+    out = pd.Series(0.0, index=prices.index)
+    upper, lower = 1.0 + band_pct, 1.0 - band_pct
+    in_pos = False
+    entry_prem = maxp = 0.0
+    age = 0
+    for i in range(n):
+        sv = s.iloc[i]
+        if i < window or pd.isna(sv):
+            out.iloc[i] = 1.0 if in_pos else 0.0
+            continue
+        c = close.iloc[i]
+        prem = c / sv - 1.0
+        if not in_pos:
+            if c > sv * upper:
+                in_pos = True
+                entry_prem = maxp = prem
+                age = 0
+                out.iloc[i] = 1.0
+        else:
+            age += 1
+            if prem > maxp:
+                maxp = prem
+            if ((age >= accel_n and maxp < entry_prem + accel_step) or c < sv * lower):
+                in_pos = False
+                out.iloc[i] = 0.0
+            else:
+                out.iloc[i] = 1.0
+    return out
+
+
 def compute_strategy_leverage(
     prices: pd.DataFrame,
     spec: dict | None = None,
@@ -211,8 +256,13 @@ def compute_strategy_leverage(
     band_p = float(spec["band_pct"])
     leverage = float(spec.get("leverage", 1.0))
 
-    # SMA200 ±3% band → 0 or 1, then scale by leverage (e.g. 2x)
-    base_signal = sma_band_signal(prices, sma_w, band_p)
+    # SMA ±band% → 0 or 1 (optionally with the must-accelerate exit), then scale by leverage
+    if spec.get("exit_mode") == "accel":
+        base_signal = accel_band_signal(
+            prices, sma_w, band_p, int(spec.get("accel_n", 10)), float(spec.get("accel_step", 0.02))
+        )
+    else:
+        base_signal = sma_band_signal(prices, sma_w, band_p)
     final_lev = base_signal * leverage
 
     # Optional RSI exit filter: when the band says cash but RSI < threshold, stay invested

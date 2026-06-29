@@ -111,6 +111,7 @@ pages (ftse250/dax/msci_em/msci_world/lqq3), `3bal_guarded.html`, `summary.html`
 | [`docs/architecture.md`](docs/architecture.md) | engine + pipeline + module roles |
 | [`docs/website.md`](docs/website.md) | editing a page / live data flow |
 | [`docs/backtesting.md`](docs/backtesting.md) | engine params, costs, regeneration |
+| [`docs/strategy-lab.md`](docs/strategy-lab.md) | **testing a NEW strategy / reproducing an old backtest on a consistent basis** (the Golden Rule of Consistency) |
 | [`docs/strategies.md`](docs/strategies.md) | Guarded A5/B25, Water/Octane/Stillwater |
 | [`docs/coding-standards.md`](docs/coding-standards.md) | the mandatory quant rules |
 | [`docs/deploy.md`](docs/deploy.md) | before any commit/push |

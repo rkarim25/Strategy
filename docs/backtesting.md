@@ -3,6 +3,11 @@
 Engine parameters, data sources, and how to regenerate outputs. For strategy definitions and
 classification see [`strategies.md`](strategies.md); for module roles see [`architecture.md`](architecture.md).
 
+> **Testing a NEW strategy or reproducing an old backtest?** Read
+> [`strategy-lab.md`](strategy-lab.md) FIRST — it pins the canonical basis (the
+> `load_asset_data` loader, NOT `download_spx_panel`) so your numbers are comparable to
+> the workbook + website, and gives a reusable harness (`research/strategy_lab/`).
+
 ## Engine configuration (`sweep_all_assets_strategies.py`)
 
 - **Signal delay:** 1 day (prevents look-ahead bias — a signal from bar T fills at T+1).

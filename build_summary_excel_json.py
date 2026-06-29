@@ -39,11 +39,11 @@ DETAIL_FIELDS = [
 SITE_DEFAULTS = {
     "spx": {
         "SMA200 +-3% Band + RSI>20 Exit 2x": "Octane",
-        "SMA200 +-3% Band 1x/cash": "Water",
+        "SMA200 +-3% Band + Accel-Exit N10 1x/cash": "Water",
     },
     "ndx": {
         "GC 50/200 1x; +2x when VIX<20 & idxDD>-12%": "Octane",
-        "SMA50/200 Golden Cross 1x/cash": "Water*",
+        "SMA100 +1/-3% Band + 8% Trailing 1x/cash": "Water*",
     },
     "dax": {
         "SMA200 +-3% Band 1x/cash": "Water",
