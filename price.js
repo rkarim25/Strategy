@@ -529,6 +529,7 @@
               <input id="rngTo" type="date" style="font:inherit;font-size:12px;padding:3px 6px;border-radius:7px;border:1px solid var(--line)">
               <button id="rngApply" class="seg" style="padding:4px 10px">Go</button>
             </span></div>
+          <div><span class="lbl">Pan</span><span class="seg"><button id="panBack" title="Scroll back in time">‹</button><button id="panNow" title="Jump to the latest bars">now</button><button id="panFwd" title="Scroll forward in time">›</button></span></div>
           <div class="live" id="live"><span class="dot"></span><span id="liveTxt">live —</span></div>
           <button id="cloudBtnTop" class="seg" style="padding:5px 12px;font-weight:600" title="Your notes, drawings, indicators &amp; alerts auto-save in this browser. Click to sync them to the cloud (cross-device) — auto-syncs after sign-in.">☁ Save</button>
         </div>
@@ -651,6 +652,10 @@
     makeSeg($("rangeSeg"), RANGES, () => false, (days, b) => { if ($("rngFrom")) { $("rngFrom").value = ""; $("rngTo").value = ""; } setRange(days); segActive($("rangeSeg"), b); });
     $("rngApply").onclick = setDateRange;
     $("rngFrom").onchange = $("rngTo").onchange = () => { if ($("rngFrom").value && $("rngTo").value) setDateRange(); };
+    const panAmt = () => Math.max(120, ($("chart").clientWidth - 70) * 0.5);   // ~half the plotting width
+    $("panBack").onclick = () => safe(() => chart.scrollByDistance(panAmt(), 120));   // + = older bars (back in time)
+    $("panFwd").onclick = () => safe(() => chart.scrollByDistance(-panAmt(), 120));   // − = newer bars (forward)
+    $("panNow").onclick = () => safe(() => chart.scrollToRealTime(120));
     makeSeg($("indMain"), MAIN_INDS, (v) => state.indicators[v], (v, b) => { toggleIndicator(v); b.classList.toggle("active", state.indicators[v]); scheduleSave(); });
     makeSeg($("indSub"), SUB_INDS, (v) => state.indicators[v], (v, b) => { toggleIndicator(v); b.classList.toggle("active", state.indicators[v]); scheduleSave(); });
     // ---- "Add buy/sell signals" from a study (standard rule per indicator) ----
