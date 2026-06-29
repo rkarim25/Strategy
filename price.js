@@ -1,9 +1,11 @@
 /**
  * Charts — a TradingView/Bloomberg-style charting workstation built on KLineChart (vendored v9.8.12).
- * Asset registry (price_assets.json, grouped by class) · candle/bar/area · linear/log/% axis · range presets ·
- * timeframes 1m/5m/15m/30m/1h/4h/1D (intraday via the quote proxy, 4h aggregated, 60s auto-refresh) ·
- * comprehensive indicators with editable parameters · drawing palette + custom "Measure %" overlay (retained
- * across timeframe/zoom) · live last price · private per-asset notes + drawings (passphrase-gated, localStorage).
+ * Asset registry (price_assets.json, grouped by class incl. Leveraged ETPs) · custom symmetric HLOC Bars (forced
+ * default) / candle / area · linear/log/% axis · range presets · pan arrows (back/now/forward) · timeframes
+ * 1m/5m/15m/30m/1h/4h/1D — and 1D is real-time too: extendDailyLive() merges fresh daily bars from the quote proxy
+ * every 60s (4h aggregated) · live last price + UK update time · comprehensive indicators with editable parameters ·
+ * drawing palette + custom "Measure %" overlay (retained across timeframe/zoom) · private per-asset notes + drawings,
+ * auto-saved (localStorage + auto cloud-sync once signed in via ☁ Save). Compact layout: collapsible Draw, no title.
  * Interactive Signal Playbook: each rule has parameter inputs whose backtest recomputes live, a "plot" toggle
  * (draws the indicator with the same params), a "signals" toggle (▲ buy / ▼ sell markers on the chart, via a
  * custom-indicator draw callback), and a "notes" toggle (preloaded explanation of the buy/sell logic and why).
@@ -11,10 +13,11 @@
  * Plus (SPX/NDX): a technical-indicator SIGNAL DASHBOARD (signals_{spx,ndx}.json — A–D graded by backtested edge,
  * live 0–100 strength, composite → suggested leverage, show-on-chart, view-backtest) and a one-click ANALYST
  * (live bundle of signals + official signal + news + the current chart view + a screenshot → quant report +
- * copy-prompt/worker; shared brain analyst_prompt.md). Drawing adds free-draw→Enhance shapes, rectangle/circle,
- * an erase tool (click or box-select), notes that link to + move with a drawing, and a full price-alert system
- * (on-chart 🔔 markers, a managed Price-alerts section, edit/rename/delete/drag, right-click-to-set anywhere,
- * trend/ray line-following). Overlays carry stable ids so links/alerts survive applyNewData + reload.
+ * copy-prompt/worker; shared brain analyst_prompt.md). Drawing adds free-draw→Enhance (freeDraw only), rectangle/circle,
+ * an erase tool (click or box-select), notes that link to + move with a drawing, right-click colour swatches +
+ * "Show angle" for trend lines, and a full price-alert system (on-chart 🔔 markers, a managed Price-alerts section,
+ * edit/rename/delete/drag, right-click-to-set anywhere, trend/ray line-following with an amber tracked-line highlight).
+ * Overlays carry stable ids so links/alerts survive applyNewData + reload; their per-endpoint axis tags are suppressed.
  * See docs/website.md (Charts) and docs/oneclick-analyst.md.
  */
 (function () {

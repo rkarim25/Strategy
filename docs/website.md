@@ -86,10 +86,13 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
 **Regenerate all data with `python make_price_data.py`** (Yahoo); it writes every `price_<id>.json`,
 `price_assets.json` (the registry), `ust_curve.json` (live curve) — all at root.
 
-- **Assets (23, registry `price_assets.json`):** Indices / Commodities / Crypto / FX (`kind:"price"`),
+- **Assets (29, registry `price_assets.json`):** Indices (incl. **FTSE 250** `^FTMC`) / **Leveraged ETPs** (LQQ3 3×
+  Nasdaq `LQQ3.L`, 3BAL 3× Euro banks `3BAL.L`, XS2D 2× S&P `XS2D.L`) / Commodities / Crypto / FX (`kind:"price"`),
   **Rates** = UST yields 3M `^IRX` / 2Y `2YY=F` / 5Y `^FVX` / 7Y(interp) / 10Y `^TNX` / 30Y `^TYX` (`kind:"yield"`),
   **Steepness** = 2s10s/3m10y/5s10s/5s30s and **Butterfly** = 2s5s10s/5s10s30s + RW-fly variants (`kind:"spread"`,
-  carry `legs:[{t,w}]`). **Add an asset = one row in `make_price_data.py`.**
+  carry `legs:[{t,w}]`). **Add an asset = one row in `make_price_data.py`** (then regen, or generate just that file
+  + merge into the registry). **CACHE CAVEAT:** `price_assets.json` is fetched without a cache-buster → a newly-added
+  asset only appears after the ~10-min Pages cache expires or a hard-refresh.
 - **Backtest models (per `kind`):** price → long/cash, %-returns, $100 growth. **UST (`yield`+`spread`) → DIRECTIONAL,
   P&L = position × daily Δ(series) in bps** (`isDelta` path): yield long = *long rates* (profit when yield rises),
   spread long = *steepener*, fly = *RV reversion*. Columns switch to Ann bps/Max DD bps/Sharpe/Hit %/Total bps, or
@@ -101,16 +104,33 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
   long-the-instrument, from the curve on *that* date) into each UST file, so the drift flips sign with the regime
   (long rates *earns* carry when the curve is inverted, *pays* when normal). Carry term uses exact yield levels; the
   roll term interpolates the available tenors (cruder pre-2021). Falls back to today's-curve-held-flat if `cr` absent.
-- **Chart:** **bar (default)**/candle/area · linear/log/% axis (spreads forced linear — they go negative) · range presets ·
-  **timeframes** 1m/5m/15m/30m/1h/4h/1D (intraday via quote-proxy `?mode=intraday`; **spreads/flies combine each
-  leg's intraday client-side** via `fetchIntradayBars`/`combineLegs`; 4h aggregated; 60 s auto-refresh) · live price.
+- **Layout (max chart):** the on-page title/intro is gone (browser-tab title kept per asset); Asset/TF/Type/Axis/Range/live
+  live in one compact top bar; the Draw tools sit in a collapsed-by-default `<details>`; chart height is responsive
+  (`clamp(460px,74vh,840px)`). **Pan** control (‹ back · "now" `scrollToRealTime` · › forward = `chart.scrollByDistance ±½-width`).
+- **Chart types:** **Bars (forced default)**/Candles/Area · linear/log/% axis (spreads forced linear — they go negative) ·
+  range presets. **Bars = a custom symmetric HLOC renderer**, NOT KLineChart's built-in `ohlc` (whose close tick rendered
+  ~⅓ shorter than open): in Bars mode the built-in candle is made transparent and an `HLOC` `registerIndicator` draws the
+  H-L line + equal-length open(left)/close(right) ticks (`applyBarMode`/`BAR_MODE`). Bars is forced on every load (`applySnapshot`
+  ignores saved type).
+- **Timeframes** 1m/5m/15m/30m/1h/4h/1D. **1D is real-time too:** the committed `price_<id>.json` lags a few days, so
+  `extendDailyLive()` merges fresh daily bars (incl. today's forming bar) from the quote-proxy `?mode=intraday&interval=1d`
+  by exact timestamp, every 60 s; intraday TFs fetch `?mode=intraday`; **spreads/flies combine each leg's intraday client-side**
+  via `fetchIntradayBars`/`combineLegs`; 4h aggregated. Live readout shows the price + **last-update time in UK** (`ukClock`,
+  Europe/London).
 - **Indicators:** 6 overlays + 20 studies w/ editable calcParams. **Drawing:** trend/ray/lines/price/parallel/
   fibonacci/text + **Measure %** + **free-draw** (sketch, then right-click **Enhance** → circle/square/rect/trend/
   ray/channel) + **rectangle/circle** tools + an **erase tool** (click a drawing, or drag a box to clear an area) +
   **notes that link to a drawing** and ride along when it moves. Every overlay gets a **stable id** (passed to
   `createOverlay`) so note-links and alerts survive `applyNewData`/reload (drawings tracked in JS — v9 has no
-  `getOverlays`; persisted with private notes via the store worker). **Display toggles** for all drawings / all
-  alert markers; default chart type is **bars**. **NBER recession shading** (`RECESSION`, "▦ Recessions") + **curve-inversion shading** (`INVERSION`,
+  `getOverlays`; persisted with private notes via the store worker). **Right-click a drawing →** colour swatches
+  (persisted via `color` through record/snapshot/reapply), **📐 Show angle** for trend lines (visual angle vs horizontal
+  + % move, via `chart.convertToPixel` resolving each point by `dataIndex` so future-area endpoints still measure), Erase,
+  alert, linked note; **Enhance is freeDraw-only** (`ENHANCEABLE={freeDraw}`). KLineChart's per-endpoint date/price **axis
+  tags are suppressed** (`needDefaultX/YAxisFigure:false`) — they overlapped into unreadable blocks. **Stability:** a
+  drawing's null/future-area endpoint timestamp is clamped to the last bar, and drawings re-anchor after `extendDailyLive`
+  appends a new bar, so trend lines don't jump on reload. **Display toggles** for all drawings / all
+  alert markers. Everything (notes/drawings/indicators/alerts) **auto-saves** — instant local + auto cloud-sync once
+  signed in via the top-bar **☁ Save** button. **NBER recession shading** (`RECESSION`, "▦ Recessions") + **curve-inversion shading** (`INVERSION`,
   "⊘ Inversions"; amber bands over the 16 sustained 2s10s/3m10y inverted periods in `ust_inversions.json`) — both
   custom `draw`-callback indicators; they paint only over the visible window (verify by slicing data to end mid-band).
 - **Signal Playbook (14 rules):** Golden/EMA Cross, Trend, Band trend (Water), MACD/MACD-zero, RSI momentum/reversion,
@@ -130,8 +150,10 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
   architecture + replication notes in [`oneclick-analyst.md`](oneclick-analyst.md).
 - **Price alerts:** set on any line/level (right-click a drawing, the chart, or the 🔔 marker), denoted on the
   chart by a dashed 🔔 line (a managed **Price alerts** section lists them with edit-level/rename/delete; drag the
-  line to change the level). Alerts on a **trend/ray line follow the line** (trigger updates each bar). Fire a
-  toast+beep+notification on the live-quote tick; persisted with the private chart.
+  line to change the level). Alerts on a **trend/ray line follow the line** (trigger updates each bar); a tracked sloped
+  line is **highlighted amber** on the chart (`applyDrawingColors`) and its row shows the line's **angle** + current
+  crossing level, so you can tell which line is tracked. Fire a toast+beep+notification on the live-quote tick; persisted
+  with the private chart.
 - **Curve strategy leaderboard** (`ust_strategies.json` ← `scratch/ust_strategy_sweep.py`): best rule per UST instrument
   ranked by Sharpe + explanation + **live signal** + Load; the **best rule is auto-applied as the default** for each
   UST trade. Plus a **live curve snapshot** (`ust_curve.json`: SVG 3M→30Y + 2s10s/3m10y/5s30s slope/inversion flags +
@@ -140,8 +162,10 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
   (`GET`/`POST /api/chart/:asset`, **both passphrase-gated**), localStorage fallback + autosave. **Mobile:** wide tables
   scroll inside their cards (`overflow-x:auto`); chart 60vh.
 - **⚠ Preview gotcha:** KLineChart renders via `requestAnimationFrame`, which the headless preview throttles → the
-  page's canvases stay blank (300×150). NOT a bug — verify by forcing `requestAnimationFrame` synchronous in an
-  **isolated fresh `klinecharts.init`+`applyNewData`** (then candles paint); it renders fine in a real browser.
+  page's canvases stay blank (300×150) and animated scrolls don't move. NOT a bug — it renders fine in a real browser.
+  The chart instance is exposed as **`window.__chart`** for headless debugging: read state (`getVisibleRange`,
+  `convertToPixel`), or spy a method call to verify a handler fires (the visible result needs a real browser). Verify
+  drawing/canvas features by DOM geometry + method spies, not screenshots.
 - **⚠ Windows:** non-ASCII chars (β, −) in Python `print`/labels crash on cp1252 — use ASCII (`RW`, `-`).
 
 ## Scripts (`*.js`, root)
@@ -150,7 +174,7 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
 |------|------|
 | `strategy_page.js` | **Shared renderer** (Signal/Back-test/MC; markers, %-equity, manual-price; sma_cash/band/gc families) |
 | `site-nav.js` | Shared left sidebar nav + `STRATEGY_NAV_ITEMS` (bump `?v=` everywhere on change) |
-| `lab.js` | **Lab** — interactive strategy builder (AND/OR conditions, cloud save) on `band_lab_*`/`lab_ndx.json` |
+| `lab.js` | **Lab** — strategy builder on `band_lab_*`/`lab_ndx.json` (S&P/Nasdaq only). AND/OR condition stacks with **level + cross** states per indicator (cross-up/down through line/level, golden/death, MACD signal/zero, Bollinger band crosses, Donchian breakout — momentary `crossUp/crossDn`, fire on the cross bar). **"Leverage on"** toggle: *Index* (signal on index, hold N×) vs *Synthetic* (`buildSynthetic` = daily-rebalanced N×+financing series; indicators **and** equity run on it). **Stop-loss % / Target %** exits (from the entry close). Cloud save (passphrase) + portable `#s=` links |
 | `price.js` + `klinecharts.min.js` | **Charts** workstation (KLineChart) — see the Charts section above |
 | `cloudflare_lab_store_worker.js` | **Not part of Pages** — `lab-strategy-store` Worker (KV) for Lab cloud-save + private chart notes (`wrangler.lab-store.toml`) |
 | `site-scroll-init.js` | Scroll/section init shared across pages |
@@ -168,7 +192,7 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
 - `spx_distance_scale_site_data.json` (+ `*_etp_returns.json`) — the bespoke `index.html`.
 - `{slug}_daily.csv`, `latest_{slug}_signal.json` — cron-refreshed price/signal data (don't bundle in feature commits).
 - `summary_excel.json` — feeds `summary.html`.
-- `price_assets.json` + `price_<id>.json` (16) — the **Charts** page registry + per-asset OHLCV (regenerate with
+- `price_assets.json` + `price_<id>.json` (29) — the **Charts** page registry + per-asset OHLCV (regenerate with
   `python make_price_data.py`). `band_lab_spx.json` / `lab_ndx.json` — the **Lab** datasets.
 - `signals_{spx,ndx}.json` — the **signal dashboard** data (graded indicators + live-eval rules + evidence;
   regenerate with `python research/build_signal_dashboard.py`). `analyst_prompt.md` — the shared **Analyst brain**
@@ -200,6 +224,10 @@ All dump with `allow_nan=False` (fail loud rather than write invalid JSON).
    `npx --no-install wrangler deploy -c wrangler.lab-store.toml`. A **Cloudflare MCP** is also connected for KV/D1.
    (The store worker is passphrase-gated via the `LAB_SECRET` secret; rotate with `wrangler secret put LAB_SECRET`.)
    The intraday feed (`?mode=intraday&symbol&interval&range`) and `?mode=quote` both come from the quote proxy.
+6. **Charts is self-healing real-time:** the **1D** view doesn't just rely on the committed `price_<id>.json` (which lags
+   a few days) — `extendDailyLive()` merges fresh daily bars (incl. today's forming bar) from the proxy's
+   `?mode=intraday&interval=1d` every 60 s, so SPX/NDX/etc. are always current with no paid feed. Daily-bar timestamps
+   match the committed file's exactly, so the merge is by exact timestamp.
 
 ## ⚠️ Gotchas
 
