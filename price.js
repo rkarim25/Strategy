@@ -415,8 +415,16 @@
       .live{display:inline-flex;align-items:center;gap:7px;font-size:13px;margin-left:auto;}
       .live .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);}
       .live.on .dot{background:var(--good);box-shadow:0 0 0 3px rgba(48,209,88,.18);}
-      #chart{width:100%;height:560px;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
-      @media(max-width:680px){#chart{height:62vh;}}
+      .chart-card{margin-top:4px;padding-top:8px;padding-bottom:8px;}
+      .ctrlbar{gap:6px 14px;margin:2px 0 6px;}
+      .ctrlbar .lbl{margin-right:4px;}
+      .ctrlbar .seg button{padding:4px 9px;font-size:11.5px;}
+      .ctrlbar select{padding:5px 9px;font-size:13px;max-width:168px;}
+      .ctrlbar .live{margin-left:6px;}
+      .chart-card details.ind-panel{margin:3px 0;padding:0 12px;}
+      .chart-card details.ind-panel summary{padding:6px 0;font-size:12px;}
+      #chart{width:100%;height:clamp(460px,74vh,840px);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+      @media(max-width:680px){#chart{height:68vh;}}
       details.ind-panel{margin:6px 0;border:1px solid var(--line);border-radius:12px;padding:2px 14px;background:rgba(255,255,255,.6);}
       details.ind-panel summary{font-size:12.5px;font-weight:700;cursor:pointer;padding:8px 0;color:#1d1d1f;}
       details.ind-panel[open] summary{border-bottom:1px solid var(--line);margin-bottom:6px;}
@@ -501,17 +509,10 @@
 
     const app = document.getElementById("app");
     app.innerHTML = `
-      <h1 id="cTitle">Charts</h1>
-      <p class="lede">Candlestick charts with indicators, drawing tools and multiple timeframes. Tune any indicator's
-        parameters, and the <b>Signal Playbook</b> below backtests common buy/sell rules on this asset — plot the indicator,
-        show ▲ buy / ▼ sell markers on the chart, and read what each signal means, all from the same parameters.</p>
-      <div class="card">
-        <div class="cbar">
+      <div class="card chart-card">
+        <div class="cbar ctrlbar">
           <div><span class="lbl">Asset</span><select id="assetSel"></select></div>
-          <div class="live" id="live"><span class="dot"></span><span id="liveTxt">live —</span></div>
-        </div>
-        <div class="cbar">
-          <div><span class="lbl">Timeframe</span><span class="seg" id="tfSeg"></span></div>
+          <div><span class="lbl">TF</span><span class="seg" id="tfSeg"></span></div>
           <div><span class="lbl">Type</span><span class="seg" id="typeSeg"></span></div>
           <div><span class="lbl">Axis</span><span class="seg" id="axisSeg"></span></div>
           <div><span class="lbl">Range</span><span class="seg" id="rangeSeg"></span>
@@ -521,6 +522,7 @@
               <input id="rngTo" type="date" style="font:inherit;font-size:12px;padding:3px 6px;border-radius:7px;border:1px solid var(--line)">
               <button id="rngApply" class="seg" style="padding:4px 10px">Go</button>
             </span></div>
+          <div class="live" id="live"><span class="dot"></span><span id="liveTxt">live —</span></div>
         </div>
         <details class="ind-panel">
           <summary>Indicators — overlays &amp; studies · click to expand &amp; edit params · <b>right-click any for help, examples &amp; one-click signals</b></summary>
@@ -537,10 +539,11 @@
             <span><span class="lbl">Crosshair</span><span class="seg" id="xhairSeg"></span></span>
           </div>
         </details>
-        <div class="cbar">
-          <div><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
-          <div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="autoBtn">⚡ Auto-analysis</button><button id="recBtn" title="Shade US recessions · right-click: what they are &amp; what to expect"><span style="color:#9a9aa2">▦</span> Recessions</button><button id="invBtn" title="Shade yield-curve inversions · right-click: what an inversion means &amp; what to expect"><span style="color:#d68a12">⊘</span> Inversions</button><button id="drawToggle" class="active" title="Show or hide all your drawings">👁 Drawings</button><button id="alertToggle" class="active" title="Show or hide price-alert markers on the chart (alerts still fire)">🔔 Alerts</button></div>
-        </div>
+        <details class="ind-panel" id="drawPanel">
+          <summary>Draw &amp; tools — drawing tools · undo · clear · auto-analysis · recessions · inversions · show/hide drawings &amp; alerts</summary>
+          <div class="ind-grp"><span class="lbl">Draw</span><span class="seg" id="toolSeg"></span></div>
+          <div class="ind-grp"><div class="seg"><button id="undoBtn">Undo</button><button id="clearBtn">Clear all</button><button id="autoBtn">⚡ Auto-analysis</button><button id="recBtn" title="Shade US recessions · right-click: what they are &amp; what to expect"><span style="color:#9a9aa2">▦</span> Recessions</button><button id="invBtn" title="Shade yield-curve inversions · right-click: what an inversion means &amp; what to expect"><span style="color:#d68a12">⊘</span> Inversions</button><button id="drawToggle" class="active" title="Show or hide all your drawings">👁 Drawings</button><button id="alertToggle" class="active" title="Show or hide price-alert markers on the chart (alerts still fire)">🔔 Alerts</button></div></div>
+        </details>
         <div id="chart"></div>
         <p class="meta" id="hint" style="margin-top:8px">Scroll to zoom · drag to pan · pick a draw tool then click points · <b>✎ Free draw</b> to sketch freehand, then <b>right-click → Enhance</b> to snap it into a clean circle / square / rectangle / trend / ray / channel · <b>🗑 Erase</b> tool: click a drawing to delete it, or drag a box to erase everything inside · <b>right-click the chart</b> to set a price alert at that level (or add a note) · <b>right-click any drawing</b> to enhance / erase / set a price alert / <b>📝 Attach a linked note</b> that moves with it · hover a drawing and press <b>Delete</b> to remove it.</p>
         <details id="autoCard" class="ind-panel" style="display:none;margin-top:8px">
@@ -1855,7 +1858,7 @@
         D.dv01 = D.legs ? Math.max(...D.legs.map((l) => TICKER_DV01[l.t] || 1)) : (TICKER_DV01[D.ticker] || 8.6);
         state.pnl.perBp = Math.round(D.dv01 * 1000);   // ≈ trade DV01 in $/bp (per ~$10mm); user-editable
         if (D.kind === "spread" && state.yAxis !== "normal") { state.yAxis = "normal"; safe(() => chart.setStyles({ yAxis: { type: "normal" } })); segActive($("axisSeg"), findBtn($("axisSeg"), "normal")); }  // log/% invalid for spreads that go negative
-        $("cTitle").textContent = D.label + " — chart";
+        { const ct = $("cTitle"); if (ct) ct.textContent = D.label + " — chart"; document.title = D.label + " — chart"; } // on-page title was removed for space; keep the browser-tab title per asset
         if ($("rngFrom") && D.dates.length) { $("rngFrom").min = $("rngTo").min = D.dates[0]; $("rngFrom").max = $("rngTo").max = D.dates[D.n - 1]; $("rngFrom").value = ""; $("rngTo").value = ""; }
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
         safe(() => chart.removeOverlay()); drawings = []; removeStudySignals();
