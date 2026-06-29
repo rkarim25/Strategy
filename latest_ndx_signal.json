@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-29T22:04:31Z",
+  "generated_at_utc": "2026-06-29T22:54:24Z",
   "data_asof": "2026-06-29",
   "daily_rows": 7546,
   "quote_price": 29774.751953125,
@@ -75,9 +75,8 @@
     "last_observed_asof": "2026-06-29",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-06-29T22:04:31Z",
+    "last_checked_at_utc": "2026-06-29T22:54:24Z",
     "last_email_sent_on": "2026-06-29",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
       "id": "2026-06-29:0->2026-06-29:1",
       "detected_at_utc": "2026-06-29T22:04:31Z",

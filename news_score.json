@@ -1,23 +1,23 @@
 {
-  "generated_at_utc": "2026-06-29T22:04:35Z",
+  "generated_at_utc": "2026-06-29T22:54:28Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga; Micron's monster post-earnings rally is almost gone. Traders divided on where it goes next. Bearish offsets: Citi Wealth warns investors to move out of excess cash because of hot inflation; Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as major tech-related shares jump; Micron's monster post-earnings rally is almost gone. Traders divided on where it goes next. Bearish offsets: Citi Wealth warns investors to move out of excess cash because of hot inflation; Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView.",
   "articles": [
+    {
+      "title": "Wall Street ends higher as major tech-related shares jump",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/wall-street-ends-higher-major-224730543.html?.tsrc=rss",
+      "published": "2026-06-29T22:47:30Z",
+      "tone": "bullish"
+    },
     {
       "title": "Citi Wealth warns investors to move out of excess cash because of hot inflation",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/06/29/citi-wealth-warns-investors-to-move-out-of-excess-cash-because-of-hot-inflation.html",
       "published": "2026-06-29T19:02:45Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
-      "source": "Benzinga",
-      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNRkFaMnhCa0JSblJ6ZVcxUHUyQ3l0blVqSlktd2x6bUloMzRCMU0wVkZaX0ZIV3p1WEQ0NFpqSnNMdVM4a2EzbW11ODg0cmlua01RVXo3UnlUdl9qNmd6UmUzRmkzUUh3UHhwOXJlSm1yUVpnUmZoWVhRY1VrMHBpODZpR2RmMGZjaE1vdkgxTzluTUF4ZExMTHk5ZXJZMXlRazFmamhYaHNpMUVZVXZJRE53M3l6c3B1Zzk0RzI1dXd5dnJhUWJtUWxVODJaSUFmN1FIM3Y0SWdkR0VEVkM4NW1DT3dSQ2JMWVBNWnBONnRjcVIwWnZpMks3QVdpa1E2b0E?oc=5",
-      "published": "2026-06-25T12:42:00Z",
-      "tone": "bullish"
     },
     {
       "title": "Micron's monster post-earnings rally is almost gone. Traders divided on where it goes next",
@@ -27,17 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Nasdaq Drop: What Is Driving the Massive June Tech Stock Selloff? - Barron's",
-      "source": "Barron's",
-      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBnVFozOWNNczBGWDhadHlPOXpWNlM2bUJ0R2QyMlZqQTJtOTB6cHJldUx5M3YzbUFuVTZxZ0VpaDRTQWFOekFLNkpZTUVnUF9kbndwQWxxVWNtSEJUTGpJQ1NkYVlQTmRpamlxTzVIQTBtTWV1RFE?oc=5",
-      "published": "2026-06-23T15:12:00Z",
-      "tone": "bearish"
+      "title": "'We don't view this as a bubble' that will pop soon: Wall Street weighs surging AI costs on stock market rally - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNRlRHcUhPM1FMU2YzcWNSOVRzcXQ2YllEUlZpQ2ExR0JITTZMeHB2TmJoUkMzUzRuWHl6QTAwZkV2ZlQtNVhQTnVWUksxLXN6WXYyM2FhM0Vjb0FIalZUMmY3b0lxVHNWVnpEQUtoMXFKTkNUNGpOX2tJdE1VMmFxbkFIWm85bzlVM3dLOTVxTWJPQmhaTC0wXzVVN2V4SXZwRFZYRDJ4Q1ZvN2tPaVNwblJNWmxsOGdlZ01qVFZMUmNLM0JKUWxmZFM4Sm1nLTNjT2lBeURIeUtrSEFVOE5wSFVTNHZCcTVVRndhVXRrRk5NYW4yZnc?oc=5",
+      "published": "2026-06-29T08:42:36Z",
+      "tone": "bullish"
     },
     {
-      "title": "Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNa0lqMC1NZW5UV1pXZnpVcmlaTHhZaUFfNmp2RnFRV2hfTHRadmo4Z19XZ1lES05UVHdCeUoyRTJweU1IOTExeDY0U29NdnhVcEl2TW1uaUF1akI3SUxiakFtZTVLWjBfMWplVzJEN2VVbk44VE1odkFNV2c1VUlVa3E1aDU1S0w3dGNzWTYwYWIyZzJ0Q2ExSlhSa29YT19HM3FHRmR1TW0zOFJwR0diTmpDUVphQWU1WkRiUUcwYkdJd0VWOWNNeFZwV1g?oc=5",
-      "published": "2026-06-26T15:40:47Z",
+      "title": "Wall Street crash: Why S&P 500, Nasdaq futures tumbled today after KOSPI\u2019s 10% fall; AI sell-off deepens - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPOE9pYW4wR3lMMmxwaUFFUlZGUHJzNjh0aUV1RGs4T1MyYkNCNXlwTDRpbzk2SlhEZ3lEdmoxRnRvVUU0Uk1oUTYtWXJvaUpyeURNaVZJS0FvcmE4cGwwUzczTFhyZmJXSmdvZEIwSVZvYU5UWC04V3ZBTUQwQmhOYVpRZ1ZPWjU4akcxckRRRUlKTkpPZTlOaFRpWGdDYnRiY0RuRG9zbmlGYm1paUR3cF9yVGIwWlZTd0RxNmZtUVlNNzl3MnhRbnQwM0Z4N3J0ZFJabUVVRjNqT29YbExLNXFOMTdySEhVMUF4SmNiU01nMWkxcHc?oc=5",
+      "published": "2026-06-23T07:30:45Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 89
       }
     ],
-    "headline_count": 144,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
