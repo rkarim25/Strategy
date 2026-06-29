@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-06-29T15:36:09Z",
+  "generated_at_utc": "2026-06-29T18:05:18Z",
   "data_asof": "2026-06-29",
   "daily_rows": 6480,
-  "quote_price": 4032.60009765625,
+  "quote_price": 4035.300048828125,
   "quote_timestamp": "2026-06-29",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1782833769&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1782842718&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-06-29",
-      "close": 4034.39990234375
+      "close": 4035.699951171875
     },
-    "latestSma": 4245.545007324219,
+    "latestSma": 4245.610009765625,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.24142599721283797,
+    "latestDd": -0.24118155361100346,
     "regime": "tier2",
     "entryClose": 4087.699951171875,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-06-29",
-      "close": 4032.60009765625
+      "close": 4035.300048828125
     },
-    "latestSma": 4223.415002441407,
+    "latestSma": 4223.615002441406,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2417644081485607,
+    "latestDd": -0.24125674584007484,
     "regime": "tier2",
     "entryClose": 4087.699951171875,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-06-29",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-29T15:36:09Z",
+    "last_checked_at_utc": "2026-06-29T18:05:18Z",
     "last_email_sent_on": "2026-06-17",
     "last_transition": {
       "id": "2026-06-17:1->2026-06-17:0",
