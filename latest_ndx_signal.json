@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-29T11:54:37Z",
-  "data_asof": "2026-06-26",
-  "daily_rows": 7547,
-  "quote_price": 29118.23828125,
-  "quote_timestamp": "2026-06-26",
+  "generated_at_utc": "2026-06-29T15:36:09Z",
+  "data_asof": "2026-06-29",
+  "daily_rows": 7546,
+  "quote_price": 29471.390625,
+  "quote_timestamp": "2026-06-29",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-26",
-      "close": 29118.240234375
+      "date": "2026-06-29",
+      "close": 29471.390625
     },
-    "latestSma": 29779.768359375,
+    "latestSma": 29736.67890625,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.050304279585204115,
+    "latestDd": -0.03878622725993197,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -51,19 +51,19 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-06-26",
-      "close": 29118.23828125
+      "date": "2026-06-29",
+      "close": 29471.390625
     },
-    "latestSma": 29719.0212890625,
+    "latestSma": 29684.55546875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.05030434328666544,
+    "latestDd": -0.03878622725993197,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
     "recoveryTarget": null,
     "aboveSma": false,
-    "recoveryOk": false,
+    "recoveryOk": true,
     "targetLeverage": 0,
     "activeEntryClose": null,
     "activeEntryDate": null,
@@ -72,10 +72,10 @@
     "explanation": "No recovery tier active; base rule says cash because close is below SMA20."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-26",
+    "last_observed_asof": "2026-06-29",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-29T11:54:37Z",
+    "last_checked_at_utc": "2026-06-29T15:36:09Z",
     "last_email_sent_on": "2026-06-23",
     "last_transition": {
       "id": "2026-06-22:1->2026-06-23:0",

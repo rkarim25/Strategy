@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-06-29T11:54:36Z",
-  "data_asof": "2026-06-26",
-  "daily_rows": 7547,
-  "quote_price": 7354.02001953125,
-  "quote_timestamp": "2026-06-26",
+  "generated_at_utc": "2026-06-29T15:36:07Z",
+  "data_asof": "2026-06-29",
+  "daily_rows": 7546,
+  "quote_price": 7403.18017578125,
+  "quote_timestamp": "2026-06-29",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,66 +29,67 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-06-26",
-      "close": 7354.02001953125
+      "date": "2026-06-29",
+      "close": 7402.7099609375
     },
-    "latestSma": 7454.548046875,
+    "latestSma": 7445.6805419921875,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.03360935176125446,
+    "latestDd": -0.027211013993159616,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
     "recoveryTarget": 9205.44775390625,
     "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
+    "recoveryOk": true,
+    "targetLeverage": 2,
+    "activeEntryClose": 6575.31982421875,
+    "activeEntryDate": "2026-04-01",
+    "activeEntryLeverage": 2,
+    "activeEntryPnl": 0.1258326832515797,
+    "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-06-26",
-      "close": 7354.02001953125
+      "date": "2026-06-29",
+      "close": 7403.18017578125
     },
-    "latestSma": 7443.246044921875,
+    "latestSma": 7435.841552734375,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.03360935176125446,
+    "latestDd": -0.027149223132316713,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
     "recoveryTarget": 9205.44775390625,
     "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
+    "recoveryOk": true,
+    "targetLeverage": 2,
+    "activeEntryClose": 6575.31982421875,
+    "activeEntryDate": "2026-04-01",
+    "activeEntryLeverage": 2,
+    "activeEntryPnl": 0.1259041953386446,
+    "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-06-26",
-    "last_observed_target_leverage": 0,
-    "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-06-29T11:54:36Z",
-    "last_email_sent_on": "2026-06-24",
+    "last_observed_asof": "2026-06-29",
+    "last_observed_target_leverage": 2,
+    "last_observed_target_label": "2x",
+    "last_checked_at_utc": "2026-06-29T15:36:07Z",
+    "last_email_sent_on": "2026-06-29",
+    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
-      "id": "2026-06-24:2->2026-06-24:0",
-      "detected_at_utc": "2026-06-24T17:49:31Z",
-      "previous_asof": "2026-06-24",
-      "current_asof": "2026-06-24",
-      "old_target_leverage": 2,
-      "new_target_leverage": 0,
-      "old_target_label": "2x",
-      "new_target_label": "cash",
-      "email_sent": false,
+      "id": "2026-06-26:0->2026-06-29:2",
+      "detected_at_utc": "2026-06-29T15:36:07Z",
+      "previous_asof": "2026-06-26",
+      "current_asof": "2026-06-29",
+      "old_target_leverage": 0,
+      "new_target_leverage": 2,
+      "old_target_label": "cash",
+      "new_target_label": "2x",
+      "email_sent": true,
       "email_error": null,
-      "email_skipped_reason": "Signal changed (2x -> cash) but an alert email was already sent today (2026-06-24 UK)."
+      "email_skipped_reason": null
     }
   }
 }
