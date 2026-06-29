@@ -22,3 +22,6 @@ output.txt
 # Multi-agent coordination claims (local, ephemeral — see docs/runbooks/coordination.md)
 .claims/*
 !.claims/README.md
+
+# One-click Analyst — regenerated local artifact (not served, not committed)
+analyst_bundle.json

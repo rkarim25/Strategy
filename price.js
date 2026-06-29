@@ -7,6 +7,15 @@
  * Interactive Signal Playbook: each rule has parameter inputs whose backtest recomputes live, a "plot" toggle
  * (draws the indicator with the same params), a "signals" toggle (▲ buy / ▼ sell markers on the chart, via a
  * custom-indicator draw callback), and a "notes" toggle (preloaded explanation of the buy/sell logic and why).
+ *
+ * Plus (SPX/NDX): a technical-indicator SIGNAL DASHBOARD (signals_{spx,ndx}.json — A–D graded by backtested edge,
+ * live 0–100 strength, composite → suggested leverage, show-on-chart, view-backtest) and a one-click ANALYST
+ * (live bundle of signals + official signal + news + the current chart view + a screenshot → quant report +
+ * copy-prompt/worker; shared brain analyst_prompt.md). Drawing adds free-draw→Enhance shapes, rectangle/circle,
+ * an erase tool (click or box-select), notes that link to + move with a drawing, and a full price-alert system
+ * (on-chart 🔔 markers, a managed Price-alerts section, edit/rename/delete/drag, right-click-to-set anywhere,
+ * trend/ray line-following). Overlays carry stable ids so links/alerts survive applyNewData + reload.
+ * See docs/website.md (Charts) and docs/oneclick-analyst.md.
  */
 (function () {
   "use strict";

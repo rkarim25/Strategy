@@ -101,18 +101,37 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
   long-the-instrument, from the curve on *that* date) into each UST file, so the drift flips sign with the regime
   (long rates *earns* carry when the curve is inverted, *pays* when normal). Carry term uses exact yield levels; the
   roll term interpolates the available tenors (cruder pre-2021). Falls back to today's-curve-held-flat if `cr` absent.
-- **Chart:** candle/bar/area · linear/log/% axis (spreads forced linear — they go negative) · range presets ·
+- **Chart:** **bar (default)**/candle/area · linear/log/% axis (spreads forced linear — they go negative) · range presets ·
   **timeframes** 1m/5m/15m/30m/1h/4h/1D (intraday via quote-proxy `?mode=intraday`; **spreads/flies combine each
   leg's intraday client-side** via `fetchIntradayBars`/`combineLegs`; 4h aggregated; 60 s auto-refresh) · live price.
 - **Indicators:** 6 overlays + 20 studies w/ editable calcParams. **Drawing:** trend/ray/lines/price/parallel/
-  fibonacci/text + custom **Measure %** overlay (tracked in JS — v9 has no `getOverlays` — re-applied after every
-  `applyNewData`). **NBER recession shading** (`RECESSION`, "▦ Recessions") + **curve-inversion shading** (`INVERSION`,
+  fibonacci/text + **Measure %** + **free-draw** (sketch, then right-click **Enhance** → circle/square/rect/trend/
+  ray/channel) + **rectangle/circle** tools + an **erase tool** (click a drawing, or drag a box to clear an area) +
+  **notes that link to a drawing** and ride along when it moves. Every overlay gets a **stable id** (passed to
+  `createOverlay`) so note-links and alerts survive `applyNewData`/reload (drawings tracked in JS — v9 has no
+  `getOverlays`; persisted with private notes via the store worker). **Display toggles** for all drawings / all
+  alert markers; default chart type is **bars**. **NBER recession shading** (`RECESSION`, "▦ Recessions") + **curve-inversion shading** (`INVERSION`,
   "⊘ Inversions"; amber bands over the 16 sustained 2s10s/3m10y inverted periods in `ust_inversions.json`) — both
   custom `draw`-callback indicators; they paint only over the visible window (verify by slicing data to end mid-band).
 - **Signal Playbook (14 rules):** Golden/EMA Cross, Trend, Band trend (Water), MACD/MACD-zero, RSI momentum/reversion,
   Bollinger, Donchian, Williams %R, Stochastic, CCI, RSI-dip+SMA-exit. Live param inputs → live backtest; **plot**
   (draws the indicator), **signals** (▲/▼ markers via custom-indicator `draw`), **notes** (preloaded why). Optional
   **2×/3× when-safe leverage** (DD+vol gated) + costs toggle for `price` assets.
+- **Signal dashboard (SPX/NDX only, below the chart):** reads `signals_{spx,ndx}.json` — technical indicators
+  graded **A–D** by their backtested edge vs buy-and-hold (from `output/comprehensive_sweep`, via
+  `research/build_signal_dashboard.py` + `signal_state.py`; **no re-backtesting**), each with a live **0–100
+  strength** computed in-browser, a trust-weighted **composite → independent suggested leverage**, **show-on-chart**
+  (plots the indicator + ▲/▼ markers) and a **view-backtest** modal. VIX overlay pulls live VIX from the quote proxy.
+- **🧠 One-click Analyst:** the "hours of chart-reading in one click". Builds a live bundle (graded signals +
+  official mechanical signal + news + **the chart you're viewing** + a screenshot) and renders a deterministic
+  quant report + **copy-prompt (+ image)** for any Claude chat; an optional Cloudflare worker
+  (`cloudflare_market_analyst_worker.js`) does it inline via the Claude API. Shared "brain" = `analyst_prompt.md`
+  (used by the website, the worker, and the `oneclick-analyst` skill / `research/build_analyst_bundle.py`). Full
+  architecture + replication notes in [`oneclick-analyst.md`](oneclick-analyst.md).
+- **Price alerts:** set on any line/level (right-click a drawing, the chart, or the 🔔 marker), denoted on the
+  chart by a dashed 🔔 line (a managed **Price alerts** section lists them with edit-level/rename/delete; drag the
+  line to change the level). Alerts on a **trend/ray line follow the line** (trigger updates each bar). Fire a
+  toast+beep+notification on the live-quote tick; persisted with the private chart.
 - **Curve strategy leaderboard** (`ust_strategies.json` ← `scratch/ust_strategy_sweep.py`): best rule per UST instrument
   ranked by Sharpe + explanation + **live signal** + Load; the **best rule is auto-applied as the default** for each
   UST trade. Plus a **live curve snapshot** (`ust_curve.json`: SVG 3M→30Y + 2s10s/3m10y/5s30s slope/inversion flags +
@@ -138,6 +157,7 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
 | `{slug}_guarded.js` | **Dead** — legacy thick-client logic, no longer referenced (kept on disk) |
 | `etp-leverage.js`, `all-instruments-data.js`, `instruments-*.js`, `halal-comparison-data.js` | `instruments.html` data/render |
 | `cloudflare_spx_quote_worker.js` | **Not part of Pages** — source of the deployed quote-proxy Worker (config in `wrangler.toml`) |
+| `cloudflare_market_analyst_worker.js` | **Not part of Pages, not deployed** — optional Analyst worker (Claude API) for inline AI; drop-in per [`oneclick-analyst.md`](../docs/oneclick-analyst.md) |
 
 ## Data files the site fetches (root — do not move)
 
@@ -150,6 +170,10 @@ MIT, ~205 KB — keep vendored, no CDN runtime dep). Self-contained (only reuses
 - `summary_excel.json` — feeds `summary.html`.
 - `price_assets.json` + `price_<id>.json` (16) — the **Charts** page registry + per-asset OHLCV (regenerate with
   `python make_price_data.py`). `band_lab_spx.json` / `lab_ndx.json` — the **Lab** datasets.
+- `signals_{spx,ndx}.json` — the **signal dashboard** data (graded indicators + live-eval rules + evidence;
+  regenerate with `python research/build_signal_dashboard.py`). `analyst_prompt.md` — the shared **Analyst brain**
+  (fetched by the website copy-prompt + the worker). `analyst_bundle.json` is a regenerated local artifact — **not
+  served, not committed** (gitignored).
 
 ## Backtest emitters (regenerate the payloads)
 
