@@ -95,6 +95,8 @@
 
   // ---------------- backtest / stats ----------------
   function backtest(close, tbill, lev) { const n = close.length, eq = Array(n), ret = Array(n); let prev = 0, e = 100; for (let i = 0; i < n; i++) { const ar = i === 0 ? 0 : close[i] / close[i - 1] - 1, cash = (tbill[i] || 0) / TD, ll = i === 0 ? 0 : lev[i - 1]; let r = ll * ar + (1 - ll) * cash - Math.abs(ll - prev) * COST; prev = ll; e *= 1 + r; eq[i] = e; ret[i] = r; } return { equity: eq, ret }; }
+  // synthetic N× daily-rebalanced LETF price series: each day = N×the index return minus borrowing cost on the levered (N-1) portion
+  function buildSynthetic(close, tbill, N) { const n = close.length, out = Array(n); out[0] = close[0]; for (let i = 1; i < n; i++) { const ar = close[i] / close[i - 1] - 1, cash = (tbill[i] || 0) / TD; out[i] = out[i - 1] * (1 + N * ar - (N - 1) * cash); } return out; }
   function stats(eq, ret, tbill) { const n = eq.length; if (n < 2) return { cagr: NaN, vol: NaN, sharpe: NaN, sortino: NaN, calmar: NaN, maxdd: NaN, end: eq[n - 1] }; const years = n / TD, end = eq[n - 1]; const cagr = Math.pow(end / eq[0], 1 / years) - 1; let mean = 0; for (const r of ret) mean += r; mean /= n; let v = 0, dn = 0; for (const r of ret) { v += (r - mean) ** 2; if (r < 0) dn += r * r; } const vol = Math.sqrt(v / (n - 1)) * Math.sqrt(TD), down = Math.sqrt(dn / n) * Math.sqrt(TD); let rf = 0; for (const t of tbill) rf += t; rf /= n; const ann = mean * TD; let peak = -Infinity, mdd = 0; for (const x of eq) { if (x > peak) peak = x; const dd = x / peak - 1; if (dd < mdd) mdd = dd; } return { cagr, vol, sharpe: vol ? (ann - rf) / vol : NaN, sortino: down ? (ann - rf) / down : NaN, calmar: mdd < 0 ? cagr / Math.abs(mdd) : NaN, maxdd: mdd, end }; }
   function transitions(lev, dates, close) { const entry = [], exit = []; for (let i = 1; i < lev.length; i++) { if (lev[i] === lev[i - 1]) continue; const up = lev[i] > lev[i - 1]; const m = { date: dates[i], dir: up ? "up" : "down", color: up ? "#15803d" : "#b42318", label: up ? fmtLev(lev[i]) : "out", tip: `<b>${up ? "Entry" : "Exit"}</b><br>${dates[i]}<br>${fmtLev(lev[i - 1])} → ${fmtLev(lev[i])}` + (close[i] != null ? `<br>close ${close[i].toLocaleString()}` : "") }; (up ? entry : exit).push(m); } return { entry, exit, all: entry.concat(exit) }; }
 
@@ -158,7 +160,7 @@
       asset: "spx", period: "full", cs: "", ce: "",
       entry: { op: "and", conds: [{ ind: "sma", params: { window: 100, offset: -2 }, st: "above" }] },
       exit: { op: "and", conds: [{ ind: "sma", params: { window: 100, offset: 2 }, st: "below" }] },
-      lev: 1, layout: "combined",
+      lev: 1, basis: "index", layout: "combined",
     };
     let savedWin = [0, 0], lastBt = null, descs = [], lastSig = null, tmr = null;
 
@@ -167,7 +169,9 @@
       <h1 id="labTitle">Lab</h1>
       <p class="lede">Build a strategy by stacking conditions (combined with <b>AND</b>/<b>OR</b>); a group fires when
         its combined state turns on. Entry → go long (1×/2×/3×); exit → cash. The metrics track the charted
-        window — set a back-test period or zoom any chart. 1-day lag, 0.10% turnover cost, synthetic daily-rebalanced leverage.</p>
+        window — set a back-test period or zoom any chart. 1-day lag, 0.10% turnover cost, synthetic daily-rebalanced leverage.
+        <b>Leverage on</b>: <i>Index</i> = signal on the index, hold N× when long; <i>Synthetic</i> = build a daily-compounded
+        N× series and run the indicators (SMA/RSI/crosses) on <i>that</i>, so the signals reflect the leveraged instrument.</p>
       <div class="card">
         <div class="lab-bar" style="margin-bottom:16px">
           <div><span class="lbl">Asset</span><span class="seg" id="assetSeg"></span></div>
@@ -183,6 +187,7 @@
         </div>
         <div class="lab-bar">
           <div><span class="lbl">Leverage</span><span class="seg" id="levSeg"></span></div>
+          <div><span class="lbl">Leverage on</span><span class="seg" id="basisSeg"></span></div>
           <div><span class="lbl">Charts</span><span class="seg" id="layoutSeg"></span></div>
         </div>
       </div>
@@ -212,7 +217,9 @@
     const assetSeg = document.getElementById("assetSeg");
     Object.keys(ASSETS).forEach((id) => { const b = document.createElement("button"); b.textContent = ASSETS[id].label; if (id === state.asset) b.classList.add("active"); b.onclick = () => { seg(assetSeg, b); loadAsset(id); }; assetSeg.appendChild(b); });
     const levSeg = document.getElementById("levSeg");
-    [1, 2, 3].forEach((L) => { const b = document.createElement("button"); b.textContent = L + "x"; if (L === state.lev) b.classList.add("active"); b.onclick = () => { state.lev = L; seg(levSeg, b); schedule(); }; levSeg.appendChild(b); });
+    [1, 2, 3].forEach((L) => { const b = document.createElement("button"); b.textContent = L + "x"; if (L === state.lev) b.classList.add("active"); b.onclick = () => { state.lev = L; seg(levSeg, b); applyBasis(); schedule(); }; levSeg.appendChild(b); });
+    const basisSeg = document.getElementById("basisSeg");
+    [["index", "Index"], ["synthetic", "Synthetic"]].forEach(([v, t]) => { const b = document.createElement("button"); b.textContent = t; b.dataset.v = v; if (v === state.basis) b.classList.add("active"); b.onclick = () => { state.basis = v; seg(basisSeg, b); applyBasis(); schedule(); }; basisSeg.appendChild(b); });
     const layoutSeg = document.getElementById("layoutSeg");
     [["combined", "Combined"], ["separate", "Separate entry/exit"]].forEach(([id, t]) => { const b = document.createElement("button"); b.textContent = t; if (id === state.layout) b.classList.add("active"); b.onclick = () => { state.layout = id; seg(layoutSeg, b); rebuild(); }; layoutSeg.appendChild(b); });
 
@@ -283,11 +290,11 @@
 
     // ---- compute / kpis ----
     function computeStrategy() {
-      const e = groupSignal(D.close, state.entry), x = groupSignal(D.close, state.exit);
+      const e = groupSignal(D.sig, state.entry), x = groupSignal(D.sig, state.exit);
       const lev = Array(D.n).fill(0); let st = 0;
-      for (let i = 0; i < D.n; i++) { if (st === 0 && e.fires[i]) st = state.lev; else if (st > 0 && x.fires[i]) st = 0; lev[i] = st; }
-      const bt = backtest(D.close, D.tbill, lev); lastBt = { equity: bt.equity, ret: bt.ret, lev };
-      return { entryComps: e.comps, exitComps: x.comps, mk: transitions(lev, D.dates, D.close) };
+      for (let i = 0; i < D.n; i++) { if (st === 0 && e.fires[i]) st = D.posMult; else if (st > 0 && x.fires[i]) st = 0; lev[i] = st; }
+      const bt = backtest(D.sig, D.tbill, lev); lastBt = { equity: bt.equity, ret: bt.ret, lev };
+      return { entryComps: e.comps, exitComps: x.comps, mk: transitions(lev, D.dates, D.sig) };
     }
     function setKPIs(s) { const v = { cagr: pct(s.cagr), maxdd: pct(s.maxdd), calmar: f2(s.calmar), sortino: f3(s.sortino), sharpe: f3(s.sharpe), vol: pct(s.vol), end: money(s.end), pctIn: (s.pctIn * 100).toFixed(1) + "%" }; KPI.forEach(([k, key]) => { const el = document.querySelector(`[data-kpi="${k}"]`); if (el) el.textContent = v[key]; }); }
     function setKPIsForWindow() {
@@ -298,7 +305,7 @@
       s.pctIn = lastBt.lev.slice(a, hi).reduce((acc, v) => acc + (v > 0 ? 1 : 0), 0) / (hi - a);
       setKPIs(s);
       const bs = stats(reb(D.bh.equity), D.bh.ret.slice(a, hi), D.tbill.slice(a, hi));
-      document.getElementById("bhNote").innerHTML = `Buy &amp; hold 1× over the charted window (${D.dates[a]} → ${D.dates[hi - 1]}): CAGR <b>${pct(bs.cagr)}</b> · Max DD <b>${pct(bs.maxdd)}</b> · Sharpe <b>${f3(bs.sharpe)}</b> · End <b>${money(bs.end)}</b>.`;
+      document.getElementById("bhNote").innerHTML = `Buy &amp; hold 1× of <b>${esc(D.sigLabel || D.label)}</b> over the charted window (${D.dates[a]} → ${D.dates[hi - 1]}): CAGR <b>${pct(bs.cagr)}</b> · Max DD <b>${pct(bs.maxdd)}</b> · Sharpe <b>${f3(bs.sharpe)}</b> · End <b>${money(bs.end)}</b>.`;
     }
 
     // ---- charts ----
@@ -307,7 +314,7 @@
     const priceOverlays = (comps) => comps.filter((c) => c.ind.panel === "price").flatMap((c) => c.comp.lines);
     const oscComps = (comps) => comps.map((c, i) => ({ c, i })).filter((o) => o.c.ind.panel === "osc");
     function makeDescriptors(ctx) {
-      const list = [], closeLine = () => ({ label: D.label + " close", color: CLOSE_C, values: D.close });
+      const list = [], closeLine = () => ({ label: (D.sigLabel || D.label) + " close", color: CLOSE_C, values: D.sig });
       if (state.layout === "combined") {
         list.push({ title: "Price & indicators — entry/exit markers", mk: "all", series: (c) => SER([closeLine(), ...priceOverlays(c.entryComps), ...priceOverlays(c.exitComps)]) });
         oscComps(ctx.entryComps).forEach(({ i }) => list.push({ title: "Entry: " + ctx.entryComps[i].ind.label, mk: "entry", series: (c) => SER(c.entryComps[i].comp.lines) }));
@@ -342,6 +349,16 @@
     }
 
     // ---- asset load ----
+    // derive the series the strategy runs on: Index (signals on the index, position N× when long) or
+    // Synthetic (signals on a daily-compounded N× series, position 1× of it when long). N=1 ⇒ both = the index.
+    function applyBasis() {
+      if (!D.close.length) return;
+      const syn = state.basis === "synthetic" && state.lev > 1;
+      D.sig = syn ? buildSynthetic(D.close, D.tbill, state.lev) : D.close;
+      D.posMult = syn ? 1 : state.lev;                       // leverage applied to the position when long
+      D.sigLabel = syn ? `${D.label} · synthetic ${state.lev}×` : D.label;
+      D.bh = backtest(D.sig, D.tbill, Array(D.n).fill(1));    // buy & hold 1× of whatever series we're trading
+    }
     function loadAsset(id) {
       state.asset = id;
       document.getElementById("charts").innerHTML = '<p class="meta">Loading…</p>';
@@ -349,7 +366,7 @@
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
         .then((data) => {
           D.dates = data.dates; D.close = data.close; D.tbill = data.tbill; D.label = data.asset_label || ASSETS[id].label; D.n = data.close.length;
-          D.bh = backtest(D.close, D.tbill, Array(D.n).fill(1));
+          applyBasis();   // sets D.sig (index or synthetic N×) + D.posMult + D.bh + D.sigLabel
           document.getElementById("labTitle").textContent = D.label + " — Lab";
           buildPeriodOptions();
           savedWin = periodRange();
@@ -363,14 +380,15 @@
     const dec = (str) => JSON.parse(decodeURIComponent(atob(str)));
     const loadSaved = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch (_) { return []; } };
     const writeSaved = (arr) => { try { localStorage.setItem(LS_KEY, JSON.stringify(arr)); } catch (_) {} };
-    const currentConfig = () => ({ asset: state.asset, period: state.period, cs: state.cs, ce: state.ce, lev: state.lev, layout: state.layout, entry: state.entry, exit: state.exit });
+    const currentConfig = () => ({ asset: state.asset, period: state.period, cs: state.cs, ce: state.ce, lev: state.lev, basis: state.basis, layout: state.layout, entry: state.entry, exit: state.exit });
     const findBtn = (c, t) => [...c.querySelectorAll("button")].find((b) => b.textContent === t);
     function applyConfig(cfg) {
       if (!cfg || !cfg.entry || !cfg.exit) return;
-      state.entry = cfg.entry; state.exit = cfg.exit; state.lev = +cfg.lev || 1; state.layout = cfg.layout === "separate" ? "separate" : "combined";
+      state.entry = cfg.entry; state.exit = cfg.exit; state.lev = +cfg.lev || 1; state.basis = cfg.basis === "synthetic" ? "synthetic" : "index"; state.layout = cfg.layout === "separate" ? "separate" : "combined";
       state.period = cfg.period || "full"; state.cs = cfg.cs || ""; state.ce = cfg.ce || "";
       renderGroup("entry"); renderGroup("exit");
       const lb = findBtn(levSeg, state.lev + "x"); if (lb) seg(levSeg, lb);
+      const bb = [...basisSeg.querySelectorAll("button")].find((b) => b.dataset.v === state.basis); if (bb) seg(basisSeg, bb);
       const yb = findBtn(layoutSeg, state.layout === "separate" ? "Separate entry/exit" : "Combined"); if (yb) seg(layoutSeg, yb);
       const id = ASSETS[cfg.asset] ? cfg.asset : "spx"; const ab = findBtn(assetSeg, ASSETS[id].label); if (ab) seg(assetSeg, ab);
       loadAsset(id);
