@@ -34,6 +34,9 @@
   function above(a, ref) { const n = a.length, o = Array(n).fill(false); for (let i = 0; i < n; i++) { const r = tref(ref, i); if (a[i] != null && r != null && a[i] >= r) o[i] = true; } return o; }
   function below(a, ref) { const n = a.length, o = Array(n).fill(false); for (let i = 0; i < n; i++) { const r = tref(ref, i); if (a[i] != null && r != null && a[i] <= r) o[i] = true; } return o; }
   const shift1 = (a) => a.map((_, i) => (i ? a[i - 1] : null));
+  const risingEdge = (s) => s.map((v, i) => (i > 0 && v && !s[i - 1]));   // true only on the bar a state turns on
+  const crossUp = (a, ref) => risingEdge(above(a, ref));   // a crosses UP through ref (was below, now at/above) — momentary
+  const crossDn = (a, ref) => risingEdge(below(a, ref));   // a crosses DOWN through ref (was above, now at/below) — momentary
 
   // ---------------- indicator registry ----------------
   // compute(close,p) -> { lines:[{label,color,values}], state:{ stateId: bool[] (currently-true) } }
@@ -41,50 +44,50 @@
     sma: {
       label: "Price vs SMA", panel: "price",
       params: [{ k: "window", label: "SMA days", d: 100, min: 2, max: 400, step: 1 }, { k: "offset", label: "Offset %", d: 0, min: -15, max: 15, step: 0.5 }],
-      states: [{ id: "above", label: "price ABOVE the line" }, { id: "below", label: "price BELOW the line" }],
-      compute(c, p) { const s = sma(c, p.window); const off = p.offset / 100; const line = off ? s.map((x) => (x == null ? null : x * (1 + off))) : s; const lines = [{ label: "SMA" + p.window, color: "#b26a00", values: s }]; if (off) lines.push({ label: `SMA${p.window} ${p.offset > 0 ? "+" : ""}${p.offset}%`, color: "#15803d", values: line }); return { lines, state: { above: above(c, line), below: below(c, line) } }; },
+      states: [{ id: "above", label: "price ABOVE the line" }, { id: "below", label: "price BELOW the line" }, { id: "xu", label: "price CROSSES UP through the line (from below)" }, { id: "xd", label: "price CROSSES DOWN through the line (from above)" }],
+      compute(c, p) { const s = sma(c, p.window); const off = p.offset / 100; const line = off ? s.map((x) => (x == null ? null : x * (1 + off))) : s; const lines = [{ label: "SMA" + p.window, color: "#b26a00", values: s }]; if (off) lines.push({ label: `SMA${p.window} ${p.offset > 0 ? "+" : ""}${p.offset}%`, color: "#15803d", values: line }); return { lines, state: { above: above(c, line), below: below(c, line), xu: crossUp(c, line), xd: crossDn(c, line) } }; },
     },
     ema: {
       label: "Price vs EMA", panel: "price",
       params: [{ k: "window", label: "EMA days", d: 100, min: 2, max: 400, step: 1 }, { k: "offset", label: "Offset %", d: 0, min: -15, max: 15, step: 0.5 }],
-      states: [{ id: "above", label: "price ABOVE the line" }, { id: "below", label: "price BELOW the line" }],
-      compute(c, p) { const s = emaSeries(c, p.window); const off = p.offset / 100; const line = off ? s.map((x) => (x == null ? null : x * (1 + off))) : s; const lines = [{ label: "EMA" + p.window, color: "#b26a00", values: s }]; if (off) lines.push({ label: `EMA${p.window} ${p.offset > 0 ? "+" : ""}${p.offset}%`, color: "#15803d", values: line }); return { lines, state: { above: above(c, line), below: below(c, line) } }; },
+      states: [{ id: "above", label: "price ABOVE the line" }, { id: "below", label: "price BELOW the line" }, { id: "xu", label: "price CROSSES UP through the line (from below)" }, { id: "xd", label: "price CROSSES DOWN through the line (from above)" }],
+      compute(c, p) { const s = emaSeries(c, p.window); const off = p.offset / 100; const line = off ? s.map((x) => (x == null ? null : x * (1 + off))) : s; const lines = [{ label: "EMA" + p.window, color: "#b26a00", values: s }]; if (off) lines.push({ label: `EMA${p.window} ${p.offset > 0 ? "+" : ""}${p.offset}%`, color: "#15803d", values: line }); return { lines, state: { above: above(c, line), below: below(c, line), xu: crossUp(c, line), xd: crossDn(c, line) } }; },
     },
     sma_cross: {
       label: "SMA cross (fast/slow)", panel: "price",
       params: [{ k: "fast", label: "Fast SMA", d: 50, min: 2, max: 200, step: 1 }, { k: "slow", label: "Slow SMA", d: 200, min: 5, max: 400, step: 1 }],
-      states: [{ id: "fa", label: "fast ABOVE slow (bullish)" }, { id: "fb", label: "fast BELOW slow (bearish)" }],
-      compute(c, p) { const f = sma(c, p.fast), s = sma(c, p.slow); return { lines: [{ label: "SMA" + p.fast, color: "#2563eb", values: f }, { label: "SMA" + p.slow, color: "#b26a00", values: s }], state: { fa: above(f, s), fb: below(f, s) } }; },
+      states: [{ id: "fa", label: "fast ABOVE slow (bullish)" }, { id: "fb", label: "fast BELOW slow (bearish)" }, { id: "gx", label: "GOLDEN cross — fast crosses ABOVE slow" }, { id: "dx", label: "DEATH cross — fast crosses BELOW slow" }],
+      compute(c, p) { const f = sma(c, p.fast), s = sma(c, p.slow); return { lines: [{ label: "SMA" + p.fast, color: "#2563eb", values: f }, { label: "SMA" + p.slow, color: "#b26a00", values: s }], state: { fa: above(f, s), fb: below(f, s), gx: crossUp(f, s), dx: crossDn(f, s) } }; },
     },
     rsi: {
       label: "RSI", panel: "osc",
       params: [{ k: "period", label: "RSI period", d: 14, min: 2, max: 50, step: 1 }, { k: "level", label: "Level", d: 30, min: 1, max: 99, step: 1 }],
-      states: [{ id: "above", label: "RSI ABOVE level" }, { id: "below", label: "RSI BELOW level" }],
-      compute(c, p) { const r = rsi(c, p.period); return { lines: [{ label: "RSI" + p.period, color: "#7c3aed", values: r }, { label: "Level " + p.level, color: "rgba(0,0,0,.45)", values: c.map(() => p.level) }], state: { above: above(r, p.level), below: below(r, p.level) } }; },
+      states: [{ id: "above", label: "RSI ABOVE level" }, { id: "below", label: "RSI BELOW level" }, { id: "xu", label: "RSI CROSSES UP through level (from below)" }, { id: "xd", label: "RSI CROSSES DOWN through level (from above)" }],
+      compute(c, p) { const r = rsi(c, p.period); return { lines: [{ label: "RSI" + p.period, color: "#7c3aed", values: r }, { label: "Level " + p.level, color: "rgba(0,0,0,.45)", values: c.map(() => p.level) }], state: { above: above(r, p.level), below: below(r, p.level), xu: crossUp(r, p.level), xd: crossDn(r, p.level) } }; },
     },
     macd: {
       label: "MACD", panel: "osc",
       params: [{ k: "fast", label: "Fast EMA", d: 12, min: 2, max: 50, step: 1 }, { k: "slow", label: "Slow EMA", d: 26, min: 3, max: 100, step: 1 }, { k: "signal", label: "Signal EMA", d: 9, min: 2, max: 50, step: 1 }],
-      states: [{ id: "as", label: "MACD ABOVE signal" }, { id: "bs", label: "MACD BELOW signal" }, { id: "az", label: "MACD ABOVE zero" }, { id: "bz", label: "MACD BELOW zero" }],
-      compute(c, p) { const m = macd(c, p.fast, p.slow, p.signal); return { lines: [{ label: "MACD", color: "#2563eb", values: m.macd }, { label: "Signal", color: "#b26a00", values: m.signal }, { label: "0", color: "rgba(0,0,0,.45)", values: c.map(() => 0) }], state: { as: above(m.macd, m.signal), bs: below(m.macd, m.signal), az: above(m.macd, 0), bz: below(m.macd, 0) } }; },
+      states: [{ id: "as", label: "MACD ABOVE signal" }, { id: "bs", label: "MACD BELOW signal" }, { id: "az", label: "MACD ABOVE zero" }, { id: "bz", label: "MACD BELOW zero" }, { id: "xsu", label: "MACD CROSSES ABOVE signal (bullish)" }, { id: "xsd", label: "MACD CROSSES BELOW signal (bearish)" }, { id: "xzu", label: "MACD CROSSES ABOVE zero" }, { id: "xzd", label: "MACD CROSSES BELOW zero" }],
+      compute(c, p) { const m = macd(c, p.fast, p.slow, p.signal); return { lines: [{ label: "MACD", color: "#2563eb", values: m.macd }, { label: "Signal", color: "#b26a00", values: m.signal }, { label: "0", color: "rgba(0,0,0,.45)", values: c.map(() => 0) }], state: { as: above(m.macd, m.signal), bs: below(m.macd, m.signal), az: above(m.macd, 0), bz: below(m.macd, 0), xsu: crossUp(m.macd, m.signal), xsd: crossDn(m.macd, m.signal), xzu: crossUp(m.macd, 0), xzd: crossDn(m.macd, 0) } }; },
     },
     boll: {
       label: "Bollinger Bands", panel: "price",
       params: [{ k: "window", label: "Window", d: 20, min: 5, max: 100, step: 1 }, { k: "k", label: "Std devs", d: 2, min: 0.5, max: 4, step: 0.1 }],
-      states: [{ id: "au", label: "price ABOVE upper" }, { id: "bu", label: "price BELOW upper" }, { id: "al", label: "price ABOVE lower" }, { id: "bl", label: "price BELOW lower" }],
-      compute(c, p) { const mid = sma(c, p.window), sd = rollStd(c, p.window); const up = mid.map((m, i) => (m == null ? null : m + p.k * sd[i])), lo = mid.map((m, i) => (m == null ? null : m - p.k * sd[i])); return { lines: [{ label: "SMA" + p.window, color: "#b26a00", values: mid }, { label: "Upper", color: "#15803d", values: up }, { label: "Lower", color: "#b42318", values: lo }], state: { au: above(c, up), bu: below(c, up), al: above(c, lo), bl: below(c, lo) } }; },
+      states: [{ id: "au", label: "price ABOVE upper" }, { id: "bu", label: "price BELOW upper" }, { id: "al", label: "price ABOVE lower" }, { id: "bl", label: "price BELOW lower" }, { id: "xau", label: "price CROSSES ABOVE upper (breakout)" }, { id: "xbu", label: "price CROSSES BACK BELOW upper" }, { id: "xal", label: "price CROSSES BACK ABOVE lower (reversion)" }, { id: "xbl", label: "price CROSSES BELOW lower (breakdown)" }],
+      compute(c, p) { const mid = sma(c, p.window), sd = rollStd(c, p.window); const up = mid.map((m, i) => (m == null ? null : m + p.k * sd[i])), lo = mid.map((m, i) => (m == null ? null : m - p.k * sd[i])); return { lines: [{ label: "SMA" + p.window, color: "#b26a00", values: mid }, { label: "Upper", color: "#15803d", values: up }, { label: "Lower", color: "#b42318", values: lo }], state: { au: above(c, up), bu: below(c, up), al: above(c, lo), bl: below(c, lo), xau: crossUp(c, up), xbu: crossDn(c, up), xal: crossUp(c, lo), xbl: crossDn(c, lo) } }; },
     },
     donchian: {
       label: "Donchian channel", panel: "price",
       params: [{ k: "window", label: "Window", d: 20, min: 3, max: 200, step: 1 }],
-      states: [{ id: "ah", label: "price at/above N-high" }, { id: "al", label: "price at/below N-low" }],
-      compute(c, p) { const up = rollMax(c, p.window), lo = rollMin(c, p.window); return { lines: [{ label: "High" + p.window, color: "#15803d", values: up }, { label: "Low" + p.window, color: "#b42318", values: lo }], state: { ah: above(c, shift1(up)), al: below(c, shift1(lo)) } }; },
+      states: [{ id: "ah", label: "price at/above N-high" }, { id: "al", label: "price at/below N-low" }, { id: "xbo", label: "NEW N-high breakout (crosses up)" }, { id: "xbd", label: "NEW N-low breakdown (crosses down)" }],
+      compute(c, p) { const up = rollMax(c, p.window), lo = rollMin(c, p.window); return { lines: [{ label: "High" + p.window, color: "#15803d", values: up }, { label: "Low" + p.window, color: "#b42318", values: lo }], state: { ah: above(c, shift1(up)), al: below(c, shift1(lo)), xbo: crossUp(c, shift1(up)), xbd: crossDn(c, shift1(lo)) } }; },
     },
     price: {
       label: "Price level", panel: "price",
       params: [{ k: "level", label: "Price level", d: 3000, min: 1, max: 100000, step: 10 }],
-      states: [{ id: "above", label: "price ABOVE level" }, { id: "below", label: "price BELOW level" }],
-      compute(c, p) { return { lines: [{ label: "Level " + p.level, color: "rgba(0,0,0,.5)", values: c.map(() => p.level) }], state: { above: above(c, p.level), below: below(c, p.level) } }; },
+      states: [{ id: "above", label: "price ABOVE level" }, { id: "below", label: "price BELOW level" }, { id: "xu", label: "price CROSSES UP through level (from below)" }, { id: "xd", label: "price CROSSES DOWN through level (from above)" }],
+      compute(c, p) { return { lines: [{ label: "Level " + p.level, color: "rgba(0,0,0,.5)", values: c.map(() => p.level) }], state: { above: above(c, p.level), below: below(c, p.level), xu: crossUp(c, p.level), xd: crossDn(c, p.level) } }; },
     },
   };
   const defaultsFor = (id) => { const o = {}; IND[id].params.forEach((q) => (o[q.k] = q.d)); return o; };
