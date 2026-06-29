@@ -875,8 +875,16 @@
     function toggleSignals(key) { state.signalKey = state.signalKey === key ? null : key; refreshSignals(); renderPlaybook(); }
 
     // ---- drawing ----
-    let pendingOverlayId = null, drawMenuEl = null, lastMouse = { x: 120, y: 120 }, hoverOverlayId = null, selOverlayId = null, ALERTS = [], pendingLink = null;
+    let pendingOverlayId = null, drawMenuEl = null, lastMouse = { x: 120, y: 120 }, hoverOverlayId = null, selOverlayId = null, ALERTS = [], pendingLink = null, rearmTool = null;
     document.addEventListener("mousemove", (e) => { lastMouse = { x: e.clientX, y: e.clientY }; });
+    // Right-click while a draw tool is armed: cancel the in-progress (sticky) draw BEFORE KLineChart consumes the
+    // right-click — otherwise the first right-click on an existing drawing just cancels the pending draw and the
+    // menu doesn't open. We re-arm the tool when the menu closes (closeDrawMenu) so sticky drawing still works.
+    $("chart").addEventListener("pointerdown", (e) => {
+      if (e.button !== 2 || pendingOverlayId == null) return;
+      safe(() => chart.removeOverlay(pendingOverlayId)); pendingOverlayId = null;
+      const t = state.tool; if (t !== "cursor" && t !== "erase" && t !== "freeDraw") rearmTool = t;
+    }, true);
     // every overlay: right-click → edit/erase/alert menu; track hover + selection so the Delete key can remove it
     function mkOverlay(spec) {
       const oid = spec.id || ("dw_" + Date.now().toString(36) + "_" + Math.floor(Math.random() * 1e9).toString(36));   // stable, unique → survives reapply so note↔drawing links hold
@@ -1040,9 +1048,10 @@
       status("Enhanced ✓ — drag the shape to move it, drag a handle to resize, right-click to change");
     }
     function drawMenuOutside(e) { if (drawMenuEl && !drawMenuEl.contains(e.target)) closeDrawMenu(); }
-    function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; document.removeEventListener("mousedown", drawMenuOutside); } }
+    function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; document.removeEventListener("mousedown", drawMenuOutside); } if (rearmTool && pendingOverlayId == null && state.tool === rearmTool) { const t = rearmTool; rearmTool = null; armTool(t); } }
     function showDrawMenu(overlay) {
       closeDrawMenu();
+      selOverlayId = overlay.id;   // right-clicking selects it, so the Delete key also works
       const isNote = overlay.name === "noteText" || overlay.name === "simpleAnnotation";
       const m = document.createElement("div");
       m.style.cssText = `position:fixed;left:${Math.min(lastMouse.x, innerWidth - 190)}px;top:${Math.min(lastMouse.y, innerHeight - 130)}px;z-index:9999;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;min-width:172px;`;
