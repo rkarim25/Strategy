@@ -610,7 +610,7 @@
     function makeSeg(host, items, isActive, onPick, cls) { host.innerHTML = ""; items.forEach(([val, label]) => { const b = document.createElement("button"); if (cls) b.className = cls; b.textContent = label; b.dataset.v = val; if (isActive(val)) b.classList.add("active"); b.onclick = () => onPick(val, b); host.appendChild(b); }); }
     function safe(fn) { try { return fn(); } catch (e) { status("error: " + (e.message || e)); } }
 
-    chart = klinecharts.init($("chart"));
+    chart = klinecharts.init($("chart")); window.__chart = chart;   // expose the instance (harmless) — aids debugging the headless-canvas paths
     chart.setStyles({
       grid: { horizontal: { color: "#eee" }, vertical: { color: "#f4f4f4" } },
       candle: { type: state.type, bar: { upColor: UP, downColor: DN, noChangeColor: "#888", upBorderColor: UP, downBorderColor: DN, upWickColor: UP, downWickColor: DN }, priceMark: { last: { show: true }, high: { show: true }, low: { show: true } }, tooltip: { showRule: "always", showType: "rect" } },
@@ -1144,16 +1144,24 @@
     function applyDrawingColors() {   // re-assert each drawing's colour (alerted → amber so you can see WHICH line is tracked)
       drawings.forEach((d) => { const c = ALERTS.some((a) => a.id === d.id) ? DRAW_ALERT : (d.color || DRAW_DEFAULT); safe(() => chart.overrideOverlay({ id: d.id, styles: overlayColorStyles(c) })); });
     }
+    const toPx = (pt) => {   // resolve a drawing point to chart pixels — dataIndex first (a future/edge point has a null timestamp but a valid dataIndex)
+      if (!pt || pt.value == null) return null;
+      const q = { value: pt.value };
+      if (pt.dataIndex != null) q.dataIndex = pt.dataIndex; else if (pt.timestamp != null) q.timestamp = pt.timestamp; else return null;
+      const r = safe(() => chart.convertToPixel(q, { paneId: "candle_pane" }));
+      return r && isFinite(r.x) && isFinite(r.y) ? r : null;
+    };
     function trendAngleInfo(overlay) {   // visual angle vs horizontal (steepness at current zoom) + % move over the span
-      const p = (overlay.points || []).filter((x) => x && x.value != null && x.timestamp != null); if (p.length < 2) return null;
-      const A = safe(() => chart.convertToPixel({ timestamp: p[0].timestamp, value: p[0].value }, { paneId: "candle_pane" }));
-      const B = safe(() => chart.convertToPixel({ timestamp: p[1].timestamp, value: p[1].value }, { paneId: "candle_pane" }));
-      if (!A || !B) return null;
+      const p = (overlay.points || []).filter((x) => x && x.value != null && (x.dataIndex != null || x.timestamp != null)); if (p.length < 2) return null;
+      const A = toPx(p[0]), B = toPx(p[1]); if (!A || !B) return null;
       const L = A.x <= B.x ? A : B, R = A.x <= B.x ? B : A;
       const angle = Math.atan2(-(R.y - L.y), Math.max(1, R.x - L.x)) * 180 / Math.PI;   // up-to-the-right = positive
-      const e0 = p[0].timestamp <= p[1].timestamp ? p[0] : p[1], e1 = p[0].timestamp <= p[1].timestamp ? p[1] : p[0];
-      const pct = e0.value ? (e1.value / e0.value - 1) * 100 : 0, days = Math.round((e1.timestamp - e0.timestamp) / 864e5);
-      const mid = safe(() => chart.convertToPixel({ timestamp: (p[0].timestamp + p[1].timestamp) / 2, value: (p[0].value + p[1].value) / 2 }, { paneId: "candle_pane" }));
+      const haveTs = p[0].timestamp != null && p[1].timestamp != null;
+      const e0 = !haveTs || p[0].timestamp <= p[1].timestamp ? p[0] : p[1], e1 = !haveTs || p[0].timestamp <= p[1].timestamp ? p[1] : p[0];
+      const pct = e0.value ? (e1.value / e0.value - 1) * 100 : 0, days = haveTs ? Math.round((e1.timestamp - e0.timestamp) / 864e5) : null;
+      const mid = toPx({ value: (p[0].value + p[1].value) / 2,
+        dataIndex: (p[0].dataIndex != null && p[1].dataIndex != null) ? (p[0].dataIndex + p[1].dataIndex) / 2 : undefined,
+        timestamp: haveTs ? (p[0].timestamp + p[1].timestamp) / 2 : undefined });
       return { angle, pct, days, mid };
     }
     function floatLabel(px, py, text) {
@@ -1162,11 +1170,12 @@
       document.body.appendChild(el); setTimeout(() => { el.style.opacity = "0"; }, 3200); setTimeout(() => el.remove(), 3800);
     }
     function showTrendAngle(overlay) {
-      const info = trendAngleInfo(overlay); if (!info) { status("couldn't measure this line"); return; }
+      const info = trendAngleInfo(overlay); if (!info) { floatLabel(lastMouse.x, lastMouse.y, "📐 couldn't measure this line"); status("couldn't measure this line"); return; }
       const txt = `📐 ${info.angle >= 0 ? "+" : ""}${info.angle.toFixed(1)}° vs horizontal  ·  ${info.pct >= 0 ? "+" : ""}${info.pct.toFixed(1)}%${info.days ? " over " + info.days + "d" : ""}`;
       const host = $("chart").getBoundingClientRect();
-      if (info.mid) floatLabel(host.left + info.mid.x, host.top + info.mid.y, txt); else floatLabel(lastMouse.x, lastMouse.y, txt);
-      status(txt.replace("📐 ", "Trend angle "));
+      const px = info.mid && isFinite(info.mid.x) ? host.left + info.mid.x : lastMouse.x;
+      const py = info.mid && isFinite(info.mid.y) ? host.top + info.mid.y : lastMouse.y;
+      floatLabel(px, py, txt); status(txt.replace("📐 ", "Trend angle "));
     }
     function showDrawMenu(overlay) {
       closeDrawMenu();
