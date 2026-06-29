@@ -423,6 +423,12 @@
       .ctrlbar .live{margin-left:6px;}
       .chart-card details.ind-panel{margin:3px 0;padding:0 12px;}
       .chart-card details.ind-panel summary{padding:6px 0;font-size:12px;}
+      .dsig-arrow{display:inline-block;transition:transform .15s ease;}
+      details.dsig[open] .dsig-arrow{transform:rotate(180deg);}
+      .dw-swatches{display:flex;gap:6px;padding:8px 14px 4px;flex-wrap:wrap;align-items:center;}
+      .dw-swatch{width:18px;height:18px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0;}
+      .dw-swatch:hover{transform:scale(1.15);}
+      .alert-row.tracked{background:rgba(214,138,18,.10);border-left:3px solid #d68a12;}
       #chart{width:100%;height:clamp(460px,74vh,840px);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
       @media(max-width:680px){#chart{height:68vh;}}
       details.ind-panel{margin:6px 0;border:1px solid var(--line);border-radius:12px;padding:2px 14px;background:rgba(255,255,255,.6);}
@@ -523,6 +529,7 @@
               <button id="rngApply" class="seg" style="padding:4px 10px">Go</button>
             </span></div>
           <div class="live" id="live"><span class="dot"></span><span id="liveTxt">live —</span></div>
+          <button id="cloudBtnTop" class="seg" style="padding:5px 12px;font-weight:600" title="Your notes, drawings, indicators &amp; alerts auto-save in this browser. Click to sync them to the cloud (cross-device) — auto-syncs after sign-in.">☁ Save</button>
         </div>
         <details class="ind-panel">
           <summary>Indicators — overlays &amp; studies · click to expand &amp; edit params · <b>right-click any for help, examples &amp; one-click signals</b></summary>
@@ -592,9 +599,9 @@
       </div>
       <div class="card">
         <h2>Notes <span class="meta" id="notesStatus" style="font-weight:400"></span></h2>
-        <div class="notes-row"><button id="cloudBtn" class="apply">☁ Save to cloud</button><span class="meta" id="cloudAuth"></span></div>
-        <textarea id="notes" rows="5" placeholder="Your private notes for this asset (saved locally; ☁ for cross-device)…"></textarea>
-        <p class="meta" style="margin-top:8px">Your notes, drawings, indicator &amp; strategy parameters are <b>private</b> and saved per asset — passphrase to view/save, auto-saved in this browser meanwhile.</p>
+        <div class="notes-row"><span class="meta" id="cloudAuth"></span></div>
+        <textarea id="notes" rows="5" placeholder="Your private notes for this asset (auto-saved in this browser; ☁ Save at the top syncs cross-device)…"></textarea>
+        <p class="meta" style="margin-top:8px">Your notes, drawings, indicators &amp; alerts are <b>private</b> and <b>auto-saved</b> per asset — instantly in this browser, and synced to the cloud automatically once you’ve signed in via <b>☁ Save</b> (top right).</p>
       </div>`;
 
     const $ = (id) => document.getElementById(id);
@@ -893,6 +900,7 @@
       fetch(QUOTE + "/?mode=intraday&symbol=" + encodeURIComponent(D.ticker) + "&interval=1d&range=3mo&_=" + Date.now()).then((r) => r.json()).then((j) => {
         if (!j || (j.ticker || "").toUpperCase() !== (D.ticker || "").toUpperCase()) return;   // ticker-match safeguard (proxy may fall back to a wrong symbol's last close)
         const live = (j.bars || []).filter((b) => b && b.close > 0); if (!live.length) return;
+        const prevLastTs = D.daily.length ? D.daily[D.daily.length - 1].timestamp : 0;   // to detect a genuine NEW bar (vs only the forming bar updating)
         const byTs = new Map(D.daily.map((b) => [b.timestamp, b]));
         const dateOf = new Map(D.daily.map((b, i) => [b.timestamp, D.dates[i]]));
         const changed = [];
@@ -909,7 +917,13 @@
         D.close = merged.map((b) => b.close); D.high = merged.map((b) => b.high); D.low = merged.map((b) => b.low);
         D.ddh = ddFromHigh(D.close, 252); D.rv = rvol(D.close, 20);
         const c = ASSET_CACHE[D.id]; if (c) { c.dates = D.dates; c.timestamp = merged.map((b) => b.timestamp); c.open = merged.map((b) => b.open); c.high = D.high; c.low = D.low; c.close = D.close; c.volume = merged.map((b) => b.volume); }
-        if (state.tf === "D") { changed.sort((a, b) => a.timestamp - b.timestamp).forEach((b) => safe(() => chart.updateData(b))); setCur(merged); refreshSignals(); }
+        if (state.tf === "D") {
+          changed.sort((a, b) => a.timestamp - b.timestamp).forEach((b) => safe(() => chart.updateData(b))); setCur(merged); refreshSignals();
+          // a genuinely NEW bar shifts the data length → re-anchor drawings to the now-current dataset so trend lines don't
+          // jump on reload (their saved timestamps re-resolve against the same bars they were drawn on). Skip mid-draw / menu-open.
+          const appended = merged.length && merged[merged.length - 1].timestamp > prevLastTs;
+          if (appended && drawings.length && pendingOverlayId == null && !drawMenuEl) reapplyDrawings();
+        }
         renderPlaybook();
       }).catch(() => {});
     }
@@ -955,7 +969,8 @@
     // every overlay: right-click → edit/erase/alert menu; track hover + selection so the Delete key can remove it
     function mkOverlay(spec) {
       const oid = spec.id || ("dw_" + Date.now().toString(36) + "_" + Math.floor(Math.random() * 1e9).toString(36));   // stable, unique → survives reapply so note↔drawing links hold
-      return safe(() => chart.createOverlay({ ...spec, id: oid,
+      const colorStyles = spec.color ? { styles: overlayColorStyles(spec.color) } : {};   // restore a custom colour on (re)create
+      return safe(() => chart.createOverlay({ ...spec, ...colorStyles, id: oid,
         onClick: (e) => { if (state.tool === "erase") { eraseOverlay(e.overlay); status("🗑 erased"); return true; } return false; },
         onRightClick: (e) => { showDrawMenu(e.overlay); return true; },
         onPressedMoveStart: (e) => { if (ALERTS.some((a) => a.id === e.overlay.id)) safe(() => chart.removeIndicator("candle_pane", "ALERTLINE")); return false; },   // hide the 🔔 marker while dragging an alerted drawing
@@ -1116,6 +1131,43 @@
     }
     function drawMenuOutside(e) { if (drawMenuEl && !drawMenuEl.contains(e.target)) closeDrawMenu(); }
     function closeDrawMenu() { if (drawMenuEl) { drawMenuEl.remove(); drawMenuEl = null; document.removeEventListener("mousedown", drawMenuOutside); } if (rearmTool && pendingOverlayId == null && state.tool === rearmTool) { const t = rearmTool; rearmTool = null; armTool(t); } }
+    // ---- drawing colour + trend-line angle ----
+    const DRAW_DEFAULT = "#0071e3", DRAW_ALERT = "#d68a12";   // default blue · amber = a tracked (alerted) line
+    const SWATCHES = ["#0071e3", "#15803d", "#b42318", "#d68a12", "#7c3aed", "#0aa2c0", "#1d1d1f"];
+    function overlayColorStyles(c) { const fill = c + "1f"; return { line: { color: c }, polygon: { color: fill, borderColor: c }, circle: { color: fill, borderColor: c }, arc: { color: c }, text: { color: c } }; }
+    function recolorOverlay(overlay, c) {
+      const d = drawings.find((x) => x.id === overlay.id) || (recordDrawing(overlay), drawings.find((x) => x.id === overlay.id));
+      if (d) d.color = c;
+      if (!ALERTS.some((a) => a.id === overlay.id)) safe(() => chart.overrideOverlay({ id: overlay.id, styles: overlayColorStyles(c) }));   // an alerted line stays amber until the alert is removed
+      scheduleSave(); status("colour changed");
+    }
+    function applyDrawingColors() {   // re-assert each drawing's colour (alerted → amber so you can see WHICH line is tracked)
+      drawings.forEach((d) => { const c = ALERTS.some((a) => a.id === d.id) ? DRAW_ALERT : (d.color || DRAW_DEFAULT); safe(() => chart.overrideOverlay({ id: d.id, styles: overlayColorStyles(c) })); });
+    }
+    function trendAngleInfo(overlay) {   // visual angle vs horizontal (steepness at current zoom) + % move over the span
+      const p = (overlay.points || []).filter((x) => x && x.value != null && x.timestamp != null); if (p.length < 2) return null;
+      const A = safe(() => chart.convertToPixel({ timestamp: p[0].timestamp, value: p[0].value }, { paneId: "candle_pane" }));
+      const B = safe(() => chart.convertToPixel({ timestamp: p[1].timestamp, value: p[1].value }, { paneId: "candle_pane" }));
+      if (!A || !B) return null;
+      const L = A.x <= B.x ? A : B, R = A.x <= B.x ? B : A;
+      const angle = Math.atan2(-(R.y - L.y), Math.max(1, R.x - L.x)) * 180 / Math.PI;   // up-to-the-right = positive
+      const e0 = p[0].timestamp <= p[1].timestamp ? p[0] : p[1], e1 = p[0].timestamp <= p[1].timestamp ? p[1] : p[0];
+      const pct = e0.value ? (e1.value / e0.value - 1) * 100 : 0, days = Math.round((e1.timestamp - e0.timestamp) / 864e5);
+      const mid = safe(() => chart.convertToPixel({ timestamp: (p[0].timestamp + p[1].timestamp) / 2, value: (p[0].value + p[1].value) / 2 }, { paneId: "candle_pane" }));
+      return { angle, pct, days, mid };
+    }
+    function floatLabel(px, py, text) {
+      const el = document.createElement("div"); el.textContent = text;
+      el.style.cssText = `position:fixed;left:${px}px;top:${py}px;transform:translate(-50%,-135%);z-index:9998;background:#1d1d1f;color:#fff;font:600 12.5px -apple-system,sans-serif;padding:6px 11px;border-radius:9px;box-shadow:0 8px 24px rgba(0,0,0,.28);pointer-events:none;transition:opacity .5s;white-space:nowrap`;
+      document.body.appendChild(el); setTimeout(() => { el.style.opacity = "0"; }, 3200); setTimeout(() => el.remove(), 3800);
+    }
+    function showTrendAngle(overlay) {
+      const info = trendAngleInfo(overlay); if (!info) { status("couldn't measure this line"); return; }
+      const txt = `📐 ${info.angle >= 0 ? "+" : ""}${info.angle.toFixed(1)}° vs horizontal  ·  ${info.pct >= 0 ? "+" : ""}${info.pct.toFixed(1)}%${info.days ? " over " + info.days + "d" : ""}`;
+      const host = $("chart").getBoundingClientRect();
+      if (info.mid) floatLabel(host.left + info.mid.x, host.top + info.mid.y, txt); else floatLabel(lastMouse.x, lastMouse.y, txt);
+      status(txt.replace("📐 ", "Trend angle "));
+    }
     function showDrawMenu(overlay) {
       closeDrawMenu();
       selOverlayId = overlay.id;   // right-clicking selects it, so the Delete key also works
@@ -1139,7 +1191,14 @@
       }
       if (!isNote) m.appendChild(item("📝  Attach linked note", () => attachNote(overlay)));   // note rides along when this drawing moves
       if (isNote) { const nr = drawings.find((d) => d.id === overlay.id); if (nr && nr.linkedTo) m.appendChild(item("🔗  Detach from drawing", () => { nr.linkedTo = undefined; nr.offset = undefined; scheduleSave(); status("note detached — now free-standing"); })); }
+      if (isSloping(overlay.name)) m.appendChild(item("📐  Show angle (steepness)", () => showTrendAngle(overlay)));
       if (ENHANCEABLE.has(overlay.name)) ENHANCE.forEach(([k, lbl]) => m.appendChild(item("Enhance → " + lbl, () => enhanceTo(overlay, k))));
+      if (!isNote) {   // colour swatches — recolour any line/shape
+        const sw = document.createElement("div"); sw.className = "dw-swatches";
+        const swl = document.createElement("span"); swl.textContent = "Colour"; swl.style.cssText = "font-size:11px;color:#6e6e73;margin-right:3px"; sw.appendChild(swl);
+        SWATCHES.forEach((c) => { const b = document.createElement("button"); b.className = "dw-swatch"; b.style.background = c; b.title = c; b.onmousedown = (ev) => ev.stopPropagation(); b.onclick = (ev) => { ev.stopPropagation(); closeDrawMenu(); recolorOverlay(overlay, c); }; sw.appendChild(b); });
+        m.appendChild(sw);
+      }
       m.appendChild(item("🗑  Erase  (or press Delete)", () => eraseOverlay(overlay), true));
       document.body.appendChild(m); drawMenuEl = m;
       setTimeout(() => document.addEventListener("mousedown", drawMenuOutside), 0);   // close on OUTSIDE click only (was closing before the button click registered)
@@ -1279,7 +1338,7 @@
       ALERT_LINES = lines;
       safe(() => { chart.removeIndicator("candle_pane", "ALERTLINE"); if (lines.length && !state.alertsHidden) chart.createIndicator("ALERTLINE", true, { id: "candle_pane" }); });
     }
-    function syncAlerts() { refreshAlertLines(); renderAlerts(); }
+    function syncAlerts() { refreshAlertLines(); renderAlerts(); applyDrawingColors(); }
     function renderAlerts() {
       const card = $("alertCard"), host = $("alertList"); if (!card || !host) return;
       ALERTS = ALERTS.filter((a) => drawings.some((d) => d.id === a.id));   // drop alerts whose drawing is gone
@@ -1289,8 +1348,11 @@
       host.innerHTML = ALERTS.map((a) => {
         const d = drawings.find((x) => x.id === a.id), lv = overlayLevels(d, ts), t = drawingTypeLabel(d.name), levels = lv.map((x) => nfmt(x.value)).join(" · ");
         const editable = lv.length === 1 && (d.name === "horizontalStraightLine" || d.name === "priceLine");
-        const where = isSloping(d.name) ? "tracks the line — now " + levels : (lv.length > 1 ? levels : "at " + levels);
-        return `<div class="alert-row" data-id="${esc(a.id)}"><span class="a-bell">🔔</span><span style="min-width:0"><b>${esc(a.label || t)}</b><div class="meta">${esc(t)} · ${esc(where)}</div></span><span class="a-acts">${editable ? `<button data-ap="${esc(a.id)}">Edit price</button>` : ""}<button data-an="${esc(a.id)}">Rename</button><button class="del" data-ad="${esc(a.id)}">Delete</button></span></div>`;
+        const sloped = isSloping(d.name), nowVal = lv.length && isFinite(lv[0].value) ? lv[0].value : null;
+        const ang = sloped ? (trendAngleInfo({ name: d.name, points: d.points }) || {}).angle : null;   // identify WHICH trend line by its steepness
+        const where = sloped ? (nowVal != null ? "crosses ≈ " + nfmt(nowVal) + " now (rises with the line)" : "tracks the line — drag it to set the level") : (lv.length > 1 ? levels : "at " + (nowVal != null ? nfmt(nowVal) : "—"));
+        const angTag = ang != null ? ` · <b style="color:${DRAW_ALERT}">${ang >= 0 ? "+" : ""}${ang.toFixed(0)}°</b>` : "";
+        return `<div class="alert-row${sloped ? " tracked" : ""}" data-id="${esc(a.id)}"><span class="a-bell">🔔</span><span style="min-width:0"><b>${esc(a.label || t)}</b><div class="meta">${esc(t)}${angTag} · ${where}</div></span><span class="a-acts">${editable ? `<button data-ap="${esc(a.id)}">Edit price</button>` : ""}<button data-an="${esc(a.id)}">Rename</button><button class="del" data-ad="${esc(a.id)}">Delete</button></span></div>`;
       }).join("");
       host.querySelectorAll("button[data-ad]").forEach((b) => (b.onclick = () => { removeAlert(b.dataset.ad); syncAlerts(); status("alert deleted"); }));
       host.querySelectorAll("button[data-an]").forEach((b) => (b.onclick = () => alertInlineEdit(b, "name")));
@@ -1349,8 +1411,9 @@
     const validDraw = (d) => d && d.name && Array.isArray(d.points) && d.points.length && d.points.every((p) => p && p.value != null && isFinite(p.value));
     function recordDrawing(o) {
       if (restoring || !o || !o.points || !o.points.length) return;
-      const pts = o.points.map((p) => ({ timestamp: p.timestamp, value: p.value })); if (pts.some((p) => p.value == null)) return;
-      const i = drawings.findIndex((d) => d.id === o.id), prev = i >= 0 ? drawings[i] : null, rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData };
+      const lastTs = (state.curTs && state.curTs.length) ? state.curTs[state.curTs.length - 1] : null;
+      const pts = o.points.map((p) => ({ timestamp: (p.timestamp == null || !isFinite(p.timestamp)) && lastTs != null ? lastTs : p.timestamp, value: p.value })); if (pts.some((p) => p.value == null || p.timestamp == null)) return;   // clamp a null/future-area timestamp to the last bar so the line can't jump to the far left on reload
+      const i = drawings.findIndex((d) => d.id === o.id), prev = i >= 0 ? drawings[i] : null, rec = { id: o.id, name: o.name, points: pts, extendData: o.extendData, color: prev ? prev.color : undefined };
       const link = (pendingLink && pendingLink.noteId === o.id) ? pendingLink : null;   // a freshly-attached note
       if (link) { rec.linkedTo = link.linkedTo; rec.offset = link.offset; pendingLink = null; }
       else if (prev && prev.linkedTo) {   // an existing linked note got moved → re-anchor its offset to the parent
@@ -1360,7 +1423,7 @@
       if (i >= 0) drawings[i] = rec; else drawings.push(rec); scheduleSave();
       const movedAlert = ALERTS.find((a) => a.id === o.id); if (movedAlert) { movedAlert.sides = []; syncAlerts(); }   // alerted drawing moved → re-anchor its trigger level (re-seed so it doesn't fire from the move itself)
     }
-    function reapplyDrawings() { restoring = true; safe(() => chart.removeOverlay()); if (state.drawingsHidden) { restoring = false; syncAlerts(); return; } const keep = drawings.filter(validDraw); drawings = []; keep.forEach((d) => { const id = mkOverlay({ id: d.id, name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData, linkedTo: d.linkedTo, offset: d.offset }); }); restoring = false; syncAlerts(); }
+    function reapplyDrawings() { restoring = true; safe(() => chart.removeOverlay()); if (state.drawingsHidden) { restoring = false; syncAlerts(); return; } const keep = drawings.filter(validDraw); drawings = []; keep.forEach((d) => { const id = mkOverlay({ id: d.id, name: d.name, points: d.points, extendData: d.extendData, color: d.color }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData, linkedTo: d.linkedTo, offset: d.offset, color: d.color }); }); restoring = false; syncAlerts(); }
     function undoDrawing() { const last = drawings.pop(); if (last) { safe(() => chart.removeOverlay(last.id)); removeAlert(last.id); } scheduleSave(); syncAlerts(); }
     function clearDrawings() { safe(() => chart.removeOverlay()); drawings = []; ALERTS = []; scheduleSave(); syncAlerts(); }
 
@@ -1371,10 +1434,22 @@
     function status(msg) { $("notesStatus").textContent = msg ? "· " + msg : ""; }
     function updateAuth() { const el = $("cloudAuth"); if (getKey()) { el.innerHTML = `signed in · <a href="#" id="logout">log out</a>`; el.querySelector("#logout").onclick = (e) => { e.preventDefault(); setKey(""); status("logged out"); }; } else el.textContent = "not signed in"; }
     function ensureKey() { const k = getKey(); if (k) return Promise.resolve(k); const entry = (window.prompt("Passphrase to save/view private notes:") || "").trim(); if (!entry) return Promise.resolve(""); return fetch(STORE + "/api/auth", { method: "POST", headers: { "X-Lab-Key": entry } }).then((r) => { if (!r.ok) { status("wrong passphrase"); return ""; } setKey(entry); return entry; }).catch(() => { status("login failed"); return ""; }); }
-    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, name, points, extendData, linkedTo, offset }) => ({ id, name, points, extendData, linkedTo, offset })), alerts: ALERTS.map((a) => ({ id: a.id, label: a.label })), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams, lev: state.lev, carry: state.carry, pnl: { mode: state.pnl.mode, perBp: state.pnl.perBp } } }; }
+    function snapshot() { return { notes: $("notes").value || "", drawings: drawings.map(({ id, name, points, extendData, linkedTo, offset, color }) => ({ id, name, points, extendData, linkedTo, offset, color })), alerts: ALERTS.map((a) => ({ id: a.id, label: a.label })), settings: { type: state.type, yAxis: state.yAxis, indicators: state.indicators, indParams: state.indParams, stratParams: state.stratParams, lev: state.lev, carry: state.carry, pnl: { mode: state.pnl.mode, perBp: state.pnl.perBp } } }; }
     function saveLocal() { try { localStorage.setItem(lsKey(D.id), JSON.stringify(snapshot())); } catch (_) {} }
-    function scheduleSave() { if (saveTimer) clearTimeout(saveTimer); saveTimer = setTimeout(() => { saveTimer = null; saveLocal(); status("saved locally"); }, 600); }
-    $("cloudBtn").onclick = () => { ensureKey().then((key) => { if (!key) return; updateAuth(); status("saving…"); fetch(STORE + "/api/chart/" + D.id, { method: "POST", headers: { "Content-Type": "application/json", "X-Lab-Key": key }, body: JSON.stringify(snapshot()) }).then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired"); } if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then(() => status("saved to cloud ✓")).catch((e) => status("cloud save failed: " + e.message)); }); };
+    function pushCloud(announce) {   // sync the snapshot to the cloud store; silent unless announce
+      const key = getKey(); if (!key) return Promise.resolve(false);
+      if (announce) status("syncing…");
+      return fetch(STORE + "/api/chart/" + D.id, { method: "POST", headers: { "Content-Type": "application/json", "X-Lab-Key": key }, body: JSON.stringify(snapshot()) })
+        .then((r) => { if (r.status === 401) { setKey(""); throw new Error("login expired"); } if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(() => { if (announce) status("synced to cloud ✓"); return true; }).catch((e) => { status("cloud sync failed: " + e.message); return false; });
+    }
+    function scheduleSave() {   // everything auto-saves: instantly to this browser, and (once signed in) synced to the cloud — no button needed
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => { saveTimer = null; saveLocal(); if (getKey()) pushCloud(false).then((ok) => { if (ok) status("saved · synced ☁"); }); else status("saved locally"); }, 600);
+    }
+    function manualCloudSave() { ensureKey().then((key) => { if (!key) { status("sign in to sync across devices"); return; } updateAuth(); pushCloud(true); }); }   // ☁ Save: sign in if needed, then sync now (afterwards every change auto-syncs)
+    if ($("cloudBtn")) $("cloudBtn").onclick = manualCloudSave;       // legacy bottom button (removed from layout) — guarded
+    if ($("cloudBtnTop")) $("cloudBtnTop").onclick = manualCloudSave; // neat top-bar button
     $("notes").addEventListener("input", scheduleSave);
 
     function applySnapshot(snap) {
@@ -1391,7 +1466,7 @@
       syncPnlUI();
       syncIndicators(st.indicators); renderIndParams();
       drawings = [];
-      (snap.drawings || []).filter(validDraw).forEach((d) => { const id = mkOverlay({ id: d.id, name: d.name, points: d.points, extendData: d.extendData }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData, linkedTo: d.linkedTo, offset: d.offset }); });
+      (snap.drawings || []).filter(validDraw).forEach((d) => { const id = mkOverlay({ id: d.id, name: d.name, points: d.points, extendData: d.extendData, color: d.color }); if (id) drawings.push({ id, name: d.name, points: d.points, extendData: d.extendData, linkedTo: d.linkedTo, offset: d.offset, color: d.color }); });
       ALERTS = (snap.alerts || []).filter((a) => drawings.some((d) => d.id === a.id)).map((a) => ({ id: a.id, label: a.label, sides: [] }));
       restoring = false; renderPlaybook(); syncAlerts();
     }
@@ -1611,7 +1686,7 @@
             <span class="dgrade" style="background:${gc[0]};color:${gc[1]}">${s.grade}</span>
             <span style="flex:1;min-width:0"><span style="font-size:14px;color:#1d1d1f">${esc(s.name)}</span><span style="display:block;font-size:12px;color:var(--muted)">${st ? esc(st.read) : "awaiting data"}</span></span>
             <span style="width:118px;flex:none"><span style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px"><span style="color:${dirCol};font-weight:600">${dirTxt}</span><span>${st ? str : "–"}</span></span><span class="dbar"><i style="width:${str}%;background:${barCol}"></i></span></span>
-            <span style="color:var(--muted);font-size:12px">▾</span>
+            <span class="dsig-arrow" style="color:var(--muted);font-size:12px">▾</span>
           </summary>
           <div style="padding:11px 0 3px 34px">
             <div style="font-size:13px;color:#444;line-height:1.6;margin-bottom:9px">${esc(s.why || "")}</div>
