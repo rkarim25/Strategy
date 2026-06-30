@@ -32,6 +32,19 @@
   let AUTO_SIG = { buys: new Set(), sells: new Set() }; // auto-analysis buy/sell timestamps (drawn by the AUTOTA indicator)
   let STUDY_SIG = { buys: new Set(), sells: new Set() }; // "add buy/sell signals" from a study (drawn by the STUDYSIG indicator)
   let ALERT_LINES = []; // [{value,label}] active price-alert levels, drawn on the chart by the ALERTLINE indicator
+  // ---- multi-asset Compare overlay: each picked asset is indexed to 100 at the first date all series share,
+  //      drawn in its own auto-scaled sub-pane (COMPARE indicator) so different price scales never clash. ----
+  let COMPARE_SERIES = new Map();  // id -> { label, tsArr:[], closeArr:[] }
+  let COMPARE_ORDER = [];          // ids in slot order (c0..cN) — also the chip + colour order
+  let CMP_MAIN = { label: "", close: [], ts: [] };  // the current main asset (for the dark reference line + chip)
+  const CMP_MAX = 6;               // max simultaneous comparisons (palette + pane legibility)
+  const CMP_PALETTE = ["#2563eb", "#d4317c", "#0d9488", "#ea580c", "#7c3aed", "#0891b2"]; // c0..c5
+  function cmpCloseAt(s, ts) {     // close at-or-before ts (binary search) → aligns daily series onto aggregated/other-asset bars
+    const a = s.tsArr; if (!a || !a.length || ts < a[0]) return NaN;
+    let lo = 0, hi = a.length - 1, ans = -1;
+    while (lo <= hi) { const m = (lo + hi) >> 1; if (a[m] <= ts) { ans = m; lo = m + 1; } else hi = m - 1; }
+    return ans >= 0 ? s.closeArr[ans] : NaN;
+  }
   const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // UK date format dd-MMM-yy
   const p2 = (n) => String(n).padStart(2, "0");
   function ukTs(ts, withTime) { const d = new Date(ts); if (!isFinite(d.getTime())) return ""; const s = p2(d.getDate()) + "-" + MON[d.getMonth()] + "-" + String(d.getFullYear()).slice(-2); return withTime ? s + " " + p2(d.getHours()) + ":" + p2(d.getMinutes()) : s; }
@@ -383,6 +396,33 @@
       });
     } catch (_) {}
     try {
+      klinecharts.registerIndicator({   // multi-asset Compare — main + picked assets indexed to 100 at the first shared date, own auto-scaled pane
+        name: "COMPARE", shortName: "Compare (=100)",
+        figures: [{ key: "m", title: "", type: "line" }].concat([0, 1, 2, 3, 4, 5].map((k) => ({ key: "c" + k, title: "", type: "line" }))),
+        calc: (dataList) => {
+          const out = dataList.map(() => ({}));
+          const ids = COMPARE_ORDER.slice(0, CMP_MAX);
+          if (!ids.length || !dataList.length) return out;
+          const series = ids.map((id) => COMPARE_SERIES.get(id)).filter(Boolean);
+          let base = -1;
+          for (let i = 0; i < dataList.length; i++) {
+            const d = dataList[i]; if (!d || !(d.close > 0)) continue;
+            if (series.every((s) => cmpCloseAt(s, d.timestamp) > 0)) { base = i; break; }
+          }
+          if (base < 0) return out;
+          const baseMain = dataList[base].close, baseTs = dataList[base].timestamp;
+          const baseCmp = series.map((s) => cmpCloseAt(s, baseTs));
+          for (let i = base; i < dataList.length; i++) {
+            const d = dataList[i]; if (!d || !(d.close > 0)) continue;
+            const o = { m: 100 * d.close / baseMain };
+            series.forEach((s, k) => { const cc = cmpCloseAt(s, d.timestamp); if (cc > 0 && baseCmp[k] > 0) o["c" + k] = 100 * cc / baseCmp[k]; });
+            out[i] = o;
+          }
+          return out;
+        },
+      });
+    } catch (_) {}
+    try {
       klinecharts.registerIndicator({
         name: "ALERTLINE", figures: [], calc: (dataList) => dataList.map(() => ({})),
         draw: ({ ctx, bounding, yAxis }) => {
@@ -522,6 +562,7 @@
       <div class="card chart-card">
         <div class="cbar ctrlbar">
           <div><span class="lbl">Asset</span><select id="assetSel"></select></div>
+          <div><span class="lbl">Compare</span><select id="cmpSel" title="Overlay another asset class — all indexed to 100 at their first shared date, in a relative-performance panel below"></select><span id="cmpChips" style="display:inline-flex;flex-wrap:wrap;align-items:center"></span></div>
           <div><span class="lbl">TF</span><span class="seg" id="tfSeg"></span></div>
           <div><span class="lbl">Type</span><span class="seg" id="typeSeg"></span></div>
           <div><span class="lbl">Axis</span><span class="seg" id="axisSeg"></span></div>
@@ -1957,11 +1998,52 @@
         D.daily = d.close.map((c, i) => ({ timestamp: d.timestamp[i], open: d.open[i], high: d.high[i], low: d.low[i], close: c, volume: d.volume ? d.volume[i] : 0 }));
         safe(() => chart.removeOverlay()); drawings = []; removeStudySignals();
         applyTF(); loadNotes(); fetchLive(); renderPlaybook(); renderLeader(); renderCurve(); syncPnlUI(); loadDashboard(id);
+        if (COMPARE_SERIES.has(id)) { COMPARE_SERIES.delete(id); COMPARE_ORDER = COMPARE_ORDER.filter((x) => x !== id); saveCompare(); }   // never compare an asset to itself
+        refreshCompare();   // keep the compare pane + chips across asset switches (re-indexes to the new main)
         if (pendingBest) { applyStrategy(pendingBest, true); pendingBest = null; }
         else { const e = LEADER.find((x) => x.id === D.id); if (e && ["Rates", "Steepness", "Butterfly"].includes(D.klass)) applyStrategy(e.best, false); }   // best rule = default for every UST trade
       };
       if (ASSET_CACHE[id]) return apply(ASSET_CACHE[id]);
       fetch("price_" + id + ".json").then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then((d) => { ASSET_CACHE[id] = d; apply(d); }).catch((e) => { status("could not load " + id + " — " + e.message); });
+    }
+
+    // ---- multi-asset Compare: pick extra assets → a relative-performance sub-pane (all indexed to 100 at the first shared date) ----
+    function saveCompare() { try { localStorage.setItem("price_compare_v1", JSON.stringify(COMPARE_ORDER)); } catch (_) {} }
+    function renderCmpChips() {
+      const host = $("cmpChips"); if (!host) return;
+      const chip = (label, color, id) => `<span style="display:inline-flex;align-items:center;gap:4px;margin-left:5px;padding:2px 7px;border-radius:11px;background:#f1f1f4;font-size:12px;line-height:1.4">`
+        + `<span style="width:9px;height:9px;border-radius:50%;background:${color};display:inline-block"></span>${esc(label)}`
+        + (id ? `<button data-rm="${esc(id)}" title="Remove from compare" style="border:0;background:none;cursor:pointer;font-size:14px;line-height:1;color:#86868b;padding:0;margin-left:1px">×</button>` : "") + `</span>`;
+      let html = COMPARE_ORDER.length ? chip(D.label || state.asset, "#1d1d1f", null) : "";   // main asset = dark reference line (not removable)
+      COMPARE_ORDER.forEach((id, i) => { const s = COMPARE_SERIES.get(id); if (s) html += chip(s.label, CMP_PALETTE[i % CMP_PALETTE.length], id); });
+      host.innerHTML = html;
+      host.querySelectorAll("button[data-rm]").forEach((b) => { b.onclick = () => removeCompare(b.dataset.rm); });
+    }
+    function refreshCompare() {
+      safe(() => {
+        chart.removeIndicator("compare_pane", "COMPARE");
+        if (COMPARE_ORDER.length) {
+          const lines = [{ color: "#1d1d1f", size: 1.4 }].concat(CMP_PALETTE.map((c) => ({ color: c, size: 1.2 })));
+          chart.createIndicator({ name: "COMPARE", styles: { lines } }, false, { id: "compare_pane" });
+        }
+      });
+      renderCmpChips();
+    }
+    function addCompare(id) {
+      if (!id || COMPARE_SERIES.has(id) || id === state.asset) return;
+      if (COMPARE_ORDER.length >= CMP_MAX) { status("compare is full (max " + CMP_MAX + ") — remove one first"); return; }
+      getAsset(id).then((d) => {
+        if (!d || !d.close || !d.close.length || !d.timestamp) { status("no data to compare for " + id); return; }
+        const meta = ASSETS.find((a) => a.id === id) || {};
+        COMPARE_SERIES.set(id, { label: meta.label || d.asset_label || id, tsArr: d.timestamp.slice(), closeArr: d.close.slice() });
+        COMPARE_ORDER.push(id); saveCompare(); refreshCompare();
+        status("comparing " + (meta.label || id) + " — see the relative-performance panel below the chart");
+      }).catch((e) => status("could not load " + id + " — " + (e.message || e)));
+    }
+    function removeCompare(id) {
+      if (!COMPARE_SERIES.has(id)) return;
+      COMPARE_SERIES.delete(id); COMPARE_ORDER = COMPARE_ORDER.filter((x) => x !== id);
+      saveCompare(); refreshCompare();
     }
 
     updateAuth();
@@ -1978,6 +2060,12 @@
       const sel = $("assetSel"), groups = {}; ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); });
       sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join("");
       sel.value = state.asset; sel.onchange = () => loadAsset(sel.value); loadAsset(state.asset);
+      const csel = $("cmpSel");
+      if (csel) {
+        csel.innerHTML = `<option value="">+ add…</option>` + Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join("");
+        csel.onchange = () => { const v = csel.value; csel.value = ""; addCompare(v); };
+        try { const saved = JSON.parse(localStorage.getItem("price_compare_v1") || "[]"); if (Array.isArray(saved)) saved.slice(0, CMP_MAX).forEach((id) => { if (id !== state.asset) addCompare(id); }); } catch (_) {}
+      }
     });
   }
 
