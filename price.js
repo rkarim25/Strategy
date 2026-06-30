@@ -2025,7 +2025,10 @@
         if (COMPARE_ORDER.length) {
           const lines = [{ color: "#1d1d1f", size: 1.4 }].concat(CMP_PALETTE.map((c) => ({ color: c, size: 1.2 })));
           chart.createIndicator({ name: "COMPARE", styles: { lines } }, false, { id: "compare_pane" });
+          // a NEW KLineChart pane defaults to a ~30px sliver — give it a usable, drag-resizable height
+          chart.setPaneOptions({ id: "compare_pane", height: 210, dragEnabled: true });
         }
+        chart.resize();
       });
       renderCmpChips();
     }
