@@ -1,10 +1,24 @@
 {
-  "generated_at_utc": "2026-06-30T12:29:30Z",
+  "generated_at_utc": "2026-06-30T15:13:13Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow closes above 52,000 for first time, S&P 500 and Nasdaq rally as tech gains - Yahoo Finance; US Stock Market Today: Dow, Nasdaq & S&P 500 Jump as AI Stocks Rally, US-Iran Ceasefire Boosts Sentiment; Wall Street Eyes Strong End to First Half & Q2 - The Sunday Guardian. Bearish offsets: Nasdaq, S&P end lower as tech stocks fall - Reuters; Sharp drops in Big Tech companies pull indexes mostly lower on Wall Street - Los Angeles Times.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market News for Jun 30, 2026; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St..",
   "articles": [
+    {
+      "title": "Stock Market News for Jun 30, 2026",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-news-jun-30-133900372.html?.tsrc=rss",
+      "published": "2026-06-30T13:39:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
+      "source": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNRkFaMnhCa0JSblJ6ZVcxUHUyQ3l0blVqSlktd2x6bUloMzRCMU0wVkZaX0ZIV3p1WEQ0NFpqSnNMdVM4a2EzbW11ODg0cmlua01RVXo3UnlUdl9qNmd6UmUzRmkzUUh3UHhwOXJlSm1yUVpnUmZoWVhRY1VrMHBpODZpR2RmMGZjaE1vdkgxTzluTUF4ZExMTHk5ZXJZMXlRazFmamhYaHNpMUVZVXZJRE53M3l6c3B1Zzk0RzI1dXd5dnJhUWJtUWxVODJaSUFmN1FIM3Y0SWdkR0VEVkM4NW1DT3dSQ2JMWVBNWnBONnRjcVIwWnZpMks3QVdpa1E2b0E?oc=5",
+      "published": "2026-06-25T12:42:00Z",
+      "tone": "bullish"
+    },
     {
       "title": "Stock market today: Dow closes above 52,000 for first time, S&P 500 and Nasdaq rally as tech gains - Yahoo Finance",
       "source": "Yahoo Finance",
@@ -13,32 +27,18 @@
       "tone": "bullish"
     },
     {
-      "title": "US Stock Market Today: Dow, Nasdaq & S&P 500 Jump as AI Stocks Rally, US-Iran Ceasefire Boosts Sentiment; Wall Street Eyes Strong End to First Half & Q2 - The Sunday Guardian",
-      "source": "The Sunday Guardian",
-      "url": "https://news.google.com/rss/articles/CBMimwJBVV95cUxQWnNsYzNrVUNCN0ZIMXRBRFRuZmtWdFNvX0lFR2dSdmZCeTllY0MyNDI3d0Jna21sRGp6RjN4cW0yZzk2TjZnN2FxMVhJXzBoQ3Jka3JUaS1ZTzlqMUhvcG5xeHp0bEtESDRnTUhtOFJIbUdiNDRYZFdFNzRjYWJBazVSYlZab1c0X2FSd1ZzMXJLaUtXRjBVNjJwbWtnckVaVW1CVEZET3ltUl94ZmJaSmc5ZE51bnJpYWR3WDRXYzNIT3hFUElSLVE0dWhSdU00d0NWVzYwRHVSazE4SGJXaXFxaDRzOVNTU09xd3k2VU5HUEpOTVBJMV9SYmtQVUhmcC1oSXB6ZGxIUFZEd1VHQmpOQ0hMRFhDamU40gGgAkFVX3lxTE1Vc1NxTEVPY1gtRlR4U3lXV3lWQmw2Yk1hYXVOU2ZQLUUwMlpGQ2JKSkxTeWJmeks4NVpQUklNSmN2YkRSdzh3aXdDY1EzaXQwOHBYWENXX2gzQmFoNElPU1NEME53SXhXQ0NPS25hZkhsMUhnaWRLSUpyWDVwOTZWNzdXZEJkdE9JeDR4Y0x1bmdxeFZtT2lHRmg3cmFHUmhQc2FVYkhWRl9wMEpxQk1wYVNsTmRWRWlOQmIta3phQUsxQnBoSC1jVW5Bemw1T2hUNmJCal9IZ1d4Sk1yLTBQQ2NqalAwbjd6QUFaQy1UTUJGX3JLRG5FUVBSNFN1bVc1dm1kV2c5VWc4QnYwekplOGdneWdybmd3MC1lX2xlZw?oc=5",
-      "published": "2026-06-30T11:11:19Z",
-      "tone": "bullish"
+      "title": "Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNa0lqMC1NZW5UV1pXZnpVcmlaTHhZaUFfNmp2RnFRV2hfTHRadmo4Z19XZ1lES05UVHdCeUoyRTJweU1IOTExeDY0U29NdnhVcEl2TW1uaUF1akI3SUxiakFtZTVLWjBfMWplVzJEN2VVbk44VE1odkFNV2c1VUlVa3E1aDU1S0w3dGNzWTYwYWIyZzJ0Q2ExSlhSa29YT19HM3FHRmR1TW0zOFJwR0diTmpDUVphQWU1WkRiUUcwYkdJd0VWOWNNeFZwV1g?oc=5",
+      "published": "2026-06-26T15:40:47Z",
+      "tone": "bearish"
     },
     {
       "title": "'We don't view this as a bubble' that will pop soon: Wall Street weighs surging AI costs on stock market rally - Yahoo Finance",
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNRlRHcUhPM1FMU2YzcWNSOVRzcXQ2YllEUlZpQ2ExR0JITTZMeHB2TmJoUkMzUzRuWHl6QTAwZkV2ZlQtNVhQTnVWUksxLXN6WXYyM2FhM0Vjb0FIalZUMmY3b0lxVHNWVnpEQUtoMXFKTkNUNGpOX2tJdE1VMmFxbkFIWm85bzlVM3dLOTVxTWJPQmhaTC0wXzVVN2V4SXZwRFZYRDJ4Q1ZvN2tPaVNwblJNWmxsOGdlZ01qVFZMUmNLM0JKUWxmZFM4Sm1nLTNjT2lBeURIeUtrSEFVOE5wSFVTNHZCcTVVRndhVXRrRk5NYW4yZnc?oc=5",
-      "published": "2026-06-28T11:56:42Z",
+      "published": "2026-06-29T08:42:36Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Nasdaq, S&P end lower as tech stocks fall - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOYktYX1NzUUhjN2p1VDBmM2lIS0I4S2c1cmFSQjFxUmFCQWNfeXpycEw3VTdPblhTcDZEUjVSeWNnWjNCaEIzNUpnQjhIYm00R3l1NUwtYk5nX3VhTkp2RTVFaU51TnVDVzh5MFpYZTliMzFuZUNmYllmX0JTRVpycmp5OTU5ZnZUdGxiQ01XY3ItenNodklTQUliMzk?oc=5",
-      "published": "2026-06-24T22:40:37Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Sharp drops in Big Tech companies pull indexes mostly lower on Wall Street - Los Angeles Times",
-      "source": "Los Angeles Times",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQVjFHUUpuNGEtRnNZSDZmZ0RBRzB3dUVtZS1MQWJFdUdVT3VUN1pDNHVNRjA3SDY3cV9xWEZBaGVGM1lOZ291QjFENkt4WmZGWFQ0X0RMd3pSOEN1aW5KVWF5ZGxzTGtmQVFYQnozUloxMjhKSjhoeklodE1oVDZYN21DM0dGbmhudGpZcUxKMl91ekgzYy11Y243TUYyRFRSOE90S2FhNk1uUXNRVUZrV1BrcURrZzJhODgxV2ZFYzUwQQ?oc=5",
-      "published": "2026-06-23T22:31:02Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 46
+        "articles": 95
       }
     ],
-    "headline_count": 96,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
