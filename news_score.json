@@ -1,22 +1,15 @@
 {
-  "generated_at_utc": "2026-06-30T15:13:13Z",
+  "generated_at_utc": "2026-06-30T17:21:56Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market News for Jun 30, 2026; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St..",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Nasdaq Shows Its Might; This Tech Player Hits A New High (Live Coverage); Stock market today: Dow closes above 52,000 for first time, S&P 500 and Nasdaq rally as tech gains - Yahoo Finance. Bearish offsets: Wall Street ends lower on semiconductor selloff as AI spending concerns mount - Reuters; S&P, Nasdaq end lower on semiconductor selloff, AI spending concerns - The Detroit News.",
   "articles": [
     {
-      "title": "Stock Market News for Jun 30, 2026",
+      "title": "Stock Market Today: Nasdaq Shows Its Might; This Tech Player Hits A New High (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-news-jun-30-133900372.html?.tsrc=rss",
-      "published": "2026-06-30T13:39:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
-      "source": "Benzinga",
-      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNRkFaMnhCa0JSblJ6ZVcxUHUyQ3l0blVqSlktd2x6bUloMzRCMU0wVkZaX0ZIV3p1WEQ0NFpqSnNMdVM4a2EzbW11ODg0cmlua01RVXo3UnlUdl9qNmd6UmUzRmkzUUh3UHhwOXJlSm1yUVpnUmZoWVhRY1VrMHBpODZpR2RmMGZjaE1vdkgxTzluTUF4ZExMTHk5ZXJZMXlRazFmamhYaHNpMUVZVXZJRE53M3l6c3B1Zzk0RzI1dXd5dnJhUWJtUWxVODJaSUFmN1FIM3Y0SWdkR0VEVkM4NW1DT3dSQ2JMWVBNWnBONnRjcVIwWnZpMks3QVdpa1E2b0E?oc=5",
-      "published": "2026-06-25T12:42:00Z",
+      "url": "https://finance.yahoo.com/m/72cb64ac-956e-34d7-a70b-1bc0c9153407/stock-market-today%3A-nasdaq.html?.tsrc=rss",
+      "published": "2026-06-30T15:52:51Z",
       "tone": "bullish"
     },
     {
@@ -27,18 +20,25 @@
       "tone": "bullish"
     },
     {
-      "title": "Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNa0lqMC1NZW5UV1pXZnpVcmlaTHhZaUFfNmp2RnFRV2hfTHRadmo4Z19XZ1lES05UVHdCeUoyRTJweU1IOTExeDY0U29NdnhVcEl2TW1uaUF1akI3SUxiakFtZTVLWjBfMWplVzJEN2VVbk44VE1odkFNV2c1VUlVa3E1aDU1S0w3dGNzWTYwYWIyZzJ0Q2ExSlhSa29YT19HM3FHRmR1TW0zOFJwR0diTmpDUVphQWU1WkRiUUcwYkdJd0VWOWNNeFZwV1g?oc=5",
-      "published": "2026-06-26T15:40:47Z",
-      "tone": "bearish"
-    },
-    {
       "title": "'We don't view this as a bubble' that will pop soon: Wall Street weighs surging AI costs on stock market rally - Yahoo Finance",
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNRlRHcUhPM1FMU2YzcWNSOVRzcXQ2YllEUlZpQ2ExR0JITTZMeHB2TmJoUkMzUzRuWHl6QTAwZkV2ZlQtNVhQTnVWUksxLXN6WXYyM2FhM0Vjb0FIalZUMmY3b0lxVHNWVnpEQUtoMXFKTkNUNGpOX2tJdE1VMmFxbkFIWm85bzlVM3dLOTVxTWJPQmhaTC0wXzVVN2V4SXZwRFZYRDJ4Q1ZvN2tPaVNwblJNWmxsOGdlZ01qVFZMUmNLM0JKUWxmZFM4Sm1nLTNjT2lBeURIeUtrSEFVOE5wSFVTNHZCcTVVRndhVXRrRk5NYW4yZnc?oc=5",
       "published": "2026-06-29T08:42:36Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Wall Street ends lower on semiconductor selloff as AI spending concerns mount - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxON2t3ZXZzXzl6MTZCNnY4U09lU2l4ZWZENmdOZVZuNVF2VzFjYlFleVlLR1FHNlFwbjlvRnZVVjFsOGo1RXBsOGUzVk1xVERVal9SbVFxeG1CdVhSaHZtajFlUDRRZFllalVYdVRGY1J5ZGN1bVFfN2xmRHB0aTdxQjJBRVhIMFI0NWI3SjlXeTdRWUQxaU9rRA?oc=5",
+      "published": "2026-06-23T23:03:21Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "S&P, Nasdaq end lower on semiconductor selloff, AI spending concerns - The Detroit News",
+      "source": "The Detroit News",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPVmdjSzdjcTZLWHNHRU5aWG1Vel9pMEN3eXM1cDU5UFo4cDM3V3ExeVVOWjlpNF9PVzAwVVM2SGJXdm94S0RBS28zNGVOYnhhbTctMHU4S0lNYjBiSno4YzNOei1CcEZCc3VMMHFBSGpteWdMYXdRUExxeFlJaVdKWnR2QzRtclVfMjMxLUNwM3ZLaVBYaEJoOUQwZG4xa3F5TjNFQWNjQUtxUHpFaHpMOWY2NG5vVUt6bnZsWmc3V2NGTmFzMFgw?oc=5",
+      "published": "2026-06-23T20:04:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 87
       }
     ],
-    "headline_count": 145,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
