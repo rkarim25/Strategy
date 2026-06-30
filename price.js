@@ -32,11 +32,13 @@
   let AUTO_SIG = { buys: new Set(), sells: new Set() }; // auto-analysis buy/sell timestamps (drawn by the AUTOTA indicator)
   let STUDY_SIG = { buys: new Set(), sells: new Set() }; // "add buy/sell signals" from a study (drawn by the STUDYSIG indicator)
   let ALERT_LINES = []; // [{value,label}] active price-alert levels, drawn on the chart by the ALERTLINE indicator
-  // ---- multi-asset Compare overlay: each picked asset is indexed to 100 at the first date all series share,
-  //      drawn in its own auto-scaled sub-pane (COMPARE indicator) so different price scales never clash. ----
+  // ---- multi-asset Compare overlay: each picked asset is indexed to 100 at the LEFT EDGE OF THE VISIBLE WINDOW
+  //      (rebased as you scroll/zoom, TradingView-style), drawn in its own auto-scaled sub-pane (COMPARE indicator). ----
   let COMPARE_SERIES = new Map();  // id -> { label, tsArr:[], closeArr:[] }
   let COMPARE_ORDER = [];          // ids in slot order (c0..cN) — also the chip + colour order
   let CMP_MAIN = { label: "", close: [], ts: [] };  // the current main asset (for the dark reference line + chip)
+  let CMP_VIS_FROM = null;         // visible-range left index → Compare rebases (=100) to the left edge of the view
+  let cmpRecalcRAF = 0;            // throttle the rebase recompute on scroll/zoom to one per frame
   const CMP_MAX = 6;               // max simultaneous comparisons (palette + pane legibility)
   const CMP_PALETTE = ["#2563eb", "#d4317c", "#0d9488", "#ea580c", "#7c3aed", "#0891b2"]; // c0..c5
   function cmpCloseAt(s, ts) {     // close at-or-before ts (binary search) → aligns daily series onto aggregated/other-asset bars
@@ -397,22 +399,29 @@
     } catch (_) {}
     try {
       klinecharts.registerIndicator({   // multi-asset Compare — main + picked assets indexed to 100 at the first shared date, own auto-scaled pane
-        name: "COMPARE", shortName: "Compare (=100)",
+        name: "COMPARE", shortName: "Compare (=100)", calcParams: [0],   // calcParams bumped to force a recalc on rebase (calc ignores it)
         figures: [{ key: "m", title: "", type: "line" }].concat([0, 1, 2, 3, 4, 5].map((k) => ({ key: "c" + k, title: "", type: "line" }))),
         calc: (dataList) => {
           const out = dataList.map(() => ({}));
           const ids = COMPARE_ORDER.slice(0, CMP_MAX);
           if (!ids.length || !dataList.length) return out;
           const series = ids.map((id) => COMPARE_SERIES.get(id)).filter(Boolean);
+          // base = the first bar AT/AFTER the visible-window left edge where every series has data → all lines = 100
+          // there, then show their relative % move across the view (auto-scales so the lines are actually visible).
+          const startFrom = (CMP_VIS_FROM != null && CMP_VIS_FROM >= 0) ? Math.min(CMP_VIS_FROM, dataList.length - 1) : 0;
           let base = -1;
-          for (let i = 0; i < dataList.length; i++) {
+          for (let i = startFrom; i < dataList.length; i++) {
+            const d = dataList[i]; if (!d || !(d.close > 0)) continue;
+            if (series.every((s) => cmpCloseAt(s, d.timestamp) > 0)) { base = i; break; }
+          }
+          if (base < 0) for (let i = 0; i < startFrom; i++) {   // fallback: view starts before any shared data → earliest common date
             const d = dataList[i]; if (!d || !(d.close > 0)) continue;
             if (series.every((s) => cmpCloseAt(s, d.timestamp) > 0)) { base = i; break; }
           }
           if (base < 0) return out;
           const baseMain = dataList[base].close, baseTs = dataList[base].timestamp;
           const baseCmp = series.map((s) => cmpCloseAt(s, baseTs));
-          for (let i = base; i < dataList.length; i++) {
+          for (let i = 0; i < dataList.length; i++) {   // fill EVERY bar relative to the base (=100) so lines never vanish mid-scroll
             const d = dataList[i]; if (!d || !(d.close > 0)) continue;
             const o = { m: 100 * d.close / baseMain };
             series.forEach((s, k) => { const cc = cmpCloseAt(s, d.timestamp); if (cc > 0 && baseCmp[k] > 0) o["c" + k] = 100 * cc / baseCmp[k]; });
@@ -2019,7 +2028,22 @@
       host.innerHTML = html;
       host.querySelectorAll("button[data-rm]").forEach((b) => { b.onclick = () => removeCompare(b.dataset.rm); });
     }
+    let cmpTick = 0;
+    function recomputeCompare() {   // re-index to the new visible-window left edge, then let KLineChart auto-rescale
+      if (!COMPARE_ORDER.length) return;
+      try { const vr = chart.getVisibleRange(); if (vr && vr.from != null) CMP_VIS_FROM = vr.from; } catch (_) {}
+      safe(() => chart.overrideIndicator({ name: "COMPARE", calcParams: [++cmpTick] }, "compare_pane"));   // changed calcParams forces a real recalc
+    }
+    let cmpSubscribed = false;
     function refreshCompare() {
+      if (!cmpSubscribed) {   // rebase Compare to the left edge of the view whenever you scroll / zoom (one recompute per frame)
+        cmpSubscribed = true;
+        safe(() => chart.subscribeAction("onVisibleRangeChange", () => {
+          if (!COMPARE_ORDER.length || cmpRecalcRAF) return;
+          cmpRecalcRAF = setTimeout(() => { cmpRecalcRAF = 0; recomputeCompare(); }, 60);   // throttle (setTimeout, not rAF — fires reliably)
+        }));
+      }
+      try { const vr = chart.getVisibleRange(); if (vr && vr.from != null) CMP_VIS_FROM = vr.from; } catch (_) {}
       safe(() => {
         chart.removeIndicator("compare_pane", "COMPARE");
         if (COMPARE_ORDER.length) {
