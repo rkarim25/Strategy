@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-07-01T16:21:32Z",
+  "generated_at_utc": "2026-07-01T18:22:49Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: BlackBerry Rallies After Q1 Beat: Is the Stock Still Attractive?; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Software Rally Helps Nasdaq Flirt With Breakeven; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St..",
   "articles": [
     {
-      "title": "BlackBerry Rallies After Q1 Beat: Is the Stock Still Attractive?",
+      "title": "Software Rally Helps Nasdaq Flirt With Breakeven",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/blackberry-rallies-q1-beat-stock-145400750.html?.tsrc=rss",
-      "published": "2026-07-01T14:54:00Z",
+      "url": "https://finance.yahoo.com/m/615eaf88-34a2-3bc0-9112-53b13a4578a2/software-rally-helps-nasdaq.html?.tsrc=rss",
+      "published": "2026-07-01T16:02:05Z",
       "tone": "bullish"
     },
     {
@@ -34,11 +34,11 @@
       "tone": "bullish"
     },
     {
-      "title": "Dow Adds 307, Nasdaq Rallies 523, S&P 500 Rises 86 - TV News Check",
-      "source": "TV News Check",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNcFdvdWZIOFBPcWxzem4zb1BDazdSM2NrbDB0cDBMdkJ4LVc4YXdSSko4eEpFMDBBTDJTM3RxU3JJS2hNTkg0SlRUOEl4cnlObTBDcFVhS1ktcGhHTG5PUzR5eDg5U2JqYVNnRThWVlpMUzFQVVF2VlNlSU8zWGt0YVFDUTA5YWlQNENFWmtBUVJsQWs?oc=5",
-      "published": "2026-06-29T20:32:35Z",
-      "tone": "bullish"
+      "title": "Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNa0lqMC1NZW5UV1pXZnpVcmlaTHhZaUFfNmp2RnFRV2hfTHRadmo4Z19XZ1lES05UVHdCeUoyRTJweU1IOTExeDY0U29NdnhVcEl2TW1uaUF1akI3SUxiakFtZTVLWjBfMWplVzJEN2VVbk44VE1odkFNV2c1VUlVa3E1aDU1S0w3dGNzWTYwYWIyZzJ0Q2ExSlhSa29YT19HM3FHRmR1TW0zOFJwR0diTmpDUVphQWU1WkRiUUcwYkdJd0VWOWNNeFZwV1g?oc=5",
+      "published": "2026-06-26T15:40:47Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
