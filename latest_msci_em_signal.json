@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-07-01T13:32:07Z",
+  "generated_at_utc": "2026-07-01T16:21:29Z",
   "data_asof": "2026-07-01",
   "daily_rows": 5841,
-  "quote_price": 67.0199966430664,
+  "quote_price": 67.04000091552734,
   "quote_timestamp": "2026-07-01",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1782999127&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1783009289&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-01",
-      "close": 67.0199966430664
+      "close": 67.04000091552734
     },
-    "latestSma": 67.82999954223632,
+    "latestSma": 67.83099975585938,
     "highWater": 71.20999908447266,
     "highWaterDate": "2026-06-22",
-    "latestDd": -0.05884008559578646,
+    "latestDd": -0.05855916616427226,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -48,12 +48,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-07-01",
-      "close": 67.0199966430664
+      "close": 67.04000091552734
     },
-    "latestSma": 67.68499946594238,
+    "latestSma": 67.68699989318847,
     "highWater": 71.20999908447266,
     "highWaterDate": "2026-06-22",
-    "latestDd": -0.05884008559578646,
+    "latestDd": -0.05855916616427226,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -71,9 +71,8 @@
     "last_observed_asof": "2026-07-01",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-07-01T13:32:07Z",
+    "last_checked_at_utc": "2026-07-01T16:21:29Z",
     "last_email_sent_on": "2026-07-01",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
       "id": "2026-06-30:1->2026-07-01:0",
       "detected_at_utc": "2026-07-01T13:32:07Z",

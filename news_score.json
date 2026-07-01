@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-07-01T13:32:10Z",
+  "generated_at_utc": "2026-07-01T16:21:32Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga; Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance. Bearish offsets: Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St..",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: BlackBerry Rallies After Q1 Beat: Is the Stock Still Attractive?; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga.",
   "articles": [
+    {
+      "title": "BlackBerry Rallies After Q1 Beat: Is the Stock Still Attractive?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/blackberry-rallies-q1-beat-stock-145400750.html?.tsrc=rss",
+      "published": "2026-07-01T14:54:00Z",
+      "tone": "bullish"
+    },
     {
       "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
       "source": "Benzinga",
@@ -27,18 +34,11 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock market today: Dow closes above 52,000 for first time, S&P 500 and Nasdaq rally as tech gains - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQS0FSelVOV005QXlFX093NXJvalhjUTdZNG1neXdRYWt5SlJuRjRuOWh6clJUMDdfWWVocmhpQk5yMXZyMnE4akVWeEtKTDZGTTJhbGVhWEFNeEt3aWl1dWVDVHJub254MkphQ3haZDRPRXkyQXVRdGZZS3JibUhaZVlKeDlVaWdaUlY3YklTU1pwTVJkbGNsZmdR?oc=5",
-      "published": "2026-06-29T21:11:37Z",
+      "title": "Dow Adds 307, Nasdaq Rallies 523, S&P 500 Rises 86 - TV News Check",
+      "source": "TV News Check",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNcFdvdWZIOFBPcWxzem4zb1BDazdSM2NrbDB0cDBMdkJ4LVc4YXdSSko4eEpFMDBBTDJTM3RxU3JJS2hNTkg0SlRUOEl4cnlObTBDcFVhS1ktcGhHTG5PUzR5eDg5U2JqYVNnRThWVlpMUzFQVVF2VlNlSU8zWGt0YVFDUTA5YWlQNENFWmtBUVJsQWs?oc=5",
+      "published": "2026-06-29T20:32:35Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNa0lqMC1NZW5UV1pXZnpVcmlaTHhZaUFfNmp2RnFRV2hfTHRadmo4Z19XZ1lES05UVHdCeUoyRTJweU1IOTExeDY0U29NdnhVcEl2TW1uaUF1akI3SUxiakFtZTVLWjBfMWplVzJEN2VVbk44VE1odkFNV2c1VUlVa3E1aDU1S0w3dGNzWTYwYWIyZzJ0Q2ExSlhSa29YT19HM3FHRmR1TW0zOFJwR0diTmpDUVphQWU1WkRiUUcwYkdJd0VWOWNNeFZwV1g?oc=5",
-      "published": "2026-06-26T15:40:47Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 91
       }
     ],
-    "headline_count": 146,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
