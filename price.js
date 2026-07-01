@@ -33,10 +33,11 @@
   let STUDY_SIG = { buys: new Set(), sells: new Set() }; // "add buy/sell signals" from a study (drawn by the STUDYSIG indicator)
   let ALERT_LINES = []; // [{value,label}] active price-alert levels, drawn on the chart by the ALERTLINE indicator
   // ---- multi-asset Compare overlay: each picked asset is indexed to 100 at the LEFT EDGE OF THE VISIBLE WINDOW
-  //      (rebased as you scroll/zoom, TradingView-style), drawn in its own auto-scaled sub-pane (COMPARE indicator). ----
+  //      (rebased as you scroll/zoom, TradingView-style), drawn as an OVERLAY on the main price pane (CMPOVR indicator) — one chart. ----
   let COMPARE_SERIES = new Map();  // id -> { label, tsArr:[], closeArr:[] }
   let COMPARE_ORDER = [];          // ids in slot order (c0..cN) — also the chip + colour order
   let CMP_MAIN = { label: "", close: [], ts: [] };  // the current main asset (for the dark reference line + chip)
+  let CMP_MODE = "pct";            // "pct" = all added assets normalised to 100 at the view's left edge (shared scale); "multi" = each asset on its OWN price axis
   let CMP_VIS_FROM = null;         // visible-range left index → Compare rebases (=100) to the left edge of the view
   let cmpRecalcRAF = 0;            // throttle the rebase recompute on scroll/zoom to one per frame
   const CMP_MAX = 6;               // max simultaneous comparisons (palette + pane legibility)
@@ -398,36 +399,58 @@
       });
     } catch (_) {}
     try {
-      klinecharts.registerIndicator({   // multi-asset Compare — main + picked assets indexed to 100 at the first shared date, own auto-scaled pane
-        name: "COMPARE", shortName: "Compare (=100)", calcParams: [0],   // calcParams bumped to force a recalc on rebase (calc ignores it)
-        figures: [{ key: "m", title: "", type: "line" }].concat([0, 1, 2, 3, 4, 5].map((k) => ({ key: "c" + k, title: "", type: "line" }))),
-        calc: (dataList) => {
-          const out = dataList.map(() => ({}));
-          const ids = COMPARE_ORDER.slice(0, CMP_MAX);
-          if (!ids.length || !dataList.length) return out;
-          const series = ids.map((id) => COMPARE_SERIES.get(id)).filter(Boolean);
-          // base = the first bar AT/AFTER the visible-window left edge where every series has data → all lines = 100
-          // there, then show their relative % move across the view (auto-scales so the lines are actually visible).
-          const startFrom = (CMP_VIS_FROM != null && CMP_VIS_FROM >= 0) ? Math.min(CMP_VIS_FROM, dataList.length - 1) : 0;
-          let base = -1;
-          for (let i = startFrom; i < dataList.length; i++) {
-            const d = dataList[i]; if (!d || !(d.close > 0)) continue;
-            if (series.every((s) => cmpCloseAt(s, d.timestamp) > 0)) { base = i; break; }
+      klinecharts.registerIndicator({   // multi-asset Compare — picked assets drawn as an OVERLAY on the price pane; CMP_MODE = "pct" (normalised) | "multi" (own axis each)
+        name: "CMPOVR", figures: [], calc: (dataList) => dataList.map(() => ({})),   // pure custom draw; self-rebases to the visible-left edge every frame (no calcParams hack, no sub-pane)
+        draw: ({ ctx, kLineDataList, visibleRange, xAxis, bounding }) => {
+          const ids = COMPARE_ORDER.slice(0, CMP_MAX); if (!ids.length) return false;
+          const series = ids.map((id) => COMPARE_SERIES.get(id)).filter(Boolean); if (!series.length) return false;
+          const from = Math.max(0, visibleRange.from), to = Math.min(kLineDataList.length, visibleRange.to);
+          if (to - from < 2) return false;
+          const W = (bounding && bounding.width) || 0, H = (bounding && bounding.height) || 0;
+          const col = (k) => CMP_PALETTE[k % CMP_PALETTE.length];
+          const rightTags = (arr) => {   // colour-coded value tags at the right edge, nudged apart so they never overlap
+            arr.sort((a, b) => a.y - b.y); for (let i = 1; i < arr.length; i++) if (arr[i].y - arr[i - 1].y < 15) arr[i].y = arr[i - 1].y + 15;
+            ctx.font = "11px -apple-system,BlinkMacSystemFont,sans-serif"; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+            arr.forEach((L) => { const tw = ctx.measureText(L.text).width + 8, ly = Math.max(8, Math.min(H - 8, L.y)); ctx.fillStyle = L.color; ctx.fillRect(W - tw - 2, ly - 8, tw, 16); ctx.fillStyle = "#fff"; ctx.fillText(L.text, W - tw + 2, ly); });
+          };
+          ctx.save();
+
+          if (CMP_MODE === "multi") {   // each picked asset on its OWN real-price axis (auto-scaled), stacked colour-coded axes on the left
+            const padT = 14, padB = 14, plot = Math.max(1, H - padT - padB), axisW = 48, tags = [];
+            series.forEach((s, k) => {
+              let loK = Infinity, hiK = -Infinity; const vals = new Array(to).fill(null);
+              for (let i = from; i < to; i++) { const d = kLineDataList[i]; if (!d) continue; const cc = cmpCloseAt(s, d.timestamp); if (cc > 0) { vals[i] = cc; if (cc < loK) loK = cc; if (cc > hiK) hiK = cc; } }
+              if (!isFinite(loK) || !isFinite(hiK)) return;
+              if (hiK <= loK) hiK = loK + Math.abs(loK) * 0.01 + 1;
+              const spanK = hiK - loK, c = col(k), yOfK = (v) => padT + plot * (1 - (v - loK) / spanK);
+              ctx.strokeStyle = c; ctx.lineWidth = 1.6; ctx.beginPath(); let started = false, lastV = null;
+              for (let i = from; i < to; i++) { const v = vals[i]; if (v == null) continue; const x = xAxis.convertToPixel(i), y = yOfK(v); if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y); lastV = v; }
+              if (started) ctx.stroke();
+              const ax = 2 + k * axisW; ctx.font = "10px -apple-system,sans-serif"; ctx.textAlign = "left";   // stacked mini price axis (max / mid / min) for this asset
+              [[hiK, "top", padT], [loK + spanK / 2, "middle", padT + plot / 2], [loK, "bottom", padT + plot]].forEach(([v, bl, y]) => { ctx.textBaseline = bl; ctx.fillStyle = c; ctx.globalAlpha = 0.92; ctx.fillText(nfmt(v), ax, Math.max(2, Math.min(H - 2, y))); ctx.globalAlpha = 1; });
+              if (lastV != null) tags.push({ y: yOfK(lastV), color: c, text: (s.label || ids[k]) + " " + nfmt(lastV) });
+            });
+            rightTags(tags); ctx.restore(); return false;
           }
-          if (base < 0) for (let i = 0; i < startFrom; i++) {   // fallback: view starts before any shared data → earliest common date
-            const d = dataList[i]; if (!d || !(d.close > 0)) continue;
-            if (series.every((s) => cmpCloseAt(s, d.timestamp) > 0)) { base = i; break; }
-          }
-          if (base < 0) return out;
-          const baseMain = dataList[base].close, baseTs = dataList[base].timestamp;
-          const baseCmp = series.map((s) => cmpCloseAt(s, baseTs));
-          for (let i = 0; i < dataList.length; i++) {   // fill EVERY bar relative to the base (=100) so lines never vanish mid-scroll
-            const d = dataList[i]; if (!d || !(d.close > 0)) continue;
-            const o = { m: 100 * d.close / baseMain };
-            series.forEach((s, k) => { const cc = cmpCloseAt(s, d.timestamp); if (cc > 0 && baseCmp[k] > 0) o["c" + k] = 100 * cc / baseCmp[k]; });
-            out[i] = o;
-          }
-          return out;
+
+          // --- normalised % mode (default): every picked asset indexed to 100 at the view's left edge, shared % scale ---
+          let base = -1, baseCmp = [];
+          for (let i = from; i < to; i++) { const d = kLineDataList[i]; if (!d || !(d.close > 0)) continue; const bc = series.map((s) => cmpCloseAt(s, d.timestamp)); if (bc.every((v) => v > 0)) { base = i; baseCmp = bc; break; } }
+          if (base < 0) { ctx.restore(); return false; }
+          const idxCmp = series.map(() => new Array(to).fill(null)); let lo = 100, hi = 100;
+          for (let i = from; i < to; i++) { const d = kLineDataList[i]; if (!d) continue; series.forEach((s, k) => { const cc = cmpCloseAt(s, d.timestamp); if (cc > 0 && baseCmp[k] > 0) { const v = 100 * cc / baseCmp[k]; idxCmp[k][i] = v; if (v < lo) lo = v; if (v > hi) hi = v; } }); }
+          if (hi <= lo) hi = lo + 1;
+          const padT = 16, padB = 16, span = hi - lo || 1, plot = Math.max(1, H - padT - padB), yOf = (v) => padT + plot * (1 - (v - lo) / span);
+          const y100 = yOf(100);
+          if (y100 >= 0 && y100 <= H) { ctx.strokeStyle = "rgba(120,120,128,0.32)"; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, y100); ctx.lineTo(W, y100); ctx.stroke(); ctx.setLineDash([]); }
+          const tags = [];
+          series.forEach((s, k) => {
+            const c = col(k); ctx.strokeStyle = c; ctx.lineWidth = 1.6; ctx.beginPath(); let started = false, lastV = null;
+            for (let i = from; i < to; i++) { const v = idxCmp[k][i]; if (v == null) continue; const x = xAxis.convertToPixel(i), y = yOf(v); if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y); lastV = v; }
+            if (started) ctx.stroke();
+            if (lastV != null) tags.push({ y: yOf(lastV), color: c, text: (s.label || ids[k]) + " " + (lastV - 100 >= 0 ? "+" : "") + (lastV - 100).toFixed(1) + "%" });
+          });
+          rightTags(tags); ctx.restore(); return false;
         },
       });
     } catch (_) {}
@@ -571,7 +594,14 @@
       <div class="card chart-card">
         <div class="cbar ctrlbar">
           <div><span class="lbl">Asset</span><select id="assetSel"></select></div>
-          <div><span class="lbl">Compare</span><select id="cmpSel" title="Overlay another asset class — all indexed to 100 at their first shared date, in a relative-performance panel below"></select><span id="cmpChips" style="display:inline-flex;flex-wrap:wrap;align-items:center"></span></div>
+          <div style="position:relative"><span class="lbl">Compare</span>
+            <button id="cmpBtn" class="seg" style="padding:5px 12px;font-weight:600" title="Compare other assets on the price chart — tick to add / untick to remove. Toggle: normalised % (all indexed to 100 at the view's left edge) vs multi-axis (each asset its own price scale).">+ compare ▾</button>
+            <span id="cmpChips" style="display:inline-flex;flex-wrap:wrap;align-items:center"></span>
+            <div id="cmpPanel" style="display:none;position:absolute;z-index:60;top:calc(100% + 4px);left:44px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.16);padding:10px 12px;min-width:238px;max-height:360px;overflow:auto">
+              <div style="display:flex;gap:8px;align-items:center;margin-bottom:9px"><span class="lbl" style="margin:0">Scale</span><span class="seg" id="cmpModeSeg"></span></div>
+              <div id="cmpList" style="display:flex;flex-direction:column;gap:1px"></div>
+            </div>
+          </div>
           <div><span class="lbl">TF</span><span class="seg" id="tfSeg"></span></div>
           <div><span class="lbl">Type</span><span class="seg" id="typeSeg"></span></div>
           <div><span class="lbl">Axis</span><span class="seg" id="axisSeg"></span></div>
@@ -1516,7 +1546,23 @@
       if (saveTimer) clearTimeout(saveTimer);
       saveTimer = setTimeout(() => { saveTimer = null; saveLocal(); if (getKey()) pushCloud(false).then((ok) => { if (ok) status("saved · synced ☁"); }); else status("saved locally"); }, 600);
     }
-    function manualCloudSave() { ensureKey().then((key) => { if (!key) { status("sign in to sync across devices"); return; } updateAuth(); pushCloud(true); }); }   // ☁ Save: sign in if needed, then sync now (afterwards every change auto-syncs)
+    function manualCloudSave() {   // ☁ Save: already signed in → push "now"; FRESH sign-in → PULL first (never clobber the other device's cloud copy)
+      const fresh = !getKey();
+      ensureKey().then((key) => {
+        if (!key) { status("sign in to sync across devices"); return; }
+        updateAuth();
+        if (!fresh) return pushCloud(true);   // this device already signed in → manual save = upload current state
+        status("signed in — loading your cloud data…");   // NEW device: pull the cloud copy so signing in never overwrites it with empty local state
+        fetch(STORE + "/api/chart/" + D.id, { headers: { "X-Lab-Key": key } })
+          .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+          .then((snap) => {
+            const has = snap && (snap.notes || (snap.drawings && snap.drawings.length) || snap.settings);
+            if (has) { applySnapshot(snap); status("loaded from cloud ✓ — now syncing across devices"); }   // authoritative cloud data → hydrate this device
+            else { pushCloud(true); }   // cloud empty for this asset → seed it with this device's local work
+          })
+          .catch(() => { pushCloud(true); });   // fetch failed → fall back to seeding from local
+      });
+    }
     if ($("cloudBtn")) $("cloudBtn").onclick = manualCloudSave;       // legacy bottom button (removed from layout) — guarded
     if ($("cloudBtnTop")) $("cloudBtnTop").onclick = manualCloudSave; // neat top-bar button
     $("notes").addEventListener("input", scheduleSave);
@@ -2023,38 +2069,32 @@
       const chip = (label, color, id) => `<span style="display:inline-flex;align-items:center;gap:4px;margin-left:5px;padding:2px 7px;border-radius:11px;background:#f1f1f4;font-size:12px;line-height:1.4">`
         + `<span style="width:9px;height:9px;border-radius:50%;background:${color};display:inline-block"></span>${esc(label)}`
         + (id ? `<button data-rm="${esc(id)}" title="Remove from compare" style="border:0;background:none;cursor:pointer;font-size:14px;line-height:1;color:#86868b;padding:0;margin-left:1px">×</button>` : "") + `</span>`;
-      let html = COMPARE_ORDER.length ? chip(D.label || state.asset, "#1d1d1f", null) : "";   // main asset = dark reference line (not removable)
+      let html = "";   // S&P stays as the bars (no dark reference line), so no main chip — only the added assets are chipped
       COMPARE_ORDER.forEach((id, i) => { const s = COMPARE_SERIES.get(id); if (s) html += chip(s.label, CMP_PALETTE[i % CMP_PALETTE.length], id); });
       host.innerHTML = html;
       host.querySelectorAll("button[data-rm]").forEach((b) => { b.onclick = () => removeCompare(b.dataset.rm); });
+      const btn = $("cmpBtn"); if (btn) btn.textContent = COMPARE_ORDER.length ? "compare (" + COMPARE_ORDER.length + ") ▾" : "+ compare ▾";
     }
-    let cmpTick = 0;
-    function recomputeCompare() {   // re-index to the new visible-window left edge, then let KLineChart auto-rescale
-      if (!COMPARE_ORDER.length) return;
-      try { const vr = chart.getVisibleRange(); if (vr && vr.from != null) CMP_VIS_FROM = vr.from; } catch (_) {}
-      safe(() => chart.overrideIndicator({ name: "COMPARE", calcParams: [++cmpTick] }, "compare_pane"));   // changed calcParams forces a real recalc
+    function buildCmpList() {   // grouped checkbox picker (tick to add / untick to remove), reflecting the current picks + their colours
+      const host = $("cmpList"); if (!host) return;
+      const groups = {}; ASSETS.forEach((a) => { if (a.id === state.asset) return; (groups[a.klass || "Other"] = groups[a.klass || "Other"] || []).push(a); });
+      const full = COMPARE_ORDER.length >= CMP_MAX;
+      host.innerHTML = Object.keys(groups).map((g) =>
+        `<div style="font-size:10.5px;font-weight:700;color:#6e6e73;text-transform:uppercase;letter-spacing:.03em;margin:7px 0 2px">${esc(g)}</div>`
+        + groups[g].map((a) => { const on = COMPARE_SERIES.has(a.id), k = COMPARE_ORDER.indexOf(a.id);
+            const sw = on && k >= 0 ? `<span style="width:9px;height:9px;border-radius:50%;background:${CMP_PALETTE[k % CMP_PALETTE.length]};display:inline-block;margin-left:auto"></span>` : "";
+            const dis = full && !on ? " disabled" : "";
+            return `<label style="display:flex;align-items:center;gap:7px;font-size:13px;padding:3px 2px;cursor:pointer;opacity:${dis ? ".45" : "1"}"><input type="checkbox" data-cid="${esc(a.id)}"${on ? " checked" : ""}${dis} style="cursor:pointer">${esc(a.label)}${sw}</label>`; }).join("")
+      ).join("");
+      host.querySelectorAll("input[data-cid]").forEach((cb) => { cb.onchange = () => { const id = cb.dataset.cid; if (cb.checked) addCompare(id); else removeCompare(id); }; });
     }
-    let cmpSubscribed = false;
-    function refreshCompare() {
-      if (!cmpSubscribed) {   // rebase Compare to the left edge of the view whenever you scroll / zoom (one recompute per frame)
-        cmpSubscribed = true;
-        safe(() => chart.subscribeAction("onVisibleRangeChange", () => {
-          if (!COMPARE_ORDER.length || cmpRecalcRAF) return;
-          cmpRecalcRAF = setTimeout(() => { cmpRecalcRAF = 0; recomputeCompare(); }, 60);   // throttle (setTimeout, not rAF — fires reliably)
-        }));
-      }
-      try { const vr = chart.getVisibleRange(); if (vr && vr.from != null) CMP_VIS_FROM = vr.from; } catch (_) {}
+    function refreshCompare() {   // draw the picks as an OVERLAY on the price pane (one chart) — no sub-pane; CMP_MODE picks %-normalised vs multi-axis
+      CMP_MAIN.label = (D && D.label) ? D.label : state.asset;
       safe(() => {
-        chart.removeIndicator("compare_pane", "COMPARE");
-        if (COMPARE_ORDER.length) {
-          const lines = [{ color: "#1d1d1f", size: 1.4 }].concat(CMP_PALETTE.map((c) => ({ color: c, size: 1.2 })));
-          chart.createIndicator({ name: "COMPARE", styles: { lines } }, false, { id: "compare_pane" });
-          // a NEW KLineChart pane defaults to a ~30px sliver — give it a usable, drag-resizable height
-          chart.setPaneOptions({ id: "compare_pane", height: 210, dragEnabled: true });
-        }
-        chart.resize();
+        chart.removeIndicator("candle_pane", "CMPOVR");
+        if (COMPARE_ORDER.length) chart.createIndicator("CMPOVR", true, { id: "candle_pane" });   // stack onto the price pane; CMPOVR self-rebases to the visible-left edge every render (handles scroll/zoom + mode automatically)
       });
-      renderCmpChips();
+      renderCmpChips(); buildCmpList();
     }
     function addCompare(id) {
       if (!id || COMPARE_SERIES.has(id) || id === state.asset) return;
@@ -2064,7 +2104,7 @@
         const meta = ASSETS.find((a) => a.id === id) || {};
         COMPARE_SERIES.set(id, { label: meta.label || d.asset_label || id, tsArr: d.timestamp.slice(), closeArr: d.close.slice() });
         COMPARE_ORDER.push(id); saveCompare(); refreshCompare();
-        status("comparing " + (meta.label || id) + " — see the relative-performance panel below the chart");
+        status("comparing " + (meta.label || id) + " — overlaid on the price chart (indexed to 100 at the view's left edge)");
       }).catch((e) => status("could not load " + id + " — " + (e.message || e)));
     }
     function removeCompare(id) {
@@ -2087,12 +2127,16 @@
       const sel = $("assetSel"), groups = {}; ASSETS.forEach((a) => { (groups[a.klass] = groups[a.klass] || []).push(a); });
       sel.innerHTML = Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join("");
       sel.value = state.asset; sel.onchange = () => loadAsset(sel.value); loadAsset(state.asset);
-      const csel = $("cmpSel");
-      if (csel) {
-        csel.innerHTML = `<option value="">+ add…</option>` + Object.keys(groups).map((g) => `<optgroup label="${esc(g)}">` + groups[g].map((a) => `<option value="${esc(a.id)}">${esc(a.label)}</option>`).join("") + `</optgroup>`).join("");
-        csel.onchange = () => { const v = csel.value; csel.value = ""; addCompare(v); };
-        try { const saved = JSON.parse(localStorage.getItem("price_compare_v1") || "[]"); if (Array.isArray(saved)) saved.slice(0, CMP_MAX).forEach((id) => { if (id !== state.asset) addCompare(id); }); } catch (_) {}
+      // ---- Compare: scale-mode toggle (% vs multi-axis) + grouped checkbox picker ----
+      try { CMP_MODE = localStorage.getItem("price_cmp_mode_v1") === "multi" ? "multi" : "pct"; } catch (_) {}
+      if ($("cmpModeSeg")) makeSeg($("cmpModeSeg"), [["pct", "Normalised %"], ["multi", "Multi-axis"]], (v) => v === CMP_MODE, (v, b) => { CMP_MODE = v; try { localStorage.setItem("price_cmp_mode_v1", v); } catch (_) {} segActive($("cmpModeSeg"), b); refreshCompare(); });
+      const cmpBtn = $("cmpBtn"), cmpPanel = $("cmpPanel");
+      if (cmpBtn && cmpPanel) {
+        cmpBtn.onclick = (e) => { e.stopPropagation(); const open = cmpPanel.style.display === "none"; cmpPanel.style.display = open ? "block" : "none"; if (open) buildCmpList(); };
+        document.addEventListener("click", (e) => { if (cmpPanel.style.display !== "none" && !cmpPanel.contains(e.target) && e.target !== cmpBtn) cmpPanel.style.display = "none"; });
       }
+      buildCmpList();
+      try { const saved = JSON.parse(localStorage.getItem("price_compare_v1") || "[]"); if (Array.isArray(saved)) saved.slice(0, CMP_MAX).forEach((id) => { if (id !== state.asset) addCompare(id); }); } catch (_) {}
     });
   }
 
