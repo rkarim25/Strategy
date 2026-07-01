@@ -1,23 +1,23 @@
 {
-  "generated_at_utc": "2026-07-01T18:22:49Z",
+  "generated_at_utc": "2026-07-01T22:12:36Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Software Rally Helps Nasdaq Flirt With Breakeven; Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga. Bearish offsets: Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St..",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga; Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance. Bearish offsets: Update: US Equity Indexes Fall as Technology Slides, Warsh's Inflation Focus Lifts Treasury Yields.",
   "articles": [
-    {
-      "title": "Software Rally Helps Nasdaq Flirt With Breakeven",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/615eaf88-34a2-3bc0-9112-53b13a4578a2/software-rally-helps-nasdaq.html?.tsrc=rss",
-      "published": "2026-07-01T16:02:05Z",
-      "tone": "bullish"
-    },
     {
       "title": "Stock Market Today: Dow Jones, S&P 500, Nasdaq Futures Gain As AI Stocks Rally On Micron\u2019s Strong Outlook - Benzinga",
       "source": "Benzinga",
       "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNRkFaMnhCa0JSblJ6ZVcxUHUyQ3l0blVqSlktd2x6bUloMzRCMU0wVkZaX0ZIV3p1WEQ0NFpqSnNMdVM4a2EzbW11ODg0cmlua01RVXo3UnlUdl9qNmd6UmUzRmkzUUh3UHhwOXJlSm1yUVpnUmZoWVhRY1VrMHBpODZpR2RmMGZjaE1vdkgxTzluTUF4ZExMTHk5ZXJZMXlRazFmamhYaHNpMUVZVXZJRE53M3l6c3B1Zzk0RzI1dXd5dnJhUWJtUWxVODJaSUFmN1FIM3Y0SWdkR0VEVkM4NW1DT3dSQ2JMWVBNWnBONnRjcVIwWnZpMks3QVdpa1E2b0E?oc=5",
       "published": "2026-06-25T12:42:00Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Update: US Equity Indexes Fall as Technology Slides, Warsh's Inflation Focus Lifts Treasury Yields",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-fall-technology-210459444.html?.tsrc=rss",
+      "published": "2026-07-01T21:04:59Z",
+      "tone": "bearish"
     },
     {
       "title": "Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance",
@@ -27,18 +27,18 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street Today; DJIA Hits Record and S&P 500, Nasdaq Comp Rally as SNDK, AMD, INTC, AAPL, MU Rise - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOcFlFZkpMSmQxUURULTIyZ3FwY1JGQ2lOU2tybXFDT19ON2N2V1FSYVRaUXZpUUxqLXpDWWJyUE54MWlnQ2tsVjBGTFZxZ2NVZkNRZC1nRG1RdU1vTk8yVFRab19wTnh5R0lnRDhvbmF3RVNnR3NlRkdNWUVfY0pkcEVkcVl6RENIRUloQ24zOUI0T0pqTVVfNFdhMFRUaXVrVlE?oc=5",
-      "published": "2026-06-30T07:00:00Z",
+      "title": "Stocks mixed to kick off Q3 and H2, Dow rises and hits new intraday record high - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNOXNobHk3RWtjaFppUllVT0NZOXB1MnhLWnlEemxfV0F1RUdyVkdEdjJ1UHRMWFFjZE1HaUpVQ1ZLekx5V0NzRFJSbGJNNlAySDhhVlUtUHJ4SDdxcXpHZ0V3b3FNelctenpTTjhnR2RMRDlIS1pneVQwS0JhbzYyUkVhMlVhRmRNdVh1NjJsTm0ySi1NUWtGamE5dTItcE5fb1BrVmpGTW55clFfazE3VUFja3p5QXRIWTB3cUQ0Y18yU3dfVzFsNDVPWlQ?oc=5",
+      "published": "2026-07-01T00:35:20Z",
       "tone": "bullish"
     },
     {
-      "title": "Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNa0lqMC1NZW5UV1pXZnpVcmlaTHhZaUFfNmp2RnFRV2hfTHRadmo4Z19XZ1lES05UVHdCeUoyRTJweU1IOTExeDY0U29NdnhVcEl2TW1uaUF1akI3SUxiakFtZTVLWjBfMWplVzJEN2VVbk44VE1odkFNV2c1VUlVa3E1aDU1S0w3dGNzWTYwYWIyZzJ0Q2ExSlhSa29YT19HM3FHRmR1TW0zOFJwR0diTmpDUVphQWU1WkRiUUcwYkdJd0VWOWNNeFZwV1g?oc=5",
-      "published": "2026-06-26T15:40:47Z",
-      "tone": "bearish"
+      "title": "Wall Street Today; DJIA Hits Record and S&P 500, Nasdaq Comp Rally as SNDK, AMD, INTC, AAPL, MU Rise - Moomoo",
+      "source": "Moomoo",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQYlN5eVRKV0tWSk01SWU2bnZJejhJUnZNdV9MSUZoYklIQjZ4cDRoYVdsY1NRSF9hMjJpaGlXRWJCVkduSFlGeDFaY05peGtHNDN4ZHBMSUJFYnlhY3hoMUZpS2lfc2xINXBrMWxtV1k2THZkSmdVV1dmTUh3U2VWekc4bEsxdmY3XzBfSUs5d2NuSVg0Nk1PeVdoRTQxaERH?oc=5",
+      "published": "2026-06-30T07:00:00Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 90
       }
     ],
-    "headline_count": 141,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
