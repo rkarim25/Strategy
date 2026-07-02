@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-07-02T14:36:46Z",
+  "generated_at_utc": "2026-07-02T16:46:39Z",
   "data_asof": "2026-07-02",
   "daily_rows": 3401,
-  "quote_price": 34059.0,
+  "quote_price": 32872.0,
   "quote_timestamp": "2026-07-02",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L?period1=0&period2=1783089406&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L?period1=0&period2=1783097199&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,65 +26,65 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-02",
-      "close": 34059.0
+      "close": 32872.0
     },
-    "latestSma": 34075.025,
+    "latestSma": 34015.675,
     "highWater": 37632.0,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.09494579081632648,
+    "latestDd": -0.12648809523809523,
     "regime": "tier2",
     "entryClose": 31980.5,
     "entryDate": "2026-05-18",
     "recoveryTarget": 44772.7,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 35289.0,
-    "activeEntryDate": "2026-06-30",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": -0.03485505398282751,
-    "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-07-02",
-      "close": 34059.0
+      "close": 32872.0
     },
-    "latestSma": 34060.275,
+    "latestSma": 33941.575,
     "highWater": 37632.0,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.09494579081632648,
+    "latestDd": -0.12648809523809523,
     "regime": "tier2",
     "entryClose": 31980.5,
     "entryDate": "2026-05-18",
     "recoveryTarget": 44772.7,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 35289.0,
-    "activeEntryDate": "2026-06-30",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": -0.03485505398282751,
-    "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-07-02",
-    "last_observed_target_leverage": 1,
-    "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-07-02T14:36:46Z",
+    "last_observed_target_leverage": 0,
+    "last_observed_target_label": "cash",
+    "last_checked_at_utc": "2026-07-02T16:46:39Z",
     "last_email_sent_on": "2026-07-02",
     "last_transition": {
-      "id": "2026-07-02:0->2026-07-02:1",
-      "detected_at_utc": "2026-07-02T12:07:38Z",
+      "id": "2026-07-02:1->2026-07-02:0",
+      "detected_at_utc": "2026-07-02T16:46:39Z",
       "previous_asof": "2026-07-02",
       "current_asof": "2026-07-02",
-      "old_target_leverage": 0,
-      "new_target_leverage": 1,
-      "old_target_label": "cash",
-      "new_target_label": "1x",
+      "old_target_leverage": 1,
+      "new_target_leverage": 0,
+      "old_target_label": "1x",
+      "new_target_label": "cash",
       "email_sent": false,
       "email_error": null,
-      "email_skipped_reason": "Signal changed (cash -> 1x) but an alert email was already sent today (2026-07-02 UK)."
+      "email_skipped_reason": "Signal changed (1x -> cash) but an alert email was already sent today (2026-07-02 UK)."
     }
   }
 }
