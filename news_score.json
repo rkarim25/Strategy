@@ -1,22 +1,15 @@
 {
-  "generated_at_utc": "2026-07-03T09:52:45Z",
+  "generated_at_utc": "2026-07-03T12:05:05Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance; Dow rides into new week at record high. What investors are watching ahead. Bearish offsets: Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St..",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance; Wall Street Today; DJIA Hits Record and S&P 500, Nasdaq Comp Rally as SNDK, AMD, INTC, AAPL, MU Rise - Moomoo. Bearish offsets: Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St.; Dollar heads for weekly drop as jobs data dims Fed hike bets.",
   "articles": [
     {
       "title": "Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance",
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxObVhOMHZ6bXFMU0lFU2J6S2R4b2w5YkthUmRYdWh1ZmRna3Nqck9QVzJUU0RESmtJQ1ZyeHRZelhBaEQwMFVYcjlpbkgxWGtnejJ3NVE5ZHo1MHdndE0yRm11ZmptWXk4Yk5yTnlFdGh0ckh5bVJlRU9zNFhFb0QyOHBOZGp5NXVadFA5RUFDZ0JOSVlzckpqc2FDb21YbG1YZTJyVjFIcHJHdXFXOFdRRHNvSlQ5R2JMQzJxdTNBRV9IZjhKck5SeHpXWC1IY1JlTE9tVHc4SWdDMVZEcEl0Tk45bXFwcDBRYUp4RA?oc=5",
       "published": "2026-06-30T20:03:21Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Dow rides into new week at record high. What investors are watching ahead",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/02/dow-rides-into-new-week-at-record-high-what-investors-are-watching-ahead.html",
-      "published": "2026-07-02T20:00:40Z",
       "tone": "bullish"
     },
     {
@@ -38,6 +31,13 @@
       "source": "24/7 Wall St.",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNa0lqMC1NZW5UV1pXZnpVcmlaTHhZaUFfNmp2RnFRV2hfTHRadmo4Z19XZ1lES05UVHdCeUoyRTJweU1IOTExeDY0U29NdnhVcEl2TW1uaUF1akI3SUxiakFtZTVLWjBfMWplVzJEN2VVbk44VE1odkFNV2c1VUlVa3E1aDU1S0w3dGNzWTYwYWIyZzJ0Q2ExSlhSa29YT19HM3FHRmR1TW0zOFJwR0diTmpDUVphQWU1WkRiUUcwYkdJd0VWOWNNeFZwV1g?oc=5",
       "published": "2026-06-26T15:40:47Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Dollar heads for weekly drop as jobs data dims Fed hike bets",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/07/03/dollar-heads-for-weekly-drop-as-jobs-data-dims-fed-hike-bets.html",
+      "published": "2026-07-03T02:11:44Z",
       "tone": "bearish"
     }
   ],
@@ -62,7 +62,7 @@
         "ok": true,
         "status": 200,
         "name": "CNBC Markets",
-        "articles": 29
+        "articles": 30
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
@@ -72,7 +72,7 @@
         "articles": 93
       }
     ],
-    "headline_count": 142,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
