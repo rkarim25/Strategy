@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-03T14:39:12Z",
+  "generated_at_utc": "2026-07-03T16:21:10Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance; Wall Street Today; DJIA Hits Record and S&P 500, Nasdaq Comp Rally as SNDK, AMD, INTC, AAPL, MU Rise - Moomoo. Bearish offsets: Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St..",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance; Wall Street Today; DJIA Hits Record and S&P 500, Nasdaq Comp Rally as SNDK, AMD, INTC, AAPL, MU Rise - Moomoo.",
   "articles": [
     {
       "title": "Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance",
@@ -20,18 +20,18 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock market today: Dow closes above 52,000 for first time, S&P 500 and Nasdaq rally as tech gains - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQS0FSelVOV005QXlFX093NXJvalhjUTdZNG1neXdRYWt5SlJuRjRuOWh6clJUMDdfWWVocmhpQk5yMXZyMnE4akVWeEtKTDZGTTJhbGVhWEFNeEt3aWl1dWVDVHJub254MkphQ3haZDRPRXkyQXVRdGZZS3JibUhaZVlKeDlVaWdaUlY3YklTU1pwTVJkbGNsZmdR?oc=5",
-      "published": "2026-06-29T21:11:37Z",
+      "title": "Dow Jones Futures: Techs Rebound After Tesla, Sandisk, AI Stocks Dive; Apple, Robinhood Flash Buy Signals",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/c5c7ee9b-1c12-3518-9e81-d4125388c16f/dow-jones-futures%3A-techs.html?.tsrc=rss",
+      "published": "2026-07-03T16:05:26Z",
       "tone": "bullish"
     },
     {
-      "title": "Jeremy Grantham Warns U.S. Stocks Could Plunge 70% in the Most Expensive Market in History - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNa0lqMC1NZW5UV1pXZnpVcmlaTHhZaUFfNmp2RnFRV2hfTHRadmo4Z19XZ1lES05UVHdCeUoyRTJweU1IOTExeDY0U29NdnhVcEl2TW1uaUF1akI3SUxiakFtZTVLWjBfMWplVzJEN2VVbk44VE1odkFNV2c1VUlVa3E1aDU1S0w3dGNzWTYwYWIyZzJ0Q2ExSlhSa29YT19HM3FHRmR1TW0zOFJwR0diTmpDUVphQWU1WkRiUUcwYkdJd0VWOWNNeFZwV1g?oc=5",
-      "published": "2026-06-26T15:40:47Z",
-      "tone": "bearish"
+      "title": "ANET Rises 56% in a Year: Should Investors Buy, Sell or Hold?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/anet-rises-56-investors-buy-133900943.html?.tsrc=rss",
+      "published": "2026-07-03T13:39:00Z",
+      "tone": "bullish"
     },
     {
       "title": "This generator builder catering to AI went public a month ago. Why analysts see big gains",
