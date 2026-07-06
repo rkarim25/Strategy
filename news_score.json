@@ -1,22 +1,15 @@
 {
-  "generated_at_utc": "2026-07-06T22:05:32Z",
+  "generated_at_utc": "2026-07-06T23:04:32Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters; Chip Stocks Bounce Back, Fueling Nasdaq Rally. Bearish offsets: Wall Street ends choppy session lower as tech shares drop - Yahoo Finance.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters; U.S. stock futures rise as Wall Street looks to extend its rally coming off the holiday weekend - MarketWatch. Bearish offsets: Wall Street ends choppy session lower as tech shares drop - Yahoo Finance; Jim Cramer: Chip stocks are staging a revenge trade for last week\u2019s misguided selling.",
   "articles": [
     {
       "title": "S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOeURVeHcyZ0dZTjVKUU5YT1c0UFpHZjliRDdNamlueUo3M0pyaDFDYkNPYlZnTDMwY1I2Q2ZodmhPeWdKeUZNY2wzRUgxOUowQ0pLMnF0ajJqdnI2dS1uWjdIS1hSLUFkeHN3VnZadWJJYk9XZnAyczBjOVBXcmxCSlNCcVRWZjZnVkZQQWlYam9MQWZ2T0hpWnN0aHRSU2o2MU9WRlB0THYxREJzVkM2U1NSOA?oc=5",
-      "published": "2026-07-06T20:23:28Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Chip Stocks Bounce Back, Fueling Nasdaq Rally",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/10d6e9ad-cd8e-3369-a155-bf6fd22a6a88/chip-stocks-bounce-back%2C.html?.tsrc=rss",
-      "published": "2026-07-06T20:03:56Z",
+      "published": "2026-07-06T21:43:44Z",
       "tone": "bullish"
     },
     {
@@ -27,17 +20,24 @@
       "tone": "bullish"
     },
     {
-      "title": "Nasdaq jumps more than 1% as chip stocks rebound after two-week losing streak - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNWDMxbGFiczBvdXB5QllmWU54dmVSb2ZvY090a3hjc3M2RUxfLUM5bVhGbUJidTlyancybUs3SjRIZHZrNm5yTjhDRkQwV3doOE1fbHlCS0EwTVpfZ0FFd1R2WVV6OTZSV09HVVJSNWlNcFZQWUF1bG9kUGROM0hWZUptTW1iVHZzVzlSeDVvS3RCdUoxdWVnaHVaNHpuczN5cVlYT3drajg0cHlOZXZudWxqVThCcHl1aXVrQzQ1TmpwSzdJ?oc=5",
-      "published": "2026-07-06T00:55:28Z",
-      "tone": "bullish"
-    },
-    {
       "title": "Wall Street ends choppy session lower as tech shares drop - Yahoo Finance",
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPSkw1cUVsWDRtRDFrZ1lMSzBzZ21JTTQ1VHpxTEgzelNacWQxRkhZc05wWEpadU5YaFNKWDZmOWxDMkVGYy1rQVc3b2dUcTNRM1ZkT0IwNk9GWW11UENieTF5a3pBdEtNXzJubTJKOGE2RGlwSkNMaVE5cnFvV2dSU2R3Z1pUdFNJWWxSTWU3ZDQyY2hWWjA4?oc=5",
       "published": "2026-07-01T21:28:31Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "GigaCloud Technology Inc. (GCT) Rises Higher Than Market: Key Facts",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/gigacloud-technology-inc-gct-rises-214505657.html?.tsrc=rss",
+      "published": "2026-07-06T21:45:05Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Jim Cramer: Chip stocks are staging a revenge trade for last week\u2019s misguided selling",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/07/06/jim-cramer-chip-stocks-are-staging-a-revenge-trade-for-last-weeks-misguided-selling.html",
+      "published": "2026-07-06T15:47:42Z",
       "tone": "bearish"
     }
   ],
