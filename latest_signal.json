@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-07-06T17:37:48Z",
+  "generated_at_utc": "2026-07-06T22:05:29Z",
   "data_asof": "2026-07-06",
   "daily_rows": 7546,
-  "quote_price": 7530.169921875,
+  "quote_price": 7537.43017578125,
   "quote_timestamp": "2026-07-06",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-06",
-      "close": 7530.2900390625
+      "close": 7537.43017578125
     },
-    "latestSma": 7429.986059570312,
+    "latestSma": 7430.34306640625,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.010445735400754108,
+    "latestDd": -0.009507451124423638,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -46,18 +46,18 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.14523555361160168,
+    "activeEntryPnl": 0.1463214531434316,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-07-06",
-      "close": 7530.169921875
+      "close": 7537.43017578125
     },
-    "latestSma": 7437.307543945312,
+    "latestSma": 7438.027563476562,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.01046151998202871,
+    "latestDd": -0.009507451124423638,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -68,14 +68,14 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.14521728572643244,
+    "activeEntryPnl": 0.1463214531434316,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-07-06",
     "last_observed_target_leverage": 2,
     "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-07-06T17:37:48Z",
+    "last_checked_at_utc": "2026-07-06T22:05:29Z",
     "last_email_sent_on": "2026-06-29",
     "last_transition": {
       "id": "2026-06-26:0->2026-06-29:2",

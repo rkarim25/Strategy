@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-07-06T17:37:52Z",
+  "generated_at_utc": "2026-07-06T22:05:32Z",
   "window_days": 7,
-  "score": 9,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq 100 Futures Rebound Strongly After Yesterday's Decline. Wall Street Investment Banks Believe the U.S. Stock Rally Still Has Legs. - TradingKey; U.S. stock futures rise as Wall Street looks to extend its rally coming off the holiday weekend - MarketWatch. Bearish offsets: Wall Street ends choppy session lower as tech shares drop - Yahoo Finance.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters; Chip Stocks Bounce Back, Fueling Nasdaq Rally. Bearish offsets: Wall Street ends choppy session lower as tech shares drop - Yahoo Finance.",
   "articles": [
     {
-      "title": "Nasdaq 100 Futures Rebound Strongly After Yesterday's Decline. Wall Street Investment Banks Believe the U.S. Stock Rally Still Has Legs. - TradingKey",
-      "source": "TradingKey",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNNHR2WFdOaGduZ3o4OHhILWZEMjg5Y2ZiSE9xR1p5RVJSV01vdDZnRWsxUVVpVXVCV2UwMVpPTzRsZlhiMlpKdGVFSHpEN09Sc0xxTmFVSDB0S1VRN3QwM18xOXVkbHo3ZE1DY1pFdWYtWlF4VHQ1N0VNREtlUnlVMXloeWNQV1JMRWhUUlNrZ3djTWVvaWpITXY3UnByZlVnZnpNRWxZd2hkMFpTbURSamhYbmFoeE41NzlJYTdUM3UwREtQeHF3b3RPckg?oc=5",
-      "published": "2026-07-03T17:07:32Z",
+      "title": "S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOeURVeHcyZ0dZTjVKUU5YT1c0UFpHZjliRDdNamlueUo3M0pyaDFDYkNPYlZnTDMwY1I2Q2ZodmhPeWdKeUZNY2wzRUgxOUowQ0pLMnF0ajJqdnI2dS1uWjdIS1hSLUFkeHN3VnZadWJJYk9XZnAyczBjOVBXcmxCSlNCcVRWZjZnVkZQQWlYam9MQWZ2T0hpWnN0aHRSU2o2MU9WRlB0THYxREJzVkM2U1NSOA?oc=5",
+      "published": "2026-07-06T20:23:28Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Chip Stocks Bounce Back, Fueling Nasdaq Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/10d6e9ad-cd8e-3369-a155-bf6fd22a6a88/chip-stocks-bounce-back%2C.html?.tsrc=rss",
+      "published": "2026-07-06T20:03:56Z",
       "tone": "bullish"
     },
     {
@@ -20,25 +27,18 @@
       "tone": "bullish"
     },
     {
+      "title": "Nasdaq jumps more than 1% as chip stocks rebound after two-week losing streak - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNWDMxbGFiczBvdXB5QllmWU54dmVSb2ZvY090a3hjc3M2RUxfLUM5bVhGbUJidTlyancybUs3SjRIZHZrNm5yTjhDRkQwV3doOE1fbHlCS0EwTVpfZ0FFd1R2WVV6OTZSV09HVVJSNWlNcFZQWUF1bG9kUGROM0hWZUptTW1iVHZzVzlSeDVvS3RCdUoxdWVnaHVaNHpuczN5cVlYT3drajg0cHlOZXZudWxqVThCcHl1aXVrQzQ1TmpwSzdJ?oc=5",
+      "published": "2026-07-06T00:55:28Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Wall Street ends choppy session lower as tech shares drop - Yahoo Finance",
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPSkw1cUVsWDRtRDFrZ1lMSzBzZ21JTTQ1VHpxTEgzelNacWQxRkhZc05wWEpadU5YaFNKWDZmOWxDMkVGYy1rQVc3b2dUcTNRM1ZkT0IwNk9GWW11UENieTF5a3pBdEtNXzJubTJKOGE2RGlwSkNMaVE5cnFvV2dSU2R3Z1pUdFNJWWxSTWU3ZDQyY2hWWjA4?oc=5",
       "published": "2026-07-01T21:28:31Z",
       "tone": "bearish"
-    },
-    {
-      "title": "S&P 500, Nasdaq rise as chips recover, Broadcom gains on Apple deal - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOeURVeHcyZ0dZTjVKUU5YT1c0UFpHZjliRDdNamlueUo3M0pyaDFDYkNPYlZnTDMwY1I2Q2ZodmhPeWdKeUZNY2wzRUgxOUowQ0pLMnF0ajJqdnI2dS1uWjdIS1hSLUFkeHN3VnZadWJJYk9XZnAyczBjOVBXcmxCSlNCcVRWZjZnVkZQQWlYam9MQWZ2T0hpWnN0aHRSU2o2MU9WRlB0THYxREJzVkM2U1NSOA?oc=5",
-      "published": "2026-07-06T16:38:44Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "BFH Outperforms Industry, Trades Near 52-Week High: Time to Buy?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/bfh-outperforms-industry-trades-near-160800350.html?.tsrc=rss",
-      "published": "2026-07-06T16:08:00Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 92
       }
     ],
-    "headline_count": 145,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
