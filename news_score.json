@@ -1,23 +1,23 @@
 {
-  "generated_at_utc": "2026-07-07T17:54:11Z",
+  "generated_at_utc": "2026-07-07T22:04:37Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Can Quanta Justify Its Premium Multiple After a 79% Gain in a Year?; S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters. Bearish offsets: Stock market today: Nasdaq leads Dow, S&P 500 lower after Samsung, DeepSeek spark chip sell-off - Yahoo Finance.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Rivian Needs Cash to Grow. Its Solution Is Tanking the Stock.; S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters. Bearish offsets: Stock Market Today: Nasdaq Is Day's Biggest Loser; Sandisk, Micron Tumble, Eli Lilly Shines.",
   "articles": [
     {
-      "title": "Can Quanta Justify Its Premium Multiple After a 79% Gain in a Year?",
+      "title": "Stock Market Today: Nasdaq Is Day's Biggest Loser; Sandisk, Micron Tumble, Eli Lilly Shines",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/quanta-justify-premium-multiple-79-163100103.html?.tsrc=rss",
-      "published": "2026-07-07T16:31:00Z",
-      "tone": "bullish"
+      "url": "https://finance.yahoo.com/m/110b2049-5932-3626-b8a1-7e911ed6df13/stock-market-today%3A-nasdaq-is.html?.tsrc=rss",
+      "published": "2026-07-07T20:35:55Z",
+      "tone": "bearish"
     },
     {
-      "title": "Stock market today: Nasdaq leads Dow, S&P 500 lower after Samsung, DeepSeek spark chip sell-off - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNdGl1NlI4Wm5NTFZERzFIZ1FOelRWQUY4Ty0zdVRrSkt6YWY3WnVQXzFkd1ZpeENzVWM5MVFvSjdrWi1MNXJpYnZFUTZ1MW51SmxubzhHdUhHQlljR1BjVnh0QmZRYjI1elpnWERMdV9sZk1BZXB2TmZxU0lUTnEzVFBUNndITzFnYkhoN0pxNEJFZW5GemllUlVuaDNYdnNSMVNoY3pVa2JncVRseGJLa1g5cHo1Q2o5aEhBbkc4MTlEd0JkRFJJWngtV1hUSWVoeVNWS1pONnQ?oc=5",
-      "published": "2026-07-07T16:04:00Z",
-      "tone": "bearish"
+      "title": "Rivian Needs Cash to Grow. Its Solution Is Tanking the Stock.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/30b6abcf-8e49-39bb-bf27-80b1f8c232e8/rivian-needs-cash-to-grow..html?.tsrc=rss",
+      "published": "2026-07-07T20:28:00Z",
+      "tone": "bullish"
     },
     {
       "title": "S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 95
       }
     ],
-    "headline_count": 140,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
