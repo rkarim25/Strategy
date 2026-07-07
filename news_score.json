@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-07-06T23:04:32Z",
+  "generated_at_utc": "2026-07-07T10:21:14Z",
   "window_days": 7,
-  "score": 8,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters; U.S. stock futures rise as Wall Street looks to extend its rally coming off the holiday weekend - MarketWatch. Bearish offsets: Wall Street ends choppy session lower as tech shares drop - Yahoo Finance; Jim Cramer: Chip stocks are staging a revenge trade for last week\u2019s misguided selling.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com; S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters.",
   "articles": [
+    {
+      "title": "AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com",
+      "source": "ETEnterpriseai.com",
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQUUlFZkQ1d2IxUkYwVE5HbWRpX0wzOGZNYTFna3AySEp0ZHdNY2k4UjZ1VXJRZUttQ1BZbVRpSldTc0lfOVhlR09SSnB6ZkhETFpWMFJjLU1nWFVjY1l0Mm1xcDc3NGJqQVVwTURTREEzeFZUa1RoQUZqYndtVU15SFVXNDJCb2FrM1FXWkRLYlU3c1JPMnhPaEh4ejBXUG1VRDFQbUFUZ2VQRW4tR1BaTUthYkZVSXBZY0NQVjgwT2hBOGxvdE1GUTZIR283Y29VN0daVTNuZ2RTdGRLTUhzU9IB5gFBVV95cUxPd0ZzOGMyRGhXQ3AtOXYzemxqeWNzc2RQSC0yNUctY0FwTThvNTFaLWFMTmx3Mld5cllYTzQ1emxvbGl6T2wzVU9iSU8xcjdxVGhWYkpKSVdsRVoycmZpclZmUFloOXdYdW1XVlNnd25qUS0tZFE3Y2NhemhKXzRxcmJ5MWd3Y0NmWGxyX1NiRS1vUzNSVTlRRTRtWHJuVVFpeGxPRHNpdHZpdnFmaUpaUF84aDVQT1U5SHl3UDIzVmY3VFluUnNYekVIOW5sa1c0a3BtLU1Uak1zR19CSUV1eUJPcjFJQQ?oc=5",
+      "published": "2026-07-07T07:14:34Z",
+      "tone": "bullish"
+    },
     {
       "title": "S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOeURVeHcyZ0dZTjVKUU5YT1c0UFpHZjliRDdNamlueUo3M0pyaDFDYkNPYlZnTDMwY1I2Q2ZodmhPeWdKeUZNY2wzRUgxOUowQ0pLMnF0ajJqdnI2dS1uWjdIS1hSLUFkeHN3VnZadWJJYk9XZnAyczBjOVBXcmxCSlNCcVRWZjZnVkZQQWlYam9MQWZ2T0hpWnN0aHRSU2o2MU9WRlB0THYxREJzVkM2U1NSOA?oc=5",
-      "published": "2026-07-06T21:43:44Z",
+      "published": "2026-07-06T10:11:00Z",
       "tone": "bullish"
     },
     {
@@ -20,25 +27,18 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street ends choppy session lower as tech shares drop - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPSkw1cUVsWDRtRDFrZ1lMSzBzZ21JTTQ1VHpxTEgzelNacWQxRkhZc05wWEpadU5YaFNKWDZmOWxDMkVGYy1rQVc3b2dUcTNRM1ZkT0IwNk9GWW11UENieTF5a3pBdEtNXzJubTJKOGE2RGlwSkNMaVE5cnFvV2dSU2R3Z1pUdFNJWWxSTWU3ZDQyY2hWWjA4?oc=5",
-      "published": "2026-07-01T21:28:31Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "GigaCloud Technology Inc. (GCT) Rises Higher Than Market: Key Facts",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/gigacloud-technology-inc-gct-rises-214505657.html?.tsrc=rss",
-      "published": "2026-07-06T21:45:05Z",
+      "title": "US stocks tick higher after AI winners rebound - pottsmerc.com",
+      "source": "pottsmerc.com",
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9NZHU2UEtUYmlScy00U3V5RGozQVlxQi1MS0sxU2Y1RzliQ09KTmpVWVFpN19ZLUVsQTJmV20wNmF5LVFDZXlBbXlCblMxakx5MFRBNHAxSjg4cjMyUGxxMUtrWThqakxla3ZfblJzdXBMLVNIa1dJ?oc=5",
+      "published": "2026-07-06T13:17:28Z",
       "tone": "bullish"
     },
     {
-      "title": "Jim Cramer: Chip stocks are staging a revenge trade for last week\u2019s misguided selling",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/06/jim-cramer-chip-stocks-are-staging-a-revenge-trade-for-last-weeks-misguided-selling.html",
-      "published": "2026-07-06T15:47:42Z",
-      "tone": "bearish"
+      "title": "Semiconductor stocks climb to record 19.7% of the S&P 500 as AI rally reshapes the index - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPWnh6eW5GMTNQRE4xZDlGSVQ5YXdBYWYtWk0wRDJLdG1MTXc0U3EwR1NWbUxUMEhWQ1RsTHZ5MFdHUl9ieEhSOTJZaXNSbGNpOXdDX1JpR3BTWFRoejU5Xzd5MXBrekJhMVJRLVRPNWdrQUlMZEh0Nk1xSk5IbDcxNF9nUkxoMFVRUU9CVExiQjdDcWZGcFBuRmRwT3M4clJJMENJ?oc=5",
+      "published": "2026-06-30T12:28:37Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
