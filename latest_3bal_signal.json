@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-07-08T21:58:30Z",
-  "data_asof": "2026-07-08",
-  "daily_rows": 2913,
-  "quote_price": 6630.5,
-  "quote_timestamp": "2026-07-08",
+  "generated_at_utc": "2026-07-08T23:03:36Z",
+  "data_asof": "2026-07-07",
+  "daily_rows": 2912,
+  "quote_price": 7387.0,
+  "quote_timestamp": "2026-07-07",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L?period1=0&period2=1783634310&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L?period1=0&period2=1783638216&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -25,66 +25,67 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-07-08",
-      "close": 6630.5
+      "date": "2026-07-07",
+      "close": 7387.0
     },
-    "latestSma": 6790.15,
+    "latestSma": 6716.975,
     "highWater": 13014.4912109375,
     "highWaterDate": "2015-04-13",
-    "latestDd": -0.4905294496316793,
+    "latestDd": -0.4324019371735488,
     "regime": "sma20",
     "entryClose": null,
     "entryDate": null,
     "recoveryTarget": null,
-    "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "Close is below SMA20; hold cash."
+    "aboveSma": true,
+    "recoveryOk": true,
+    "targetLeverage": 1,
+    "activeEntryClose": 5864.0,
+    "activeEntryDate": "2026-06-12",
+    "activeEntryLeverage": 1,
+    "activeEntryPnl": 0.25972032742155515,
+    "explanation": "Close is above SMA20; hold 1x (fully in 3BAL)."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-07-08",
-      "close": 6630.5
+      "date": "2026-07-07",
+      "close": 7387.0
     },
-    "latestSma": 6860.775,
+    "latestSma": 6827.975,
     "highWater": 13014.4912109375,
     "highWaterDate": "2015-04-13",
-    "latestDd": -0.4905294496316793,
+    "latestDd": -0.4324019371735488,
     "regime": "sma20",
     "entryClose": null,
     "entryDate": null,
     "recoveryTarget": null,
-    "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "Close is below SMA20; hold cash."
+    "aboveSma": true,
+    "recoveryOk": true,
+    "targetLeverage": 1,
+    "activeEntryClose": 5864.0,
+    "activeEntryDate": "2026-06-12",
+    "activeEntryLeverage": 1,
+    "activeEntryPnl": 0.25972032742155515,
+    "explanation": "Close is above SMA20; hold 1x (fully in 3BAL)."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-07-08",
-    "last_observed_target_leverage": 0,
-    "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-07-08T21:58:30Z",
-    "last_email_sent_on": "2026-07-08",
+    "last_observed_asof": "2026-07-07",
+    "last_observed_target_leverage": 1,
+    "last_observed_target_label": "1x",
+    "last_checked_at_utc": "2026-07-08T23:03:36Z",
+    "last_email_sent_on": "2026-07-09",
+    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
-      "id": "2026-07-08:1->2026-07-08:0",
-      "detected_at_utc": "2026-07-08T15:23:47Z",
+      "id": "2026-07-08:0->2026-07-07:1",
+      "detected_at_utc": "2026-07-08T23:03:36Z",
       "previous_asof": "2026-07-08",
-      "current_asof": "2026-07-08",
-      "old_target_leverage": 1,
-      "new_target_leverage": 0,
-      "old_target_label": "1x",
-      "new_target_label": "cash",
-      "email_sent": false,
+      "current_asof": "2026-07-07",
+      "old_target_leverage": 0,
+      "new_target_leverage": 1,
+      "old_target_label": "cash",
+      "new_target_label": "1x",
+      "email_sent": true,
       "email_error": null,
-      "email_skipped_reason": "Signal changed (1x -> cash) but an alert email was already sent today (2026-07-08 UK)."
+      "email_skipped_reason": null
     }
   }
 }

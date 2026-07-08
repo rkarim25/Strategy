@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-07-08T21:58:28Z",
+  "generated_at_utc": "2026-07-08T23:03:32Z",
   "data_asof": "2026-07-08",
   "daily_rows": 6486,
-  "quote_price": 4086.60009765625,
+  "quote_price": 4088.300048828125,
   "quote_timestamp": "2026-07-08",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1783634307&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1783638212&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-08",
-      "close": 4086.60009765625
+      "close": 4088.300048828125
     },
-    "latestSma": 4146.995007324219,
+    "latestSma": 4147.080004882812,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.23161097835923583,
+    "latestDd": -0.23129134252832995,
     "regime": "tier2",
     "entryClose": 4087.699951171875,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-07-08",
-      "close": 4086.60009765625
+      "close": 4088.300048828125
     },
-    "latestSma": 4138.325012207031,
+    "latestSma": 4138.495007324219,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.23161097835923583,
+    "latestDd": -0.23129134252832995,
     "regime": "tier2",
     "entryClose": 4087.699951171875,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-07-08",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-07-08T21:58:28Z",
+    "last_checked_at_utc": "2026-07-08T23:03:32Z",
     "last_email_sent_on": "2026-07-07",
     "last_transition": {
       "id": "2026-07-07:1->2026-07-07:0",
