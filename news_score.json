@@ -1,22 +1,22 @@
 {
-  "generated_at_utc": "2026-07-08T11:21:33Z",
+  "generated_at_utc": "2026-07-08T12:58:47Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org; S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters. Bearish offsets: Wall Street Futures Fall as Trump Declares Iran Peace Framework \u201cOver\u201d: Dow Jones, S&P, Nasdaq; How a Fed rate hike can affect mortgages \u2014 and affordable lenders to help you save.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org; S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters. Bearish offsets: How a Fed rate hike can affect mortgages \u2014 and affordable lenders to help you save; Dow Jones and Nasdaq called lower as Trump says Iran ceasefire 'over'.",
   "articles": [
-    {
-      "title": "Wall Street Futures Fall as Trump Declares Iran Peace Framework \u201cOver\u201d: Dow Jones, S&P, Nasdaq",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://investorshub.advfn.com/market-news/article/31499/wall-street-futures-fall-as-trump-declares-iran-peace-framework-over-dow-jones-sp-nasdaq?.tsrc=rss",
-      "published": "2026-07-08T10:06:17Z",
-      "tone": "bearish"
-    },
     {
       "title": "How a Fed rate hike can affect mortgages \u2014 and affordable lenders to help you save",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/select/how-does-the-fed-rate-impact-mortgage-rates/",
       "published": "2026-07-08T10:02:02Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Dow Jones and Nasdaq called lower as Trump says Iran ceasefire 'over'",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.proactiveinvestors.com/companies/news/1095121/dow-jones-and-nasdaq-called-lower-as-trump-says-iran-ceasefire-over-1095121.html?.tsrc=rss",
+      "published": "2026-07-08T12:12:00Z",
       "tone": "bearish"
     },
     {
