@@ -1,30 +1,37 @@
 {
-  "generated_at_utc": "2026-07-08T15:23:48Z",
+  "generated_at_utc": "2026-07-08T16:56:01Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Roblox Stock Gains 32% in a Month: Should Investors Buy, Sell or Hold?; Is Atlanticus Stock Still Worth Buying After a 71% Rally in a Year?. Bearish offsets: How a Fed rate hike can affect mortgages \u2014 and affordable lenders to help you save; Wall Street Today: Semiconductor Selloff Drags Nasdaq Lower, Software Outperforms - Moomoo.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Valmont Shares Rise 34% YTD: Here's What's Driving the Upside; 2 Bargain Top-Ranked Energy Stocks That Won't Stay Cheap for Long. Bearish offsets: Stock Market Today: Dow Dives As U.S.-Iran Ceasefire Falls Apart; Arista Bucks Sell-Off (Live Coverage); Dow Drops 800 Points. These Stocks Are a Big Drag..",
   "articles": [
     {
-      "title": "Roblox Stock Gains 32% in a Month: Should Investors Buy, Sell or Hold?",
+      "title": "Valmont Shares Rise 34% YTD: Here's What's Driving the Upside",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/roblox-stock-gains-32-month-140000971.html?.tsrc=rss",
-      "published": "2026-07-08T14:00:00Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/valmont-shares-rise-34-ytd-151100782.html?.tsrc=rss",
+      "published": "2026-07-08T15:11:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Is Atlanticus Stock Still Worth Buying After a 71% Rally in a Year?",
+      "title": "Stock Market Today: Dow Dives As U.S.-Iran Ceasefire Falls Apart; Arista Bucks Sell-Off (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/atlanticus-stock-still-worth-buying-140700406.html?.tsrc=rss",
-      "published": "2026-07-08T14:07:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "How a Fed rate hike can affect mortgages \u2014 and affordable lenders to help you save",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/select/how-does-the-fed-rate-impact-mortgage-rates/",
-      "published": "2026-07-08T10:02:02Z",
+      "url": "https://finance.yahoo.com/m/21ec8542-e737-316b-873a-8dc98ed10edc/stock-market-today%3A-dow-dives.html?.tsrc=rss",
+      "published": "2026-07-08T15:55:13Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Dow Drops 800 Points. These Stocks Are a Big Drag.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/ccfde811-0438-354a-8113-a1a00bf2ec00/dow-drops-800-points.-these.html?.tsrc=rss",
+      "published": "2026-07-08T15:26:55Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "2 Bargain Top-Ranked Energy Stocks That Won't Stay Cheap for Long",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/energy/articles/2-bargain-top-ranked-energy-152600085.html?.tsrc=rss",
+      "published": "2026-07-08T15:26:00Z",
+      "tone": "bullish"
     },
     {
       "title": "Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org",
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBnX0czNXFyUmJYSnVQR3drWUdIZmN2bzFscVlyS1dHa0N2MUpkNVlqS2FhXzhRX3BHZndPTjdnRnFXZVZtR1NYRDlHRm1EanRWWkRnb0FjbFJQdlhMVFd2cEc0OG5BZ1JwMkJaWUlsLW02M1FK?oc=5",
       "published": "2026-07-07T15:03:31Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Wall Street Today: Semiconductor Selloff Drags Nasdaq Lower, Software Outperforms - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOdi1hZHpQRklUOFgyQXFwbDlmZ2VwRDNheHYxSENUY0UzUlBXSW1CWkl5aGZlbU5LYUlhSXl6WVZqMlJ4b200YXV2TWwwTnVVd3U2alp3dWFndXducFl6T0tuVmhROXc1ZHdDMEdIMm9zMWpHdXlLX0hnbkV1cWxPcXZYS2xsYVVrWkl5aXpmd0tmTVpkcVZLQWRETmdlT1BnQ2h3?oc=5",
-      "published": "2026-07-07T07:00:00Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 91
       }
     ],
-    "headline_count": 140,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
