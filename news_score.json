@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-07-07T22:58:32Z",
+  "generated_at_utc": "2026-07-08T09:22:43Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance; S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters. Bearish offsets: Dow Drops 953, Nasdaq Sinks 509, S&P 500 Falls 120 - TV News Check; Stock market today: Dow, S&P 500, Nasdaq fall as Samsung, DeepSeek spark chip sell-off and oil rises - Yahoo Finance.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org; S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters. Bearish offsets: Stock Futures Drop as U.S.-Iran Strikes Add to Fears Amid Chips Selloff; Stock market today: Dow, S&P 500, Nasdaq fall as Samsung, DeepSeek spark chip sell-off and oil rises - Yahoo Finance.",
   "articles": [
     {
-      "title": "Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxObVhOMHZ6bXFMU0lFU2J6S2R4b2w5YkthUmRYdWh1ZmRna3Nqck9QVzJUU0RESmtJQ1ZyeHRZelhBaEQwMFVYcjlpbkgxWGtnejJ3NVE5ZHo1MHdndE0yRm11ZmptWXk4Yk5yTnlFdGh0ckh5bVJlRU9zNFhFb0QyOHBOZGp5NXVadFA5RUFDZ0JOSVlzckpqc2FDb21YbG1YZTJyVjFIcHJHdXFXOFdRRHNvSlQ5R2JMQzJxdTNBRV9IZjhKck5SeHpXWC1IY1JlTE9tVHc4SWdDMVZEcEl0Tk45bXFwcDBRYUp4RA?oc=5",
-      "published": "2026-07-06T21:21:49Z",
+      "title": "Stock Futures Drop as U.S.-Iran Strikes Add to Fears Amid Chips Selloff",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/d0cd6f95-8aad-316d-95db-bd01a82ee05c/stock-futures-drop-as.html?.tsrc=rss",
+      "published": "2026-07-08T07:52:24Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org",
+      "source": "eciks.org",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBnX0czNXFyUmJYSnVQR3drWUdIZmN2bzFscVlyS1dHa0N2MUpkNVlqS2FhXzhRX3BHZndPTjdnRnFXZVZtR1NYRDlHRm1EanRWWkRnb0FjbFJQdlhMVFd2cEc0OG5BZ1JwMkJaWUlsLW02M1FK?oc=5",
+      "published": "2026-07-07T15:03:31Z",
       "tone": "bullish"
     },
     {
@@ -20,18 +27,11 @@
       "tone": "bullish"
     },
     {
-      "title": "U.S. Stock Futures Rise as Wall Street Looks to Extend Its Rally Coming off the Holiday Weekend - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOODFvYU5KcXZTR192NXBNWmp6Uk1Nc2NYekRwSzgwNnE4YzRQbzZodFJCS05sQkE3YWZNbDE1U3lic1lyOWpfQ1Zxb09CV3ZKTko2ME15TVNieHJvc1BNNHpLMm8xWkQwOXBaSkk1dHBybVFzb3ltenQtWXhOeUxvekdZWXY2WHdpdGZvMTdyQUhlVXlISGdDTEx3?oc=5",
-      "published": "2026-07-05T23:33:06Z",
+      "title": "U.S. stock futures rise as Wall Street looks to extend its rally coming off the holiday weekend - MarketWatch",
+      "source": "MarketWatch",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQSGx4NTNEbE5VR0sxQ3NIWlIzM1l2dWxJX0tQYm5UUTJ2NUVEUkc2VTlJcmZfWWJYNHU3V2pvMzdLUkl3a3RuMjdndTJfeTI4Tl81VWNUdE1FWUxvTDA5TWNheTlHeFZXWXBXal90OXg4NmFCWEUzN3JvdUozbmNKdDBwMklYd0NKYmpIQ3hTNEwzNU1FZzA0SnlvZ0h3Y1hiYjFqcmtzb2RjNnY1ODlzQ1RiTEMyXzNZTXNLVjdtbERETEczdVh4ZG15VWJoR3FiNkhR?oc=5",
+      "published": "2026-07-06T03:09:00Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Dow Drops 953, Nasdaq Sinks 509, S&P 500 Falls 120 - TV News Check",
-      "source": "TV News Check",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOVFBvSm9QaXJ2ZDZkSE41Y2g5WlVVVkJiUDNZTVBTUTU1WWJlVm5wSktjR1A2eTN2akNqRDVwdGtVbnFKTnlyY3BIVVFBVUc1VzY0WU9CUzRxR3ZoSU5pZ2tNRWNpMzRzZi1XX0dMX2pkenpPd2Q3Y1c5UjhSU09GSXNnV2RZYmJVcFl5bENPNHA3UjQ?oc=5",
-      "published": "2026-07-03T09:42:51Z",
-      "tone": "bearish"
     },
     {
       "title": "Stock market today: Dow, S&P 500, Nasdaq fall as Samsung, DeepSeek spark chip sell-off and oil rises - Yahoo Finance",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 88
       }
     ],
-    "headline_count": 142,
+    "headline_count": 138,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
