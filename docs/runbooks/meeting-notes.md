@@ -63,8 +63,18 @@ Revoke link-sharing after download if it was enabled.
    (`create_file`, `disableConversionToGoogleType: true`) and sent to the user
    via SendUserFile. Meeting recordings may contain sensitive information — do
    not commit transcripts, audio, or summaries to this repo.
-6. Maintain a **cross-issuer master guidance file** in the trip folder as notes
-   accumulate (one row per issuer×metric with meeting date).
+6. Maintain the **MASTER file** in the trip folder: title
+   `_MASTER <trip> [updated YYYY-MM-DD].md`. Contents: (a) progress tracker
+   table — one row per meeting: audio / Otter / note status — then (b) every
+   completed note concatenated in full (v3 format), so one copy grabs everything.
+   The Drive connector cannot update or delete files, so each refresh CREATES a
+   new file with the current date in the title — **the newest-dated `_MASTER` is
+   canonical**; the master's copy of a note supersedes the individual file.
+   Individual per-issuer note files are still uploaded alongside it.
+   The user checks progress from any chat by asking Claude (with the Drive
+   connector) to read the latest `_MASTER` file. Refresh the master after every
+   completed note, and suggest the user occasionally deletes stale `_MASTER`
+   versions and superseded drafts (connector can't).
 
 ## Status (2026-07-09)
 
