@@ -37,28 +37,34 @@ Revoke link-sharing after download if it was enabled.
 - ~1h35m audio ≈ 30–60 min on `small`. Run in background (`run_in_background`).
 - Keep the audio and transcripts in the session scratchpad, NOT in this git repo.
 
-## Reconciliation & summary rules
+## Reconciliation & summary rules (FINAL SPEC — user-approved 2026-07-09, v3 format)
 
 1. The user's own notes have **priority** — they mark what mattered in the room.
-2. Use Otter mainly for speaker labels/timestamps; trust the fresh Whisper
-   transcript for content. Every **number** must be cross-checked across all
-   three sources; unresolved conflicts go in a "Flags for verification" list with
-   timestamps. Sanity-check numbers by arithmetic where possible (cash walks etc.).
-3. Audience: EM Eurobond credit investor. Include only forward-useful content.
-   Fixed template per issuer:
-   - Header (issuer, date, meeting type)
-   - Top takeaways (3–6 bullets, credit-relevant)
-   - **Guidance table**: revenue, EBITDA, interest expense, working capital,
-     capex, FCF, dividend, net leverage — plus volumes/pricing where relevant.
-     Columns: Metric | Guidance | Period | Confidence | Timestamp.
-     Confidence key: ✓ notes+transcript agree · N notes only · T transcript only · ⚠ conflict.
-   - **Issuance / liability-management table**: instrument, size, timing, use of proceeds.
-   - Other points for the file (competitive/regulatory/watch items)
-   - Flags for audio verification
-4. Output: markdown, uploaded back into the same Drive trip folder
+2. Cross-check every **number** across all sources (own Whisper transcript, Otter,
+   user notes, public disclosures) and by arithmetic (cash walks etc.) — then
+   **print only the single most reliable value. Never show the conflict, the
+   correction trail, or "X said / notes said" annotations.** Mis-heard names are
+   silently replaced with the verified real name (e.g. Otter's "Engin" → İncir HPP).
+3. **Per issuer, run a deep research pass before writing** (parallel web-research
+   agents): company background, industry, and macro. Weave in only context that
+   changes the credit read — one clause, stated as fact, no "Context:" labels,
+   no source lists, no verification notes in the output.
+4. Audience: EM Eurobond credit investor. Only forward-useful content. Template
+   (copy-paste ready, no meta, no second-person references):
+   - `# <Issuer> — Management Meeting, <Trip> (<Mon-Year>)`
+   - **Takeaways** — 4–6 bullets, credit-relevant, key figures bolded
+   - **Guidance** table — Metric | Guidance | Period. Metrics: revenue, EBITDA,
+     interest expense, working capital, capex, FCF, dividend, net leverage,
+     plus volumes/pricing where relevant.
+   - **Funding & issuance** table — instrument, size, timing, terms, use of proceeds
+   - **Watch items** — ≤3 bullets: swing factors, catalysts, what to track
+   - Reference example: `Limak_Renewables_note_v3.md` in the trip folder.
+5. Output: markdown, uploaded to the same Drive trip folder
    (`create_file`, `disableConversionToGoogleType: true`) and sent to the user
    via SendUserFile. Meeting recordings may contain sensitive information — do
    not commit transcripts, audio, or summaries to this repo.
+6. Maintain a **cross-issuer master guidance file** in the trip folder as notes
+   accumulate (one row per issuer×metric with meeting date).
 
 ## Status (2026-07-09)
 
