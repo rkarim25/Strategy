@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-07-09T18:16:08Z",
+  "generated_at_utc": "2026-07-09T22:13:00Z",
   "data_asof": "2026-07-09",
-  "daily_rows": 7548,
-  "quote_price": 29756.98828125,
+  "daily_rows": 7547,
+  "quote_price": 29727.09765625,
   "quote_timestamp": "2026-07-09",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-09",
-      "close": 29756.98828125
+      "close": 29727.09765625
     },
-    "latestSma": 29636.10986328125,
+    "latestSma": 29634.61533203125,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.029471417377261777,
+    "latestDd": -0.03044630454127084,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -43,7 +43,7 @@
     "aboveSma": true,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 29756.98828125,
+    "activeEntryClose": 29727.09765625,
     "activeEntryDate": "2026-07-09",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
@@ -52,12 +52,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-07-09",
-      "close": 29756.98828125
+      "close": 29727.09765625
     },
-    "latestSma": 29698.5578125,
+    "latestSma": 29695.56875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.029471417377261777,
+    "latestDd": -0.03044630454127084,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -65,7 +65,7 @@
     "aboveSma": true,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 29756.98828125,
+    "activeEntryClose": 29727.09765625,
     "activeEntryDate": "2026-07-09",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
@@ -75,7 +75,7 @@
     "last_observed_asof": "2026-07-09",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-07-09T18:16:08Z",
+    "last_checked_at_utc": "2026-07-09T22:13:00Z",
     "last_email_sent_on": "2026-07-09",
     "last_transition": {
       "id": "2026-07-08:0->2026-07-09:1",
