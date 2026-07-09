@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-09T13:28:57Z",
-  "data_asof": "2026-07-08",
-  "daily_rows": 7547,
-  "quote_price": 7482.7099609375,
-  "quote_timestamp": "2026-07-08",
+  "generated_at_utc": "2026-07-09T16:12:33Z",
+  "data_asof": "2026-07-09",
+  "daily_rows": 7548,
+  "quote_price": 7530.990234375,
+  "quote_timestamp": "2026-07-09",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-07-08",
-      "close": 7482.7099609375
+      "date": "2026-07-09",
+      "close": 7530.89013671875
     },
-    "latestSma": 7440.19755859375,
+    "latestSma": 7447.4095703125,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.016698226204471034,
+    "latestDd": -0.010366876659346103,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -46,18 +46,18 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.1379993918130913,
+    "activeEntryPnl": 0.14532681877775233,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-07-08",
-      "close": 7482.7099609375
+      "date": "2026-07-09",
+      "close": 7530.990234375
     },
-    "latestSma": 7445.000561523438,
+    "latestSma": 7460.6095703125,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.016698226204471034,
+    "latestDd": -0.010353722841617286,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -68,14 +68,14 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.1379993918130913,
+    "activeEntryPnl": 0.14534204201539325,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-07-08",
+    "last_observed_asof": "2026-07-09",
     "last_observed_target_leverage": 2,
     "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-07-09T13:28:57Z",
+    "last_checked_at_utc": "2026-07-09T16:12:33Z",
     "last_email_sent_on": "2026-06-29",
     "last_transition": {
       "id": "2026-06-26:0->2026-06-29:2",

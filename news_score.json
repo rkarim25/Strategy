@@ -1,29 +1,29 @@
 {
-  "generated_at_utc": "2026-07-09T13:29:03Z",
+  "generated_at_utc": "2026-07-09T16:12:39Z",
   "window_days": 7,
-  "score": 9,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Micron Technology (MU) Gains from Growing AI Infrastructure Investment; Enovix, Forte Biosciences rally premarket; PepsiCo slips.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Illumina Stock Gains 43.7% in 2026: What's Powering the Rally?; Broad Market Gains Offset Big Tech Weakness. Bearish offsets: Oil prices fall as market bets U.S.-Iran fighting won't escalate into wider war.",
   "articles": [
     {
-      "title": "Micron Technology (MU) Gains from Growing AI Infrastructure Investment",
+      "title": "Illumina Stock Gains 43.7% in 2026: What's Powering the Rally?",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/micron-technology-mu-gains-growing-130441916.html?.tsrc=rss",
-      "published": "2026-07-09T13:04:41Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/illumina-stock-gains-43-7-142800788.html?.tsrc=rss",
+      "published": "2026-07-09T14:28:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Enovix, Forte Biosciences rally premarket; PepsiCo slips",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/enovix-forte-biosciences-rally-premarket-130229393.html?.tsrc=rss",
-      "published": "2026-07-09T13:02:29Z",
-      "tone": "bullish"
+      "title": "Oil prices fall as market bets U.S.-Iran fighting won't escalate into wider war",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/07/09/oil-rises-as-iran-us-tensions-raise-concerns-over-supply-disruptions-.html",
+      "published": "2026-07-09T15:16:56Z",
+      "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Dow Rises Amid U.S.-Iran News; Micron Stock, Sandisk Rally (Live Coverage)",
+      "title": "Broad Market Gains Offset Big Tech Weakness",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/8c0acb4d-329f-354e-84a5-d2254939eee8/stock-market-today%3A-dow-rises.html?.tsrc=rss",
-      "published": "2026-07-09T13:21:49Z",
+      "url": "https://finance.yahoo.com/m/ad75b7ff-f333-3946-b7aa-e46c2cdc0c7f/broad-market-gains-offset-big.html?.tsrc=rss",
+      "published": "2026-07-09T14:46:36Z",
       "tone": "bullish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 92
       }
     ],
-    "headline_count": 143,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
