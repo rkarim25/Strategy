@@ -1,36 +1,29 @@
 {
-  "generated_at_utc": "2026-07-09T10:19:49Z",
+  "generated_at_utc": "2026-07-09T13:27:37Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com; Stock market today: Dow posts record, S&P 500 and Nasdaq rally on revived AI optimism - Yahoo Finance. Bearish offsets: US Stock Market Today: S&P 500 Futures Fall On Higher Yields And Inflation Jitters.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Micron Technology (MU) Gains from Growing AI Infrastructure Investment; Enovix, Forte Biosciences rally premarket; PepsiCo slips.",
   "articles": [
     {
-      "title": "US Stock Market Today: S&P 500 Futures Fall On Higher Yields And Inflation Jitters",
+      "title": "Micron Technology (MU) Gains from Growing AI Infrastructure Investment",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-081539361.html?.tsrc=rss",
-      "published": "2026-07-09T08:15:39Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com",
-      "source": "ETEnterpriseai.com",
-      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQUUlFZkQ1d2IxUkYwVE5HbWRpX0wzOGZNYTFna3AySEp0ZHdNY2k4UjZ1VXJRZUttQ1BZbVRpSldTc0lfOVhlR09SSnB6ZkhETFpWMFJjLU1nWFVjY1l0Mm1xcDc3NGJqQVVwTURTREEzeFZUa1RoQUZqYndtVU15SFVXNDJCb2FrM1FXWkRLYlU3c1JPMnhPaEh4ejBXUG1VRDFQbUFUZ2VQRW4tR1BaTUthYkZVSXBZY0NQVjgwT2hBOGxvdE1GUTZIR283Y29VN0daVTNuZ2RTdGRLTUhzU9IB5gFBVV95cUxPd0ZzOGMyRGhXQ3AtOXYzemxqeWNzc2RQSC0yNUctY0FwTThvNTFaLWFMTmx3Mld5cllYTzQ1emxvbGl6T2wzVU9iSU8xcjdxVGhWYkpKSVdsRVoycmZpclZmUFloOXdYdW1XVlNnd25qUS0tZFE3Y2NhemhKXzRxcmJ5MWd3Y0NmWGxyX1NiRS1vUzNSVTlRRTRtWHJuVVFpeGxPRHNpdHZpdnFmaUpaUF84aDVQT1U5SHl3UDIzVmY3VFluUnNYekVIOW5sa1c0a3BtLU1Uak1zR19CSUV1eUJPcjFJQQ?oc=5",
-      "published": "2026-07-07T07:14:34Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/micron-technology-mu-gains-growing-130441916.html?.tsrc=rss",
+      "published": "2026-07-09T13:04:41Z",
       "tone": "bullish"
     },
     {
-      "title": "Stock market today: Dow posts record, S&P 500 and Nasdaq rally on revived AI optimism - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQTktvaWU4WlZaV3VGWTBZSGVkMUhpNG5aQ0FZUDN4TXdYTzBrc2gwWTJXS1VIaVFKYTZSVHNTc0Z6dnFvLU5sUE00a3lpS1ZoNzBkVXpRRjc1cDZuUEtZemhOV05nVXNQZlFtMEo4Vy1BeGdFdkFzaUQ2VWNJNGhRcXJJY0dvUWxTMWFXQUFrZFBSTGdEZ2tIOTlhRzhEUHNWN0RmYVNodXZEN0VR?oc=5",
-      "published": "2026-07-06T21:52:37Z",
+      "title": "Enovix, Forte Biosciences rally premarket; PepsiCo slips",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/enovix-forte-biosciences-rally-premarket-130229393.html?.tsrc=rss",
+      "published": "2026-07-09T13:02:29Z",
       "tone": "bullish"
     },
     {
-      "title": "Stock Futures Rebound as Markets Shrug Off U.S.-Iran Strikes",
+      "title": "Stock Market Today: Dow Rises Amid U.S.-Iran News; Micron Stock, Sandisk Rally (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/4e6ce553-bae3-34c7-8e27-215b474f16af/stock-futures-rebound-as.html?.tsrc=rss",
-      "published": "2026-07-09T08:44:34Z",
+      "url": "https://finance.yahoo.com/m/8c0acb4d-329f-354e-84a5-d2254939eee8/stock-market-today%3A-dow-rises.html?.tsrc=rss",
+      "published": "2026-07-09T13:21:49Z",
       "tone": "bullish"
     },
     {
@@ -38,6 +31,13 @@
       "source": "eciks.org",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBnX0czNXFyUmJYSnVQR3drWUdIZmN2bzFscVlyS1dHa0N2MUpkNVlqS2FhXzhRX3BHZndPTjdnRnFXZVZtR1NYRDlHRm1EanRWWkRnb0FjbFJQdlhMVFd2cEc0OG5BZ1JwMkJaWUlsLW02M1FK?oc=5",
       "published": "2026-07-07T15:03:31Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOeURVeHcyZ0dZTjVKUU5YT1c0UFpHZjliRDdNamlueUo3M0pyaDFDYkNPYlZnTDMwY1I2Q2ZodmhPeWdKeUZNY2wzRUgxOUowQ0pLMnF0ajJqdnI2dS1uWjdIS1hSLUFkeHN3VnZadWJJYk9XZnAyczBjOVBXcmxCSlNCcVRWZjZnVkZQQWlYam9MQWZ2T0hpWnN0aHRSU2o2MU9WRlB0THYxREJzVkM2U1NSOA?oc=5",
+      "published": "2026-07-06T10:11:00Z",
       "tone": "bullish"
     }
   ],
