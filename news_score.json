@@ -1,15 +1,36 @@
 {
-  "generated_at_utc": "2026-07-10T17:18:45Z",
+  "generated_at_utc": "2026-07-10T21:51:21Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com; Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 Posts Weekly Gain as Technology, Energy Rally; Stock Market Today: Dow Ends Higher; SK Hynix Jumps In U.S. Trading Debut; Moderna Tumbles.",
   "articles": [
     {
-      "title": "AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com",
-      "source": "ETEnterpriseai.com",
-      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQUUlFZkQ1d2IxUkYwVE5HbWRpX0wzOGZNYTFna3AySEp0ZHdNY2k4UjZ1VXJRZUttQ1BZbVRpSldTc0lfOVhlR09SSnB6ZkhETFpWMFJjLU1nWFVjY1l0Mm1xcDc3NGJqQVVwTURTREEzeFZUa1RoQUZqYndtVU15SFVXNDJCb2FrM1FXWkRLYlU3c1JPMnhPaEh4ejBXUG1VRDFQbUFUZ2VQRW4tR1BaTUthYkZVSXBZY0NQVjgwT2hBOGxvdE1GUTZIR283Y29VN0daVTNuZ2RTdGRLTUhzU9IB5gFBVV95cUxPd0ZzOGMyRGhXQ3AtOXYzemxqeWNzc2RQSC0yNUctY0FwTThvNTFaLWFMTmx3Mld5cllYTzQ1emxvbGl6T2wzVU9iSU8xcjdxVGhWYkpKSVdsRVoycmZpclZmUFloOXdYdW1XVlNnd25qUS0tZFE3Y2NhemhKXzRxcmJ5MWd3Y0NmWGxyX1NiRS1vUzNSVTlRRTRtWHJuVVFpeGxPRHNpdHZpdnFmaUpaUF84aDVQT1U5SHl3UDIzVmY3VFluUnNYekVIOW5sa1c0a3BtLU1Uak1zR19CSUV1eUJPcjFJQQ?oc=5",
-      "published": "2026-07-07T07:14:34Z",
+      "title": "S&P 500 Posts Weekly Gain as Technology, Energy Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-posts-weekly-gain-205535829.html?.tsrc=rss",
+      "published": "2026-07-10T20:55:35Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Market Today: Dow Ends Higher; SK Hynix Jumps In U.S. Trading Debut; Moderna Tumbles",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/44707f93-df29-35bc-8649-28477f0b5b59/stock-market-today%3A-dow-ends.html?.tsrc=rss",
+      "published": "2026-07-10T20:44:02Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 closes higher to notch a winning week, helped by tech gains",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/07/09/stock-market-today-live-updates.html",
+      "published": "2026-07-10T20:16:42Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "US Equity Markets End Higher Amid Broad Rally, US-Iran Diplomatic Progress",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-markets-end-higher-200117842.html?.tsrc=rss",
+      "published": "2026-07-10T20:01:17Z",
       "tone": "bullish"
     },
     {
@@ -17,27 +38,6 @@
       "source": "eciks.org",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBnX0czNXFyUmJYSnVQR3drWUdIZmN2bzFscVlyS1dHa0N2MUpkNVlqS2FhXzhRX3BHZndPTjdnRnFXZVZtR1NYRDlHRm1EanRWWkRnb0FjbFJQdlhMVFd2cEc0OG5BZ1JwMkJaWUlsLW02M1FK?oc=5",
       "published": "2026-07-07T15:03:31Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOeURVeHcyZ0dZTjVKUU5YT1c0UFpHZjliRDdNamlueUo3M0pyaDFDYkNPYlZnTDMwY1I2Q2ZodmhPeWdKeUZNY2wzRUgxOUowQ0pLMnF0ajJqdnI2dS1uWjdIS1hSLUFkeHN3VnZadWJJYk9XZnAyczBjOVBXcmxCSlNCcVRWZjZnVkZQQWlYam9MQWZ2T0hpWnN0aHRSU2o2MU9WRlB0THYxREJzVkM2U1NSOA?oc=5",
-      "published": "2026-07-06T10:11:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "U.S. stock futures rise as Wall Street looks to extend its rally coming off the holiday weekend - MarketWatch",
-      "source": "MarketWatch",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQSGx4NTNEbE5VR0sxQ3NIWlIzM1l2dWxJX0tQYm5UUTJ2NUVEUkc2VTlJcmZfWWJYNHU3V2pvMzdLUkl3a3RuMjdndTJfeTI4Tl81VWNUdE1FWUxvTDA5TWNheTlHeFZXWXBXal90OXg4NmFCWEUzN3JvdUozbmNKdDBwMklYd0NKYmpIQ3hTNEwzNU1FZzA0SnlvZ0h3Y1hiYjFqcmtzb2RjNnY1ODlzQ1RiTEMyXzNZTXNLVjdtbERETEczdVh4ZG15VWJoR3FiNkhR?oc=5",
-      "published": "2026-07-06T03:09:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Why Ciena Stock More Than Doubled in the First Half of 2026",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/investing/2026/07/10/why-ciena-stock-more-than-doubled-in-the-first-hal/?.tsrc=rss",
-      "published": "2026-07-10T16:25:58Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 97
+        "articles": 96
       }
     ],
-    "headline_count": 147,
+    "headline_count": 146,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
