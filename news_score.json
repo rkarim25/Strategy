@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-10T12:39:34Z",
+  "generated_at_utc": "2026-07-10T15:28:16Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com; Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com; Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org.",
   "articles": [
     {
       "title": "AI stock rebound lifts Wall Street, pushes S&P 500 near record high - ETEnterpriseai.com",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 97
       }
     ],
-    "headline_count": 144,
+    "headline_count": 147,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
