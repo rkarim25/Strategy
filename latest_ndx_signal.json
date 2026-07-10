@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-07-09T23:08:32Z",
+  "generated_at_utc": "2026-07-10T10:18:17Z",
   "data_asof": "2026-07-09",
   "daily_rows": 7547,
   "quote_price": 29727.09765625,
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-09",
-      "close": 29727.09765625
+      "close": 29727.099609375
     },
-    "latestSma": 29634.61533203125,
+    "latestSma": 29634.6154296875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.03044630454127084,
+    "latestDd": -0.030446240839809513,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -43,7 +43,7 @@
     "aboveSma": true,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 29727.09765625,
+    "activeEntryClose": 29727.099609375,
     "activeEntryDate": "2026-07-09",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
@@ -54,7 +54,7 @@
       "date": "2026-07-09",
       "close": 29727.09765625
     },
-    "latestSma": 29695.56875,
+    "latestSma": 29695.56884765625,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
     "latestDd": -0.03044630454127084,
@@ -65,17 +65,17 @@
     "aboveSma": true,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 29727.09765625,
+    "activeEntryClose": 29727.099609375,
     "activeEntryDate": "2026-07-09",
     "activeEntryLeverage": 1,
-    "activeEntryPnl": 0.0,
+    "activeEntryPnl": -6.570183519460926e-08,
     "explanation": "No recovery tier active; base rule says 1x because close is above SMA20."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-07-09",
     "last_observed_target_leverage": 1,
     "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-07-09T23:08:32Z",
+    "last_checked_at_utc": "2026-07-10T10:18:17Z",
     "last_email_sent_on": "2026-07-09",
     "last_transition": {
       "id": "2026-07-08:0->2026-07-09:1",
