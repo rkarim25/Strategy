@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-07-13T12:44:08Z",
+  "generated_at_utc": "2026-07-13T15:39:09Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow posts record, S&P 500 and Nasdaq rally on revived AI optimism - Yahoo Finance; Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank; Nasdaq ends sharply higher; chip surge offsets Iran worries - Reuters. Bearish offsets: Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire.",
   "articles": [
     {
-      "title": "Stock market today: Dow posts record, S&P 500 and Nasdaq rally on revived AI optimism - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQTktvaWU4WlZaV3VGWTBZSGVkMUhpNG5aQ0FZUDN4TXdYTzBrc2gwWTJXS1VIaVFKYTZSVHNTc0Z6dnFvLU5sUE00a3lpS1ZoNzBkVXpRRjc1cDZuUEtZemhOV05nVXNQZlFtMEo4Vy1BeGdFdkFzaUQ2VWNJNGhRcXJJY0dvUWxTMWFXQUFrZFBSTGdEZ2tIOTlhRzhEUHNWN0RmYVNodXZEN0VR?oc=5",
-      "published": "2026-07-06T21:52:37Z",
+      "title": "Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank",
+      "source": "CryptoRank",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1idGpaSmUyYnBYQUhsNVYtdjQ0VVlzRHQyQzgtYkp0ejdwWkhlTk1ndW9JeXJQTXpyeWw0LWFPaU9QaGgtTmRrb014WUlMdHJZNjJlVC12dUpTT3BocnJfV0gxZTZQRUh1a2tVaE1iUF9NRnpneW8ySWgzeUI?oc=5",
+      "published": "2026-07-11T07:30:21Z",
       "tone": "bullish"
     },
     {
-      "title": "Stock market today: Dow hits record, S&P 500 jumps to cap best quarter since 2020 amid massive chip rally - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxObVhOMHZ6bXFMU0lFU2J6S2R4b2w5YkthUmRYdWh1ZmRna3Nqck9QVzJUU0RESmtJQ1ZyeHRZelhBaEQwMFVYcjlpbkgxWGtnejJ3NVE5ZHo1MHdndE0yRm11ZmptWXk4Yk5yTnlFdGh0ckh5bVJlRU9zNFhFb0QyOHBOZGp5NXVadFA5RUFDZ0JOSVlzckpqc2FDb21YbG1YZTJyVjFIcHJHdXFXOFdRRHNvSlQ5R2JMQzJxdTNBRV9IZjhKck5SeHpXWC1IY1JlTE9tVHc4SWdDMVZEcEl0Tk45bXFwcDBRYUp4RA?oc=5",
-      "published": "2026-07-06T21:21:49Z",
+      "title": "Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire",
+      "source": "FXEmpire",
+      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPT1djTUZnUXJMYnJrMnVDV3FxY1NLcFdVblJva2dfVHI5RzZIeFpYUl9rSERwbDk2dzViWnhWeHZkcUdVQTR3Q0xvVTY1eGhQWmhGVkpGLUtPYnZyUF9XY3RnMnlhV1Z1UXFFSWdUS3dwZHBkS1JGc08zeXUtaGF0bERwVTIyUGpBYXlCZ0lBQkFOdm8xMWVlV3cyanB0a1VNb09qM25mVG1BTC1HbWF1aTZlOVdPQ1liU2ozX2hmMWJVQjNULV80TUlaYm9jdm5Oc1Z2MjlVc28?oc=5",
+      "published": "2026-07-07T17:03:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Nasdaq ends sharply higher; chip surge offsets Iran worries - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOWlJrcUhGNjUtY2dOX1RQcWxqNW1KNGtrZU9uYU5KSjZiaDdZM3ozU1BZUjR4WmJyLVJjLW9yYjJGRHdSSEo4T0NNVUQ1T2VHN19keUtvRklORURPYUhtS0hUR2NJWnRIcnd3VFRLdGpDTmcwSnA0WHcxSUJ2RHhrNG1hOWUycm5kUjl6OHhoTjhSNVZXRmFUVnRMclJYMW9FdXRJZ1VLSkFrbmxRWVg5N3Z5c3M?oc=5",
+      "published": "2026-07-09T23:36:06Z",
       "tone": "bullish"
     },
     {
-      "title": "Stock market today: S&P 500, Nasdaq rally toward record highs, oil tumbles as Iran deal optimism grows - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPNUEyby1TdG1XUklRd3lDQnZwMmpUZUY1ZVl5azd5VFAzM0pvTFExV1NSYVlVazN0S0RuVHN2SDdxNXVQLTc3QXVGV0lzbTU1Q2NXR0x2djFNRHZRcVFHRUEwazVMaEZNZFFYWEItbDV6Szh6M25GV005dGI5dTZRSVVwNE91bTcyM2lnNTRUZjZON1dTMTdmMTlaWkhWLUVzOUFPazJvR2ZLX2o4MS11ZVR5c3dVREh4b2RzTC1PZXhRakJkZHBDc2J6cFJZSWxjR1dHQkdnUQ?oc=5",
-      "published": "2026-07-07T22:49:56Z",
+      "title": "Jim Cramer Highlights Analyst Rating as the Reason for Sandisk Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-highlights-analyst-rating-152551521.html?.tsrc=rss",
+      "published": "2026-07-13T15:25:51Z",
       "tone": "bullish"
     },
     {
-      "title": "Majority of U.S. workers support an AI wealth fund as tech layoffs surge, survey finds",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/12/majority-of-us-workers-support-ai-fund-amid-tech-layoffs-survey.html",
-      "published": "2026-07-12T12:27:55Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org",
-      "source": "eciks.org",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBnX0czNXFyUmJYSnVQR3drWUdIZmN2bzFscVlyS1dHa0N2MUpkNVlqS2FhXzhRX3BHZndPTjdnRnFXZVZtR1NYRDlHRm1EanRWWkRnb0FjbFJQdlhMVFd2cEc0OG5BZ1JwMkJaWUlsLW02M1FK?oc=5",
-      "published": "2026-07-07T15:03:31Z",
+      "title": "Morgan Stanley says stock market rally faces $1.2 trillion question - thestreet.com",
+      "source": "thestreet.com",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPS0RtLUZfYkp4d19vVFNyT1R2SkFJcmF2cW5SZm80d1FicVE2UGNLTWxQZDlIbDgwVnBBUHYybnIwZjJQUjMtUzdUSDc1VTJvNFpRc004UTdELTRuY0JwMVpYbWlYazlKLUptTkpBQUpoWV84a3JUS2wySXN6SngzMjR1WTF3WEEwWU5pWHFoaWVfVWFWYzJIUXd4V0pJcm5nZWxjUXpoT0s5d2R3aHc?oc=5",
+      "published": "2026-07-11T13:03:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 90
       }
     ],
-    "headline_count": 142,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
