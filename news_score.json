@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-07-13T17:50:31Z",
+  "generated_at_utc": "2026-07-13T21:44:25Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow posts record, S&P 500 and Nasdaq rally on revived AI optimism - Yahoo Finance; Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank. Bearish offsets: Waller says Fed shouldn't 'fight the last war' on inflation but warns hikes still possible; Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow posts record, S&P 500 and Nasdaq rally on revived AI optimism - Yahoo Finance; Wall Street gains as chip rally, bank earnings loom - MSN. Bearish offsets: Waller says Fed shouldn't 'fight the last war' on inflation but warns hikes still possible.",
   "articles": [
     {
       "title": "Waller says Fed shouldn't 'fight the last war' on inflation but warns hikes still possible",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/07/13/waller-says-fed-shouldnt-fight-the-last-war-on-inflation-but-warns-hikes-still-possible.html",
-      "published": "2026-07-13T16:33:49Z",
+      "published": "2026-07-13T19:15:25Z",
       "tone": "bearish"
     },
     {
@@ -17,6 +17,13 @@
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQTktvaWU4WlZaV3VGWTBZSGVkMUhpNG5aQ0FZUDN4TXdYTzBrc2gwWTJXS1VIaVFKYTZSVHNTc0Z6dnFvLU5sUE00a3lpS1ZoNzBkVXpRRjc1cDZuUEtZemhOV05nVXNQZlFtMEo4Vy1BeGdFdkFzaUQ2VWNJNGhRcXJJY0dvUWxTMWFXQUFrZFBSTGdEZ2tIOTlhRzhEUHNWN0RmYVNodXZEN0VR?oc=5",
       "published": "2026-07-06T21:52:37Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street gains as chip rally, bank earnings loom - MSN",
+      "source": "MSN",
+      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNUWxLVFE5aFp2b3NfaGoxUWNTZl91SjBuOEY5SEV3YkJJTVBHTF9qV1RzNTZtN25vd0JTNlJlLUlMLTRUYVl2endZUUVQellIUnVyNFJDcndWN2xSQnZ0Mlh2SDBZOE5jTGhoZ0RielFpZnpicXdkUnFnWllvVHI4SDJRUDJCYUthaXdJUENoaEZvemZuZW9wdnFEYTB2NXA1SWRtbXFlaXRCblppUXV4WVBWMzU3YnJsdjU3YTROSGVwNk8wSXd3VUQ3UHVybWJCbFVBbUZ4b1FiUmJlWFg2eVF1QlgwTTA?oc=5",
+      "published": "2026-07-12T08:39:34Z",
       "tone": "bullish"
     },
     {
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOV9wcVZ4Mnl3Z0d6dlFUTUN5N2otMzk5WjIzbFRaZnBRVnJZWWJ6T21WeGQwajZDSXR3YWNmRzk2VkJfU0hzSUJDY0REb3hRRlltRG95UlpVNlZLUi1faW00U2J0LTQ4bVZoNjVPSFJhd2wyVlZPZl8tSk1ESkxGS0hnM3NkZTVQenE1YmtUaS0tSE1kY2ZWeVY3MXVpLTNSRVk3UVBNU2JRRDE0MGRJamMxRDRwT1Zt?oc=5",
       "published": "2026-07-09T10:02:10Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire",
-      "source": "FXEmpire",
-      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPT1djTUZnUXJMYnJrMnVDV3FxY1NLcFdVblJva2dfVHI5RzZIeFpYUl9rSERwbDk2dzViWnhWeHZkcUdVQTR3Q0xvVTY1eGhQWmhGVkpGLUtPYnZyUF9XY3RnMnlhV1Z1UXFFSWdUS3dwZHBkS1JGc08zeXUtaGF0bERwVTIyUGpBYXlCZ0lBQkFOdm8xMWVlV3cyanB0a1VNb09qM25mVG1BTC1HbWF1aTZlOVdPQ1liU2ozX2hmMWJVQjNULV80TUlaYm9jdm5Oc1Z2MjlVc28?oc=5",
-      "published": "2026-07-07T17:03:00Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 93
       }
     ],
-    "headline_count": 141,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
