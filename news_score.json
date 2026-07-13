@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-07-10T22:57:16Z",
+  "generated_at_utc": "2026-07-13T10:19:01Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as investors turn to earnings season; S&P 500 closes higher to notch a winning week, helped by tech gains.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: S&P 500 Futures Rise As Inflation Cools And Earnings Loom; Majority of U.S. workers support an AI wealth fund as tech layoffs surge, survey finds. Bearish offsets: Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire.",
   "articles": [
     {
-      "title": "Wall Street ends higher as investors turn to earnings season",
+      "title": "US Stock Market Today: S&P 500 Futures Rise As Inflation Cools And Earnings Loom",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/wall-street-ends-higher-investors-224020146.html?.tsrc=rss",
-      "published": "2026-07-10T22:40:20Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-081032919.html?.tsrc=rss",
+      "published": "2026-07-13T08:10:32Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 closes higher to notch a winning week, helped by tech gains",
+      "title": "Majority of U.S. workers support an AI wealth fund as tech layoffs surge, survey finds",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/09/stock-market-today-live-updates.html",
-      "published": "2026-07-10T20:16:42Z",
+      "url": "https://www.cnbc.com/2026/07/12/majority-of-us-workers-support-ai-fund-amid-tech-layoffs-survey.html",
+      "published": "2026-07-12T12:27:55Z",
       "tone": "bullish"
     },
     {
-      "title": "Stock market rallies to new highs: Dow closes at record, S&P 500 gains 1.77%, Nasdaq up 2.12% - eciks.org",
-      "source": "eciks.org",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBnX0czNXFyUmJYSnVQR3drWUdIZmN2bzFscVlyS1dHa0N2MUpkNVlqS2FhXzhRX3BHZndPTjdnRnFXZVZtR1NYRDlHRm1EanRWWkRnb0FjbFJQdlhMVFd2cEc0OG5BZ1JwMkJaWUlsLW02M1FK?oc=5",
-      "published": "2026-07-07T15:03:31Z",
+      "title": "Wall Street gains as chip rally, bank earnings loom - MSN",
+      "source": "MSN",
+      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNUWxLVFE5aFp2b3NfaGoxUWNTZl91SjBuOEY5SEV3YkJJTVBHTF9qV1RzNTZtN25vd0JTNlJlLUlMLTRUYVl2endZUUVQellIUnVyNFJDcndWN2xSQnZ0Mlh2SDBZOE5jTGhoZ0RielFpZnpicXdkUnFnWllvVHI4SDJRUDJCYUthaXdJUENoaEZvemZuZW9wdnFEYTB2NXA1SWRtbXFlaXRCblppUXV4WVBWMzU3YnJsdjU3YTROSGVwNk8wSXd3VUQ3UHVybWJCbFVBbUZ4b1FiUmJlWFg2eVF1QlgwTTA?oc=5",
+      "published": "2026-07-12T08:39:34Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500, Nasdaq close sharply higher as Broadcom rallies - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOeURVeHcyZ0dZTjVKUU5YT1c0UFpHZjliRDdNamlueUo3M0pyaDFDYkNPYlZnTDMwY1I2Q2ZodmhPeWdKeUZNY2wzRUgxOUowQ0pLMnF0ajJqdnI2dS1uWjdIS1hSLUFkeHN3VnZadWJJYk9XZnAyczBjOVBXcmxCSlNCcVRWZjZnVkZQQWlYam9MQWZ2T0hpWnN0aHRSU2o2MU9WRlB0THYxREJzVkM2U1NSOA?oc=5",
-      "published": "2026-07-06T10:11:00Z",
+      "title": "Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank",
+      "source": "CryptoRank",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1idGpaSmUyYnBYQUhsNVYtdjQ0VVlzRHQyQzgtYkp0ejdwWkhlTk1ndW9JeXJQTXpyeWw0LWFPaU9QaGgtTmRrb014WUlMdHJZNjJlVC12dUpTT3BocnJfV0gxZTZQRUh1a2tVaE1iUF9NRnpneW8ySWgzeUI?oc=5",
+      "published": "2026-07-11T07:30:21Z",
       "tone": "bullish"
     },
     {
-      "title": "U.S. stock futures rise as Wall Street looks to extend its rally coming off the holiday weekend - MarketWatch",
-      "source": "MarketWatch",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQSGx4NTNEbE5VR0sxQ3NIWlIzM1l2dWxJX0tQYm5UUTJ2NUVEUkc2VTlJcmZfWWJYNHU3V2pvMzdLUkl3a3RuMjdndTJfeTI4Tl81VWNUdE1FWUxvTDA5TWNheTlHeFZXWXBXal90OXg4NmFCWEUzN3JvdUozbmNKdDBwMklYd0NKYmpIQ3hTNEwzNU1FZzA0SnlvZ0h3Y1hiYjFqcmtzb2RjNnY1ODlzQ1RiTEMyXzNZTXNLVjdtbERETEczdVh4ZG15VWJoR3FiNkhR?oc=5",
-      "published": "2026-07-06T03:09:00Z",
-      "tone": "bullish"
+      "title": "Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire",
+      "source": "FXEmpire",
+      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPT1djTUZnUXJMYnJrMnVDV3FxY1NLcFdVblJva2dfVHI5RzZIeFpYUl9rSERwbDk2dzViWnhWeHZkcUdVQTR3Q0xvVTY1eGhQWmhGVkpGLUtPYnZyUF9XY3RnMnlhV1Z1UXFFSWdUS3dwZHBkS1JGc08zeXUtaGF0bERwVTIyUGpBYXlCZ0lBQkFOdm8xMWVlV3cyanB0a1VNb09qM25mVG1BTC1HbWF1aTZlOVdPQ1liU2ozX2hmMWJVQjNULV80TUlaYm9jdm5Oc1Z2MjlVc28?oc=5",
+      "published": "2026-07-07T17:03:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 91
       }
     ],
-    "headline_count": 145,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
