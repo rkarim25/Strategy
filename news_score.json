@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-14T12:46:12Z",
+  "generated_at_utc": "2026-07-14T14:44:23Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street gains as chip rally, bank earnings loom - MSN; Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank. Bearish offsets: Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire; CPI On Tap As Resurgent Oil Prices Fuel Fed Rate-Hike Odds (Live Coverage).",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street gains as chip rally, bank earnings loom - MSN; Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank. Bearish offsets: Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire.",
   "articles": [
     {
       "title": "Wall Street gains as chip rally, bank earnings loom - MSN",
@@ -34,11 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "CPI On Tap As Resurgent Oil Prices Fuel Fed Rate-Hike Odds (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/98b742c7-fa56-3310-a807-ef8ba4c3becc/cpi-on-tap-as-resurgent-oil.html?.tsrc=rss",
-      "published": "2026-07-14T12:29:32Z",
-      "tone": "bearish"
+      "title": "Nasdaq ends sharply higher; chip surge offsets Iran worries - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOWlJrcUhGNjUtY2dOX1RQcWxqNW1KNGtrZU9uYU5KSjZiaDdZM3ozU1BZUjR4WmJyLVJjLW9yYjJGRHdSSEo4T0NNVUQ1T2VHN19keUtvRklORURPYUhtS0hUR2NJWnRIcnd3VFRLdGpDTmcwSnA0WHcxSUJ2RHhrNG1hOWUycm5kUjl6OHhoTjhSNVZXRmFUVnRMclJYMW9FdXRJZ1VLSkFrbmxRWVg5N3Z5c3M?oc=5",
+      "published": "2026-07-09T23:36:06Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 92
       }
     ],
-    "headline_count": 140,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

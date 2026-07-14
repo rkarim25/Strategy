@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-07-14T12:46:09Z",
+  "generated_at_utc": "2026-07-14T14:44:21Z",
   "data_asof": "2026-07-14",
   "daily_rows": 6490,
-  "quote_price": 4100.2001953125,
+  "quote_price": 4088.0,
   "quote_timestamp": "2026-07-14",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1784119569&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1784126660&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,34 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-14",
-      "close": 4100.39990234375
+      "close": 4092.0
     },
-    "latestSma": 4129.139990234375,
+    "latestSma": 4128.719995117188,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.22901624969255197,
+    "latestDd": -0.23059565374226398,
+    "regime": "tier2",
+    "entryClose": 4087.699951171875,
+    "entryDate": "2025-10-21",
+    "recoveryTarget": 5722.779931640624,
+    "aboveSma": false,
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
+  },
+  "provisional_signal": {
+    "latest": {
+      "date": "2026-07-14",
+      "close": 4088.0
+    },
+    "latestSma": 4116.719995117188,
+    "highWater": 5318.39990234375,
+    "highWaterDate": "2026-01-29",
+    "latestDd": -0.23134775965258436,
     "regime": "tier2",
     "entryClose": 4087.699951171875,
     "entryDate": "2025-10-21",
@@ -44,53 +66,30 @@
     "aboveSma": false,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 4100.39990234375,
+    "activeEntryClose": 4088.0,
     "activeEntryDate": "2026-07-14",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
     "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
   },
-  "provisional_signal": {
-    "latest": {
-      "date": "2026-07-14",
-      "close": 4100.2001953125
-    },
-    "latestSma": 4117.75,
-    "highWater": 5318.39990234375,
-    "highWaterDate": "2026-01-29",
-    "latestDd": -0.22905379990218588,
-    "regime": "tier2",
-    "entryClose": 4087.699951171875,
-    "entryDate": "2025-10-21",
-    "recoveryTarget": 5722.779931640624,
-    "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 1,
-    "activeEntryClose": 4100.39990234375,
-    "activeEntryDate": "2026-07-14",
-    "activeEntryLeverage": 1,
-    "activeEntryPnl": -4.870428153502804e-05,
-    "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
-  },
   "trade_alert_state": {
     "last_observed_asof": "2026-07-14",
-    "last_observed_target_leverage": 1,
-    "last_observed_target_label": "1x",
-    "last_checked_at_utc": "2026-07-14T12:46:09Z",
+    "last_observed_target_leverage": 0,
+    "last_observed_target_label": "cash",
+    "last_checked_at_utc": "2026-07-14T14:44:21Z",
     "last_email_sent_on": "2026-07-14",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
-      "id": "2026-07-14:0->2026-07-14:1",
-      "detected_at_utc": "2026-07-14T12:46:09Z",
+      "id": "2026-07-14:1->2026-07-14:0",
+      "detected_at_utc": "2026-07-14T14:44:21Z",
       "previous_asof": "2026-07-14",
       "current_asof": "2026-07-14",
-      "old_target_leverage": 0,
-      "new_target_leverage": 1,
-      "old_target_label": "cash",
-      "new_target_label": "1x",
-      "email_sent": true,
+      "old_target_leverage": 1,
+      "new_target_leverage": 0,
+      "old_target_label": "1x",
+      "new_target_label": "cash",
+      "email_sent": false,
       "email_error": null,
-      "email_skipped_reason": null
+      "email_skipped_reason": "Signal changed (1x -> cash) but an alert email was already sent today (2026-07-14 UK)."
     }
   }
 }
