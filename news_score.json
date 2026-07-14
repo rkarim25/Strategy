@@ -1,24 +1,10 @@
 {
-  "generated_at_utc": "2026-07-14T14:44:23Z",
+  "generated_at_utc": "2026-07-14T16:09:52Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street gains as chip rally, bank earnings loom - MSN; Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank. Bearish offsets: Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Higher bar for corporate profit growth poses challenge for US stock market rally - Reuters; Nasdaq ends sharply higher; chip surge offsets Iran worries - Reuters. Bearish offsets: Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire; Wall Street set for lower open as Iran tensions jolt sentiment; chip stocks fall - 1470 & 100.3 WMBD.",
   "articles": [
-    {
-      "title": "Wall Street gains as chip rally, bank earnings loom - MSN",
-      "source": "MSN",
-      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNUWxLVFE5aFp2b3NfaGoxUWNTZl91SjBuOEY5SEV3YkJJTVBHTF9qV1RzNTZtN25vd0JTNlJlLUlMLTRUYVl2endZUUVQellIUnVyNFJDcndWN2xSQnZ0Mlh2SDBZOE5jTGhoZ0RielFpZnpicXdkUnFnWllvVHI4SDJRUDJCYUthaXdJUENoaEZvemZuZW9wdnFEYTB2NXA1SWRtbXFlaXRCblppUXV4WVBWMzU3YnJsdjU3YTROSGVwNk8wSXd3VUQ3UHVybWJCbFVBbUZ4b1FiUmJlWFg2eVF1QlgwTTA?oc=5",
-      "published": "2026-07-11T16:36:13Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank",
-      "source": "CryptoRank",
-      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1idGpaSmUyYnBYQUhsNVYtdjQ0VVlzRHQyQzgtYkp0ejdwWkhlTk1ndW9JeXJQTXpyeWw0LWFPaU9QaGgtTmRrb014WUlMdHJZNjJlVC12dUpTT3BocnJfV0gxZTZQRUh1a2tVaE1iUF9NRnpneW8ySWgzeUI?oc=5",
-      "published": "2026-07-11T07:30:21Z",
-      "tone": "bullish"
-    },
     {
       "title": "Higher bar for corporate profit growth poses challenge for US stock market rally - Reuters",
       "source": "Reuters",
@@ -39,6 +25,20 @@
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOWlJrcUhGNjUtY2dOX1RQcWxqNW1KNGtrZU9uYU5KSjZiaDdZM3ozU1BZUjR4WmJyLVJjLW9yYjJGRHdSSEo4T0NNVUQ1T2VHN19keUtvRklORURPYUhtS0hUR2NJWnRIcnd3VFRLdGpDTmcwSnA0WHcxSUJ2RHhrNG1hOWUycm5kUjl6OHhoTjhSNVZXRmFUVnRMclJYMW9FdXRJZ1VLSkFrbmxRWVg5N3Z5c3M?oc=5",
       "published": "2026-07-09T23:36:06Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Wall Street set for lower open as Iran tensions jolt sentiment; chip stocks fall - 1470 & 100.3 WMBD",
+      "source": "1470 & 100.3 WMBD",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOUHFFN1VKWWdIQlVrQ3Ixd1NWX2N2TGhMZHdvLXpkcWpWTEFtcGcwV3A0dVBSRHVGVk9JNDhFWmlZQTJXVEpPTVpkQmFteEJLSC1BcnlZZVA2dmtPLW1rS0pLWEtWamZ0ZFpRaWNZTVNsenVFSXFPcWdSdnV4VkZWMEVtTFJUUmg4SlNQTWVqS05iWDl6UlZubHFjMWVlWnlUeEFzWXh3?oc=5",
+      "published": "2026-07-14T00:14:04Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street ends lower as Iran tensions dampen risk appetite; chipmakers drop - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPSUxJelN2M2lFYXd0QzZIdkhQVGdKTFl2clAtSllTMzIxZ0xudk9CeFpNNVV5MVNVSTdhb251ZjZYbWZ3UFQxWGl0ZWRBRXc3NFVvbXpRT1pPUjZxWUw5VDhtZ2s0bDZVT2VrWEp6M01qeTgwcWFtdmxOcFBYdmQxU1J6anlGbURld1ZmdnloOFBOaTJYbUFxNGo0dTFvbEl1bFdZTXIwcjMtRldFd1BMTw?oc=5",
+      "published": "2026-07-13T09:54:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 95
       }
     ],
-    "headline_count": 142,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
