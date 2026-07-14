@@ -1,22 +1,29 @@
 {
-  "generated_at_utc": "2026-07-13T22:53:29Z",
+  "generated_at_utc": "2026-07-14T09:01:27Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street gains as chip rally, bank earnings loom - MSN; Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank. Bearish offsets: Waller says Fed shouldn't 'fight the last war' on inflation but warns hikes still possible; Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street gains as chip rally, bank earnings loom - MSN; Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank. Bearish offsets: Treasury yields rise as Fed rate hike expectations grow ahead of June inflation print; Goldman Sachs drops new warning on interest rate hikes.",
   "articles": [
     {
-      "title": "Waller says Fed shouldn't 'fight the last war' on inflation but warns hikes still possible",
+      "title": "Treasury yields rise as Fed rate hike expectations grow ahead of June inflation print",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/13/waller-says-fed-shouldnt-fight-the-last-war-on-inflation-but-warns-hikes-still-possible.html",
-      "published": "2026-07-13T19:15:25Z",
+      "url": "https://www.cnbc.com/2026/07/14/treasury-yields-rise-as-fed-rate-hike-expectations-grow.html",
+      "published": "2026-07-14T08:38:40Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Goldman Sachs drops new warning on interest rate hikes",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.thestreet.com/fed/goldman-sachs-drops-new-warning-on-interest-rate-hikes?.tsrc=rss",
+      "published": "2026-07-14T03:07:00Z",
       "tone": "bearish"
     },
     {
       "title": "Wall Street gains as chip rally, bank earnings loom - MSN",
       "source": "MSN",
       "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNUWxLVFE5aFp2b3NfaGoxUWNTZl91SjBuOEY5SEV3YkJJTVBHTF9qV1RzNTZtN25vd0JTNlJlLUlMLTRUYVl2endZUUVQellIUnVyNFJDcndWN2xSQnZ0Mlh2SDBZOE5jTGhoZ0RielFpZnpicXdkUnFnWllvVHI4SDJRUDJCYUthaXdJUENoaEZvemZuZW9wdnFEYTB2NXA1SWRtbXFlaXRCblppUXV4WVBWMzU3YnJsdjU3YTROSGVwNk8wSXd3VUQ3UHVybWJCbFVBbUZ4b1FiUmJlWFg2eVF1QlgwTTA?oc=5",
-      "published": "2026-07-12T08:39:34Z",
+      "published": "2026-07-11T16:36:13Z",
       "tone": "bullish"
     },
     {
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOV9wcVZ4Mnl3Z0d6dlFUTUN5N2otMzk5WjIzbFRaZnBRVnJZWWJ6T21WeGQwajZDSXR3YWNmRzk2VkJfU0hzSUJDY0REb3hRRlltRG95UlpVNlZLUi1faW00U2J0LTQ4bVZoNjVPSFJhd2wyVlZPZl8tSk1ESkxGS0hnM3NkZTVQenE1YmtUaS0tSE1kY2ZWeVY3MXVpLTNSRVk3UVBNU2JRRDE0MGRJamMxRDRwT1Zt?oc=5",
       "published": "2026-07-09T10:02:10Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire",
-      "source": "FXEmpire",
-      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPT1djTUZnUXJMYnJrMnVDV3FxY1NLcFdVblJva2dfVHI5RzZIeFpYUl9rSERwbDk2dzViWnhWeHZkcUdVQTR3Q0xvVTY1eGhQWmhGVkpGLUtPYnZyUF9XY3RnMnlhV1Z1UXFFSWdUS3dwZHBkS1JGc08zeXUtaGF0bERwVTIyUGpBYXlCZ0lBQkFOdm8xMWVlV3cyanB0a1VNb09qM25mVG1BTC1HbWF1aTZlOVdPQ1liU2ozX2hmMWJVQjNULV80TUlaYm9jdm5Oc1Z2MjlVc28?oc=5",
-      "published": "2026-07-07T17:03:00Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 93
       }
     ],
-    "headline_count": 140,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

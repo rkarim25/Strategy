@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-07-13T22:53:25Z",
+  "generated_at_utc": "2026-07-14T09:01:24Z",
   "data_asof": "2026-07-13",
   "daily_rows": 7546,
   "quote_price": 29264.103515625,
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-13",
-      "close": 29264.103515625
+      "close": 29264.099609375
     },
-    "latestSma": 29691.365625,
+    "latestSma": 29691.3654296875,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.045546927051061226,
+    "latestDd": -0.04554705445398388,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -54,7 +54,7 @@
       "date": "2026-07-13",
       "close": 29264.103515625
     },
-    "latestSma": 29672.77333984375,
+    "latestSma": 29672.77314453125,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
     "latestDd": -0.045546927051061226,
@@ -75,7 +75,7 @@
     "last_observed_asof": "2026-07-13",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-07-13T22:53:25Z",
+    "last_checked_at_utc": "2026-07-14T09:01:24Z",
     "last_email_sent_on": "2026-07-13",
     "last_transition": {
       "id": "2026-07-10:1->2026-07-13:0",
