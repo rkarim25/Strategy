@@ -1,31 +1,10 @@
 {
-  "generated_at_utc": "2026-07-14T11:04:03Z",
+  "generated_at_utc": "2026-07-14T12:46:12Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street gains as chip rally, bank earnings loom - MSN; Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank. Bearish offsets: Treasury yields rise as Fed rate hike expectations grow ahead of June inflation print; Goldman Sachs drops new warning on interest rate hikes.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street gains as chip rally, bank earnings loom - MSN; Wall Street Opens Higher: Nasdaq Leads as Tech Stocks Rally - CryptoRank. Bearish offsets: Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire; CPI On Tap As Resurgent Oil Prices Fuel Fed Rate-Hike Odds (Live Coverage).",
   "articles": [
-    {
-      "title": "Treasury yields rise as Fed rate hike expectations grow ahead of June inflation print",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/14/treasury-yields-rise-as-fed-rate-hike-expectations-grow.html",
-      "published": "2026-07-14T10:04:39Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Goldman Sachs drops new warning on interest rate hikes",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.thestreet.com/fed/goldman-sachs-drops-new-warning-on-interest-rate-hikes?.tsrc=rss",
-      "published": "2026-07-14T03:07:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Tech Rebounds After Chip Selloff. Dow Futures Fall Amid Iran Fears on Crunch Day for Markets.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/98a32df9-8f0a-3079-b959-b22b88bac0b4/tech-rebounds-after-chip.html?.tsrc=rss",
-      "published": "2026-07-14T09:40:58Z",
-      "tone": "bearish"
-    },
     {
       "title": "Wall Street gains as chip rally, bank earnings loom - MSN",
       "source": "MSN",
@@ -39,6 +18,27 @@
       "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1idGpaSmUyYnBYQUhsNVYtdjQ0VVlzRHQyQzgtYkp0ejdwWkhlTk1ndW9JeXJQTXpyeWw0LWFPaU9QaGgtTmRrb014WUlMdHJZNjJlVC12dUpTT3BocnJfV0gxZTZQRUh1a2tVaE1iUF9NRnpneW8ySWgzeUI?oc=5",
       "published": "2026-07-11T07:30:21Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Higher bar for corporate profit growth poses challenge for US stock market rally - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOV9wcVZ4Mnl3Z0d6dlFUTUN5N2otMzk5WjIzbFRaZnBRVnJZWWJ6T21WeGQwajZDSXR3YWNmRzk2VkJfU0hzSUJDY0REb3hRRlltRG95UlpVNlZLUi1faW00U2J0LTQ4bVZoNjVPSFJhd2wyVlZPZl8tSk1ESkxGS0hnM3NkZTVQenE1YmtUaS0tSE1kY2ZWeVY3MXVpLTNSRVk3UVBNU2JRRDE0MGRJamMxRDRwT1Zt?oc=5",
+      "published": "2026-07-09T10:02:10Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Nasdaq Index and S&P500: Chip Selloff Drives Stock Market Lower as Tech Stocks Face Pressure - FXEmpire",
+      "source": "FXEmpire",
+      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPT1djTUZnUXJMYnJrMnVDV3FxY1NLcFdVblJva2dfVHI5RzZIeFpYUl9rSERwbDk2dzViWnhWeHZkcUdVQTR3Q0xvVTY1eGhQWmhGVkpGLUtPYnZyUF9XY3RnMnlhV1Z1UXFFSWdUS3dwZHBkS1JGc08zeXUtaGF0bERwVTIyUGpBYXlCZ0lBQkFOdm8xMWVlV3cyanB0a1VNb09qM25mVG1BTC1HbWF1aTZlOVdPQ1liU2ozX2hmMWJVQjNULV80TUlaYm9jdm5Oc1Z2MjlVc28?oc=5",
+      "published": "2026-07-07T17:03:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "CPI On Tap As Resurgent Oil Prices Fuel Fed Rate-Hike Odds (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/98b742c7-fa56-3310-a807-ef8ba4c3becc/cpi-on-tap-as-resurgent-oil.html?.tsrc=rss",
+      "published": "2026-07-14T12:29:32Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 90
       }
     ],
-    "headline_count": 144,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
