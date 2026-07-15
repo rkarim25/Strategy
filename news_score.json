@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-07-15T14:43:50Z",
+  "generated_at_utc": "2026-07-15T16:15:46Z",
   "window_days": 7,
-  "score": 8,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stocks rise on Big Tech gains, encouraging inflation signs: Live updates; Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Here\u2019s What Fuels Littelfuse\u2019s (LFUS) 40% Rally; Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause. Bearish offsets: S&P 500 is little changed as chip stocks fall; traders weigh inflation data: Live updates.",
   "articles": [
     {
-      "title": "Stocks rise on Big Tech gains, encouraging inflation signs: Live updates",
+      "title": "S&P 500 is little changed as chip stocks fall; traders weigh inflation data: Live updates",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/07/14/stock-market-today-live-updates.html",
-      "published": "2026-07-15T14:21:28Z",
+      "published": "2026-07-15T16:15:35Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Here\u2019s What Fuels Littelfuse\u2019s (LFUS) 40% Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/fuels-littelfuse-lfus-40-rally-145004297.html?.tsrc=rss",
+      "published": "2026-07-15T14:50:04Z",
       "tone": "bullish"
     },
     {
@@ -31,13 +38,6 @@
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOV9wcVZ4Mnl3Z0d6dlFUTUN5N2otMzk5WjIzbFRaZnBRVnJZWWJ6T21WeGQwajZDSXR3YWNmRzk2VkJfU0hzSUJDY0REb3hRRlltRG95UlpVNlZLUi1faW00U2J0LTQ4bVZoNjVPSFJhd2wyVlZPZl8tSk1ESkxGS0hnM3NkZTVQenE1YmtUaS0tSE1kY2ZWeVY3MXVpLTNSRVk3UVBNU2JRRDE0MGRJamMxRDRwT1Zt?oc=5",
       "published": "2026-07-09T10:02:10Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "How Marvell Turned AI Demand Into A 200% Rally",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.trefis.com/articles/607093/how-marvell-turned-ai-demand-into-a-200-rally/2026-07-15?.tsrc=rss",
-      "published": "2026-07-15T13:13:15Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 93
       }
     ],
-    "headline_count": 145,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
