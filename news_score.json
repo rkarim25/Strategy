@@ -1,10 +1,24 @@
 {
-  "generated_at_utc": "2026-07-15T09:06:16Z",
+  "generated_at_utc": "2026-07-15T11:06:58Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow, S&P 500, Nasdaq rise as Fed rate-hike bets ease, chip stocks rally - Yahoo Finance; Higher bar for corporate profit growth poses challenge for US stock market rally - Reuters. Bearish offsets: Despite Falling Oil Prices, There's Now a 73% Chance of an Interest Rate Hike by September -- Here Are the 2 Culprits to Blame.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Futures Jump. Market Rally Gathers Pace as Earnings Season Ramps Up.; Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause. Bearish offsets: Despite Falling Oil Prices, There's Now a 73% Chance of an Interest Rate Hike by September -- Here Are the 2 Culprits to Blame.",
   "articles": [
+    {
+      "title": "Stock Futures Jump. Market Rally Gathers Pace as Earnings Season Ramps Up.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/b5722414-f646-3346-b582-e50f1059657f/stock-futures-jump.-market.html?.tsrc=rss",
+      "published": "2026-07-15T10:09:42Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/07/15/mortgage-rates-rise-to-highest-level-in-nearly-a-year.html",
+      "published": "2026-07-15T11:00:01Z",
+      "tone": "bullish"
+    },
     {
       "title": "Stock market today: Dow, S&P 500, Nasdaq rise as Fed rate-hike bets ease, chip stocks rally - Yahoo Finance",
       "source": "Yahoo Finance",
@@ -25,20 +39,6 @@
       "url": "https://www.fool.com/investing/2026/07/15/73-chance-interest-rate-hike-september-2-culprits/?.tsrc=rss",
       "published": "2026-07-15T08:26:00Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Cybersecurity stocks rally on AI spending change comments from IBM's Krishna",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/14/cybersecurity-stocks-ai-spending-mythos.html",
-      "published": "2026-07-14T21:13:39Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Nasdaq ends sharply higher; chip surge offsets Iran worries - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOWlJrcUhGNjUtY2dOX1RQcWxqNW1KNGtrZU9uYU5KSjZiaDdZM3ozU1BZUjR4WmJyLVJjLW9yYjJGRHdSSEo4T0NNVUQ1T2VHN19keUtvRklORURPYUhtS0hUR2NJWnRIcnd3VFRLdGpDTmcwSnA0WHcxSUJ2RHhrNG1hOWUycm5kUjl6OHhoTjhSNVZXRmFUVnRMclJYMW9FdXRJZ1VLSkFrbmxRWVg5N3Z5c3M?oc=5",
-      "published": "2026-07-09T23:36:06Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 90
       }
     ],
-    "headline_count": 144,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
