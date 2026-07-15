@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-15T12:49:39Z",
-  "data_asof": "2026-07-13",
-  "daily_rows": 7546,
-  "quote_price": 29586.287109375,
-  "quote_timestamp": "2026-07-14",
+  "generated_at_utc": "2026-07-15T14:43:44Z",
+  "data_asof": "2026-07-15",
+  "daily_rows": 7547,
+  "quote_price": 29373.0234375,
+  "quote_timestamp": "2026-07-15",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-07-13",
-      "close": 29264.099609375
+      "date": "2026-07-15",
+      "close": 29373.0234375
     },
-    "latestSma": 29691.3654296875,
+    "latestSma": 29678.219140625,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.04554705445398388,
+    "latestDd": -0.04199448765774627,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
@@ -51,19 +51,19 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-07-14",
-      "close": 29586.287109375
+      "date": "2026-07-15",
+      "close": 29373.0234375
     },
-    "latestSma": 29688.88232421875,
+    "latestSma": 29619.67431640625,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.035038861394984244,
+    "latestDd": -0.04199448765774627,
     "regime": "base",
     "entryClose": null,
     "entryDate": null,
     "recoveryTarget": null,
     "aboveSma": false,
-    "recoveryOk": true,
+    "recoveryOk": false,
     "targetLeverage": 0,
     "activeEntryClose": null,
     "activeEntryDate": null,
@@ -72,10 +72,10 @@
     "explanation": "No recovery tier active; base rule says cash because close is below SMA20."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-07-13",
+    "last_observed_asof": "2026-07-15",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-07-15T12:49:39Z",
+    "last_checked_at_utc": "2026-07-15T14:43:44Z",
     "last_email_sent_on": "2026-07-13",
     "last_transition": {
       "id": "2026-07-10:1->2026-07-13:0",
