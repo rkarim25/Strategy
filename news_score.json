@@ -1,23 +1,16 @@
 {
-  "generated_at_utc": "2026-07-15T16:15:46Z",
+  "generated_at_utc": "2026-07-15T17:44:45Z",
   "window_days": 7,
-  "score": 9,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Here\u2019s What Fuels Littelfuse\u2019s (LFUS) 40% Rally; Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause. Bearish offsets: S&P 500 is little changed as chip stocks fall; traders weigh inflation data: Live updates.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause; Stock market today: Dow, S&P 500, Nasdaq rise as Fed rate-hike bets ease, chip stocks rally - Yahoo Finance. Bearish offsets: S&P 500 is little changed as chip stocks fall; traders weigh inflation data: Live updates.",
   "articles": [
     {
       "title": "S&P 500 is little changed as chip stocks fall; traders weigh inflation data: Live updates",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/07/14/stock-market-today-live-updates.html",
-      "published": "2026-07-15T16:15:35Z",
+      "published": "2026-07-15T17:06:17Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Here\u2019s What Fuels Littelfuse\u2019s (LFUS) 40% Rally",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/fuels-littelfuse-lfus-40-rally-145004297.html?.tsrc=rss",
-      "published": "2026-07-15T14:50:04Z",
-      "tone": "bullish"
     },
     {
       "title": "Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause",
@@ -38,6 +31,13 @@
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOV9wcVZ4Mnl3Z0d6dlFUTUN5N2otMzk5WjIzbFRaZnBRVnJZWWJ6T21WeGQwajZDSXR3YWNmRzk2VkJfU0hzSUJDY0REb3hRRlltRG95UlpVNlZLUi1faW00U2J0LTQ4bVZoNjVPSFJhd2wyVlZPZl8tSk1ESkxGS0hnM3NkZTVQenE1YmtUaS0tSE1kY2ZWeVY3MXVpLTNSRVk3UVBNU2JRRDE0MGRJamMxRDRwT1Zt?oc=5",
       "published": "2026-07-09T10:02:10Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Cintas Stock Jumps After Earnings Beat Expectations",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/8929626c-703c-31a7-bd62-77c3bf4856bc/cintas-stock-jumps-after.html?.tsrc=rss",
+      "published": "2026-07-15T16:49:00Z",
       "tone": "bullish"
     }
   ],
