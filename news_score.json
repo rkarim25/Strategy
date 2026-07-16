@@ -1,22 +1,15 @@
 {
-  "generated_at_utc": "2026-07-16T09:09:46Z",
+  "generated_at_utc": "2026-07-16T11:15:55Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow, S&P 500, Nasdaq rise as Apple notches record high - Yahoo Finance; Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause. Bearish offsets: SK Hynix shares plunge over 11% as Asia sees tech rout, tracking U.S. chip losses.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow, S&P 500, Nasdaq rise as Apple notches record high - Yahoo Finance; Mortgage rates rise to highest level in nearly a year, causing homebuyers to pause. Bearish offsets: Dow Jones Futures: Taiwan Semi, GE Aerospace Fall Despite Strong Earnings; AI Slide Continues; Wall Street ends lower as Iran tensions dampen risk appetite; chipmakers drop By Reuters - Investing.com.",
   "articles": [
-    {
-      "title": "SK Hynix shares plunge over 11% as Asia sees tech rout, tracking U.S. chip losses",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/16/sk-hynix-falls-amid-asia-tech-rout-tracking-us-semiconductor-losses.html",
-      "published": "2026-07-16T07:02:36Z",
-      "tone": "bearish"
-    },
     {
       "title": "Stock market today: Dow, S&P 500, Nasdaq rise as Apple notches record high - Yahoo Finance",
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOLVp4LWZyMUlpNGV3T2MwYmkwT1RLY01BSzNnTkpRaUJRZ2dXWGpOVEJDdEJqN0xLTUdMT0hvYzczREpVZmZWUzlpVkZoWGMzcVpTZHgtd0ltdDJINFBnWXBEaTRHa1pvYjB3ZHQ5dWNyRHlLZUJJWHVZd0Q5aU5CcnVydGpNcmlzQlFtbGZ4aVZVWTRERGFqenN5OWdleEpYeHIxYmhVX3o4V0xhdWZ6SFdLc2MxUQ?oc=5",
-      "published": "2026-07-15T20:02:32Z",
+      "published": "2026-07-15T20:04:58Z",
       "tone": "bullish"
     },
     {
@@ -34,11 +27,18 @@
       "tone": "bullish"
     },
     {
-      "title": "Higher bar for corporate profit growth poses challenge for US stock market rally - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOV9wcVZ4Mnl3Z0d6dlFUTUN5N2otMzk5WjIzbFRaZnBRVnJZWWJ6T21WeGQwajZDSXR3YWNmRzk2VkJfU0hzSUJDY0REb3hRRlltRG95UlpVNlZLUi1faW00U2J0LTQ4bVZoNjVPSFJhd2wyVlZPZl8tSk1ESkxGS0hnM3NkZTVQenE1YmtUaS0tSE1kY2ZWeVY3MXVpLTNSRVk3UVBNU2JRRDE0MGRJamMxRDRwT1Zt?oc=5",
-      "published": "2026-07-09T10:02:10Z",
-      "tone": "bullish"
+      "title": "Dow Jones Futures: Taiwan Semi, GE Aerospace Fall Despite Strong Earnings; AI Slide Continues",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/9b2a3551-5bcd-34f5-9f61-00ac74d553c1/dow-jones-futures%3A-taiwan.html?.tsrc=rss",
+      "published": "2026-07-16T11:09:45Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street ends lower as Iran tensions dampen risk appetite; chipmakers drop By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNTWZOLUNxNEdFQzI1bnB6OENWX0Ruc2pHT1J5SGltMHFvdS1IdVp1cTF5SThnYTFTSFo5QWlvUTBwYWpnbHhzN2JrUVdXazRiV0lsT0M2X0FEX000Z1NrUW5kTE5DQS1PQWNoak11ZnMtQ2hfVXA3NWRsQ0tTQld1YS05aXp4TlNGeGJ0ZG5LN1lqREI2NFdXWlZiQnB1STZOQ19SYkJYVmw5eVh0b29UenNubDNQSnc0YVJXSg?oc=5",
+      "published": "2026-07-13T09:58:10Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 88
       }
     ],
-    "headline_count": 137,
+    "headline_count": 138,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
