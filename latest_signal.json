@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-16T12:58:16Z",
-  "data_asof": "2026-07-15",
-  "daily_rows": 7547,
-  "quote_price": 7572.39990234375,
-  "quote_timestamp": "2026-07-15",
+  "generated_at_utc": "2026-07-16T15:03:36Z",
+  "data_asof": "2026-07-16",
+  "daily_rows": 7548,
+  "quote_price": 7564.66015625,
+  "quote_timestamp": "2026-07-16",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-07-15",
-      "close": 7572.39990234375
+      "date": "2026-07-16",
+      "close": 7564.6201171875
     },
-    "latestSma": 7476.0310546875,
+    "latestSma": 7478.694555664062,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.004912084694673302,
+    "latestDd": -0.005934425074538785,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -46,18 +46,18 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.15163978403795264,
+    "activeEntryPnl": 0.15045660430461183,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-07-15",
-      "close": 7572.39990234375
+      "date": "2026-07-16",
+      "close": 7564.66015625
     },
-    "latestSma": 7479.083544921875,
+    "latestSma": 7485.92255859375,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.004912084694673302,
+    "latestDd": -0.005929163547447325,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -68,14 +68,14 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.15163978403795264,
+    "activeEntryPnl": 0.15046269359966824,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-07-15",
+    "last_observed_asof": "2026-07-16",
     "last_observed_target_leverage": 2,
     "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-07-16T12:58:16Z",
+    "last_checked_at_utc": "2026-07-16T15:03:36Z",
     "last_email_sent_on": "2026-06-29",
     "last_transition": {
       "id": "2026-06-26:0->2026-06-29:2",
