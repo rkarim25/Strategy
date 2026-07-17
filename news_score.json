@@ -1,15 +1,36 @@
 {
-  "generated_at_utc": "2026-07-17T09:05:09Z",
+  "generated_at_utc": "2026-07-17T11:03:22Z",
   "window_days": 7,
   "score": 5,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock market today: Dow, S&P 500, Nasdaq rise as Big Tech stocks rally - Yahoo Finance. Bearish offsets: Stock futures fall as global chip sell-off continues: Live updates; Wall Street Today: DJIA, S&P 500, Nasdaq Comp Fall as SKHY, MU, GOOGL, TSM Lead Tech Selloff - Moomoo.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Apple just hit a record high. HSBC says it still has room to run. Bearish offsets: Stock Futures Drop as Tech Selloff Gathers Pace; Nasdaq futures fall 2% as global chip sell-off continues: Live updates.",
   "articles": [
     {
-      "title": "Stock futures fall as global chip sell-off continues: Live updates",
+      "title": "Apple just hit a record high. HSBC says it still has room to run",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/07/17/apple-just-hit-a-record-high-hsbc-says-it-still-has-room-to-run.html",
+      "published": "2026-07-17T10:52:34Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Futures Drop as Tech Selloff Gathers Pace",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/6b6c1731-20d8-3e62-b50c-673daf7ec6ce/stock-futures-drop-as-tech.html?.tsrc=rss",
+      "published": "2026-07-17T10:03:38Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Nasdaq futures fall 2% as global chip sell-off continues: Live updates",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/07/16/stock-market-today-live-updates.html",
-      "published": "2026-07-17T07:52:51Z",
+      "published": "2026-07-17T10:18:25Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock market today: Stocks fall after Netflix whiff while with chip stocks sell-off hammers Nasdaq - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPVHlaX3ROeTUxeFRlTUYzTmVkYlRLRnEzU2VRSmJOWHQ1NnF0eTBzb3dCMnFFUzBHenRVekVuUzRwbTlnN1lCUDhXdXdwWmgzZWpPVnRYS2tRUHFjVUdCUjhLSFc0UUN6OVBWM0I1RkNkTkgxRXJkRG5SNEJWamdYQ3ZwMWJESFJsSXh2LVVJR3RYeFltX2lGdkhKSU9QRzNTWVBHMU1LcU4?oc=5",
+      "published": "2026-07-17T09:23:45Z",
       "tone": "bearish"
     },
     {
@@ -18,27 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMi9gJBVV95cUxPSFpJbjd0NFlRYnJCVWw3Q0tIZG9waF9HaUhtV2ltNGcyTXY0SE9QbzVLMTF3d2MxTlVwa1oybGdlaHNzTDJ3clNjenRZTXo5Tzdvc2pxMmtGX1dVM0V2X2h1UUtZdG5pMHo5QUNOVTEyYmkzOGh3dGxkVkhVM2htbDVBR1A3cFk5STVKZ0R2MlVxYUhLcnN2UUo4QnNPQU5abktmOVNHaUJVUWNEUkhnd3lCV2xvY1BfV3JZOGNEOHliYVhQU2duODc2T1lqOTZGd0tJVWxFa25fYXNLa2ZEbkh5T2pIelBtOHRwbmxQUXZ0YVdQWlFydXV3eUNyN2ZfZE5zTHVNZTlaTXVVSXJfVF90WXJ3elVsRlg0bnhlamZIbHBHcHdoZDJZLW9Uc2hEOUNjZjVMV2pLWFZhZzU4NmZIVHFqcmdVY1NMeDlSQ3JJakk1QmYyaVN2SGFIVXhSSXJWMzd0U0F1ZmhzM0hWdUlSSzE0QQ?oc=5",
       "published": "2026-07-16T07:00:00Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Asia stocks slip amid tech losses, Iran tensions; Nikkei leads losses",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/world-indices/articles/asia-stocks-slip-amid-tech-044313893.html?.tsrc=rss",
-      "published": "2026-07-17T04:43:13Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Chip selloff drags Wall Street lower, offsetting solid earnings - Honolulu Star-Advertiser",
-      "source": "Honolulu Star-Advertiser",
-      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPdnZVcG4xT0xJQ1ZZSXZSM25yRXZvank5SWxiSlpjX3lmRTVKRGNwdmljUVB1RnRvNFlfZnp5WWZGQ2N0Rlppc3QtUjducmRWWGNDME4walNKWFJZcEFSc2tSbTFSXzFKM0YyRGNkdGZwS01BWXcxX3BhaEZGekZBaHJCTi10dV9xVGVqTzV4MHRxVmFra2dWbXdPR2Jadkx3Vk1Ob0VJNFVrR0pvQjlIZ1padWFjbmNRSE9r?oc=5",
-      "published": "2026-07-16T22:54:36Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Stock market today: Dow, S&P 500, Nasdaq rise as Big Tech stocks rally - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOLVp4LWZyMUlpNGV3T2MwYmkwT1RLY01BSzNnTkpRaUJRZ2dXWGpOVEJDdEJqN0xLTUdMT0hvYzczREpVZmZWUzlpVkZoWGMzcVpTZHgtd0ltdDJINFBnWXBEaTRHa1pvYjB3ZHQ5dWNyRHlLZUJJWHVZd0Q5aU5CcnVydGpNcmlzQlFtbGZ4aVZVWTRERGFqenN5OWdleEpYeHIxYmhVX3o4V0xhdWZ6SFdLc2MxUQ?oc=5",
-      "published": "2026-07-15T18:57:46Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 89
       }
     ],
-    "headline_count": 144,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
