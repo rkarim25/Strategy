@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-17T11:03:22Z",
+  "generated_at_utc": "2026-07-17T12:40:58Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Apple just hit a record high. HSBC says it still has room to run. Bearish offsets: Stock Futures Drop as Tech Selloff Gathers Pace; Nasdaq futures fall 2% as global chip sell-off continues: Live updates.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Apple just hit a record high. HSBC says it still has room to run. Bearish offsets: Stock Futures Drop as Tech Selloff Gathers Pace; S&P 500 and Nasdaq futures drop as chipmaker sell-off intensifies; Netflix slides 11%: Live updates.",
   "articles": [
     {
       "title": "Apple just hit a record high. HSBC says it still has room to run",
@@ -20,24 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "Nasdaq futures fall 2% as global chip sell-off continues: Live updates",
+      "title": "S&P 500 and Nasdaq futures drop as chipmaker sell-off intensifies; Netflix slides 11%: Live updates",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/07/16/stock-market-today-live-updates.html",
-      "published": "2026-07-17T10:18:25Z",
+      "published": "2026-07-17T12:37:22Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock market today: Stocks fall after Netflix whiff while with chip stocks sell-off hammers Nasdaq - Yahoo Finance",
+      "title": "Stocks Fall Pre-Bell as Chip Sell-Off Continues",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-fall-pre-bell-chip-115314659.html?.tsrc=rss",
+      "published": "2026-07-17T11:53:14Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock market today: Nasdaq futures hammered by chips sell-off, Dow and S&P 500 futures fall after Netflix whiff - Yahoo Finance",
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPVHlaX3ROeTUxeFRlTUYzTmVkYlRLRnEzU2VRSmJOWHQ1NnF0eTBzb3dCMnFFUzBHenRVekVuUzRwbTlnN1lCUDhXdXdwWmgzZWpPVnRYS2tRUHFjVUdCUjhLSFc0UUN6OVBWM0I1RkNkTkgxRXJkRG5SNEJWamdYQ3ZwMWJESFJsSXh2LVVJR3RYeFltX2lGdkhKSU9QRzNTWVBHMU1LcU4?oc=5",
-      "published": "2026-07-17T09:23:45Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street Today: DJIA, S&P 500, Nasdaq Comp Fall as SKHY, MU, GOOGL, TSM Lead Tech Selloff - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMi9gJBVV95cUxPSFpJbjd0NFlRYnJCVWw3Q0tIZG9waF9HaUhtV2ltNGcyTXY0SE9QbzVLMTF3d2MxTlVwa1oybGdlaHNzTDJ3clNjenRZTXo5Tzdvc2pxMmtGX1dVM0V2X2h1UUtZdG5pMHo5QUNOVTEyYmkzOGh3dGxkVkhVM2htbDVBR1A3cFk5STVKZ0R2MlVxYUhLcnN2UUo4QnNPQU5abktmOVNHaUJVUWNEUkhnd3lCV2xvY1BfV3JZOGNEOHliYVhQU2duODc2T1lqOTZGd0tJVWxFa25fYXNLa2ZEbkh5T2pIelBtOHRwbmxQUXZ0YVdQWlFydXV3eUNyN2ZfZE5zTHVNZTlaTXVVSXJfVF90WXJ3elVsRlg0bnhlamZIbHBHcHdoZDJZLW9Uc2hEOUNjZjVMV2pLWFZhZzU4NmZIVHFqcmdVY1NMeDlSQ3JJakk1QmYyaVN2SGFIVXhSSXJWMzd0U0F1ZmhzM0hWdUlSSzE0QQ?oc=5",
-      "published": "2026-07-16T07:00:00Z",
+      "published": "2026-07-17T12:04:29Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 91
       }
     ],
-    "headline_count": 139,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
