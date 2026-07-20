@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-07-20T09:53:41Z",
+  "generated_at_utc": "2026-07-20T12:11:50Z",
   "window_days": 7,
-  "score": 2,
-  "label": "Bearish",
-  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Dow falls nearly 400 points as chip selloff deepens, Wall Street posts weekly loss - TradingView; Stock market today: Stocks fall after Netflix whiff while with chip stocks sell-off hammers Nasdaq - Yahoo Finance.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN. Bearish offsets: Dow falls nearly 400 points as chip selloff deepens, Wall Street posts weekly loss - TradingView; Stock market today: Stocks fall after Netflix whiff while with chip stocks sell-off hammers Nasdaq - Yahoo Finance.",
   "articles": [
+    {
+      "title": "S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN",
+      "source": "MSN",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOTE50R2IxUmNHeWR1aEd0enN1WFMtMWRnT2Y2NjMwYjZ5MGpPdnYzZEJHcmZ2NHFoZnVyRjdra1Fac0JPeDZBcjluZE10ZGZJYkdqYVVBSUUza19WSFFtUTdVMTE4SDBzRW1UbEF4LXg0dUZGS1JnaEdFVjlBZXpkRWQtQWpHNzlsTktPeDFjdDNuNmczWW54YW9NQjlrQUR1cW9kMHdrVHR6TTFlQ1RZcjFiVGZmUkxPQUxfaEgyeFJyVFlIVmFCV013UjVYRFNmQWI5V0Z0U25YTTFDc1lnYlFFWFlMWjhFdTlVN2s4UXdkWFU?oc=5",
+      "published": "2026-07-18T12:06:13Z",
+      "tone": "bullish"
+    },
     {
       "title": "Dow falls nearly 400 points as chip selloff deepens, Wall Street posts weekly loss - TradingView",
       "source": "TradingView",
@@ -31,13 +38,6 @@
       "source": "Yahoo Finance S&P 500",
       "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-080840351.html?.tsrc=rss",
       "published": "2026-07-20T08:08:40Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "'Give me my money back': South Korean traders' leveraged SK Hynix, Samsung bets unravel after selloff",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/20/give-me-my-money-back-south-korean-traders-leveraged-bets-unravel.html",
-      "published": "2026-07-20T04:18:05Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 94
       }
     ],
-    "headline_count": 143,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
