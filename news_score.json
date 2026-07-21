@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-21T09:23:57Z",
+  "generated_at_utc": "2026-07-21T11:22:18Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN; Is the U.S. stock market bull run merely taking a pause? Wall Street veteran: It could still rise more than 10% this year, with optimism for these 'non-AI sectors'! - \u5bcc\u9014\u725b\u725b. Bearish offsets: Wall Street ends lower as chip selloff overshadows earnings - MSN; Wall St ends lower for the day and week as chip selloff broadens - Yahoo Finance.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN; Nasdaq, S&P 500 Futures Rebound As Chip Rally Counters Iran Jitters: Why NBIS, NVDA, INTC, TSLA, IREN, MU Are In Focus. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Reuters; Wall Street ends lower as chip selloff overshadows earnings - MSN.",
   "articles": [
     {
       "title": "S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN",
@@ -13,17 +13,24 @@
       "tone": "bullish"
     },
     {
+      "title": "Nasdaq, S&P 500 Futures Rebound As Chip Rally Counters Iran Jitters: Why NBIS, NVDA, INTC, TSLA, IREN, MU Are In Focus",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://stocktwits.com/news-articles/markets/equity/nasdaq-sp500-futures-rebound-chip-rally-counters-iran-jitters-why-nbis-nvda-intc-tsla-iren-mu-are-in-focus/cZZSPLBR7HM?.tsrc=rss",
+      "published": "2026-07-21T08:52:44Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall St ends lower for the day and week as chip selloff broadens - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPSXBLd3owVnZENU9mMVBIZUg5UjJoT1RtdmJ6UkdJNzJOVmxXdVFtT2FWYzU4c1pQSzkybmNBRHUwMnBxeURFY01ZQ3ptMkg0TFR2dGpQblJSSWRNVThEYlBXZWNVZjQtTWswdUdLR2M4SXhXWGtRNER2UlgyU1ctQkR6Y0ZSWWYzV2tyc2FtMHhfZGNMU0xZdlRGN0hXYXVkRWk0QkdpV0o4dEU?oc=5",
+      "published": "2026-07-17T22:31:24Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Wall Street ends lower as chip selloff overshadows earnings - MSN",
       "source": "MSN",
       "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxOSGptUXlXWXlucGVGUE5nWFZtZFZBU0NYX18yN2I4c3RTbWRaUG9pSHZLTC15cncwVzZlUXk1cmlUd2t4VmFxMVFhNVljT0gxN1hlR1VKaS1YSEJHNExuQjFERDg3a3BiaDR0Vk94RVptTmZ0NTZvNEp0LWFuSUx6Y3FRa01adnUtWXVRYUNrNFNqdnZrLTN4aWpCMWI2aHBvbXQ1YjRmaUZDMUxaSlpoeGIzV3ZuTHlmY3JOT2xiU1BkWWE3bG5ieTZoSmo5cjV4R3hyRE41SkV0SFR1MzlZSHU4VQ?oc=5",
       "published": "2026-07-17T20:48:22Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall St ends lower for the day and week as chip selloff broadens - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQb2FGSjg0bGVlcTBGelNrbERiaUd4Mlo2bkNEY0Y1T09wSzRBOVV1RTduZGdsQkVOY0N2dzNsQTg2WDBIMVFuMjRTaVVpU3hoYmZCSEdYWlNLLTQxN3pMdC16OWczZTl1MF9Ob1Q2RDJHVmdLMGhoOTBlY1Qzby1DZ0tNR3RSUk1YQ3YteV92dVFZMXIx?oc=5",
-      "published": "2026-07-17T20:28:54Z",
       "tone": "bearish"
     },
     {
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQcVhMSUdJU2VnTm5JeW1yRW5veHNRajdKclVvV2JwX095eWp4UVNuRXd4Z0RMcW5EUTVFal92N081bnZETW9ieFFJREdUYkJ0bEdOelBucVZ1SmxuNFNJcEk5eFNTWlNYcmdJQllEcmhwLWZjT0lZeFZBQzdUblh0YUM4LVRJUmMwRGFnWm1oZXc3QQ?oc=5",
       "published": "2026-07-21T03:03:07Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Trump imposing 50% tariffs on certain Canadian goods over alleged trade discrimination",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/20/trump-tariffs-canada-trade.html",
-      "published": "2026-07-20T22:13:57Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 97
+        "articles": 95
       }
     ],
-    "headline_count": 147,
+    "headline_count": 145,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
