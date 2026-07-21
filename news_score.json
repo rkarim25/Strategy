@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-21T21:54:51Z",
+  "generated_at_utc": "2026-07-21T22:53:07Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Reuters.",
   "articles": [
     {
       "title": "US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit",
@@ -20,13 +20,6 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today: Nasdaq Pops As S&P 500 Finds Key Support; Micron, Sandisk Shares Soar (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/510d805e-7ef0-3e23-9ea8-d11352e04bb1/stock-market-today%3A-nasdaq.html?.tsrc=rss",
-      "published": "2026-07-21T20:19:07Z",
-      "tone": "bullish"
-    },
-    {
       "title": "Stock Market Today: Dow, S&P 500, Nasdaq 100 Futures Rise as Tech Stocks Lead the Rally\u2014Nebius, Archer, I - Benzinga",
       "source": "Benzinga",
       "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxQVGc2UElicGV5VjNEbkR4ZGhfNGNNb2ZsNWZ1c3E5aGFTUkRWSFdRTVp0U3RsN3JqT2tIVXROekZ0TmdxRmlaSFhPUklTVEl1QkU1R2RVbDRUdW00WEdaaDJRUjZmeVI0WHViYTlET0l3Sks1VkRyTGhXVDZxSXhZTUZDOFBzdVFRQnRTY25MZ00wSTgtNnpTWW9tdXVCRFlwSUZHSzFTTkpVRDJBQkdsdFkyODgwaFR3YXlDYUxvYWxzZWROeVJJNjBZcERIYXlyZVdpSzRIQWxoeE9JazV5WmJ0SFNDUUhfMmxIZnJOUlRVVTRiNHhxbHJtYw?oc=5",
@@ -39,6 +32,13 @@
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPT2ZVWlFvSkNRM3pBSzN6Vy1scXBZQzNfUGZXenUzTHNSSWtTVURVVUk1S1RQYWxTVEJOb2t6WG1LOEFMVXNuVWVndUdYZnNfb21KSVdmT2tJQ1lRXzVuWVliX3YwLWk3VDVGdU9BMUJYR3YxM0xOSHlwUlgtRDB3cjEzdWJ4ejRneUpxM2ZsMGRDMDVTODdWTlNERERUaGc3R2E2cHNwaUQ?oc=5",
       "published": "2026-07-20T22:14:59Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Wall St ends lower for the day and week as chip selloff broadens - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPSXBLd3owVnZENU9mMVBIZUg5UjJoT1RtdmJ6UkdJNzJOVmxXdVFtT2FWYzU4c1pQSzkybmNBRHUwMnBxeURFY01ZQ3ptMkg0TFR2dGpQblJSSWRNVThEYlBXZWNVZjQtTWswdUdLR2M4SXhXWGtRNER2UlgyU1ctQkR6Y0ZSWWYzV2tyc2FtMHhfZGNMU0xZdlRGN0hXYXVkRWk0QkdpV0o4dEU?oc=5",
+      "published": "2026-07-17T22:31:24Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 88
       }
     ],
-    "headline_count": 140,
+    "headline_count": 138,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
