@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-22T16:24:03Z",
+  "generated_at_utc": "2026-07-22T17:47:46Z",
   "window_days": 7,
-  "score": 9,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; Stock Market Today: Dow Climbs Even As Oil Jumps; This Industrial Name Rallies, SMCI Surges (Live Coverage).",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; Zuckerberg's stock rebound made him world's 5th richest at $222B.",
   "articles": [
     {
       "title": "US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit",
@@ -13,10 +13,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today: Dow Climbs Even As Oil Jumps; This Industrial Name Rallies, SMCI Surges (Live Coverage)",
+      "title": "Zuckerberg's stock rebound made him world's 5th richest at $222B",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/1c679c39-b73f-3cc1-abf9-648d2f1a9328/stock-market-today%3A-dow.html?.tsrc=rss",
-      "published": "2026-07-22T16:09:50Z",
+      "url": "https://www.thestreet.com/markets/meta-stock-rally-zuckerberg-net-worth-2026?.tsrc=rss",
+      "published": "2026-07-22T16:17:00Z",
       "tone": "bullish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 85
+        "articles": 86
       }
     ],
-    "headline_count": 135,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
