@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-07-22T12:54:51Z",
+  "generated_at_utc": "2026-07-22T14:59:38Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; Stock Market Today: Dow, S&P 500, Nasdaq 100 Futures Rise as Tech Stocks Lead the Rally\u2014Nebius, Archer, I - Benzinga. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Reuters; Trump plans generic drug tariffs from 2028 with two-year delay testing U.S. onshoring push.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; Wall Street futures retreat as oil rally overshadows optimism before Big Tech earnings: Dow Jones, S&P, Nasdaq - Yahoo Finance UK. Bearish offsets: US stocks: Wall Street ends lower for the day and week as chip selloff broadens - The Business Times.",
   "articles": [
     {
       "title": "US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit",
       "source": "NDTV Profit",
       "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPem1MSV9VOVdMZU5sdlI2em91M2xjaEtXUFRSczg4ZWlHVGFNak5zbXRsb0hyU3UwNncxb3VSWFplZ2FHYWt0N0cya2JHYW12V2U4TV9nUzY1WFBOZ1RHNGlhQmZQczBLb1c5bzQ4QkR5N1hnalR5QjBYZUpBYi1DUlNUdGdHc2s5VG5ueWZQMW5oRUlzTE1GeW40eEhnV2J6R0VneE1EZ2lTM2JNdXl3bnRSNHdhTW5HOGEwMUExekI4bGxYNWdLQkdRYk9paDRpNVHSAdoBQVVfeXFMT2lBN2Jlcl80bTZRdTM3WDQ2dkQzODBZTXJFOVZ0dHJOT0lFaUVCcXlvNkpLa05JY3hjdVBXckUxcG9HT05hSUl5LVhMSlBEVlFhZ05hRUpwMi1hMGFZSUtQOVlLSXVOVWc4cHY4S1lPekNpVVEzR2lWOGxQdS1qZ1k4OTNkekNTSFk4WFBSbTBLXzZ3X2txUzU4RGJsNE5IOVR5Nm5qalo4dnM4TUQ4b2JDVENsMF9GMmxzX3FhcjhvS1lHak95QTZJMVVuWV9OYUxXSGdVSC1adnc?oc=5",
       "published": "2026-07-21T13:44:35Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street futures retreat as oil rally overshadows optimism before Big Tech earnings: Dow Jones, S&P, Nasdaq - Yahoo Finance UK",
+      "source": "Yahoo Finance UK",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPMW1lTS1xNVZNTXNFZXN3VVdhLXlkc2FVWWJYdTFaSEZpVXFtdHFvNXRQTW05RTA5cVR3anRfcFFsSGphZW9ZakdfcHZ5TWQ2bzEwdUNhSVprcU04TEV1Nmx2SFRFZ0Y2LUNEcFlaOGZFVmZPaWxSM2Ytd0JQMHQ3N0lTVkZyMEE?oc=5",
+      "published": "2026-07-22T13:18:59Z",
       "tone": "bullish"
     },
     {
@@ -27,17 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall St ends lower for the day and week as chip selloff broadens - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPSXBLd3owVnZENU9mMVBIZUg5UjJoT1RtdmJ6UkdJNzJOVmxXdVFtT2FWYzU4c1pQSzkybmNBRHUwMnBxeURFY01ZQ3ptMkg0TFR2dGpQblJSSWRNVThEYlBXZWNVZjQtTWswdUdLR2M4SXhXWGtRNER2UlgyU1ctQkR6Y0ZSWWYzV2tyc2FtMHhfZGNMU0xZdlRGN0hXYXVkRWk0QkdpV0o4dEU?oc=5",
-      "published": "2026-07-17T22:31:24Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Trump plans generic drug tariffs from 2028 with two-year delay testing U.S. onshoring push",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/22/trump-generic-drugs-tariffs-medicine-trade-.html",
-      "published": "2026-07-22T06:28:08Z",
+      "title": "US stocks: Wall Street ends lower for the day and week as chip selloff broadens - The Business Times",
+      "source": "The Business Times",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQTV9uTXZQeDY4Yy16bE95ZUpYYWNCcWtVcldGeEZSZlB1LTZrRkF5cjhjVHQ2VkJ2ejU0MlBkTDVHNlk5V1drcDlhOG1vYjFYNUhRRy1xVUJvVmc4cV9wNkRGR25wakxxMEgwQ2NPdllNUmVkWjBwampHZUh5VkExMWgzdnhDd1VLa1VZUkZCdU42dVhNLUNkdnhuSXN1TXJwSjg3LTdaRzdZaG5pNUtOdHl6UUpQd1pnZkgteHVWVjVOd1VFeEVhWnZJeWF4amdUQTlOdHBMM1dEX09TalE?oc=5",
+      "published": "2026-07-17T23:40:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 90
       }
     ],
-    "headline_count": 141,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
