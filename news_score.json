@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-21T22:53:07Z",
+  "generated_at_utc": "2026-07-22T09:23:11Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Reuters.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; S&P 500, Nasdaq, Dow Futures Ease As Oil Rally Tempers AI Optimism Ahead of Big Tech Earnings: SMCI, OKLO, XE, SKHY, GOOG In Focus. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Reuters.",
   "articles": [
     {
       "title": "US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit",
@@ -13,10 +13,10 @@
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 earnings surge as tech dominance fuels rally despite volatility - MSN",
-      "source": "MSN",
-      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOTE50R2IxUmNHeWR1aEd0enN1WFMtMWRnT2Y2NjMwYjZ5MGpPdnYzZEJHcmZ2NHFoZnVyRjdra1Fac0JPeDZBcjluZE10ZGZJYkdqYVVBSUUza19WSFFtUTdVMTE4SDBzRW1UbEF4LXg0dUZGS1JnaEdFVjlBZXpkRWQtQWpHNzlsTktPeDFjdDNuNmczWW54YW9NQjlrQUR1cW9kMHdrVHR6TTFlQ1RZcjFiVGZmUkxPQUxfaEgyeFJyVFlIVmFCV013UjVYRFNmQWI5V0Z0U25YTTFDc1lnYlFFWFlMWjhFdTlVN2s4UXdkWFU?oc=5",
-      "published": "2026-07-18T12:06:13Z",
+      "title": "S&P 500, Nasdaq, Dow Futures Ease As Oil Rally Tempers AI Optimism Ahead of Big Tech Earnings: SMCI, OKLO, XE, SKHY, GOOG In Focus",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-nasdaq-dow-futures-ease-as-oil-rally-tempers-ai-optimism-ahead-of-big-tech-earnings-smci-oklo-xe-skhy-goog-in-focus/cZZmby1R7wd?.tsrc=rss",
+      "published": "2026-07-22T02:13:34Z",
       "tone": "bullish"
     },
     {
