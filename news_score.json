@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-07-22T22:59:04Z",
+  "generated_at_utc": "2026-07-23T09:21:25Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; Wall Street futures retreat as oil rally overshadows optimism before Big Tech earnings: Dow Jones, S&P, Nasdaq - Yahoo Finance UK. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Reuters.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit; Silver and gold prices stage a cautious rebound \u2014 but analysts see slim hopes for a sustained rally. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Yahoo Finance.",
   "articles": [
     {
       "title": "US Stock Market Today: Nasdaq Jumps 1% On Chip Rally; S&P 500, Dow Edge Higher On Earnings Boost - NDTV Profit",
@@ -13,10 +13,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street futures retreat as oil rally overshadows optimism before Big Tech earnings: Dow Jones, S&P, Nasdaq - Yahoo Finance UK",
-      "source": "Yahoo Finance UK",
-      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPMW1lTS1xNVZNTXNFZXN3VVdhLXlkc2FVWWJYdTFaSEZpVXFtdHFvNXRQTW05RTA5cVR3anRfcFFsSGphZW9ZakdfcHZ5TWQ2bzEwdUNhSVprcU04TEV1Nmx2SFRFZ0Y2LUNEcFlaOGZFVmZPaWxSM2Ytd0JQMHQ3N0lTVkZyMEE?oc=5",
-      "published": "2026-07-22T13:18:59Z",
+      "title": "Silver and gold prices stage a cautious rebound \u2014 but analysts see slim hopes for a sustained rally",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/07/23/silver-gold-prices-rebound-rally-correction.html",
+      "published": "2026-07-23T05:00:01Z",
       "tone": "bullish"
     },
     {
@@ -34,10 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall St ends lower for the day and week as chip selloff broadens - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPSXBLd3owVnZENU9mMVBIZUg5UjJoT1RtdmJ6UkdJNzJOVmxXdVFtT2FWYzU4c1pQSzkybmNBRHUwMnBxeURFY01ZQ3ptMkg0TFR2dGpQblJSSWRNVThEYlBXZWNVZjQtTWswdUdLR2M4SXhXWGtRNER2UlgyU1ctQkR6Y0ZSWWYzV2tyc2FtMHhfZGNMU0xZdlRGN0hXYXVkRWk0QkdpV0o4dEU?oc=5",
-      "published": "2026-07-17T22:31:24Z",
+      "title": "Wall St ends lower for the day and week as chip selloff broadens - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQb2FGSjg0bGVlcTBGelNrbERiaUd4Mlo2bkNEY0Y1T09wSzRBOVV1RTduZGdsQkVOY0N2dzNsQTg2WDBIMVFuMjRTaVVpU3hoYmZCSEdYWlNLLTQxN3pMdC16OWczZTl1MF9Ob1Q2RDJHVmdLMGhoOTBlY1Qzby1DZ0tNR3RSUk1YQ3YteV92dVFZMXIx?oc=5",
+      "published": "2026-07-17T20:28:54Z",
       "tone": "bearish"
     }
   ],
