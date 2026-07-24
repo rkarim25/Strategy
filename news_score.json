@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-07-24T09:16:19Z",
+  "generated_at_utc": "2026-07-24T11:15:36Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow, S&P 500, Nasdaq 100 Futures Rise as Tech Stocks Lead the Rally\u2014Nebius, Archer, I - Benzinga; Stock market today: Dow, S&P 500, Nasdaq rally fizzles as chip stock momentum fades, oil rises - Yahoo Finance. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Reuters; Trump's new global tariff draws rebukes from trade partners over forced-labor justification.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures Rise As Oil Prices Retreat; Intel Jumps After Google, Tesla Dive; Stock Market Today: Dow, S&P 500, Nasdaq 100 Futures Rise as Tech Stocks Lead the Rally\u2014Nebius, Archer, I - Benzinga. Bearish offsets: Wall St ends lower for the day and week as chip selloff broadens - Reuters; Trump to slap 'sweeping' new tariffs on 60 trade partners as global duties expire.",
   "articles": [
+    {
+      "title": "Dow Jones Futures Rise As Oil Prices Retreat; Intel Jumps After Google, Tesla Dive",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/96fdd7c6-3e7b-334a-a08e-b91b60ced4b6/dow-jones-futures-rise-as-oil.html?.tsrc=rss",
+      "published": "2026-07-24T11:01:20Z",
+      "tone": "bullish"
+    },
     {
       "title": "Stock Market Today: Dow, S&P 500, Nasdaq 100 Futures Rise as Tech Stocks Lead the Rally\u2014Nebius, Archer, I - Benzinga",
       "source": "Benzinga",
@@ -27,17 +34,10 @@
       "tone": "bearish"
     },
     {
-      "title": "Trump's new global tariff draws rebukes from trade partners over forced-labor justification",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/07/24/trump-global-tariffs-trade-imbalance-forced-labor.html",
-      "published": "2026-07-24T05:47:21Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Trump to slap 'sweeping' new tariffs on 60 trade partners as global duties expire",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/07/23/trump-tariffs-trade-deadline.html",
-      "published": "2026-07-23T21:43:10Z",
+      "published": "2026-07-24T10:46:26Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 89
       }
     ],
-    "headline_count": 140,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
