@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-07-24T16:34:39Z",
+  "generated_at_utc": "2026-07-24T17:57:37Z",
   "data_asof": "2026-07-24",
   "daily_rows": 7548,
-  "quote_price": 7448.58984375,
+  "quote_price": 7436.3798828125,
   "quote_timestamp": "2026-07-24",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,12 +30,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-07-24",
-      "close": 7449.22021484375
+      "close": 7436.58984375
     },
-    "latestSma": 7491.752514648438,
+    "latestSma": 7491.12099609375,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.021099108626729257,
+    "latestDd": -0.02275886376424152,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -46,38 +46,37 @@
     "activeEntryClose": 6575.31982421875,
     "activeEntryDate": "2026-04-01",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.13290614205657025,
+    "activeEntryPnl": 0.13098526650505282,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-07-24",
-      "close": 7448.58984375
+      "close": 7436.3798828125
     },
-    "latestSma": 7496.481005859375,
+    "latestSma": 7495.238989257812,
     "highWater": 7609.77978515625,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.021181945595938223,
+    "latestDd": -0.022786454698989655,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
     "recoveryTarget": 9205.44775390625,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 2,
-    "activeEntryClose": 6575.31982421875,
-    "activeEntryDate": "2026-04-01",
-    "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.13281027278927948,
-    "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-07-24",
     "last_observed_target_leverage": 2,
     "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-07-24T16:34:39Z",
+    "last_checked_at_utc": "2026-07-24T17:57:37Z",
     "last_email_sent_on": "2026-07-24",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
       "id": "2026-07-24:0->2026-07-24:2",
       "detected_at_utc": "2026-07-24T16:34:39Z",

@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-07-24T16:34:45Z",
+  "generated_at_utc": "2026-07-24T17:57:43Z",
   "window_days": 7,
-  "score": 5,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow, S&P 500, Nasdaq 100 Futures Rise as Tech Stocks Lead the Rally\u2014Nebius, Archer, I - Benzinga. Bearish offsets: Treasury Yield Breakout Raises S&P 500 Risks As Trump Weighs 'Massive' Attack; Wall St ends lower for the day and week as chip selloff broadens - Reuters.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow, S&P 500, Nasdaq 100 Futures Rise as Tech Stocks Lead the Rally\u2014Nebius, Archer, I - Benzinga. Bearish offsets: S&P 500 Fresh Warning as Valuation Drops Below 20x; Wall St ends lower for the day and week as chip selloff broadens - Reuters.",
   "articles": [
     {
-      "title": "Treasury Yield Breakout Raises S&P 500 Risks As Trump Weighs 'Massive' Attack",
+      "title": "S&P 500 Fresh Warning as Valuation Drops Below 20x",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/e6e917c5-79af-3b4b-8187-47c17c433928/treasury-yield-breakout.html?.tsrc=rss",
-      "published": "2026-07-24T15:26:54Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-fresh-warning-valuation-170826318.html?.tsrc=rss",
+      "published": "2026-07-24T17:08:26Z",
       "tone": "bearish"
     },
     {
@@ -27,17 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "Trump's new tariff push has investors rethinking their playbook",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/trumps-new-tariff-push-has-investors-rethinking-their-playbook-143509808.html?.tsrc=rss",
-      "published": "2026-07-24T14:35:09Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Trump imposes 'sweeping' new tariffs on 60 trade partners as global duties expire",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/07/23/trump-tariffs-trade-deadline.html",
       "published": "2026-07-24T14:11:56Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Trump's new global tariff draws rebukes from trade partners over forced labor justification",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/07/24/trump-global-tariffs-trade-imbalance-forced-labor.html",
+      "published": "2026-07-24T12:09:09Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 92
       }
     ],
-    "headline_count": 143,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
