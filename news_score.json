@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-09T16:48:29Z",
+  "generated_at_utc": "2026-09-09T22:50:15Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Dow futures drop as Iran war, Canada tariffs hit Wall Street - qz.com; U.S. reveals import ban on slew of Canadian goods as trade war escalates.",
+  "score": 2,
+  "label": "Bearish",
+  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Dow futures drop as Iran war, Canada tariffs hit Wall Street - qz.com; U.S. reveals import ban on slew of Canadian goods as trade war escalates.",
   "articles": [
     {
       "title": "Dow futures drop as Iran war, Canada tariffs hit Wall Street - qz.com",
@@ -34,10 +34,10 @@
       "tone": "bearish"
     },
     {
-      "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - Boston Herald",
-      "source": "Boston Herald",
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBIMVBkeWRvcFVlY3dJdlc0SWdDYmJxZnFINGxTNEFMMHkxZDhMa2hSNi1YdUE4cFVXNkRfaHFObU1nQ2lZSGtqZFFnYW9SSzZVUk8wSWo1Uk5ybjBMWU5ENE50Wlp5ek1BX1NlMnNR?oc=5",
-      "published": "2026-09-09T15:55:34Z",
+      "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - WRAL",
+      "source": "WRAL",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPNGdCYTV3UWhBV2htZ1lNZ3EwTTdCbEhvaHE5MFdtdGxpSW05WGh6bVNpZ0E4ZXVFTWp5M1BQdWMyMTc0eWVmekxERXlFWGxOVm4xeDFOcWFpSTlkZlVJdXp1YWJNVVJKTHRrS3JGREZQVWF3TTJPSmM0b0haam40Y0ZkMnhkX0xrVGlnbExjMlpUcTlsSFRLOFNHRjJFQQ?oc=5",
+      "published": "2026-09-09T20:00:44Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 93
       }
     ],
-    "headline_count": 139,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
