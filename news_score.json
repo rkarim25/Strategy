@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-09T23:48:25Z",
+  "generated_at_utc": "2026-09-10T11:59:38Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Dow futures drop as Iran war, Canada tariffs hit Wall Street - qz.com; U.S. reveals import ban on slew of Canadian goods as trade war escalates.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: World\u2019s largest contract chipmaker TSMC sees August revenue surge over 53% to record high; Dow, S&P 500 Futures Rise as Stock Market Shrugs Off the Oil Rally. Bearish offsets: Dow futures drop as Iran war, Canada tariffs hit Wall Street - qz.com; An ECB rate hike is \u2018all but certain\u2019 \u2014 but investors divided on what comes next.",
   "articles": [
     {
       "title": "Dow futures drop as Iran war, Canada tariffs hit Wall Street - qz.com",
@@ -13,32 +13,32 @@
       "tone": "bearish"
     },
     {
-      "title": "U.S. reveals import ban on slew of Canadian goods as trade war escalates",
+      "title": "World\u2019s largest contract chipmaker TSMC sees August revenue surge over 53% to record high",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/09/us-canada-trade-war-import-ban.html",
-      "published": "2026-09-09T16:17:46Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
-      "source": "CNBC",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
-      "published": "2026-09-08T13:41:42Z",
+      "url": "https://www.cnbc.com/2026/09/10/tsmc-august-revenue-chip-ai.html",
+      "published": "2026-09-10T06:45:55Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPOWhjeDNrZFJXajFqV2dqMm50YlZhaEpiMngzNFBkSmpxNnBnTU1ZcXNjRS03U2NBNm1ib2wyZ2VCVTlSa1dTS3pDcG1QcnJfbjBfcUdzVzJjOVZxUVlYZG03eXlXd3pueWZocmxXTzhDV21JdVdIU1I0OVRPMVQyZW9SRkFmSUd0d0pFY0c0bm9xVWlNdjE3eFdPdm5kQ1EtLTFYYm9SMA?oc=5",
-      "published": "2026-09-08T01:15:39Z",
+      "title": "An ECB rate hike is \u2018all but certain\u2019 \u2014 but investors divided on what comes next",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/10/ecb-interest-rate-hike-lagarde-iran.html",
+      "published": "2026-09-10T10:01:22Z",
       "tone": "bearish"
     },
     {
-      "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - WRAL",
-      "source": "WRAL",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPNGdCYTV3UWhBV2htZ1lNZ3EwTTdCbEhvaHE5MFdtdGxpSW05WGh6bVNpZ0E4ZXVFTWp5M1BQdWMyMTc0eWVmekxERXlFWGxOVm4xeDFOcWFpSTlkZlVJdXp1YWJNVVJKTHRrS3JGREZQVWF3TTJPSmM0b0haam40Y0ZkMnhkX0xrVGlnbExjMlpUcTlsSFRLOFNHRjJFQQ?oc=5",
-      "published": "2026-09-09T20:00:44Z",
-      "tone": "bearish"
+      "title": "Dow, S&P 500 Futures Rise as Stock Market Shrugs Off the Oil Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/6d2b8c5b-0116-3184-b3e4-1adf64b8662e/dow%2C-s%26p-500-futures-rise-as.html?.tsrc=rss",
+      "published": "2026-09-10T10:02:54Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - cnbc.com",
+      "source": "cnbc.com",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
+      "published": "2026-09-08T13:41:42Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
