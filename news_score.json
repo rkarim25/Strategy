@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-10T19:10:32Z",
+  "generated_at_utc": "2026-09-10T22:51:06Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - WRAL.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; S&P 500, Dow, Nasdaq End Lower As Surging Oil Raises Odds For A September Rate Hike \u2014 ORCL, ADBE, M, NVDA, UBER In Focus.",
   "articles": [
     {
       "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
@@ -20,6 +20,13 @@
       "tone": "bearish"
     },
     {
+      "title": "S&P 500, Dow, Nasdaq End Lower As Surging Oil Raises Odds For A September Rate Hike \u2014 ORCL, ADBE, M, NVDA, UBER In Focus",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-dow-nasdaq-end-lower-as-surging-oil-raises-odds-for-a-september-rate-hike/cZtapeARJ68?.tsrc=rss",
+      "published": "2026-09-10T22:46:44Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - WRAL",
       "source": "WRAL",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPNGdCYTV3UWhBV2htZ1lNZ3EwTTdCbEhvaHE5MFdtdGxpSW05WGh6bVNpZ0E4ZXVFTWp5M1BQdWMyMTc0eWVmekxERXlFWGxOVm4xeDFOcWFpSTlkZlVJdXp1YWJNVVJKTHRrS3JGREZQVWF3TTJPSmM0b0haam40Y0ZkMnhkX0xrVGlnbExjMlpUcTlsSFRLOFNHRjJFQQ?oc=5",
@@ -27,17 +34,10 @@
       "tone": "bearish"
     },
     {
-      "title": "Stocks fall on Wall Street as oil prices jump above $100 a barrel after US and Iran war escalates - nydailynews.com",
-      "source": "nydailynews.com",
+      "title": "Stocks fall on Wall Street as oil prices jump above $100 a barrel after US and Iran war escalates - New York Daily News",
+      "source": "New York Daily News",
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE50bzFHOGlVT01oaW9FakF3SzAtRmoxTjN5TFJqUjlMTXdPSTRHZE5uYmdZX21BUkdzTDVyT0IwZFV4STlGc1lKNGFKY1JyRXFVSmZ2RUZEQnRSejlHLUlfVVBwZXdzY2dmQUMzbw?oc=5",
       "published": "2026-09-09T13:02:15Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Stock Market Today: S&P 500, Dow, Nasdaq 100 Futures Fall as Oil Tops $99 Despite Trump\u2019s Price Drop Pred - Benzinga",
-      "source": "Benzinga",
-      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxQV0JabjItTkd2SWotTUJvZEVwdUJRY0xyT1BpS05FeDJSNFdHYXdlczk0NGU2RFB5a3Zrb0s3bzdkeGFsUmExQzhmLW1qTi1sejZNYUlvS3E2V2RVNWFZc2thWFgxNURrM1c5dWM3R1ppb1RpQTRaNEp6UkZ6U3NhYTJJSG1nUkwzYm5DRHlGNnhDbTBzWlV1MHczRTFYcjVraV84Y081Ty1ZSWxKMHAxZzQ3VXp6UkhOMThKSndscng3RnNXMzAxUWtKeHZHTXo3cDRseWlUcmpVZ01VQzBZdTcwSkFZZVZraS1RNjFZcmFoNG5GY0JiRmd2dmpOZk9pbXExSA?oc=5",
-      "published": "2026-09-08T12:32:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 92
       }
     ],
-    "headline_count": 145,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
