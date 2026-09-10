@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-09-10T11:59:38Z",
+  "generated_at_utc": "2026-09-10T16:10:53Z",
   "window_days": 7,
   "score": 4,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: World\u2019s largest contract chipmaker TSMC sees August revenue surge over 53% to record high; Dow, S&P 500 Futures Rise as Stock Market Shrugs Off the Oil Rally. Bearish offsets: Dow futures drop as Iran war, Canada tariffs hit Wall Street - qz.com; An ECB rate hike is \u2018all but certain\u2019 \u2014 but investors divided on what comes next.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - Boston Herald.",
   "articles": [
     {
-      "title": "Dow futures drop as Iran war, Canada tariffs hit Wall Street - qz.com",
-      "source": "qz.com",
-      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5pRVJ3Z2ZKM1FnU0ZHWFNUZ05WM3dMOFNrTzhoZHZjN2xyYXprUUp2Q2NXM2dJLTFEcWNRSXZSS1VzUFBJdVFkTzlNZkRycmJMRmhMYWUzYW12LTdsOWVENkc5Y09EUnplSGcyb3RYRWxZOVk?oc=5",
-      "published": "2026-09-08T11:28:27Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "World\u2019s largest contract chipmaker TSMC sees August revenue surge over 53% to record high",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/10/tsmc-august-revenue-chip-ai.html",
-      "published": "2026-09-10T06:45:55Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "An ECB rate hike is \u2018all but certain\u2019 \u2014 but investors divided on what comes next",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/10/ecb-interest-rate-hike-lagarde-iran.html",
-      "published": "2026-09-10T10:01:22Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Dow, S&P 500 Futures Rise as Stock Market Shrugs Off the Oil Rally",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/6d2b8c5b-0116-3184-b3e4-1adf64b8662e/dow%2C-s%26p-500-futures-rise-as.html?.tsrc=rss",
-      "published": "2026-09-10T10:02:54Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - cnbc.com",
-      "source": "cnbc.com",
+      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
+      "source": "CNBC",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
       "published": "2026-09-08T13:41:42Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPOWhjeDNrZFJXajFqV2dqMm50YlZhaEpiMngzNFBkSmpxNnBnTU1ZcXNjRS03U2NBNm1ib2wyZ2VCVTlSa1dTS3pDcG1QcnJfbjBfcUdzVzJjOVZxUVlYZG03eXlXd3pueWZocmxXTzhDV21JdVdIU1I0OVRPMVQyZW9SRkFmSUd0d0pFY0c0bm9xVWlNdjE3eFdPdm5kQ1EtLTFYYm9SMA?oc=5",
+      "published": "2026-09-08T01:15:39Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - Boston Herald",
+      "source": "Boston Herald",
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBIMVBkeWRvcFVlY3dJdlc0SWdDYmJxZnFINGxTNEFMMHkxZDhMa2hSNi1YdUE4cFVXNkRfaHFObU1nQ2lZSGtqZFFnYW9SSzZVUk8wSWo1Uk5ybjBMWU5ENE50Wlp5ek1BX1NlMnNR?oc=5",
+      "published": "2026-09-09T19:55:49Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stocks fall on Wall Street as oil prices jump above $100 a barrel after US and Iran war escalates - New York Daily News",
+      "source": "New York Daily News",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE50bzFHOGlVT01oaW9FakF3SzAtRmoxTjN5TFJqUjlMTXdPSTRHZE5uYmdZX21BUkdzTDVyT0IwZFV4STlGc1lKNGFKY1JyRXFVSmZ2RUZEQnRSejlHLUlfVVBwZXdzY2dmQUMzbw?oc=5",
+      "published": "2026-09-09T13:02:15Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock Market Today: S&P 500, Dow, Nasdaq 100 Futures Fall as Oil Tops $99 Despite Trump\u2019s Price Drop Pred - Benzinga",
+      "source": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxQV0JabjItTkd2SWotTUJvZEVwdUJRY0xyT1BpS05FeDJSNFdHYXdlczk0NGU2RFB5a3Zrb0s3bzdkeGFsUmExQzhmLW1qTi1sejZNYUlvS3E2V2RVNWFZc2thWFgxNURrM1c5dWM3R1ppb1RpQTRaNEp6UkZ6U3NhYTJJSG1nUkwzYm5DRHlGNnhDbTBzWlV1MHczRTFYcjVraV84Y081Ty1ZSWxKMHAxZzQ3VXp6UkhOMThKSndscng3RnNXMzAxUWtKeHZHTXo3cDRseWlUcmpVZ01VQzBZdTcwSkFZZVZraS1RNjFZcmFoNG5GY0JiRmd2dmpOZk9pbXExSA?oc=5",
+      "published": "2026-09-08T12:32:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 96
       }
     ],
-    "headline_count": 142,
+    "headline_count": 146,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
