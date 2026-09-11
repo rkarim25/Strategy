@@ -1,13 +1,20 @@
 {
-  "generated_at_utc": "2026-09-11T11:58:41Z",
+  "generated_at_utc": "2026-09-11T16:06:41Z",
   "window_days": 7,
-  "score": 4,
+  "score": 5,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - cnbc.com; US Market: Wall Street brokerages see S&P 500 extending rally in 2026 on AI, earnings - The Economic Times. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Analysis: Hot inflation data sets up a Fed rate hike. What happens if Warsh wavers; Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com.",
   "articles": [
     {
-      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - cnbc.com",
-      "source": "cnbc.com",
+      "title": "Analysis: Hot inflation data sets up a Fed rate hike. What happens if Warsh wavers",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/11/kevin-warsh-fed-cpi-inflation-rate-hike-analysis.html",
+      "published": "2026-09-11T15:53:41Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
+      "source": "CNBC",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
       "published": "2026-09-08T13:41:42Z",
       "tone": "bullish"
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE50bzFHOGlVT01oaW9FakF3SzAtRmoxTjN5TFJqUjlMTXdPSTRHZE5uYmdZX21BUkdzTDVyT0IwZFV4STlGc1lKNGFKY1JyRXFVSmZ2RUZEQnRSejlHLUlfVVBwZXdzY2dmQUMzbw?oc=5",
       "published": "2026-09-09T13:02:15Z",
       "tone": "bearish"
-    },
-    {
-      "title": "US Market: Wall Street brokerages see S&P 500 extending rally in 2026 on AI, earnings - The Economic Times",
-      "source": "The Economic Times",
-      "url": "https://news.google.com/rss/articles/CBMi6wJBVV95cUxPUUJVMURJN0ZZekl3a3Nkdk1EcHpHZ0w0TkJOdHVyUU5ocWxvSXpqT19JakRIeHlXM2tMdXU1czl4U09MdFZzbTZzRkNxV2ZwNzF5OUVTeGZTV2QxT1haRjZxaFRYcXhlOE9jelQyS2ZlRENSVXFYNElrREFKNEY5TjBKTk5hd0lKRkZvTjR5aUtwem9saWFpM2pabUU0N1RaTVd5SFgzaEVZVUwtMFRUOUxJME9aTGFNcGR0enJYUHJmTDA1QkliS3JqcGNoOFBIb0lCRUtXeGV3RDYxY1VESUpHRXpPN1BaN0ZPQ2xBejNSdmpvdUg4VTVDOUJQbm1US21hWDAwSWQ3OTdWRkNkTmhPOEpEOHdYeVlLaHFaY1V1bGE3NFU4N3ZPcXdEVTNqRlhEcExiejFJQTVlX2dCTjh0Y25wcGpuRzMyM05oQ21WSlRtaGFHMlBQOHdGZjVqMUdCSVNlTnF6TTTSAYcCQVVfeXFMTmtVdkVfUVVLZmVkSjE3TU5TejRYRUdfdUw5VzNzNTdZNFYtZmtWZ1R0QnN1V2RLd1dXUkdsTHdZZ0NNRTc0MGgtQWpsd3VEZC1CVHBwLWh0UWxTcjJqZHRJY0YybTZ2VV82RFdscUcyMmxja05DOFk3ZVYzbk1RdURzRVY3UzhFa1RIV2UwR25POWl2dE9tMmZrbEhVMzZhaGJqT3RyeXN4Zndmd2FDc05TaGVjb3M2aVlnVmdpSTZTVVV1OW9uNGdCZExPdnRIUDFzMjZxeEhGMFVSX1RaYVo1WllLQ0QtdFpOM3hUUWxYQzh1QU5DMWZaTndTcjZqelVNamxJMzQ?oc=5",
-      "published": "2026-09-11T04:36:28Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 88
       }
     ],
-    "headline_count": 136,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
