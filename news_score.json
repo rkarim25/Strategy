@@ -1,16 +1,23 @@
 {
-  "generated_at_utc": "2026-09-11T16:06:41Z",
+  "generated_at_utc": "2026-09-11T19:12:45Z",
   "window_days": 7,
   "score": 5,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Analysis: Hot inflation data sets up a Fed rate hike. What happens if Warsh wavers; Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stocks Are Trading Near Highs. So Are Bond Yields.; S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Analysis: Hot inflation data sets up a Fed rate hike. What happens if Warsh wavers; Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com.",
   "articles": [
     {
       "title": "Analysis: Hot inflation data sets up a Fed rate hike. What happens if Warsh wavers",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/09/11/kevin-warsh-fed-cpi-inflation-rate-hike-analysis.html",
-      "published": "2026-09-11T15:53:41Z",
+      "published": "2026-09-11T16:21:53Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Stocks Are Trading Near Highs. So Are Bond Yields.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/f32beccc-f903-3315-ae8d-f682b7b1b901/stocks-are-trading-near.html?.tsrc=rss",
+      "published": "2026-09-11T18:07:25Z",
+      "tone": "bullish"
     },
     {
       "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
@@ -30,14 +37,7 @@
       "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News",
       "source": "AP News",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQU1FDWlZxem5yejRWekJjdmdOVW4tU2RQYWpQX2FDWmlHZ3lBOVlYNjdEb01mcUFvM2FhaV9fMG5kUno1VzRjY0F6WkhKbmgxTzUwZXdabXprUjdGbTBuVE5jR2s4QVJqdkt6cS1QTVcwMW82d29FYjBvMFoxdjVrdkxwS0wyY0toNWNYaUpqUkJ6ZkM0bFZHdDk4RU1qWm9Ga0VUQ1J3WQ?oc=5",
-      "published": "2026-09-09T20:59:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Stocks fall on Wall Street as oil prices jump above $100 a barrel after US and Iran war escalates - New York Daily News",
-      "source": "New York Daily News",
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE50bzFHOGlVT01oaW9FakF3SzAtRmoxTjN5TFJqUjlMTXdPSTRHZE5uYmdZX21BUkdzTDVyT0IwZFV4STlGc1lKNGFKY1JyRXFVSmZ2RUZEQnRSejlHLUlfVVBwZXdzY2dmQUMzbw?oc=5",
-      "published": "2026-09-09T13:02:15Z",
+      "published": "2026-09-09T04:33:35Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 89
       }
     ],
-    "headline_count": 137,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
