@@ -1,6 +1,7 @@
 ﻿/**
  * ust-page.js - Interactive US Treasury Curve & Macro Regime Visualizer
  * Strategy Dashboard (rkarim25.github.io/Strategy)
+ * Includes Technical Analysis, Steepener/Flattener Recommendations, and Pivot Triggers.
  */
 
 (function () {
@@ -88,9 +89,12 @@
     renderSpreads();
     renderYieldCurveChart();
     renderHistoryChart();
+    renderExecutiveRecommendation();
+    renderTechnicalsAndTriggers();
     renderMacroRadar();
     renderRegimeModelTable();
     setupEventListeners();
+    setupSteepenerCalculator();
     runScenarioSimulation("fiscal_supply");
   }
 
@@ -141,6 +145,105 @@
     });
   }
 
+  function renderExecutiveRecommendation() {
+    const macro = curveData.macro_assessment;
+    if (!macro) return;
+
+    const execP = document.getElementById("executiveParagraph");
+    if (execP && macro.executive_paragraph) {
+      execP.textContent = macro.executive_paragraph;
+    }
+
+    const tradeRec = document.getElementById("curveTradeBadge");
+    if (tradeRec && macro.curve_trade_recommendation) {
+      tradeRec.textContent = macro.curve_trade_recommendation.primary_trade;
+    }
+
+    const sizingEl = document.getElementById("curveTradeSizing");
+    if (sizingEl && macro.curve_trade_recommendation) {
+      sizingEl.textContent = `Execution Rule: ${macro.curve_trade_recommendation.sizing_rule}`;
+    }
+  }
+
+  function renderTechnicalsAndTriggers() {
+    const macro = curveData.macro_assessment;
+    if (!macro || !macro.technicals) return;
+    const tech = macro.technicals;
+
+    // Technical gauges
+    const t10 = tech["10y"] || {};
+    const t2s10s = tech["2s10s"] || {};
+
+    const el10ySma = document.getElementById("tech10ySma");
+    if (el10ySma) {
+      el10ySma.innerHTML = `<strong>10Y: ${t10.current}%</strong> · 50d SMA: ${t10.sma50}% · 200d SMA: ${t10.sma200}% · RSI(14): <strong>${t10.rsi14}</strong> (${t10.rsi_status})`;
+    }
+
+    const el2s10sSma = document.getElementById("tech2s10sSma");
+    if (el2s10sSma) {
+      el2s10sSma.innerHTML = `<strong>2s10s: +${t2s10s.current} bps</strong> · 50d SMA: +${t2s10s.sma50} bps · 200d SMA: +${t2s10s.sma200} bps · RSI(14): <strong>${t2s10s.rsi14}</strong> (${t2s10s.trend})`;
+    }
+
+    // Triggers List
+    const triggersList = document.getElementById("triggersContainer");
+    if (triggersList && tech.triggers) {
+      triggersList.replaceChildren();
+      tech.triggers.forEach((trg) => {
+        const item = document.createElement("div");
+        item.className = "trigger-card " + (trg.threshold_met ? "active-alert" : "");
+        item.innerHTML = `
+          <div class="trigger-header">
+            <h4 class="trigger-title">${trg.title}</h4>
+            <span class="trigger-status-badge ${trg.threshold_met ? 'badge-alert' : 'badge-inactive'}">${trg.status}</span>
+          </div>
+          <p class="trigger-condition"><strong>Condition:</strong> ${trg.condition}</p>
+          <div class="trigger-action-pill"><strong>Action:</strong> ${trg.action}</div>
+          <div class="trigger-metric-dist">${trg.active_metric}</div>
+        `;
+        triggersList.appendChild(item);
+      });
+    }
+  }
+
+  function setupSteepenerCalculator() {
+    const notionalInput = document.getElementById("steepenerNotional");
+    const basisShiftInput = document.getElementById("steepenerBpsShift");
+    const out2y = document.getElementById("calcSize2y");
+    const out10y = document.getElementById("calcSize10y");
+    const outPnl = document.getElementById("calcPnl");
+
+    function recalc() {
+      if (!notionalInput || !basisShiftInput || !out2y || !out10y || !outPnl) return;
+      const notional = parseFloat(notionalInput.value) || 1000000;
+      const bps = parseFloat(basisShiftInput.value) || 10;
+
+      // 10Y DV01 approx $82.0 per $100k = $0.00082 per $1
+      // 2Y DV01 approx $19.2 per $100k = $0.000192 per $1
+      // For DV01 neutrality: Size_2Y * DV01_2Y = Size_10Y * DV01_10Y
+      // Ratio: 82.0 / 19.2 = ~4.27
+      const ratio = 82.0 / 19.2;
+      const size10y = notional;
+      const size2y = notional * ratio;
+
+      // P&L per basis point of steepening (2s10s widens by 1 bp):
+      // DV01 = notional * 0.00082
+      const dv01Total = (size10y / 100000) * 82.0;
+      const pnl = dv01Total * bps;
+
+      out10y.textContent = `$${(size10y / 1e6).toFixed(2)}M Short`;
+      out2y.textContent = `$${(size2y / 1e6).toFixed(2)}M Long (Ratio ${ratio.toFixed(2)}x)`;
+      const sign = pnl >= 0 ? "+" : "";
+      outPnl.textContent = `${sign}$${Math.round(pnl).toLocaleString()}`;
+      outPnl.className = "calc-pnl-val " + (pnl >= 0 ? "good" : "bad");
+    }
+
+    if (notionalInput && basisShiftInput) {
+      notionalInput.addEventListener("input", recalc);
+      basisShiftInput.addEventListener("input", recalc);
+      recalc();
+    }
+  }
+
   function renderMacroRadar() {
     const macro = curveData.macro_assessment;
     if (!macro) return;
@@ -156,7 +259,7 @@
       regimeBadge.className = "regime-badge bear-steep";
     }
     if (regimeSummary) regimeSummary.textContent = macro.regime_summary;
-    if (curveAction) curveAction.textContent = macro.curve_action;
+    if (curveAction) curveAction.textContent = macro.curve_trade_recommendation ? macro.curve_trade_recommendation.curve_action : macro.curve_action;
 
     // Render Indicator Table
     const tbody = document.getElementById("macroIndicatorsBody");
@@ -167,7 +270,7 @@
         tr.innerHTML = `
           <td><strong>${ind.name}</strong></td>
           <td class="stat-highlight">${ind.value}</td>
-          <td><span class="trend-pill ${ind.trend.toLowerCase()}">${ind.trend}</span></td>
+          <td><span class="trend-pill ${ind.trend.toLowerCase().replace(/\s+/g, '-')}">${ind.trend}</span></td>
           <td class="small-muted">${ind.target}</td>
           <td>${ind.impact}</td>
         `;
@@ -270,7 +373,6 @@
 
     ctx.clearRect(0, 0, W, H);
 
-    // Compute min and max yield across active series
     let minY = 3.5;
     let maxY = 5.8;
     const snaps = curveData.snapshots || {};
@@ -289,7 +391,6 @@
     minY = Math.floor(minY * 2) / 2 - 0.2;
     maxY = Math.ceil(maxY * 2) / 2 + 0.2;
 
-    // Tenor X positions (proportional or evenly spaced with log-like progression)
     const tenorXMap = {
       "2y": pad.left + chartW * 0.10,
       "5y": pad.left + chartW * 0.38,
@@ -301,7 +402,6 @@
       return pad.top + chartH * (1 - (val - minY) / (maxY - minY));
     }
 
-    // Draw horizontal grid lines & labels
     ctx.strokeStyle = "rgba(0, 0, 0, 0.07)";
     ctx.lineWidth = 1;
     ctx.fillStyle = "#86868b";
@@ -319,7 +419,6 @@
       ctx.fillText(yVal.toFixed(2) + "%", pad.left - 10, py);
     }
 
-    // Draw vertical tenor lines & labels
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
     TENOR_KEYS.forEach((k) => {
@@ -334,7 +433,6 @@
       ctx.fillText(TENOR_LABELS[k], px, H - pad.bottom + 10);
     });
 
-    // Draw active curves
     const drawOrder = ["1y_ago", "6m_ago", "1m_ago", "peak_inversion", "current"];
     drawOrder.forEach((k) => {
       if (!activeCurveSeries[k] || !snaps[k]) return;
@@ -360,7 +458,6 @@
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Draw points
       TENOR_KEYS.forEach((t) => {
         const px = tenorXMap[t];
         const py = yToPx(snap[t]);
@@ -404,7 +501,6 @@
 
     ctx.clearRect(0, 0, W, H);
 
-    // Filter by active range
     const allRows = curveData.history;
     const countMap = { "1m": 22, "3m": 66, "6m": 126, "1y": 252 };
     const maxPts = countMap[activeHistoryRange] || allRows.length;
@@ -426,7 +522,6 @@
       minY = Math.floor(minY * 2) / 2 - 0.2;
       maxY = Math.ceil(maxY * 2) / 2 + 0.2;
     } else {
-      // Spreads mode: 2s10s, 2s30s
       rows.forEach((r) => {
         minY = Math.min(minY, r.spread_2s10s, r.spread_2s30s);
         maxY = Math.max(maxY, r.spread_2s10s, r.spread_2s30s);
@@ -442,7 +537,6 @@
       return pad.left + (chartW * idx) / (rows.length - 1);
     }
 
-    // Grid lines
     ctx.strokeStyle = "rgba(0, 0, 0, 0.07)";
     ctx.lineWidth = 1;
     ctx.fillStyle = "#86868b";
@@ -462,7 +556,6 @@
       ctx.fillText(label, pad.left - 8, py);
     }
 
-    // Draw Zero line in spreads mode if within range
     if (activeHistoryMode === "spreads" && minY <= 0 && maxY >= 0) {
       const zPy = yToPx(0);
       ctx.strokeStyle = "rgba(215, 0, 21, 0.35)";
@@ -477,7 +570,6 @@
       ctx.fillText("0 (Inversion Threshold)", W - pad.right - 10, zPy - 8);
     }
 
-    // Draw series
     if (activeHistoryMode === "yields") {
       const seriesColors = {
         "2y": "#ff9500",
@@ -498,7 +590,6 @@
         ctx.stroke();
       });
     } else {
-      // 2s10s spread
       ctx.beginPath();
       rows.forEach((r, i) => {
         const px = xToPx(i);
@@ -510,7 +601,6 @@
       ctx.lineWidth = 2.5;
       ctx.stroke();
 
-      // 2s30s spread
       ctx.beginPath();
       rows.forEach((r, i) => {
         const px = xToPx(i);
@@ -523,7 +613,6 @@
       ctx.stroke();
     }
 
-    // X date labels
     ctx.fillStyle = "#86868b";
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
@@ -543,7 +632,6 @@
     const sc = PRESET_SCENARIOS[scenarioKey];
     if (!sc || !curveData || !curveData.yields) return;
 
-    // Update active button
     document.querySelectorAll(".scenario-btn").forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.scenario === scenarioKey);
     });
@@ -553,19 +641,13 @@
       descEl.innerHTML = `<strong>${sc.name}:</strong> ${sc.desc} <span class="scenario-regime-tag">${sc.regime}</span>`;
     }
 
-    // Compute returns
     const results = [];
     TENOR_KEYS.forEach((k) => {
       const meta = curveData.yields[k];
-      const shiftPct = sc.shifts[k]; // e.g. -0.50 (in percentage points)
-      const shiftDec = shiftPct / 100.0;
-      const initialYield = meta.yield / 100.0;
+      const shiftPct = sc.shifts[k];
       const newYield = meta.yield + shiftPct;
 
-      // Price return: -Duration * deltaY + 0.5 * Convexity * (deltaY * 100)^2 / 100
-      // Approximate percentage price change:
       const priceChgPct = -(meta.duration * shiftPct) + 0.5 * meta.convexity * Math.pow(shiftPct, 2);
-      // Total 1-year holding period return = price return + coupon carry
       const total1YReturn = priceChgPct + meta.yield;
 
       results.push({
@@ -580,10 +662,8 @@
       });
     });
 
-    // Sort by price change descending
     results.sort((a, b) => b.priceChgPct - a.priceChgPct);
 
-    // Render Simulation Results Table & Bar
     const tbody = document.getElementById("scenarioResultsBody");
     if (tbody) {
       tbody.replaceChildren();
@@ -614,7 +694,6 @@
   }
 
   function setupEventListeners() {
-    // Curve toggle checkboxes
     document.querySelectorAll(".curve-toggle-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.curveKey;
@@ -624,7 +703,6 @@
       });
     });
 
-    // History mode tabs
     document.querySelectorAll(".history-mode-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".history-mode-btn").forEach((b) => b.classList.remove("active"));
@@ -634,7 +712,6 @@
       });
     });
 
-    // History range tabs
     document.querySelectorAll(".history-range-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".history-range-btn").forEach((b) => b.classList.remove("active"));
@@ -644,21 +721,18 @@
       });
     });
 
-    // Scenario preset buttons
     document.querySelectorAll(".scenario-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         runScenarioSimulation(btn.dataset.scenario);
       });
     });
 
-    // Window resize
     window.addEventListener("resize", () => {
       renderYieldCurveChart();
       renderHistoryChart();
     });
   }
 
-  // Kick off on load
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", loadData);
   } else {

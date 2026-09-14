@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T20:34:55.963822+00:00",
+  "generated_at": "2026-09-14T20:44:34.724396+00:00",
   "latest_date": "2026-09-14",
   "yields": {
     "2y": {
@@ -36,7 +36,7 @@
       "duration": 8.2,
       "convexity": 0.82,
       "dv01": 82.0,
-      "role": "Global Cost of Capital / Equity Equity & Mortgage Benchmark"
+      "role": "Global Cost of Capital / Equity & Mortgage Benchmark"
     },
     "30y": {
       "symbol": "^TYX",
@@ -132,7 +132,12 @@
     "regime_id": "bear_steepening",
     "regime_name": "Bear Steepening / Fiscal Dominance & Sticky Inflation",
     "regime_summary": "Long-end yields (10Y testing ~5.0%, 30Y at ~5.33%) are under pressure from heavy Treasury coupon supply ($2T deficit) and persistent inflation (CPI at 3.4%). The 10Y term premium has climbed to ~1.02%, while 2Y (~4.38%) is relatively well-anchored by the restrictive Fed rate range.",
-    "curve_action": "Overweight Front-to-Belly (5Y & 2Y); Underweight Long-End Duration (30Y)",
+    "executive_paragraph": "Maintain an Overweight on the 5Y Belly (Top Pick) and 2Y Carry, paired with a DV01-neutral 2s10s / 2s30s Steepener trade, while Underweighting 30Y long-end duration. This strategy locks in ~4.78% yield with modest duration volatility as heavy Treasury coupon issuance ($2T deficit) and sticky CPI (3.4%) push 10Y term premiums higher (~1.02%). What triggers a pivot to Long Duration (Bull Flattening)? A decisive daily close of the 10Y yield below 4.70% (50d/200d SMA support zone), accompanied by 2s10s breaking below +25 bps and unemployment rising above 4.6%, would invalidate the supply-steepening thesis and mandate an immediate rotation into 10Y and 30Y duration.",
+    "curve_trade_recommendation": {
+      "primary_trade": "2s10s / 2s30s Curve Steepener (Long Front / Short Long Duration)",
+      "sizing_rule": "DV01-Neutral (e.g. Long $4.3M 2Y vs Short $1.0M 10Y)",
+      "curve_action": "Overweight Front-to-Belly (5Y & 2Y); Underweight Long-End Duration (30Y)"
+    },
     "model_signals": {
       "2y": {
         "stance": "Overweight / Defensive Carry",
@@ -158,6 +163,57 @@
         "rating": "Avoid Duration",
         "rationale": "Extreme duration risk (DV01 $165/bp). Heavily exposed to expanding term premiums, $40T national debt debate, and continuous Treasury auction supply."
       }
+    },
+    "technicals": {
+      "10y": {
+        "current": 4.961,
+        "sma50": 4.681,
+        "sma200": 4.38,
+        "rsi14": 76.6,
+        "trend": "Bullish Yield / Bearish Price",
+        "rsi_status": "Overbought Yield (>70)",
+        "resistance": 5.05,
+        "support_50d": 4.681,
+        "support_200d": 4.38
+      },
+      "2s10s": {
+        "current": 58.1,
+        "sma50": 55.566,
+        "sma200": 62.814,
+        "rsi14": 53.1,
+        "trend": "Steepening Trend Intact",
+        "support_50d": 55.566,
+        "resistance_high": 75.0
+      },
+      "triggers": [
+        {
+          "id": "flip_to_long_duration",
+          "title": "Trigger to Pivot to Long Duration (Bull Flattening)",
+          "action": "Close Steepeners. Overweight 10Y and 30Y Duration.",
+          "condition": "10Y Yield breaks below 4.70% (50d/200d SMA support) AND 2s10s breaks below +25 bps AND Unemployment > 4.6%.",
+          "status": "Inactive (Bear Steepener Dominant)",
+          "active_metric": "10Y is 0.26% above trigger; 2s10s is 33.1 bps above trigger.",
+          "threshold_met": false
+        },
+        {
+          "id": "steepener_continuation",
+          "title": "Trigger for Accelerated Steepener (Bond Vigilante Breakout)",
+          "action": "Add to 2s10s / 2s30s Steepeners. Short 30Y Duration.",
+          "condition": "10Y Yield daily close above 5.05% resistance with 30Y > 5.40%.",
+          "status": "Testing Resistance (Imminent Watch)",
+          "active_metric": "10Y is 0.09% away from 5.05% breakout ceiling.",
+          "threshold_met": false
+        },
+        {
+          "id": "bear_flattener_cash",
+          "title": "Trigger for Bear Flattener / Flight to Ultra-Short Cash",
+          "action": "Move sleeve to T-Bills / Cash. Avoid all duration.",
+          "condition": "2Y Yield breaks above 4.85% (hawkish Fed hike re-pricing) with CPI > 3.7%.",
+          "status": "Inactive (2Y well-anchored by terminal rate bounds)",
+          "active_metric": "2Y is currently 4.38% (47 bps below trigger).",
+          "threshold_met": false
+        }
+      ]
     },
     "indicators": [
       {
@@ -194,6 +250,13 @@
         "trend": "Elevated",
         "target": "Historical ~0.20%",
         "impact": "Bond market repricing sovereign risk and duration compensation."
+      },
+      {
+        "name": "10-Year RSI(14)",
+        "value": "76.6",
+        "trend": "Overbought Yield",
+        "target": "30 - 70 Range",
+        "impact": "Testing 5.00%-5.05% key resistance ceiling; vulnerable to technical stall."
       }
     ],
     "headlines": [

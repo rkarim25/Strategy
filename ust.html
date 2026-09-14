@@ -619,6 +619,22 @@
       and an institutional macro regime model detailing which points of the curve outperform across cycles.
     </p>
 
+        <!-- Executive Recommendation Banner -->
+    <div class="executive-card" style="border-radius: 24px; padding: 24px 28px; background: linear-gradient(135deg, rgba(0, 113, 227, .09) 0%, rgba(36, 138, 61, .09) 100%); border: 1px solid rgba(0, 113, 227, .24); margin-bottom: 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+        <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin: 0;">Institutional Curve Recommendation</h3>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <span style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--accent); color: #fff;" id="curveTradeBadge">2s10s / 2s30s Curve Steepener (Long Front / Short Long Duration)</span>
+        </div>
+      </div>
+      <p style="font-size: 15px; line-height: 1.6; color: var(--text); margin: 0 0 12px; font-weight: 480;" id="executiveParagraph">
+        Maintain an Overweight on the 5Y Belly (Top Pick) and 2Y Carry, paired with a DV01-neutral 2s10s / 2s30s Steepener trade, while Underweighting 30Y long-end duration. This strategy locks in ~4.78% yield with modest duration volatility as heavy Treasury coupon issuance ($2T deficit) and sticky CPI (3.4%) push 10Y term premiums higher (~1.02%). What triggers a pivot to Long Duration (Bull Flattening)? A decisive daily close of the 10Y yield below 4.70% (50d/200d SMA support zone), accompanied by 2s10s breaking below +25 bps and unemployment rising above 4.6%, would invalidate the supply-steepening thesis and mandate an immediate rotation into 10Y and 30Y duration.
+      </p>
+      <div style="font-size: 12.5px; color: var(--muted); font-weight: 600; border-top: 1px solid rgba(0, 0, 0, .08); padding-top: 8px;" id="curveTradeSizing">
+        Execution Rule: DV01-Neutral (e.g. Long $4.27M 2Y vs Short $1.00M 10Y)
+      </div>
+    </div>
+
     <!-- Generic Yield Top Cards -->
     <div class="grid">
       <div class="card" style="background: rgba(255,255,255,.9);">
@@ -687,6 +703,59 @@
         <div class="spread-val" id="spread_10s30s_val">+37.2 bps</div>
         <div class="spread-status" id="spread_10s30s_status">Positive Slope</div>
         <div class="small-muted" id="spread_10s30s_chg" style="font-size: 11px; margin-top: 4px;">1D: -0.7 bps</div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Section: Technical Analysis & Invalidation Triggers -->
+  <section class="card wide" style="margin-top: 20px;">
+    <h2>Technical Indicators & Recommendation Invalidation Triggers</h2>
+    <p>Quantitative trend metrics tracking curve momentum and specific mechanical triggers required to flip the trade recommendation.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin: 14px 0 20px;">
+      <div class="card" style="background: rgba(255, 255, 255, .7); padding: 14px 18px; border-radius: 16px; font-size: 13.5px;" id="tech10ySma">
+        <strong>10Y: 4.96%</strong> · 50d SMA: 4.68% · 200d SMA: 4.38% · RSI(14): <strong>76.6</strong> (Overbought Yield)
+      </div>
+      <div class="card" style="background: rgba(255, 255, 255, .7); padding: 14px 18px; border-radius: 16px; font-size: 13.5px;" id="tech2s10sSma">
+        <strong>2s10s: +58.1 bps</strong> · 50d SMA: +55.6 bps · 200d SMA: +62.8 bps · RSI(14): <strong>53.1</strong> (Steepening Trend Intact)
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px;" id="triggersContainer">
+      <!-- Injected by ust-page.js -->
+    </div>
+
+    <!-- DV01-Neutral Steepener Calculator -->
+    <div style="background: rgba(255, 255, 255, .75); border: 1px solid var(--line); border-radius: 20px; padding: 20px; margin-top: 18px;">
+      <h3 style="margin: 0 0 6px;">DV01-Neutral Steepener Trade Sizing & P&L Calculator</h3>
+      <p style="font-size: 13px; margin: 0 0 10px;">Simulate a duration-neutral 2s10s curve steepener (Long 2Y vs Short 10Y) to calculate exact sizing ratio and dollar P&L per basis point.</p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-top: 12px;">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <label style="font-size: 12px; font-weight: 600; color: var(--muted);" for="steepenerNotional">10-Year Base Notional ($)</label>
+          <input type="number" id="steepenerNotional" value="1000000" step="250000" style="padding: 8px 14px; border-radius: 12px; border: 1px solid var(--line); font-size: 14px; background: #fff;" />
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <label style="font-size: 12px; font-weight: 600; color: var(--muted);" for="steepenerBpsShift">Expected 2s10s Steepening (bps)</label>
+          <input type="number" id="steepenerBpsShift" value="10" step="1" style="padding: 8px 14px; border-radius: 12px; border: 1px solid var(--line); font-size: 14px; background: #fff;" />
+        </div>
+      </div>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);">
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700;">10-Year Leg</span>
+          <span style="font-size: 18px; font-weight: 800; margin-top: 2px;" id="calcSize10y">$1.00M Short</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700;">2-Year Leg (DV01 Hedge)</span>
+          <span style="font-size: 18px; font-weight: 800; margin-top: 2px;" id="calcSize2y">$4.27M Long (Ratio 4.27x)</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700;">Combined DV01</span>
+          <span style="font-size: 18px; font-weight: 800; margin-top: 2px;">$820 / bp</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700;">Simulated P&L</span>
+          <span style="font-size: 24px; font-weight: 800;" class="calc-pnl-val good" id="calcPnl">+$8,200</span>
+        </div>
       </div>
     </div>
   </section>
@@ -890,7 +959,7 @@
 <!-- Fallback JSON Data for offline / local preview -->
 <script type="application/json" id="ustFallbackData">
 {
-  "generated_at": "2026-09-14T18:42:13.542467+00:00",
+  "generated_at": "2026-09-14T20:42:56.749393+00:00",
   "latest_date": "2026-09-14",
   "yields": {
     "2y": {
@@ -909,9 +978,9 @@
       "symbol": "^FVX",
       "name": "US 5-Year Treasury Note",
       "tenor_years": 5,
-      "yield": 4.784,
+      "yield": 4.79,
       "prev_yield": 4.791,
-      "change_bps": -0.7,
+      "change_bps": -0.1,
       "duration": 4.65,
       "convexity": 0.25,
       "dv01": 46.5,
@@ -921,21 +990,21 @@
       "symbol": "^TNX",
       "name": "US 10-Year Treasury Note",
       "tenor_years": 10,
-      "yield": 4.959,
+      "yield": 4.961,
       "prev_yield": 4.975,
-      "change_bps": -1.6,
+      "change_bps": -1.4,
       "duration": 8.2,
       "convexity": 0.82,
       "dv01": 82.0,
-      "role": "Global Cost of Capital / Equity Equity & Mortgage Benchmark"
+      "role": "Global Cost of Capital / Equity & Mortgage Benchmark"
     },
     "30y": {
       "symbol": "^TYX",
       "name": "US 30-Year Treasury Bond",
       "tenor_years": 30,
-      "yield": 5.331,
+      "yield": 5.329,
       "prev_yield": 5.354,
-      "change_bps": -2.3,
+      "change_bps": -2.5,
       "duration": 16.5,
       "convexity": 3.65,
       "dv01": 165.0,
@@ -945,33 +1014,33 @@
   "spreads": {
     "2s10s": {
       "name": "2Y / 10Y Curve Spread",
-      "bps": 57.9,
+      "bps": 58.1,
       "prev_bps": 59.5,
-      "change_bps": -1.6,
+      "change_bps": -1.4,
       "status": "Normal / Steepening",
       "desc": "Primary macro recession & monetary cycle bellwether"
     },
     "5s30s": {
       "name": "5Y / 30Y Belly-to-Long",
-      "bps": 54.7,
+      "bps": 53.9,
       "prev_bps": 56.3,
-      "change_bps": -1.6,
+      "change_bps": -2.4,
       "status": "Upward Sloping",
       "desc": "Captures term premium and supply indigestion between belly and ultra-long"
     },
     "2s30s": {
       "name": "2Y / 30Y Full Curve Slope",
-      "bps": 95.1,
+      "bps": 94.9,
       "prev_bps": 97.4,
-      "change_bps": -2.3,
+      "change_bps": -2.5,
       "status": "Steep",
       "desc": "Overall curve steepness; highlights duration compensation vs cash"
     },
     "10s30s": {
       "name": "10Y / 30Y Ultra-Long Spread",
-      "bps": 37.2,
+      "bps": 36.8,
       "prev_bps": 37.9,
-      "change_bps": -0.7,
+      "change_bps": -1.1,
       "status": "Positive Slope",
       "desc": "Measures pure long-end debt issuance discount and liability hedging demand"
     }
@@ -980,9 +1049,9 @@
     "current": {
       "date": "2026-09-14",
       "2y": 4.38,
-      "5y": 4.784,
-      "10y": 4.959,
-      "30y": 5.331,
+      "5y": 4.79,
+      "10y": 4.961,
+      "30y": 5.329,
       "label": "Current (2026-09-14)"
     },
     "1m_ago": {
@@ -1023,7 +1092,12 @@
     "regime_id": "bear_steepening",
     "regime_name": "Bear Steepening / Fiscal Dominance & Sticky Inflation",
     "regime_summary": "Long-end yields (10Y testing ~5.0%, 30Y at ~5.33%) are under pressure from heavy Treasury coupon supply ($2T deficit) and persistent inflation (CPI at 3.4%). The 10Y term premium has climbed to ~1.02%, while 2Y (~4.38%) is relatively well-anchored by the restrictive Fed rate range.",
-    "curve_action": "Overweight Front-to-Belly (5Y & 2Y); Underweight Long-End Duration (30Y)",
+    "executive_paragraph": "Maintain an Overweight on the 5Y Belly (Top Pick) and 2Y Carry, paired with a DV01-neutral 2s10s / 2s30s Steepener trade, while Underweighting 30Y long-end duration. This strategy locks in ~4.78% yield with modest duration volatility as heavy Treasury coupon issuance ($2T deficit) and sticky CPI (3.4%) push 10Y term premiums higher (~1.02%). What triggers a pivot to Long Duration (Bull Flattening)? A decisive daily close of the 10Y yield below 4.70% (50d/200d SMA support zone), accompanied by 2s10s breaking below +25 bps and unemployment rising above 4.6%, would invalidate the supply-steepening thesis and mandate an immediate rotation into 10Y and 30Y duration.",
+    "curve_trade_recommendation": {
+      "primary_trade": "2s10s / 2s30s Curve Steepener (Long Front / Short Long Duration)",
+      "sizing_rule": "DV01-Neutral (e.g. Long $4.3M 2Y vs Short $1.0M 10Y)",
+      "curve_action": "Overweight Front-to-Belly (5Y & 2Y); Underweight Long-End Duration (30Y)"
+    },
     "model_signals": {
       "2y": {
         "stance": "Overweight / Defensive Carry",
@@ -1049,6 +1123,57 @@
         "rating": "Avoid Duration",
         "rationale": "Extreme duration risk (DV01 $165/bp). Heavily exposed to expanding term premiums, $40T national debt debate, and continuous Treasury auction supply."
       }
+    },
+    "technicals": {
+      "10y": {
+        "current": 4.961,
+        "sma50": 4.681,
+        "sma200": 4.38,
+        "rsi14": 76.6,
+        "trend": "Bullish Yield / Bearish Price",
+        "rsi_status": "Overbought Yield (>70)",
+        "resistance": 5.05,
+        "support_50d": 4.681,
+        "support_200d": 4.38
+      },
+      "2s10s": {
+        "current": 58.1,
+        "sma50": 55.566,
+        "sma200": 62.814,
+        "rsi14": 53.1,
+        "trend": "Steepening Trend Intact",
+        "support_50d": 55.566,
+        "resistance_high": 75.0
+      },
+      "triggers": [
+        {
+          "id": "flip_to_long_duration",
+          "title": "Trigger to Pivot to Long Duration (Bull Flattening)",
+          "action": "Close Steepeners. Overweight 10Y and 30Y Duration.",
+          "condition": "10Y Yield breaks below 4.70% (50d/200d SMA support) AND 2s10s breaks below +25 bps AND Unemployment > 4.6%.",
+          "status": "Inactive (Bear Steepener Dominant)",
+          "active_metric": "10Y is 0.26% above trigger; 2s10s is 33.1 bps above trigger.",
+          "threshold_met": false
+        },
+        {
+          "id": "steepener_continuation",
+          "title": "Trigger for Accelerated Steepener (Bond Vigilante Breakout)",
+          "action": "Add to 2s10s / 2s30s Steepeners. Short 30Y Duration.",
+          "condition": "10Y Yield daily close above 5.05% resistance with 30Y > 5.40%.",
+          "status": "Testing Resistance (Imminent Watch)",
+          "active_metric": "10Y is 0.09% away from 5.05% breakout ceiling.",
+          "threshold_met": false
+        },
+        {
+          "id": "bear_flattener_cash",
+          "title": "Trigger for Bear Flattener / Flight to Ultra-Short Cash",
+          "action": "Move sleeve to T-Bills / Cash. Avoid all duration.",
+          "condition": "2Y Yield breaks above 4.85% (hawkish Fed hike re-pricing) with CPI > 3.7%.",
+          "status": "Inactive (2Y well-anchored by terminal rate bounds)",
+          "active_metric": "2Y is currently 4.38% (47 bps below trigger).",
+          "threshold_met": false
+        }
+      ]
     },
     "indicators": [
       {
@@ -1085,6 +1210,13 @@
         "trend": "Elevated",
         "target": "Historical ~0.20%",
         "impact": "Bond market repricing sovereign risk and duration compensation."
+      },
+      {
+        "name": "10-Year RSI(14)",
+        "value": "76.6",
+        "trend": "Overbought Yield",
+        "target": "30 - 70 Range",
+        "impact": "Testing 5.00%-5.05% key resistance ceiling; vulnerable to technical stall."
       }
     ],
     "headlines": [
@@ -3977,13 +4109,13 @@
     {
       "date": "2026-09-14",
       "2y": 4.38,
-      "5y": 4.784,
-      "10y": 4.959,
-      "30y": 5.331,
-      "spread_2s10s": 57.9,
-      "spread_5s30s": 54.7,
-      "spread_2s30s": 95.1,
-      "spread_10s30s": 37.2
+      "5y": 4.79,
+      "10y": 4.961,
+      "30y": 5.329,
+      "spread_2s10s": 58.1,
+      "spread_5s30s": 53.9,
+      "spread_2s30s": 94.9,
+      "spread_10s30s": 36.8
     }
   ]
 }

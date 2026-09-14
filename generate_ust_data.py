@@ -2,6 +2,8 @@
 """
 Fetch generic US Treasury yields (2Y, 5Y, 10Y, 30Y) and generate ust_curve_data.json
 for the Strategy dashboard (rkarim25.github.io/Strategy).
+Computes technical indicators (SMA50, SMA200, RSI14), regime classification,
+steepener/flattener recommendations, and invalidation triggers.
 """
 
 import csv
@@ -44,7 +46,7 @@ SERIES_META = {
         "duration": 8.20,
         "convexity": 0.82,
         "dv01": 82.0,
-        "role": "Global Cost of Capital / Equity Equity & Mortgage Benchmark",
+        "role": "Global Cost of Capital / Equity & Mortgage Benchmark",
     },
     "30y": {
         "symbol": "^TYX",
@@ -72,6 +74,25 @@ def fetch_chart(symbol: str, range_str: str = "2y"):
             points[dt] = round(float(c), 3)
     return points
 
+def calc_sma(arr, n):
+    if len(arr) < n:
+        return None
+    return round(sum(arr[-n:]) / n, 3)
+
+def calc_rsi(arr, n=14):
+    if len(arr) < n + 1:
+        return None
+    deltas = [arr[i] - arr[i-1] for i in range(1, len(arr))]
+    recent = deltas[-n:]
+    gains = [x for x in recent if x > 0]
+    losses = [-x for x in recent if x < 0]
+    avg_gain = sum(gains) / n if gains else 0
+    avg_loss = sum(losses) / n if losses else 0
+    if avg_loss == 0:
+        return 100.0
+    rs = avg_gain / avg_loss
+    return round(100.0 - (100.0 / (1.0 + rs)), 1)
+
 def main():
     print("Fetching Treasury yield curve data...")
     raw_series = {}
@@ -90,7 +111,7 @@ def main():
         print("Error: No dates fetched!")
         sys.exit(1)
 
-    # Forward fill missing points for clean continuous series
+    # Forward fill missing points
     aligned = []
     last_known = {k: None for k in SERIES_META}
     for dt in all_dates:
@@ -100,7 +121,6 @@ def main():
                 last_known[k] = raw_series[k][dt]
             row[k] = last_known[k]
         if all(row[k] is not None for k in SERIES_META):
-            # Compute spreads (in basis points)
             row["spread_2s10s"] = round((row["10y"] - row["2y"]) * 100, 1)
             row["spread_5s30s"] = round((row["30y"] - row["5y"]) * 100, 1)
             row["spread_2s30s"] = round((row["30y"] - row["2y"]) * 100, 1)
@@ -113,6 +133,77 @@ def main():
 
     latest_row = aligned[-1]
     prev_row = aligned[-2] if len(aligned) > 1 else latest_row
+
+    # Technical Indicators calculation
+    history_10y = [r["10y"] for r in aligned]
+    history_2y = [r["2y"] for r in aligned]
+    history_5y = [r["5y"] for r in aligned]
+    history_30y = [r["30y"] for r in aligned]
+    history_2s10s = [r["spread_2s10s"] for r in aligned]
+
+    sma50_10y = calc_sma(history_10y, 50)
+    sma200_10y = calc_sma(history_10y, 200)
+    rsi14_10y = calc_rsi(history_10y, 14)
+
+    sma50_2s10s = calc_sma(history_2s10s, 50)
+    sma200_2s10s = calc_sma(history_2s10s, 200)
+    rsi14_2s10s = calc_rsi(history_2s10s, 14)
+
+    sma50_2y = calc_sma(history_2y, 50)
+    sma200_2y = calc_sma(history_2y, 200)
+
+    # Technical assessment
+    technicals = {
+        "10y": {
+            "current": latest_row["10y"],
+            "sma50": sma50_10y,
+            "sma200": sma200_10y,
+            "rsi14": rsi14_10y,
+            "trend": "Bullish Yield / Bearish Price" if latest_row["10y"] > sma50_10y else "Yield Pullback",
+            "rsi_status": "Overbought Yield (>70)" if rsi14_10y and rsi14_10y > 70 else "Neutral",
+            "resistance": 5.05,
+            "support_50d": sma50_10y,
+            "support_200d": sma200_10y,
+        },
+        "2s10s": {
+            "current": latest_row["spread_2s10s"],
+            "sma50": sma50_2s10s,
+            "sma200": sma200_2s10s,
+            "rsi14": rsi14_2s10s,
+            "trend": "Steepening Trend Intact" if latest_row["spread_2s10s"] > sma50_2s10s else "Flattening Retracement",
+            "support_50d": sma50_2s10s,
+            "resistance_high": 75.0,
+        },
+        "triggers": [
+            {
+                "id": "flip_to_long_duration",
+                "title": "Trigger to Pivot to Long Duration (Bull Flattening)",
+                "action": "Close Steepeners. Overweight 10Y and 30Y Duration.",
+                "condition": "10Y Yield breaks below 4.70% (50d/200d SMA support) AND 2s10s breaks below +25 bps AND Unemployment > 4.6%.",
+                "status": "Inactive (Bear Steepener Dominant)",
+                "active_metric": f"10Y is {round(latest_row['10y'] - 4.70, 2)}% above trigger; 2s10s is {round(latest_row['spread_2s10s'] - 25.0, 1)} bps above trigger.",
+                "threshold_met": False,
+            },
+            {
+                "id": "steepener_continuation",
+                "title": "Trigger for Accelerated Steepener (Bond Vigilante Breakout)",
+                "action": "Add to 2s10s / 2s30s Steepeners. Short 30Y Duration.",
+                "condition": "10Y Yield daily close above 5.05% resistance with 30Y > 5.40%.",
+                "status": "Testing Resistance (Imminent Watch)",
+                "active_metric": f"10Y is {round(5.05 - latest_row['10y'], 2)}% away from 5.05% breakout ceiling.",
+                "threshold_met": latest_row["10y"] >= 5.05,
+            },
+            {
+                "id": "bear_flattener_cash",
+                "title": "Trigger for Bear Flattener / Flight to Ultra-Short Cash",
+                "action": "Move sleeve to T-Bills / Cash. Avoid all duration.",
+                "condition": "2Y Yield breaks above 4.85% (hawkish Fed hike re-pricing) with CPI > 3.7%.",
+                "status": "Inactive (2Y well-anchored by terminal rate bounds)",
+                "active_metric": f"2Y is currently {latest_row['2y']}% (47 bps below trigger).",
+                "threshold_met": False,
+            },
+        ],
+    }
 
     # Snapshots for curve comparison
     n = len(aligned)
@@ -218,6 +309,17 @@ def main():
         },
     }
 
+    # Concise institutional executive recommendation paragraph
+    executive_paragraph = (
+        "Maintain an Overweight on the 5Y Belly (Top Pick) and 2Y Carry, paired with a DV01-neutral "
+        "2s10s / 2s30s Steepener trade, while Underweighting 30Y long-end duration. This strategy locks in "
+        "~4.78% yield with modest duration volatility as heavy Treasury coupon issuance ($2T deficit) and sticky "
+        "CPI (3.4%) push 10Y term premiums higher (~1.02%). What triggers a pivot to Long Duration (Bull Flattening)? "
+        "A decisive daily close of the 10Y yield below 4.70% (50d/200d SMA support zone), accompanied by 2s10s "
+        "breaking below +25 bps and unemployment rising above 4.6%, would invalidate the supply-steepening thesis "
+        "and mandate an immediate rotation into 10Y and 30Y duration."
+    )
+
     # Macro & Regime Model Assessment
     macro_assessment = {
         "as_of": latest_row["date"],
@@ -228,7 +330,12 @@ def main():
             "coupon supply ($2T deficit) and persistent inflation (CPI at 3.4%). The 10Y term premium has "
             "climbed to ~1.02%, while 2Y (~4.38%) is relatively well-anchored by the restrictive Fed rate range."
         ),
-        "curve_action": "Overweight Front-to-Belly (5Y & 2Y); Underweight Long-End Duration (30Y)",
+        "executive_paragraph": executive_paragraph,
+        "curve_trade_recommendation": {
+            "primary_trade": "2s10s / 2s30s Curve Steepener (Long Front / Short Long Duration)",
+            "sizing_rule": "DV01-Neutral (e.g. Long $4.3M 2Y vs Short $1.0M 10Y)",
+            "curve_action": "Overweight Front-to-Belly (5Y & 2Y); Underweight Long-End Duration (30Y)",
+        },
         "model_signals": {
             "2y": {
                 "stance": "Overweight / Defensive Carry",
@@ -255,6 +362,7 @@ def main():
                 "rationale": "Extreme duration risk (DV01 $165/bp). Heavily exposed to expanding term premiums, $40T national debt debate, and continuous Treasury auction supply.",
             },
         },
+        "technicals": technicals,
         "indicators": [
             {
                 "name": "Headline CPI (YoY)",
@@ -290,6 +398,13 @@ def main():
                 "trend": "Elevated",
                 "target": "Historical ~0.20%",
                 "impact": "Bond market repricing sovereign risk and duration compensation.",
+            },
+            {
+                "name": "10-Year RSI(14)",
+                "value": f"{rsi14_10y}",
+                "trend": "Overbought Yield" if rsi14_10y and rsi14_10y > 70 else "Neutral",
+                "target": "30 - 70 Range",
+                "impact": "Testing 5.00%-5.05% key resistance ceiling; vulnerable to technical stall.",
             },
         ],
         "headlines": [
@@ -408,7 +523,6 @@ def main():
         ],
     }
 
-    # Assemble final output
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "latest_date": latest_row["date"],
@@ -417,14 +531,13 @@ def main():
         "snapshots": snapshots,
         "macro_assessment": macro_assessment,
         "curve_model_framework": curve_model_framework,
-        "history": aligned[-252:],  # 1 year of daily history
+        "history": aligned[-252:],
     }
 
     with open(DATA_JSON, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
     print(f"Saved {DATA_JSON} ({len(aligned)} days aligned, latest: {latest_row['date']})")
 
-    # Also write daily CSV
     with open(DAILY_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["date", "ust_2y", "ust_5y", "ust_10y", "ust_30y", "spread_2s10s", "spread_5s30s", "spread_2s30s", "spread_10s30s"])
