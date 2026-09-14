@@ -8,10 +8,10 @@ Whenever Reza says **"analyse credit"**, **"update credit"**, **"analyse CDX"**,
 
 | File | Path | Role |
 | :--- | :--- | :--- |
-| **Dashboard Page** | `credit.html` | User-facing Credit Derivatives Desk with spread charts, percentile bars, triggers, and index deep dives. |
+| **Dashboard Page** | `cdx.html` | User-facing Credit Derivatives Desk with spread charts, percentile bars, triggers, and index deep dives. |
 | **Client Engine** | `credit-page.js` | Interactive charting, Transatlantic basis toggle, and trigger card renderer. |
 | **Data Pipeline** | `generate_credit_data.py` | Python pipeline generating spreads, SMAs (50d/200d), RSI14, percentiles, default rate outlooks, and trade expressions. |
-| **Static Data Payload** | `credit_data.json` | The single source of truth consumed by `credit.html` via GitHub Pages. |
+| **Static Data Payload** | `credit_data.json` | The single source of truth consumed by `cdx.html` via GitHub Pages. |
 | **Global Navigation** | `site-nav.js` | Shared sidebar navigation across all pages (`Rates, Credit & FX` group). |
 
 ---
@@ -41,12 +41,12 @@ Ensure each index structure contains:
 ```bash
 python -m http.server 8088
 ```
-Open `http://localhost:8088/credit.html` to confirm cards, triggers, and canvas charts.
+Open `http://localhost:8088/cdx.html` to confirm cards, triggers, and canvas charts.
 
 ### Step 4: Commit and Deploy to GitHub Pages
 ```bash
-git add site-nav.js credit.html credit-page.js generate_credit_data.py credit_data.json ANALYSE_CREDIT.md
+git add site-nav.js cdx.html credit-page.js generate_credit_data.py credit_data.json ANALYSE_CREDIT.md
 git commit -m "Update Credit derivatives analysis, spreads, technical triggers, and trade expressions"
 git push origin main
 ```
-GitHub Actions will automatically deploy to `https://rkarim25.github.io/Strategy/credit.html`.
+GitHub Actions will automatically deploy to `https://rkarim25.github.io/Strategy/cdx.html`.

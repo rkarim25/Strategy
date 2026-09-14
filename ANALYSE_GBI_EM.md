@@ -8,10 +8,10 @@ Whenever Reza says **"analyse GBI EM"**, **"update GBI EM"**, **"run GBI-EM anal
 
 | File | Path | Role |
 | :--- | :--- | :--- |
-| **Dashboard Page** | `gbi_em.html` | User-facing GBI-EM strategy desk with regional filters, real yield chart, country cards, and hedging instructions. |
+| **Dashboard Page** | `local_em.html` | User-facing GBI-EM strategy desk with regional filters, real yield chart, country cards, and hedging instructions. |
 | **Client Engine** | `gbi-em-page.js` | Interactive charting, regional filtering, and country card renderer. |
 | **Data Pipeline** | `generate_gbi_em_data.py` | Python pipeline aggregating yields, inflation, real rates, FX carry, technical indicators, and supporting paragraphs. |
-| **Static Data Payload** | `gbi_em_data.json` | The single source of truth consumed by `gbi_em.html` via GitHub Pages. |
+| **Static Data Payload** | `gbi_em_data.json` | The single source of truth consumed by `local_em.html` via GitHub Pages. |
 | **Global Navigation** | `site-nav.js` | Shared sidebar navigation across all pages (`Rates, Credit & FX` group). |
 
 ---
@@ -57,12 +57,12 @@ Ensure each country object contains:
 ```bash
 python -m http.server 8088
 ```
-Open `http://localhost:8088/gbi_em.html` to confirm cards, regional filters, and the Real Yield ranking bar chart.
+Open `http://localhost:8088/local_em.html` to confirm cards, regional filters, and the Real Yield ranking bar chart.
 
 ### Step 5: Commit and Deploy to GitHub Pages
 ```bash
-git add site-nav.js gbi_em.html gbi-em-page.js generate_gbi_em_data.py gbi_em_data.json ANALYSE_GBI_EM.md
+git add site-nav.js local_em.html gbi-em-page.js generate_gbi_em_data.py gbi_em_data.json ANALYSE_GBI_EM.md
 git commit -m "Update GBI-EM local sovereign debt & FX analysis, trade expressions, and catalysts"
 git push origin main
 ```
-GitHub Actions will automatically deploy to `https://rkarim25.github.io/Strategy/gbi_em.html`.
+GitHub Actions will automatically deploy to `https://rkarim25.github.io/Strategy/local_em.html`.

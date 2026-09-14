@@ -51,8 +51,8 @@
     { id: "price", asset: "Charts", strategy: "Candles, indicators & drawing tools", group: "tools", href: "price.html" },
     { id: "summary", asset: "Summary results", strategy: "Cross-asset backtests", group: "tools", href: "summary.html" },
     { id: "ust", asset: "US Treasuries", strategy: "Yield Curve & Macro Model", group: "rates", href: "ust.html", secondary: true },
-    { id: "credit", asset: "Credit Spreads", strategy: "CDX EM, Xover & US HY", group: "rates", href: "credit.html", secondary: true },
-    { id: "gbi_em", asset: "GBI-EM Desk", strategy: "Local Sovereign Debt & FX", group: "rates", href: "gbi_em.html", secondary: true },
+    { id: "cdx", asset: "CDX", strategy: "EM CDX, Xover & US HY", group: "rates", href: "cdx.html", secondary: true },
+    { id: "local_em", asset: "Local EM", strategy: "GBI-EM Sovereign Debt & FX", group: "rates", href: "local_em.html", secondary: true },
     { id: "instruments", asset: "Tools", strategy: "Instruments", group: "tools", href: "instruments.html", secondary: true },
   ];
 
@@ -140,6 +140,8 @@
   function activeNavId(loc = location) {
     const page = currentPageFile(loc);
     if (page === "instruments.html") return "instruments";
+    if (page === "cdx.html" || page === "credit.html") return "cdx";
+    if (page === "local_em.html" || page === "gbi_em.html") return "local_em";
     if (page !== "index.html") {
       const match = STRATEGY_NAV_ITEMS.find((item) => navItemPageFile(item) === page);
       return match ? match.id : null;
@@ -192,7 +194,7 @@
     // reused the raw current page id, so clicking e.g. "S&P 500" from a momentum
     // page pointed back at #momentumSignalPage instead of the guarded #signalPage.
     let targetHash;
-    if (item.id === "instruments" || item.id === "summary" || item.id === "spx" || item.id === "lab" || item.id === "price" || item.id === "ust" || item.id === "credit" || item.id === "gbi_em") {
+    if (item.id === "instruments" || item.id === "summary" || item.id === "spx" || item.id === "lab" || item.id === "price" || item.id === "ust" || item.id === "cdx" || item.id === "credit" || item.id === "local_em" || item.id === "gbi_em") {
       targetHash = "";   // thin-host / tool pages — no section hash
     } else if (item.id === "momentum") {
       targetHash = pageForStrategy("momentum", sectionOf(currentPageId));
