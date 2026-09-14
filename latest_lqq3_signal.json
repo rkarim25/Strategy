@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-09-11T23:51:40Z",
-  "data_asof": "2026-09-10",
-  "daily_rows": 3450,
-  "quote_price": 30095.0,
-  "quote_timestamp": "2026-09-10",
+  "generated_at_utc": "2026-09-14T13:33:14Z",
+  "data_asof": "2026-09-14",
+  "daily_rows": 3452,
+  "quote_price": 29123.998046875,
+  "quote_timestamp": "2026-09-14",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L?period1=0&period2=1789257100&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L?period1=0&period2=1789479194&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -25,13 +25,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-09-10",
-      "close": 30095.0
+      "date": "2026-09-14",
+      "close": 29123.998046875
     },
-    "latestSma": 30996.75,
+    "latestSma": 30696.19990234375,
     "highWater": 37632.0,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.200281675170068,
+    "latestDd": -0.2260842355741125,
     "regime": "tier2",
     "entryClose": 31980.5,
     "entryDate": "2026-05-18",
@@ -47,13 +47,13 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-09-10",
-      "close": 30095.0
+      "date": "2026-09-14",
+      "close": 29123.998046875
     },
-    "latestSma": 30841.2,
+    "latestSma": 30484.9498046875,
     "highWater": 37632.0,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.200281675170068,
+    "latestDd": -0.2260842355741125,
     "regime": "tier2",
     "entryClose": 31980.5,
     "entryDate": "2026-05-18",
@@ -68,12 +68,11 @@
     "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-09-10",
+    "last_observed_asof": "2026-09-14",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-09-11T23:51:40Z",
+    "last_checked_at_utc": "2026-09-14T13:33:14Z",
     "last_email_sent_on": "2026-09-12",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
       "id": "2026-09-11:1->2026-09-10:0",
       "detected_at_utc": "2026-09-11T23:51:40Z",

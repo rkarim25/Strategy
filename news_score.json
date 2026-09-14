@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-09-11T23:51:44Z",
+  "generated_at_utc": "2026-09-14T13:33:15Z",
   "window_days": 7,
-  "score": 6,
+  "score": 5,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC; US Market: Wall Street brokerages see S&P 500 extending rally in 2026 on AI, earnings - The Economic Times. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - cnbc.com. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
   "articles": [
     {
-      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
-      "source": "CNBC",
+      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - cnbc.com",
+      "source": "cnbc.com",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
       "published": "2026-09-08T13:41:42Z",
       "tone": "bullish"
@@ -23,20 +23,20 @@
       "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News",
       "source": "AP News",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQU1FDWlZxem5yejRWekJjdmdOVW4tU2RQYWpQX2FDWmlHZ3lBOVlYNjdEb01mcUFvM2FhaV9fMG5kUno1VzRjY0F6WkhKbmgxTzUwZXdabXprUjdGbTBuVE5jR2s4QVJqdkt6cS1QTVcwMW82d29FYjBvMFoxdjVrdkxwS0wyY0toNWNYaUpqUkJ6ZkM0bFZHdDk4RU1qWm9Ga0VUQ1J3WQ?oc=5",
-      "published": "2026-09-09T04:33:35Z",
+      "published": "2026-09-09T20:59:00Z",
       "tone": "bearish"
     },
     {
-      "title": "US Market: Wall Street brokerages see S&P 500 extending rally in 2026 on AI, earnings - The Economic Times",
-      "source": "The Economic Times",
-      "url": "https://news.google.com/rss/articles/CBMi6wJBVV95cUxPUUJVMURJN0ZZekl3a3Nkdk1EcHpHZ0w0TkJOdHVyUU5ocWxvSXpqT19JakRIeHlXM2tMdXU1czl4U09MdFZzbTZzRkNxV2ZwNzF5OUVTeGZTV2QxT1haRjZxaFRYcXhlOE9jelQyS2ZlRENSVXFYNElrREFKNEY5TjBKTk5hd0lKRkZvTjR5aUtwem9saWFpM2pabUU0N1RaTVd5SFgzaEVZVUwtMFRUOUxJME9aTGFNcGR0enJYUHJmTDA1QkliS3JqcGNoOFBIb0lCRUtXeGV3RDYxY1VESUpHRXpPN1BaN0ZPQ2xBejNSdmpvdUg4VTVDOUJQbm1US21hWDAwSWQ3OTdWRkNkTmhPOEpEOHdYeVlLaHFaY1V1bGE3NFU4N3ZPcXdEVTNqRlhEcExiejFJQTVlX2dCTjh0Y25wcGpuRzMyM05oQ21WSlRtaGFHMlBQOHdGZjVqMUdCSVNlTnF6TTTSAYcCQVVfeXFMTmtVdkVfUVVLZmVkSjE3TU5TejRYRUdfdUw5VzNzNTdZNFYtZmtWZ1R0QnN1V2RLd1dXUkdsTHdZZ0NNRTc0MGgtQWpsd3VEZC1CVHBwLWh0UWxTcjJqZHRJY0YybTZ2VV82RFdscUcyMmxja05DOFk3ZVYzbk1RdURzRVY3UzhFa1RIV2UwR25POWl2dE9tMmZrbEhVMzZhaGJqT3RyeXN4Zndmd2FDc05TaGVjb3M2aVlnVmdpSTZTVVV1OW9uNGdCZExPdnRIUDFzMjZxeEhGMFVSX1RaYVo1WllLQ0QtdFpOM3hUUWxYQzh1QU5DMWZaTndTcjZqelVNamxJMzQ?oc=5",
-      "published": "2026-09-11T04:36:28Z",
-      "tone": "bullish"
+      "title": "Stock Market Today: S&P 500, Dow, Nasdaq 100 Futures Fall as Oil Tops $99 Despite Trump\u2019s Price Drop Pred - Benzinga",
+      "source": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxQV0JabjItTkd2SWotTUJvZEVwdUJRY0xyT1BpS05FeDJSNFdHYXdlczk0NGU2RFB5a3Zrb0s3bzdkeGFsUmExQzhmLW1qTi1sejZNYUlvS3E2V2RVNWFZc2thWFgxNURrM1c5dWM3R1ppb1RpQTRaNEp6UkZ6U3NhYTJJSG1nUkwzYm5DRHlGNnhDbTBzWlV1MHczRTFYcjVraV84Y081Ty1ZSWxKMHAxZzQ3VXp6UkhOMThKSndscng3RnNXMzAxUWtKeHZHTXo3cDRseWlUcmpVZ01VQzBZdTcwSkFZZVZraS1RNjFZcmFoNG5GY0JiRmd2dmpOZk9pbXExSA?oc=5",
+      "published": "2026-09-08T12:32:00Z",
+      "tone": "bearish"
     },
     {
       "title": "Wall Street Today: DJIA, S&P 500, Nasdaq Comp Fall on Rising Oil and Bond Rates, ORCL, NVDA, MU Losses - Moomoo",
       "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOaHprY1Q2OWVEQjY2aVk5YWpSaC10UFlLZGY4RU0tTGZBdjl3UjVkNlg3OERlOGhqSThwajRXS3ZJS0VPYnQweW9TZWZZZUFCRWpSeEYtRV83U2RZbVhtcmhzdzhITTBIQnpLYjRqQk5QVmplTXkzN2pRX2xZSUhVU3BkcFVONVpCSkdmSngxY1k2OGVBSXYzdFdMNTRGSHJMdVo4?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOQTJDRW1DN2JTNnJ3R0RwaWdLSHJGbjNJWUNZSm00THI1Z0I1TGlibUg1VVR3cGo2VDRkR1FpX184QnJ4WktTUWNOZXdLdTdGcmNCQkhlWi0xb3JZZXpEbWlJQk9pdWFaaW9nRUg0eDNBSlpSVjJ2ZGh6UU05emdOT3R2ckJFd1dqMWdWNl83dHhIV0ZydmlvVWMyVm1JSFJyc3c?oc=5",
       "published": "2026-09-10T07:00:00Z",
       "tone": "bearish"
     }
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 90
       }
     ],
-    "headline_count": 139,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
