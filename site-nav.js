@@ -30,6 +30,7 @@
 
   const NAV_GROUPS = [
     { id: "strategies", label: "Strategies" },
+    { id: "rates", label: "Rates & Yields" },
     { id: "tools", label: "Tools & research" },
   ];
 
@@ -49,6 +50,7 @@
     { id: "lab", asset: "Lab", strategy: "Interactive strategy builder", group: "tools", href: "lab.html" },
     { id: "price", asset: "Charts", strategy: "Candles, indicators & drawing tools", group: "tools", href: "price.html" },
     { id: "summary", asset: "Summary results", strategy: "Cross-asset backtests", group: "tools", href: "summary.html" },
+    { id: "ust", asset: "US Treasuries", strategy: "Yield Curve & Macro Model", group: "rates", href: "ust.html", secondary: true },
     { id: "instruments", asset: "Tools", strategy: "Instruments", group: "tools", href: "instruments.html", secondary: true },
   ];
 
@@ -188,7 +190,7 @@
     // reused the raw current page id, so clicking e.g. "S&P 500" from a momentum
     // page pointed back at #momentumSignalPage instead of the guarded #signalPage.
     let targetHash;
-    if (item.id === "instruments" || item.id === "summary" || item.id === "spx" || item.id === "lab" || item.id === "price") {
+    if (item.id === "instruments" || item.id === "summary" || item.id === "spx" || item.id === "lab" || item.id === "price" || item.id === "ust") {
       targetHash = "";   // thin-host / tool pages — no section hash
     } else if (item.id === "momentum") {
       targetHash = pageForStrategy("momentum", sectionOf(currentPageId));
