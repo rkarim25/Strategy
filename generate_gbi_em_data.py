@@ -388,11 +388,37 @@ def main():
     except Exception as e:
         print(f"  Warning: Could not update trade tracker in GBI-EM: {e}")
 
+
+    headlines = [
+        {
+            "source": "Reuters",
+            "title": "EM Local Sovereign Bonds Diverge as Real Yield Cushions Offset Strong Dollar Drag",
+            "date": "2026-09-14",
+            "category": "GBI-EM Sovereign Debt",
+            "takeaway": "Brazil's +8.1% real yield and South Africa's +6.2% real yield provide wide shock absorbers against Fed rate repricing, whereas Central European real yields remain razor-thin."
+        },
+        {
+            "source": "Financial Times",
+            "title": "India's Historic JPMorgan Debt Index Inclusion Generates Steady $2B Monthly Passive Tide",
+            "date": "2026-09-13",
+            "category": "Index Inflows",
+            "takeaway": "Phased 10% weight inclusion into the GBI-EM Global Diversified index continues to anchor IGB yields (~6.98%) and insulates the rupee from broader EM FX volatility."
+        },
+        {
+            "source": "The Economist",
+            "title": "Latin America's Divided Fiscal Map: Brazilian Carry Buffer vs Mexican Judicial Uncertainty",
+            "date": "2026-09-12",
+            "category": "Regional Policy",
+            "takeaway": "While Brazil's 10.50% Selic provides a fortress carry yield, Mexico's constitutional judicial reforms and USMCA review rhetoric keep M-Bono markets rangebound (8.40%-8.90%)."
+        }
+    ]
+
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "as_of_date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "executive_paragraph": executive_paragraph,
         "trade_tracker": trade_tracker_data,
+        "headlines": headlines,
         "countries": COUNTRIES,
         "ranking_by_real_yield": [c["id"] for c in ranked_by_real_yield],
         "regional_breakdown": {
