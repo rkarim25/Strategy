@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-14T18:58:31Z",
+  "generated_at_utc": "2026-09-14T23:34:59Z",
   "window_days": 7,
   "score": 4,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Benchmark Yield Hits 5%. How Will Stocks Respond To A Fed Rate Hike?; Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC; S&P 500 Bulls Are Not Giving Up Yet \u2013 But Rising Oil Prices, Long-Term Yields Rise Are Narrowing The Path Higher - TradingView. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
   "articles": [
     {
       "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
@@ -11,13 +11,6 @@
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
       "published": "2026-09-08T13:41:42Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Benchmark Yield Hits 5%. How Will Stocks Respond To A Fed Rate Hike?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/0f560f5f-70a7-353b-9eba-992168aa54b7/benchmark-yield-hits-5%25.-how.html?.tsrc=rss",
-      "published": "2026-09-14T18:05:56Z",
-      "tone": "bearish"
     },
     {
       "title": "Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com",
@@ -34,11 +27,18 @@
       "tone": "bearish"
     },
     {
-      "title": "Is a 'SaaSpocalypse'-like sell-off coming for AI hardware stocks? Not so fast",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/14/is-a-saaspocalypse-like-sell-off-coming-for-ai-hardware-stocks-not-so-fast.html",
-      "published": "2026-09-14T18:43:44Z",
+      "title": "Wall Street Today: DJIA, S&P 500, Nasdaq Comp Fall on Rising Oil and Bond Rates, ORCL, NVDA, MU Losses - moomoo.com",
+      "source": "moomoo.com",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOQTJDRW1DN2JTNnJ3R0RwaWdLSHJGbjNJWUNZSm00THI1Z0I1TGlibUg1VVR3cGo2VDRkR1FpX184QnJ4WktTUWNOZXdLdTdGcmNCQkhlWi0xb3JZZXpEbWlJQk9pdWFaaW9nRUg0eDNBSlpSVjJ2ZGh6UU05emdOT3R2ckJFd1dqMWdWNl83dHhIV0ZydmlvVWMyVm1JSFJyc3c?oc=5",
+      "published": "2026-09-10T07:00:00Z",
       "tone": "bearish"
+    },
+    {
+      "title": "S&P 500 Bulls Are Not Giving Up Yet \u2013 But Rising Oil Prices, Long-Term Yields Rise Are Narrowing The Path Higher - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxQTWxoclF1UzlXTTRCUXMzdmNNcnZTTF9mUzZ6RVRWOWpzMDI4d2dPbmVRRFZPd0VnZ3Z6SmRFTlI5UzJ5TnRwRl9HTklmT1hjYzFSS0dEdERmWGcxaVdMT0k0bHQ5cE5icjVzWXZ1Y0lTcXNkNFRPWjV1UDRSWUhQQzRYWFhoQWZWcXpSWHJzWDJxSW1yMmRQSnI3WkszeVR2RjBuTjU4aVFIMWZZV0lLTWVHdE53THh6YmdqU1F1UGlhWG9TWlRRTmFGbmhzTjNRaFNZR194SENJdDRWcjZqcnYzUEhtcm0wZkxSREZiVERZUThGVXNvazZYcnZweXc?oc=5",
+      "published": "2026-09-14T06:52:00Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,7 +69,7 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 90
       }
     ],
     "headline_count": 140,
