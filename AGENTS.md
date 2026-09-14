@@ -16,6 +16,19 @@
 
 Full checklist: [`docs/runbooks/START-HERE.md`](docs/runbooks/START-HERE.md).
 
+## Special Commands
+
+### "analyse UST" / "update UST"
+When the user asks to **"analyse UST"**, **"update UST"**, or **"UST curve analysis"**, follow [`ANALYSE_UST.md`](ANALYSE_UST.md):
+1. **Fetch & Compute**: Run `python generate_ust_data.py` (pulls `2YY=F`, `^FVX`, `^TNX`, `^TYX`, calculates spreads, 50d/200d SMAs, RSI14, and invalidation triggers).
+2. **Review Headline & Macro Telemetry**: Search latest CPI, Core PCE, Unemployment, GDP, Treasury auction supply/deficit, and Fed FOMC comments.
+3. **Evaluate Triggers**: Assess the 3 technical invalidation triggers:
+   - *Pivot to Long Duration (Bull Flattening)*: 10Y < 4.70% & 2s10s < +25 bps & Unemployment > 4.6%.
+   - *Accelerated Steepener (Bond Vigilantes)*: 10Y > 5.05% & 30Y > 5.40%.
+   - *Bear Flattener (Ultra-Short Cash)*: 2Y > 4.85% & CPI > 3.7%.
+4. **Update Executive Summary & Data**: Re-run `python generate_ust_data.py` to refresh `ust_curve_data.json` and `ust.html`.
+5. **Commit & Push**: Push explicit files (`site-nav.js`, `ust.html`, `ust-page.js`, `generate_ust_data.py`, `ust_curve_data.json`, `ust_daily.csv`, `ANALYSE_UST.md`) to `main`.
+
 ## What this is
 A personal **systematic leveraged backtesting + live-signal platform**. Two halves:
 1. **Python engine** (local) — historical simulations → metrics → JSON/CSV/Excel.
