@@ -29,6 +29,29 @@ When the user asks to **"analyse UST"**, **"update UST"**, or **"UST curve analy
 4. **Update Executive Summary & Data**: Re-run `python generate_ust_data.py` to refresh `ust_curve_data.json` and `ust.html`.
 5. **Commit & Push**: Push explicit files (`site-nav.js`, `ust.html`, `ust-page.js`, `generate_ust_data.py`, `ust_curve_data.json`, `ust_daily.csv`, `ANALYSE_UST.md`) to `main`.
 
+### "analyse credit" / "analyse CDX"
+When the user asks to **"analyse credit"**, **"analyse CDX"**, or **"credit spreads analysis"**, follow [`ANALYSE_CREDIT.md`](ANALYSE_CREDIT.md):
+1. **Fetch & Compute**: Run `python generate_credit_data.py` (pulls current spread levels, runs 253-day historical simulation, computes SMA50/200, RSI14, Transatlantic basis, and distress ratios).
+2. **Review Spread Percentiles & Macro Context**: Check CDX.NA.HY (<350 bps = tight), iTraxx Xover (<320 bps = tight), CDX.EM (<190 bps = benign).
+3. **Evaluate Quantitative Triggers**:
+   - *Risk-Off Widener*: US HY > 360 bps & Xover > 340 bps -> Shift to Long Protection.
+   - *Transatlantic Divergence*: US HY - Xover basis > 50 bps -> Long Xover / Short US HY spread compression.
+   - *EM Compression Breakout*: CDX.EM < 160 bps with stable commodity basket -> EM spread compression.
+4. **Update Executive Summary & Data**: Refresh `credit_data.json` and `credit.html`.
+5. **Commit & Push**: Push explicit files (`site-nav.js`, `credit.html`, `credit-page.js`, `generate_credit_data.py`, `credit_data.json`, `ANALYSE_CREDIT.md`) to `main`.
+
+### "analyse GBI EM" / "analyse GBI-EM"
+When the user asks to **"analyse GBI EM"**, **"analyse GBI-EM"**, or **"EM local rates analysis"**, follow [`ANALYSE_GBI_EM.md`](ANALYSE_GBI_EM.md):
+1. **Fetch & Compute**: Run `python generate_gbi_em_data.py` (pulls local 10Y benchmarks, policy rates, CPI, computes real yields, SMA50/200, and RSI14 for 8 core EM countries: Brazil, Mexico, South Africa, Indonesia, Poland, India, Colombia, Turkey).
+2. **Review Real Yields & Macro Fundamentals**: Check inflation trajectories, central bank guidance, fiscal dynamics, and FX carry-to-vol ratios.
+3. **Synthesize Trade Recommendations & Invalidation Triggers**:
+   - Explicit instrument selection (e.g., NTN-F 2029, M-Bono 2034, SAGB R2035, SUN FR0100, IGB 2033).
+   - Explicit FX Hedging Directive (Unhedged vs FX-Hedged vs Sideways).
+   - If sideways/rangebound (e.g. Mexico 8.40-8.90%, Colombia 10.40-10.90%), state that explicitly.
+4. **Update Executive Summary & Data**: Refresh `gbi_em_data.json` and `gbi_em.html`.
+5. **Commit & Push**: Push explicit files (`site-nav.js`, `gbi_em.html`, `gbi-em-page.js`, `generate_gbi_em_data.py`, `gbi_em_data.json`, `ANALYSE_GBI_EM.md`) to `main`.
+
+
 ## What this is
 A personal **systematic leveraged backtesting + live-signal platform**. Two halves:
 1. **Python engine** (local) — historical simulations → metrics → JSON/CSV/Excel.

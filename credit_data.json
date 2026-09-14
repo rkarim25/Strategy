@@ -1,0 +1,1910 @@
+{
+  "generated_at": "2026-09-14T20:48:03.150068+00:00",
+  "latest_date": "2026-09-14",
+  "executive_paragraph": "Across global credit derivatives, spreads trade in the tight 20th\u201335th percentiles of historical 1-year ranges: US HY CDX at ~322 bps, iTraxx Europe Crossover at ~296 bps, and CDX EM at ~174 bps. While corporate fundamentals (interest coverage >4x, low default rates ~2.5%) support clipping index carry, compressed risk premiums leave little cushion against a macro growth shock or 10-Year Treasury breakout above 5.05%. The optimal trade expression is Overweight CDX.EM carry (backed by sovereign reserve buffers) while maintaining an asymmetric hedge on US HY via out-of-the-money 375 bps payer swaptions to protect against refinancing wall indigestion.",
+  "indices": {
+    "cdx_na_hy": {
+      "id": "cdx_na_hy",
+      "name": "CDX North American High Yield (CDX.NA.HY)",
+      "asset_class": "US Corporate High Yield",
+      "tenor": "5-Year",
+      "spread_bps": 322.5,
+      "prev_bps": 324.0,
+      "change_bps": -1.5,
+      "sma50": 318.2,
+      "sma200": 339.4,
+      "rsi14": 54.8,
+      "range_1y": {
+        "min": 288.0,
+        "max": 398.0,
+        "percentile": 31.0
+      },
+      "range_3y": {
+        "min": 288.0,
+        "max": 595.0,
+        "percentile": 18.0
+      },
+      "default_rate_forecast": "2.4% - 2.8%",
+      "distress_ratio": "6.2%",
+      "rating": "Neutral / Selective Carry",
+      "recommendation_stance": "Rangebound Carry with Asymmetric Out-of-the-Money Protection Bias",
+      "rationale": "US High Yield spreads (~322 bps) sit in the 31st percentile of 1-year trading. Corporate interest coverage remains resilient at ~4.1x, and the 2026 refinancing wall has been largely pre-funded by issuers in early 2025. However, with spreads tight to fundamentals, upside spread compression is limited (support at ~290-300 bps), while downside vulnerability to higher Treasury yields (>5% on 10Y) creates asymmetric tail risk.",
+      "trade_expression": {
+        "primary_trade": "Harvest carry via selling 5Y CDX.NA.HY protection; hedge tail risk with OTM 375 bps Payer Swaptions",
+        "spread_target": "Tightening target 300 bps; Stop loss / Protection flip at 360 bps",
+        "instrument": "CDX.NA.HY Series 45/46 5Y (or listed ETF proxy HYG / SHYG)",
+        "catalysts": "US Q3 earnings credit metrics, upcoming FOMC rate path, high yield gross issuance calendar"
+      }
+    },
+    "itraxx_xover": {
+      "id": "itraxx_xover",
+      "name": "iTraxx Europe Crossover (Xover)",
+      "asset_class": "European Sub-Investment Grade (75 names)",
+      "tenor": "5-Year",
+      "spread_bps": 296.0,
+      "prev_bps": 298.5,
+      "change_bps": -2.5,
+      "sma50": 292.4,
+      "sma200": 316.8,
+      "rsi14": 53.2,
+      "range_1y": {
+        "min": 272.0,
+        "max": 382.0,
+        "percentile": 26.0
+      },
+      "range_3y": {
+        "min": 272.0,
+        "max": 540.0,
+        "percentile": 14.0
+      },
+      "default_rate_forecast": "2.6% - 3.1%",
+      "distress_ratio": "5.8%",
+      "rating": "Neutral / Carry with Hedged Basis",
+      "recommendation_stance": "Tightening Stance Intact; Relative Value Outperformance vs US HY",
+      "rationale": "European Crossover (296 bps) trades tighter than US HY CDX, reflecting the superior average credit quality of the 75 constituent basket (high BB concentration, lower CCC exposure than US peer indices). The ECB easing cycle provides supportive corporate financing conditions despite stagnant German manufacturing data.",
+      "trade_expression": {
+        "primary_trade": "Long Xover vs Short CDX.NA.HY (Transatlantic Spread Compression Basis)",
+        "spread_target": "Compression target: Xover-to-US HY basis widening to -35 bps",
+        "instrument": "iTraxx Europe Crossover Series 45/46 5Y",
+        "catalysts": "ECB policy rate cuts, European bank lending survey, sovereign spread stability (OAT-Bund)"
+      }
+    },
+    "cdx_em": {
+      "id": "cdx_em",
+      "name": "CDX Emerging Markets (CDX.EM)",
+      "asset_class": "EM Sovereign & Quasi-Sovereign Hard Currency",
+      "tenor": "5-Year",
+      "spread_bps": 174.5,
+      "prev_bps": 176.0,
+      "change_bps": -1.5,
+      "sma50": 171.0,
+      "sma200": 190.5,
+      "rsi14": 52.0,
+      "range_1y": {
+        "min": 158.0,
+        "max": 235.0,
+        "percentile": 22.0
+      },
+      "range_3y": {
+        "min": 158.0,
+        "max": 375.0,
+        "percentile": 12.0
+      },
+      "default_rate_forecast": "1.8% (ex-distressed)",
+      "distress_ratio": "4.5%",
+      "rating": "Overweight / High-Quality EM Carry",
+      "recommendation_stance": "Structural Spread Compression Supported by Multilateral Anchor",
+      "rationale": "CDX.EM (~175 bps) trades near its 1-year lows, supported by solid foreign exchange reserve buffers in core sovereign constituents (Brazil, Mexico, Indonesia, GCC sovereigns) and IMF backstops. Investment-grade and high-beta EM spreads continue to decouple, with non-distressed sovereigns exhibiting robust debt-service ratios.",
+      "trade_expression": {
+        "primary_trade": "Sell Protection on CDX.EM (Collect Index Carry); Express sovereign alpha via CDX.EM vs single-name hedge",
+        "spread_target": "Tightening target 160 bps; Invalidation stop at 205 bps",
+        "instrument": "CDX.EM Series 45/46 5Y (or liquid USD sovereign ETF proxy EMB)",
+        "catalysts": "Fed rate cut transmission, commodity terms of trade (copper/oil), IMF bilateral debt restructurings"
+      }
+    }
+  },
+  "technicals": {
+    "triggers": [
+      {
+        "id": "credit_tail_risk_spike",
+        "title": "Trigger for Risk-Off Protection Spike (Credit Spread Widening)",
+        "action": "Buy Index Protection on CDX.NA.HY / Xover; Close short spread carry.",
+        "condition": "CDX.NA.HY daily close > 360 bps AND 14d RSI > 70 AND High Yield distress ratio > 8.0%.",
+        "status": "Inactive / Contained (CDX HY is 38 bps below trigger)",
+        "active_metric": "CDX.NA.HY: 322.5 bps (RSI 54.8) vs 360 bps trigger ceiling.",
+        "threshold_met": false
+      },
+      {
+        "id": "credit_compression_extreme",
+        "title": "Trigger for Tight-Spread Profit Taking (Re-leveraging Risk)",
+        "action": "Take profit on protection seller trades; Rotate into high-quality sovereign debt.",
+        "condition": "CDX.NA.HY breaks below 295 bps AND Xover breaks below 270 bps.",
+        "status": "Watching Support (27 bps from 295 bps extreme)",
+        "active_metric": "Current spread 322.5 bps sits 27 bps above historical tight support.",
+        "threshold_met": false
+      },
+      {
+        "id": "transatlantic_basis_divergence",
+        "title": "Transatlantic Basis Mispricing (US HY vs European Xover)",
+        "action": "Long Xover vs Short CDX HY when basis widens > +45 bps.",
+        "condition": "US HY - Xover spread differential widens above 45 bps (currently +26.5 bps).",
+        "status": "Neutral Basis (+26.5 bps)",
+        "active_metric": "Basis is 18.5 bps away from divergence trigger.",
+        "threshold_met": false
+      }
+    ]
+  },
+  "history": [
+    {
+      "date": "2026-01-05",
+      "cdx_na_hy": 359.7,
+      "itraxx_xover": 329.7,
+      "cdx_em": 204.9,
+      "basis_hy_xover": 30.0
+    },
+    {
+      "date": "2026-01-06",
+      "cdx_na_hy": 361.0,
+      "itraxx_xover": 329.5,
+      "cdx_em": 203.4,
+      "basis_hy_xover": 31.5
+    },
+    {
+      "date": "2026-01-07",
+      "cdx_na_hy": 361.5,
+      "itraxx_xover": 329.1,
+      "cdx_em": 203.2,
+      "basis_hy_xover": 32.4
+    },
+    {
+      "date": "2026-01-08",
+      "cdx_na_hy": 361.6,
+      "itraxx_xover": 329.5,
+      "cdx_em": 204.4,
+      "basis_hy_xover": 32.1
+    },
+    {
+      "date": "2026-01-09",
+      "cdx_na_hy": 362.7,
+      "itraxx_xover": 329.7,
+      "cdx_em": 203.7,
+      "basis_hy_xover": 33.0
+    },
+    {
+      "date": "2026-01-10",
+      "cdx_na_hy": 360.7,
+      "itraxx_xover": 330.1,
+      "cdx_em": 205.0,
+      "basis_hy_xover": 30.6
+    },
+    {
+      "date": "2026-01-11",
+      "cdx_na_hy": 360.7,
+      "itraxx_xover": 329.9,
+      "cdx_em": 205.5,
+      "basis_hy_xover": 30.8
+    },
+    {
+      "date": "2026-01-12",
+      "cdx_na_hy": 358.0,
+      "itraxx_xover": 329.4,
+      "cdx_em": 205.9,
+      "basis_hy_xover": 28.6
+    },
+    {
+      "date": "2026-01-13",
+      "cdx_na_hy": 359.6,
+      "itraxx_xover": 329.0,
+      "cdx_em": 206.2,
+      "basis_hy_xover": 30.6
+    },
+    {
+      "date": "2026-01-14",
+      "cdx_na_hy": 360.0,
+      "itraxx_xover": 330.2,
+      "cdx_em": 205.0,
+      "basis_hy_xover": 29.8
+    },
+    {
+      "date": "2026-01-15",
+      "cdx_na_hy": 361.0,
+      "itraxx_xover": 327.7,
+      "cdx_em": 202.3,
+      "basis_hy_xover": 33.3
+    },
+    {
+      "date": "2026-01-16",
+      "cdx_na_hy": 359.8,
+      "itraxx_xover": 326.3,
+      "cdx_em": 203.2,
+      "basis_hy_xover": 33.5
+    },
+    {
+      "date": "2026-01-17",
+      "cdx_na_hy": 360.9,
+      "itraxx_xover": 324.4,
+      "cdx_em": 204.1,
+      "basis_hy_xover": 36.5
+    },
+    {
+      "date": "2026-01-18",
+      "cdx_na_hy": 359.0,
+      "itraxx_xover": 324.4,
+      "cdx_em": 203.8,
+      "basis_hy_xover": 34.6
+    },
+    {
+      "date": "2026-01-19",
+      "cdx_na_hy": 359.2,
+      "itraxx_xover": 325.9,
+      "cdx_em": 204.4,
+      "basis_hy_xover": 33.3
+    },
+    {
+      "date": "2026-01-20",
+      "cdx_na_hy": 359.8,
+      "itraxx_xover": 327.0,
+      "cdx_em": 204.8,
+      "basis_hy_xover": 32.8
+    },
+    {
+      "date": "2026-01-21",
+      "cdx_na_hy": 358.6,
+      "itraxx_xover": 325.9,
+      "cdx_em": 204.3,
+      "basis_hy_xover": 32.7
+    },
+    {
+      "date": "2026-01-22",
+      "cdx_na_hy": 359.5,
+      "itraxx_xover": 325.6,
+      "cdx_em": 206.6,
+      "basis_hy_xover": 33.9
+    },
+    {
+      "date": "2026-01-23",
+      "cdx_na_hy": 357.9,
+      "itraxx_xover": 323.9,
+      "cdx_em": 207.2,
+      "basis_hy_xover": 34.0
+    },
+    {
+      "date": "2026-01-24",
+      "cdx_na_hy": 360.4,
+      "itraxx_xover": 324.9,
+      "cdx_em": 207.9,
+      "basis_hy_xover": 35.5
+    },
+    {
+      "date": "2026-01-25",
+      "cdx_na_hy": 362.8,
+      "itraxx_xover": 324.8,
+      "cdx_em": 206.3,
+      "basis_hy_xover": 38.0
+    },
+    {
+      "date": "2026-01-26",
+      "cdx_na_hy": 361.6,
+      "itraxx_xover": 326.4,
+      "cdx_em": 204.7,
+      "basis_hy_xover": 35.2
+    },
+    {
+      "date": "2026-01-27",
+      "cdx_na_hy": 361.5,
+      "itraxx_xover": 326.8,
+      "cdx_em": 204.3,
+      "basis_hy_xover": 34.7
+    },
+    {
+      "date": "2026-01-28",
+      "cdx_na_hy": 362.6,
+      "itraxx_xover": 327.7,
+      "cdx_em": 206.5,
+      "basis_hy_xover": 34.9
+    },
+    {
+      "date": "2026-01-29",
+      "cdx_na_hy": 363.5,
+      "itraxx_xover": 326.7,
+      "cdx_em": 205.8,
+      "basis_hy_xover": 36.8
+    },
+    {
+      "date": "2026-01-30",
+      "cdx_na_hy": 361.7,
+      "itraxx_xover": 328.2,
+      "cdx_em": 205.1,
+      "basis_hy_xover": 33.5
+    },
+    {
+      "date": "2026-01-31",
+      "cdx_na_hy": 361.4,
+      "itraxx_xover": 329.3,
+      "cdx_em": 204.2,
+      "basis_hy_xover": 32.1
+    },
+    {
+      "date": "2026-02-01",
+      "cdx_na_hy": 360.7,
+      "itraxx_xover": 326.2,
+      "cdx_em": 203.0,
+      "basis_hy_xover": 34.5
+    },
+    {
+      "date": "2026-02-02",
+      "cdx_na_hy": 359.5,
+      "itraxx_xover": 326.9,
+      "cdx_em": 204.1,
+      "basis_hy_xover": 32.6
+    },
+    {
+      "date": "2026-02-03",
+      "cdx_na_hy": 359.3,
+      "itraxx_xover": 327.3,
+      "cdx_em": 204.2,
+      "basis_hy_xover": 32.0
+    },
+    {
+      "date": "2026-02-04",
+      "cdx_na_hy": 361.1,
+      "itraxx_xover": 328.7,
+      "cdx_em": 204.4,
+      "basis_hy_xover": 32.4
+    },
+    {
+      "date": "2026-02-05",
+      "cdx_na_hy": 359.1,
+      "itraxx_xover": 330.0,
+      "cdx_em": 204.7,
+      "basis_hy_xover": 29.1
+    },
+    {
+      "date": "2026-02-06",
+      "cdx_na_hy": 361.2,
+      "itraxx_xover": 329.8,
+      "cdx_em": 206.5,
+      "basis_hy_xover": 31.4
+    },
+    {
+      "date": "2026-02-07",
+      "cdx_na_hy": 360.3,
+      "itraxx_xover": 332.2,
+      "cdx_em": 206.4,
+      "basis_hy_xover": 28.1
+    },
+    {
+      "date": "2026-02-08",
+      "cdx_na_hy": 359.2,
+      "itraxx_xover": 330.1,
+      "cdx_em": 206.0,
+      "basis_hy_xover": 29.1
+    },
+    {
+      "date": "2026-02-09",
+      "cdx_na_hy": 361.6,
+      "itraxx_xover": 331.2,
+      "cdx_em": 206.5,
+      "basis_hy_xover": 30.4
+    },
+    {
+      "date": "2026-02-10",
+      "cdx_na_hy": 357.0,
+      "itraxx_xover": 332.1,
+      "cdx_em": 206.8,
+      "basis_hy_xover": 24.9
+    },
+    {
+      "date": "2026-02-11",
+      "cdx_na_hy": 355.9,
+      "itraxx_xover": 330.8,
+      "cdx_em": 206.5,
+      "basis_hy_xover": 25.1
+    },
+    {
+      "date": "2026-02-12",
+      "cdx_na_hy": 358.9,
+      "itraxx_xover": 328.9,
+      "cdx_em": 205.8,
+      "basis_hy_xover": 30.0
+    },
+    {
+      "date": "2026-02-13",
+      "cdx_na_hy": 361.2,
+      "itraxx_xover": 328.0,
+      "cdx_em": 205.2,
+      "basis_hy_xover": 33.2
+    },
+    {
+      "date": "2026-02-14",
+      "cdx_na_hy": 361.1,
+      "itraxx_xover": 325.9,
+      "cdx_em": 205.2,
+      "basis_hy_xover": 35.2
+    },
+    {
+      "date": "2026-02-15",
+      "cdx_na_hy": 358.6,
+      "itraxx_xover": 327.3,
+      "cdx_em": 205.0,
+      "basis_hy_xover": 31.3
+    },
+    {
+      "date": "2026-02-16",
+      "cdx_na_hy": 362.5,
+      "itraxx_xover": 327.6,
+      "cdx_em": 206.2,
+      "basis_hy_xover": 34.9
+    },
+    {
+      "date": "2026-02-17",
+      "cdx_na_hy": 359.8,
+      "itraxx_xover": 327.3,
+      "cdx_em": 206.3,
+      "basis_hy_xover": 32.5
+    },
+    {
+      "date": "2026-02-18",
+      "cdx_na_hy": 362.7,
+      "itraxx_xover": 324.5,
+      "cdx_em": 207.0,
+      "basis_hy_xover": 38.2
+    },
+    {
+      "date": "2026-02-19",
+      "cdx_na_hy": 363.4,
+      "itraxx_xover": 326.9,
+      "cdx_em": 207.4,
+      "basis_hy_xover": 36.5
+    },
+    {
+      "date": "2026-02-20",
+      "cdx_na_hy": 363.1,
+      "itraxx_xover": 325.9,
+      "cdx_em": 205.8,
+      "basis_hy_xover": 37.2
+    },
+    {
+      "date": "2026-02-21",
+      "cdx_na_hy": 363.0,
+      "itraxx_xover": 325.5,
+      "cdx_em": 207.6,
+      "basis_hy_xover": 37.5
+    },
+    {
+      "date": "2026-02-22",
+      "cdx_na_hy": 361.5,
+      "itraxx_xover": 325.9,
+      "cdx_em": 205.7,
+      "basis_hy_xover": 35.6
+    },
+    {
+      "date": "2026-02-23",
+      "cdx_na_hy": 360.4,
+      "itraxx_xover": 326.2,
+      "cdx_em": 206.3,
+      "basis_hy_xover": 34.2
+    },
+    {
+      "date": "2026-02-24",
+      "cdx_na_hy": 362.7,
+      "itraxx_xover": 326.0,
+      "cdx_em": 204.9,
+      "basis_hy_xover": 36.7
+    },
+    {
+      "date": "2026-02-25",
+      "cdx_na_hy": 363.1,
+      "itraxx_xover": 326.7,
+      "cdx_em": 205.1,
+      "basis_hy_xover": 36.4
+    },
+    {
+      "date": "2026-02-26",
+      "cdx_na_hy": 361.4,
+      "itraxx_xover": 328.4,
+      "cdx_em": 204.9,
+      "basis_hy_xover": 33.0
+    },
+    {
+      "date": "2026-02-27",
+      "cdx_na_hy": 362.3,
+      "itraxx_xover": 330.2,
+      "cdx_em": 205.3,
+      "basis_hy_xover": 32.1
+    },
+    {
+      "date": "2026-02-28",
+      "cdx_na_hy": 362.4,
+      "itraxx_xover": 333.3,
+      "cdx_em": 205.3,
+      "basis_hy_xover": 29.1
+    },
+    {
+      "date": "2026-03-01",
+      "cdx_na_hy": 361.4,
+      "itraxx_xover": 333.1,
+      "cdx_em": 206.5,
+      "basis_hy_xover": 28.3
+    },
+    {
+      "date": "2026-03-02",
+      "cdx_na_hy": 361.2,
+      "itraxx_xover": 333.5,
+      "cdx_em": 207.4,
+      "basis_hy_xover": 27.7
+    },
+    {
+      "date": "2026-03-03",
+      "cdx_na_hy": 359.9,
+      "itraxx_xover": 330.3,
+      "cdx_em": 207.3,
+      "basis_hy_xover": 29.6
+    },
+    {
+      "date": "2026-03-04",
+      "cdx_na_hy": 360.0,
+      "itraxx_xover": 329.0,
+      "cdx_em": 207.8,
+      "basis_hy_xover": 31.0
+    },
+    {
+      "date": "2026-03-05",
+      "cdx_na_hy": 360.7,
+      "itraxx_xover": 327.1,
+      "cdx_em": 207.9,
+      "basis_hy_xover": 33.6
+    },
+    {
+      "date": "2026-03-06",
+      "cdx_na_hy": 360.0,
+      "itraxx_xover": 324.5,
+      "cdx_em": 207.9,
+      "basis_hy_xover": 35.5
+    },
+    {
+      "date": "2026-03-07",
+      "cdx_na_hy": 359.6,
+      "itraxx_xover": 323.2,
+      "cdx_em": 208.0,
+      "basis_hy_xover": 36.4
+    },
+    {
+      "date": "2026-03-08",
+      "cdx_na_hy": 360.1,
+      "itraxx_xover": 322.2,
+      "cdx_em": 208.0,
+      "basis_hy_xover": 37.9
+    },
+    {
+      "date": "2026-03-09",
+      "cdx_na_hy": 361.5,
+      "itraxx_xover": 321.0,
+      "cdx_em": 208.0,
+      "basis_hy_xover": 40.5
+    },
+    {
+      "date": "2026-03-10",
+      "cdx_na_hy": 361.1,
+      "itraxx_xover": 324.6,
+      "cdx_em": 205.7,
+      "basis_hy_xover": 36.5
+    },
+    {
+      "date": "2026-03-11",
+      "cdx_na_hy": 361.9,
+      "itraxx_xover": 324.0,
+      "cdx_em": 205.3,
+      "basis_hy_xover": 37.9
+    },
+    {
+      "date": "2026-03-12",
+      "cdx_na_hy": 364.9,
+      "itraxx_xover": 323.9,
+      "cdx_em": 207.2,
+      "basis_hy_xover": 41.0
+    },
+    {
+      "date": "2026-03-13",
+      "cdx_na_hy": 363.5,
+      "itraxx_xover": 324.3,
+      "cdx_em": 206.3,
+      "basis_hy_xover": 39.2
+    },
+    {
+      "date": "2026-03-14",
+      "cdx_na_hy": 361.7,
+      "itraxx_xover": 324.3,
+      "cdx_em": 205.6,
+      "basis_hy_xover": 37.4
+    },
+    {
+      "date": "2026-03-15",
+      "cdx_na_hy": 361.6,
+      "itraxx_xover": 320.8,
+      "cdx_em": 207.2,
+      "basis_hy_xover": 40.8
+    },
+    {
+      "date": "2026-03-16",
+      "cdx_na_hy": 360.8,
+      "itraxx_xover": 323.6,
+      "cdx_em": 205.8,
+      "basis_hy_xover": 37.2
+    },
+    {
+      "date": "2026-03-17",
+      "cdx_na_hy": 360.9,
+      "itraxx_xover": 328.5,
+      "cdx_em": 204.6,
+      "basis_hy_xover": 32.4
+    },
+    {
+      "date": "2026-03-18",
+      "cdx_na_hy": 357.7,
+      "itraxx_xover": 327.3,
+      "cdx_em": 204.7,
+      "basis_hy_xover": 30.4
+    },
+    {
+      "date": "2026-03-19",
+      "cdx_na_hy": 358.6,
+      "itraxx_xover": 329.1,
+      "cdx_em": 204.1,
+      "basis_hy_xover": 29.5
+    },
+    {
+      "date": "2026-03-20",
+      "cdx_na_hy": 355.3,
+      "itraxx_xover": 328.0,
+      "cdx_em": 205.0,
+      "basis_hy_xover": 27.3
+    },
+    {
+      "date": "2026-03-21",
+      "cdx_na_hy": 355.9,
+      "itraxx_xover": 324.5,
+      "cdx_em": 204.6,
+      "basis_hy_xover": 31.4
+    },
+    {
+      "date": "2026-03-22",
+      "cdx_na_hy": 358.1,
+      "itraxx_xover": 327.7,
+      "cdx_em": 204.8,
+      "basis_hy_xover": 30.4
+    },
+    {
+      "date": "2026-03-23",
+      "cdx_na_hy": 358.3,
+      "itraxx_xover": 325.4,
+      "cdx_em": 203.6,
+      "basis_hy_xover": 32.9
+    },
+    {
+      "date": "2026-03-24",
+      "cdx_na_hy": 358.0,
+      "itraxx_xover": 326.0,
+      "cdx_em": 203.9,
+      "basis_hy_xover": 32.0
+    },
+    {
+      "date": "2026-03-25",
+      "cdx_na_hy": 356.7,
+      "itraxx_xover": 323.9,
+      "cdx_em": 202.8,
+      "basis_hy_xover": 32.8
+    },
+    {
+      "date": "2026-03-26",
+      "cdx_na_hy": 354.3,
+      "itraxx_xover": 324.7,
+      "cdx_em": 200.2,
+      "basis_hy_xover": 29.6
+    },
+    {
+      "date": "2026-03-27",
+      "cdx_na_hy": 353.4,
+      "itraxx_xover": 325.2,
+      "cdx_em": 201.5,
+      "basis_hy_xover": 28.2
+    },
+    {
+      "date": "2026-03-28",
+      "cdx_na_hy": 353.3,
+      "itraxx_xover": 326.6,
+      "cdx_em": 200.8,
+      "basis_hy_xover": 26.7
+    },
+    {
+      "date": "2026-03-29",
+      "cdx_na_hy": 351.7,
+      "itraxx_xover": 325.2,
+      "cdx_em": 202.1,
+      "basis_hy_xover": 26.5
+    },
+    {
+      "date": "2026-03-30",
+      "cdx_na_hy": 353.3,
+      "itraxx_xover": 325.7,
+      "cdx_em": 205.1,
+      "basis_hy_xover": 27.6
+    },
+    {
+      "date": "2026-03-31",
+      "cdx_na_hy": 353.0,
+      "itraxx_xover": 326.4,
+      "cdx_em": 205.0,
+      "basis_hy_xover": 26.6
+    },
+    {
+      "date": "2026-04-01",
+      "cdx_na_hy": 352.4,
+      "itraxx_xover": 329.8,
+      "cdx_em": 206.1,
+      "basis_hy_xover": 22.6
+    },
+    {
+      "date": "2026-04-02",
+      "cdx_na_hy": 349.7,
+      "itraxx_xover": 328.7,
+      "cdx_em": 206.1,
+      "basis_hy_xover": 21.0
+    },
+    {
+      "date": "2026-04-03",
+      "cdx_na_hy": 351.0,
+      "itraxx_xover": 326.1,
+      "cdx_em": 203.4,
+      "basis_hy_xover": 24.9
+    },
+    {
+      "date": "2026-04-04",
+      "cdx_na_hy": 347.4,
+      "itraxx_xover": 325.7,
+      "cdx_em": 202.9,
+      "basis_hy_xover": 21.7
+    },
+    {
+      "date": "2026-04-05",
+      "cdx_na_hy": 348.0,
+      "itraxx_xover": 324.2,
+      "cdx_em": 201.3,
+      "basis_hy_xover": 23.8
+    },
+    {
+      "date": "2026-04-06",
+      "cdx_na_hy": 344.3,
+      "itraxx_xover": 324.5,
+      "cdx_em": 201.4,
+      "basis_hy_xover": 19.8
+    },
+    {
+      "date": "2026-04-07",
+      "cdx_na_hy": 346.2,
+      "itraxx_xover": 325.5,
+      "cdx_em": 200.9,
+      "basis_hy_xover": 20.7
+    },
+    {
+      "date": "2026-04-08",
+      "cdx_na_hy": 348.6,
+      "itraxx_xover": 325.0,
+      "cdx_em": 200.0,
+      "basis_hy_xover": 23.6
+    },
+    {
+      "date": "2026-04-09",
+      "cdx_na_hy": 347.6,
+      "itraxx_xover": 323.8,
+      "cdx_em": 197.6,
+      "basis_hy_xover": 23.8
+    },
+    {
+      "date": "2026-04-10",
+      "cdx_na_hy": 347.8,
+      "itraxx_xover": 323.9,
+      "cdx_em": 197.1,
+      "basis_hy_xover": 23.9
+    },
+    {
+      "date": "2026-04-11",
+      "cdx_na_hy": 346.4,
+      "itraxx_xover": 324.2,
+      "cdx_em": 198.7,
+      "basis_hy_xover": 22.2
+    },
+    {
+      "date": "2026-04-12",
+      "cdx_na_hy": 346.4,
+      "itraxx_xover": 323.1,
+      "cdx_em": 197.9,
+      "basis_hy_xover": 23.3
+    },
+    {
+      "date": "2026-04-13",
+      "cdx_na_hy": 346.2,
+      "itraxx_xover": 320.8,
+      "cdx_em": 197.6,
+      "basis_hy_xover": 25.4
+    },
+    {
+      "date": "2026-04-14",
+      "cdx_na_hy": 346.3,
+      "itraxx_xover": 323.6,
+      "cdx_em": 198.4,
+      "basis_hy_xover": 22.7
+    },
+    {
+      "date": "2026-04-15",
+      "cdx_na_hy": 348.1,
+      "itraxx_xover": 322.2,
+      "cdx_em": 198.8,
+      "basis_hy_xover": 25.9
+    },
+    {
+      "date": "2026-04-16",
+      "cdx_na_hy": 345.9,
+      "itraxx_xover": 322.5,
+      "cdx_em": 199.0,
+      "basis_hy_xover": 23.4
+    },
+    {
+      "date": "2026-04-17",
+      "cdx_na_hy": 344.5,
+      "itraxx_xover": 325.4,
+      "cdx_em": 199.3,
+      "basis_hy_xover": 19.1
+    },
+    {
+      "date": "2026-04-18",
+      "cdx_na_hy": 341.1,
+      "itraxx_xover": 325.9,
+      "cdx_em": 198.6,
+      "basis_hy_xover": 15.2
+    },
+    {
+      "date": "2026-04-19",
+      "cdx_na_hy": 341.2,
+      "itraxx_xover": 326.2,
+      "cdx_em": 198.7,
+      "basis_hy_xover": 15.0
+    },
+    {
+      "date": "2026-04-20",
+      "cdx_na_hy": 337.7,
+      "itraxx_xover": 323.9,
+      "cdx_em": 199.2,
+      "basis_hy_xover": 13.8
+    },
+    {
+      "date": "2026-04-21",
+      "cdx_na_hy": 340.3,
+      "itraxx_xover": 326.6,
+      "cdx_em": 200.7,
+      "basis_hy_xover": 13.7
+    },
+    {
+      "date": "2026-04-22",
+      "cdx_na_hy": 336.8,
+      "itraxx_xover": 327.4,
+      "cdx_em": 198.4,
+      "basis_hy_xover": 9.4
+    },
+    {
+      "date": "2026-04-23",
+      "cdx_na_hy": 340.0,
+      "itraxx_xover": 327.3,
+      "cdx_em": 197.0,
+      "basis_hy_xover": 12.7
+    },
+    {
+      "date": "2026-04-24",
+      "cdx_na_hy": 343.8,
+      "itraxx_xover": 327.9,
+      "cdx_em": 194.9,
+      "basis_hy_xover": 15.9
+    },
+    {
+      "date": "2026-04-25",
+      "cdx_na_hy": 344.3,
+      "itraxx_xover": 326.2,
+      "cdx_em": 194.9,
+      "basis_hy_xover": 18.1
+    },
+    {
+      "date": "2026-04-26",
+      "cdx_na_hy": 343.4,
+      "itraxx_xover": 328.0,
+      "cdx_em": 193.3,
+      "basis_hy_xover": 15.4
+    },
+    {
+      "date": "2026-04-27",
+      "cdx_na_hy": 344.0,
+      "itraxx_xover": 330.4,
+      "cdx_em": 192.4,
+      "basis_hy_xover": 13.6
+    },
+    {
+      "date": "2026-04-28",
+      "cdx_na_hy": 344.3,
+      "itraxx_xover": 330.1,
+      "cdx_em": 191.7,
+      "basis_hy_xover": 14.2
+    },
+    {
+      "date": "2026-04-29",
+      "cdx_na_hy": 345.4,
+      "itraxx_xover": 329.6,
+      "cdx_em": 190.7,
+      "basis_hy_xover": 15.8
+    },
+    {
+      "date": "2026-04-30",
+      "cdx_na_hy": 348.5,
+      "itraxx_xover": 330.3,
+      "cdx_em": 190.5,
+      "basis_hy_xover": 18.2
+    },
+    {
+      "date": "2026-05-01",
+      "cdx_na_hy": 347.1,
+      "itraxx_xover": 328.4,
+      "cdx_em": 191.7,
+      "basis_hy_xover": 18.7
+    },
+    {
+      "date": "2026-05-02",
+      "cdx_na_hy": 346.7,
+      "itraxx_xover": 328.6,
+      "cdx_em": 191.5,
+      "basis_hy_xover": 18.1
+    },
+    {
+      "date": "2026-05-03",
+      "cdx_na_hy": 347.6,
+      "itraxx_xover": 327.8,
+      "cdx_em": 192.2,
+      "basis_hy_xover": 19.8
+    },
+    {
+      "date": "2026-05-04",
+      "cdx_na_hy": 347.1,
+      "itraxx_xover": 328.6,
+      "cdx_em": 192.8,
+      "basis_hy_xover": 18.5
+    },
+    {
+      "date": "2026-05-05",
+      "cdx_na_hy": 346.7,
+      "itraxx_xover": 326.6,
+      "cdx_em": 191.8,
+      "basis_hy_xover": 20.1
+    },
+    {
+      "date": "2026-05-06",
+      "cdx_na_hy": 345.2,
+      "itraxx_xover": 324.5,
+      "cdx_em": 192.6,
+      "basis_hy_xover": 20.7
+    },
+    {
+      "date": "2026-05-07",
+      "cdx_na_hy": 345.0,
+      "itraxx_xover": 326.6,
+      "cdx_em": 194.8,
+      "basis_hy_xover": 18.4
+    },
+    {
+      "date": "2026-05-08",
+      "cdx_na_hy": 344.9,
+      "itraxx_xover": 323.6,
+      "cdx_em": 194.2,
+      "basis_hy_xover": 21.3
+    },
+    {
+      "date": "2026-05-09",
+      "cdx_na_hy": 344.6,
+      "itraxx_xover": 320.8,
+      "cdx_em": 193.8,
+      "basis_hy_xover": 23.8
+    },
+    {
+      "date": "2026-05-10",
+      "cdx_na_hy": 345.0,
+      "itraxx_xover": 319.8,
+      "cdx_em": 192.9,
+      "basis_hy_xover": 25.2
+    },
+    {
+      "date": "2026-05-11",
+      "cdx_na_hy": 343.5,
+      "itraxx_xover": 322.4,
+      "cdx_em": 192.6,
+      "basis_hy_xover": 21.1
+    },
+    {
+      "date": "2026-05-12",
+      "cdx_na_hy": 341.9,
+      "itraxx_xover": 321.4,
+      "cdx_em": 193.4,
+      "basis_hy_xover": 20.5
+    },
+    {
+      "date": "2026-05-13",
+      "cdx_na_hy": 340.6,
+      "itraxx_xover": 321.8,
+      "cdx_em": 194.0,
+      "basis_hy_xover": 18.8
+    },
+    {
+      "date": "2026-05-14",
+      "cdx_na_hy": 342.0,
+      "itraxx_xover": 323.7,
+      "cdx_em": 193.3,
+      "basis_hy_xover": 18.3
+    },
+    {
+      "date": "2026-05-15",
+      "cdx_na_hy": 344.0,
+      "itraxx_xover": 322.0,
+      "cdx_em": 192.7,
+      "basis_hy_xover": 22.0
+    },
+    {
+      "date": "2026-05-16",
+      "cdx_na_hy": 346.0,
+      "itraxx_xover": 322.9,
+      "cdx_em": 192.6,
+      "basis_hy_xover": 23.1
+    },
+    {
+      "date": "2026-05-17",
+      "cdx_na_hy": 343.6,
+      "itraxx_xover": 323.4,
+      "cdx_em": 191.8,
+      "basis_hy_xover": 20.2
+    },
+    {
+      "date": "2026-05-18",
+      "cdx_na_hy": 341.8,
+      "itraxx_xover": 321.9,
+      "cdx_em": 191.9,
+      "basis_hy_xover": 19.9
+    },
+    {
+      "date": "2026-05-19",
+      "cdx_na_hy": 337.9,
+      "itraxx_xover": 322.1,
+      "cdx_em": 191.9,
+      "basis_hy_xover": 15.8
+    },
+    {
+      "date": "2026-05-20",
+      "cdx_na_hy": 336.9,
+      "itraxx_xover": 323.3,
+      "cdx_em": 192.4,
+      "basis_hy_xover": 13.6
+    },
+    {
+      "date": "2026-05-21",
+      "cdx_na_hy": 335.9,
+      "itraxx_xover": 321.8,
+      "cdx_em": 192.9,
+      "basis_hy_xover": 14.1
+    },
+    {
+      "date": "2026-05-22",
+      "cdx_na_hy": 333.3,
+      "itraxx_xover": 320.9,
+      "cdx_em": 192.1,
+      "basis_hy_xover": 12.4
+    },
+    {
+      "date": "2026-05-23",
+      "cdx_na_hy": 333.7,
+      "itraxx_xover": 320.9,
+      "cdx_em": 192.0,
+      "basis_hy_xover": 12.8
+    },
+    {
+      "date": "2026-05-24",
+      "cdx_na_hy": 336.0,
+      "itraxx_xover": 320.9,
+      "cdx_em": 191.5,
+      "basis_hy_xover": 15.1
+    },
+    {
+      "date": "2026-05-25",
+      "cdx_na_hy": 333.9,
+      "itraxx_xover": 321.7,
+      "cdx_em": 191.9,
+      "basis_hy_xover": 12.2
+    },
+    {
+      "date": "2026-05-26",
+      "cdx_na_hy": 336.7,
+      "itraxx_xover": 320.1,
+      "cdx_em": 191.8,
+      "basis_hy_xover": 16.6
+    },
+    {
+      "date": "2026-05-27",
+      "cdx_na_hy": 336.7,
+      "itraxx_xover": 319.6,
+      "cdx_em": 191.7,
+      "basis_hy_xover": 17.1
+    },
+    {
+      "date": "2026-05-28",
+      "cdx_na_hy": 333.7,
+      "itraxx_xover": 320.6,
+      "cdx_em": 192.2,
+      "basis_hy_xover": 13.1
+    },
+    {
+      "date": "2026-05-29",
+      "cdx_na_hy": 335.9,
+      "itraxx_xover": 323.8,
+      "cdx_em": 191.7,
+      "basis_hy_xover": 12.1
+    },
+    {
+      "date": "2026-05-30",
+      "cdx_na_hy": 335.9,
+      "itraxx_xover": 323.3,
+      "cdx_em": 193.5,
+      "basis_hy_xover": 12.6
+    },
+    {
+      "date": "2026-05-31",
+      "cdx_na_hy": 332.9,
+      "itraxx_xover": 323.6,
+      "cdx_em": 191.8,
+      "basis_hy_xover": 9.3
+    },
+    {
+      "date": "2026-06-01",
+      "cdx_na_hy": 328.5,
+      "itraxx_xover": 319.8,
+      "cdx_em": 190.2,
+      "basis_hy_xover": 8.7
+    },
+    {
+      "date": "2026-06-02",
+      "cdx_na_hy": 330.8,
+      "itraxx_xover": 318.0,
+      "cdx_em": 189.8,
+      "basis_hy_xover": 12.8
+    },
+    {
+      "date": "2026-06-03",
+      "cdx_na_hy": 329.0,
+      "itraxx_xover": 318.7,
+      "cdx_em": 188.6,
+      "basis_hy_xover": 10.3
+    },
+    {
+      "date": "2026-06-04",
+      "cdx_na_hy": 331.7,
+      "itraxx_xover": 316.8,
+      "cdx_em": 187.8,
+      "basis_hy_xover": 14.9
+    },
+    {
+      "date": "2026-06-05",
+      "cdx_na_hy": 332.2,
+      "itraxx_xover": 316.6,
+      "cdx_em": 189.2,
+      "basis_hy_xover": 15.6
+    },
+    {
+      "date": "2026-06-06",
+      "cdx_na_hy": 332.6,
+      "itraxx_xover": 314.4,
+      "cdx_em": 188.5,
+      "basis_hy_xover": 18.2
+    },
+    {
+      "date": "2026-06-07",
+      "cdx_na_hy": 331.8,
+      "itraxx_xover": 315.4,
+      "cdx_em": 188.8,
+      "basis_hy_xover": 16.4
+    },
+    {
+      "date": "2026-06-08",
+      "cdx_na_hy": 331.8,
+      "itraxx_xover": 316.5,
+      "cdx_em": 188.2,
+      "basis_hy_xover": 15.3
+    },
+    {
+      "date": "2026-06-09",
+      "cdx_na_hy": 331.8,
+      "itraxx_xover": 316.5,
+      "cdx_em": 189.6,
+      "basis_hy_xover": 15.3
+    },
+    {
+      "date": "2026-06-10",
+      "cdx_na_hy": 331.8,
+      "itraxx_xover": 315.6,
+      "cdx_em": 188.4,
+      "basis_hy_xover": 16.2
+    },
+    {
+      "date": "2026-06-11",
+      "cdx_na_hy": 333.2,
+      "itraxx_xover": 314.4,
+      "cdx_em": 188.6,
+      "basis_hy_xover": 18.8
+    },
+    {
+      "date": "2026-06-12",
+      "cdx_na_hy": 329.9,
+      "itraxx_xover": 315.8,
+      "cdx_em": 187.2,
+      "basis_hy_xover": 14.1
+    },
+    {
+      "date": "2026-06-13",
+      "cdx_na_hy": 328.8,
+      "itraxx_xover": 317.2,
+      "cdx_em": 185.8,
+      "basis_hy_xover": 11.6
+    },
+    {
+      "date": "2026-06-14",
+      "cdx_na_hy": 329.0,
+      "itraxx_xover": 317.0,
+      "cdx_em": 184.8,
+      "basis_hy_xover": 12.0
+    },
+    {
+      "date": "2026-06-15",
+      "cdx_na_hy": 331.7,
+      "itraxx_xover": 319.0,
+      "cdx_em": 182.9,
+      "basis_hy_xover": 12.7
+    },
+    {
+      "date": "2026-06-16",
+      "cdx_na_hy": 329.3,
+      "itraxx_xover": 319.9,
+      "cdx_em": 181.7,
+      "basis_hy_xover": 9.4
+    },
+    {
+      "date": "2026-06-17",
+      "cdx_na_hy": 328.9,
+      "itraxx_xover": 319.6,
+      "cdx_em": 182.5,
+      "basis_hy_xover": 9.3
+    },
+    {
+      "date": "2026-06-18",
+      "cdx_na_hy": 328.8,
+      "itraxx_xover": 319.3,
+      "cdx_em": 181.8,
+      "basis_hy_xover": 9.5
+    },
+    {
+      "date": "2026-06-19",
+      "cdx_na_hy": 331.4,
+      "itraxx_xover": 318.0,
+      "cdx_em": 182.3,
+      "basis_hy_xover": 13.4
+    },
+    {
+      "date": "2026-06-20",
+      "cdx_na_hy": 330.6,
+      "itraxx_xover": 317.8,
+      "cdx_em": 182.2,
+      "basis_hy_xover": 12.8
+    },
+    {
+      "date": "2026-06-21",
+      "cdx_na_hy": 330.5,
+      "itraxx_xover": 315.8,
+      "cdx_em": 183.1,
+      "basis_hy_xover": 14.7
+    },
+    {
+      "date": "2026-06-22",
+      "cdx_na_hy": 333.2,
+      "itraxx_xover": 315.9,
+      "cdx_em": 183.9,
+      "basis_hy_xover": 17.3
+    },
+    {
+      "date": "2026-06-23",
+      "cdx_na_hy": 334.8,
+      "itraxx_xover": 317.0,
+      "cdx_em": 184.2,
+      "basis_hy_xover": 17.8
+    },
+    {
+      "date": "2026-06-24",
+      "cdx_na_hy": 335.2,
+      "itraxx_xover": 318.0,
+      "cdx_em": 184.3,
+      "basis_hy_xover": 17.2
+    },
+    {
+      "date": "2026-06-25",
+      "cdx_na_hy": 333.4,
+      "itraxx_xover": 317.6,
+      "cdx_em": 182.4,
+      "basis_hy_xover": 15.8
+    },
+    {
+      "date": "2026-06-26",
+      "cdx_na_hy": 333.4,
+      "itraxx_xover": 317.8,
+      "cdx_em": 183.7,
+      "basis_hy_xover": 15.6
+    },
+    {
+      "date": "2026-06-27",
+      "cdx_na_hy": 333.7,
+      "itraxx_xover": 318.8,
+      "cdx_em": 183.7,
+      "basis_hy_xover": 14.9
+    },
+    {
+      "date": "2026-06-28",
+      "cdx_na_hy": 331.9,
+      "itraxx_xover": 316.1,
+      "cdx_em": 182.7,
+      "basis_hy_xover": 15.8
+    },
+    {
+      "date": "2026-06-29",
+      "cdx_na_hy": 329.5,
+      "itraxx_xover": 316.7,
+      "cdx_em": 182.5,
+      "basis_hy_xover": 12.8
+    },
+    {
+      "date": "2026-06-30",
+      "cdx_na_hy": 330.7,
+      "itraxx_xover": 316.4,
+      "cdx_em": 183.6,
+      "basis_hy_xover": 14.3
+    },
+    {
+      "date": "2026-07-01",
+      "cdx_na_hy": 332.7,
+      "itraxx_xover": 315.0,
+      "cdx_em": 183.3,
+      "basis_hy_xover": 17.7
+    },
+    {
+      "date": "2026-07-02",
+      "cdx_na_hy": 331.8,
+      "itraxx_xover": 312.0,
+      "cdx_em": 184.0,
+      "basis_hy_xover": 19.8
+    },
+    {
+      "date": "2026-07-03",
+      "cdx_na_hy": 334.0,
+      "itraxx_xover": 311.7,
+      "cdx_em": 183.5,
+      "basis_hy_xover": 22.3
+    },
+    {
+      "date": "2026-07-04",
+      "cdx_na_hy": 335.9,
+      "itraxx_xover": 307.7,
+      "cdx_em": 183.7,
+      "basis_hy_xover": 28.2
+    },
+    {
+      "date": "2026-07-05",
+      "cdx_na_hy": 336.0,
+      "itraxx_xover": 306.7,
+      "cdx_em": 185.1,
+      "basis_hy_xover": 29.3
+    },
+    {
+      "date": "2026-07-06",
+      "cdx_na_hy": 337.6,
+      "itraxx_xover": 306.2,
+      "cdx_em": 184.9,
+      "basis_hy_xover": 31.4
+    },
+    {
+      "date": "2026-07-07",
+      "cdx_na_hy": 336.7,
+      "itraxx_xover": 305.3,
+      "cdx_em": 183.5,
+      "basis_hy_xover": 31.4
+    },
+    {
+      "date": "2026-07-08",
+      "cdx_na_hy": 339.0,
+      "itraxx_xover": 306.9,
+      "cdx_em": 184.3,
+      "basis_hy_xover": 32.1
+    },
+    {
+      "date": "2026-07-09",
+      "cdx_na_hy": 336.8,
+      "itraxx_xover": 310.2,
+      "cdx_em": 186.2,
+      "basis_hy_xover": 26.6
+    },
+    {
+      "date": "2026-07-10",
+      "cdx_na_hy": 337.0,
+      "itraxx_xover": 308.5,
+      "cdx_em": 185.2,
+      "basis_hy_xover": 28.5
+    },
+    {
+      "date": "2026-07-11",
+      "cdx_na_hy": 337.6,
+      "itraxx_xover": 306.9,
+      "cdx_em": 185.1,
+      "basis_hy_xover": 30.7
+    },
+    {
+      "date": "2026-07-12",
+      "cdx_na_hy": 339.3,
+      "itraxx_xover": 304.4,
+      "cdx_em": 187.0,
+      "basis_hy_xover": 34.9
+    },
+    {
+      "date": "2026-07-13",
+      "cdx_na_hy": 341.8,
+      "itraxx_xover": 302.4,
+      "cdx_em": 185.4,
+      "basis_hy_xover": 39.4
+    },
+    {
+      "date": "2026-07-14",
+      "cdx_na_hy": 340.9,
+      "itraxx_xover": 300.8,
+      "cdx_em": 185.0,
+      "basis_hy_xover": 40.1
+    },
+    {
+      "date": "2026-07-15",
+      "cdx_na_hy": 335.9,
+      "itraxx_xover": 300.6,
+      "cdx_em": 186.7,
+      "basis_hy_xover": 35.3
+    },
+    {
+      "date": "2026-07-16",
+      "cdx_na_hy": 333.7,
+      "itraxx_xover": 300.3,
+      "cdx_em": 185.0,
+      "basis_hy_xover": 33.4
+    },
+    {
+      "date": "2026-07-17",
+      "cdx_na_hy": 334.8,
+      "itraxx_xover": 300.1,
+      "cdx_em": 186.8,
+      "basis_hy_xover": 34.7
+    },
+    {
+      "date": "2026-07-18",
+      "cdx_na_hy": 335.0,
+      "itraxx_xover": 299.7,
+      "cdx_em": 187.1,
+      "basis_hy_xover": 35.3
+    },
+    {
+      "date": "2026-07-19",
+      "cdx_na_hy": 333.9,
+      "itraxx_xover": 297.7,
+      "cdx_em": 187.2,
+      "basis_hy_xover": 36.2
+    },
+    {
+      "date": "2026-07-20",
+      "cdx_na_hy": 333.5,
+      "itraxx_xover": 298.2,
+      "cdx_em": 187.3,
+      "basis_hy_xover": 35.3
+    },
+    {
+      "date": "2026-07-21",
+      "cdx_na_hy": 332.5,
+      "itraxx_xover": 299.1,
+      "cdx_em": 188.8,
+      "basis_hy_xover": 33.4
+    },
+    {
+      "date": "2026-07-22",
+      "cdx_na_hy": 330.4,
+      "itraxx_xover": 302.0,
+      "cdx_em": 188.2,
+      "basis_hy_xover": 28.4
+    },
+    {
+      "date": "2026-07-23",
+      "cdx_na_hy": 329.0,
+      "itraxx_xover": 305.9,
+      "cdx_em": 188.1,
+      "basis_hy_xover": 23.1
+    },
+    {
+      "date": "2026-07-24",
+      "cdx_na_hy": 331.5,
+      "itraxx_xover": 307.1,
+      "cdx_em": 186.1,
+      "basis_hy_xover": 24.4
+    },
+    {
+      "date": "2026-07-25",
+      "cdx_na_hy": 331.7,
+      "itraxx_xover": 306.1,
+      "cdx_em": 184.5,
+      "basis_hy_xover": 25.6
+    },
+    {
+      "date": "2026-07-26",
+      "cdx_na_hy": 328.4,
+      "itraxx_xover": 306.1,
+      "cdx_em": 184.9,
+      "basis_hy_xover": 22.3
+    },
+    {
+      "date": "2026-07-27",
+      "cdx_na_hy": 329.2,
+      "itraxx_xover": 305.5,
+      "cdx_em": 183.9,
+      "basis_hy_xover": 23.7
+    },
+    {
+      "date": "2026-07-28",
+      "cdx_na_hy": 327.4,
+      "itraxx_xover": 304.5,
+      "cdx_em": 182.7,
+      "basis_hy_xover": 22.9
+    },
+    {
+      "date": "2026-07-29",
+      "cdx_na_hy": 327.1,
+      "itraxx_xover": 304.4,
+      "cdx_em": 181.7,
+      "basis_hy_xover": 22.7
+    },
+    {
+      "date": "2026-07-30",
+      "cdx_na_hy": 326.8,
+      "itraxx_xover": 303.1,
+      "cdx_em": 181.6,
+      "basis_hy_xover": 23.7
+    },
+    {
+      "date": "2026-07-31",
+      "cdx_na_hy": 327.8,
+      "itraxx_xover": 303.3,
+      "cdx_em": 182.0,
+      "basis_hy_xover": 24.5
+    },
+    {
+      "date": "2026-08-01",
+      "cdx_na_hy": 324.9,
+      "itraxx_xover": 302.6,
+      "cdx_em": 182.2,
+      "basis_hy_xover": 22.3
+    },
+    {
+      "date": "2026-08-02",
+      "cdx_na_hy": 326.2,
+      "itraxx_xover": 300.0,
+      "cdx_em": 182.3,
+      "basis_hy_xover": 26.2
+    },
+    {
+      "date": "2026-08-03",
+      "cdx_na_hy": 328.5,
+      "itraxx_xover": 299.8,
+      "cdx_em": 182.1,
+      "basis_hy_xover": 28.7
+    },
+    {
+      "date": "2026-08-04",
+      "cdx_na_hy": 329.3,
+      "itraxx_xover": 300.3,
+      "cdx_em": 182.7,
+      "basis_hy_xover": 29.0
+    },
+    {
+      "date": "2026-08-05",
+      "cdx_na_hy": 329.4,
+      "itraxx_xover": 300.6,
+      "cdx_em": 181.8,
+      "basis_hy_xover": 28.8
+    },
+    {
+      "date": "2026-08-06",
+      "cdx_na_hy": 329.0,
+      "itraxx_xover": 302.6,
+      "cdx_em": 181.5,
+      "basis_hy_xover": 26.4
+    },
+    {
+      "date": "2026-08-07",
+      "cdx_na_hy": 328.7,
+      "itraxx_xover": 301.8,
+      "cdx_em": 182.2,
+      "basis_hy_xover": 26.9
+    },
+    {
+      "date": "2026-08-08",
+      "cdx_na_hy": 327.1,
+      "itraxx_xover": 303.2,
+      "cdx_em": 181.1,
+      "basis_hy_xover": 23.9
+    },
+    {
+      "date": "2026-08-09",
+      "cdx_na_hy": 325.2,
+      "itraxx_xover": 303.4,
+      "cdx_em": 181.1,
+      "basis_hy_xover": 21.8
+    },
+    {
+      "date": "2026-08-10",
+      "cdx_na_hy": 325.8,
+      "itraxx_xover": 305.0,
+      "cdx_em": 180.6,
+      "basis_hy_xover": 20.8
+    },
+    {
+      "date": "2026-08-11",
+      "cdx_na_hy": 326.7,
+      "itraxx_xover": 303.4,
+      "cdx_em": 181.8,
+      "basis_hy_xover": 23.3
+    },
+    {
+      "date": "2026-08-12",
+      "cdx_na_hy": 327.9,
+      "itraxx_xover": 304.1,
+      "cdx_em": 181.9,
+      "basis_hy_xover": 23.8
+    },
+    {
+      "date": "2026-08-13",
+      "cdx_na_hy": 326.5,
+      "itraxx_xover": 303.4,
+      "cdx_em": 182.3,
+      "basis_hy_xover": 23.1
+    },
+    {
+      "date": "2026-08-14",
+      "cdx_na_hy": 326.5,
+      "itraxx_xover": 303.5,
+      "cdx_em": 180.8,
+      "basis_hy_xover": 23.0
+    },
+    {
+      "date": "2026-08-15",
+      "cdx_na_hy": 326.8,
+      "itraxx_xover": 302.3,
+      "cdx_em": 179.6,
+      "basis_hy_xover": 24.5
+    },
+    {
+      "date": "2026-08-16",
+      "cdx_na_hy": 326.5,
+      "itraxx_xover": 299.2,
+      "cdx_em": 180.2,
+      "basis_hy_xover": 27.3
+    },
+    {
+      "date": "2026-08-17",
+      "cdx_na_hy": 328.0,
+      "itraxx_xover": 299.1,
+      "cdx_em": 179.1,
+      "basis_hy_xover": 28.9
+    },
+    {
+      "date": "2026-08-18",
+      "cdx_na_hy": 326.2,
+      "itraxx_xover": 298.9,
+      "cdx_em": 176.6,
+      "basis_hy_xover": 27.3
+    },
+    {
+      "date": "2026-08-19",
+      "cdx_na_hy": 326.5,
+      "itraxx_xover": 300.0,
+      "cdx_em": 176.3,
+      "basis_hy_xover": 26.5
+    },
+    {
+      "date": "2026-08-20",
+      "cdx_na_hy": 325.6,
+      "itraxx_xover": 300.3,
+      "cdx_em": 176.7,
+      "basis_hy_xover": 25.3
+    },
+    {
+      "date": "2026-08-21",
+      "cdx_na_hy": 327.6,
+      "itraxx_xover": 300.3,
+      "cdx_em": 176.0,
+      "basis_hy_xover": 27.3
+    },
+    {
+      "date": "2026-08-22",
+      "cdx_na_hy": 326.7,
+      "itraxx_xover": 300.5,
+      "cdx_em": 177.6,
+      "basis_hy_xover": 26.2
+    },
+    {
+      "date": "2026-08-23",
+      "cdx_na_hy": 326.1,
+      "itraxx_xover": 298.8,
+      "cdx_em": 176.7,
+      "basis_hy_xover": 27.3
+    },
+    {
+      "date": "2026-08-24",
+      "cdx_na_hy": 322.3,
+      "itraxx_xover": 299.3,
+      "cdx_em": 175.4,
+      "basis_hy_xover": 23.0
+    },
+    {
+      "date": "2026-08-25",
+      "cdx_na_hy": 320.2,
+      "itraxx_xover": 296.1,
+      "cdx_em": 174.3,
+      "basis_hy_xover": 24.1
+    },
+    {
+      "date": "2026-08-26",
+      "cdx_na_hy": 321.4,
+      "itraxx_xover": 294.1,
+      "cdx_em": 172.7,
+      "basis_hy_xover": 27.3
+    },
+    {
+      "date": "2026-08-27",
+      "cdx_na_hy": 321.9,
+      "itraxx_xover": 293.7,
+      "cdx_em": 173.3,
+      "basis_hy_xover": 28.2
+    },
+    {
+      "date": "2026-08-28",
+      "cdx_na_hy": 323.4,
+      "itraxx_xover": 293.9,
+      "cdx_em": 172.1,
+      "basis_hy_xover": 29.5
+    },
+    {
+      "date": "2026-08-29",
+      "cdx_na_hy": 323.2,
+      "itraxx_xover": 294.9,
+      "cdx_em": 171.7,
+      "basis_hy_xover": 28.3
+    },
+    {
+      "date": "2026-08-30",
+      "cdx_na_hy": 320.7,
+      "itraxx_xover": 296.8,
+      "cdx_em": 171.5,
+      "basis_hy_xover": 23.9
+    },
+    {
+      "date": "2026-08-31",
+      "cdx_na_hy": 320.1,
+      "itraxx_xover": 296.9,
+      "cdx_em": 172.7,
+      "basis_hy_xover": 23.2
+    },
+    {
+      "date": "2026-09-01",
+      "cdx_na_hy": 320.7,
+      "itraxx_xover": 296.4,
+      "cdx_em": 173.5,
+      "basis_hy_xover": 24.3
+    },
+    {
+      "date": "2026-09-02",
+      "cdx_na_hy": 324.7,
+      "itraxx_xover": 298.7,
+      "cdx_em": 174.3,
+      "basis_hy_xover": 26.0
+    },
+    {
+      "date": "2026-09-03",
+      "cdx_na_hy": 322.7,
+      "itraxx_xover": 304.7,
+      "cdx_em": 173.2,
+      "basis_hy_xover": 18.0
+    },
+    {
+      "date": "2026-09-04",
+      "cdx_na_hy": 322.1,
+      "itraxx_xover": 303.3,
+      "cdx_em": 174.9,
+      "basis_hy_xover": 18.8
+    },
+    {
+      "date": "2026-09-05",
+      "cdx_na_hy": 322.9,
+      "itraxx_xover": 300.8,
+      "cdx_em": 175.2,
+      "basis_hy_xover": 22.1
+    },
+    {
+      "date": "2026-09-06",
+      "cdx_na_hy": 323.9,
+      "itraxx_xover": 300.1,
+      "cdx_em": 174.0,
+      "basis_hy_xover": 23.8
+    },
+    {
+      "date": "2026-09-07",
+      "cdx_na_hy": 322.6,
+      "itraxx_xover": 299.3,
+      "cdx_em": 174.1,
+      "basis_hy_xover": 23.3
+    },
+    {
+      "date": "2026-09-08",
+      "cdx_na_hy": 321.7,
+      "itraxx_xover": 300.4,
+      "cdx_em": 173.2,
+      "basis_hy_xover": 21.3
+    },
+    {
+      "date": "2026-09-09",
+      "cdx_na_hy": 318.6,
+      "itraxx_xover": 299.1,
+      "cdx_em": 174.6,
+      "basis_hy_xover": 19.5
+    },
+    {
+      "date": "2026-09-10",
+      "cdx_na_hy": 317.7,
+      "itraxx_xover": 302.7,
+      "cdx_em": 175.1,
+      "basis_hy_xover": 15.0
+    },
+    {
+      "date": "2026-09-11",
+      "cdx_na_hy": 315.8,
+      "itraxx_xover": 301.1,
+      "cdx_em": 175.3,
+      "basis_hy_xover": 14.7
+    },
+    {
+      "date": "2026-09-12",
+      "cdx_na_hy": 314.0,
+      "itraxx_xover": 304.7,
+      "cdx_em": 174.3,
+      "basis_hy_xover": 9.3
+    },
+    {
+      "date": "2026-09-13",
+      "cdx_na_hy": 315.6,
+      "itraxx_xover": 306.7,
+      "cdx_em": 174.2,
+      "basis_hy_xover": 8.9
+    },
+    {
+      "date": "2026-09-14",
+      "cdx_na_hy": 322.5,
+      "itraxx_xover": 296.0,
+      "cdx_em": 174.5,
+      "basis_hy_xover": 26.5
+    }
+  ]
+}
