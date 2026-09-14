@@ -59,6 +59,9 @@ shows asset + the **actual default strategy name** (kept in sync with the page's
 | LQQ3 3x Nasdaq | SMA200 1x/cash | sma_cash |
 | 3BAL 3x EU Banks | SMA20 1x/cash | sma_cash |
 | *Tools* | Lab, Charts, Summary results, Instruments | — |
+| US Treasuries | 2Y, 5Y, 10Y, 30Y Yield Curve & Macro Model | rates |
+| CDX | EM CDX, iTraxx Europe Crossover & US High Yield CDX | rates |
+| Local EM | GBI-EM Local Currency Sovereign Debt & FX Desk | rates |
 
 The `\*` on the Nasdaq tabs flags Stillwater picks (strict Water unreachable). Gold/MSCI EM/MSCI World/LQQ3
 have **no strict Water** either (their buy-&-hold is too strong) — they use the best available 1x/cash trend.
@@ -239,3 +242,18 @@ All dump with `allow_nan=False` (fail loud rather than write invalid JSON).
   been migrated to the shared renderer.
 - The dead `*_guarded.js` thick-clients and `archive/guarded_legacy/*.bak` can be deleted later — git history
   preserves the originals.
+
+
+## Rates, Credit & FX Strategy Desks
+
+Three dedicated institutional macro desks served at the repo root and grouped under **Rates, Credit & FX** in `site-nav.js`:
+
+| Page | Desk | Engine / Script | Data Payload | Auto-Refresh Skill |
+| :--- | :--- | :--- | :--- | :--- |
+| **`ust.html`** | US Treasuries (Curve & Macro Model) | `ust-page.js` | `ust_curve_data.json`, `ust_daily.csv` | `/analyse-ust` |
+| **`cdx.html`** | CDX & Credit Derivatives Desk | `credit-page.js` | `credit_data.json` | `/analyse-cdx` |
+| **`local_em.html`** | Local EM Strategy Desk (GBI-EM) | `gbi-em-page.js` | `gbi_em_data.json` | `/analyse-gbi-em` |
+
+- **`ust.html` (US Treasuries)**: Tracks generic yields (2Y, 5Y, 10Y, 30Y), key spreads (2s10s, 5s30s, 2s30s, 10s30s), classifies macro regimes (Bear Steepening / Fiscal Dominance), computes DV01-neutral steepeners, and tracks technical invalidation triggers.
+- **`cdx.html` (CDX Desk)**: Tracks synthetic CDS index benchmarks (CDX.NA.HY, iTraxx Europe Crossover, CDX.EM), spread percentiles, Transatlantic basis, distress ratios, and 12M default forecasts. (`credit.html` provides a backwards-compatible instant redirect).
+- **`local_em.html` (Local EM Desk)**: Analyzes 8 core benchmark countries (Brazil, South Africa, Indonesia, Colombia, Mexico, India, Poland, Turkey) ranked by real yields, specifying exact curve points (e.g. NTN-F 2029 5Y belly, SAGB R2035 10Y), Unhedged vs FX-Hedged directives, upcoming catalysts, and explicit sideways/rangebound flags. (`gbi_em.html` provides a backwards-compatible instant redirect).

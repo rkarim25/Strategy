@@ -13,7 +13,7 @@ This skill provides an autonomous execution protocol for analyzing the US Treasu
 1. **Reza's time is the scarce resource**: Never make him read a long report — present about ten lines with clear trade expressions, then the question.
 2. **Never invent a number**: Every yield, spread, SMA, and RSI must be computed directly from live data or historical series in this session.
 3. **Repository location**: All files live at `C:\Users\Reza Karim\Strategy`. The remote is `https://github.com/rkarim25/Strategy.git` (`main` branch).
-4. **Never git add . / -A**: Stage explicit files (`git add ust.html ust-page.js generate_ust_data.py ust_curve_data.json ust_daily.csv ANALYSE_UST.md site-nav.js`).
+4. **Never git add . / -A**: Stage explicit files (`git add ust.html ust-page.js generate_ust_data.py ust_curve_data.json ust_daily.csv docs/runbooks/analyse-ust.md site-nav.js`).
 
 ---
 
@@ -58,7 +58,7 @@ Check the three quantitative trigger conditions:
 1. Re-run `python generate_ust_data.py` if custom headline commentary or updated trigger flags are required.
 2. Stage and commit:
 ```powershell
-git -C "C:\Users\Reza Karim\Strategy" add ust.html ust-page.js generate_ust_data.py ust_curve_data.json ust_daily.csv ANALYSE_UST.md site-nav.js
+git -C "C:\Users\Reza Karim\Strategy" add ust.html ust-page.js generate_ust_data.py ust_curve_data.json ust_daily.csv docs/runbooks/analyse-ust.md site-nav.js
 git -C "C:\Users\Reza Karim\Strategy" commit -m "Refresh UST curve analysis, macro regime, and rate recommendations"
 git -C "C:\Users\Reza Karim\Strategy" push origin main
 ```

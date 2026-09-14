@@ -18,7 +18,7 @@ This skill provides an autonomous execution protocol for analyzing local currenc
    - **Upcoming catalysts to watch**.
 3. **If a market is sideways/rangebound, state that explicitly** (e.g. Mexico 8.40-8.90% M-Bono range; Colombia 10.40-10.90% TES range).
 4. **Repository location**: `C:\Users\Reza Karim\Strategy`. Remote: `origin main`.
-5. **Never git add . / -A**: Stage explicit files (`local_em.html gbi_em.html gbi-em-page.js generate_gbi_em_data.py gbi_em_data.json ANALYSE_GBI_EM.md site-nav.js`).
+5. **Never git add . / -A**: Stage explicit files (`local_em.html gbi_em.html gbi-em-page.js generate_gbi_em_data.py gbi_em_data.json docs/runbooks/analyse-gbi-em.md site-nav.js`).
 
 ---
 
@@ -53,7 +53,7 @@ This script computes:
 
 ### Step 4: Commit & Deploy
 ```powershell
-git -C "C:\Users\Reza Karim\Strategy" add local_em.html gbi_em.html gbi-em-page.js generate_gbi_em_data.py gbi_em_data.json ANALYSE_GBI_EM.md site-nav.js
+git -C "C:\Users\Reza Karim\Strategy" add local_em.html gbi_em.html gbi-em-page.js generate_gbi_em_data.py gbi_em_data.json docs/runbooks/analyse-gbi-em.md site-nav.js
 git -C "C:\Users\Reza Karim\Strategy" commit -m "Refresh GBI-EM local sovereign debt & FX recommendations"
 git -C "C:\Users\Reza Karim\Strategy" push origin main
 ```

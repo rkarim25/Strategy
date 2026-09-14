@@ -13,7 +13,7 @@ This skill provides an autonomous execution protocol for tracking synthetic cred
 1. **Reza's time is the scarce resource**: Provide a high-density, ~10-line executive update with clear quantitative triggers and derivative trade expressions.
 2. **Never invent spread levels**: Every spread, basis, SMA, and RSI must come from the simulation or live data feed.
 3. **Repository location**: `C:\Users\Reza Karim\Strategy`. Remote: `origin main`.
-4. **Never git add . / -A**: Stage explicit files (`cdx.html credit.html credit-page.js generate_credit_data.py credit_data.json ANALYSE_CREDIT.md site-nav.js`).
+4. **Never git add . / -A**: Stage explicit files (`cdx.html credit.html credit-page.js generate_credit_data.py credit_data.json docs/runbooks/analyse-cdx.md site-nav.js`).
 
 ---
 
@@ -48,7 +48,7 @@ This script computes:
 
 ### Step 4: Commit & Deploy
 ```powershell
-git -C "C:\Users\Reza Karim\Strategy" add cdx.html credit.html credit-page.js generate_credit_data.py credit_data.json ANALYSE_CREDIT.md site-nav.js
+git -C "C:\Users\Reza Karim\Strategy" add cdx.html credit.html credit-page.js generate_credit_data.py credit_data.json docs/runbooks/analyse-cdx.md site-nav.js
 git -C "C:\Users\Reza Karim\Strategy" commit -m "Refresh CDX credit derivatives spreads and recommendations"
 git -C "C:\Users\Reza Karim\Strategy" push origin main
 ```

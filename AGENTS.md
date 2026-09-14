@@ -18,39 +18,26 @@ Full checklist: [`docs/runbooks/START-HERE.md`](docs/runbooks/START-HERE.md).
 
 ## Special Commands
 
-### "analyse UST" / "update UST"
-When the user asks to **"analyse UST"**, **"update UST"**, or **"UST curve analysis"**, follow [`ANALYSE_UST.md`](ANALYSE_UST.md):
-1. **Fetch & Compute**: Run `python generate_ust_data.py` (pulls `2YY=F`, `^FVX`, `^TNX`, `^TYX`, calculates spreads, 50d/200d SMAs, RSI14, and invalidation triggers).
-2. **Review Headline & Macro Telemetry**: Search latest CPI, Core PCE, Unemployment, GDP, Treasury auction supply/deficit, and Fed FOMC comments.
-3. **Evaluate Triggers**: Assess the 3 technical invalidation triggers:
-   - *Pivot to Long Duration (Bull Flattening)*: 10Y < 4.70% & 2s10s < +25 bps & Unemployment > 4.6%.
-   - *Accelerated Steepener (Bond Vigilantes)*: 10Y > 5.05% & 30Y > 5.40%.
-   - *Bear Flattener (Ultra-Short Cash)*: 2Y > 4.85% & CPI > 3.7%.
-4. **Update Executive Summary & Data**: Re-run `python generate_ust_data.py` to refresh `ust_curve_data.json` and `ust.html`.
-5. **Commit & Push**: Push explicit files (`site-nav.js`, `ust.html`, `ust-page.js`, `generate_ust_data.py`, `ust_curve_data.json`, `ust_daily.csv`, `ANALYSE_UST.md`) to `main`.
+### "analyse UST" / "update UST" (/analyse-ust)
+Skill: [`.agents/skills/analyse-ust`](.agents/skills/analyse-ust/SKILL.md) | Runbook: [`docs/runbooks/analyse-ust.md`](docs/runbooks/analyse-ust.md)
+1. Run `python generate_ust_data.py` (fetches yields, computes spreads, SMAs, RSI14).
+2. Review macro indicators (CPI, PCE, Payrolls, Treasury supply/deficits, FOMC expectations).
+3. Evaluate triggers: Pivot to Duration (<4.70% 10Y) vs Accelerated Steepener (>5.05% 10Y) vs Bear Flattener (>4.85% 2Y).
+4. Stage explicit files (`site-nav.js`, `ust.html`, `ust-page.js`, `generate_ust_data.py`, `ust_curve_data.json`, `ust_daily.csv`) and push to `main`.
 
-### "analyse CDX" / "analyse credit" / "analyse CDX"
-When the user asks to **"analyse CDX" / "analyse credit"**, **"analyse CDX"**, or **"credit spreads analysis"**, follow [`ANALYSE_CREDIT.md`](ANALYSE_CREDIT.md):
-1. **Fetch & Compute**: Run `python generate_credit_data.py` (pulls current spread levels, runs 253-day historical simulation, computes SMA50/200, RSI14, Transatlantic basis, and distress ratios).
-2. **Review Spread Percentiles & Macro Context**: Check CDX.NA.HY (<350 bps = tight), iTraxx Xover (<320 bps = tight), CDX.EM (<190 bps = benign).
-3. **Evaluate Quantitative Triggers**:
-   - *Risk-Off Widener*: US HY > 360 bps & Xover > 340 bps -> Shift to Long Protection.
-   - *Transatlantic Divergence*: US HY - Xover basis > 50 bps -> Long Xover / Short US HY spread compression.
-   - *EM Compression Breakout*: CDX.EM < 160 bps with stable commodity basket -> EM spread compression.
-4. **Update Executive Summary & Data**: Refresh `credit_data.json` and `cdx.html`.
-5. **Commit & Push**: Push explicit files (`site-nav.js`, `cdx.html`, `credit-page.js`, `generate_credit_data.py`, `credit_data.json`, `ANALYSE_CREDIT.md`) to `main`.
+### "analyse CDX" / "analyse credit" (/analyse-cdx)
+Skill: [`.agents/skills/analyse-cdx`](.agents/skills/analyse-cdx/SKILL.md) | Runbook: [`docs/runbooks/analyse-cdx.md`](docs/runbooks/analyse-cdx.md)
+1. Run `python generate_credit_data.py` (pulls spreads, percentiles, default rates, Transatlantic basis).
+2. Review spreads: CDX.NA.HY (322 bps), iTraxx Xover (296 bps), CDX.EM (174 bps), Basis (+26.5 bps).
+3. Evaluate triggers: Risk-Off Widener (US HY > 360 bps) vs Basis Divergence (>50 bps) vs EM Breakout (<160 bps).
+4. Stage explicit files (`site-nav.js`, `cdx.html`, `credit.html`, `credit-page.js`, `generate_credit_data.py`, `credit_data.json`) and push to `main`.
 
-### "analyse Local EM" / "analyse GBI EM" / "analyse GBI-EM"
-When the user asks to **"analyse Local EM" / "analyse GBI EM"**, **"analyse GBI-EM"**, or **"EM local rates analysis"**, follow [`ANALYSE_GBI_EM.md`](ANALYSE_GBI_EM.md):
-1. **Fetch & Compute**: Run `python generate_gbi_em_data.py` (pulls local 10Y benchmarks, policy rates, CPI, computes real yields, SMA50/200, and RSI14 for 8 core EM countries: Brazil, Mexico, South Africa, Indonesia, Poland, India, Colombia, Turkey).
-2. **Review Real Yields & Macro Fundamentals**: Check inflation trajectories, central bank guidance, fiscal dynamics, and FX carry-to-vol ratios.
-3. **Synthesize Trade Recommendations & Invalidation Triggers**:
-   - Explicit instrument selection (e.g., NTN-F 2029, M-Bono 2034, SAGB R2035, SUN FR0100, IGB 2033).
-   - Explicit FX Hedging Directive (Unhedged vs FX-Hedged vs Sideways).
-   - If sideways/rangebound (e.g. Mexico 8.40-8.90%, Colombia 10.40-10.90%), state that explicitly.
-4. **Update Executive Summary & Data**: Refresh `gbi_em_data.json` and `local_em.html`.
-5. **Commit & Push**: Push explicit files (`site-nav.js`, `local_em.html`, `gbi-em-page.js`, `generate_gbi_em_data.py`, `gbi_em_data.json`, `ANALYSE_GBI_EM.md`) to `main`.
-
+### "analyse Local EM" / "analyse GBI EM" (/analyse-gbi-em)
+Skill: [`.agents/skills/analyse-gbi-em`](.agents/skills/analyse-gbi-em/SKILL.md) | Runbook: [`docs/runbooks/analyse-gbi-em.md`](docs/runbooks/analyse-gbi-em.md)
+1. Run `python generate_gbi_em_data.py` (computes real yields, policy rates, and FX technicals for 8 benchmark countries).
+2. Formulate directives: Exact curve points, specific instruments, and Unhedged vs FX-Hedged calls.
+3. Flag sideways regimes explicitly (Mexico 8.40-8.90% M-Bono; Colombia 10.40-10.90% TES).
+4. Stage explicit files (`site-nav.js`, `local_em.html`, `gbi_em.html`, `gbi-em-page.js`, `generate_gbi_em_data.py`, `gbi_em_data.json`) and push to `main`.
 
 ## What this is
 A personal **systematic leveraged backtesting + live-signal platform**. Two halves:
@@ -117,7 +104,7 @@ pages (ftse250/dax/msci_em/msci_world/lqq3), `3bal_guarded.html`, `summary.html`
 ## Repo map
 | Path | What | Move OK? |
 |------|------|----------|
-| `index.html`, `*_guarded.html/js`, `site-nav.js`, `instruments-*.js`, `etp-leverage.js`, `favicon.svg` | website (served at root) | ❌ |
+| `index.html`, `*_guarded.html/js`, `ust.html`, `cdx.html`, `local_em.html`, `credit.html` (redir), `gbi_em.html` (redir), `site-nav.js`, `*-page.js`, `*_curve_data.json`, `credit_data.json`, `gbi_em_data.json`, `favicon.svg` | website & rates/credit desks (served at root) | ❌ |
 | `*_daily.csv`, `*_site_data.json`, `latest_*_signal.json`, `*_etp_returns.json`, `summary_excel.json` | live data (root + cron-written) | ❌ |
 | `core/` package — `engine.py`, `strategies.py`, `metrics.py`, `indicators.py`, `data_manager.py`, `etp_leverage.py`, `price_cleaning.py`, `guarded_asset_registry.py`, `reporting.py`, `data_three_asset.py` (import via `from core import …`) | core engine (imported widely) | ❌ |
 | `test_tiered_dd_recovery_guarded.py`, `test_guarded_balanced_candidate.py` | strategy libs (imported despite `test_` name) | ❌ |
