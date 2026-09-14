@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ust-page.js - Interactive US Treasury Curve & Macro Regime Visualizer
  * Strategy Dashboard (rkarim25.github.io/Strategy)
  * Includes Technical Analysis, Steepener/Flattener Recommendations, and Pivot Triggers.
@@ -20,6 +20,24 @@
   let activeSpreadKey = "2s10s"; // "2s10s", "2s30s", "5s10s", "all"
   let activeSpreadRange = "1y"; // "1m", "3m", "6m", "1y"
   let activeTrackerFilter = "all"; // "all", "US Treasuries", "Local EM", "Credit Derivatives"
+
+  // Interactive curve tenor & spread toggles
+  let activeHistoryTenors = {
+    "30y": true,
+    "10y": true,
+    "5y": true,
+    "2y": true,
+  };
+  let activeHistorySpreads = {
+    spread_2s10s: true,
+    spread_2s30s: true,
+    spread_5s10s: true,
+  };
+
+  // Hover indices
+  let hoverHistoryIdx = null;
+  let hoverSpreadIdx = null;
+  let hoverYieldTenor = null;
 
   const CURVE_COLORS = {
     current: "#0071e3",
@@ -88,6 +106,7 @@
 
   function initUI() {
     if (!curveData) return;
+
     renderTopStats();
     renderSpreads();
     renderYieldCurveChart();
@@ -100,6 +119,7 @@
     renderTradeTracker();
     setupEventListeners();
     setupSteepenerCalculator();
+    setupChartHoverEngines();
     runScenarioSimulation("fiscal_supply");
   }
 
@@ -119,191 +139,254 @@
         elChg.className = "stat-change " + (chg > 0 ? "bad" : chg < 0 ? "good" : "muted");
       }
       if (elDur) {
-        elDur.textContent = `Mod Dur: ${item.duration.toFixed(1)}y · DV01: $${item.dv01.toFixed(1)}`;
+        elDur.textContent = `Mod Dur: ${item.duration.toFixed(1)}y • DV01: $${item.dv01.toFixed(1)}`;
       }
     });
 
-    const asOfEl = document.getElementById("curveAsOfDate");
-    if (asOfEl && curveData.latest_date) {
-      asOfEl.textContent = `As of ${curveData.latest_date} · Live Generic Treasury Par Rates`;
+    const elAsOf = document.getElementById("dataAsOfTime");
+    if (elAsOf && curveData.as_of) {
+      elAsOf.textContent = "Data as of: " + curveData.as_of;
     }
   }
 
   function renderSpreads() {
-    const s = curveData.spreads || {};
-    const keys = ["2s10s", "5s30s", "2s30s", "10s30s"];
-    keys.forEach((k) => {
-      const item = s[k];
+    const sp = curveData.spreads || {};
+    const map = {
+      "2s10s": { val: "spread_2s10s_val", chg: "spread_2s10s_chg", st: "spread_2s10s_st" },
+      "2s30s": { val: "spread_2s30s_val", chg: "spread_2s30s_chg", st: "spread_2s30s_st" },
+      "5s30s": { val: "spread_5s30s_val", chg: "spread_5s30s_chg", st: "spread_5s30s_st" },
+      "10s30s": { val: "spread_10s30s_val", chg: "spread_10s30s_chg", st: "spread_10s30s_st" },
+    };
+
+    Object.keys(map).forEach((k) => {
+      const item = sp[k];
       if (!item) return;
-      const elVal = document.getElementById(`spread_${k}_val`);
-      const elChg = document.getElementById(`spread_${k}_chg`);
-      const elStatus = document.getElementById(`spread_${k}_status`);
-      if (elVal) {
+      const ids = map[k];
+      const elV = document.getElementById(ids.val);
+      const elC = document.getElementById(ids.chg);
+      const elS = document.getElementById(ids.st);
+
+      if (elV) {
         const sign = item.bps > 0 ? "+" : "";
-        elVal.textContent = `${sign}${item.bps.toFixed(1)} bps`;
+        elV.textContent = `${sign}${item.bps.toFixed(1)} bps`;
+        elV.className = "spread-val " + (item.bps > 0 ? "good" : item.bps < 0 ? "bad" : "muted");
       }
-      if (elChg) {
+      if (elC) {
         const sign = item.change_bps > 0 ? "+" : "";
-        elChg.textContent = `1D: ${sign}${item.change_bps.toFixed(1)} bps`;
+        elC.textContent = `${sign}${item.change_bps.toFixed(1)} bps 1D`;
       }
-      if (elStatus) elStatus.textContent = item.status;
+      if (elS) {
+        elS.textContent = item.status || (item.bps >= 0 ? "Normal" : "Inverted");
+      }
     });
   }
 
+  /* -------------------------------------------------------------
+     EXECUTIVE RECOMMENDATION & RATIONALE
+     ------------------------------------------------------------- */
   function renderExecutiveRecommendation() {
-    const macro = curveData.macro_assessment;
-    if (!macro) return;
+    const rec = curveData.executive_recommendation;
+    if (!rec) return;
 
-    const execP = document.getElementById("executiveParagraph");
-    if (execP && macro.executive_paragraph) {
-      execP.textContent = macro.executive_paragraph;
+    const banner = document.getElementById("recommendationBanner");
+    const titleEl = document.getElementById("recTitle");
+    const badgeEl = document.getElementById("recBadge");
+    const pointEl = document.getElementById("recPoint");
+    const typeEl = document.getElementById("recType");
+    const horizonEl = document.getElementById("recHorizon");
+    const summaryEl = document.getElementById("recSummary");
+    const bulletsEl = document.getElementById("recBullets");
+    const vehicleEl = document.getElementById("recVehicle");
+
+    if (titleEl) titleEl.textContent = rec.headline || "Yield Curve Stance";
+    if (badgeEl) {
+      badgeEl.textContent = (rec.curve_structure || "STANCE").toUpperCase();
+      badgeEl.className = "rec-badge " + (rec.direction === "STEEPENER" ? "steepener" : "flattener");
+    }
+    if (pointEl) pointEl.textContent = rec.curve_point || "2s10s";
+    if (typeEl) typeEl.textContent = rec.curve_structure || "Bear Steepener";
+    if (horizonEl) horizonEl.textContent = rec.target_horizon || "3 - 6 Months";
+    if (summaryEl) summaryEl.textContent = rec.concise_summary || "";
+
+    if (bulletsEl && Array.isArray(rec.key_drivers)) {
+      bulletsEl.replaceChildren();
+      rec.key_drivers.forEach((d) => {
+        const li = document.createElement("li");
+        li.textContent = d;
+        bulletsEl.appendChild(li);
+      });
     }
 
-    const tradeRec = document.getElementById("curveTradeBadge");
-    if (tradeRec && macro.curve_trade_recommendation) {
-      tradeRec.textContent = macro.curve_trade_recommendation.primary_trade;
-    }
-
-    const sizingEl = document.getElementById("curveTradeSizing");
-    if (sizingEl && macro.curve_trade_recommendation) {
-      sizingEl.textContent = `Execution Rule: ${macro.curve_trade_recommendation.sizing_rule}`;
+    if (vehicleEl) {
+      vehicleEl.innerHTML = `<strong>Expression Vehicle:</strong> ${rec.recommended_vehicle || "Treasury Futures / Swaps"}`;
     }
   }
 
+  /* -------------------------------------------------------------
+     TECHNICAL INDICATORS & PIVOT TRIGGERS
+     ------------------------------------------------------------- */
   function renderTechnicalsAndTriggers() {
-    const macro = curveData.macro_assessment;
-    if (!macro || !macro.technicals) return;
-    const tech = macro.technicals;
+    const tech = curveData.technicals;
+    const trig = curveData.change_triggers;
 
-    // Technical gauges
-    const t10 = tech["10y"] || {};
-    const t2s10s = tech["2s10s"] || {};
+    // Technical Metrics Grid
+    const techGrid = document.getElementById("technicalsGrid");
+    if (techGrid && tech) {
+      techGrid.replaceChildren();
+      const items = [
+        { label: "2s10s Spread Level", val: `+${tech["2s10s_spread"] ? tech["2s10s_spread"].toFixed(1) : 0} bps`, sub: "Current Benchmark Slope" },
+        { label: "50-Day Moving Avg", val: `+${tech["2s10s_sma50"] ? tech["2s10s_sma50"].toFixed(1) : 0} bps`, sub: tech["2s10s_spread"] > tech["2s10s_sma50"] ? "Above SMA50 (Bullish Slope)" : "Below SMA50" },
+        { label: "200-Day Moving Avg", val: `${tech["2s10s_sma200"] >= 0 ? "+" : ""}${tech["2s10s_sma200"] ? tech["2s10s_sma200"].toFixed(1) : 0} bps`, sub: "Structural Trend Baseline" },
+        { label: "14-Day RSI (Spread)", val: tech.rsi14 ? tech.rsi14.toFixed(1) : "50.0", sub: tech.rsi14 > 70 ? "Overbought Slope" : tech.rsi14 < 30 ? "Oversold Slope" : "Neutral Momentum" },
+        { label: "10Y Term Premium", val: `+${tech.term_premium_10y ? tech.term_premium_10y.toFixed(2) : 0}%`, sub: "ACM Model Estimate" },
+        { label: "Market Momentum", val: tech.momentum_regime || "Steepening Trend", sub: "Trend Classification" },
+      ];
 
-    const el10ySma = document.getElementById("tech10ySma");
-    if (el10ySma) {
-      el10ySma.innerHTML = `<strong>10Y: ${t10.current}%</strong> · 50d SMA: ${t10.sma50}% · 200d SMA: ${t10.sma200}% · RSI(14): <strong>${t10.rsi14}</strong> (${t10.rsi_status})`;
-    }
-
-    const el2s10sSma = document.getElementById("tech2s10sSma");
-    if (el2s10sSma) {
-      el2s10sSma.innerHTML = `<strong>2s10s: +${t2s10s.current} bps</strong> · 50d SMA: +${t2s10s.sma50} bps · 200d SMA: +${t2s10s.sma200} bps · RSI(14): <strong>${t2s10s.rsi14}</strong> (${t2s10s.trend})`;
-    }
-
-    // Triggers List
-    const triggersList = document.getElementById("triggersContainer");
-    if (triggersList && tech.triggers) {
-      triggersList.replaceChildren();
-      tech.triggers.forEach((trg) => {
-        const item = document.createElement("div");
-        item.className = "trigger-card " + (trg.threshold_met ? "active-alert" : "");
-        item.innerHTML = `
-          <div class="trigger-header">
-            <h4 class="trigger-title">${trg.title}</h4>
-            <span class="trigger-status-badge ${trg.threshold_met ? 'badge-alert' : 'badge-inactive'}">${trg.status}</span>
-          </div>
-          <p class="trigger-condition"><strong>Condition:</strong> ${trg.condition}</p>
-          <div class="trigger-action-pill"><strong>Action:</strong> ${trg.action}</div>
-          <div class="trigger-metric-dist">${trg.active_metric}</div>
+      items.forEach((it) => {
+        const div = document.createElement("div");
+        div.className = "tech-stat-card";
+        div.innerHTML = `
+          <span class="tech-label">${it.label}</span>
+          <span class="tech-val">${it.val}</span>
+          <span class="tech-sub">${it.sub}</span>
         `;
-        triggersList.appendChild(item);
+        techGrid.appendChild(div);
+      });
+    }
+
+    // Pivot Triggers Lists
+    const flattenerList = document.getElementById("flattenerTriggersList");
+    if (flattenerList && trig && trig.pivot_to_flattener) {
+      flattenerList.replaceChildren();
+      trig.pivot_to_flattener.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        flattenerList.appendChild(li);
+      });
+    }
+
+    const bullSteepList = document.getElementById("bullSteepTriggersList");
+    if (bullSteepList && trig && trig.pivot_to_bull_steepener) {
+      bullSteepList.replaceChildren();
+      trig.pivot_to_bull_steepener.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        bullSteepList.appendChild(li);
       });
     }
   }
 
+  /* -------------------------------------------------------------
+     INTERACTIVE STEEPENER / FLATTENER TRADE CALCULATOR
+     ------------------------------------------------------------- */
   function setupSteepenerCalculator() {
-    const notionalInput = document.getElementById("steepenerNotional");
-    const basisShiftInput = document.getElementById("steepenerBpsShift");
-    const out2y = document.getElementById("calcSize2y");
-    const out10y = document.getElementById("calcSize10y");
-    const outPnl = document.getElementById("calcPnl");
+    const selectSpread = document.getElementById("calcSpreadSelect");
+    const selectTrade = document.getElementById("calcTradeType");
+    const inputNotional = document.getElementById("calcNotional");
+    const inputExpectedShift = document.getElementById("calcExpectedShift");
+    const btnCalc = document.getElementById("calcRunBtn");
 
-    function recalc() {
-      if (!notionalInput || !basisShiftInput || !out2y || !out10y || !outPnl) return;
-      const notional = parseFloat(notionalInput.value) || 1000000;
-      const bps = parseFloat(basisShiftInput.value) || 10;
+    if (!btnCalc || !curveData) return;
 
-      // 10Y DV01 approx $82.0 per $100k = $0.00082 per $1
-      // 2Y DV01 approx $19.2 per $100k = $0.000192 per $1
-      // For DV01 neutrality: Size_2Y * DV01_2Y = Size_10Y * DV01_10Y
-      // Ratio: 82.0 / 19.2 = ~4.27
-      const ratio = 82.0 / 19.2;
-      const size10y = notional;
-      const size2y = notional * ratio;
+    function runCalc() {
+      const spreadKey = selectSpread ? selectSpread.value : "2s10s";
+      const tradeType = selectTrade ? selectTrade.value : "steepener";
+      const notional = parseFloat(inputNotional ? inputNotional.value : 1000000) || 1000000;
+      const expectedShiftBps = parseFloat(inputExpectedShift ? inputExpectedShift.value : 25) || 25;
 
-      // P&L per basis point of steepening (2s10s widens by 1 bp):
-      // DV01 = notional * 0.00082
-      const dv01Total = (size10y / 100000) * 82.0;
-      const pnl = dv01Total * bps;
+      const y = curveData.yields || {};
+      const sp = curveData.spreads || {};
 
-      out10y.textContent = `$${(size10y / 1e6).toFixed(2)}M Short`;
-      out2y.textContent = `$${(size2y / 1e6).toFixed(2)}M Long (Ratio ${ratio.toFixed(2)}x)`;
-      const sign = pnl >= 0 ? "+" : "";
-      outPnl.textContent = `${sign}$${Math.round(pnl).toLocaleString()}`;
-      outPnl.className = "calc-pnl-val " + (pnl >= 0 ? "good" : "bad");
+      let legShort = "2y";
+      let legLong = "10y";
+      if (spreadKey === "2s30s") { legShort = "2y"; legLong = "30y"; }
+      else if (spreadKey === "5s30s") { legShort = "5y"; legLong = "30y"; }
+      else if (spreadKey === "10s30s") { legShort = "10y"; legLong = "30y"; }
+
+      const shortMeta = y[legShort] || { yield: 4.38, duration: 1.85, dv01: 18.5 };
+      const longMeta = y[legLong] || { yield: 4.96, duration: 8.2, dv01: 82.0 };
+
+      const hedgeRatio = longMeta.dv01 / shortMeta.dv01;
+      const shortNotional = notional * hedgeRatio;
+      const dv01PerLeg = (notional / 100000) * longMeta.dv01;
+
+      const multiplier = tradeType === "steepener" ? 1 : -1;
+      const estPnl = dv01PerLeg * expectedShiftBps * multiplier;
+
+      const elCurrSpread = document.getElementById("calcCurrSpread");
+      const elRatio = document.getElementById("calcHedgeRatio");
+      const elLegShort = document.getElementById("calcLegShortDesc");
+      const elLegLong = document.getElementById("calcLegLongDesc");
+      const elDv01 = document.getElementById("calcTotalDv01");
+      const elPnl = document.getElementById("calcEstPnl");
+
+      if (elCurrSpread) {
+        const curSp = sp[spreadKey] ? sp[spreadKey].bps : (longMeta.yield - shortMeta.yield) * 100;
+        elCurrSpread.textContent = `+${curSp.toFixed(1)} bps`;
+      }
+      if (elRatio) {
+        elRatio.textContent = `${hedgeRatio.toFixed(2)}x (DV01 Neutral)`;
+      }
+      if (elLegShort) {
+        const action = tradeType === "steepener" ? "Pay (Short)" : "Receive (Long)";
+        elLegShort.textContent = `${action} $${(shortNotional / 1000000).toFixed(2)}M of ${TENOR_LABELS[legShort]}`;
+      }
+      if (elLegLong) {
+        const action = tradeType === "steepener" ? "Receive (Long)" : "Pay (Short)";
+        elLegLong.textContent = `${action} $${(notional / 1000000).toFixed(2)}M of ${TENOR_LABELS[legLong]}`;
+      }
+      if (elDv01) {
+        elDv01.textContent = `$${dv01PerLeg.toFixed(0)} / bp`;
+      }
+      if (elPnl) {
+        const sign = estPnl >= 0 ? "+" : "-";
+        elPnl.textContent = `${sign}$${Math.abs(estPnl).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+        elPnl.className = "calc-pnl-val " + (estPnl >= 0 ? "good" : "bad");
+      }
     }
 
-    if (notionalInput && basisShiftInput) {
-      notionalInput.addEventListener("input", recalc);
-      basisShiftInput.addEventListener("input", recalc);
-      recalc();
-    }
+    btnCalc.addEventListener("click", runCalc);
+    if (selectSpread) selectSpread.addEventListener("change", runCalc);
+    if (selectTrade) selectTrade.addEventListener("change", runCalc);
+    runCalc();
   }
 
+  /* -------------------------------------------------------------
+     MACRO RADAR & NEWS HEADLINES
+     ------------------------------------------------------------- */
   function renderMacroRadar() {
     const macro = curveData.macro_assessment;
     if (!macro) return;
 
-    const regimeTitle = document.getElementById("macroRegimeTitle");
-    const regimeBadge = document.getElementById("macroRegimeBadge");
-    const regimeSummary = document.getElementById("macroRegimeSummary");
-    const curveAction = document.getElementById("curveActionBanner");
+    const elTitle = document.getElementById("macroRegimeTitle");
+    const elBadge = document.getElementById("macroRegimeBadge");
+    const elSumm = document.getElementById("macroRegimeSummary");
+    const elAction = document.getElementById("curveActionBanner");
 
-    if (regimeTitle) regimeTitle.textContent = macro.regime_name;
-    if (regimeBadge) {
-      regimeBadge.textContent = "CURRENT REGIME";
-      regimeBadge.className = "regime-badge bear-steep";
-    }
-    if (regimeSummary) regimeSummary.textContent = macro.regime_summary;
-    if (curveAction) curveAction.textContent = macro.curve_trade_recommendation ? macro.curve_trade_recommendation.curve_action : macro.curve_action;
+    if (elTitle) elTitle.textContent = macro.regime_name || "Active Macro Regime";
+    if (elBadge) elBadge.textContent = macro.regime_id ? macro.regime_id.toUpperCase().replace(/_/g, " ") : "REGIME";
+    if (elSumm) elSumm.textContent = macro.summary || "";
+    if (elAction) elAction.textContent = macro.tactical_bias || "Maintain neutral duration posture.";
 
-    // Render Indicator Table
-    const tbody = document.getElementById("macroIndicatorsBody");
-    if (tbody && macro.indicators) {
-      tbody.replaceChildren();
-      macro.indicators.forEach((ind) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><strong>${ind.name}</strong></td>
-          <td class="stat-highlight">${ind.value}</td>
-          <td><span class="trend-pill ${ind.trend.toLowerCase().replace(/\s+/g, '-')}">${ind.trend}</span></td>
-          <td class="small-muted">${ind.target}</td>
-          <td>${ind.impact}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    // Render Headlines
-    const headlineList = document.getElementById("macroHeadlinesList");
-    if (headlineList && macro.headlines) {
+    const headlineList = document.getElementById("macroHeadlineList");
+    if (headlineList && macro.news_drivers) {
       headlineList.replaceChildren();
-      macro.headlines.forEach((h) => {
+      macro.news_drivers.forEach((item) => {
         const card = document.createElement("div");
-        card.className = "headline-item";
+        card.className = "headline-card";
+        const impactCls = (item.impact || "neutral").toLowerCase().replace(/\s+/g, '-');
         card.innerHTML = `
           <div class="headline-header">
-            <span class="headline-cat">${h.category}</span>
-            <span class="headline-source">${h.source}</span>
+            <span>${item.source} • ${item.date}</span>
+            <span class="headline-tag ${impactCls}">${item.impact}</span>
           </div>
-          <h4 class="headline-title">${h.headline}</h4>
-          <p class="headline-summary">${h.summary}</p>
-          <div class="headline-tag ${h.sentiment.toLowerCase().replace(/\s+/g, '-')}">${h.sentiment}</div>
+          <h4 class="headline-title">${item.headline}</h4>
+          <p class="headline-summary">${item.summary}</p>
         `;
         headlineList.appendChild(card);
       });
     }
 
-    // Render Model Stances
     const stanceContainer = document.getElementById("modelStanceContainer");
     if (stanceContainer && macro.model_signals) {
       stanceContainer.replaceChildren();
@@ -424,17 +507,28 @@
       ctx.fillText(yVal.toFixed(2) + "%", pad.left - 10, py);
     }
 
-    ctx.textAlign = "center";
-    ctx.textBaseline = "top";
+    // Tenor Columns
     TENOR_KEYS.forEach((k) => {
       const px = tenorXMap[k];
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.05)";
+      const isHovered = hoverYieldTenor === k;
+
+      // Soft vertical highlight band if hovered
+      if (isHovered) {
+        ctx.fillStyle = "rgba(0, 113, 227, 0.07)";
+        ctx.fillRect(px - 30, pad.top - 10, 60, chartH + 20);
+      }
+
+      ctx.strokeStyle = isHovered ? "rgba(0, 113, 227, 0.35)" : "rgba(0, 0, 0, 0.05)";
+      ctx.lineWidth = isHovered ? 1.5 : 1;
       ctx.beginPath();
       ctx.moveTo(px, pad.top);
       ctx.lineTo(px, H - pad.bottom);
       ctx.stroke();
-      ctx.fillStyle = "#1d1d1f";
-      ctx.font = "600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+
+      ctx.fillStyle = isHovered ? "#0071e3" : "#1d1d1f";
+      ctx.font = isHovered ? "bold 13px sans-serif" : "600 13px sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
       ctx.fillText(TENOR_LABELS[k], px, H - pad.bottom + 10);
     });
 
@@ -466,17 +560,19 @@
       TENOR_KEYS.forEach((t) => {
         const px = tenorXMap[t];
         const py = yToPx(snap[t]);
+        const isHovered = hoverYieldTenor === t;
+
         ctx.beginPath();
-        ctx.arc(px, py, isCurrent ? 5 : 3.5, 0, Math.PI * 2);
+        ctx.arc(px, py, isCurrent ? 5.5 : 3.5, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.fill();
         ctx.strokeStyle = "#ffffff";
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = isCurrent ? 2 : 1.5;
         ctx.stroke();
 
-        if (isCurrent) {
+        if (isCurrent || isHovered) {
           ctx.fillStyle = "#1d1d1f";
-          ctx.font = "bold 12px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+          ctx.font = "bold 12px -apple-system, BlinkMacSystemFont, sans-serif";
           ctx.textAlign = "center";
           ctx.textBaseline = "bottom";
           ctx.fillText(snap[t].toFixed(2) + "%", px, py - 8);
@@ -488,6 +584,91 @@
   /* -------------------------------------------------------------
      INTERACTIVE HISTORICAL SERIES CHART
      ------------------------------------------------------------- */
+  function renderHistoryLegendBar(rows) {
+    const bar = document.getElementById("historyLegendBar");
+    if (!bar || !rows || !rows.length) return;
+    bar.replaceChildren();
+
+    const lastRow = rows[rows.length - 1];
+
+    if (activeHistoryMode === "yields") {
+      const tenors = [
+        { key: "30y", label: "30Y Long Bond", color: "#34c759" },
+        { key: "10y", label: "10Y Benchmark", color: "#0071e3" },
+        { key: "5y", label: "5Y Belly", color: "#af52de" },
+        { key: "2y", label: "2Y Front-End", color: "#ff9500" },
+      ];
+
+      tenors.forEach((t) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        const isActive = activeHistoryTenors[t.key] !== false;
+        btn.className = `legend-pill ${isActive ? "active" : "muted"}`;
+        btn.title = `Click to toggle ${t.label} curve on/off`;
+        const val = lastRow[t.key] != null ? lastRow[t.key].toFixed(2) + "%" : "—";
+        btn.innerHTML = `
+          <span class="pill-dot" style="background: ${t.color};"></span>
+          <span>${t.label}</span>
+          <span class="pill-val" style="color: ${isActive ? t.color : 'inherit'};">${val}</span>
+        `;
+        btn.addEventListener("click", () => {
+          activeHistoryTenors[t.key] = !activeHistoryTenors[t.key];
+          // Ensure at least one tenor stays active
+          const anyActive = Object.values(activeHistoryTenors).some(Boolean);
+          if (!anyActive) activeHistoryTenors[t.key] = true;
+          renderHistoryChart();
+        });
+        bar.appendChild(btn);
+      });
+
+      const tip = document.createElement("span");
+      tip.style.fontSize = "11px";
+      tip.style.color = "var(--muted)";
+      tip.style.marginLeft = "auto";
+      tip.textContent = "💡 Click curves to toggle • Hover to inspect";
+      bar.appendChild(tip);
+
+    } else {
+      const spreads = [
+        { key: "spread_2s10s", label: "2s10s Benchmark (10Y − 2Y)", color: "#0071e3" },
+        { key: "spread_2s30s", label: "2s30s Total Slope (30Y − 2Y)", color: "#af52de" },
+        { key: "spread_5s10s", label: "5s10s Belly Slope (10Y − 5Y)", color: "#248a3d" },
+      ];
+
+      spreads.forEach((s) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        const isActive = activeHistorySpreads[s.key] !== false;
+        btn.className = `legend-pill ${isActive ? "active" : "muted"}`;
+        btn.title = `Click to toggle ${s.label} on/off`;
+        const val = lastRow[s.key] != null ? (lastRow[s.key] >= 0 ? "+" : "") + lastRow[s.key].toFixed(1) + " bps" : "—";
+        btn.innerHTML = `
+          <span class="pill-dot" style="background: ${s.color};"></span>
+          <span>${s.label}</span>
+          <span class="pill-val" style="color: ${isActive ? s.color : 'inherit'};">${val}</span>
+        `;
+        btn.addEventListener("click", () => {
+          activeHistorySpreads[s.key] = !activeHistorySpreads[s.key];
+          const anyActive = Object.values(activeHistorySpreads).some(Boolean);
+          if (!anyActive) activeHistorySpreads[s.key] = true;
+          renderHistoryChart();
+        });
+        bar.appendChild(btn);
+      });
+
+      const invBadge = document.createElement("div");
+      invBadge.className = "legend-pill";
+      invBadge.style.cursor = "default";
+      invBadge.style.borderColor = "rgba(215, 0, 21, 0.4)";
+      invBadge.innerHTML = `
+        <span class="pill-dot" style="background: #d70015;"></span>
+        <span style="color: #d70015; font-weight: 700;">Inversion Barrier</span>
+        <span class="pill-val" style="color: #d70015;">0.0 bps</span>
+      `;
+      bar.appendChild(invBadge);
+    }
+  }
+
   function renderHistoryChart() {
     const canvas = document.getElementById("historyChartCanvas");
     if (!canvas || !curveData || !curveData.history) return;
@@ -495,12 +676,12 @@
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
-    canvas.height = 320 * dpr;
+    canvas.height = 340 * dpr;
     ctx.scale(dpr, dpr);
 
     const W = rect.width;
-    const H = 320;
-    const pad = { top: 30, right: 40, bottom: 40, left: 55 };
+    const H = 340;
+    const pad = { top: 28, right: 88, bottom: 42, left: 58 };
     const chartW = W - pad.left - pad.right;
     const chartH = H - pad.top - pad.bottom;
 
@@ -512,27 +693,38 @@
     const rows = allRows.slice(-maxPts);
     if (!rows.length) return;
 
+    renderHistoryLegendBar(rows);
+
     let minY = Infinity;
     let maxY = -Infinity;
 
     if (activeHistoryMode === "yields") {
       rows.forEach((r) => {
         TENOR_KEYS.forEach((k) => {
-          if (r[k] != null) {
+          if (activeHistoryTenors[k] && r[k] != null) {
             minY = Math.min(minY, r[k]);
             maxY = Math.max(maxY, r[k]);
           }
         });
       });
+      if (minY === Infinity) { minY = 3.5; maxY = 5.5; }
       minY = Math.floor(minY * 2) / 2 - 0.2;
       maxY = Math.ceil(maxY * 2) / 2 + 0.2;
     } else {
       rows.forEach((r) => {
-        minY = Math.min(minY, r.spread_2s10s, r.spread_2s30s);
-        maxY = Math.max(maxY, r.spread_2s10s, r.spread_2s30s);
+        ["spread_2s10s", "spread_2s30s", "spread_5s10s"].forEach((sk) => {
+          if (activeHistorySpreads[sk] && typeof r[sk] === "number") {
+            minY = Math.min(minY, r[sk]);
+            maxY = Math.max(maxY, r[sk]);
+          }
+        });
       });
-      minY = Math.floor(minY / 20) * 20 - 10;
-      maxY = Math.ceil(maxY / 20) * 20 + 10;
+      if (minY === Infinity) { minY = -20; maxY = 100; }
+      minY = Math.min(minY, -10);
+      maxY = Math.max(maxY, 20);
+      const padY = (maxY - minY) * 0.12;
+      minY = Math.floor((minY - padY) / 10) * 10;
+      maxY = Math.ceil((maxY + padY) / 10) * 10;
     }
 
     function yToPx(val) {
@@ -542,10 +734,11 @@
       return pad.left + (chartW * idx) / (rows.length - 1);
     }
 
-    ctx.strokeStyle = "rgba(0, 0, 0, 0.07)";
+    // Grid lines
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.06)";
     ctx.lineWidth = 1;
     ctx.fillStyle = "#86868b";
-    ctx.font = "12px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "11.5px -apple-system, BlinkMacSystemFont, sans-serif";
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
 
@@ -557,32 +750,42 @@
       ctx.moveTo(pad.left, py);
       ctx.lineTo(W - pad.right, py);
       ctx.stroke();
-      const label = activeHistoryMode === "yields" ? v.toFixed(2) + "%" : v.toFixed(0) + " bps";
+      const label = activeHistoryMode === "yields" ? v.toFixed(2) + "%" : (v >= 0 ? "+" : "") + v.toFixed(0) + " bps";
       ctx.fillText(label, pad.left - 8, py);
     }
 
+    // Zero line (Spreads mode)
     if (activeHistoryMode === "spreads" && minY <= 0 && maxY >= 0) {
       const zPy = yToPx(0);
-      ctx.strokeStyle = "rgba(215, 0, 21, 0.35)";
-      ctx.lineWidth = 1.5;
-      ctx.setLineDash([4, 4]);
+      ctx.save();
+      ctx.strokeStyle = "rgba(215, 0, 21, 0.75)";
+      ctx.lineWidth = 1.6;
+      ctx.setLineDash([5, 4]);
       ctx.beginPath();
       ctx.moveTo(pad.left, zPy);
       ctx.lineTo(W - pad.right, zPy);
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = "#d70015";
-      ctx.fillText("0 (Inversion Threshold)", W - pad.right - 10, zPy - 8);
+      ctx.font = "bold 10px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText("0 bps — Inversion Barrier (Recession Threshold)", pad.left + 8, zPy - 5);
+      ctx.restore();
     }
 
+    // Render Series Lines & End Badges
     if (activeHistoryMode === "yields") {
       const seriesColors = {
-        "2y": "#ff9500",
-        "5y": "#af52de",
-        "10y": "#0071e3",
         "30y": "#34c759",
+        "10y": "#0071e3",
+        "5y": "#af52de",
+        "2y": "#ff9500",
       };
-      TENOR_KEYS.forEach((k) => {
+
+      ["2y", "5y", "10y", "30y"].forEach((k) => {
+        if (!activeHistoryTenors[k]) return;
+        const color = seriesColors[k];
+
         ctx.beginPath();
         rows.forEach((r, i) => {
           const px = xToPx(i);
@@ -590,114 +793,187 @@
           if (i === 0) ctx.moveTo(px, py);
           else ctx.lineTo(px, py);
         });
-        ctx.strokeStyle = seriesColors[k];
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.2;
         ctx.stroke();
+
+        // End-of-line marker & badge
+        const lastVal = rows[rows.length - 1][k];
+        if (lastVal != null) {
+          const lastX = xToPx(rows.length - 1);
+          const lastY = yToPx(lastVal);
+
+          ctx.beginPath();
+          ctx.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+          ctx.strokeStyle = "#ffffff";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          // Pill Badge
+          const badgeX = lastX + 7;
+          const badgeY = lastY - 9.5;
+          const badgeW = 75;
+          const badgeH = 19;
+
+          ctx.save();
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 5);
+          else ctx.rect(badgeX, badgeY, badgeW, badgeH);
+          ctx.fillStyle = color;
+          ctx.fill();
+
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "bold 10px -apple-system, BlinkMacSystemFont, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(`${k.toUpperCase()} ${lastVal.toFixed(2)}%`, badgeX + badgeW / 2, badgeY + badgeH / 2);
+          ctx.restore();
+        }
       });
     } else {
-      ctx.beginPath();
-      rows.forEach((r, i) => {
-        const px = xToPx(i);
-        const py = yToPx(r.spread_2s10s);
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
-      });
-      ctx.strokeStyle = "#0071e3";
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
+      const spreadConfigs = [
+        { key: "spread_2s10s", label: "2s10s", color: "#0071e3", width: 2.5 },
+        { key: "spread_2s30s", label: "2s30s", color: "#af52de", width: 2.2 },
+        { key: "spread_5s10s", label: "5s10s", color: "#248a3d", width: 2.2 },
+      ];
 
-      ctx.beginPath();
-      rows.forEach((r, i) => {
-        const px = xToPx(i);
-        const py = yToPx(r.spread_2s30s);
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
+      spreadConfigs.forEach((cfg) => {
+        if (!activeHistorySpreads[cfg.key]) return;
+        ctx.beginPath();
+        rows.forEach((r, i) => {
+          const px = xToPx(i);
+          const py = yToPx(r[cfg.key]);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.strokeStyle = cfg.color;
+        ctx.lineWidth = cfg.width;
+        ctx.stroke();
+
+        const lastVal = rows[rows.length - 1][cfg.key];
+        if (typeof lastVal === "number") {
+          const lastX = xToPx(rows.length - 1);
+          const lastY = yToPx(lastVal);
+
+          ctx.beginPath();
+          ctx.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = cfg.color;
+          ctx.fill();
+          ctx.strokeStyle = "#ffffff";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          // Pill badge
+          const badgeX = lastX + 7;
+          const badgeY = lastY - 9.5;
+          const badgeW = 75;
+          const badgeH = 19;
+
+          ctx.save();
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 5);
+          else ctx.rect(badgeX, badgeY, badgeW, badgeH);
+          ctx.fillStyle = cfg.color;
+          ctx.fill();
+
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "bold 9.5px -apple-system, BlinkMacSystemFont, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          const sign = lastVal >= 0 ? "+" : "";
+          ctx.fillText(`${cfg.label} ${sign}${Math.round(lastVal)}b`, badgeX + badgeW / 2, badgeY + badgeH / 2);
+          ctx.restore();
+        }
       });
-      ctx.strokeStyle = "#34c759";
-      ctx.lineWidth = 2;
-      ctx.stroke();
     }
 
+    // X Axis Labels (Dates)
     ctx.fillStyle = "#86868b";
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-    const xLabelsCount = Math.min(5, rows.length);
+    ctx.font = "11px -apple-system, BlinkMacSystemFont, sans-serif";
+    const xLabelsCount = Math.min(6, rows.length);
     for (let i = 0; i < xLabelsCount; i++) {
       const rIdx = Math.round((i * (rows.length - 1)) / (xLabelsCount - 1));
       const px = xToPx(rIdx);
       const dt = rows[rIdx].date;
-      ctx.fillText(dt, px, H - pad.bottom + 10);
+      ctx.fillText(dt, px, H - pad.bottom + 12);
+    }
+
+    // HOVER OVER INTERACTIVITY
+    if (hoverHistoryIdx !== null && hoverHistoryIdx >= 0 && hoverHistoryIdx < rows.length) {
+      const hx = xToPx(hoverHistoryIdx);
+      const r = rows[hoverHistoryIdx];
+
+      ctx.save();
+      // Vertical crosshair
+      ctx.beginPath();
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = "rgba(0, 113, 227, 0.45)";
+      ctx.lineWidth = 1.5;
+      ctx.moveTo(hx, pad.top);
+      ctx.lineTo(hx, H - pad.bottom);
+      ctx.stroke();
+
+      // Bottom date badge
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#1d1d1f";
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(hx - 40, H - pad.bottom + 8, 80, 20, 5);
+      else ctx.rect(hx - 40, H - pad.bottom + 8, 80, 20);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 10.5px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(r.date, hx, H - pad.bottom + 18);
+
+      // Glowing anchor dots
+      if (activeHistoryMode === "yields") {
+        const seriesColors = { "30y": "#34c759", "10y": "#0071e3", "5y": "#af52de", "2y": "#ff9500" };
+        ["30y", "10y", "5y", "2y"].forEach((k) => {
+          if (!activeHistoryTenors[k] || r[k] == null) return;
+          const py = yToPx(r[k]);
+          const col = seriesColors[k];
+          ctx.beginPath();
+          ctx.arc(hx, py, 7.5, 0, Math.PI * 2);
+          ctx.fillStyle = col + "40";
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(hx, py, 4, 0, Math.PI * 2);
+          ctx.fillStyle = col;
+          ctx.fill();
+          ctx.strokeStyle = "#ffffff";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        });
+      } else {
+        const spreadConfigs = [
+          { key: "spread_2s10s", color: "#0071e3" },
+          { key: "spread_2s30s", color: "#af52de" },
+          { key: "spread_5s10s", color: "#248a3d" },
+        ];
+        spreadConfigs.forEach((cfg) => {
+          if (!activeHistorySpreads[cfg.key] || typeof r[cfg.key] !== "number") return;
+          const py = yToPx(r[cfg.key]);
+          ctx.beginPath();
+          ctx.arc(hx, py, 7.5, 0, Math.PI * 2);
+          ctx.fillStyle = cfg.color + "40";
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(hx, py, 4, 0, Math.PI * 2);
+          ctx.fillStyle = cfg.color;
+          ctx.fill();
+          ctx.strokeStyle = "#ffffff";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        });
+      }
+      ctx.restore();
     }
   }
-
-  /* -------------------------------------------------------------
-     SCENARIO SIMULATOR
-     ------------------------------------------------------------- */
-  function runScenarioSimulation(scenarioKey) {
-    const sc = PRESET_SCENARIOS[scenarioKey];
-    if (!sc || !curveData || !curveData.yields) return;
-
-    document.querySelectorAll(".scenario-btn").forEach((btn) => {
-      btn.classList.toggle("active", btn.dataset.scenario === scenarioKey);
-    });
-
-    const descEl = document.getElementById("scenarioDesc");
-    if (descEl) {
-      descEl.innerHTML = `<strong>${sc.name}:</strong> ${sc.desc} <span class="scenario-regime-tag">${sc.regime}</span>`;
-    }
-
-    const results = [];
-    TENOR_KEYS.forEach((k) => {
-      const meta = curveData.yields[k];
-      const shiftPct = sc.shifts[k];
-      const newYield = meta.yield + shiftPct;
-
-      const priceChgPct = -(meta.duration * shiftPct) + 0.5 * meta.convexity * Math.pow(shiftPct, 2);
-      const total1YReturn = priceChgPct + meta.yield;
-
-      results.push({
-        tenor: k,
-        label: TENOR_LABELS[k],
-        initialYield: meta.yield,
-        shiftPct: shiftPct,
-        newYield: newYield,
-        duration: meta.duration,
-        priceChgPct: priceChgPct,
-        total1YReturn: total1YReturn,
-      });
-    });
-
-    results.sort((a, b) => b.priceChgPct - a.priceChgPct);
-
-    const tbody = document.getElementById("scenarioResultsBody");
-    if (tbody) {
-      tbody.replaceChildren();
-      results.forEach((res, rank) => {
-        const tr = document.createElement("tr");
-        const priceCls = res.priceChgPct > 0 ? "good" : res.priceChgPct < 0 ? "bad" : "";
-        const totCls = res.total1YReturn > 0 ? "good" : "bad";
-        const signShift = res.shiftPct > 0 ? "+" : "";
-        const signPrice = res.priceChgPct > 0 ? "+" : "";
-        const signTot = res.total1YReturn > 0 ? "+" : "";
-
-        tr.innerHTML = `
-          <td><strong>#${rank + 1} ${res.label}</strong></td>
-          <td>${res.initialYield.toFixed(2)}%</td>
-          <td><span class="${res.shiftPct < 0 ? "good" : "bad"}">${signShift}${res.shiftPct.toFixed(2)}% (${signShift}${(res.shiftPct * 100).toFixed(0)} bps)</span></td>
-          <td><strong>${res.newYield.toFixed(2)}%</strong></td>
-          <td class="stat-highlight ${priceCls}"><strong>${signPrice}${res.priceChgPct.toFixed(2)}%</strong></td>
-          <td class="${totCls}">${signTot}${res.total1YReturn.toFixed(2)}%</td>
-          <td>
-            <div class="sim-bar-wrap">
-              <div class="sim-bar-fill ${res.priceChgPct >= 0 ? 'good-bar' : 'bad-bar'}" style="width: ${Math.min(100, Math.abs(res.priceChgPct) * 6)}%;"></div>
-            </div>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-  }
-
 
   /* -------------------------------------------------------------
      DEDICATED CURVE SPREADS CHART (2s10s, 2s30s, 5s10s)
@@ -714,7 +990,7 @@
 
     const W = rect.width;
     const H = 340;
-    const pad = { top: 30, right: 40, bottom: 40, left: 55 };
+    const pad = { top: 28, right: 88, bottom: 42, left: 58 };
     const chartW = W - pad.left - pad.right;
     const chartH = H - pad.top - pad.bottom;
 
@@ -726,10 +1002,8 @@
     const rows = allRows.slice(-maxPts);
     if (rows.length === 0) return;
 
-    // Update Stats Grid
     renderSpreadStatsGrid(rows);
 
-    // Compute Y range
     let minVal = Infinity;
     let maxVal = -Infinity;
 
@@ -745,18 +1019,17 @@
     });
 
     if (minVal === Infinity) { minVal = -20; maxVal = 100; }
-    // Always include zero line in perspective if within 50 bps
-    if (minVal > -15) minVal = Math.min(minVal, -5);
-    if (maxVal < 15) maxVal = Math.max(maxVal, 15);
+    minVal = Math.min(minVal, -10);
+    maxVal = Math.max(maxVal, 20);
 
     const padY = (maxVal - minVal) * 0.12 || 10;
-    minVal -= padY;
-    maxVal += padY;
+    minVal = Math.floor((minVal - padY) / 10) * 10;
+    maxVal = Math.ceil((maxVal + padY) / 10) * 10;
 
     const toX = (idx) => pad.left + (idx / (rows.length - 1)) * chartW;
     const toY = (val) => pad.top + (1 - (val - minVal) / (maxVal - minVal)) * chartH;
 
-    // Background Grid
+    // Grid lines
     ctx.lineWidth = 1;
     ctx.strokeStyle = "rgba(0,0,0,0.06)";
     const ySteps = 5;
@@ -765,37 +1038,38 @@
       const y = toY(v);
       ctx.beginPath();
       ctx.moveTo(pad.left, y);
-      ctx.lineTo(pad.left + chartW, y);
+      ctx.lineTo(W - pad.right, y);
       ctx.stroke();
 
       ctx.fillStyle = "#86868b";
-      ctx.font = "11px -apple-system, sans-serif";
+      ctx.font = "11.5px -apple-system, BlinkMacSystemFont, sans-serif";
       ctx.textAlign = "right";
       ctx.fillText(`${v >= 0 ? "+" : ""}${Math.round(v)} bps`, pad.left - 8, y + 3.5);
     }
 
-    // Draw Zero (Inversion Threshold) Line
+    // Prominent Red Zero Inversion Barrier Line
     const zeroY = toY(0);
     if (zeroY >= pad.top && zeroY <= pad.top + chartH) {
       ctx.save();
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.8;
       ctx.setLineDash([5, 4]);
-      ctx.strokeStyle = "rgba(215, 0, 21, 0.6)"; // Red line for inversion barrier
+      ctx.strokeStyle = "rgba(215, 0, 21, 0.85)";
       ctx.beginPath();
       ctx.moveTo(pad.left, zeroY);
-      ctx.lineTo(pad.left + chartW, zeroY);
+      ctx.lineTo(W - pad.right, zeroY);
       ctx.stroke();
+      ctx.setLineDash([]);
 
       ctx.fillStyle = "#d70015";
-      ctx.font = "bold 10px -apple-system, sans-serif";
+      ctx.font = "bold 10px -apple-system, BlinkMacSystemFont, sans-serif";
       ctx.textAlign = "left";
-      ctx.fillText("0 bps (Inversion Barrier)", pad.left + 8, zeroY - 4);
+      ctx.fillText("0.0 bps — INVERSION BARRIER (Recession Threshold)", pad.left + 8, zeroY - 5);
       ctx.restore();
     }
 
     // X Axis Labels (Dates)
     ctx.fillStyle = "#86868b";
-    ctx.font = "11px -apple-system, sans-serif";
+    ctx.font = "11px -apple-system, BlinkMacSystemFont, sans-serif";
     ctx.textAlign = "center";
     const xLabelCount = Math.min(6, rows.length);
     for (let i = 0; i < xLabelCount; i++) {
@@ -803,25 +1077,22 @@
       const r = rows[idx];
       if (!r) continue;
       const x = toX(idx);
-      const parts = r.date.split("-");
-      const label = parts.length === 3 ? `${parts[1]}/${parts[2]}` : r.date;
-      ctx.fillText(label, x, pad.top + chartH + 20);
+      ctx.fillText(r.date, x, pad.top + chartH + 15);
     }
 
-    // Plot Lines
     const SPREAD_LINE_CONFIG = {
-      spread_2s10s: { label: "2s10s Benchmark", color: "#0071e3", width: 2.5 },
-      spread_2s30s: { label: "2s30s Total Slope", color: "#af52de", width: 2.2 },
-      spread_5s10s: { label: "5s10s Belly Slope", color: "#248a3d", width: 2.2 },
+      spread_2s10s: { label: "2s10s Benchmark (10Y − 2Y)", tag: "2s10s", color: "#0071e3", width: 2.5 },
+      spread_2s30s: { label: "2s30s Total Slope (30Y − 2Y)", tag: "2s30s", color: "#af52de", width: 2.2 },
+      spread_5s10s: { label: "5s10s Belly Slope (10Y − 5Y)", tag: "5s10s", color: "#248a3d", width: 2.2 },
     };
 
     spreadsToPlot.forEach((sKey) => {
-      const cfg = SPREAD_LINE_CONFIG[sKey] || { label: sKey, color: "#0071e3", width: 2 };
-      
-      // Gradient Fill for single spread mode
+      const cfg = SPREAD_LINE_CONFIG[sKey] || { label: sKey, tag: sKey, color: "#0071e3", width: 2 };
+
+      // Shaded area for single spread mode
       if (activeSpreadKey !== "all") {
         const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + chartH);
-        grad.addColorStop(0, "rgba(0, 113, 227, 0.18)");
+        grad.addColorStop(0, "rgba(0, 113, 227, 0.16)");
         grad.addColorStop(1, "rgba(0, 113, 227, 0.00)");
         ctx.beginPath();
         ctx.moveTo(toX(0), toY(rows[0][sKey]));
@@ -834,11 +1105,10 @@
         ctx.fillStyle = grad;
         ctx.fill();
 
-        // Overlay 50d SMA line if single spread
         renderMovingAverageLine(ctx, rows, sKey, 50, "#ff9500", [4, 3], toX, toY);
       }
 
-      // Main Spread Line
+      // Main line
       ctx.lineWidth = cfg.width;
       ctx.strokeStyle = cfg.color;
       ctx.beginPath();
@@ -850,20 +1120,44 @@
       }
       ctx.stroke();
 
-      // End point marker & callout
+      // End point marker & badge
       const lastX = toX(rows.length - 1);
       const lastVal = rows[rows.length - 1][sKey];
-      const lastY = toY(lastVal);
-      ctx.fillStyle = cfg.color;
-      ctx.beginPath();
-      ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = "#ffffff";
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
+      if (typeof lastVal === "number") {
+        const lastY = toY(lastVal);
+
+        ctx.beginPath();
+        ctx.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = cfg.color;
+        ctx.fill();
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Right margin badge
+        const badgeX = lastX + 7;
+        const badgeY = lastY - 9.5;
+        const badgeW = 75;
+        const badgeH = 19;
+
+        ctx.save();
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 5);
+        else ctx.rect(badgeX, badgeY, badgeW, badgeH);
+        ctx.fillStyle = cfg.color;
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 9.5px -apple-system, BlinkMacSystemFont, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        const sign = lastVal >= 0 ? "+" : "";
+        ctx.fillText(`${cfg.tag} ${sign}${Math.round(lastVal)}b`, badgeX + badgeW / 2, badgeY + badgeH / 2);
+        ctx.restore();
+      }
     });
 
-    // Legend
+    // Top Legend
     let legX = pad.left + 10;
     const legY = pad.top + 14;
     spreadsToPlot.forEach((sKey) => {
@@ -883,6 +1177,56 @@
       ctx.fillStyle = "#6e6e73";
       ctx.font = "11px -apple-system, sans-serif";
       ctx.fillText("50d SMA", legX + 16, legY - 3);
+    }
+
+    // HOVER OVER INTERACTIVITY
+    if (hoverSpreadIdx !== null && hoverSpreadIdx >= 0 && hoverSpreadIdx < rows.length) {
+      const hx = toX(hoverSpreadIdx);
+      const r = rows[hoverSpreadIdx];
+
+      ctx.save();
+      // Vertical crosshair
+      ctx.beginPath();
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = "rgba(0, 113, 227, 0.45)";
+      ctx.lineWidth = 1.5;
+      ctx.moveTo(hx, pad.top);
+      ctx.lineTo(hx, pad.top + chartH);
+      ctx.stroke();
+
+      // Bottom date badge
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#1d1d1f";
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(hx - 40, pad.top + chartH + 6, 80, 20, 5);
+      else ctx.rect(hx - 40, pad.top + chartH + 6, 80, 20);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 10.5px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(r.date, hx, pad.top + chartH + 16);
+
+      // Glowing anchor dots
+      spreadsToPlot.forEach((sKey) => {
+        const val = r[sKey];
+        if (typeof val !== "number") return;
+        const cfg = SPREAD_LINE_CONFIG[sKey] || { color: "#0071e3" };
+        const py = toY(val);
+
+        ctx.beginPath();
+        ctx.arc(hx, py, 7.5, 0, Math.PI * 2);
+        ctx.fillStyle = cfg.color + "40";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(hx, py, 4, 0, Math.PI * 2);
+        ctx.fillStyle = cfg.color;
+        ctx.fill();
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+      ctx.restore();
     }
   }
 
@@ -950,7 +1294,6 @@
         grid.appendChild(el);
       });
     } else {
-      // Show summary for all 3 spreads
       ["2s10s", "2s30s", "5s10s"].forEach((k) => {
         const sp = spreads[k] || {};
         const curr = sp.bps !== undefined ? sp.bps : 0;
@@ -966,6 +1309,77 @@
           <span class="spread-stat-sub">1D: ${signChg}${chg.toFixed(1)} bps | 50d SMA: +${sp.sma50 ? sp.sma50.toFixed(1) : 0} bps</span>
         `;
         grid.appendChild(el);
+      });
+    }
+  }
+
+  /* -------------------------------------------------------------
+     SCENARIO SIMULATOR
+     ------------------------------------------------------------- */
+  function runScenarioSimulation(scenarioKey) {
+    const sc = PRESET_SCENARIOS[scenarioKey];
+    if (!sc || !curveData || !curveData.yields) return;
+
+    document.querySelectorAll(".scenario-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.scenario === scenarioKey);
+    });
+
+    const elName = document.getElementById("scenarioName");
+    const elDesc = document.getElementById("scenarioDesc");
+    const elRegime = document.getElementById("scenarioRegimeTag");
+
+    if (elName) elName.textContent = sc.name;
+    if (elDesc) elDesc.textContent = sc.desc;
+    if (elRegime) elRegime.textContent = sc.regime;
+
+    const results = [];
+    TENOR_KEYS.forEach((k) => {
+      const meta = curveData.yields[k];
+      const shiftPct = sc.shifts[k];
+      const newYield = meta.yield + shiftPct;
+
+      const priceChgPct = -(meta.duration * shiftPct) + 0.5 * meta.convexity * Math.pow(shiftPct, 2);
+      const total1YReturn = priceChgPct + meta.yield;
+
+      results.push({
+        tenor: k,
+        label: TENOR_LABELS[k],
+        initialYield: meta.yield,
+        shiftPct: shiftPct,
+        newYield: newYield,
+        duration: meta.duration,
+        priceChgPct: priceChgPct,
+        total1YReturn: total1YReturn,
+      });
+    });
+
+    results.sort((a, b) => b.priceChgPct - a.priceChgPct);
+
+    const tbody = document.getElementById("scenarioResultsBody");
+    if (tbody) {
+      tbody.replaceChildren();
+      results.forEach((res, rank) => {
+        const tr = document.createElement("tr");
+        const priceCls = res.priceChgPct > 0 ? "good" : res.priceChgPct < 0 ? "bad" : "";
+        const totCls = res.total1YReturn > 0 ? "good" : "bad";
+        const signShift = res.shiftPct > 0 ? "+" : "";
+        const signPrice = res.priceChgPct > 0 ? "+" : "";
+        const signTot = res.total1YReturn > 0 ? "+" : "";
+
+        tr.innerHTML = `
+          <td><strong>#${rank + 1} ${res.label}</strong></td>
+          <td>${res.initialYield.toFixed(2)}%</td>
+          <td><span class="${res.shiftPct < 0 ? "good" : "bad"}">${signShift}${res.shiftPct.toFixed(2)}% (${signShift}${(res.shiftPct * 100).toFixed(0)} bps)</span></td>
+          <td><strong>${res.newYield.toFixed(2)}%</strong></td>
+          <td class="stat-highlight ${priceCls}"><strong>${signPrice}${res.priceChgPct.toFixed(2)}%</strong></td>
+          <td class="${totCls}">${signTot}${res.total1YReturn.toFixed(2)}%</td>
+          <td>
+            <div class="sim-bar-wrap">
+              <div class="sim-bar-fill ${res.priceChgPct >= 0 ? 'good-bar' : 'bad-bar'}" style="width: ${Math.min(100, Math.abs(res.priceChgPct) * 6)}%;"></div>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
       });
     }
   }
@@ -988,33 +1402,33 @@
 
     // Render Summary Bar
     summaryBar.replaceChildren();
-    const pnlUsd = summary.total_pnl_usd || 0;
-    const pnlBps = summary.total_pnl_bps || 0;
-    const signUsd = pnlUsd > 0 ? "+" : "";
-    const signBps = pnlBps > 0 ? "+" : "";
-    const pnlCls = pnlUsd >= 0 ? "good" : "bad";
 
-    const summaryCards = [
-      { label: "Total Unrealized P&L ($)", val: `${signUsd}$${Math.abs(pnlUsd).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, cls: pnlCls },
-      { label: "Portfolio P&L (bps)", val: `${signBps}${pnlBps.toFixed(1)} bps`, cls: pnlCls },
-      { label: "Active Open Trades", val: `${summary.open_trades || trades.length} Positions`, cls: "" },
-      { label: "Model Win Rate", val: `${summary.win_rate_pct || 100.0}%`, cls: "good" },
-      { label: "Normalized Sizing", val: "$10k / bp DV01", cls: "stat-highlight" },
+    const signBps = (summary.total_pnl_bps || 0) > 0 ? "+" : "";
+    const signUsd = (summary.total_pnl_usd || 0) > 0 ? "+" : "";
+    const pnlCls = (summary.total_pnl_usd || 0) >= 0 ? "good" : "bad";
+
+    const stats = [
+      { label: "Total Ideas Tracked", val: summary.total_trades || 0, sub: `${summary.open_trades || 0} Open • ${summary.closed_trades || 0} Closed` },
+      { label: "Win Rate", val: `${summary.win_rate_pct || 100}%`, sub: "Closed + Open in Profit" },
+      { label: "Cumulative MTM (bps)", val: `${signBps}${(summary.total_pnl_bps || 0).toFixed(1)} bps`, sub: "Aggregate Basis Points", cls: pnlCls },
+      { label: "Mark-to-Market P&L", val: `${signUsd}$${Math.abs(summary.total_pnl_usd || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, sub: "Live Unrealized + Realized", cls: pnlCls },
     ];
 
-    summaryCards.forEach((c) => {
-      const item = document.createElement("div");
-      item.className = "tracker-summary-item";
-      item.innerHTML = `
-        <span class="tracker-summary-label">${c.label}</span>
-        <span class="tracker-summary-val ${c.cls}">${c.val}</span>
+    stats.forEach((st) => {
+      const card = document.createElement("div");
+      card.className = "tracker-summary-card";
+      card.innerHTML = `
+        <span class="tracker-summary-label">${st.label}</span>
+        <span class="tracker-summary-val ${st.cls || ''}">${st.val}</span>
+        <span class="tracker-summary-sub">${st.sub}</span>
       `;
-      summaryBar.appendChild(item);
+      summaryBar.appendChild(card);
     });
 
-    // Render Table Rows
+    // Render Trades Table
     tbody.replaceChildren();
-    const filteredTrades = activeTrackerFilter === "all" ? trades : trades.filter((t) => t.desk === activeTrackerFilter);
+
+    const filteredTrades = activeTrackerFilter === "all" ? trades : trades.filter(t => t.desk === activeTrackerFilter);
 
     if (filteredTrades.length === 0) {
       const tr = document.createElement("tr");
@@ -1060,7 +1474,287 @@
     });
   }
 
+  /* -------------------------------------------------------------
+     CHART HOVER ENGINES & TOOLTIP UPDATERS
+     ------------------------------------------------------------- */
+  function setupChartHoverEngines() {
+    // 1. History Chart Hover
+    const histCanvas = document.getElementById("historyChartCanvas");
+    const histTooltip = document.getElementById("historyChartTooltip");
+
+    if (histCanvas && histTooltip) {
+      histCanvas.addEventListener("mousemove", (e) => {
+        if (!curveData || !curveData.history) return;
+        const countMap = { "1m": 22, "3m": 66, "6m": 126, "1y": 252 };
+        const maxPts = countMap[activeHistoryRange] || curveData.history.length;
+        const rows = curveData.history.slice(-maxPts);
+        if (!rows.length) return;
+
+        const rect = histCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const padLeft = 58;
+        const padRight = 88;
+        const chartW = rect.width - padLeft - padRight;
+
+        if (mouseX >= padLeft - 10 && mouseX <= rect.width - padRight + 10) {
+          const frac = Math.max(0, Math.min(1, (mouseX - padLeft) / chartW));
+          hoverHistoryIdx = Math.round(frac * (rows.length - 1));
+          renderHistoryChart();
+          updateHistoryTooltip(rows[hoverHistoryIdx], padLeft + (chartW * hoverHistoryIdx) / (rows.length - 1), rect.width);
+        } else {
+          hoverHistoryIdx = null;
+          histTooltip.style.display = "none";
+          renderHistoryChart();
+        }
+      });
+
+      histCanvas.addEventListener("mouseleave", () => {
+        hoverHistoryIdx = null;
+        histTooltip.style.display = "none";
+        renderHistoryChart();
+      });
+    }
+
+    // 2. Dedicated Spreads Chart Hover
+    const spCanvas = document.getElementById("spreadChartCanvas");
+    const spTooltip = document.getElementById("spreadChartTooltip");
+
+    if (spCanvas && spTooltip) {
+      spCanvas.addEventListener("mousemove", (e) => {
+        if (!curveData || !curveData.history) return;
+        const countMap = { "1m": 22, "3m": 66, "6m": 126, "1y": 252 };
+        const maxPts = countMap[activeSpreadRange] || curveData.history.length;
+        const rows = curveData.history.slice(-maxPts);
+        if (!rows.length) return;
+
+        const rect = spCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const padLeft = 58;
+        const padRight = 88;
+        const chartW = rect.width - padLeft - padRight;
+
+        if (mouseX >= padLeft - 10 && mouseX <= rect.width - padRight + 10) {
+          const frac = Math.max(0, Math.min(1, (mouseX - padLeft) / chartW));
+          hoverSpreadIdx = Math.round(frac * (rows.length - 1));
+          renderSpreadChart();
+          updateSpreadTooltip(rows[hoverSpreadIdx], padLeft + (chartW * hoverSpreadIdx) / (rows.length - 1), rect.width);
+        } else {
+          hoverSpreadIdx = null;
+          spTooltip.style.display = "none";
+          renderSpreadChart();
+        }
+      });
+
+      spCanvas.addEventListener("mouseleave", () => {
+        hoverSpreadIdx = null;
+        spTooltip.style.display = "none";
+        renderSpreadChart();
+      });
+    }
+
+    // 3. Yield Curve Shape Hover
+    const ycCanvas = document.getElementById("yieldCurveCanvas");
+    const ycTooltip = document.getElementById("yieldCurveTooltip");
+
+    if (ycCanvas && ycTooltip) {
+      ycCanvas.addEventListener("mousemove", (e) => {
+        if (!curveData || !curveData.snapshots) return;
+        const rect = ycCanvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const padLeft = 55;
+        const padRight = 40;
+        const chartW = rect.width - padLeft - padRight;
+
+        const tenorXMap = {
+          "2y": padLeft + chartW * 0.10,
+          "5y": padLeft + chartW * 0.38,
+          "10y": padLeft + chartW * 0.68,
+          "30y": padLeft + chartW * 0.95,
+        };
+
+        let closest = null;
+        let minDist = 50; // pixel threshold
+        Object.keys(tenorXMap).forEach((t) => {
+          const dist = Math.abs(mouseX - tenorXMap[t]);
+          if (dist < minDist) {
+            minDist = dist;
+            closest = t;
+          }
+        });
+
+        if (closest) {
+          hoverYieldTenor = closest;
+          renderYieldCurveChart();
+          updateYieldCurveTooltip(closest, tenorXMap[closest], rect.width);
+        } else {
+          hoverYieldTenor = null;
+          ycTooltip.style.display = "none";
+          renderYieldCurveChart();
+        }
+      });
+
+      ycCanvas.addEventListener("mouseleave", () => {
+        hoverYieldTenor = null;
+        ycTooltip.style.display = "none";
+        renderYieldCurveChart();
+      });
+    }
+  }
+
+  function updateHistoryTooltip(row, xPx, totalW) {
+    const tip = document.getElementById("historyChartTooltip");
+    if (!tip || !row) return;
+
+    tip.style.display = "block";
+    tip.style.left = `${xPx}px`;
+    tip.style.top = `38px`;
+    const isRight = xPx > totalW * 0.62;
+    tip.style.transform = isRight ? "translate(calc(-100% - 14px), 0)" : "translate(14px, 0)";
+
+    if (activeHistoryMode === "yields") {
+      const s2s10 = row.spread_2s10s !== undefined ? row.spread_2s10s : ((row["10y"] - row["2y"]) * 100);
+      const isNormal = s2s10 >= 0;
+      tip.innerHTML = `
+        <div class="tooltip-date">
+          <span>📅 ${row.date}</span>
+          <span class="${isNormal ? 'status-pill-normal' : 'status-pill-inverted'}">${isNormal ? 'Normal Slope' : 'Inverted'}</span>
+        </div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #34c759;"></span>30Y Long Bond</span><span class="tooltip-val">${row["30y"] != null ? row["30y"].toFixed(2) + "%" : "—"}</span></div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #0071e3;"></span>10Y Benchmark</span><span class="tooltip-val">${row["10y"] != null ? row["10y"].toFixed(2) + "%" : "—"}</span></div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #af52de;"></span>5Y Belly</span><span class="tooltip-val">${row["5y"] != null ? row["5y"].toFixed(2) + "%" : "—"}</span></div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #ff9500;"></span>2Y Front-End</span><span class="tooltip-val">${row["2y"] != null ? row["2y"].toFixed(2) + "%" : "—"}</span></div>
+        <div class="tooltip-footer">
+          <div style="display: flex; justify-content: space-between; font-weight: 700;">
+            <span>2s10s Spread:</span>
+            <span style="color: ${isNormal ? '#248a3d' : '#d70015'};">${isNormal ? '+' : ''}${s2s10.toFixed(1)} bps</span>
+          </div>
+          <div style="font-size: 10px; color: #86868b; margin-top: 3px;">Math: 10Y (${row["10y"] ? row["10y"].toFixed(2) : 0}%) − 2Y (${row["2y"] ? row["2y"].toFixed(2) : 0}%)</div>
+        </div>
+      `;
+    } else {
+      const s2s10 = row.spread_2s10s || 0;
+      const s2s30 = row.spread_2s30s || 0;
+      const s5s10 = row.spread_5s10s || 0;
+      const isNormal = s2s10 >= 0;
+
+      tip.innerHTML = `
+        <div class="tooltip-date">
+          <span>📅 ${row.date}</span>
+          <span class="${isNormal ? 'status-pill-normal' : 'status-pill-inverted'}">${isNormal ? 'Normal Slope' : 'Inverted'}</span>
+        </div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #0071e3;"></span>2s10s (10Y − 2Y)</span><span class="tooltip-val" style="color: #0071e3;">${s2s10 >= 0 ? '+' : ''}${s2s10.toFixed(1)} bps</span></div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #af52de;"></span>2s30s (30Y − 2Y)</span><span class="tooltip-val" style="color: #af52de;">${s2s30 >= 0 ? '+' : ''}${s2s30.toFixed(1)} bps</span></div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #248a3d;"></span>5s10s (10Y − 5Y)</span><span class="tooltip-val" style="color: #248a3d;">${s5s10 >= 0 ? '+' : ''}${s5s10.toFixed(1)} bps</span></div>
+        <div class="tooltip-footer">
+          <div style="font-weight: 600; color: #1d1d1f;">Spread = Longer Tenor − Shorter Tenor</div>
+          <div style="font-size: 10px; color: #86868b; margin-top: 2px;">${isNormal ? '✅ Positive Slope: Healthy economic expansion' : '⚠️ Negative (< 0 bps): Recession warning signal'}</div>
+        </div>
+      `;
+    }
+  }
+
+  function updateSpreadTooltip(row, xPx, totalW) {
+    const tip = document.getElementById("spreadChartTooltip");
+    if (!tip || !row) return;
+
+    tip.style.display = "block";
+    tip.style.left = `${xPx}px`;
+    tip.style.top = `38px`;
+    const isRight = xPx > totalW * 0.62;
+    tip.style.transform = isRight ? "translate(calc(-100% - 14px), 0)" : "translate(14px, 0)";
+
+    const SPREAD_INFO = {
+      "2s10s": { name: "2s10s Benchmark", formula: "10Y Yield − 2Y Yield", key: "spread_2s10s", color: "#0071e3" },
+      "2s30s": { name: "2s30s Total Slope", formula: "30Y Yield − 2Y Yield", key: "spread_2s30s", color: "#af52de" },
+      "5s10s": { name: "5s10s Belly Slope", formula: "10Y Yield − 5Y Yield", key: "spread_5s10s", color: "#248a3d" },
+    };
+
+    if (activeSpreadKey !== "all") {
+      const info = SPREAD_INFO[activeSpreadKey] || SPREAD_INFO["2s10s"];
+      const val = row[info.key] || 0;
+      const isNormal = val >= 0;
+
+      let formulaMath = "";
+      if (activeSpreadKey === "2s10s") {
+        formulaMath = `10Y (${row["10y"] ? row["10y"].toFixed(2) : 0}%) − 2Y (${row["2y"] ? row["2y"].toFixed(2) : 0}%)`;
+      } else if (activeSpreadKey === "2s30s") {
+        formulaMath = `30Y (${row["30y"] ? row["30y"].toFixed(2) : 0}%) − 2Y (${row["2y"] ? row["2y"].toFixed(2) : 0}%)`;
+      } else if (activeSpreadKey === "5s10s") {
+        formulaMath = `10Y (${row["10y"] ? row["10y"].toFixed(2) : 0}%) − 5Y (${row["5y"] ? row["5y"].toFixed(2) : 0}%)`;
+      }
+
+      tip.innerHTML = `
+        <div class="tooltip-date">
+          <span>📅 ${row.date}</span>
+          <span class="${isNormal ? 'status-pill-normal' : 'status-pill-inverted'}">${isNormal ? 'Normal Slope' : 'Inverted'}</span>
+        </div>
+        <div class="tooltip-row">
+          <span class="tooltip-label"><span class="tooltip-dot" style="background: ${info.color};"></span>${info.name}</span>
+          <span class="tooltip-val" style="color: ${info.color}; font-size: 13.5px;">${val >= 0 ? '+' : ''}${val.toFixed(1)} bps</span>
+        </div>
+        <div class="tooltip-footer">
+          <div style="font-weight: 700; color: #1d1d1f; margin-bottom: 2px;">Formula: ${info.formula}</div>
+          <div style="font-size: 10px; color: #555;">Math: ${formulaMath} = ${val >= 0 ? '+' : ''}${val.toFixed(1)} bps</div>
+          <div style="font-size: 10px; color: ${isNormal ? '#248a3d' : '#d70015'}; margin-top: 4px; font-weight: 600;">
+            ${isNormal ? '✅ Normal: Long rates pay more than short rates' : '⚠️ Inverted: Short rates higher than long rates'}
+          </div>
+        </div>
+      `;
+    } else {
+      const s2s10 = row.spread_2s10s || 0;
+      const s2s30 = row.spread_2s30s || 0;
+      const s5s10 = row.spread_5s10s || 0;
+
+      tip.innerHTML = `
+        <div class="tooltip-date">
+          <span>📅 ${row.date}</span>
+          <span class="${s2s10 >= 0 ? 'status-pill-normal' : 'status-pill-inverted'}">${s2s10 >= 0 ? 'Normal' : 'Inverted'}</span>
+        </div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #0071e3;"></span>2s10s Benchmark</span><span class="tooltip-val" style="color: #0071e3;">${s2s10 >= 0 ? '+' : ''}${s2s10.toFixed(1)} bps</span></div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #af52de;"></span>2s30s Total Slope</span><span class="tooltip-val" style="color: #af52de;">${s2s30 >= 0 ? '+' : ''}${s2s30.toFixed(1)} bps</span></div>
+        <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #248a3d;"></span>5s10s Belly Slope</span><span class="tooltip-val" style="color: #248a3d;">${s5s10 >= 0 ? '+' : ''}${s5s10.toFixed(1)} bps</span></div>
+        <div class="tooltip-footer">
+          <div style="font-size: 10.5px; color: #555;">Inversion Barrier: <strong>0.0 bps</strong></div>
+        </div>
+      `;
+    }
+  }
+
+  function updateYieldCurveTooltip(tenorKey, xPx, totalW) {
+    const tip = document.getElementById("yieldCurveTooltip");
+    if (!tip || !curveData || !curveData.snapshots) return;
+
+    const snaps = curveData.snapshots;
+    const meta = (curveData.yields && curveData.yields[tenorKey]) || {};
+
+    tip.style.display = "block";
+    tip.style.left = `${xPx}px`;
+    tip.style.top = `40px`;
+    const isRight = xPx > totalW * 0.65;
+    tip.style.transform = isRight ? "translate(calc(-100% - 14px), 0)" : "translate(14px, 0)";
+
+    tip.innerHTML = `
+      <div class="tooltip-date">
+        <span>📍 ${TENOR_LABELS[tenorKey]} (${tenorKey.toUpperCase()})</span>
+        <span class="status-pill-normal">Current: ${meta.yield ? meta.yield.toFixed(2) + "%" : "—"}</span>
+      </div>
+      <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #0071e3;"></span>Current</span><span class="tooltip-val">${snaps.current && snaps.current[tenorKey] != null ? snaps.current[tenorKey].toFixed(2) + "%" : "—"}</span></div>
+      <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #8e8e93;"></span>1M Ago</span><span class="tooltip-val">${snaps["1m_ago"] && snaps["1m_ago"][tenorKey] != null ? snaps["1m_ago"][tenorKey].toFixed(2) + "%" : "—"}</span></div>
+      <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #af52de;"></span>6M Ago</span><span class="tooltip-val">${snaps["6m_ago"] && snaps["6m_ago"][tenorKey] != null ? snaps["6m_ago"][tenorKey].toFixed(2) + "%" : "—"}</span></div>
+      <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #34c759;"></span>1Y Ago</span><span class="tooltip-val">${snaps["1y_ago"] && snaps["1y_ago"][tenorKey] != null ? snaps["1y_ago"][tenorKey].toFixed(2) + "%" : "—"}</span></div>
+      <div class="tooltip-row"><span class="tooltip-label"><span class="tooltip-dot" style="background: #ff3b30;"></span>Inverted Peak</span><span class="tooltip-val">${snaps.peak_inversion && snaps.peak_inversion[tenorKey] != null ? snaps.peak_inversion[tenorKey].toFixed(2) + "%" : "—"}</span></div>
+      <div class="tooltip-footer">
+        <div><strong>Mod Duration:</strong> ${meta.duration ? meta.duration.toFixed(1) + "y" : "—"}</div>
+        <div><strong>DV01:</strong> ${meta.dv01 ? "$" + meta.dv01.toFixed(1) + " / bp ($100k)" : "—"}</div>
+      </div>
+    `;
+  }
+
+  /* -------------------------------------------------------------
+     EVENT LISTENERS INITIALIZATION
+     ------------------------------------------------------------- */
   function setupEventListeners() {
+    // Yield Curve series toggles
     document.querySelectorAll(".curve-toggle-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.curveKey;
@@ -1070,6 +1764,7 @@
       });
     });
 
+    // History mode toggles (Yields % vs Spreads bps)
     document.querySelectorAll(".history-mode-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".history-mode-btn").forEach((b) => b.classList.remove("active"));
@@ -1079,6 +1774,7 @@
       });
     });
 
+    // History range buttons (1M, 3M, 6M, 1Y)
     document.querySelectorAll(".history-range-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".history-range-btn").forEach((b) => b.classList.remove("active"));
@@ -1088,15 +1784,48 @@
       });
     });
 
+    // Spread selection buttons (2s10s, 2s30s, 5s10s, all)
+    document.querySelectorAll(".spread-select-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".spread-select-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeSpreadKey = btn.dataset.spread;
+        renderSpreadChart();
+      });
+    });
+
+    // Spread range buttons (1M, 3M, 6M, 1Y)
+    document.querySelectorAll(".spread-range-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".spread-range-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeSpreadRange = btn.dataset.range;
+        renderSpreadChart();
+      });
+    });
+
+    // Trade tracker desk filter buttons
+    document.querySelectorAll(".tracker-filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tracker-filter-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeTrackerFilter = btn.dataset.filter;
+        renderTradeTracker();
+      });
+    });
+
+    // Scenario buttons
     document.querySelectorAll(".scenario-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         runScenarioSimulation(btn.dataset.scenario);
       });
     });
 
+    // Resize event
     window.addEventListener("resize", () => {
       renderYieldCurveChart();
       renderHistoryChart();
+      renderSpreadChart();
     });
   }
 

@@ -703,6 +703,179 @@
       .model-stance-grid { grid-template-columns: 1fr; }
       main { margin: 24px auto 48px; }
     }
+  
+    /* --- Interactive Chart Enhancements: Tooltips, Legends & Explainers --- */
+    .chart-tooltip {
+      position: absolute;
+      display: none;
+      pointer-events: none;
+      z-index: 100;
+      min-width: 220px;
+      max-width: 290px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.06);
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text);
+      transition: opacity 0.12s ease-out;
+    }
+    .chart-tooltip .tooltip-date {
+      font-weight: 700;
+      font-size: 12.5px;
+      color: var(--text);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chart-tooltip .tooltip-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3.5px 0;
+      font-size: 12px;
+    }
+    .chart-tooltip .tooltip-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .chart-tooltip .tooltip-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .chart-tooltip .tooltip-val {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+    }
+    .chart-tooltip .tooltip-footer {
+      margin-top: 8px;
+      padding-top: 7px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.10);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .history-legend-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+    .legend-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+    .legend-pill:hover {
+      background: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
+    }
+    .legend-pill.muted {
+      opacity: 0.42;
+      background: rgba(0, 0, 0, 0.03);
+      border-color: transparent;
+      text-decoration: line-through;
+    }
+    .legend-pill .pill-val {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      margin-left: 2px;
+    }
+
+    .spread-explainer-banner {
+      background: linear-gradient(135deg, rgba(0, 113, 227, 0.05) 0%, rgba(175, 82, 222, 0.05) 100%);
+      border: 1px solid rgba(0, 113, 227, 0.16);
+      border-radius: 18px;
+      padding: 16px 20px;
+      margin-top: 14px;
+      margin-bottom: 14px;
+    }
+    .spread-explainer-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .spread-explainer-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .spread-explainer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .spread-explainer-col {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .formula-badge {
+      display: inline-block;
+      background: rgba(0, 113, 227, 0.1);
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      margin: 2px 0;
+    }
+    .status-pill-normal {
+      background: rgba(52, 199, 89, 0.15);
+      color: #248a3d;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 10.5px;
+      letter-spacing: 0.02em;
+    }
+    .status-pill-inverted {
+      background: rgba(255, 59, 48, 0.15);
+      color: #d70015;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 10.5px;
+      letter-spacing: 0.02em;
+    }
+
   </style>
 </head>
 <body>
@@ -885,6 +1058,7 @@
     </div>
     <div class="chart-container">
       <canvas id="yieldCurveCanvas" class="interactive-chart"></canvas>
+        <div class="chart-tooltip" id="yieldCurveTooltip"></div>
     </div>
   </section>
 
@@ -908,9 +1082,13 @@
         </div>
       </div>
     </div>
-    <div class="chart-container">
-      <canvas id="historyChartCanvas" class="interactive-chart"></canvas>
-    </div>
+          <div class="history-legend-bar" id="historyLegendBar">
+        <!-- Injected dynamically by ust-page.js: Interactive curve toggles & current prices -->
+      </div>
+      <div class="chart-container">
+        <canvas id="historyChartCanvas" class="interactive-chart"></canvas>
+        <div class="chart-tooltip" id="historyChartTooltip"></div>
+      </div>
   </section>
 
   <!-- Section: Dedicated Benchmark Curve Spreads (2s10s, 2s30s, 5s10s) -->
@@ -940,12 +1118,40 @@
     </div>
 
     <!-- Dynamic Spread Summary Metrics Grid -->
-    <div class="spread-stats-grid" id="spreadStatsGrid">
+          <!-- What is a Yield Curve Spread Explainer Banner -->
+      <div class="spread-explainer-banner">
+        <div class="spread-explainer-header">
+          <span style="font-size: 17px;">💡</span>
+          <span class="spread-explainer-title">What is a Yield Curve Spread & Why Does It Matter?</span>
+        </div>
+        <div class="spread-explainer-grid">
+          <div class="spread-explainer-col">
+            <div style="font-weight: 700; margin-bottom: 4px; color: var(--text);">1. What is a Spread?</div>
+            A <strong>spread</strong> is the difference between two yields, measured in <strong>basis points (bps)</strong>, where <strong>1 bp = 0.01%</strong> (100 bps = 1.00%).<br>
+            <span class="formula-badge">Spread = Longer-Term Yield − Shorter-Term Yield</span>
+          </div>
+          <div class="spread-explainer-col">
+            <div style="font-weight: 700; margin-bottom: 4px; color: var(--text);">2. Core Spreads Tracked</div>
+            • <strong>2s10s</strong>: <span class="formula-badge">10Y − 2Y</span> (The #1 growth & recession barometer)<br>
+            • <strong>2s30s</strong>: <span class="formula-badge">30Y − 2Y</span> (Term premium & long-run fiscal supply)<br>
+            • <strong>5s10s</strong>: <span class="formula-badge">10Y − 5Y</span> (Intermediate belly slope & Fed transition)
+          </div>
+          <div class="spread-explainer-col">
+            <div style="font-weight: 700; margin-bottom: 4px; color: var(--text);">3. How to Read the Signals</div>
+            • <span class="status-pill-normal">Above 0 bps (Normal)</span>: 10Y pays more than 2Y. Healthy expansion.<br>
+            • <span class="status-pill-inverted">Below 0 bps (Inverted)</span>: 2Y pays more than 10Y. Historically preceded recessions.<br>
+            • <strong>Steepening</strong>: Spread rising. <strong>Flattening</strong>: Spread narrowing.
+          </div>
+        </div>
+      </div>
+
+      <div class="spread-stats-grid" id="spreadStatsGrid">
       <!-- Dynamically injected by ust-page.js -->
     </div>
 
     <div class="chart-container" style="margin-top: 14px;">
       <canvas id="spreadChartCanvas" class="interactive-chart"></canvas>
+        <div class="chart-tooltip" id="spreadChartTooltip"></div>
     </div>
   </section>
 
