@@ -10,6 +10,8 @@ Invoked via: `/analyse-ust` or `"analyse UST"`. Skill: [`.agents/skills/analyse-
 - **Client Engine**: `ust-page.js` (canvas curve visualizer, DV01 calculator, scenario simulator)
 - **Data Pipeline**: `generate_ust_data.py` (pulls `2YY=F`, `^FVX`, `^TNX`, `^TYX`, computes spreads & SMAs)
 - **Data Payload**: `ust_curve_data.json` and `ust_daily.csv` (consumed directly by `ust.html`)
+- **Trade Tracker & P&L Engine**: `trade_tracker.py` & `macro_trade_tracker.json` (auto-marks active trades to market)
+- **Curve Spread Visualizer**: Dedicated interactive canvas charts for 2s10s, 2s30s, and 5s10s with 50d/200d SMAs and inversion thresholds.
 
 ---
 
@@ -27,7 +29,7 @@ Invoked via: `/analyse-ust` or `"analyse UST"`. Skill: [`.agents/skills/analyse-
    - *Bear Flattener (Ultra-Short Cash)*: 2Y > 4.85% & CPI > 3.7%.
 4. **Deploy**:
    ```bash
-   git add ust.html ust-page.js generate_ust_data.py ust_curve_data.json ust_daily.csv site-nav.js docs/runbooks/analyse-ust.md
+   git add ust.html ust-page.js generate_ust_data.py ust_curve_data.json ust_daily.csv trade_tracker.py macro_trade_tracker.json site-nav.js docs/runbooks/analyse-ust.md
    git commit -m "Refresh UST curve analysis and macro regime"
    git push origin main
    ```

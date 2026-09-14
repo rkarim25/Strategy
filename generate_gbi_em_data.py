@@ -379,10 +379,20 @@ def main():
         "an FX-hedged approach or selective curve flatteners."
     )
     
+    # Mark to market GBI-EM trades
+    trade_tracker_data = None
+    try:
+        import trade_tracker
+        trade_tracker_data = trade_tracker.update_gbi_em_trades(COUNTRIES)
+        print(f"  GBI-EM trade tracker updated: Total P&L: ${trade_tracker_data['portfolio_summary']['total_pnl_usd']}")
+    except Exception as e:
+        print(f"  Warning: Could not update trade tracker in GBI-EM: {e}")
+
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "as_of_date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "executive_paragraph": executive_paragraph,
+        "trade_tracker": trade_tracker_data,
         "countries": COUNTRIES,
         "ranking_by_real_yield": [c["id"] for c in ranked_by_real_yield],
         "regional_breakdown": {

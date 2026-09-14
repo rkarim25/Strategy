@@ -125,6 +125,7 @@ def main():
             row["spread_5s30s"] = round((row["30y"] - row["5y"]) * 100, 1)
             row["spread_2s30s"] = round((row["30y"] - row["2y"]) * 100, 1)
             row["spread_10s30s"] = round((row["30y"] - row["10y"]) * 100, 1)
+            row["spread_5s10s"] = round((row["10y"] - row["5y"]) * 100, 1)
             aligned.append(row)
 
     if not aligned:
@@ -140,6 +141,17 @@ def main():
     history_5y = [r["5y"] for r in aligned]
     history_30y = [r["30y"] for r in aligned]
     history_2s10s = [r["spread_2s10s"] for r in aligned]
+    history_2s30s = [r["spread_2s30s"] for r in aligned]
+    history_5s10s = [r["spread_5s10s"] for r in aligned]
+    history_5s30s = [r["spread_5s30s"] for r in aligned]
+
+    sma50_2s30s = calc_sma(history_2s30s, 50)
+    sma200_2s30s = calc_sma(history_2s30s, 200)
+    rsi14_2s30s = calc_rsi(history_2s30s, 14)
+
+    sma50_5s10s = calc_sma(history_5s10s, 50)
+    sma200_5s10s = calc_sma(history_5s10s, 200)
+    rsi14_5s10s = calc_rsi(history_5s10s, 14)
 
     sma50_10y = calc_sma(history_10y, 50)
     sma200_10y = calc_sma(history_10y, 200)
@@ -273,34 +285,62 @@ def main():
             "role": meta["role"],
         }
 
-    # Spreads payload
+    # Spreads payload with full statistics for 2s10s, 2s30s, and 5s10s
     spreads = {
         "2s10s": {
-            "name": "2Y / 10Y Curve Spread",
+            "name": "2Y / 10Y Benchmark Spread",
+            "short_name": "2s10s",
             "bps": latest_row["spread_2s10s"],
             "prev_bps": prev_row["spread_2s10s"],
             "change_bps": round(latest_row["spread_2s10s"] - prev_row["spread_2s10s"], 1),
             "status": "Normal / Steepening" if latest_row["spread_2s10s"] > 0 else "Inverted",
-            "desc": "Primary macro recession & monetary cycle bellwether",
+            "desc": "Primary macro recession & monetary policy cycle bellwether",
+            "sma50": sma50_2s10s,
+            "sma200": sma200_2s10s,
+            "rsi14": rsi14_2s10s,
+            "min_52w": round(min(history_2s10s[-252:]), 1),
+            "max_52w": round(max(history_2s10s[-252:]), 1),
+        },
+        "2s30s": {
+            "name": "2Y / 30Y Total Curve Slope",
+            "short_name": "2s30s",
+            "bps": latest_row["spread_2s30s"],
+            "prev_bps": prev_row["spread_2s30s"],
+            "change_bps": round(latest_row["spread_2s30s"] - prev_row["spread_2s30s"], 1),
+            "status": "Normal Steep" if latest_row["spread_2s30s"] > 0 else "Inverted",
+            "desc": "Full curve slope measuring cumulative term premium and fiscal debt supply",
+            "sma50": sma50_2s30s,
+            "sma200": sma200_2s30s,
+            "rsi14": rsi14_2s30s,
+            "min_52w": round(min(history_2s30s[-252:]), 1),
+            "max_52w": round(max(history_2s30s[-252:]), 1),
+        },
+        "5s10s": {
+            "name": "5Y / 10Y Belly Slope",
+            "short_name": "5s10s",
+            "bps": latest_row["spread_5s10s"],
+            "prev_bps": prev_row["spread_5s10s"],
+            "change_bps": round(latest_row["spread_5s10s"] - prev_row["spread_5s10s"], 1),
+            "status": "Normal" if latest_row["spread_5s10s"] > 0 else "Inverted",
+            "desc": "Intermediate curve steepness and primary leg for 2s5s10s butterfly positioning",
+            "sma50": sma50_5s10s,
+            "sma200": sma200_5s10s,
+            "rsi14": rsi14_5s10s,
+            "min_52w": round(min(history_5s10s[-252:]), 1),
+            "max_52w": round(max(history_5s10s[-252:]), 1),
         },
         "5s30s": {
             "name": "5Y / 30Y Belly-to-Long",
+            "short_name": "5s30s",
             "bps": latest_row["spread_5s30s"],
             "prev_bps": prev_row["spread_5s30s"],
             "change_bps": round(latest_row["spread_5s30s"] - prev_row["spread_5s30s"], 1),
             "status": "Upward Sloping" if latest_row["spread_5s30s"] > 0 else "Flat/Inverted",
             "desc": "Captures term premium and supply indigestion between belly and ultra-long",
         },
-        "2s30s": {
-            "name": "2Y / 30Y Full Curve Slope",
-            "bps": latest_row["spread_2s30s"],
-            "prev_bps": prev_row["spread_2s30s"],
-            "change_bps": round(latest_row["spread_2s30s"] - prev_row["spread_2s30s"], 1),
-            "status": "Steep",
-            "desc": "Overall curve steepness; highlights duration compensation vs cash",
-        },
         "10s30s": {
             "name": "10Y / 30Y Ultra-Long Spread",
+            "short_name": "10s30s",
             "bps": latest_row["spread_10s30s"],
             "prev_bps": prev_row["spread_10s30s"],
             "change_bps": round(latest_row["spread_10s30s"] - prev_row["spread_10s30s"], 1),
@@ -523,6 +563,15 @@ def main():
         ],
     }
 
+    # Mark to market UST trade recommendations via trade_tracker
+    trade_tracker_data = None
+    try:
+        import trade_tracker
+        trade_tracker_data = trade_tracker.update_ust_trades(yields, spreads)
+        print(f"  Trade tracker updated: {len(trade_tracker_data.get('trades', []))} total trades, P&L: ${trade_tracker_data['portfolio_summary']['total_pnl_usd']}")
+    except Exception as e:
+        print(f"  Warning: Could not update trade tracker: {e}")
+
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "latest_date": latest_row["date"],
@@ -531,6 +580,7 @@ def main():
         "snapshots": snapshots,
         "macro_assessment": macro_assessment,
         "curve_model_framework": curve_model_framework,
+        "trade_tracker": trade_tracker_data,
         "history": aligned[-252:],
     }
 
@@ -540,9 +590,9 @@ def main():
 
     with open(DAILY_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["date", "ust_2y", "ust_5y", "ust_10y", "ust_30y", "spread_2s10s", "spread_5s30s", "spread_2s30s", "spread_10s30s"])
+        writer.writerow(["date", "ust_2y", "ust_5y", "ust_10y", "ust_30y", "spread_2s10s", "spread_5s30s", "spread_2s30s", "spread_10s30s", "spread_5s10s"])
         for r in aligned:
-            writer.writerow([r["date"], r["2y"], r["5y"], r["10y"], r["30y"], r["spread_2s10s"], r["spread_5s30s"], r["spread_2s30s"], r["spread_10s30s"]])
+            writer.writerow([r["date"], r["2y"], r["5y"], r["10y"], r["30y"], r["spread_2s10s"], r["spread_5s30s"], r["spread_2s30s"], r["spread_10s30s"], r["spread_5s10s"]])
     print(f"Saved {DAILY_CSV}")
 
 if __name__ == "__main__":

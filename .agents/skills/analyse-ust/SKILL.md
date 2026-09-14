@@ -1,6 +1,6 @@
 ---
 name: analyse-ust
-description: Autonomous US Treasury curve, macro regime, and rate recommendation workflow. Fetches live generic yields (2Y, 5Y, 10Y, 30Y), calculates curve spreads (2s10s, 5s30s, 2s30s, 10s30s), evaluates 50d/200d SMAs and RSI14, scans economic headlines, and updates the live UST page (ust.html) on GitHub Pages. Use when the user says "analyse UST", "update UST", "analyse ust", "UST curve analysis", or invokes /analyse-ust.
+description: Autonomous US Treasury curve, macro regime, and rate recommendation workflow. Fetches live generic yields (2Y, 5Y, 10Y, 30Y), calculates curve spreads (2s10s, 2s30s, 5s10s, 5s30s, 10s30s), marks to market active trade recommendations,, evaluates 50d/200d SMAs and RSI14, scans economic headlines, and updates the live UST page (ust.html) on GitHub Pages. Use when the user says "analyse UST", "update UST", "analyse ust", "UST curve analysis", or invokes /analyse-ust.
 ---
 
 # Analyse UST — US Treasury Curve & Macro Regime Strategy Skill

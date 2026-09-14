@@ -190,10 +190,20 @@ def main():
         ]
     }
     
+    # Mark to market Credit trades
+    trade_tracker_data = None
+    try:
+        import trade_tracker
+        trade_tracker_data = trade_tracker.update_credit_trades(INDICES)
+        print("  Credit trade tracker updated successfully.")
+    except Exception as e:
+        print("  Warning: Could not update trade tracker in Credit:", e)
+
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "latest_date": history[-1]["date"],
         "executive_paragraph": executive_paragraph,
+        "trade_tracker": trade_tracker_data,
         "indices": INDICES,
         "technicals": technicals,
         "history": history,

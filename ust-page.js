@@ -17,6 +17,9 @@
   };
   let activeHistoryMode = "yields"; // "yields" or "spreads"
   let activeHistoryRange = "1y"; // "1m", "3m", "6m", "1y"
+  let activeSpreadKey = "2s10s"; // "2s10s", "2s30s", "5s10s", "all"
+  let activeSpreadRange = "1y"; // "1m", "3m", "6m", "1y"
+  let activeTrackerFilter = "all"; // "all", "US Treasuries", "Local EM", "Credit Derivatives"
 
   const CURVE_COLORS = {
     current: "#0071e3",
@@ -93,6 +96,8 @@
     renderTechnicalsAndTriggers();
     renderMacroRadar();
     renderRegimeModelTable();
+    renderSpreadChart();
+    renderTradeTracker();
     setupEventListeners();
     setupSteepenerCalculator();
     runScenarioSimulation("fiscal_supply");
@@ -691,6 +696,368 @@
         tbody.appendChild(tr);
       });
     }
+  }
+
+
+  /* -------------------------------------------------------------
+     DEDICATED CURVE SPREADS CHART (2s10s, 2s30s, 5s10s)
+     ------------------------------------------------------------- */
+  function renderSpreadChart() {
+    const canvas = document.getElementById("spreadChartCanvas");
+    if (!canvas || !curveData || !curveData.history) return;
+    const ctx = canvas.getContext("2d");
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = 340 * dpr;
+    ctx.scale(dpr, dpr);
+
+    const W = rect.width;
+    const H = 340;
+    const pad = { top: 30, right: 40, bottom: 40, left: 55 };
+    const chartW = W - pad.left - pad.right;
+    const chartH = H - pad.top - pad.bottom;
+
+    ctx.clearRect(0, 0, W, H);
+
+    const allRows = curveData.history;
+    const countMap = { "1m": 22, "3m": 66, "6m": 126, "1y": 252 };
+    const maxPts = countMap[activeSpreadRange] || allRows.length;
+    const rows = allRows.slice(-maxPts);
+    if (rows.length === 0) return;
+
+    // Update Stats Grid
+    renderSpreadStatsGrid(rows);
+
+    // Compute Y range
+    let minVal = Infinity;
+    let maxVal = -Infinity;
+
+    const spreadsToPlot = activeSpreadKey === "all" ? ["spread_2s10s", "spread_2s30s", "spread_5s10s"] : [`spread_${activeSpreadKey}`];
+    spreadsToPlot.forEach((sKey) => {
+      rows.forEach((r) => {
+        const val = r[sKey];
+        if (typeof val === "number" && !isNaN(val)) {
+          if (val < minVal) minVal = val;
+          if (val > maxVal) maxVal = val;
+        }
+      });
+    });
+
+    if (minVal === Infinity) { minVal = -20; maxVal = 100; }
+    // Always include zero line in perspective if within 50 bps
+    if (minVal > -15) minVal = Math.min(minVal, -5);
+    if (maxVal < 15) maxVal = Math.max(maxVal, 15);
+
+    const padY = (maxVal - minVal) * 0.12 || 10;
+    minVal -= padY;
+    maxVal += padY;
+
+    const toX = (idx) => pad.left + (idx / (rows.length - 1)) * chartW;
+    const toY = (val) => pad.top + (1 - (val - minVal) / (maxVal - minVal)) * chartH;
+
+    // Background Grid
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(0,0,0,0.06)";
+    const ySteps = 5;
+    for (let i = 0; i <= ySteps; i++) {
+      const v = minVal + (i / ySteps) * (maxVal - minVal);
+      const y = toY(v);
+      ctx.beginPath();
+      ctx.moveTo(pad.left, y);
+      ctx.lineTo(pad.left + chartW, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#86868b";
+      ctx.font = "11px -apple-system, sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText(`${v >= 0 ? "+" : ""}${Math.round(v)} bps`, pad.left - 8, y + 3.5);
+    }
+
+    // Draw Zero (Inversion Threshold) Line
+    const zeroY = toY(0);
+    if (zeroY >= pad.top && zeroY <= pad.top + chartH) {
+      ctx.save();
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = "rgba(215, 0, 21, 0.6)"; // Red line for inversion barrier
+      ctx.beginPath();
+      ctx.moveTo(pad.left, zeroY);
+      ctx.lineTo(pad.left + chartW, zeroY);
+      ctx.stroke();
+
+      ctx.fillStyle = "#d70015";
+      ctx.font = "bold 10px -apple-system, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText("0 bps (Inversion Barrier)", pad.left + 8, zeroY - 4);
+      ctx.restore();
+    }
+
+    // X Axis Labels (Dates)
+    ctx.fillStyle = "#86868b";
+    ctx.font = "11px -apple-system, sans-serif";
+    ctx.textAlign = "center";
+    const xLabelCount = Math.min(6, rows.length);
+    for (let i = 0; i < xLabelCount; i++) {
+      const idx = Math.round((i / (xLabelCount - 1)) * (rows.length - 1));
+      const r = rows[idx];
+      if (!r) continue;
+      const x = toX(idx);
+      const parts = r.date.split("-");
+      const label = parts.length === 3 ? `${parts[1]}/${parts[2]}` : r.date;
+      ctx.fillText(label, x, pad.top + chartH + 20);
+    }
+
+    // Plot Lines
+    const SPREAD_LINE_CONFIG = {
+      spread_2s10s: { label: "2s10s Benchmark", color: "#0071e3", width: 2.5 },
+      spread_2s30s: { label: "2s30s Total Slope", color: "#af52de", width: 2.2 },
+      spread_5s10s: { label: "5s10s Belly Slope", color: "#248a3d", width: 2.2 },
+    };
+
+    spreadsToPlot.forEach((sKey) => {
+      const cfg = SPREAD_LINE_CONFIG[sKey] || { label: sKey, color: "#0071e3", width: 2 };
+      
+      // Gradient Fill for single spread mode
+      if (activeSpreadKey !== "all") {
+        const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + chartH);
+        grad.addColorStop(0, "rgba(0, 113, 227, 0.18)");
+        grad.addColorStop(1, "rgba(0, 113, 227, 0.00)");
+        ctx.beginPath();
+        ctx.moveTo(toX(0), toY(rows[0][sKey]));
+        for (let i = 1; i < rows.length; i++) {
+          ctx.lineTo(toX(i), toY(rows[i][sKey]));
+        }
+        ctx.lineTo(toX(rows.length - 1), pad.top + chartH);
+        ctx.lineTo(toX(0), pad.top + chartH);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Overlay 50d SMA line if single spread
+        renderMovingAverageLine(ctx, rows, sKey, 50, "#ff9500", [4, 3], toX, toY);
+      }
+
+      // Main Spread Line
+      ctx.lineWidth = cfg.width;
+      ctx.strokeStyle = cfg.color;
+      ctx.beginPath();
+      for (let i = 0; i < rows.length; i++) {
+        const x = toX(i);
+        const y = toY(rows[i][sKey]);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // End point marker & callout
+      const lastX = toX(rows.length - 1);
+      const lastVal = rows[rows.length - 1][sKey];
+      const lastY = toY(lastVal);
+      ctx.fillStyle = cfg.color;
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    });
+
+    // Legend
+    let legX = pad.left + 10;
+    const legY = pad.top + 14;
+    spreadsToPlot.forEach((sKey) => {
+      const cfg = SPREAD_LINE_CONFIG[sKey] || { label: sKey, color: "#0071e3" };
+      ctx.fillStyle = cfg.color;
+      ctx.fillRect(legX, legY - 8, 12, 4);
+      ctx.fillStyle = "#1d1d1f";
+      ctx.font = "bold 11px -apple-system, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText(cfg.label, legX + 16, legY - 3);
+      legX += ctx.measureText(cfg.label).width + 30;
+    });
+
+    if (activeSpreadKey !== "all") {
+      ctx.fillStyle = "#ff9500";
+      ctx.fillRect(legX, legY - 8, 12, 3);
+      ctx.fillStyle = "#6e6e73";
+      ctx.font = "11px -apple-system, sans-serif";
+      ctx.fillText("50d SMA", legX + 16, legY - 3);
+    }
+  }
+
+  function renderMovingAverageLine(ctx, rows, key, windowSize, color, dash, toX, toY) {
+    if (rows.length < windowSize) return;
+    ctx.save();
+    ctx.lineWidth = 1.6;
+    ctx.strokeStyle = color;
+    ctx.setLineDash(dash);
+    ctx.beginPath();
+    let started = false;
+    for (let i = 0; i < rows.length; i++) {
+      if (i < windowSize - 1) continue;
+      let sum = 0;
+      for (let j = 0; j < windowSize; j++) {
+        sum += rows[i - j][key];
+      }
+      const avg = sum / windowSize;
+      const x = toX(i);
+      const y = toY(avg);
+      if (!started) { ctx.moveTo(x, y); started = true; }
+      else { ctx.lineTo(x, y); }
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function renderSpreadStatsGrid(rows) {
+    const grid = document.getElementById("spreadStatsGrid");
+    if (!grid || !curveData || !curveData.spreads) return;
+    grid.replaceChildren();
+
+    const spreads = curveData.spreads;
+
+    if (activeSpreadKey !== "all") {
+      const sp = spreads[activeSpreadKey] || {};
+      const curr = sp.bps !== undefined ? sp.bps : 0;
+      const chg = sp.change_bps !== undefined ? sp.change_bps : 0;
+      const sma50 = sp.sma50 !== undefined ? sp.sma50 : 0;
+      const sma200 = sp.sma200 !== undefined ? sp.sma200 : 0;
+      const min52 = sp.min_52w !== undefined ? sp.min_52w : -100;
+      const max52 = sp.max_52w !== undefined ? sp.max_52w : 100;
+      const rsi = sp.rsi14 !== undefined ? sp.rsi14 : 50;
+
+      const signChg = chg > 0 ? "+" : "";
+      const signCurr = curr > 0 ? "+" : "";
+
+      const cards = [
+        { label: "Current Level", val: `${signCurr}${curr.toFixed(1)} bps`, sub: `${signChg}${chg.toFixed(1)} bps 1D` },
+        { label: "Curve Status", val: sp.status || (curr > 0 ? "Normal" : "Inverted"), sub: curr > 0 ? `${curr.toFixed(1)} bps above 0` : `${Math.abs(curr).toFixed(1)} bps inverted` },
+        { label: "50-Day Moving Avg", val: `+${sma50.toFixed(1)} bps`, sub: `${(curr - sma50) >= 0 ? "+" : ""}${(curr - sma50).toFixed(1)} bps vs SMA50` },
+        { label: "200-Day Moving Avg", val: `${sma200 >= 0 ? "+" : ""}${sma200.toFixed(1)} bps`, sub: `${(curr - sma200) >= 0 ? "+" : ""}${(curr - sma200).toFixed(1)} bps vs SMA200` },
+        { label: "14-Day RSI", val: rsi.toFixed(1), sub: rsi > 70 ? "Overbought" : rsi < 30 ? "Oversold" : "Neutral Range" },
+        { label: "52-Week Range", val: `${min52.toFixed(1)} to +${max52.toFixed(1)}`, sub: "Annual Extremes" },
+      ];
+
+      cards.forEach((c) => {
+        const el = document.createElement("div");
+        el.className = "spread-stat-card";
+        el.innerHTML = `
+          <span class="spread-stat-label">${c.label}</span>
+          <span class="spread-stat-val">${c.val}</span>
+          <span class="spread-stat-sub">${c.sub}</span>
+        `;
+        grid.appendChild(el);
+      });
+    } else {
+      // Show summary for all 3 spreads
+      ["2s10s", "2s30s", "5s10s"].forEach((k) => {
+        const sp = spreads[k] || {};
+        const curr = sp.bps !== undefined ? sp.bps : 0;
+        const chg = sp.change_bps !== undefined ? sp.change_bps : 0;
+        const signCurr = curr > 0 ? "+" : "";
+        const signChg = chg > 0 ? "+" : "";
+
+        const el = document.createElement("div");
+        el.className = "spread-stat-card";
+        el.innerHTML = `
+          <span class="spread-stat-label">${sp.name || k}</span>
+          <span class="spread-stat-val" style="color: ${k === '2s10s' ? '#0071e3' : k === '2s30s' ? '#af52de' : '#248a3d'};">${signCurr}${curr.toFixed(1)} bps</span>
+          <span class="spread-stat-sub">1D: ${signChg}${chg.toFixed(1)} bps | 50d SMA: +${sp.sma50 ? sp.sma50.toFixed(1) : 0} bps</span>
+        `;
+        grid.appendChild(el);
+      });
+    }
+  }
+
+  /* -------------------------------------------------------------
+     TRADE RECOMMENDATIONS & LIVE P&L TRACKER
+     ------------------------------------------------------------- */
+  function renderTradeTracker() {
+    const summaryBar = document.getElementById("trackerSummaryBar");
+    const tbody = document.getElementById("trackerTableBody");
+    if (!summaryBar || !tbody) return;
+
+    const tracker = curveData.trade_tracker || {
+      portfolio_summary: { total_trades: 0, open_trades: 0, closed_trades: 0, total_pnl_bps: 0, total_pnl_usd: 0, win_rate_pct: 100 },
+      trades: []
+    };
+
+    const summary = tracker.portfolio_summary || {};
+    const trades = tracker.trades || [];
+
+    // Render Summary Bar
+    summaryBar.replaceChildren();
+    const pnlUsd = summary.total_pnl_usd || 0;
+    const pnlBps = summary.total_pnl_bps || 0;
+    const signUsd = pnlUsd > 0 ? "+" : "";
+    const signBps = pnlBps > 0 ? "+" : "";
+    const pnlCls = pnlUsd >= 0 ? "good" : "bad";
+
+    const summaryCards = [
+      { label: "Total Unrealized P&L ($)", val: `${signUsd}$${Math.abs(pnlUsd).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, cls: pnlCls },
+      { label: "Portfolio P&L (bps)", val: `${signBps}${pnlBps.toFixed(1)} bps`, cls: pnlCls },
+      { label: "Active Open Trades", val: `${summary.open_trades || trades.length} Positions`, cls: "" },
+      { label: "Model Win Rate", val: `${summary.win_rate_pct || 100.0}%`, cls: "good" },
+      { label: "Normalized Sizing", val: "$10k / bp DV01", cls: "stat-highlight" },
+    ];
+
+    summaryCards.forEach((c) => {
+      const item = document.createElement("div");
+      item.className = "tracker-summary-item";
+      item.innerHTML = `
+        <span class="tracker-summary-label">${c.label}</span>
+        <span class="tracker-summary-val ${c.cls}">${c.val}</span>
+      `;
+      summaryBar.appendChild(item);
+    });
+
+    // Render Table Rows
+    tbody.replaceChildren();
+    const filteredTrades = activeTrackerFilter === "all" ? trades : trades.filter((t) => t.desk === activeTrackerFilter);
+
+    if (filteredTrades.length === 0) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="10" style="padding: 24px; text-align: center; color: var(--muted);">No recommendations for ${activeTrackerFilter}.</td>`;
+      tbody.appendChild(tr);
+      return;
+    }
+
+    filteredTrades.forEach((t) => {
+      const tr = document.createElement("tr");
+      tr.style.borderBottom = "1px solid var(--line)";
+
+      const pnlBps = t.pnl_bps || 0;
+      const pnlUsd = t.pnl_usd || 0;
+      const signB = pnlBps > 0 ? "+" : "";
+      const signU = pnlUsd > 0 ? "+" : "";
+      const pCls = pnlUsd >= 0 ? "good" : "bad";
+
+      const badgeCls = t.status === "OPEN" ? "badge-open" : t.status === "TARGET_HIT" ? "badge-hit" : "badge-stopped";
+
+      tr.innerHTML = `
+        <td style="padding: 12px 10px; font-weight: 500; font-size: 12px; color: var(--muted);">${t.date_opened}</td>
+        <td style="padding: 12px 10px;">
+          <div style="font-weight: 700; color: var(--text);">${t.title}</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">${t.rationale}</div>
+        </td>
+        <td style="padding: 12px 10px;"><span class="desk-tag">${t.desk}</span></td>
+        <td style="padding: 12px 10px;">
+          <div style="font-weight: 600;">${t.instrument}</div>
+          <div style="font-size: 11.5px; color: var(--muted);">${t.sizing}</div>
+        </td>
+        <td style="padding: 12px 10px; font-weight: 600;">${t.entry_level} ${t.entry_unit || ''}</td>
+        <td style="padding: 12px 10px; font-weight: 700; color: var(--accent);">${t.current_level} ${t.entry_unit || ''}</td>
+        <td style="padding: 12px 10px; font-size: 12px;">
+          <div><span style="color: var(--good); font-weight: 600;">Tgt:</span> ${t.target_level}</div>
+          <div><span style="color: var(--bad); font-weight: 600;">Stp:</span> ${t.stop_loss_level}</div>
+        </td>
+        <td style="padding: 12px 10px; font-weight: 700;" class="${pCls}">${signB}${pnlBps.toFixed(1)}</td>
+        <td style="padding: 12px 10px; font-weight: 800;" class="${pCls}">${signU}$${Math.abs(pnlUsd).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        <td style="padding: 12px 10px;"><span class="${badgeCls}">${t.status}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
   }
 
   function setupEventListeners() {
