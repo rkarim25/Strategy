@@ -72,12 +72,31 @@ This script computes:
 16. 🇵🇭 **Philippines (PHP)**: BSP 6.25% − 3.10% Survey = +3.15% Ex-Ante Real Policy Rate. 10Y FXTN 5.95% (Ex-Ante Real 2.85%). Quadrant 2: High Carry Belly Rates. Receive 5Y/10Y FXTN duration / BVAL swaps unhedged. REER -4.2%. Macro: Easing front-runner in ASEAN, FX Reserves $106.5B.
 17. 🇪🇬 **Egypt (EGP)**: CBE 27.25% − 16.50% Forward CPI = +10.75% Ex-Ante Real Policy Rate. 3M T-Bills 29.50% (Ex-Ante Real 13.00%). Special Regime: Front-End Hyper-Carry Roll. Clip 3M T-Bills roll unhedged. REER -32.5% (Extremely undervalued post-float). Macro: $35B ADQ investment, FX Reserves $46.5B.
 
-### Step 3: Check Upcoming Dated Catalysts & Invalidation Triggers
+### Step 3: Maintain Dedicated Sovereign One-Pager Dossiers (`gbi_country.html`)
+Each of the 17 GBI-EM benchmark constituents has a dedicated, institutional-grade sovereign dossier accessible from `local_em.html` via the Quick Jump Bar, country card CTAs, and clickable table rows:
+- **Location:** `gbi_country.html?c=<country_id>` powered by `gbi-country-page.js`
+- **Data Source:** `sovereign_dossiers_data.py` imported into `generate_gbi_em_data.py` and exported into `gbi_em_data.json`
+- **Dossier Schema per Country (`c.sovereign_dossier`):**
+  1. `investment_thesis`: Core institutional thesis statement, stance (`Overweight`, `Neutral`, `Underweight`), recommended investment horizon (e.g. 3-6M, 6-12M), and conviction level (`High`, `Medium`).
+  2. `positives`: 4-5 bulleted institutional bull arguments (e.g., central bank credibility, real yield cushion, fiscal anchors, commodity windfalls, structural reforms).
+  3. `negatives`: 4-5 bulleted vulnerabilities and structural risks (e.g., fiscal slippage, debt-to-GDP dynamics, twin deficits, political fragmentation, geopolitical exposure).
+  4. `economic_structure`: Detailed macro breakdown:
+     - `gdp_composition`: Services %, Industry %, Agriculture % (with interactive visual bar).
+     - `primary_exports`: Key export commodities/goods and top trading partners.
+     - `public_debt_profile`: Debt-to-GDP ratio, currency denomination mix (local vs FX debt), and average maturity.
+     - `banking_system`: Capital adequacy ratio (CAR), NPL ratio, and systemic resilience.
+     - `domestic_institutional_anchor`: Domestic investor base (pension funds, retail bonds, mutual funds) providing duration support.
+  5. `macro_data_summary`: Key macroeconomic KPIs (GDP growth, policy rate, headline CPI, 10Y yield, FX reserves, current account / GDP).
+  6. `recent_developments`: Last 30-90 days of monetary decisions, rating upgrades/downgrades, political inflection points, and macro prints.
+  7. `what_to_watch`: Specific upcoming dated catalysts, technical yield triggers, and commodity price thresholds.
+- **Maintenance Command:** If updating sovereign dossiers, edit `sovereign_dossiers_data.py`, then run `python generate_gbi_em_data.py` to compile into `gbi_em_data.json` and sync the offline fallback payload in `local_em.html` and `gbi_country.html`.
+
+### Step 4: Check Upcoming Dated Catalysts & Invalidation Triggers
 - Central bank interest rate decisions with exact dates (Copom, Banxico, SARB, BI, RBI, NBP, BanRep, TCMB, BCCh, BCRP, CNB, MNB, NBR, BNM, BOT, BSP, CBE, US FOMC).
 - Commodity terms of trade (Brent crude for Colombia/India/Turkey, gold for South Africa, copper for Chile/Peru, nickel for Indonesia).
 - Currency technical invalidation levels (e.g. USDBRL > 5.65, USDMXN > 19.80, USDZAR > 18.20).
 
-### Step 4: Commit & Deploy
+### Step 5: Commit & Deploy
 ```powershell
 git -C "C:\Users\Reza Karim\Strategy" add local_em.html gbi_em.html gbi-em-page.js generate_gbi_em_data.py additional_gbi_countries.py gbi_em_data.json trade_tracker.py macro_trade_tracker.json ust_curve_data.json docs/runbooks/analyse-gbi-em.md site-nav.js
 git -C "C:\Users\Reza Karim\Strategy" commit -m "Expand GBI-EM desk to full 17-country benchmark universe with real rates arithmetic and derivatives execution"
@@ -85,7 +104,7 @@ git -C "C:\Users\Reza Karim\Strategy" push origin main
 ```
 Verify live deployment at `https://rkarim25.github.io/Strategy/local_em.html`.
 
-### Step 5: Output Concise Executive Summary
+### Step 6: Output Concise Executive Summary
 Format the final response for Reza:
 - Real Rates Breakdown (Policy Rate − 12M Forward CPI = Ex-Ante Real Rate).
 - Terms of Trade & REER Decision Matrix Directives (Quadrants).

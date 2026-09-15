@@ -289,7 +289,9 @@
 
       tr.innerHTML = `
         <td style="padding: 12px 10px; font-weight: 700; white-space: nowrap;">
-          ${c.flag || ''} ${c.name || c.country || c.id}
+          <a href="gbi_country.html?c=${c.id}" style="color: inherit; text-decoration: none;" title="Open ${c.name || c.country || c.id} Sovereign One-Pager">
+            ${c.flag || ''} ${c.name || c.country || c.id} <span style="font-size: 11px; color: var(--accent);">↗</span>
+          </a>
           <div style="font-size: 11px; font-weight: 500; color: var(--muted);">${c.currency}</div>
         </td>
         <td style="padding: 12px 10px;">
@@ -354,7 +356,9 @@
 
       tr.innerHTML = `
         <td style="padding: 12px 10px; font-weight: 700; white-space: nowrap;">
-          ${r.flag || ''} ${r.country}
+          <a href="gbi_country.html?c=${r.id}" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Open ${r.country} Sovereign Dossier ↗">
+            ${r.flag || ''} ${r.country} <span style="font-size: 10px; color: var(--accent);">↗</span>
+          </a>
           <div style="font-size: 11px; font-weight: 500; color: var(--muted);">${r.currency}</div>
         </td>
         <td style="padding: 12px 10px;">
@@ -426,7 +430,9 @@
 
       tr.innerHTML = `
         <td style="padding: 12px 10px; font-weight: 700; white-space: nowrap;">
-          ${c.flag || ''} ${c.name || c.country || c.id}
+          <a href="gbi_country.html?c=${c.id}" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Open ${c.name || c.country || c.id} Sovereign Dossier ↗">
+            ${c.flag || ''} ${c.name || c.country || c.id} <span style="font-size: 10px; color: var(--accent);">↗</span>
+          </a>
           <div style="font-size: 11px; font-weight: 500; color: var(--muted);">${c.fx ? c.fx.pair : c.currency}</div>
         </td>
         <td style="padding: 12px 10px;">
@@ -784,6 +790,16 @@
                 <div style="font-size: 11.5px; color: var(--accent); font-weight: 600;">Action: ${cat.trade_implication}</div>
               </div>
             `).join('')}
+          </div>
+        </div>
+
+        <!-- Open Sovereign One-Pager Dossier CTA Button -->
+        <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <a href="gbi_country.html?c=${c.id}" class="filter-btn" style="background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; font-size: 12.5px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 20px; box-shadow: 0 2px 6px rgba(0, 113, 227, 0.25); transition: all .15s ease;">
+            <span>📖</span> Open Full ${c.name || c.country || c.id} One-Pager Dossier ↗
+          </a>
+          <div style="font-size: 11.5px; color: var(--muted); font-weight: 500;">
+            Comprehensive macro balance sheet, GDP structure, positives/negatives & risk triggers
           </div>
         </div>
       `;

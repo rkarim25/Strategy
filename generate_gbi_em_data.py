@@ -1030,6 +1030,15 @@ try:
 except ImportError as e:
     print(f"[WARN] Could not load additional_gbi_countries: {e}")
 
+try:
+    from sovereign_dossiers_data import SOVEREIGN_DOSSIERS
+    for c_id, dos in SOVEREIGN_DOSSIERS.items():
+        if c_id in COUNTRIES:
+            COUNTRIES[c_id].update(dos)
+    print(f"[OK] Injected {len(SOVEREIGN_DOSSIERS)} institutional sovereign dossiers into GBI-EM universe.")
+except ImportError as e:
+    print(f"[WARN] Could not load sovereign_dossiers_data: {e}")
+
 
 
 def main():

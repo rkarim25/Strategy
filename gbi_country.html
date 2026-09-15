@@ -1,3 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GBI-EM Sovereign Dossier — Macro One-Pager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --panel: rgba(255, 255, 255, .88);
+      --panel-solid: #ffffff;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --line: rgba(0, 0, 0, .08);
+      --line-strong: rgba(0, 0, 0, .15);
+      --accent: #0071e3;
+      --accent-soft: rgba(0, 113, 227, .10);
+      --accent-hover: #0077ed;
+      --good: #248a3d;
+      --good-soft: rgba(36, 138, 61, .12);
+      --warn: #b26a00;
+      --warn-soft: rgba(178, 106, 0, .12);
+      --bad: #d70015;
+      --bad-soft: rgba(215, 0, 21, .10);
+      --purple: #6f42c1;
+      --purple-soft: rgba(111, 66, 193, .12);
+      --shadow: 0 12px 36px rgba(0, 0, 0, .06);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, .04);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .dossier-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 6px 12px;
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      transition: all .2s ease;
+    }
+    .back-link:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .print-btn, .country-select-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      color: var(--text);
+      transition: all .2s;
+    }
+    .print-btn:hover {
+      background: var(--bg);
+      border-color: var(--text);
+    }
+
+    /* Country Pills Quick Selector */
+    .country-pills-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+      scrollbar-width: thin;
+    }
+    .country-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all .15s ease;
+    }
+    .country-pill:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .country-pill.active {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+
+    /* Hero Header Card */
+    .hero-card {
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .hero-main {
+      flex: 1;
+      min-width: 300px;
+    }
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .hero-flag {
+      font-size: 40px;
+      line-height: 1;
+    }
+    .hero-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .hero-ccy {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .badge-rating {
+      background: #eef2ff;
+      color: #4338ca;
+      border: 1px solid #c7d2fe;
+    }
+    .badge-region {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+    .badge-weight {
+      background: #fdf4ff;
+      color: #a21caf;
+      border: 1px solid #f0abfc;
+    }
+    .badge-stance {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .badge-overweight { background: var(--good-soft); color: var(--good); border: 1px solid rgba(36, 138, 61, .25); }
+    .badge-underweight { background: var(--bad-soft); color: var(--bad); border: 1px solid rgba(215, 0, 21, .25); }
+    .badge-neutral { background: var(--warn-soft); color: var(--warn); border: 1px solid rgba(178, 106, 0, .25); }
+    .badge-flattener { background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(0, 113, 227, .25); }
+    .badge-carry { background: var(--purple-soft); color: var(--purple); border: 1px solid rgba(111, 66, 193, .25); }
+
+    /* Key Macro Highlight Strip */
+    .hero-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      width: 100%;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+    .kpi-box {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+    }
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .kpi-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Layout Sections */
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 28px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Executive Thesis Box */
+    .thesis-card {
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+    .thesis-expression-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+    }
+    .thesis-expression-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .thesis-expression-text {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1.4;
+    }
+    .thesis-text {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: #334155;
+    }
+
+    /* Bulls vs Bears (Positives vs Negatives) */
+    .bull-bear-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 768px) {
+      .bull-bear-grid { grid-template-columns: 1fr; }
+    }
+    .column-card {
+      background: var(--panel-solid);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .column-card.bull { border-top: 4px solid var(--good); }
+    .column-card.bear { border-top: 4px solid var(--bad); }
+    .col-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .col-header.bull { color: var(--good); }
+    .col-header.bear { color: var(--bad); }
+    .point-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .point-item {
+      font-size: 13px;
+      line-height: 1.5;
+      position: relative;
+      padding-left: 20px;
+      color: #334155;
+    }
+    .point-item::before {
+      content: "•";
+      position: absolute;
+      left: 6px;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .point-item.bull::before { color: var(--good); }
+    .point-item.bear::before { color: var(--bad); }
+
+    /* Economic Structure & Fundamentals */
+    .structure-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 880px) {
+      .structure-grid { grid-template-columns: 1fr; }
+    }
+    .structure-card {
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .gdp-bar-wrapper {
+      margin: 14px 0 18px;
+    }
+    .gdp-bar {
+      display: flex;
+      height: 16px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #e2e8f0;
+      margin-bottom: 8px;
+    }
+    .gdp-seg-services { background: var(--accent); }
+    .gdp-seg-industry { background: #0284c7; }
+    .gdp-seg-agri { background: var(--good); }
+    .gdp-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .legend-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .tag {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    /* Macro & Rates Dashboard Table */
+    .dashboard-table-card {
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    table.dense-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    table.dense-table th {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--line-strong);
+    }
+    table.dense-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .mono { font-family: var(--font-mono); font-weight: 700; }
+
+    /* Recent Developments & What to Watch */
+    .dev-watch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 800px) {
+      .dev-watch-grid { grid-template-columns: 1fr; }
+    }
+    .timeline-item {
+      border-left: 2px solid var(--accent);
+      padding-left: 14px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #334155;
+    }
+
+    /* Rates Pay / Receive Execution Desk Box */
+    .execution-card {
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .execution-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .exec-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .exec-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .exec-val {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .trader-lingo-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid var(--warn);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+    }
+
+    /* Print Styling */
+    @media print {
+      body { background: #fff; padding-bottom: 0; font-size: 11px; }
+      .dossier-container { max-width: 100%; padding: 0; }
+      .top-nav, .country-pills-bar, .print-btn { display: none !important; }
+      .hero-card, .thesis-card, .column-card, .structure-card, .dashboard-table-card, .execution-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+        margin-bottom: 12px;
+        padding: 14px;
+      }
+    }
+  
+    /* Site Header Navigation */
+    .site-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      background: rgba(0, 0, 0, .04);
+      border: 1px solid rgba(0, 0, 0, .06);
+      border-radius: 999px;
+    }
+    .site-nav .site-nav-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 560;
+      text-decoration: none;
+      transition: color .2s ease, background .2s ease;
+    }
+    .site-nav .site-nav-link:hover { color: var(--text); background: rgba(255, 255, 255, .8); }
+    .site-nav .site-nav-link.active {
+      color: var(--text);
+      background: #fff;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="dossier-container">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <a href="local_em.html" class="back-link">
+        <span>←</span> Back to GBI-EM Strategy Desk
+      </a>
+      <div class="nav-actions">
+        <select id="countrySelectDropdown" class="country-select-btn" aria-label="Select Country Dossier">
+          <!-- Populated by JS -->
+        </select>
+        <button type="button" class="print-btn" onclick="window.print()">
+          🖨️ Print / Export PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- 17-Country Quick Jump Pills -->
+    <nav class="country-pills-bar" id="countryPillsContainer" aria-label="Country Navigation">
+      <!-- Populated by JS -->
+    </nav>
+
+    <!-- Hero Card Header -->
+    <section class="hero-card" id="heroCard">
+      <div class="hero-main">
+        <div class="hero-title-row">
+          <span class="hero-flag" id="heroFlag">🇧🇷</span>
+          <h1 class="hero-title" id="heroTitle">Brazil</h1>
+          <span class="hero-ccy" id="heroCcy">BRL</span>
+        </div>
+        <div class="hero-badges" id="heroBadges">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+      <div id="heroStanceBadgeContainer">
+        <!-- Stance Badge -->
+      </div>
+      <!-- KPI Highlight Strip -->
+      <div class="hero-kpi-grid" id="heroKpiGrid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- Section 1: Executive Investment Thesis -->
+    <h2 class="section-title">📌 Executive Investment Thesis & Horizon</h2>
+    <section class="thesis-card">
+      <div class="thesis-expression-box">
+        <div class="thesis-expression-title">⚡ High-Conviction Expression & Target</div>
+        <div class="thesis-expression-text" id="thesisExpressionText">Loading expression...</div>
+      </div>
+      <div class="thesis-text" id="thesisNarrativeText">Loading narrative thesis...</div>
+    </section>
+
+    <!-- Section 2: Bulls vs Bears (Positives vs Negatives) -->
+    <h2 class="section-title">⚖️ Balance Sheet: Structural Drivers vs Key Vulnerabilities</h2>
+    <div class="bull-bear-grid">
+      <div class="column-card bull">
+        <div class="col-header bull">
+          <span>🟢</span> Structural Tailwinds & Opportunities (Bulls)
+        </div>
+        <ul class="point-list" id="positivesList">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+      <div class="column-card bear">
+        <div class="col-header bear">
+          <span>🔴</span> Vulnerabilities & Key Risks (Bears)
+        </div>
+        <ul class="point-list" id="negativesList">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- Section 3: Economic Structure & Fundamentals -->
+    <h2 class="section-title">🏛️ Economic Structure, External Balance & Debt</h2>
+    <div class="structure-grid">
+      <div class="structure-card">
+        <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">GDP Composition by Sector</h3>
+        <div class="gdp-bar-wrapper">
+          <div class="gdp-bar" id="gdpBar">
+            <div class="gdp-seg-services" id="gdpSegServices" style="width: 63%;"></div>
+            <div class="gdp-seg-industry" id="gdpSegIndustry" style="width: 21%;"></div>
+            <div class="gdp-seg-agri" id="gdpSegAgri" style="width: 16%;"></div>
+          </div>
+          <div class="gdp-legend" id="gdpLegend">
+            <span><span class="legend-dot" style="background: var(--accent);"></span>Services: <b id="gdpValServices">63%</b></span>
+            <span><span class="legend-dot" style="background: #0284c7;"></span>Industry/Mfg: <b id="gdpValIndustry">21%</b></span>
+            <span><span class="legend-dot" style="background: var(--good);"></span>Agri/Mining: <b id="gdpValAgri">16%</b></span>
+          </div>
+        </div>
+
+        <h3 style="font-size: 14px; font-weight: 700; margin: 16px 0 6px;">Top Export Basket</h3>
+        <div class="tag-cloud" id="topExportsCloud">
+          <!-- Populated by JS -->
+        </div>
+
+        <h3 style="font-size: 14px; font-weight: 700; margin: 16px 0 6px;">Primary Trading Partners</h3>
+        <div class="tag-cloud" id="topPartnersCloud">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="structure-card">
+        <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">Sovereign Debt Profile & Domestic Absorption</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+          <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid var(--line);">
+            <span style="color: var(--muted);">Gross General Debt:</span>
+            <span class="mono" id="structDebtVal">77.8% of GDP</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid var(--line);">
+            <span style="color: var(--muted);">Foreign Ownership of Local Debt:</span>
+            <span class="mono" id="structForeignHoldVal">9.5%</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid var(--line);">
+            <span style="color: var(--muted);">FX Reserves & Cover:</span>
+            <span class="mono" id="structReservesVal">$355B (12.2 mos)</span>
+          </div>
+          <div style="margin-top: 8px;">
+            <b style="font-size: 12px; color: #1e293b;">Banking System Stability:</b>
+            <p style="font-size: 12px; color: var(--muted); margin-top: 2px;" id="structBankingText">Loading banking summary...</p>
+          </div>
+          <div style="margin-top: 6px;">
+            <b style="font-size: 12px; color: #1e293b;">Domestic Institutional Anchor:</b>
+            <p style="font-size: 12px; color: var(--muted); margin-top: 2px;" id="structAnchorText">Loading institutional anchor...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Macro & Yield Curve Dashboard -->
+    <h2 class="section-title">📊 Macro & Rates Valuation Matrix</h2>
+    <div class="dashboard-table-card">
+      <table class="dense-table" id="macroMetricsTable">
+        <thead>
+          <tr>
+            <th>Central Bank Policy Rate</th>
+            <th>12M Forward Expected CPI</th>
+            <th>Ex-Ante Real Rate</th>
+            <th>10Y Nominal Yield</th>
+            <th>10Y Ex-Ante Real</th>
+            <th>FX Spot & 3M Carry</th>
+            <th>10Y REER Valuation</th>
+            <th>Current Account / GDP</th>
+          </tr>
+        </thead>
+        <tbody id="macroMetricsTableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 5: Recent Developments & What to Watch -->
+    <h2 class="section-title">⏱️ Recent Developments & What to Watch</h2>
+    <div class="dev-watch-grid">
+      <div class="column-card">
+        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+          <span>📰</span> Recent Developments (Last 30-90 Days)
+        </h3>
+        <div id="recentDevelopmentsTimeline">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="column-card">
+        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+          <span>🎯</span> What to Watch: Catalysts & Invalidation Triggers
+        </h3>
+        <div style="margin-bottom: 14px;">
+          <b style="font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 0.04em;">Upcoming Dated Catalysts:</b>
+          <div id="triggersList" style="margin-top: 6px; display: flex; flex-direction: column; gap: 8px;">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line);">
+          <b style="font-size: 11px; text-transform: uppercase; color: var(--bad); letter-spacing: 0.04em;">Invalidation Triggers:</b>
+          <div id="invalidationList" style="margin-top: 6px; font-size: 12px; color: #334155; display: flex; flex-direction: column; gap: 6px;">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line);">
+          <b style="font-size: 11px; text-transform: uppercase; color: var(--accent); letter-spacing: 0.04em;">Commodity Thresholds:</b>
+          <div id="commoditySensitivitiesList" style="margin-top: 6px; font-size: 12px; color: #334155; display: flex; flex-direction: column; gap: 6px;">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6: Rates Pay / Receive Execution Desk -->
+    <h2 class="section-title">⚡ Rates Pay / Receive & Institutional Execution Playbook</h2>
+    <section class="execution-card">
+      <div class="execution-grid" id="executionGrid">
+        <!-- Populated by JS -->
+      </div>
+      <div class="trader-lingo-box">
+        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--warn); letter-spacing: 0.04em; margin-bottom: 4px;">
+          🗣️ Street Trader Lingo & Execution Playbook:
+        </div>
+        <div id="traderLingoText">Loading trader playbook...</div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Fallback Embedded Data Payload -->
+  <script type="application/json" id="gbiFallbackData">
 {
   "rates_pay_receive_matrix": [
     {
@@ -4521,3 +5304,10 @@
     }
   }
 }
+</script>
+
+  <!-- Client Logic -->
+  <script src="gbi-country-page.js"></script>
+  <script src="site-nav.js"></script>
+</body>
+</html>
