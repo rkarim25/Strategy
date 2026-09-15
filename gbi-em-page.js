@@ -46,12 +46,12 @@
   }
 
   function renderTopHeader() {
-    const meta = document.getElementById("gbiAsOfMeta");
+    const meta = document.getElementById("gbiAsOf") || document.getElementById("gbiAsOfMeta");
     if (meta && gbiData.as_of_date) {
       meta.textContent = `As of ${gbiData.as_of_date} · Benchmark: ${gbiData.benchmark || 'J.P. Morgan GBI-EM Global Diversified'}`;
     }
 
-    const execEl = document.getElementById("executiveParagraph");
+    const execEl = document.getElementById("gbiExecutiveParagraph") || document.getElementById("executiveParagraph");
     if (execEl && gbiData.executive_paragraph) {
       execEl.innerHTML = gbiData.executive_paragraph;
     }
