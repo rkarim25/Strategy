@@ -256,7 +256,7 @@
       "recommended_notional": "EGP 200 Million 3M T-Bills (~$4.1M USD notional) Unhedged"
     }
   ],
-  "as_of_date": "2026-09-15 06:13 UTC",
+  "as_of_date": "2026-09-15 18:12 UTC",
   "desk_name": "GBI-EM Local Currency Sovereign Debt & FX Strategy Desk",
   "benchmark": "J.P. Morgan GBI-EM Global Diversified",
   "macro_anchors": {
@@ -877,7 +877,7 @@
     }
   ],
   "trade_tracker": {
-    "last_updated": "2026-09-15T06:06:23.708737+00:00",
+    "last_updated": "2026-09-15T18:12:53.948130+00:00",
     "portfolio_summary": {
       "total_trades": 13,
       "open_trades": 12,
