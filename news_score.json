@@ -1,31 +1,10 @@
 {
-  "generated_at_utc": "2026-09-15T17:10:30Z",
+  "generated_at_utc": "2026-09-15T23:18:24Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Offshore Oil Stocks Rally While the Broad Market Slips: Transocean Climbs 6%, Valaris Rises 6%, W&T Offshore Gains 6%; How Caterpillar (CAT) Drives Sector-Leading Performance Beyond AI Models. Bearish offsets: 10-year Treasury yield hits highest level since 2007 as traders bet a Fed rate hike is coming; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
+  "score": 3,
+  "label": "Bearish",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Why one Wall Street firm thinks this year\u2019s stock-market rally is running out of road - MarketWatch; Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 24/7 Wall St.. Bearish offsets: Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News; US Stock Market Today S&P 500 Futures Fall As Inflation Pressures Persist - simplywall.st.",
   "articles": [
-    {
-      "title": "Offshore Oil Stocks Rally While the Broad Market Slips: Transocean Climbs 6%, Valaris Rises 6%, W&T Offshore Gains 6%",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/09/15/offshore-oil-stocks-rally-while-the-broad-market-slips-transocean-climbs-6-valaris-rises-6-wt-offshore-gains-6/?.tsrc=rss",
-      "published": "2026-09-15T16:03:15Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "10-year Treasury yield hits highest level since 2007 as traders bet a Fed rate hike is coming",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/15/10-year-treasury-yield-rises-to-highest-since-2007.html",
-      "published": "2026-09-15T16:29:43Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "How Caterpillar (CAT) Drives Sector-Leading Performance Beyond AI Models",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/caterpillar-cat-drives-sector-leading-155623250.html?.tsrc=rss",
-      "published": "2026-09-15T15:56:23Z",
-      "tone": "bullish"
-    },
     {
       "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News",
       "source": "AP News",
@@ -34,11 +13,32 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Dow Dives, Oil Play Tests New Entry; Bitcoin Falls Ahead Of Clarity Act Vote (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/8af6acb0-32f5-3a96-97ee-647dd408ed1b/stock-market-today%3A-dow.html?.tsrc=rss",
-      "published": "2026-09-15T16:52:11Z",
+      "title": "US Stock Market Today S&P 500 Futures Fall As Inflation Pressures Persist - simplywall.st",
+      "source": "simplywall.st",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQNDNhWlBVZTF4NTVwcl9ZaFZlblFOaWM5TFBYMkU1S0ozRTYyWHMzU1RVeW9nR1dXNXczOEVyRVBrQ1ZkOTd5bjJKU3VacXlGRk1aaHRkZWhnb3VGbjZhWTVBNHVtb1R0WWxQTm9HbTMwd1huQ2pBUFdwTFd3V25mMGZuZGlrQnBnSzVmakgyakFsTC1VSUU2ZzZkRHF4YVVEcUFvSHU5cDh5VjkzTmo4cXNqVklwM0gxd1QxX0pOeDYwQWUzN3cwSEM2QVRBY29VS1k40gHYAUFVX3lxTE1YV2VZNkpJcV9GUWlxUjlwb3ZuREJFemFzaEFvU1lkTXJELWFDQmowanl5Qk9sWjRSQ1hOODh4ZXNXQmNteFp6Mk96WE54RlhPYzAzaWZPYUNfdXMwZ3laWWtGMEdOUFpneXhJQ3RZZG81NWFrWHV6TFA0WTB3c2lGdmw4VEN5dnFuT2dBME1FSzREdUFlTjRuUVpRWkNUaHk5WUx5RlV5djVUcUhZNnZ4Wk5jNGdnb0pTSEl6d0JtU2dUUnBHN1g1bWtKdzFqRHlMUWhfZXFaYg?oc=5",
+      "published": "2026-09-15T08:24:31Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Why one Wall Street firm thinks this year\u2019s stock-market rally is running out of road - MarketWatch",
+      "source": "MarketWatch",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNdWx6TGZVYWI1RXlLeEpfalctRzZKWnAxSThPdW9DekRpdjhnSWg5b2NEeHUwdFRZNXVEMVdIWEZlVFVaTlZhWEN1V3F5Y2UtUzMwZlM1RXNhZS1yQVpaQndodEVUeXpTNi01Wmp3cVdZNmk1MHBORVRUcEItQlpPaUhRTmFSWDBrOXI1ZGo3UmZjZWN6cHQ3VE9EVGpqRHFsWUVYS1BXNWFKcW1H?oc=5",
+      "published": "2026-09-15T14:14:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Alnylam's Sell-Off Looks Ugly -- but Wall Street Still Sees a Much Brighter Picture - The Motley Fool",
+      "source": "The Motley Fool",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQSW5NZ0x0Qlg2SnZadW5Wd1dNWGJlSHRTSjhyMHZqMkt4S1dxYmRrWTQ1VFVfRVlJLWJmZHNFeUZTcFFReGZjdnFjMmFPNXFLWmxlT3Z4UHpMTTVsNDByUXpVOF9sN3o0Q1hzT2d3WjRidW84UjFBX0ZURXBwMi1VMWRpUkZ3S0Y2eUYxbkxHUkVhM2NKaVVucA?oc=5",
+      "published": "2026-09-15T09:44:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQRmV1QnVlNTFpamxfRHh6QnJKUHUtQWoxWWYySXZsMjFQdVV5QUNDZW9OT3cxcThWQ3NDb05veFFiV09xZGdybjBoYkpybXpGNHN1WGJOV1RkNmZqYVJOV1VfMHk2Z0lLYk0xS1hwNGFKRXNBMFhnWVdyZFBTMUhESmRfNXJZQzV3UHh6RGQ2aDZ4S2ozcTltbzktZFU0YVpCTDBHUmJSbWd6cUlMNjNwNTRSVWFXM0xDQ0lpaHZhZnQ1dGtPVTZ0dHphZGtTUjlXdGtBUG53bnR1cVRvODFmODc2V01ud1VVS3ZQMFRVOFRhUUk?oc=5",
+      "published": "2026-09-11T15:49:00Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 93
       }
     ],
-    "headline_count": 144,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
