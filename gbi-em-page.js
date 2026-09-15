@@ -71,12 +71,53 @@
     if (!container || !gbiData.macro_anchors) return;
 
     const anchors = gbiData.macro_anchors;
+
+    function getAnchorVal(item, fallback) {
+      if (!item) return fallback;
+      if (typeof item === "object") {
+        const v = item.value !== undefined ? item.value : '';
+        const u = item.unit || '';
+        return `${v} ${u}`.trim() || fallback;
+      }
+      return String(item) || fallback;
+    }
+
+    function getAnchorComment(item, fallback) {
+      if (item && typeof item === "object" && item.comment) return item.comment;
+      return fallback;
+    }
+
     const items = [
-      { label: "Brent Crude Oil", val: anchors.brent_crude ? `$${anchors.brent_crude.toFixed(2)}/bbl` : "$74.20/bbl", comment: anchors.brent_comment || "EM terms of trade driver", icon: "🛢️" },
-      { label: "LME Copper", val: anchors.copper_per_lb ? `$${anchors.copper_per_lb.toFixed(2)}/lb` : "$4.22/lb", comment: anchors.copper_comment || "Industrial activity proxy", icon: "⛏️" },
-      { label: "Spot Gold", val: anchors.gold_per_oz ? `$${anchors.gold_per_oz.toLocaleString()}/oz` : "$2,580/oz", comment: anchors.gold_comment || "Safe haven & reserve asset", icon: "🥇" },
-      { label: "US Dollar Index (DXY)", val: anchors.dxy_index ? anchors.dxy_index.toFixed(2) : "100.85", comment: anchors.dxy_comment || "Dollar funding pressure", icon: "💵" },
-      { label: "US 10Y Benchmark", val: anchors.ust_10y_yield ? `${anchors.ust_10y_yield.toFixed(2)}%` : "3.65%", comment: anchors.ust_comment || "Global risk-free hurdle rate", icon: "📈" }
+      {
+        label: "Brent Crude Oil",
+        val: getAnchorVal(anchors.brent_crude, "$74.20/bbl"),
+        comment: getAnchorComment(anchors.brent_crude, "EM terms of trade driver"),
+        icon: "🛢️"
+      },
+      {
+        label: "LME Copper",
+        val: getAnchorVal(anchors.copper, "$4.22/lb"),
+        comment: getAnchorComment(anchors.copper, "Industrial activity proxy"),
+        icon: "⛏️"
+      },
+      {
+        label: "Spot Gold",
+        val: getAnchorVal(anchors.gold, "$2,580/oz"),
+        comment: getAnchorComment(anchors.gold, "Safe haven & reserve asset"),
+        icon: "🥇"
+      },
+      {
+        label: "US Dollar Index (DXY)",
+        val: getAnchorVal(anchors.dxy_index, "101.40"),
+        comment: getAnchorComment(anchors.dxy_index, "Dollar funding pressure"),
+        icon: "💵"
+      },
+      {
+        label: "US 10Y Benchmark",
+        val: getAnchorVal(anchors.ust_10y, "4.96%"),
+        comment: getAnchorComment(anchors.ust_10y, "Global risk-free hurdle rate"),
+        icon: "📈"
+      }
     ];
 
     container.replaceChildren();
@@ -121,16 +162,20 @@
     if (!container || !gbiData.geopolitical_risk_matrix) return;
 
     container.replaceChildren();
-    gbiData.geopolitical_risk_matrix.forEach(p => {
+    const pillars = Array.isArray(gbiData.geopolitical_risk_matrix)
+      ? gbiData.geopolitical_risk_matrix
+      : Object.values(gbiData.geopolitical_risk_matrix || {});
+
+    pillars.forEach(p => {
       const el = document.createElement("div");
       el.className = "geopolitical-pillar";
       el.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <strong style="font-size: 14px; color: var(--text);">${p.theme}</strong>
+          <strong style="font-size: 14px; color: var(--text);">${p.theme || p.title || 'Risk Pillar'}</strong>
           <span style="font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: rgba(215, 0, 21, .12); color: var(--bad);">${p.impact_level || 'High'} Impact</span>
         </div>
-        <div style="font-size: 12.5px; color: var(--muted); margin-bottom: 6px;"><strong>Transmission:</strong> ${p.transmission_channel}</div>
-        <div style="font-size: 12.5px; color: var(--accent); font-weight: 600;"><strong>Direct Trade Influence:</strong> ${p.market_implication}</div>
+        <div style="font-size: 12.5px; color: var(--muted); margin-bottom: 6px;"><strong>Transmission:</strong> ${p.transmission_channel || p.description || ''}</div>
+        <div style="font-size: 12.5px; color: var(--accent); font-weight: 600;"><strong>Direct Trade Influence:</strong> ${p.market_implication || p.trade_influence || ''}</div>
       `;
       container.appendChild(el);
     });
@@ -179,7 +224,7 @@
       ctx.font = "600 12px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
       ctx.textAlign = "right";
       ctx.textBaseline = "middle";
-      ctx.fillText(`${c.flag} ${c.country}`, paddingLeft - 10, y + barHeight / 2);
+      ctx.fillText(`${c.flag || ''} ${c.name || c.country || c.id}`, paddingLeft - 10, y + barHeight / 2);
 
       // Zero line
       const zeroX = paddingLeft + ((0 - minVal) / (maxVal - minVal)) * chartWidth;
@@ -243,7 +288,7 @@
 
       tr.innerHTML = `
         <td style="padding: 12px 10px; font-weight: 700; white-space: nowrap;">
-          ${c.flag} ${c.country}
+          ${c.flag || ''} ${c.name || c.country || c.id}
           <div style="font-size: 11px; font-weight: 500; color: var(--muted);">${c.currency}</div>
         </td>
         <td style="padding: 12px 10px;">
@@ -325,7 +370,7 @@
 
       tr.innerHTML = `
         <td style="padding: 12px 10px; font-weight: 700; white-space: nowrap;">
-          ${c.flag} ${c.country}
+          ${c.flag || ''} ${c.name || c.country || c.id}
           <div style="font-size: 11px; font-weight: 500; color: var(--muted);">${c.fx ? c.fx.pair : c.currency}</div>
         </td>
         <td style="padding: 12px 10px;">
@@ -431,8 +476,8 @@
         <td style="padding: 12px 10px; font-weight: 600;">${t.entry_level}</td>
         <td style="padding: 12px 10px; font-weight: 700; color: var(--text);">${t.current_level}</td>
         <td style="padding: 12px 10px; font-size: 12px;">
-          <span style="color: var(--good); font-weight: 600;">T: ${t.target}</span><br>
-          <span style="color: var(--bad); font-size: 11px;">S: ${t.stop_loss}</span>
+          <span style="color: var(--good); font-weight: 600;">T: ${t.target_level !== undefined ? t.target_level : (t.target || 'N/A')}</span><br>
+          <span style="color: var(--bad); font-size: 11px;">S: ${t.stop_loss_level !== undefined ? t.stop_loss_level : (t.stop_loss || 'N/A')}</span>
         </td>
         <td style="padding: 12px 10px; font-weight: 700; font-size: 13.5px;" class="${pCls}">
           ${signB}${pnlBps.toFixed(1)}
@@ -508,9 +553,9 @@
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
           <div>
             <div style="display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 32px;">${c.flag}</span>
+              <span style="font-size: 32px;">${c.flag || ''}</span>
               <div>
-                <h3 style="margin: 0; font-size: 24px; font-weight: 800;">${c.country}</h3>
+                <h3 style="margin: 0; font-size: 24px; font-weight: 800;">${c.name || c.country || c.id}</h3>
                 <span style="font-size: 13px; color: var(--muted);">${c.currency} · ${c.region} · Credit: <strong>${c.credit_rating}</strong></span>
               </div>
             </div>
