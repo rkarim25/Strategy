@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-15T23:18:24Z",
+  "generated_at_utc": "2026-09-15T23:56:47Z",
   "window_days": 7,
   "score": 3,
   "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Why one Wall Street firm thinks this year\u2019s stock-market rally is running out of road - MarketWatch; Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 24/7 Wall St.. Bearish offsets: Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News; US Stock Market Today S&P 500 Futures Fall As Inflation Pressures Persist - simplywall.st.",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Why one Wall Street firm thinks this year\u2019s stock-market rally is running out of road - marketwatch.com; Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 24/7 Wall St.. Bearish offsets: Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News; US Stock Market Today S&P 500 Futures Fall As Inflation Pressures Persist - simplywall.st.",
   "articles": [
     {
       "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News",
@@ -20,8 +20,8 @@
       "tone": "bearish"
     },
     {
-      "title": "Why one Wall Street firm thinks this year\u2019s stock-market rally is running out of road - MarketWatch",
-      "source": "MarketWatch",
+      "title": "Why one Wall Street firm thinks this year\u2019s stock-market rally is running out of road - marketwatch.com",
+      "source": "marketwatch.com",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNdWx6TGZVYWI1RXlLeEpfalctRzZKWnAxSThPdW9DekRpdjhnSWg5b2NEeHUwdFRZNXVEMVdIWEZlVFVaTlZhWEN1V3F5Y2UtUzMwZlM1RXNhZS1yQVpaQndodEVUeXpTNi01Wmp3cVdZNmk1MHBORVRUcEItQlpPaUhRTmFSWDBrOXI1ZGo3UmZjZWN6cHQ3VE9EVGpqRHFsWUVYS1BXNWFKcW1H?oc=5",
       "published": "2026-09-15T14:14:00Z",
       "tone": "bullish"
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 92
       }
     ],
-    "headline_count": 143,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
