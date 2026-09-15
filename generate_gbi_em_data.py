@@ -1017,6 +1017,20 @@ RATES_EXECUTION = {
 
 print(f"[OK] Loaded {len(RATES_EXECUTION)} institutional rates execution profiles.")
 
+try:
+    from additional_gbi_countries import (
+        NEW_COUNTRIES,
+        EXPANDED_TOT_REER_QUADRANT_MATRIX,
+        EXPANDED_GEOPOLITICAL_RISK_MATRIX
+    )
+    COUNTRIES.update(NEW_COUNTRIES)
+    TOT_REER_QUADRANT_MATRIX = EXPANDED_TOT_REER_QUADRANT_MATRIX
+    GEOPOLITICAL_RISK_MATRIX = EXPANDED_GEOPOLITICAL_RISK_MATRIX
+    print(f"[OK] Successfully integrated 17-country GBI-EM benchmark universe ({len(COUNTRIES)} sovereigns).")
+except ImportError as e:
+    print(f"[WARN] Could not load additional_gbi_countries: {e}")
+
+
 
 def main():
     print("Generating GBI-EM Local Currency Sovereign Debt & FX dataset with ToT-REER and Real Rates...")
@@ -1120,15 +1134,17 @@ def main():
         "upcoming_catalysts_calendar": all_catalysts,
         "trade_tracker": trade_tracker_payload,
         "executive_paragraph": (
-            "The GBI-EM local currency sovereign landscape is defined by the widest real yield dispersion in over a decade, "
-            "anchored by sub-$75 Brent Crude ($74.20/bbl) which acts as a powerful disinflationary tailwind for major net energy "
-            "importers (India, South Africa, Turkey) while trimming fiscal leeway for Latin American producers. Our highest-conviction "
-            "unhedged rates and FX allocation is South Africa (10Y SAGB R2035 at 9.15%), where post-GNU political stability and "
-            "record gold prices ($2,580/oz) create a powerful sovereign turnaround. Brazil offers the highest real yield (~6.6% ex-ante policy real rate), "
-            "best expressed in the 5Y belly (NTN-F 2029) unhedged or with 3M NDF hedges to harvest 12% nominal carry. In Mexico, "
-            "US election tariff threats warrant strict FX-hedged expressions on 10Y M-Bonos. India's phased J.P. Morgan index inclusion "
-            "and RBI reserve protection ($683B) cement 10Y IGBs as the premier low-volatility anchor asset. Conversely, Poland's defense "
-            "spending burden (4.7% GDP) creates duration headwinds on POLGBs, favouring Long PLN vs EUR to capture €60B+ in EU Recovery Fund disbursements."
+            "The J.P. Morgan GBI-EM Global Diversified local currency sovereign benchmark universe spans 17 liquid "
+            "sovereign debt markets across Latin America, Central & Eastern Europe, the Middle East & Africa, and Emerging Asia. "
+            "The asset class is characterized by historic real yield dispersion, anchored by sub-$75 Brent Crude ($74.20/bbl) "
+            "acting as a disinflationary dividend for major net energy importers (India, South Africa, Thailand, Turkey) while "
+            "commodity exporters (Brazil, Chile, Colombia, Peru) harvest terms of trade tailwinds. Our highest-conviction unhedged "
+            "duration recommendations are centered in the Andean & South African commodity exporters: South Africa 10Y SAGB R2035 (9.15%) "
+            "on record gold and GNU stability, Chile 10Y BTP (5.35%) and Peru 10Y Soberano (5.85%) on pristine 2% inflation anchors and copper strength. "
+            "In high-beta carry markets, Brazil (NTN-F 2029 at 12.05%) and Egypt (3M T-Bills at 29.50% roll) offer unparalleled real cushions "
+            "(+6.6% and +10.75% ex-ante). In trade-exposed sovereigns (Mexico M-Bonos, Czech CZGBs, Romania ROMGBs), duration must be isolated "
+            "via 2s10s curve flatteners or strict forward FX hedging against US election tariff risk and European industrial drag. In Emerging Asia, "
+            "India 10Y IGBs and Malaysia MYR provide ultra-liquid, low-volatility balance of payments anchor allocations."
         ),
         "rankings": {
             "by_ex_ante_real_policy_rate": [c["id"] for c in ranked_by_ex_ante_real_rate],
