@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-09-15T00:15:03Z",
+  "generated_at_utc": "2026-09-15T12:23:54Z",
   "data_asof": "2026-09-15",
-  "daily_rows": 6533,
-  "quote_price": 4326.5,
+  "daily_rows": 6535,
+  "quote_price": 4317.10009765625,
   "quote_timestamp": "2026-09-15",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1789517703&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1789561434&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,16 +31,16 @@
   "official_signal": {
     "latest": {
       "date": "2026-09-15",
-      "close": 4326.5
+      "close": 4317.10009765625
     },
-    "latestSma": 4467.759985351562,
+    "latestSma": 4507.564965820313,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.18650344474973246,
+    "latestDd": -0.18827087527702457,
     "regime": "tier2",
-    "entryClose": 4087.699951171875,
+    "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
-    "recoveryTarget": 5722.779931640624,
+    "recoveryTarget": 5752.740136718749,
     "aboveSma": false,
     "recoveryOk": false,
     "targetLeverage": 0,
@@ -53,16 +53,16 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-09-15",
-      "close": 4326.5
+      "close": 4317.10009765625
     },
-    "latestSma": 4463.194995117187,
+    "latestSma": 4502.389965820313,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.18650344474973246,
+    "latestDd": -0.18827087527702457,
     "regime": "tier2",
-    "entryClose": 4087.699951171875,
+    "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
-    "recoveryTarget": 5722.779931640624,
+    "recoveryTarget": 5752.740136718749,
     "aboveSma": false,
     "recoveryOk": false,
     "targetLeverage": 0,
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-09-15",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-09-15T00:15:03Z",
+    "last_checked_at_utc": "2026-09-15T12:23:54Z",
     "last_email_sent_on": "2026-09-10",
     "last_transition": {
       "id": "2026-09-09:1->2026-09-10:0",

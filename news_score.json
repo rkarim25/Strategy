@@ -1,10 +1,24 @@
 {
-  "generated_at_utc": "2026-09-15T00:15:08Z",
+  "generated_at_utc": "2026-09-15T12:23:59Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
+  "score": 3,
+  "label": "Bearish",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: A Rate Hike Could Be the First of Many. Stocks Are on Red Alert.; Warsh's credibility is on the line this week as Trump policies put pressure on Fed to hike.",
   "articles": [
+    {
+      "title": "A Rate Hike Could Be the First of Many. Stocks Are on Red Alert.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/a69fed47-9f11-3097-aa6c-9dcb33bc6067/a-rate-hike-could-be-the.html?.tsrc=rss",
+      "published": "2026-09-15T10:35:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Warsh's credibility is on the line this week as Trump policies put pressure on Fed to hike",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/14/warshs-credibility-is-on-the-line-this-week-as-trump-policies-put-pressure-on-fed-to-hike.html",
+      "published": "2026-09-14T20:49:03Z",
+      "tone": "bearish"
+    },
     {
       "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
       "source": "CNBC",
@@ -13,31 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPOWhjeDNrZFJXajFqV2dqMm50YlZhaEpiMngzNFBkSmpxNnBnTU1ZcXNjRS03U2NBNm1ib2wyZ2VCVTlSa1dTS3pDcG1QcnJfbjBfcUdzVzJjOVZxUVlYZG03eXlXd3pueWZocmxXTzhDV21JdVdIU1I0OVRPMVQyZW9SRkFmSUd0d0pFY0c0bm9xVWlNdjE3eFdPdm5kQ1EtLTFYYm9SMA?oc=5",
-      "published": "2026-09-08T01:15:39Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News",
-      "source": "AP News",
+      "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - apnews.com",
+      "source": "apnews.com",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQU1FDWlZxem5yejRWekJjdmdOVW4tU2RQYWpQX2FDWmlHZ3lBOVlYNjdEb01mcUFvM2FhaV9fMG5kUno1VzRjY0F6WkhKbmgxTzUwZXdabXprUjdGbTBuVE5jR2s4QVJqdkt6cS1QTVcwMW82d29FYjBvMFoxdjVrdkxwS0wyY0toNWNYaUpqUkJ6ZkM0bFZHdDk4RU1qWm9Ga0VUQ1J3WQ?oc=5",
       "published": "2026-09-09T20:59:00Z",
       "tone": "bearish"
     },
     {
-      "title": "Review & Preview: AI Is At It Again",
+      "title": "Stocks Selloff Rages on as AI and Bond Fears Mount",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/8aec404f-c114-3de5-883f-8ab4ed4b9540/review-%26-preview%3A-ai-is-at-it.html?.tsrc=rss",
-      "published": "2026-09-14T23:55:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street Today: DJIA, S&P 500, Nasdaq Comp Fall on Rising Oil and Bond Rates, ORCL, NVDA, MU Losses - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOQTJDRW1DN2JTNnJ3R0RwaWdLSHJGbjNJWUNZSm00THI1Z0I1TGlibUg1VVR3cGo2VDRkR1FpX184QnJ4WktTUWNOZXdLdTdGcmNCQkhlWi0xb3JZZXpEbWlJQk9pdWFaaW9nRUg0eDNBSlpSVjJ2ZGh6UU05emdOT3R2ckJFd1dqMWdWNl83dHhIV0ZydmlvVWMyVm1JSFJyc3c?oc=5",
-      "published": "2026-09-10T07:00:00Z",
+      "url": "https://finance.yahoo.com/m/5b0f2bad-635f-3204-92df-4bd69e3cae3f/stocks-selloff-rages-on-as-ai.html?.tsrc=rss",
+      "published": "2026-09-15T09:34:51Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 94
       }
     ],
-    "headline_count": 143,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
