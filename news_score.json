@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-14T23:34:59Z",
+  "generated_at_utc": "2026-09-15T00:15:08Z",
   "window_days": 7,
   "score": 4,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC; S&P 500 Bulls Are Not Giving Up Yet \u2013 But Rising Oil Prices, Long-Term Yields Rise Are Narrowing The Path Higher - TradingView. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: Wall Street falls on elevated Fed rate hike bets and oil prices, slump in health - Investing.com; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
   "articles": [
     {
       "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
@@ -27,18 +27,18 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street Today: DJIA, S&P 500, Nasdaq Comp Fall on Rising Oil and Bond Rates, ORCL, NVDA, MU Losses - moomoo.com",
-      "source": "moomoo.com",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOQTJDRW1DN2JTNnJ3R0RwaWdLSHJGbjNJWUNZSm00THI1Z0I1TGlibUg1VVR3cGo2VDRkR1FpX184QnJ4WktTUWNOZXdLdTdGcmNCQkhlWi0xb3JZZXpEbWlJQk9pdWFaaW9nRUg0eDNBSlpSVjJ2ZGh6UU05emdOT3R2ckJFd1dqMWdWNl83dHhIV0ZydmlvVWMyVm1JSFJyc3c?oc=5",
-      "published": "2026-09-10T07:00:00Z",
+      "title": "Review & Preview: AI Is At It Again",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/8aec404f-c114-3de5-883f-8ab4ed4b9540/review-%26-preview%3A-ai-is-at-it.html?.tsrc=rss",
+      "published": "2026-09-14T23:55:00Z",
       "tone": "bearish"
     },
     {
-      "title": "S&P 500 Bulls Are Not Giving Up Yet \u2013 But Rising Oil Prices, Long-Term Yields Rise Are Narrowing The Path Higher - TradingView",
-      "source": "TradingView",
-      "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxQTWxoclF1UzlXTTRCUXMzdmNNcnZTTF9mUzZ6RVRWOWpzMDI4d2dPbmVRRFZPd0VnZ3Z6SmRFTlI5UzJ5TnRwRl9HTklmT1hjYzFSS0dEdERmWGcxaVdMT0k0bHQ5cE5icjVzWXZ1Y0lTcXNkNFRPWjV1UDRSWUhQQzRYWFhoQWZWcXpSWHJzWDJxSW1yMmRQSnI3WkszeVR2RjBuTjU4aVFIMWZZV0lLTWVHdE53THh6YmdqU1F1UGlhWG9TWlRRTmFGbmhzTjNRaFNZR194SENJdDRWcjZqcnYzUEhtcm0wZkxSREZiVERZUThGVXNvazZYcnZweXc?oc=5",
-      "published": "2026-09-14T06:52:00Z",
-      "tone": "bullish"
+      "title": "Wall Street Today: DJIA, S&P 500, Nasdaq Comp Fall on Rising Oil and Bond Rates, ORCL, NVDA, MU Losses - Moomoo",
+      "source": "Moomoo",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOQTJDRW1DN2JTNnJ3R0RwaWdLSHJGbjNJWUNZSm00THI1Z0I1TGlibUg1VVR3cGo2VDRkR1FpX184QnJ4WktTUWNOZXdLdTdGcmNCQkhlWi0xb3JZZXpEbWlJQk9pdWFaaW9nRUg0eDNBSlpSVjJ2ZGh6UU05emdOT3R2ckJFd1dqMWdWNl83dHhIV0ZydmlvVWMyVm1JSFJyc3c?oc=5",
+      "published": "2026-09-10T07:00:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 93
       }
     ],
-    "headline_count": 140,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
