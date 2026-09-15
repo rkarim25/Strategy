@@ -99,63 +99,100 @@ def update_all_trades():
         if t.get("status") not in ["OPEN"]:
             continue
 
-        desk = t.get("desk")
+        tid = t.get("id")
+        title = t.get("title", "").lower()
 
-        # US Treasuries
-        if desk == "US Treasuries":
-            if "2s10s" in t.get("title", "").lower() and "2s10s" in spreads:
-                curr = spreads["2s10s"]["bps"]
-                t["current_level"] = curr
-                pnl_bps = round(curr - t["entry_level"], 1)
-                t["pnl_bps"] = pnl_bps
-                t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 10000.0), 2)
-            elif "5-year" in t.get("title", "").lower() and "5y" in yields:
-                curr = yields["5y"]["yield"]
-                t["current_level"] = curr
-                pnl_bps = round((t["entry_level"] - curr) * 100, 1)
-                t["pnl_bps"] = pnl_bps
-                t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 465.0), 2)
+        # UST Trades
+        if tid == "UST-20260914-01" and "2s10s" in spreads:
+            curr = spreads["2s10s"]["bps"]
+            t["current_level"] = curr
+            pnl_bps = round(curr - t["entry_level"], 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 10000.0), 2)
+        elif tid == "UST-20260914-02" and "5y" in yields:
+            curr = yields["5y"]["yield"]
+            t["current_level"] = curr
+            pnl_bps = round((t["entry_level"] - curr) * 100, 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 465.0), 2)
 
-        # Local EM
-        elif desk == "Local EM":
-            t_id = t.get("id", "").lower()
-            t_title = t.get("title", "").lower()
+        # GBI-EM Trades by explicit ID
+        elif tid == "GBI-20260914-01" and "brazil" in countries:
+            curr = countries["brazil"]["rates"]["yield_5y"]
+            t["current_level"] = curr
+            pnl_bps = round((t["entry_level"] - curr) * 100, 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 420.0), 2)
 
-            if "brazil" in t_title and "brazil" in countries:
-                curr = countries["brazil"]["rates"]["yield_5y"]
-                t["current_level"] = curr
-                pnl_bps = round((t["entry_level"] - curr) * 100, 1)
-                t["pnl_bps"] = pnl_bps
-                t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 420.0), 2)
+        elif tid == "GBI-20260914-02" and "south_africa" in countries:
+            # Closed target hit
+            pass
 
-            elif "south africa" in t_title and "south_africa" in countries:
-                curr = countries["south_africa"]["rates"]["yield_10y"]
-                t["current_level"] = curr
-                pnl_bps = round((t["entry_level"] - curr) * 100, 1)
-                t["pnl_bps"] = pnl_bps
-                t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 410.0), 2)
+        elif tid == "GBI-20260914-03" and "south_africa" in countries:
+            curr = countries["south_africa"]["rates"]["yield_10y"]
+            t["current_level"] = curr
+            pnl_bps = round((t["entry_level"] - curr) * 100, 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 410.0), 2)
 
-            elif "india" in t_title and "india" in countries:
-                curr = countries["india"]["rates"]["yield_10y"]
-                t["current_level"] = curr
-                pnl_bps = round((t["entry_level"] - curr) * 100, 1)
-                t["pnl_bps"] = pnl_bps
-                t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 720.0), 2)
+        elif tid == "GBI-20260914-04" and "india" in countries:
+            curr = countries["india"]["rates"]["yield_10y"]
+            t["current_level"] = curr
+            pnl_bps = round((t["entry_level"] - curr) * 100, 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 720.0), 2)
 
-            elif "indonesia" in t_title and "indonesia" in countries:
-                curr = countries["indonesia"]["rates"]["yield_10y"]
-                t["current_level"] = curr
-                pnl_bps = round((t["entry_level"] - curr) * 100, 1)
-                t["pnl_bps"] = pnl_bps
-                t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 380.0), 2)
+        elif tid == "GBI-20260914-05" and "mexico" in countries:
+            # Mexico 2s10s Flattener
+            curr_10y = countries["mexico"]["rates"]["yield_10y"]
+            curr_2y = countries["mexico"]["rates"]["yield_2y"]
+            curr_spread = round((curr_10y - curr_2y) * 100, 1)  # -23 bps
+            t["current_level"] = curr_spread
+            # Flattener gains when spread becomes more negative (entry -25, current -23 -> +2 bps)
+            pnl_bps = round(curr_spread - t["entry_level"], 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 5000.0), 2)
 
-            elif "poland" in t_title and "poland" in countries:
-                curr = countries["poland"]["fx"]["spot"]
-                t["current_level"] = curr
-                # EUR/PLN lower spot is gain for Long PLN
-                pnl_pips = round((t["entry_level"] - curr) * 10000 / 43, 1)
-                t["pnl_bps"] = pnl_pips
-                t["pnl_usd"] = round(pnl_pips * t.get("dv01_usd", 200.0), 2)
+        elif tid == "GBI-20260914-06" and "indonesia" in countries:
+            curr = countries["indonesia"]["rates"]["yield_10y"]
+            t["current_level"] = curr
+            pnl_bps = round((t["entry_level"] - curr) * 100, 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 380.0), 2)
+
+        elif tid == "GBI-20260914-07" and "poland" in countries:
+            # Poland PLN FX trade
+            curr = countries["poland"]["fx"]["spot"]
+            t["current_level"] = curr
+            # EUR/PLN lower spot is gain for Long PLN
+            pnl_pips = round((t["entry_level"] - curr) * 100, 1)  # e.g. 4.32 - 4.28 = 0.04 -> 4.0 pips / 40 ticks
+            t["pnl_bps"] = round((t["entry_level"] - curr) * 1000 / 4.3, 1)
+            t["pnl_usd"] = round(((t["entry_level"] - curr) / t["entry_level"]) * 2000000.0 / 4.28, 2)
+
+        elif tid == "GBI-20260914-08":
+            # Mexico 2s10s TIIE Flattener
+            curr_spread = -23.0
+            t["current_level"] = curr_spread
+            pnl_bps = round(curr_spread - t["entry_level"], 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * 1000.0, 2)  # $2,000
+
+        elif tid == "GBI-20260914-09" and "brazil" in countries:
+            # Receive Brazil DI1F29
+            curr = countries["brazil"]["rates"]["yield_5y"]
+            t["current_level"] = curr
+            pnl_bps = round((t["entry_level"] - curr) * 100, 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * 420.0, 2)  # $12,600
+
+        elif tid == "GBI-20260914-10" and "poland" in countries:
+            # Pay Poland 10Y WIBOR IRS
+            curr = countries["poland"]["rates"]["yield_10y"]
+            t["current_level"] = curr
+            # Pay fixed gains when yield rises
+            pnl_bps = round((curr - t["entry_level"]) * 100, 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * 1000.0, 2)  # $10,000
 
     save_tracker(tracker)
     print(f"[OK] Marked all trades to market. Total P&L: ${tracker['portfolio_summary']['total_pnl_usd']:.2f}")

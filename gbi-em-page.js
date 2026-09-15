@@ -38,6 +38,7 @@
     renderGeopoliticalRadar();
     renderRealYieldChart();
     renderRealRatesTable();
+    renderRatesExecutionTable();
     renderTotReerMatrix();
     renderTradeTracker();
     renderCountryCards();
@@ -321,6 +322,61 @@
         </td>
         <td style="padding: 12px 10px;">
           ${cushionBadge}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+
+  function renderRatesExecutionTable() {
+    const tbody = document.getElementById("ratesExecutionTableBody");
+    if (!tbody || !gbiData.rates_pay_receive_matrix) return;
+
+    tbody.replaceChildren();
+
+    gbiData.rates_pay_receive_matrix.forEach(r => {
+      const tr = document.createElement("tr");
+      tr.style.borderBottom = "1px solid var(--line)";
+
+      let dirBadgeCls = "directive-receive";
+      if (r.directive.toLowerCase().includes("pay fixed") || r.directive.toLowerCase().includes("underweight")) {
+        dirBadgeCls = "directive-pay";
+      } else if (r.directive.toLowerCase().includes("flattener") || r.directive.toLowerCase().includes("steepener") || r.directive.toLowerCase().includes("curve")) {
+        dirBadgeCls = "directive-spread";
+      } else if (r.directive.toLowerCase().includes("front-end") || r.directive.toLowerCase().includes("clip")) {
+        dirBadgeCls = "directive-cash";
+      }
+
+      let tierCls = "tier-1";
+      if (r.liquidity_tier.includes("Tier 2")) tierCls = "tier-2";
+      if (r.liquidity_tier.includes("Tier 3")) tierCls = "tier-3";
+
+      tr.innerHTML = `
+        <td style="padding: 12px 10px; font-weight: 700; white-space: nowrap;">
+          ${r.flag || ''} ${r.country}
+          <div style="font-size: 11px; font-weight: 500; color: var(--muted);">${r.currency}</div>
+        </td>
+        <td style="padding: 12px 10px;">
+          <span class="directive-badge ${dirBadgeCls}">${r.directive}</span>
+        </td>
+        <td style="padding: 12px 10px;">
+          <strong style="font-size: 13.5px; color: var(--text);">${r.swap_instrument}</strong>
+        </td>
+        <td style="padding: 12px 10px;">
+          <span style="font-size: 12.5px; color: var(--text); font-weight: 600;">${r.cash_instrument}</span>
+        </td>
+        <td style="padding: 12px 10px;">
+          <span class="tier-badge ${tierCls}">${r.liquidity_tier.split('(')[0].trim()}</span>
+          <div style="font-size: 11px; color: var(--muted); margin-top: 3px;"><strong>Clip:</strong> ${r.standard_clip}</div>
+        </td>
+        <td style="padding: 12px 10px;">
+          <div style="font-size: 12.5px; font-weight: 600;">${r.bid_ask_spread}</div>
+          <div style="font-size: 11px; color: var(--muted);">${r.clearing_venue}</div>
+        </td>
+        <td style="padding: 12px 10px; font-size: 12.5px; line-height: 1.4;">
+          <strong style="color: var(--accent);">${r.dv01_sizing}</strong>
+          <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">${r.recommended_notional}</div>
         </td>
       `;
       tbody.appendChild(tr);
@@ -652,6 +708,41 @@
             <div style="font-size: 12.5px; color: var(--muted);">50d SMA: ${c.fx.sma50} · 200d: ${c.fx.sma200} · RSI: ${c.fx.rsi14}</div>
           </div>
         </div>
+
+        
+        <!-- Rates Pay / Receive & Execution Playbook Box -->
+        ${c.rates_execution ? `
+        <div style="background: linear-gradient(135deg, rgba(0, 113, 227, .06) 0%, rgba(52, 199, 89, .06) 100%); border: 1px solid rgba(0, 113, 227, .25); border-radius: 16px; padding: 16px 18px; margin: 14px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">⚡</span>
+              <strong style="font-size: 14px; color: var(--text);">Rates Pay / Receive & Instrument Execution Playbook</strong>
+            </div>
+            <span class="directive-badge ${c.rates_execution.directive.toLowerCase().includes('pay fixed') ? 'directive-pay' : c.rates_execution.directive.toLowerCase().includes('flattener') ? 'directive-spread' : c.rates_execution.directive.toLowerCase().includes('front-end') ? 'directive-cash' : 'directive-receive'}">
+              ${c.rates_execution.directive}
+            </span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-bottom: 10px;">
+            <div style="background: rgba(255,255,255,.8); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);">
+              <span style="font-size: 11px; color: var(--muted); display: block; text-transform: uppercase; font-weight: 700;">Swap / Futures Instrument:</span>
+              <strong style="font-size: 13px; color: var(--text);">${c.rates_execution.swap_instrument}</strong>
+            </div>
+            <div style="background: rgba(255,255,255,.8); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);">
+              <span style="font-size: 11px; color: var(--muted); display: block; text-transform: uppercase; font-weight: 700;">Liquidity & Standard Clip:</span>
+              <span style="font-size: 12.5px; font-weight: 600;">${c.rates_execution.liquidity_tier}</span>
+              <div style="font-size: 11.5px; color: var(--muted);">Clip: ${c.rates_execution.standard_market_clip} · Bid/Ask: ${c.rates_execution.bid_ask_spread}</div>
+            </div>
+            <div style="background: rgba(255,255,255,.8); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);">
+              <span style="font-size: 11px; color: var(--muted); display: block; text-transform: uppercase; font-weight: 700;">DV01 Sizing & Risk:</span>
+              <strong style="font-size: 13px; color: var(--accent);">${c.rates_execution.recommended_sizing}</strong>
+              <div style="font-size: 11.5px; color: var(--muted);">${c.rates_execution.recommended_notional} (${c.rates_execution.dv01_per_unit})</div>
+            </div>
+          </div>
+          <div style="background: rgba(255,255,255,.9); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 8px; font-size: 13px; color: var(--text);">
+            <strong>Trader Lingo & Execution Rationale:</strong> ${c.rates_execution.trader_lingo_playbook}
+          </div>
+        </div>
+        ` : ''}
 
         <!-- Geopolitical Drivers & Direct Trade Influence Box -->
         ${geo.headline_theme ? `

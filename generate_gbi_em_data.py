@@ -896,6 +896,128 @@ TOT_REER_QUADRANT_MATRIX = [
     },
 ]
 
+# -*- coding: utf-8 -*-
+"""
+patch_gbi_rates_execution.py
+Adds rates_execution and rates_pay_receive_matrix to generate_gbi_em_data.py
+and runs it to update gbi_em_data.json.
+"""
+
+import sys
+import json
+sys.stdout.reconfigure(encoding='utf-8')
+
+# The 8 rates execution profiles
+RATES_EXECUTION = {
+    "brazil": {
+        "directive": "Receive Fixed (5Y Belly Duration)",
+        "swap_instrument": "B3 DI1F29 (Jan 2029 DI Futures) & DI1F27 (Jan 2027)",
+        "cash_instrument": "NTN-F 10.00% 01/01/2029 (Fixed Sovereign) / NTN-B 2030 (IPCA Linker)",
+        "liquidity_tier": "Tier 1 (Ultra-Liquid - $20B+ Daily B3 Derivatives Turnover)",
+        "bid_ask_spread": "0.5 - 1.0 bps (0.5 tick on DI1)",
+        "standard_market_clip": "R$50M - R$100M ($10M - $20M USD notional)",
+        "clearing_venue": "B3 (Brasil, Bolsa, Balcão - São Paulo)",
+        "dv01_per_unit": "~R$42 / contract (DI1F29 duration ~3.6y)",
+        "recommended_sizing": "Target $10,000 DV01 ($10k / 1 bp move; ~R$54,000 DV01)",
+        "recommended_notional": "1,280 DI1F29 contracts or R$60M cash NTN-F 2029 (~$11.1M USD)",
+        "trader_lingo_playbook": "Receive DI1F29 vs paying Copom Selic path. Curve prices terminal Selic at ~10.75%; 5Y belly at 12.05% gives +130 bps term premium cushion. If fiscal noise widens DI, hedge spot BRL via 3M NDFs to isolate the +6.5% carry spread over SOFR."
+    },
+    "mexico": {
+        "directive": "Pay 2Y vs Receive 10Y TIIE (2s10s Flattener) or Pay TIIE vs Receive M-Bono",
+        "swap_instrument": "MXN TIIE 28D IRS / TIIE Fondeo: 130x1 (10Y) vs 26x1 (2Y)",
+        "cash_instrument": "M-Bono 7.75% 05/29/2034 (10Y) & M-Bono 5.75% 03/05/2026 (2Y)",
+        "liquidity_tier": "Tier 1 (Ultra-Liquid - Standardized 28D Compounding Swaps)",
+        "bid_ask_spread": "0.75 - 1.25 bps on TIIE swaps; 1.0 - 1.5 bps on M-Bonos",
+        "standard_market_clip": "MXN 200M - MXN 500M ($10M - $25M USD notional)",
+        "clearing_venue": "CME / LCH Cleared (Offshore ISDA/CSA) or Asigna / MexDer onshore",
+        "dv01_per_unit": "~MXN 13,500 DV01 per MXN 20M 10Y (~$700 USD DV01 / $1M)",
+        "recommended_sizing": "DV01-Neutral 2s10s Flattener ($10,000 DV01 per leg)",
+        "recommended_notional": "Receive MXN 285M 10Y (130x1) vs Pay MXN 1,070M 2Y (26x1) (3.75x DV01 ratio)",
+        "trader_lingo_playbook": "Pay 2Y TIIE vs Receive 10Y TIIE at -23 bps spread. Banxico front-end easing cuts the 10.50% policy rate while US election tariff threats anchor 10Y term premiums. Curve will flatten out of inversion toward -50 bps."
+    },
+    "south_africa": {
+        "directive": "Receive Fixed (Long 10Y Duration Unhedged ZAR)",
+        "swap_instrument": "ZAR 10Y Interest Rate Swaps (3M JIBAR / ZARONIA OIS)",
+        "cash_instrument": "SAGB 8.875% 28/02/2035 (R2035 Benchmark) & R2032",
+        "liquidity_tier": "Tier 1 (Cash SAGB Benchmark) / Tier 2 (Long-End IRS)",
+        "bid_ask_spread": "1.0 - 2.0 bps in SAGB R2035; 1.5 - 2.5 bps in 10Y IRS",
+        "standard_market_clip": "ZAR 100M - ZAR 250M ($5.5M - $14M USD notional)",
+        "clearing_venue": "LCH Cleared (Offshore) / JSE Clear onshore",
+        "dv01_per_unit": "~$720 USD DV01 per $1,000,000 notional (ZAR 12,800 DV01 / ZAR 18M)",
+        "recommended_sizing": "Target $10,000 DV01 ($10k / 1 bp move; ~ZAR 178,000 DV01)",
+        "recommended_notional": "Buy ZAR 250M SAGB R2035 (~$14.0M USD notional) Unhedged",
+        "trader_lingo_playbook": "Receive 10Y SAGB R2035 unhedged. Gold at $2,580/oz terms-of-trade windfall plus Government of National Unity (GNU) fiscal consolidation creates the premier 'Double Alpha' trade in EM. Target 8.50% (-65 bps rally)."
+    },
+    "indonesia": {
+        "directive": "Receive Fixed (10Y SUN FR0100) on an FX-Hedged Basis",
+        "swap_instrument": "IDR 5Y/10Y Non-Deliverable Swaps (NDS) / IndONIA OIS",
+        "cash_instrument": "Surat Utang Negara (SUN) FR0100 6.625% 15/02/2034 (10Y)",
+        "liquidity_tier": "Tier 2 (Liquid Cash SUN; Semi-Liquid Offshore NDS)",
+        "bid_ask_spread": "1.5 - 2.5 bps in SUN FR0100; 2.5 - 4.0 bps in NDS",
+        "standard_market_clip": "IDR 100B - IDR 250B ($6.5M - $16M USD notional)",
+        "clearing_venue": "Bank Indonesia BI-SSSS onshore / Offshore bilateral ISDA NDS",
+        "dv01_per_unit": "~$760 USD DV01 per $1M notional (~IDR 11.7M DV01 / IDR 15.4B)",
+        "recommended_sizing": "Target $7,500 DV01 ($7.5k / 1 bp move)",
+        "recommended_notional": "Buy IDR 150 Billion SUN FR0100 (~$9.75M USD) + Sell $9.75M 3M NDF forward",
+        "trader_lingo_playbook": "Receive 10Y SUN FR0100 at 6.55%. Headline inflation is subdued at 2.12% giving Bank Indonesia room to cut. Always hedge spot IDR via 3M NDFs to strip out currency noise from government deficit expansions."
+    },
+    "poland": {
+        "directive": "Pay Fixed 10Y WIBOR IRS (Underweight Duration) + Long PLN vs EUR",
+        "swap_instrument": "PLN WIBOR IRS (6M WIBOR / POLONIA OIS): 5Y & 10Y tenors",
+        "cash_instrument": "POLGB DS1033 (6.00% 10/2033 Benchmark) & PS0729",
+        "liquidity_tier": "Tier 1 (Ultra-Liquid Swaps - Fully cleared on LCH)",
+        "bid_ask_spread": "0.75 - 1.25 bps in 5Y/10Y IRS; 1.0 - 1.5 bps in POLGB",
+        "standard_market_clip": "PLN 50M - PLN 100M ($13M - $26M USD notional)",
+        "clearing_venue": "LCH Cleared (Offshore) / KDPW_CCP (Warsaw)",
+        "dv01_per_unit": "~$740 USD DV01 per $1M notional (~PLN 2,850 DV01 / PLN 3.85M)",
+        "recommended_sizing": "Target $10,000 DV01 on Pay 10Y IRS leg (~PLN 38,500 DV01)",
+        "recommended_notional": "Pay PLN 52M 10Y WIBOR IRS + Long €10M PLN vs EUR (Spot / 3M Fwd)",
+        "trader_lingo_playbook": "Pay 10Y WIBOR IRS or underweight POLGB bonds. Poland's 4.7% GDP defense spending crowds out domestic real yields (+1.65% ex-ante is slimmest in GBI-EM). Express Polish bullishness exclusively via Long PLN vs EUR to ride €60B+ EU KPO inflows."
+    },
+    "india": {
+        "directive": "Receive Fixed (10Y IGB FAR) Unhedged Quasi-Dollar Anchor",
+        "swap_instrument": "INR MIBOR OIS (Overnight Indexed Swaps): 1Y, 2Y, 5Y tenors",
+        "cash_instrument": "7.18% GS 2033 & 7.10% GS 2034 (Fully Accessible Route - FAR Category)",
+        "liquidity_tier": "Tier 1 (Cash IGB FAR - $3B - $5B Daily Turnover)",
+        "bid_ask_spread": "0.5 - 1.0 bps in on-the-run IGB benchmark; 1.0 - 1.5 bps in MIBOR OIS",
+        "standard_market_clip": "INR 500M - INR 1,000M (INR 50 - 100 Crore; ~$6M - $12M USD)",
+        "clearing_venue": "Clearing Corporation of India Limited (CCIL) / NDS-OM",
+        "dv01_per_unit": "~$720 USD DV01 per $1M notional (~INR 60,000 DV01 / INR 8.35 Crore)",
+        "recommended_sizing": "Target $10,000 DV01 ($10k / 1 bp move; ~INR 835,000 DV01)",
+        "recommended_notional": "Buy INR 115 Crore (INR 1.15B) GS 2033 (~$13.8M USD notional) Unhedged",
+        "trader_lingo_playbook": "Receive 10Y IGB GS 2033 at 6.78% unhedged. Phased J.P. Morgan GBI-EM index inclusion brings ~$2B/month passive inflows. RBI pins USD/INR in a 83.70-84.00 range, converting IGB into an ultra-low-volatility 6.78% dollar yield surrogate."
+    },
+    "colombia": {
+        "directive": "Receive 5Y TES Tasa Fija on an FX-Hedged Basis",
+        "swap_instrument": "COP IBR OIS Swaps (Indicador Bancario de Referencia): 2Y & 5Y",
+        "cash_instrument": "TES Tasa Fija 03/11/2029 (5Y Benchmark at 10.15%) & TES 2034 (10.50%)",
+        "liquidity_tier": "Tier 2 (Moderate Liquidity; Belly liquid, Long-End semi-liquid)",
+        "bid_ask_spread": "2.0 - 3.5 bps in 5Y TES; 2.5 - 4.0 bps in IBR swaps",
+        "standard_market_clip": "COP 20,000M - COP 50,000M (COP 20B - 50B; ~$4.8M - $12M USD)",
+        "clearing_venue": "CRCC (Cámara de Riesgo Central de Contraparte de Colombia) / Bilateral",
+        "dv01_per_unit": "~$400 USD DV01 per $1M 5Y notional (~COP 1.68M DV01 / COP 4.2B)",
+        "recommended_sizing": "Target $5,000 DV01 ($5k / 1 bp move; ~COP 21,000,000 DV01)",
+        "recommended_notional": "Buy COP 52 Billion TES 2029 (~$12.5M USD notional) + FX Hedge",
+        "trader_lingo_playbook": "Receive 5Y TES 2029 at 10.15%. BanRep at 10.75% has high ex-ante real rate buffer (+5.95%). Keep position sized to $5k DV01 and hedge currency, as oil exploration bans and fiscal rule flex debates inject COP beta."
+    },
+    "turkey": {
+        "directive": "Clip 1M-3M Front-End Cash Carry / Do NOT Receive Long Duration",
+        "swap_instrument": "TRY Cross-Currency Swaps (XCCY) & TLREF OIS (Short tenors only)",
+        "cash_instrument": "1M - 3M Turkish Treasury Bills (Hazine Bonosu) & Central Bank Deposit Facility",
+        "liquidity_tier": "Tier 1 (Front-End 1M-3M Cash/Repo) / Tier 3 (Long-End Bond Curve Inverted)",
+        "bid_ask_spread": "10 - 20 bps in 1M-3M T-Bills; 50 - 100 bps in 10Y cash bonds",
+        "standard_market_clip": "TRY 100M - TRY 250M ($3M - $7.5M USD notional) in front-end bills",
+        "clearing_venue": "Borsa Istanbul (BIST) Takasbank onshore",
+        "dv01_per_unit": "N/A - Cash carry instrument managed on notional, not duration DV01",
+        "recommended_sizing": "Target $5M - $10M USD notional allocation in 1M-3M roll",
+        "recommended_notional": "TRY 200 Million 3M T-Bills (~$5.9M USD notional) Unhedged",
+        "trader_lingo_playbook": "Clip the front-end roll at ~46-50% annualized, never touch long-end duration (10Y yield at 32.5% is inverted by 1,000 bps vs 2Y at 42%). The 50% nominal carry generates ~$225k/month on $5.9M notional, easily covering the controlled ~1.5% monthly TRY depreciation."
+    }
+}
+
+print(f"[OK] Loaded {len(RATES_EXECUTION)} institutional rates execution profiles.")
+
+
 def main():
     print("Generating GBI-EM Local Currency Sovereign Debt & FX dataset with ToT-REER and Real Rates...")
 
@@ -963,7 +1085,32 @@ def main():
 
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
+    # Inject rates execution into each country
+    for c_key, ex in RATES_EXECUTION.items():
+        if c_key in COUNTRIES:
+            COUNTRIES[c_key]["rates_execution"] = ex
+
+    rates_matrix = []
+    for c_key, c in COUNTRIES.items():
+        ex = c.get("rates_execution", {})
+        rates_matrix.append({
+            "id": c["id"],
+            "country": c["name"],
+            "flag": c["flag"],
+            "currency": c["currency"],
+            "directive": ex.get("directive", ""),
+            "swap_instrument": ex.get("swap_instrument", ""),
+            "cash_instrument": ex.get("cash_instrument", ""),
+            "liquidity_tier": ex.get("liquidity_tier", ""),
+            "bid_ask_spread": ex.get("bid_ask_spread", ""),
+            "standard_clip": ex.get("standard_market_clip", ""),
+            "clearing_venue": ex.get("clearing_venue", ""),
+            "dv01_sizing": ex.get("recommended_sizing", ""),
+            "recommended_notional": ex.get("recommended_notional", "")
+        })
+
     payload = {
+        "rates_pay_receive_matrix": rates_matrix,
         "as_of_date": now_utc,
         "desk_name": "GBI-EM Local Currency Sovereign Debt & FX Strategy Desk",
         "benchmark": "J.P. Morgan GBI-EM Global Diversified",
