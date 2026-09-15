@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-15T12:23:54Z",
-  "data_asof": "2026-09-14",
-  "daily_rows": 7546,
-  "quote_price": 29127.158203125,
-  "quote_timestamp": "2026-09-14",
+  "generated_at_utc": "2026-09-15T17:10:25Z",
+  "data_asof": "2026-09-15",
+  "daily_rows": 7547,
+  "quote_price": 28955.740234375,
+  "quote_timestamp": "2026-09-15",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-09-14",
-      "close": 29127.16015625
+      "date": "2026-09-15",
+      "close": 28956.482421875
     },
-    "latestSma": 29359.9326171875,
+    "latestSma": 29307.9876953125,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.05001335501136528,
+    "latestDd": -0.05558003461155203,
     "regime": "tier2",
     "entryClose": 28776.80078125,
     "entryDate": "2026-08-03",
@@ -51,31 +51,31 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-09-14",
-      "close": 29127.158203125
+      "date": "2026-09-15",
+      "close": 28955.740234375
     },
-    "latestSma": 29316.521484375,
+    "latestSma": 29281.22666015625,
     "highWater": 30660.599609375,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.05001341871282661,
+    "latestDd": -0.05560424116685281,
     "regime": "tier2",
     "entryClose": 28776.80078125,
     "entryDate": "2026-08-03",
     "recoveryTarget": 40287.521093749994,
     "aboveSma": false,
-    "recoveryOk": true,
-    "targetLeverage": 2,
-    "activeEntryClose": 28776.80078125,
-    "activeEntryDate": "2026-08-03",
-    "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.012174995564596669,
-    "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
+    "recoveryOk": false,
+    "targetLeverage": 0,
+    "activeEntryClose": null,
+    "activeEntryDate": null,
+    "activeEntryLeverage": null,
+    "activeEntryPnl": null,
+    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-09-14",
+    "last_observed_asof": "2026-09-15",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-09-15T12:23:54Z",
+    "last_checked_at_utc": "2026-09-15T17:10:25Z",
     "last_email_sent_on": "2026-09-15",
     "last_transition": {
       "id": "2026-09-14:2->2026-09-14:0",

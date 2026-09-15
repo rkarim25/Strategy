@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-09-15T12:23:59Z",
+  "generated_at_utc": "2026-09-15T17:10:30Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC. Bearish offsets: A Rate Hike Could Be the First of Many. Stocks Are on Red Alert.; Warsh's credibility is on the line this week as Trump policies put pressure on Fed to hike.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Offshore Oil Stocks Rally While the Broad Market Slips: Transocean Climbs 6%, Valaris Rises 6%, W&T Offshore Gains 6%; How Caterpillar (CAT) Drives Sector-Leading Performance Beyond AI Models. Bearish offsets: 10-year Treasury yield hits highest level since 2007 as traders bet a Fed rate hike is coming; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
   "articles": [
     {
-      "title": "A Rate Hike Could Be the First of Many. Stocks Are on Red Alert.",
+      "title": "Offshore Oil Stocks Rally While the Broad Market Slips: Transocean Climbs 6%, Valaris Rises 6%, W&T Offshore Gains 6%",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/a69fed47-9f11-3097-aa6c-9dcb33bc6067/a-rate-hike-could-be-the.html?.tsrc=rss",
-      "published": "2026-09-15T10:35:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Warsh's credibility is on the line this week as Trump policies put pressure on Fed to hike",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/14/warshs-credibility-is-on-the-line-this-week-as-trump-policies-put-pressure-on-fed-to-hike.html",
-      "published": "2026-09-14T20:49:03Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - CNBC",
-      "source": "CNBC",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
-      "published": "2026-09-08T13:41:42Z",
+      "url": "https://247wallst.com/investing/2026/09/15/offshore-oil-stocks-rally-while-the-broad-market-slips-transocean-climbs-6-valaris-rises-6-wt-offshore-gains-6/?.tsrc=rss",
+      "published": "2026-09-15T16:03:15Z",
       "tone": "bullish"
     },
     {
-      "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - apnews.com",
-      "source": "apnews.com",
+      "title": "10-year Treasury yield hits highest level since 2007 as traders bet a Fed rate hike is coming",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/15/10-year-treasury-yield-rises-to-highest-since-2007.html",
+      "published": "2026-09-15T16:29:43Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "How Caterpillar (CAT) Drives Sector-Leading Performance Beyond AI Models",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/caterpillar-cat-drives-sector-leading-155623250.html?.tsrc=rss",
+      "published": "2026-09-15T15:56:23Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News",
+      "source": "AP News",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQU1FDWlZxem5yejRWekJjdmdOVW4tU2RQYWpQX2FDWmlHZ3lBOVlYNjdEb01mcUFvM2FhaV9fMG5kUno1VzRjY0F6WkhKbmgxTzUwZXdabXprUjdGbTBuVE5jR2s4QVJqdkt6cS1QTVcwMW82d29FYjBvMFoxdjVrdkxwS0wyY0toNWNYaUpqUkJ6ZkM0bFZHdDk4RU1qWm9Ga0VUQ1J3WQ?oc=5",
       "published": "2026-09-09T20:59:00Z",
       "tone": "bearish"
     },
     {
-      "title": "Stocks Selloff Rages on as AI and Bond Fears Mount",
+      "title": "Stock Market Today: Dow Dives, Oil Play Tests New Entry; Bitcoin Falls Ahead Of Clarity Act Vote (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/5b0f2bad-635f-3204-92df-4bd69e3cae3f/stocks-selloff-rages-on-as-ai.html?.tsrc=rss",
-      "published": "2026-09-15T09:34:51Z",
+      "url": "https://finance.yahoo.com/m/8af6acb0-32f5-3a96-97ee-647dd408ed1b/stock-market-today%3A-dow.html?.tsrc=rss",
+      "published": "2026-09-15T16:52:11Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 95
       }
     ],
-    "headline_count": 142,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
