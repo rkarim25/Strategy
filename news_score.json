@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-09-15T23:56:47Z",
+  "generated_at_utc": "2026-09-16T12:21:40Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Why one Wall Street firm thinks this year\u2019s stock-market rally is running out of road - marketwatch.com; Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 24/7 Wall St.. Bearish offsets: Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News; US Stock Market Today S&P 500 Futures Fall As Inflation Pressures Persist - simplywall.st.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: US Equity Futures Rise Pre-Bell as Traders Await Fed Rate Decision; Stocks Rise Pre-Bell Ahead of Fed Policy Decision. Bearish offsets: Canada invited to become EU\u2019s first \u2018associate member\u2019 as Trump trade war intensifies; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
   "articles": [
+    {
+      "title": "Canada invited to become EU\u2019s first \u2018associate member\u2019 as Trump trade war intensifies",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/16/canada-eu-associate-member-von-der-leyen.html",
+      "published": "2026-09-16T10:49:12Z",
+      "tone": "bearish"
+    },
     {
       "title": "Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News",
       "source": "AP News",
@@ -20,24 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "Why one Wall Street firm thinks this year\u2019s stock-market rally is running out of road - marketwatch.com",
-      "source": "marketwatch.com",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNdWx6TGZVYWI1RXlLeEpfalctRzZKWnAxSThPdW9DekRpdjhnSWg5b2NEeHUwdFRZNXVEMVdIWEZlVFVaTlZhWEN1V3F5Y2UtUzMwZlM1RXNhZS1yQVpaQndodEVUeXpTNi01Wmp3cVdZNmk1MHBORVRUcEItQlpPaUhRTmFSWDBrOXI1ZGo3UmZjZWN6cHQ3VE9EVGpqRHFsWUVYS1BXNWFKcW1H?oc=5",
-      "published": "2026-09-15T14:14:00Z",
+      "title": "US Equity Futures Rise Pre-Bell as Traders Await Fed Rate Decision",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-futures-rise-pre-115303878.html?.tsrc=rss",
+      "published": "2026-09-16T11:53:03Z",
       "tone": "bullish"
     },
     {
-      "title": "Alnylam's Sell-Off Looks Ugly -- but Wall Street Still Sees a Much Brighter Picture - The Motley Fool",
-      "source": "The Motley Fool",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQSW5NZ0x0Qlg2SnZadW5Wd1dNWGJlSHRTSjhyMHZqMkt4S1dxYmRrWTQ1VFVfRVlJLWJmZHNFeUZTcFFReGZjdnFjMmFPNXFLWmxlT3Z4UHpMTTVsNDByUXpVOF9sN3o0Q1hzT2d3WjRidW84UjFBX0ZURXBwMi1VMWRpUkZ3S0Y2eUYxbkxHUkVhM2NKaVVucA?oc=5",
-      "published": "2026-09-15T09:44:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQRmV1QnVlNTFpamxfRHh6QnJKUHUtQWoxWWYySXZsMjFQdVV5QUNDZW9OT3cxcThWQ3NDb05veFFiV09xZGdybjBoYkpybXpGNHN1WGJOV1RkNmZqYVJOV1VfMHk2Z0lLYk0xS1hwNGFKRXNBMFhnWVdyZFBTMUhESmRfNXJZQzV3UHh6RGQ2aDZ4S2ozcTltbzktZFU0YVpCTDBHUmJSbWd6cUlMNjNwNTRSVWFXM0xDQ0lpaHZhZnQ1dGtPVTZ0dHphZGtTUjlXdGtBUG53bnR1cVRvODFmODc2V01ud1VVS3ZQMFRVOFRhUUk?oc=5",
-      "published": "2026-09-11T15:49:00Z",
+      "title": "Stocks Rise Pre-Bell Ahead of Fed Policy Decision",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-rise-pre-bell-ahead-111416430.html?.tsrc=rss",
+      "published": "2026-09-16T11:14:16Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 87
       }
     ],
-    "headline_count": 142,
+    "headline_count": 135,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
