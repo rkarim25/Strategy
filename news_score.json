@@ -1,15 +1,29 @@
 {
-  "generated_at_utc": "2026-09-16T12:21:40Z",
+  "generated_at_utc": "2026-09-16T17:11:10Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: US Equity Futures Rise Pre-Bell as Traders Await Fed Rate Decision; Stocks Rise Pre-Bell Ahead of Fed Policy Decision. Bearish offsets: Canada invited to become EU\u2019s first \u2018associate member\u2019 as Trump trade war intensifies; Stocks fall on Wall Street as oil prices jump back above $100 a barrel after Iran war escalates - AP News.",
+  "score": 3,
+  "label": "Bearish",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: J.B. Hunt stock plunges 10% after company warns third-quarter earnings will fall; Canada invited to become EU\u2019s first \u2018associate member\u2019 as Trump trade war intensifies.",
   "articles": [
+    {
+      "title": "J.B. Hunt stock plunges 10% after company warns third-quarter earnings will fall",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/16/jb-hunt-stock-jbht-earnings.html",
+      "published": "2026-09-16T16:48:13Z",
+      "tone": "bearish"
+    },
     {
       "title": "Canada invited to become EU\u2019s first \u2018associate member\u2019 as Trump trade war intensifies",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/09/16/canada-eu-associate-member-von-der-leyen.html",
-      "published": "2026-09-16T10:49:12Z",
+      "published": "2026-09-16T14:43:09Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Hyperscaler debt signals warning sign, Apollo cautions",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/16/hyperscaler-debt-signals-warning-sign-apollo-cautions.html",
+      "published": "2026-09-16T16:51:18Z",
       "tone": "bearish"
     },
     {
@@ -20,25 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "US Stock Market Today S&P 500 Futures Fall As Inflation Pressures Persist - simplywall.st",
-      "source": "simplywall.st",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQNDNhWlBVZTF4NTVwcl9ZaFZlblFOaWM5TFBYMkU1S0ozRTYyWHMzU1RVeW9nR1dXNXczOEVyRVBrQ1ZkOTd5bjJKU3VacXlGRk1aaHRkZWhnb3VGbjZhWTVBNHVtb1R0WWxQTm9HbTMwd1huQ2pBUFdwTFd3V25mMGZuZGlrQnBnSzVmakgyakFsTC1VSUU2ZzZkRHF4YVVEcUFvSHU5cDh5VjkzTmo4cXNqVklwM0gxd1QxX0pOeDYwQWUzN3cwSEM2QVRBY29VS1k40gHYAUFVX3lxTE1YV2VZNkpJcV9GUWlxUjlwb3ZuREJFemFzaEFvU1lkTXJELWFDQmowanl5Qk9sWjRSQ1hOODh4ZXNXQmNteFp6Mk96WE54RlhPYzAzaWZPYUNfdXMwZ3laWWtGMEdOUFpneXhJQ3RZZG81NWFrWHV6TFA0WTB3c2lGdmw4VEN5dnFuT2dBME1FSzREdUFlTjRuUVpRWkNUaHk5WUx5RlV5djVUcUhZNnZ4Wk5jNGdnb0pTSEl6d0JtU2dUUnBHN1g1bWtKdzFqRHlMUWhfZXFaYg?oc=5",
-      "published": "2026-09-15T08:24:31Z",
+      "title": "Oil Producers Slide as Crude Retreats: EOG Resources Drops 6%, ConocoPhillips and Occidental Petroleum Fall 5%",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://247wallst.com/investing/2026/09/16/oil-producers-slide-as-crude-retreats-eog-resources-drops-6-conocophillips-and-occidental-petroleum-fall-5/?.tsrc=rss",
+      "published": "2026-09-16T16:03:06Z",
       "tone": "bearish"
-    },
-    {
-      "title": "US Equity Futures Rise Pre-Bell as Traders Await Fed Rate Decision",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-futures-rise-pre-115303878.html?.tsrc=rss",
-      "published": "2026-09-16T11:53:03Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stocks Rise Pre-Bell Ahead of Fed Policy Decision",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-rise-pre-bell-ahead-111416430.html?.tsrc=rss",
-      "published": "2026-09-16T11:14:16Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {

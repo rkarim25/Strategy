@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-16T12:21:37Z",
-  "data_asof": "2026-09-15",
-  "daily_rows": 7547,
-  "quote_price": 7585.72998046875,
-  "quote_timestamp": "2026-09-15",
+  "generated_at_utc": "2026-09-16T17:11:03Z",
+  "data_asof": "2026-09-16",
+  "daily_rows": 7548,
+  "quote_price": 7606.47998046875,
+  "quote_timestamp": "2026-09-16",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-09-15",
-      "close": 7585.72998046875
+      "date": "2026-09-16",
+      "close": 7606.5498046875
     },
-    "latestSma": 7668.93251953125,
+    "latestSma": 7664.672021484375,
     "highWater": 7798.990234375,
     "highWaterDate": "2026-08-13",
-    "latestDd": -0.0273445981463446,
+    "latestDd": -0.024675044320391026,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
@@ -51,31 +51,31 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-09-15",
-      "close": 7585.72998046875
+      "date": "2026-09-16",
+      "close": 7606.47998046875
     },
-    "latestSma": 7663.631030273437,
+    "latestSma": 7659.597021484375,
     "highWater": 7798.990234375,
     "highWaterDate": "2026-08-13",
-    "latestDd": -0.0273445981463446,
+    "latestDd": -0.02468399730233506,
     "regime": "tier2",
     "entryClose": 6575.31982421875,
     "entryDate": "2026-04-01",
     "recoveryTarget": 9205.44775390625,
     "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
+    "recoveryOk": true,
+    "targetLeverage": 2,
+    "activeEntryClose": 6575.31982421875,
+    "activeEntryDate": "2026-04-01",
+    "activeEntryLeverage": 2,
+    "activeEntryPnl": 0.15682281376670804,
+    "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-09-15",
+    "last_observed_asof": "2026-09-16",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-09-16T12:21:37Z",
+    "last_checked_at_utc": "2026-09-16T17:11:03Z",
     "last_email_sent_on": "2026-09-15",
     "last_transition": {
       "id": "2026-09-14:2->2026-09-15:0",
