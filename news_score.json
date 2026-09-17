@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-09-17T17:11:02Z",
+  "generated_at_utc": "2026-09-17T23:15:15Z",
   "window_days": 7,
   "score": 5,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Automaker Stocks Rally as Rotation Lifts Cyclicals: General Motors Climbs 4%, Stellantis Rises 4%, Ford Gains 3%, Tesla Adds 2%; 10-Year Yield Moves Explain Today's Stock Rally. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Steel Dynamics (STLD) Rises Higher Than Market: Key Facts; S&P 500 Opens Higher, Reclaims 7,600 With a 71-Point Gain - 247wallst.com. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com.",
   "articles": [
-    {
-      "title": "Automaker Stocks Rally as Rotation Lifts Cyclicals: General Motors Climbs 4%, Stellantis Rises 4%, Ford Gains 3%, Tesla Adds 2%",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/09/17/automaker-stocks-rally-as-rotation-lifts-cyclicals-general-motors-climbs-4-stellantis-rises-4-ford-gains-3-tesla-adds-2/?.tsrc=rss",
-      "published": "2026-09-17T17:01:18Z",
-      "tone": "bullish"
-    },
     {
       "title": "Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank",
       "source": "CryptoRank",
@@ -20,24 +13,31 @@
       "tone": "bearish"
     },
     {
-      "title": "10-Year Yield Moves Explain Today's Stock Rally",
+      "title": "Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOTzQyMWc4Wkh2eGZTU2NWeTBzR0FDNEx2dEl0cU5tVG13eGNjYnhvYkxnRWtKOXJDOUZLcG9GU3dENERhNlVCd2F4Y2Y3YkhWN04wR3Q5N2NqSlhreXkzZXY0WEJ2d3VXcXcwWjFvM24xSjlxcnQ5d1QtNzdBRTZMUEsxU1Bmdk1CSGpmODQ3ajZJX2lHc1FySFliR0ZEOThYZFB2dmZMeEQwOWtrT1NIajFpZVo?oc=5",
+      "published": "2026-09-16T00:36:45Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Steel Dynamics (STLD) Rises Higher Than Market: Key Facts",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/728c0d5a-a4b9-387e-8b9e-e16b3206a1c5/10-year-yield-moves-explain.html?.tsrc=rss",
-      "published": "2026-09-17T16:29:06Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/steel-dynamics-stld-rises-higher-221503515.html?.tsrc=rss",
+      "published": "2026-09-17T22:15:03Z",
       "tone": "bullish"
     },
     {
-      "title": "FuelCell Jumps 13% as House Shifts Data Center Power Costs to Operators; Plug Power Climbs 7%, Bloom Energy Rises 3%",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/09/17/fuelcell-jumps-13-as-house-shifts-data-center-power-costs-to-operators-plug-power-climbs-7-bloom-energy-rises-3/?.tsrc=rss",
-      "published": "2026-09-17T15:52:10Z",
+      "title": "S&P 500 Opens Higher, Reclaims 7,600 With a 71-Point Gain - 247wallst.com",
+      "source": "247wallst.com",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNakhscTE5eUNFM3Y1eE9xZXpmX3VFc2tINzhOak02VFV3RlpUSlBpSFkzUWVvRldmdlZTRzZibWVfeVRiSGFsWVNFLXNTazBSQTR0MUJldDE4QW83SFJDWE5DSnlTTE1OWVlObWVSLW1CbHh2eDdMakhscDUxbEluX0xMVkRqZWZFRndpclZvZUplS2lta1ZUMXU5YjVFa3pvcVFDOUtvbFhlM0Q1THVPZy1XM0ExZnZqZDJFUktUd0daMHlqVmhCd2piQnY?oc=5",
+      "published": "2026-09-17T14:09:34Z",
       "tone": "bullish"
     },
     {
-      "title": "Generac Surges 16% on $2.4B Amazon Data Center Generator Deal; Caterpillar Ticks Up, Cummins Sits Out the Rally",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/09/17/generac-holdings-surges-16-on-2-4b-amazon-data-center-generator-deal-caterpillar-ticks-up-cummins-sits-out-the-rally/?.tsrc=rss",
-      "published": "2026-09-17T15:43:21Z",
+      "title": "Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 247wallst.com",
+      "source": "247wallst.com",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQRmV1QnVlNTFpamxfRHh6QnJKUHUtQWoxWWYySXZsMjFQdVV5QUNDZW9OT3cxcThWQ3NDb05veFFiV09xZGdybjBoYkpybXpGNHN1WGJOV1RkNmZqYVJOV1VfMHk2Z0lLYk0xS1hwNGFKRXNBMFhnWVdyZFBTMUhESmRfNXJZQzV3UHh6RGQ2aDZ4S2ozcTltbzktZFU0YVpCTDBHUmJSbWd6cUlMNjNwNTRSVWFXM0xDQ0lpaHZhZnQ1dGtPVTZ0dHphZGtTUjlXdGtBUG53bnR1cVRvODFmODc2V01ud1VVS3ZQMFRVOFRhUUk?oc=5",
+      "published": "2026-09-11T15:49:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 86
+        "articles": 88
       }
     ],
-    "headline_count": 136,
+    "headline_count": 138,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
