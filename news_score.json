@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-17T23:15:15Z",
+  "generated_at_utc": "2026-09-17T23:53:25Z",
   "window_days": 7,
   "score": 5,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Steel Dynamics (STLD) Rises Higher Than Market: Key Facts; S&P 500 Opens Higher, Reclaims 7,600 With a 71-Point Gain - 247wallst.com. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Steel Dynamics (STLD) Rises Higher Than Market: Key Facts; S&P 500 Opens Higher, Reclaims 7,600 With a 71-Point Gain - 24/7 Wall St.. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com.",
   "articles": [
     {
       "title": "Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank",
@@ -27,15 +27,15 @@
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 Opens Higher, Reclaims 7,600 With a 71-Point Gain - 247wallst.com",
-      "source": "247wallst.com",
+      "title": "S&P 500 Opens Higher, Reclaims 7,600 With a 71-Point Gain - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNakhscTE5eUNFM3Y1eE9xZXpmX3VFc2tINzhOak02VFV3RlpUSlBpSFkzUWVvRldmdlZTRzZibWVfeVRiSGFsWVNFLXNTazBSQTR0MUJldDE4QW83SFJDWE5DSnlTTE1OWVlObWVSLW1CbHh2eDdMakhscDUxbEluX0xMVkRqZWZFRndpclZvZUplS2lta1ZUMXU5YjVFa3pvcVFDOUtvbFhlM0Q1THVPZy1XM0ExZnZqZDJFUktUd0daMHlqVmhCd2piQnY?oc=5",
       "published": "2026-09-17T14:09:34Z",
       "tone": "bullish"
     },
     {
-      "title": "Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 247wallst.com",
-      "source": "247wallst.com",
+      "title": "Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
       "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQRmV1QnVlNTFpamxfRHh6QnJKUHUtQWoxWWYySXZsMjFQdVV5QUNDZW9OT3cxcThWQ3NDb05veFFiV09xZGdybjBoYkpybXpGNHN1WGJOV1RkNmZqYVJOV1VfMHk2Z0lLYk0xS1hwNGFKRXNBMFhnWVdyZFBTMUhESmRfNXJZQzV3UHh6RGQ2aDZ4S2ozcTltbzktZFU0YVpCTDBHUmJSbWd6cUlMNjNwNTRSVWFXM0xDQ0lpaHZhZnQ1dGtPVTZ0dHphZGtTUjlXdGtBUG53bnR1cVRvODFmODc2V01ud1VVS3ZQMFRVOFRhUUk?oc=5",
       "published": "2026-09-11T15:49:00Z",
       "tone": "bullish"
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 90
       }
     ],
-    "headline_count": 138,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
