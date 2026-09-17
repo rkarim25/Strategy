@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-09-17T12:21:21Z",
+  "generated_at_utc": "2026-09-17T17:11:02Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Dow futures rise 400 points after Fed rate hike selloff.",
+  "score": 5,
+  "label": "Neutral",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Automaker Stocks Rally as Rotation Lifts Cyclicals: General Motors Climbs 4%, Stellantis Rises 4%, Ford Gains 3%, Tesla Adds 2%; 10-Year Yield Moves Explain Today's Stock Rally. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank.",
   "articles": [
+    {
+      "title": "Automaker Stocks Rally as Rotation Lifts Cyclicals: General Motors Climbs 4%, Stellantis Rises 4%, Ford Gains 3%, Tesla Adds 2%",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://247wallst.com/investing/2026/09/17/automaker-stocks-rally-as-rotation-lifts-cyclicals-general-motors-climbs-4-stellantis-rises-4-ford-gains-3-tesla-adds-2/?.tsrc=rss",
+      "published": "2026-09-17T17:01:18Z",
+      "tone": "bullish"
+    },
     {
       "title": "Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank",
       "source": "CryptoRank",
@@ -13,32 +20,25 @@
       "tone": "bearish"
     },
     {
-      "title": "Dow futures rise 400 points after Fed rate hike selloff",
+      "title": "10-Year Yield Moves Explain Today's Stock Rally",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://qz.com/dow-futures-rise-fed-rate-hike-market-recovery-091726?.tsrc=rss",
-      "published": "2026-09-17T11:25:57Z",
-      "tone": "bearish"
+      "url": "https://finance.yahoo.com/m/728c0d5a-a4b9-387e-8b9e-e16b3206a1c5/10-year-yield-moves-explain.html?.tsrc=rss",
+      "published": "2026-09-17T16:29:06Z",
+      "tone": "bullish"
     },
     {
-      "title": "Wall Street set for a green day as Fed rate hike eases inflation fears",
+      "title": "FuelCell Jumps 13% as House Shifts Data Center Power Costs to Operators; Plug Power Climbs 7%, Bloom Energy Rises 3%",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.proactiveinvestors.com/companies/news/1098694/wall-street-set-for-a-green-day-as-fed-rate-hike-eases-inflation-fears-1098694.html?.tsrc=rss",
-      "published": "2026-09-17T11:34:00Z",
-      "tone": "bearish"
+      "url": "https://247wallst.com/investing/2026/09/17/fuelcell-jumps-13-as-house-shifts-data-center-power-costs-to-operators-plug-power-climbs-7-bloom-energy-rises-3/?.tsrc=rss",
+      "published": "2026-09-17T15:52:10Z",
+      "tone": "bullish"
     },
     {
-      "title": "Analysis: How Trump could reignite the Fed independence fight after Warsh's rate hike",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/16/fed-interest-rates-kevin-warsh-trump.html",
-      "published": "2026-09-17T11:42:52Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOTzQyMWc4Wkh2eGZTU2NWeTBzR0FDNEx2dEl0cU5tVG13eGNjYnhvYkxnRWtKOXJDOUZLcG9GU3dENERhNlVCd2F4Y2Y3YkhWN04wR3Q5N2NqSlhreXkzZXY0WEJ2d3VXcXcwWjFvM24xSjlxcnQ5d1QtNzdBRTZMUEsxU1Bmdk1CSGpmODQ3ajZJX2lHc1FySFliR0ZEOThYZFB2dmZMeEQwOWtrT1NIajFpZVo?oc=5",
-      "published": "2026-09-16T00:36:45Z",
-      "tone": "bearish"
+      "title": "Generac Surges 16% on $2.4B Amazon Data Center Generator Deal; Caterpillar Ticks Up, Cummins Sits Out the Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://247wallst.com/investing/2026/09/17/generac-holdings-surges-16-on-2-4b-amazon-data-center-generator-deal-caterpillar-ticks-up-cummins-sits-out-the-rally/?.tsrc=rss",
+      "published": "2026-09-17T15:43:21Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 86
       }
     ],
-    "headline_count": 138,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
