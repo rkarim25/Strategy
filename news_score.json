@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-17T00:03:06Z",
+  "generated_at_utc": "2026-09-17T12:21:21Z",
   "window_days": 7,
-  "score": 2,
+  "score": 3,
   "label": "Bearish",
-  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Dow drops 600 points as Fed rate hike and Warsh's inflation talk unnerve investors: Live updates.",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Dow futures rise 400 points after Fed rate hike selloff.",
   "articles": [
     {
       "title": "Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank",
@@ -13,31 +13,31 @@
       "tone": "bearish"
     },
     {
-      "title": "Dow drops 600 points as Fed rate hike and Warsh's inflation talk unnerve investors: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/15/stock-market-today-live-updates.html",
-      "published": "2026-09-16T20:34:12Z",
+      "title": "Dow futures rise 400 points after Fed rate hike selloff",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://qz.com/dow-futures-rise-fed-rate-hike-market-recovery-091726?.tsrc=rss",
+      "published": "2026-09-17T11:25:57Z",
       "tone": "bearish"
     },
     {
-      "title": "Hyperscaler debt signals warning sign, Apollo cautions",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/16/hyperscaler-debt-signals-warning-sign-apollo-cautions.html",
-      "published": "2026-09-16T19:29:18Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Federal Reserve Rate Hike Triggers S&P 500 Correction Warning - \uc870\uc120\uc77c\ubcf4",
-      "source": "\uc870\uc120\uc77c\ubcf4",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOc2dxSGFIcU91eFNyNmtBNzUzOFIyWW0tLUhXOU1vY3NBT0sxeDRTZGpCZk1kSVMtVkR1MmNXM1lXMFY0Uy1wU0xicldQa0J3bUE3M1NZdFN6bmhFR01aQ19TQjdpVkxDa1lTYkZlaHZNekFfR3dxejBJYWx5QUN2R1U1MElpS2w0Vmt0RGNB?oc=5",
-      "published": "2026-09-16T23:59:31Z",
+      "title": "Wall Street set for a green day as Fed rate hike eases inflation fears",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.proactiveinvestors.com/companies/news/1098694/wall-street-set-for-a-green-day-as-fed-rate-hike-eases-inflation-fears-1098694.html?.tsrc=rss",
+      "published": "2026-09-17T11:34:00Z",
       "tone": "bearish"
     },
     {
       "title": "Analysis: How Trump could reignite the Fed independence fight after Warsh's rate hike",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/09/16/fed-interest-rates-kevin-warsh-trump.html",
-      "published": "2026-09-16T21:50:48Z",
+      "published": "2026-09-17T11:42:52Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOTzQyMWc4Wkh2eGZTU2NWeTBzR0FDNEx2dEl0cU5tVG13eGNjYnhvYkxnRWtKOXJDOUZLcG9GU3dENERhNlVCd2F4Y2Y3YkhWN04wR3Q5N2NqSlhreXkzZXY0WEJ2d3VXcXcwWjFvM24xSjlxcnQ5d1QtNzdBRTZMUEsxU1Bmdk1CSGpmODQ3ajZJX2lHc1FySFliR0ZEOThYZFB2dmZMeEQwOWtrT1NIajFpZVo?oc=5",
+      "published": "2026-09-16T00:36:45Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,7 +69,7 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 88
       }
     ],
     "headline_count": 138,
