@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-18T22:54:33Z",
+  "generated_at_utc": "2026-09-18T23:51:17Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: HudBay Minerals (HBM) Rises Higher Than Market: Key Facts; Archrock Inc. (AROC) Rises Higher Than Market: Key Facts. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq Composite edge higher; oil slips; bitcoin rallies - AFR; Wall Street Slips as Energy Surge Fails to Offset Consumer Discretionary Weakness - Rate Cut Expectations - CarePlus VietNam. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Dow Drops To Record Worst Week In Six Months Amid Elevated Yields, Oil \u2014 NVDA, TSLA, SPCX, ONON In Focus.",
   "articles": [
     {
       "title": "Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank",
@@ -13,32 +13,32 @@
       "tone": "bearish"
     },
     {
+      "title": "Dow Drops To Record Worst Week In Six Months Amid Elevated Yields, Oil \u2014 NVDA, TSLA, SPCX, ONON In Focus",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://stocktwits.com/news-articles/markets/equity/dow-drops-to-record-worst-week-in-six-months-amid-elevated-yields-oil-nvda-tsla-spcx-onon-in-focus/cZtHOYsRBEK?.tsrc=rss",
+      "published": "2026-09-18T23:35:58Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "S&P 500, Nasdaq Composite edge higher; oil slips; bitcoin rallies - AFR",
+      "source": "AFR",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQNmgyRzhRR0dUTlBEZWZjaFZucjM2aGs5YlZZWWYxdXQyVkt5dDVKbEN0cFhHbFR1RGhWcG1zXzlHaTMzMkVNWl9pVV90am5UbjlXU01hYlRMczYzckQxYjJiay1CU3V0bDFqT19uMjdsdzZoRUsyY2htYTdldmFjMHlNbEY4NnR0eW9WdXYzVEdkdThPR0NNQ1haWVpVeE9wd19DUjBSeHNsMmtHaURoNUhJdTNwTVduX3E5Ql8zQUxhUQ?oc=5",
+      "published": "2026-09-18T18:55:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street Slips as Energy Surge Fails to Offset Consumer Discretionary Weakness - Rate Cut Expectations - CarePlus VietNam",
+      "source": "CarePlus VietNam",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOUzd3ZF9UbldFWktaRE92ZTBaS3cxVHJJY1pWSEV1NmhfTWNRSmUxTkV5S2NaZmd3bHN6bEg4Mzc3LTJnRkNVX25ibUlSb2F0LUJiekFzR3NkYTF1Uk1ONlRqcThUZno3V1RqQU16ZGJOUkxTalZoSVowYWhTMTlQTDY0ZlhZLWlEYXVOYnJ2bGNXcWMwZWZmdXU5UGJUejRxUVlGdk9TRTJnVTlxemYyeEh0OEExLWNMQ2pGRHFGbjhFdw?oc=5",
+      "published": "2026-09-16T13:06:52Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com",
       "source": "Investing.com",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOTzQyMWc4Wkh2eGZTU2NWeTBzR0FDNEx2dEl0cU5tVG13eGNjYnhvYkxnRWtKOXJDOUZLcG9GU3dENERhNlVCd2F4Y2Y3YkhWN04wR3Q5N2NqSlhreXkzZXY0WEJ2d3VXcXcwWjFvM24xSjlxcnQ5d1QtNzdBRTZMUEsxU1Bmdk1CSGpmODQ3ajZJX2lHc1FySFliR0ZEOThYZFB2dmZMeEQwOWtrT1NIajFpZVo?oc=5",
       "published": "2026-09-16T00:36:45Z",
       "tone": "bearish"
-    },
-    {
-      "title": "HudBay Minerals (HBM) Rises Higher Than Market: Key Facts",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/hudbay-minerals-hbm-rises-higher-221502014.html?.tsrc=rss",
-      "published": "2026-09-18T22:15:02Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Archrock Inc. (AROC) Rises Higher Than Market: Key Facts",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/archrock-inc-aroc-rises-higher-215005674.html?.tsrc=rss",
-      "published": "2026-09-18T21:50:05Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today: S&P 500 Rises, Nasdaq Gains 0.5% as Oil Fails - CryptoRank",
-      "source": "CryptoRank",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQWVg2OWxtSnU4bmZyUlJzR2FnWmFORi1vc2tGT2VGUWtUWk9KNEpQTkF5cEZDMHRJUFZMb1lsZDJKaUZLdjRtak44b2Z6RjhBZ1FHUUIzcjRaYnk2ZGt4SnZETGNDem4tOXhnZHp0M3c0Wll0UkU3TVRMVno4a2JrRlRQV0dTSWtXTERwWFFSQkFIeFVIR2N0WXo0SlpmXzQ?oc=5",
-      "published": "2026-09-18T14:32:40Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
