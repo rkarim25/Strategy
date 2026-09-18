@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-17T23:53:25Z",
+  "generated_at_utc": "2026-09-18T12:00:57Z",
   "window_days": 7,
-  "score": 5,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Steel Dynamics (STLD) Rises Higher Than Market: Key Facts; S&P 500 Opens Higher, Reclaims 7,600 With a 71-Point Gain - 24/7 Wall St.. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock futures steady Friday as Nasdaq posts weekly gain; Easing Oil Prices, Tech Rally Lift Wall Street Pre-Bell; Asia Up, Europe Off. Bearish offsets: Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank; Pok\u00e9mon card curbs send shares of Japanese online marketplace Mercari on a bumpy ride.",
   "articles": [
     {
       "title": "Stock Market Today: Dow Drops 1.2%, S&P 500 Falls After Fed Rate Hike - CryptoRank",
@@ -13,31 +13,31 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOTzQyMWc4Wkh2eGZTU2NWeTBzR0FDNEx2dEl0cU5tVG13eGNjYnhvYkxnRWtKOXJDOUZLcG9GU3dENERhNlVCd2F4Y2Y3YkhWN04wR3Q5N2NqSlhreXkzZXY0WEJ2d3VXcXcwWjFvM24xSjlxcnQ5d1QtNzdBRTZMUEsxU1Bmdk1CSGpmODQ3ajZJX2lHc1FySFliR0ZEOThYZFB2dmZMeEQwOWtrT1NIajFpZVo?oc=5",
-      "published": "2026-09-16T00:36:45Z",
+      "title": "Stock futures steady Friday as Nasdaq posts weekly gain",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://qz.com/stock-futures-nasdaq-weekly-gain-ai-fed-rate-hike-091826?.tsrc=rss",
+      "published": "2026-09-18T11:46:49Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Easing Oil Prices, Tech Rally Lift Wall Street Pre-Bell; Asia Up, Europe Off",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/articles/easing-oil-prices-tech-rally-111414374.html?.tsrc=rss",
+      "published": "2026-09-18T11:14:14Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Pok\u00e9mon card curbs send shares of Japanese online marketplace Mercari on a bumpy ride",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/18/pokmon-cards-mercari-stock.html",
+      "published": "2026-09-18T04:09:56Z",
       "tone": "bearish"
     },
     {
-      "title": "Steel Dynamics (STLD) Rises Higher Than Market: Key Facts",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/steel-dynamics-stld-rises-higher-221503515.html?.tsrc=rss",
-      "published": "2026-09-17T22:15:03Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 Opens Higher, Reclaims 7,600 With a 71-Point Gain - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNakhscTE5eUNFM3Y1eE9xZXpmX3VFc2tINzhOak02VFV3RlpUSlBpSFkzUWVvRldmdlZTRzZibWVfeVRiSGFsWVNFLXNTazBSQTR0MUJldDE4QW83SFJDWE5DSnlTTE1OWVlObWVSLW1CbHh2eDdMakhscDUxbEluX0xMVkRqZWZFRndpclZvZUplS2lta1ZUMXU5YjVFa3pvcVFDOUtvbFhlM0Q1THVPZy1XM0ExZnZqZDJFUktUd0daMHlqVmhCd2piQnY?oc=5",
-      "published": "2026-09-17T14:09:34Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Bloom Energy Climbs 7% as Fuel Cell Bid Spreads Beyond Its S&P 500 Add, FuelCell Energy Rises 4%, Plug Power Inches Higher - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQRmV1QnVlNTFpamxfRHh6QnJKUHUtQWoxWWYySXZsMjFQdVV5QUNDZW9OT3cxcThWQ3NDb05veFFiV09xZGdybjBoYkpybXpGNHN1WGJOV1RkNmZqYVJOV1VfMHk2Z0lLYk0xS1hwNGFKRXNBMFhnWVdyZFBTMUhESmRfNXJZQzV3UHh6RGQ2aDZ4S2ozcTltbzktZFU0YVpCTDBHUmJSbWd6cUlMNjNwNTRSVWFXM0xDQ0lpaHZhZnQ1dGtPVTZ0dHphZGtTUjlXdGtBUG53bnR1cVRvODFmODc2V01ud1VVS3ZQMFRVOFRhUUk?oc=5",
-      "published": "2026-09-11T15:49:00Z",
+      "title": "Asian shares mostly rise, cheered by a US rally and easing oil prices - Bozeman Daily Chronicle",
+      "source": "Bozeman Daily Chronicle",
+      "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNbHFGSlpWSGE5NWt0X2M4Mk8teHIwZEl5THR6WTRaTzFDNzRab1NSWGU1ZW1VYml1NkRKNk1ZcUlpLUpkUmVaaXhMeUJwQ09BUXc1YXJjVHA4M201ZW1Sd3pRWnlNaGoxLWkzcnhNSUpsNFNTMG1mR0Z3VlRfa3pYMEdJVjBjaHZWLXRJMTNYTnNZdkFaOGpTLWJab0NPcVlzUmwtRDJvdTJfb1JBS0dYUDJvbzFaSGU2ZUJ3RDg1bXk0akhYay0ydmRCQWlNcFNrS3FjMjlvREV1OUwwU1pFanphN05aQm5KY3BwcGNSUGcwRzhYTW1oZjB5VXBvcEU?oc=5",
+      "published": "2026-09-18T03:25:50Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -72,7 +72,7 @@
         "articles": 90
       }
     ],
-    "headline_count": 140,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
