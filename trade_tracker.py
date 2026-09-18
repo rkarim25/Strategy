@@ -199,3 +199,121 @@ def update_all_trades():
 
 if __name__ == "__main__":
     update_all_trades()
+
+
+def update_ust_trades(yields, spreads):
+    tracker = load_tracker()
+    trades = tracker.get("trades", [])
+
+    # Ensure required UST trade ideas exist in the tracker
+    trade_map = {t["id"]: t for t in trades}
+
+    # 1. 2s10s Steepener / 2s30s Steepener
+    if "UST-20260914-01" in trade_map:
+        t = trade_map["UST-20260914-01"]
+        if "2s10s" in spreads:
+            curr = spreads["2s10s"]["bps"]
+            t["current_level"] = curr
+            pnl_bps = round(curr - t["entry_level"], 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * t.get("dv01_usd", 10000.0), 2)
+            t["stop_loss_level"] = 25.0
+            t["duration_contribution"] = "DV01 Neutral (+0.05y steepener bias)"
+
+    # 2. Short 30Y Bond Duration (WN Futures) - Dual Confluence (Bigger Position)
+    if "UST-20260914-02" in trade_map:
+        t = trade_map["UST-20260914-02"]
+        # Update to Short 30Y Duration
+        t["title"] = "Short 30Y Bond Duration (WN Futures) — Dual Confluence"
+        t["instrument"] = "US 30-Year Treasury Bond (WN Futures)"
+        t["direction"] = "Short Duration"
+        t["entry_level"] = 5.296
+        t["entry_unit"] = "% yield"
+        if "30y" in yields:
+            curr = yields["30y"]["yield"]
+            t["current_level"] = curr
+            pnl_bps = round((curr - t["entry_level"]) * 100, 1)  # Short gains when yield rises
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * 1650.0, 2)
+        t["target_level"] = 5.550
+        t["stop_loss_level"] = 5.180
+        t["duration_contribution"] = "-0.20 Years"
+        t["confluence"] = "Dual Alignment (Technical Upper Band + Fundamental Floor) — Bigger Position"
+        t["rationale"] = "$2.0T annual deficit supply flood + technical breakout above 5.30%. Yield testing into 5.35%-5.60% fundamental band."
+
+    # 3. Short 2Y Note Duration (TU Futures) - Strategic Fundamental Mispricing
+    if "UST-20260916-01" not in trade_map:
+        trades.append({
+            "id": "UST-20260916-01",
+            "desk": "US Treasuries",
+            "asset_class": "Rates",
+            "date_opened": "2026-09-16",
+            "title": "Short 2Y Note Duration (TU Futures) — Policy Mispricing",
+            "type": "Front-End Duration",
+            "direction": "Short Duration",
+            "instrument": "US 2-Year Treasury Note (TU Futures)",
+            "sizing": "-0.15 Years Duration Contribution",
+            "dv01_usd": 1500.0,
+            "entry_level": 4.380,
+            "entry_unit": "% yield",
+            "current_level": yields.get("2y", {}).get("yield", 4.404),
+            "target_level": 4.750,
+            "stop_loss_level": 4.250,
+            "status": "OPEN",
+            "pnl_bps": round((yields.get("2y", {}).get("yield", 4.404) - 4.380) * 100, 1),
+            "pnl_usd": round(round((yields.get("2y", {}).get("yield", 4.404) - 4.380) * 100, 1) * 1500.0, 2),
+            "duration_contribution": "-0.15 Years",
+            "confluence": "Fundamental Mispricing (Strategic Repricing)",
+            "rationale": "FOMC rate hike to 3.75%-4.00% invalidates aggressive rate cut bets. Terminal rate required to quell 3.4% CPI is 4.75%-5.00%."
+        })
+    else:
+        t = trade_map["UST-20260916-01"]
+        if "2y" in yields:
+            curr = yields["2y"]["yield"]
+            t["current_level"] = curr
+            pnl_bps = round((curr - t["entry_level"]) * 100, 1)
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * 1500.0, 2)
+            t["stop_loss_level"] = 4.250
+            t["duration_contribution"] = "-0.15 Years"
+
+    # 4. Tactical Long 5Y Belly Note (FV Futures)
+    if "UST-20260918-01" not in trade_map:
+        curr_5y = yields.get("5y", {}).get("yield", 4.665)
+        trades.append({
+            "id": "UST-20260918-01",
+            "desk": "US Treasuries",
+            "asset_class": "Rates",
+            "date_opened": "2026-09-18",
+            "title": "Tactical Long 5Y Belly Note (FV Futures) — Carry & Roll-Down",
+            "type": "Intermediate Duration",
+            "direction": "Long Duration",
+            "instrument": "US 5-Year Treasury Note (FV Futures)",
+            "sizing": "+0.10 Years Duration Contribution",
+            "dv01_usd": 1000.0,
+            "entry_level": curr_5y,
+            "entry_unit": "% yield",
+            "current_level": curr_5y,
+            "target_level": 4.400,
+            "stop_loss_level": 4.880,
+            "status": "OPEN",
+            "pnl_bps": 0.0,
+            "pnl_usd": 0.0,
+            "duration_contribution": "+0.10 Years",
+            "confluence": "Tactical Technical Support & Belly Convexity Cushion",
+            "rationale": "Captures 90% of long-end yield with low volatility; rolls down steep 2s5s front slope; hedges growth slowdown."
+        })
+    else:
+        t = trade_map["UST-20260918-01"]
+        if "5y" in yields:
+            curr = yields["5y"]["yield"]
+            t["current_level"] = curr
+            pnl_bps = round((t["entry_level"] - curr) * 100, 1)  # Long gains when yield drops
+            t["pnl_bps"] = pnl_bps
+            t["pnl_usd"] = round(pnl_bps * 1000.0, 2)
+            t["stop_loss_level"] = 4.880
+            t["duration_contribution"] = "+0.10 Years"
+
+    tracker["trades"] = trades
+    save_tracker(tracker)
+    return tracker

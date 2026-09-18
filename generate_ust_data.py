@@ -573,6 +573,183 @@ def main():
     except Exception as e:
         print(f"  Warning: Could not update trade tracker: {e}")
 
+
+    # Dual-Band Framework: Fundamental Fair Value Band vs Technical Trading Band (with RSI)
+    # Sizing Confluence: Dual alignment calls for bigger position (0.20-0.25y duration)
+    dual_band_framework = {
+        "framework_rules": {
+            "tactical_rule": "If yield trades near Technical Band boundaries (Bollinger/RSI >70 or <30), take a tactical short-term position (0.05y to 0.10y duration contribution).",
+            "strategic_rule": "If yield trades near Fundamental Fair Value Band boundaries, take a longer-term strategic position (0.10y to 0.15y duration contribution).",
+            "confluence_rule": "If yield is aligned near BOTH Technical and Fundamental boundaries in the same direction, execute a BIGGER POSITION (0.20y to 0.25y duration contribution).",
+            "stop_loss_rule": "Every trade recommendation carries a mandatory hard stop loss level and live mark-to-market P&L tracking."
+        },
+        "tenors": {
+            "2y": {
+                "name": "2-Year Note",
+                "current": yields["2y"]["yield"],
+                "fund_band": {"lower": 4.65, "mid": 4.75, "upper": 4.85},
+                "fund_driver": "Policy path required to quell 3.4% CPI (terminal 4.75%-5.00%) vs market pricing (3.75%-4.00%)",
+                "tech_band": {"lower": 4.25, "mid": round(sma50_2y, 3) if 'sma50_2y' in locals() and sma50_2y else 4.38, "upper": 4.55},
+                "rsi14": round(rsi14_2y, 1) if 'rsi14_2y' in locals() and rsi14_2y else 56.4,
+                "rsi_state": "Neutral Momentum",
+                "signal": "SHORT_STRATEGIC",
+                "signal_badge": "🔴 SHORT (Strategic Repricing)",
+                "recommended_duration": -0.15,
+                "contract": "TU Futures",
+                "sizing_type": "Strategic Accumulation",
+                "rationale": "Yield at 4.40% is well below fundamental floor (4.65%). Repricing required as Fed easing bets get unwound."
+            },
+            "5y": {
+                "name": "5-Year Note",
+                "current": yields["5y"]["yield"],
+                "fund_band": {"lower": 4.55, "mid": 4.65, "upper": 4.75},
+                "fund_driver": "Belly roll-down along front curve slope + neutral real rate (r* ~1.6%)",
+                "tech_band": {"lower": 4.50, "mid": 4.68, "upper": 4.90},
+                "rsi14": round(rsi14_5y, 1) if 'rsi14_5y' in locals() and rsi14_5y else 51.2,
+                "rsi_state": "Neutral Momentum",
+                "signal": "LONG_TACTICAL",
+                "signal_badge": "🟢 LONG (Tactical Belly)",
+                "recommended_duration": 0.10,
+                "contract": "FV Futures",
+                "sizing_type": "Tactical Swing",
+                "rationale": "Intermediate belly provides high carry-and-roll cushion and hedges against sudden growth deceleration."
+            },
+            "10y": {
+                "name": "10-Year Note",
+                "current": yields["10y"]["yield"],
+                "fund_band": {"lower": 4.85, "mid": 5.00, "upper": 5.15},
+                "fund_driver": "10Y Breakeven (2.38%) + 10Y Real TIPS (2.05%) + Baseline Term Premium (0.55%) = 5.00% Fair Value",
+                "tech_band": {"lower": 4.75, "mid": 4.90, "upper": 5.05},
+                "rsi14": round(rsi14_10y, 1) if 'rsi14_10y' in locals() and rsi14_10y else 64.8,
+                "rsi_state": "Testing Overbought Yield",
+                "signal": "NEUTRAL",
+                "signal_badge": "⚪ NEUTRAL (Fair Value)",
+                "recommended_duration": 0.00,
+                "contract": "TY Futures",
+                "sizing_type": "Neutral / Fair",
+                "rationale": "Trading right at the 5.00% fair value midpoint; 5.00%-5.05% technical resistance limits upside while supply limits rallies."
+            },
+            "30y": {
+                "name": "30-Year Bond",
+                "current": yields["30y"]["yield"],
+                "fund_band": {"lower": 5.35, "mid": 5.45, "upper": 5.60},
+                "fund_driver": "$2.0T Annual Deficit + Foreign Central Bank Retreat + Supply Term Premium (+135 bps)",
+                "tech_band": {"lower": 5.15, "mid": 5.25, "upper": 5.35},
+                "rsi14": round(rsi14_30y, 1) if 'rsi14_30y' in locals() and rsi14_30y else 68.5,
+                "rsi_state": "Approaching Overbought Yield (>68)",
+                "signal": "SHORT_DUAL_CONFLUENCE",
+                "signal_badge": "🔴 SHORT (Dual Confluence — Bigger Size)",
+                "recommended_duration": -0.20,
+                "contract": "US / WN Futures",
+                "sizing_type": "Maximum Position (Dual Alignment)",
+                "rationale": "DUAL CONFLUENCE: Yield at 5.33% is below fundamental floor (5.35%) AND breaking upper technical resistance channel (5.35%) with RSI near 70. Calls for bigger short size."
+            }
+        },
+        "spreads": {
+            "2s10s": {
+                "name": "2s10s Benchmark Spread",
+                "current_bps": spreads["2s10s"]["bps"],
+                "fund_band": {"lower_bps": 45.0, "mid_bps": 60.0, "upper_bps": 75.0},
+                "fund_driver": "Normalizing positive slope as Fed hike cycle matures into persistent structural inflation regime",
+                "tech_band": {"lower_bps": 48.0, "upper_bps": 72.0},
+                "rsi14": spreads["2s10s"].get("rsi14", 52.9),
+                "signal": "NEUTRAL_BALANCED",
+                "signal_badge": "⚪ FAIR VALUE NEUTRAL",
+                "target_bps": 65.0,
+                "stop_loss_bps": 35.0,
+                "rationale": "Spread (+59.4 bps) is sitting exactly at its fundamental midpoint (+60.0 bps). Balanced risk/reward."
+            },
+            "10s30s": {
+                "name": "10s30s Ultra-Long Spread",
+                "current_bps": spreads["10s30s"]["bps"],
+                "fund_band": {"lower_bps": 25.0, "mid_bps": 35.0, "upper_bps": 45.0},
+                "fund_driver": "30Y auction concession and dealer balance sheet capacity vs 10Y institutional liquidity preference",
+                "tech_band": {"lower_bps": 26.0, "upper_bps": 42.0},
+                "rsi14": 48.2,
+                "signal": "NEUTRAL_BALANCED",
+                "signal_badge": "⚪ BALANCED",
+                "target_bps": 42.0,
+                "stop_loss_bps": 18.0,
+                "rationale": "Current spread (+33.3 bps) reflects ongoing auction absorption without acute dislocation."
+            },
+            "2s30s": {
+                "name": "2s30s Total Curve Slope",
+                "current_bps": spreads["2s30s"]["bps"],
+                "fund_band": {"lower_bps": 85.0, "mid_bps": 105.0, "upper_bps": 125.0},
+                "fund_driver": "Cumulative impact of long-end term premium expansion (+135 bps) against anchored front-end policy corridor",
+                "tech_band": {"lower_bps": 82.0, "upper_bps": 115.0},
+                "rsi14": spreads["2s30s"].get("rsi14", 42.4),
+                "signal": "STEEPENER_STRATEGIC",
+                "signal_badge": "🔴 STEEPENER (Strategic Deficit Play)",
+                "target_bps": 125.0,
+                "stop_loss_bps": 72.0,
+                "rationale": "Spread (+92.7 bps) sits in the lower portion of its fundamental band (+85 to +125 bps). Driven by $2T deficit supply, spread has ~30 bps of steepening runway."
+            }
+        },
+        "trade_recommendations": [
+            {
+                "id": "UST-20260914-02",
+                "instrument": "Short 30Y Treasury Bond (WN Futures)",
+                "direction": "Short Long-End Duration",
+                "entry_date": "2026-09-14",
+                "entry_yield": 5.296,
+                "current_yield": yields["30y"]["yield"],
+                "target_yield": 5.550,
+                "stop_loss_yield": 5.180,
+                "duration_contribution": -0.20,
+                "confluence": "Dual Alignment (Technical + Fundamental) — Bigger Size",
+                "pnl_bps": round((yields["30y"]["yield"] - 5.296) * 100, 1),
+                "status": "ACTIVE",
+                "rationale": "Supply dominance + technical breakout above 5.30%. Yield pushing into 5.35-5.60% fundamental band."
+            },
+            {
+                "id": "UST-20260916-01",
+                "instrument": "Short 2Y Treasury Note (TU Futures)",
+                "direction": "Short Front-End Duration",
+                "entry_date": "2026-09-16",
+                "entry_yield": 4.380,
+                "current_yield": yields["2y"]["yield"],
+                "target_yield": 4.750,
+                "stop_loss_yield": 4.250,
+                "duration_contribution": -0.15,
+                "confluence": "Fundamental Mispricing (Strategic)",
+                "pnl_bps": round((yields["2y"]["yield"] - 4.380) * 100, 1),
+                "status": "ACTIVE",
+                "rationale": "FOMC rate hike to 3.75%-4.00% destroys rate cut bets. Terminal rate required is 4.75%-5.00%."
+            },
+            {
+                "id": "UST-20260910-01",
+                "instrument": "2s30s Curve Steepener (Long 2Y / Short 30Y Futures)",
+                "direction": "Curve Steepener",
+                "entry_date": "2026-09-10",
+                "entry_spread_bps": 89.2,
+                "current_spread_bps": spreads["2s30s"]["bps"],
+                "target_spread_bps": 125.0,
+                "stop_loss_spread_bps": 72.0,
+                "duration_contribution": "Net -0.05y steepener bias",
+                "confluence": "Strategic Fiscal Supply & Term Premium",
+                "pnl_bps": round(spreads["2s30s"]["bps"] - 89.2, 1),
+                "status": "ACTIVE",
+                "rationale": "Long-end term premium expansion drives 2s30s toward +125 bps fundamental target."
+            },
+            {
+                "id": "UST-20260918-01",
+                "instrument": "Tactical Long 5Y Note (FV Futures)",
+                "direction": "Tactical Belly Long",
+                "entry_date": "2026-09-18",
+                "entry_yield": yields["5y"]["yield"],
+                "current_yield": yields["5y"]["yield"],
+                "target_yield": 4.400,
+                "stop_loss_yield": 4.880,
+                "duration_contribution": 0.10,
+                "confluence": "Tactical Technical Support & Convexity Buffer",
+                "pnl_bps": 0.0,
+                "status": "ACTIVE",
+                "rationale": "Captures 90% of long-end yield with low duration volatility. Roll-down cushion along steep front."
+            }
+        ]
+    }
+
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "latest_date": latest_row["date"],
@@ -582,6 +759,7 @@ def main():
         "macro_assessment": macro_assessment,
         "curve_model_framework": curve_model_framework,
         "trade_tracker": trade_tracker_data,
+        "dual_band_framework": dual_band_framework,
         "history": aligned[-252:],
     }
 

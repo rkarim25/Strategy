@@ -1032,6 +1032,67 @@
   </section>
 
   <!-- Section: Interactive Yield Curve Chart -->
+  
+  <!-- Section: Dual-Band Strategy & Sizing Confluence Framework -->
+  <section class="card wide" id="dualBandSection" style="margin-top: 20px;">
+    <div class="chart-toolbar">
+      <div>
+        <div class="as-of-badge" style="margin-bottom: 6px; background: rgba(0, 113, 227, 0.12); color: var(--accent);">Systematic Confluence Engine</div>
+        <h2 style="margin: 0 0 4px; font-size: 22px; font-weight: 700;">Dual-Band Strategy & Duration Sizing Matrix</h2>
+        <p style="margin: 0; font-size: 13.5px; color: var(--muted);">
+          Combines Fundamental Fair Value Bands (Macro r*, inflation breakevens & fiscal deficit supply) with Technical Trading Bands (Bollinger bands & 14-day RSI momentum).
+        </p>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <span class="status-pill-normal" style="font-weight: 700; background: rgba(215, 0, 21, 0.12); color: var(--bad); border: 1px solid rgba(215, 0, 21, 0.3);">
+          Net Stance: -0.25y Underweight
+        </span>
+      </div>
+    </div>
+
+    <!-- Sizing Rules Callout Banner -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 14px;">
+      <div style="background: rgba(0, 113, 227, 0.06); border: 1px solid rgba(0, 113, 227, 0.2); border-radius: 14px; padding: 12px 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase;">1. Technical Band (Tactical)</div>
+        <div style="font-size: 13px; color: var(--text); margin-top: 4px;">Near technical bands (Bollinger/RSI >70 or <30) triggers <strong>tactical swings</strong>. Sized at <strong>0.05y to 0.10y duration</strong>.</div>
+      </div>
+      <div style="background: rgba(175, 82, 222, 0.06); border: 1px solid rgba(175, 82, 222, 0.2); border-radius: 14px; padding: 12px 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--purple); text-transform: uppercase;">2. Fundamental Band (Strategic)</div>
+        <div style="font-size: 13px; color: var(--text); margin-top: 4px;">Near fundamental boundaries (r* & deficit mispricing) triggers <strong>longer-term positioning</strong>. Sized at <strong>0.10y to 0.15y duration</strong>.</div>
+      </div>
+      <div style="background: rgba(215, 0, 21, 0.06); border: 1px solid rgba(215, 0, 21, 0.25); border-radius: 14px; padding: 12px 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--bad); text-transform: uppercase;">3. Dual Alignment (Bigger Size)</div>
+        <div style="font-size: 13px; color: var(--text); margin-top: 4px;">Both Technical + Fundamental boundaries aligned in same direction triggers <strong>MAX CONVICTION</strong>. Sized at <strong>0.20y to 0.25y duration</strong>.</div>
+      </div>
+      <div style="background: rgba(36, 138, 61, 0.06); border: 1px solid rgba(36, 138, 61, 0.2); border-radius: 14px; padding: 12px 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--good); text-transform: uppercase;">4. Stop Loss Discipline</div>
+        <div style="font-size: 13px; color: var(--text); margin-top: 4px;">Trade recommendations used <strong>sparingly</strong>. Every trade carries a <strong>mandatory hard stop loss</strong> and live P&L tracking.</div>
+      </div>
+    </div>
+
+    <!-- Dual-Band Matrix Table -->
+    <div style="overflow-x: auto; margin-top: 16px;">
+      <table class="table" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--line); color: var(--muted); text-align: left;">
+            <th style="padding: 10px 12px;">Asset / Tenor</th>
+            <th style="padding: 10px 12px;">Current Level</th>
+            <th style="padding: 10px 12px;">Fundamental Fair Value Band</th>
+            <th style="padding: 10px 12px;">Technical Trading Band (Bollinger)</th>
+            <th style="padding: 10px 12px;">14D RSI & Momentum</th>
+            <th style="padding: 10px 12px;">Confluence Sizing Rule</th>
+            <th style="padding: 10px 12px;">Active Signal & Duration</th>
+            <th style="padding: 10px 12px;">Hard Stop Loss</th>
+          </tr>
+        </thead>
+        <tbody id="dualBandTableBody">
+          <!-- Dynamically injected by ust-page.js -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
   <section class="card wide" style="margin-top: 20px;">
     <div class="chart-toolbar">
       <div>

@@ -1,3 +1,109 @@
+
+  /* -------------------------------------------------------------
+     DUAL-BAND STRATEGY & DURATION SIZING MATRIX RENDERER
+     ------------------------------------------------------------- */
+  function renderDualBandMatrix() {
+    const tbody = document.getElementById("dualBandTableBody");
+    if (!tbody || !curveData || !curveData.dual_band_framework) return;
+
+    const dbf = curveData.dual_band_framework;
+    const tenors = dbf.tenors || {};
+    const spreads = dbf.spreads || {};
+    tbody.replaceChildren();
+
+    // 1. Tenors (2Y, 5Y, 10Y, 30Y)
+    const tenorList = ["2y", "5y", "10y", "30y"];
+    tenorList.forEach((k) => {
+      const t = tenors[k];
+      if (!t) return;
+      const tr = document.createElement("tr");
+      tr.style.borderBottom = "1px solid var(--line)";
+
+      const isConfluence = t.signal === "SHORT_DUAL_CONFLUENCE" || t.signal === "LONG_DUAL_CONFLUENCE";
+      const sigColor = t.recommended_duration < 0 ? "var(--bad)" : t.recommended_duration > 0 ? "var(--good)" : "var(--muted)";
+      const durText = t.recommended_duration !== 0 ? `${t.recommended_duration > 0 ? "+" : ""}${t.recommended_duration.toFixed(2)}y Duration` : "0.00y (Neutral)";
+
+      tr.innerHTML = `
+        <td style="padding: 10px 12px; font-weight: 700;">
+          <div style="font-size: 13.5px; color: var(--text);">${t.name}</div>
+          <div style="font-size: 11px; color: var(--muted);">${t.contract}</div>
+        </td>
+        <td style="padding: 10px 12px; font-weight: 800; font-size: 14px; color: var(--accent);">${t.current.toFixed(3)}%</td>
+        <td style="padding: 10px 12px;">
+          <div style="font-weight: 600; color: var(--text);">${t.fund_band.lower.toFixed(2)}% – ${t.fund_band.upper.toFixed(2)}%</div>
+          <div style="font-size: 11px; color: var(--muted);">Mid: ${t.fund_band.mid.toFixed(2)}% · ${t.fund_driver}</div>
+        </td>
+        <td style="padding: 10px 12px;">
+          <div style="font-weight: 600; color: var(--orange);">${t.tech_band.lower.toFixed(2)}% – ${t.tech_band.upper.toFixed(2)}%</div>
+          <div style="font-size: 11px; color: var(--muted);">SMA: ${t.tech_band.mid.toFixed(2)}%</div>
+        </td>
+        <td style="padding: 10px 12px;">
+          <div style="font-weight: 700; color: ${t.rsi14 > 68 ? 'var(--bad)' : t.rsi14 < 32 ? 'var(--good)' : 'var(--text)'};">${t.rsi14.toFixed(1)}</div>
+          <div style="font-size: 11px; color: var(--muted);">${t.rsi_state}</div>
+        </td>
+        <td style="padding: 10px 12px;">
+          <span style="font-size: 11.5px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: ${isConfluence ? 'rgba(215, 0, 21, 0.12)' : 'rgba(0, 0, 0, 0.05)'}; color: ${isConfluence ? 'var(--bad)' : 'var(--muted)'};">
+            ${t.sizing_type}
+          </span>
+        </td>
+        <td style="padding: 10px 12px;">
+          <div style="font-weight: 700; color: ${sigColor};">${t.signal_badge}</div>
+          <div style="font-size: 11.5px; font-weight: 700; color: ${sigColor};">${durText}</div>
+        </td>
+        <td style="padding: 10px 12px; font-weight: 600; color: var(--muted);">
+          ${k === '30y' ? '5.180%' : k === '2y' ? '4.250%' : k === '5y' ? '4.880%' : 'N/A'}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // 2. Spreads (2s10s, 10s30s, 2s30s)
+    const spreadList = ["2s10s", "10s30s", "2s30s"];
+    spreadList.forEach((sk) => {
+      const sp = spreads[sk];
+      if (!sp) return;
+      const tr = document.createElement("tr");
+      tr.style.borderBottom = "1px solid var(--line)";
+      tr.style.background = "rgba(0, 113, 227, 0.02)";
+
+      const isSteepener = sp.signal.includes("STEEPENER");
+      const sigColor = isSteepener ? "var(--bad)" : "var(--muted)";
+
+      tr.innerHTML = `
+        <td style="padding: 10px 12px; font-weight: 700;">
+          <div style="font-size: 13.5px; color: var(--text);">${sp.name}</div>
+          <div style="font-size: 11px; color: var(--muted);">${sk} Curve Slope</div>
+        </td>
+        <td style="padding: 10px 12px; font-weight: 800; font-size: 14px; color: var(--accent);">+${sp.current_bps.toFixed(1)} bps</td>
+        <td style="padding: 10px 12px;">
+          <div style="font-weight: 600; color: var(--text);">+${sp.fund_band.lower_bps.toFixed(0)} to +${sp.fund_band.upper_bps.toFixed(0)} bps</div>
+          <div style="font-size: 11px; color: var(--muted);">Mid: +${sp.fund_band.mid_bps.toFixed(0)} bps · ${sp.fund_driver}</div>
+        </td>
+        <td style="padding: 10px 12px;">
+          <div style="font-weight: 600; color: var(--orange);">+${sp.tech_band.lower_bps.toFixed(0)} to +${sp.tech_band.upper_bps.toFixed(0)} bps</div>
+          <div style="font-size: 11px; color: var(--muted);">Technical Channel</div>
+        </td>
+        <td style="padding: 10px 12px;">
+          <div style="font-weight: 700;">${sp.rsi14.toFixed(1)}</div>
+          <div style="font-size: 11px; color: var(--muted);">Curve Momentum</div>
+        </td>
+        <td style="padding: 10px 12px;">
+          <span style="font-size: 11.5px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgba(0, 0, 0, 0.05); color: var(--muted);">
+            ${isSteepener ? 'Structural Curve Play' : 'Balanced Fair Value'}
+          </span>
+        </td>
+        <td style="padding: 10px 12px;">
+          <div style="font-weight: 700; color: ${sigColor};">${sp.signal_badge}</div>
+          <div style="font-size: 11.5px; color: var(--muted);">Tgt: +${sp.target_bps.toFixed(0)} bps</div>
+        </td>
+        <td style="padding: 10px 12px; font-weight: 700; color: var(--bad);">
+          +${sp.stop_loss_bps.toFixed(0)} bps
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
 /**
  * ust-page.js - Interactive US Treasury Curve & Macro Regime Visualizer
  * Strategy Dashboard (rkarim25.github.io/Strategy)
@@ -113,6 +219,7 @@
     renderHistoryChart();
     renderExecutiveRecommendation();
     renderTechnicalsAndTriggers();
+    renderDualBandMatrix();
     renderMacroRadar();
     renderRegimeModelTable();
     renderSpreadChart();
@@ -532,6 +639,51 @@
       ctx.fillText(TENOR_LABELS[k], px, H - pad.bottom + 10);
     });
 
+
+    // Dual-Band Visual Overlay: Fundamental Fair Value Shaded Corridors & Technical Bands
+    const dbf = curveData.dual_band_framework;
+    if (dbf && dbf.tenors) {
+      TENOR_KEYS.forEach((k) => {
+        const tData = dbf.tenors[k];
+        if (!tData) return;
+        const px = tenorXMap[k];
+        const bandW = chartW * 0.16;
+
+        // Fundamental Fair Value Corridor (Shaded Blue)
+        const fundTopY = yToPx(tData.fund_band.upper);
+        const fundBotY = yToPx(tData.fund_band.lower);
+        ctx.fillStyle = "rgba(0, 113, 227, 0.08)";
+        ctx.fillRect(px - bandW / 2, fundTopY, bandW, fundBotY - fundTopY);
+
+        ctx.strokeStyle = "rgba(0, 113, 227, 0.40)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(px - bandW / 2, fundTopY);
+        ctx.lineTo(px + bandW / 2, fundTopY);
+        ctx.moveTo(px - bandW / 2, fundBotY);
+        ctx.lineTo(px + bandW / 2, fundBotY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Technical Trading Band (Orange Dashed Lines)
+        if (tData.tech_band) {
+          const techTopY = yToPx(tData.tech_band.upper);
+          const techBotY = yToPx(tData.tech_band.lower);
+          ctx.strokeStyle = "rgba(255, 149, 0, 0.75)";
+          ctx.lineWidth = 1.2;
+          ctx.setLineDash([4, 3]);
+          ctx.beginPath();
+          ctx.moveTo(px - bandW / 2 - 4, techTopY);
+          ctx.lineTo(px + bandW / 2 + 4, techTopY);
+          ctx.moveTo(px - bandW / 2 - 4, techBotY);
+          ctx.lineTo(px + bandW / 2 + 4, techBotY);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      });
+    }
+
     const drawOrder = ["1y_ago", "6m_ago", "1m_ago", "peak_inversion", "current"];
     drawOrder.forEach((k) => {
       if (!activeCurveSeries[k] || !snaps[k]) return;
@@ -576,6 +728,37 @@
           ctx.textAlign = "center";
           ctx.textBaseline = "bottom";
           ctx.fillText(snap[t].toFixed(2) + "%", px, py - 8);
+
+          // Render Signal Pill Badge above current yield
+          if (isCurrent && dbf && dbf.tenors && dbf.tenors[t]) {
+            const tData = dbf.tenors[t];
+            const badgeText = t === "30y" ? "🔴 DUAL CONFLUENCE (-0.20y)" :
+                              t === "2y"  ? "🔴 SHORT STRATEGIC (-0.15y)" :
+                              t === "5y"  ? "🟢 LONG TACTICAL (+0.10y)" :
+                                            "⚪ NEUTRAL (0.00y)";
+
+            const isShort = tData.recommended_duration < 0;
+            const isLong = tData.recommended_duration > 0;
+            const bgColor = isShort ? "rgba(215, 0, 21, 0.90)" : isLong ? "rgba(36, 138, 61, 0.90)" : "rgba(110, 110, 115, 0.85)";
+
+            ctx.save();
+            ctx.font = "bold 10px -apple-system, BlinkMacSystemFont, sans-serif";
+            const textMetrics = ctx.measureText(badgeText);
+            const bw = textMetrics.width + 12;
+            const bh = 18;
+            const by = py - 32;
+
+            ctx.fillStyle = bgColor;
+            ctx.beginPath();
+            ctx.roundRect(px - bw / 2, by, bw, bh, 5);
+            ctx.fill();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(badgeText, px, by + bh / 2);
+            ctx.restore();
+          }
         }
       });
     });
@@ -1045,6 +1228,50 @@
       ctx.font = "11.5px -apple-system, BlinkMacSystemFont, sans-serif";
       ctx.textAlign = "right";
       ctx.fillText(`${v >= 0 ? "+" : ""}${Math.round(v)} bps`, pad.left - 8, y + 3.5);
+    }
+
+    // Fundamental Fair Value Corridor for selected spread
+    if (activeSpreadKey !== "all" && curveData.dual_band_framework && curveData.dual_band_framework.spreads) {
+      const spData = curveData.dual_band_framework.spreads[activeSpreadKey];
+      if (spData && spData.fund_band) {
+        const topY = toY(spData.fund_band.upper_bps);
+        const botY = toY(spData.fund_band.lower_bps);
+        const midY = toY(spData.fund_band.mid_bps);
+
+        // Soft shaded corridor
+        ctx.fillStyle = "rgba(0, 113, 227, 0.08)";
+        ctx.fillRect(pad.left, topY, chartW, botY - topY);
+
+        // Dashed boundaries
+        ctx.strokeStyle = "rgba(0, 113, 227, 0.45)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, topY); ctx.lineTo(W - pad.right, topY);
+        ctx.moveTo(pad.left, botY); ctx.lineTo(W - pad.right, botY);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(0, 113, 227, 0.65)";
+        ctx.setLineDash([2, 2]);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, midY); ctx.lineTo(W - pad.right, midY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Top right banner on spread chart
+        const isSteep = spData.signal.includes("STEEPENER");
+        const bannerTxt = `SIGNAL: ${spData.signal_badge} | Stop: +${spData.stop_loss_bps} bps | Target: +${spData.target_bps} bps`;
+        ctx.save();
+        ctx.fillStyle = isSteep ? "rgba(215, 0, 21, 0.90)" : "rgba(0, 113, 227, 0.90)";
+        ctx.beginPath();
+        ctx.roundRect(pad.left + 8, pad.top + 6, 370, 22, 6);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 10px sans-serif";
+        ctx.textAlign = "left";
+        ctx.fillText(bannerTxt, pad.left + 16, pad.top + 17);
+        ctx.restore();
+      }
     }
 
     // Prominent Red Zero Inversion Barrier Line
