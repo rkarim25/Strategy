@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zorlu Enerji Eurobond — Distressed Restructuring & Fair Value Calculator</title>
+  <title>Zorlu Enerji Restructuring & Fair Value Engine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #0a0f1d;
-      --bg-card: #111a2e;
-      --bg-card-sub: #16223b;
-      --border-color: #202e4c;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --bg-main: #0a0e1a;
+      --bg-card: #121929;
+      --bg-card-sub: #172237;
+      --border-color: #1e2c45;
+      --border-highlight: #2c4166;
+      --text-main: #f1f5f9;
+      --text-muted: #8493a8;
       --accent-cyan: #38bdf8;
       --accent-emerald: #10b981;
       --accent-rose: #f43f5e;
       --accent-amber: #f59e0b;
-      --accent-purple: #a855f7;
     }
 
     * {
@@ -32,156 +32,238 @@
       background-color: var(--bg-main);
       color: var(--text-main);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      padding: 24px;
-      line-height: 1.5;
+      padding: 8px 12px;
+      line-height: 1.35;
+      font-size: 12px;
+      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    header {
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 18px;
-    }
-
-    .header-top {
+    /* Top Sticky Summary Bar */
+    .sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(18, 25, 41, 0.96);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-highlight);
+      border-radius: 8px;
+      padding: 8px 14px;
+      margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    .badge-bar {
+    .brand-section {
       display: flex;
-      gap: 8px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
     }
 
-    .badge {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: rgba(56, 189, 248, 0.12);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-    }
-
-    .badge.red {
-      background: rgba(244, 63, 94, 0.12);
-      color: var(--accent-rose);
-      border-color: rgba(244, 63, 94, 0.3);
-    }
-
-    .badge.amber {
-      background: rgba(245, 158, 11, 0.12);
-      color: var(--accent-amber);
-      border-color: rgba(245, 158, 11, 0.3);
-    }
-
-    h1 {
-      font-size: 24px;
+    .brand-title {
+      font-size: 13px;
       font-weight: 700;
       color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 13px;
-      margin-top: 4px;
-    }
-
-    .market-ticker {
-      display: flex;
-      gap: 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-    }
-
-    .ticker-item span {
-      color: var(--text-muted);
-      font-size: 11px;
-      display: block;
-    }
-
-    .ticker-item strong {
-      font-size: 14px;
-      color: #fff;
-    }
-
-    /* Preset buttons */
-    .presets-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-      background: var(--bg-card);
-      padding: 12px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-    }
-
-    .preset-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
-
-    .preset-btn {
-      background: var(--bg-card-sub);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .preset-btn:hover {
-      background: rgba(56, 189, 248, 0.15);
+    .brand-title .badge {
+      font-size: 10px;
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .presets-wrap {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .preset-pill {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .preset-pill:hover {
+      color: #fff;
       border-color: var(--accent-cyan);
+    }
+
+    .preset-pill.active {
+      background: var(--accent-cyan);
+      color: #031021;
+      border-color: var(--accent-cyan);
+    }
+
+    /* Live Output Ticker in Header */
+    .metrics-strip {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .metric-hero {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .metric-hero .lbl {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+
+    .metric-hero .val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .metric-hero .val span {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .metric-sub {
+      display: flex;
+      flex-direction: column;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    .metric-sub span {
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    .metric-sub strong.positive { color: var(--accent-emerald); }
+    .metric-sub strong.negative { color: var(--accent-rose); }
+    .metric-sub strong.neutral { color: var(--accent-amber); }
+
+    .trade-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .trade-badge.fair {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .trade-badge.sell {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    .trade-badge.buy {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .fullscreen-btn {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      color: var(--accent-cyan);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .fullscreen-btn:hover {
+      background: var(--accent-cyan);
+      color: #000;
+    }
+
+    /* Tab Switcher */
+    .tabs-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 4px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tab-btn:hover {
       color: #fff;
     }
 
-    .preset-btn.active {
-      background: var(--accent-cyan);
-      color: #04101e;
-      border-color: var(--accent-cyan);
-      font-weight: 600;
+    .tab-btn.active {
+      background: var(--bg-card-sub);
+      color: var(--accent-cyan);
+      border: 1px solid var(--border-color);
     }
 
-    /* Main Grid Layout */
-    .main-grid {
+    /* Tab Content Panels */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* 2-Column Grid for Tab 1 */
+    .calc-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 24px;
-      margin-bottom: 24px;
+      gap: 10px;
     }
 
-    @media (max-width: 992px) {
-      .main-grid {
+    @media (max-width: 860px) {
+      .calc-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -189,265 +271,126 @@
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 8px;
+      padding: 10px 12px;
     }
 
     .card-title {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--accent-cyan);
-      margin-bottom: 16px;
+      margin-bottom: 8px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-    }
-
-    .section-group {
-      margin-bottom: 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding-bottom: 16px;
-    }
-
-    .section-group:last-child {
-      margin-bottom: 0;
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .section-header {
-      font-size: 12px;
-      font-weight: 600;
-      color: #cbd5e1;
-      margin-bottom: 12px;
-      display: flex;
       align-items: center;
-      gap: 6px;
     }
 
-    .input-row {
+    /* Compact Slider Rows */
+    .ctrl-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 12px;
+      gap: 8px;
+      margin-bottom: 6px;
     }
 
-    @media (max-width: 600px) {
-      .input-row {
-        grid-template-columns: 1fr;
-      }
+    .ctrl-box {
+      background: var(--bg-card-sub);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      padding: 6px 8px;
     }
 
-    .control-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .control-label {
+    .ctrl-head {
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      color: var(--text-muted);
+      align-items: center;
+      margin-bottom: 4px;
+      font-size: 11px;
     }
 
-    .control-label strong {
-      color: #fff;
+    .ctrl-head span {
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ctrl-head strong {
       font-family: 'JetBrains Mono', monospace;
+      color: #fff;
+      font-size: 11px;
     }
 
     .slider-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
     }
 
     input[type="range"] {
       flex: 1;
+      height: 4px;
       accent-color: var(--accent-cyan);
+      background: #202e48;
+      border-radius: 2px;
       cursor: pointer;
-      height: 6px;
-      background: var(--bg-card-sub);
-      border-radius: 3px;
     }
 
     input[type="number"] {
-      width: 70px;
-      background: var(--bg-card-sub);
+      width: 52px;
+      background: #090e18;
       border: 1px solid var(--border-color);
       color: #fff;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 2px 4px;
+      border-radius: 4px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 11px;
       text-align: right;
     }
 
-    /* Output Results Panel */
-    .results-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .hero-metric-card {
-      background: linear-gradient(145deg, #131f38, #0c1527);
-      border: 1px solid #233554;
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-metric-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
-    }
-
-    .hero-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .hero-val {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 46px;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.1;
-      margin-bottom: 8px;
-    }
-
-    .hero-val span {
-      font-size: 24px;
-      color: var(--text-muted);
-    }
-
-    .signal-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-
-    .signal-badge.sell {
-      background: rgba(244, 63, 94, 0.15);
-      color: var(--accent-rose);
-      border: 1px solid rgba(244, 63, 94, 0.3);
-    }
-
-    .signal-badge.buy {
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--accent-emerald);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-
-    .signal-badge.fair {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--accent-amber);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .hero-subtext {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .hero-subtext strong {
-      color: #fff;
-    }
-
-    /* Secondary Metric Grid */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .sub-metric {
-      background: var(--bg-card-sub);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px 14px;
-    }
-
-    .sub-metric .lbl {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .sub-metric .val {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 18px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .sub-metric .val.positive {
-      color: var(--accent-emerald);
-    }
-
-    .sub-metric .val.negative {
-      color: var(--accent-rose);
-    }
-
-    /* Cash flow breakdown list */
-    .breakdown-box {
-      background: var(--bg-card-sub);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 14px;
-      font-size: 12px;
-    }
-
+    /* Breakdown Box */
     .breakdown-row {
       display: flex;
       justify-content: space-between;
-      padding: 5px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .breakdown-row:last-child {
-      border-bottom: none;
-      font-weight: 600;
-      padding-top: 8px;
-      margin-top: 4px;
-      border-top: 1px solid var(--border-color);
-      color: var(--accent-cyan);
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 11px;
     }
 
     .breakdown-row span:last-child {
       font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
     }
 
-    /* Sensitivity Tables Section */
-    .sensitivity-section {
-      margin-top: 24px;
+    .breakdown-row.highlight {
+      border-top: 1px solid var(--border-highlight);
+      border-bottom: none;
+      padding-top: 6px;
+      margin-top: 4px;
+      font-weight: 700;
+      color: var(--accent-cyan);
     }
 
+    .note-box {
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #cbd5e1;
+      line-height: 1.3;
+    }
+
+    /* Sensitivity Tables */
     .table-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
       overflow-x: auto;
     }
 
@@ -455,12 +398,12 @@
       width: 100%;
       border-collapse: collapse;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       text-align: center;
     }
 
     th, td {
-      padding: 8px 10px;
+      padding: 5px 6px;
       border: 1px solid var(--border-color);
     }
 
@@ -476,341 +419,292 @@
       font-weight: 700;
       color: #fff;
     }
-
-    .copy-btn {
-      background: var(--bg-card-sub);
-      border: 1px solid var(--border-color);
-      color: var(--accent-cyan);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 11px;
-      cursor: pointer;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-
-    .copy-btn:hover {
-      background: var(--accent-cyan);
-      color: #000;
-    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="header-top">
-        <div>
-          <div class="badge-bar">
-            <span class="badge red">XS2926261426</span>
-            <span class="badge">11.00% DUE 2030</span>
-            <span class="badge amber">HOULIHAN LOKEY WORKOUT</span>
-          </div>
-          <h1>Zorlu Enerji Restructuring & Fair Value Engine</h1>
-          <p class="subtitle">Interactive valuation model under negotiation delay, principal haircuts, maturity extensions, and restructuring friction.</p>
-        </div>
-        <div class="market-ticker">
-          <div class="ticker-item">
-            <span>SECONDARY PRICE</span>
-            <strong>63.50¢</strong>
-          </div>
-          <div class="ticker-item">
-            <span>STATED YTM</span>
-            <strong>27.2%</strong>
-          </div>
-          <div class="ticker-item">
-            <span>NEXT CATALYST</span>
-            <strong style="color: var(--accent-rose);">OCT 23 ($60.5M)</strong>
-          </div>
-        </div>
+  <!-- Top Sticky Header -->
+  <div class="sticky-bar">
+    <div class="brand-section">
+      <div class="brand-title">
+        <span>Zorlu Enerji Restructuring</span>
+        <span class="badge">XS2926261426 (63.5¢)</span>
       </div>
-    </header>
-
-    <!-- Presets -->
-    <div class="presets-bar">
-      <span class="preset-label">Workout Scenarios:</span>
-      <button class="preset-btn active" onclick="loadPreset('hybrid')">
-        <span>⚡</span> Pathway 3: Houlihan Hybrid (Base 65%)
-      </button>
-      <button class="preset-btn" onclick="loadPreset('amend')">
-        <span>🔄</span> Pathway 1: Amend & Extend (15%)
-      </button>
-      <button class="preset-btn" onclick="loadPreset('haircut')">
-        <span>✂️</span> Pathway 2: Hard Haircut (10%)
-      </button>
-      <button class="preset-btn" onclick="loadPreset('litigation')">
-        <span>⚖️</span> Pathway 4: In-Court Stalled (10%)
-      </button>
+      <div class="presets-wrap">
+        <button class="preset-pill active" onclick="loadPreset('hybrid')">⚡ Base (65%)</button>
+        <button class="preset-pill" onclick="loadPreset('amend')">🔄 A&E (15%)</button>
+        <button class="preset-pill" onclick="loadPreset('haircut')">✂️ Haircut (10%)</button>
+        <button class="preset-pill" onclick="loadPreset('litigation')">⚖️ Stalled (10%)</button>
+      </div>
     </div>
 
-    <!-- Main Grid -->
-    <div class="main-grid">
-      <!-- Left Inputs Card -->
+    <div class="metrics-strip">
+      <div class="metric-hero">
+        <span class="lbl">FAIR VALUE:</span>
+        <div class="val" id="top_fair_val">64.5<span>¢</span></div>
+      </div>
+
+      <div class="metric-sub">
+        <span>SPREAD VS 63.5¢</span>
+        <strong id="top_spread" class="positive">+1.0¢</strong>
+      </div>
+
+      <div class="metric-sub">
+        <span>ANNUALIZED IRR</span>
+        <strong id="top_irr" class="positive">+26.4%</strong>
+      </div>
+
+      <div class="metric-sub">
+        <span>EXIT RECOVERY</span>
+        <strong id="top_closing" style="color: #fff;">74.2¢</strong>
+      </div>
+
+      <div id="top_badge" class="trade-badge fair">⚖️ FAIRLY PRICED</div>
+
+      <a href="https://rkarim25.github.io/Strategy/zoren_calculator.html" target="_blank" class="fullscreen-btn" title="Open full screen in a new browser tab">
+        ↗ Pop Out
+      </a>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('tab_calc')">🎛️ Workout Levers & Economics</button>
+    <button class="tab-btn" onclick="switchTab('tab_sens')">📊 Sensitivity Grids (Haircut / Tenor / Yield)</button>
+    <button class="tab-btn" onclick="switchTab('tab_cf')">📋 Semi-Annual Cash Flows</button>
+  </div>
+
+  <!-- TAB 1: Main Calculator Grid -->
+  <div id="tab_calc" class="tab-panel active">
+    <div class="calc-grid">
+      <!-- Left Column: Controls -->
       <div class="card">
         <div class="card-title">
-          <span>Restructuring Negotiation Parameters</span>
-          <button class="copy-btn" onclick="copySummary()">📋 Copy Scenario</button>
+          <span>Workout Negotiation Parameters</span>
+          <button onclick="copySummary()" style="background:transparent; border:none; color:var(--accent-cyan); font-size:10px; cursor:pointer; font-weight:600;">📋 Copy</button>
         </div>
 
-        <!-- Section 1: Timeline & Distressed Carry -->
-        <div class="section-group">
-          <div class="section-header">⏱️ Workout Duration & Holding Carry</div>
-          <div class="input-row">
-            <div class="control-group">
-              <div class="control-label">
-                <span>Negotiation to Closing</span>
-                <strong id="lbl_neg_months">8 Months</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_neg_months" min="1" max="36" step="1" value="8" oninput="sync('neg_months', this.value)">
-                <input type="number" id="num_neg_months" min="1" max="36" value="8" oninput="sync('neg_months', this.value)">
-              </div>
+        <!-- Row 1: Duration & Carry -->
+        <div class="ctrl-row">
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Negotiation to Closing</span>
+              <strong id="lbl_neg_months">8 Months</strong>
             </div>
-            <div class="control-group">
-              <div class="control-label">
-                <span>Distressed Discount Rate</span>
-                <strong id="lbl_distress_rate">22.0%</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_distress_rate" min="10" max="35" step="0.5" value="22" oninput="sync('distress_rate', this.value)">
-                <input type="number" id="num_distress_rate" min="10" max="35" step="0.5" value="22" oninput="sync('distress_rate', this.value)">
-              </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_neg_months" min="1" max="36" step="1" value="8" oninput="sync('neg_months', this.value)">
+              <input type="number" id="num_neg_months" min="1" max="36" value="8" oninput="sync('neg_months', this.value)">
+            </div>
+          </div>
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Distressed Discount Rate</span>
+              <strong id="lbl_distress_rate">22.0%</strong>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_distress_rate" min="10" max="35" step="0.5" value="22" oninput="sync('distress_rate', this.value)">
+              <input type="number" id="num_distress_rate" min="10" max="35" step="0.5" value="22" oninput="sync('distress_rate', this.value)">
             </div>
           </div>
         </div>
 
-        <!-- Section 2: Bond Haircut & Tenor -->
-        <div class="section-group">
-          <div class="section-header">✂️ Principal Haircut & Maturity Tenor</div>
-          <div class="input-row">
-            <div class="control-group">
-              <div class="control-label">
-                <span>Nominal Principal Haircut</span>
-                <strong id="lbl_haircut">15.0%</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_haircut" min="0" max="60" step="0.5" value="15" oninput="sync('haircut', this.value)">
-                <input type="number" id="num_haircut" min="0" max="60" step="0.5" value="15" oninput="sync('haircut', this.value)">
-              </div>
+        <!-- Row 2: Haircut & Tenor -->
+        <div class="ctrl-row">
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Principal Haircut</span>
+              <strong id="lbl_haircut">15.0%</strong>
             </div>
-            <div class="control-group">
-              <div class="control-label">
-                <span>Maturity Extension</span>
-                <strong id="lbl_extension">3.0 Years</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_extension" min="0" max="7" step="0.5" value="3" oninput="sync('extension', this.value)">
-                <input type="number" id="num_extension" min="0" max="7" step="0.5" value="3" oninput="sync('extension', this.value)">
-              </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_haircut" min="0" max="60" step="0.5" value="15" oninput="sync('haircut', this.value)">
+              <input type="number" id="num_haircut" min="0" max="60" step="0.5" value="15" oninput="sync('haircut', this.value)">
+            </div>
+          </div>
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Maturity Extension</span>
+              <strong id="lbl_extension">3.0 Yrs</strong>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_extension" min="0" max="7" step="0.5" value="3" oninput="sync('extension', this.value)">
+              <input type="number" id="num_extension" min="0" max="7" step="0.5" value="3" oninput="sync('extension', this.value)">
             </div>
           </div>
         </div>
 
-        <!-- Section 3: Coupon Concessions & PIK -->
-        <div class="section-group">
-          <div class="section-header">💵 New Restructured Coupon Terms</div>
-          <div class="input-row">
-            <div class="control-group">
-              <div class="control-label">
-                <span>New Cash Coupon (p.a.)</span>
-                <strong id="lbl_cash_coupon">5.0%</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_cash_coupon" min="0" max="12" step="0.25" value="5.0" oninput="sync('cash_coupon', this.value)">
-                <input type="number" id="num_cash_coupon" min="0" max="12" step="0.25" value="5.0" oninput="sync('cash_coupon', this.value)">
-              </div>
+        <!-- Row 3: Cash & PIK Coupon -->
+        <div class="ctrl-row">
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>New Cash Coupon (p.a.)</span>
+              <strong id="lbl_cash_coupon">5.0%</strong>
             </div>
-            <div class="control-group">
-              <div class="control-label">
-                <span>PIK Coupon Rate (p.a.)</span>
-                <strong id="lbl_pik_coupon">5.5%</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_pik_coupon" min="0" max="10" step="0.25" value="5.5" oninput="sync('pik_coupon', this.value)">
-                <input type="number" id="num_pik_coupon" min="0" max="10" step="0.25" value="5.5" oninput="sync('pik_coupon', this.value)">
-              </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_cash_coupon" min="0" max="12" step="0.25" value="5.0" oninput="sync('cash_coupon', this.value)">
+              <input type="number" id="num_cash_coupon" min="0" max="12" step="0.25" value="5.0" oninput="sync('cash_coupon', this.value)">
             </div>
           </div>
-          <div class="input-row">
-            <div class="control-group">
-              <div class="control-label">
-                <span>PIK Duration (Years)</span>
-                <strong id="lbl_pik_years">3.0 Years</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_pik_years" min="0" max="5" step="0.5" value="3" oninput="sync('pik_years', this.value)">
-                <input type="number" id="num_pik_years" min="0" max="5" step="0.5" value="3" oninput="sync('pik_years', this.value)">
-              </div>
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>PIK Coupon Rate (p.a.)</span>
+              <strong id="lbl_pik_coupon">5.5%</strong>
             </div>
-            <div class="control-group">
-              <div class="control-label">
-                <span>Post-PIK Step-up Cash Coupon</span>
-                <strong id="lbl_post_pik">9.5%</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_post_pik" min="4" max="14" step="0.25" value="9.5" oninput="sync('post_pik', this.value)">
-                <input type="number" id="num_post_pik" min="4" max="14" step="0.25" value="9.5" oninput="sync('post_pik', this.value)">
-              </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_pik_coupon" min="0" max="10" step="0.25" value="5.5" oninput="sync('pik_coupon', this.value)">
+              <input type="number" id="num_pik_coupon" min="0" max="10" step="0.25" value="5.5" oninput="sync('pik_coupon', this.value)">
             </div>
           </div>
         </div>
 
-        <!-- Section 4: Fees, Sweeps & Exit Market Yield -->
-        <div class="section-group">
-          <div class="section-header">🏛️ Fees, Cash Sweeps & Exit Pricing</div>
-          <div class="input-row">
-            <div class="control-group">
-              <div class="control-label">
-                <span>Advisory / Legal Friction (%)</span>
-                <strong id="lbl_advisory_fee">2.5%</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_advisory_fee" min="0.5" max="6" step="0.25" value="2.5" oninput="sync('advisory_fee', this.value)">
-                <input type="number" id="num_advisory_fee" min="0.5" max="6" step="0.25" value="2.5" oninput="sync('advisory_fee', this.value)">
-              </div>
+        <!-- Row 4: PIK Window & Step-Up -->
+        <div class="ctrl-row">
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>PIK Window Duration</span>
+              <strong id="lbl_pik_years">3.0 Yrs</strong>
             </div>
-            <div class="control-group">
-              <div class="control-label">
-                <span>Upfront Consent Sweetener (%)</span>
-                <strong id="lbl_consent_fee">0.75%</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_consent_fee" min="0" max="3" step="0.25" value="0.75" oninput="sync('consent_fee', this.value)">
-                <input type="number" id="num_consent_fee" min="0" max="3" step="0.25" value="0.75" oninput="sync('consent_fee', this.value)">
-              </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_pik_years" min="0" max="5" step="0.5" value="3" oninput="sync('pik_years', this.value)">
+              <input type="number" id="num_pik_years" min="0" max="5" step="0.5" value="3" oninput="sync('pik_years', this.value)">
             </div>
           </div>
-          <div class="input-row">
-            <div class="control-group">
-              <div class="control-label">
-                <span>Asset Sweep Cash Paydown ($)</span>
-                <strong id="lbl_sweep">$5.00</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_sweep" min="0" max="25" step="0.5" value="5.0" oninput="sync('sweep', this.value)">
-                <input type="number" id="num_sweep" min="0" max="25" step="0.5" value="5.0" oninput="sync('sweep', this.value)">
-              </div>
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Post-PIK Step-up Coupon</span>
+              <strong id="lbl_post_pik">9.5%</strong>
             </div>
-            <div class="control-group">
-              <div class="control-label">
-                <span>Post-Restructuring Exit Yield</span>
-                <strong id="lbl_exit_yield">15.5%</strong>
-              </div>
-              <div class="slider-wrap">
-                <input type="range" id="inp_exit_yield" min="10" max="25" step="0.5" value="15.5" oninput="sync('exit_yield', this.value)">
-                <input type="number" id="num_exit_yield" min="10" max="25" step="0.5" value="15.5" oninput="sync('exit_yield', this.value)">
-              </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_post_pik" min="4" max="14" step="0.25" value="9.5" oninput="sync('post_pik', this.value)">
+              <input type="number" id="num_post_pik" min="4" max="14" step="0.25" value="9.5" oninput="sync('post_pik', this.value)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 5: Fees & Exit Yield -->
+        <div class="ctrl-row">
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Advisory & Legal Fees</span>
+              <strong id="lbl_advisory_fee">2.5%</strong>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_advisory_fee" min="0.5" max="6" step="0.25" value="2.5" oninput="sync('advisory_fee', this.value)">
+              <input type="number" id="num_advisory_fee" min="0.5" max="6" step="0.25" value="2.5" oninput="sync('advisory_fee', this.value)">
+            </div>
+          </div>
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Post-Restructure Exit Yield</span>
+              <strong id="lbl_exit_yield">15.5%</strong>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_exit_yield" min="10" max="25" step="0.5" value="15.5" oninput="sync('exit_yield', this.value)">
+              <input type="number" id="num_exit_yield" min="10" max="25" step="0.5" value="15.5" oninput="sync('exit_yield', this.value)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 6: Consent Sweetener & Cash Sweep -->
+        <div class="ctrl-row">
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Upfront Consent Fee (%)</span>
+              <strong id="lbl_consent_fee">0.75%</strong>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_consent_fee" min="0" max="3" step="0.25" value="0.75" oninput="sync('consent_fee', this.value)">
+              <input type="number" id="num_consent_fee" min="0" max="3" step="0.25" value="0.75" oninput="sync('consent_fee', this.value)">
+            </div>
+          </div>
+          <div class="ctrl-box">
+            <div class="ctrl-head">
+              <span>Asset Sweep Paydown ($)</span>
+              <strong id="lbl_sweep">$5.00</strong>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="inp_sweep" min="0" max="25" step="0.5" value="5.0" oninput="sync('sweep', this.value)">
+              <input type="number" id="num_sweep" min="0" max="25" step="0.5" value="5.0" oninput="sync('sweep', this.value)">
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Results Panel -->
-      <div class="results-panel">
-        <!-- Hero Card -->
-        <div class="hero-metric-card">
-          <div class="hero-label">Model Implied Fair Value Today</div>
-          <div class="hero-val" id="out_fair_value">64.5<span>¢</span></div>
-          <div id="out_signal_badge" class="signal-badge fair">⚖️ FAIRLY VALUED VS MARKET</div>
-          <p class="hero-subtext">
-            Current Secondary Market: <strong>63.50¢</strong> | Model Spread: <strong id="out_delta">+1.0¢</strong>
-          </p>
+      <!-- Right Column: Economic Outputs -->
+      <div class="card">
+        <div class="card-title">
+          <span>Restructured Instrument Breakdown</span>
+          <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--text-muted);">PER $100 FACE</span>
         </div>
 
-        <!-- Metrics Grid -->
-        <div class="metrics-grid">
-          <div class="sub-metric">
-            <div class="lbl">RECOVERY AT CLOSING</div>
-            <div class="val" id="out_closing_recovery">74.2¢</div>
-          </div>
-          <div class="sub-metric">
-            <div class="lbl">ANNUALIZED IRR TO CLOSING</div>
-            <div class="val positive" id="out_irr">+26.4%</div>
-          </div>
-          <div class="sub-metric">
-            <div class="lbl">NEGOTIATION CARRY DRAG</div>
-            <div class="val negative" id="out_carry_drag">-9.7¢</div>
-          </div>
-          <div class="sub-metric">
-            <div class="lbl">NET ADVISORY LEAKAGE</div>
-            <div class="val" id="out_net_advisory">-1.75¢</div>
-          </div>
+        <div class="breakdown-row">
+          <span>New Initial Face Value</span>
+          <span id="bd_new_principal">$85.00</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Compounded Face (post-PIK)</span>
+          <span id="bd_compounded_principal">$99.98</span>
+        </div>
+        <div class="breakdown-row">
+          <span>PV of New Bond at Exit Yield</span>
+          <span id="bd_pv_bond">$70.95</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Upfront Cash (Consent + Sweep)</span>
+          <span id="bd_upfront_cash" style="color: var(--accent-emerald);">+$5.75</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Less: Advisory Fee Leakage</span>
+          <span id="bd_friction" style="color: var(--accent-rose);">-$2.50</span>
+        </div>
+        <div class="breakdown-row highlight">
+          <span>Gross Realized Recovery at Closing</span>
+          <span id="bd_total_closing">$74.20</span>
         </div>
 
-        <!-- Breakdown Details -->
-        <div class="breakdown-box">
-          <div style="font-weight: 600; color: #cbd5e1; margin-bottom: 8px;">Restructured Instrument Economics (per $100 face)</div>
-          <div class="breakdown-row">
-            <span>New Initial Principal</span>
-            <span id="bd_new_principal">$85.00</span>
-          </div>
-          <div class="breakdown-row">
-            <span>Compounded Principal post-PIK</span>
-            <span id="bd_compounded_principal">$99.98</span>
-          </div>
-          <div class="breakdown-row">
-            <span>PV of New Restructured Bond at Exit</span>
-            <span id="bd_pv_bond">$70.95</span>
-          </div>
-          <div class="breakdown-row">
-            <span>Upfront Cash (Consent + Sweep)</span>
-            <span id="bd_upfront_cash">+$5.75</span>
-          </div>
-          <div class="breakdown-row">
-            <span>Less: Restructuring Friction Costs</span>
-            <span id="bd_friction" style="color: var(--accent-rose);">-$2.50</span>
-          </div>
-          <div class="breakdown-row">
-            <span>Total Realized Value at Closing</span>
-            <span id="bd_total_closing">$74.20</span>
-          </div>
+        <div class="breakdown-row" style="margin-top: 6px;">
+          <span>Negotiation Negative Carry Drag</span>
+          <span id="bd_carry_drag" style="color: var(--accent-rose);">-9.7¢</span>
+        </div>
+        <div class="breakdown-row">
+          <span>Time Discount Factor</span>
+          <span id="bd_discount_factor">1.150x</span>
         </div>
 
-        <!-- Strategic Recommendation Note -->
-        <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 14px; font-size: 12px; color: #cbd5e1;">
-          <strong style="color: var(--accent-cyan); display: block; margin-bottom: 4px;">💡 Portfolio Manager Action Note:</strong>
+        <div class="note-box">
+          <strong style="color: var(--accent-cyan); display:block; margin-bottom:2px;">Desk Strategy Directive:</strong>
           <span id="out_action_note">
-            At 63.5¢, the bond fully reflects this base case without giving any margin of safety for negotiation stalls or the October 23 coupon default. Wait for the downgrade capitulation into 50¢–53¢ to enter with positive asymmetry.
+            At 63.5¢, the bond fully prices in this 64.5¢ base case without safety margin. Wait for the post-Oct 23 coupon default capitulation into 50¢–53¢ to enter.
           </span>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Sensitivity Matrices -->
-    <div class="sensitivity-section">
-      <div class="table-card">
-        <div class="card-title">
-          <span>Sensitivity 1: Fair Value Today (¢) vs. Haircut % and Negotiation Months</span>
-        </div>
-        <table id="tbl_sens_haircut"></table>
-      </div>
+  <!-- TAB 2: Sensitivities -->
+  <div id="tab_sens" class="tab-panel">
+    <div class="table-card">
+      <div class="card-title"><span>Sensitivity 1: Fair Value Today (¢) vs. Haircut % and Negotiation Months</span></div>
+      <table id="tbl_sens_haircut"></table>
+    </div>
 
-      <div class="table-card">
-        <div class="card-title">
-          <span>Sensitivity 2: Fair Value Today (¢) vs. Maturity Extension and Exit Yield</span>
-        </div>
-        <table id="tbl_sens_tenor"></table>
-      </div>
+    <div class="table-card">
+      <div class="card-title"><span>Sensitivity 2: Fair Value Today (¢) vs. Maturity Extension and Exit Yield</span></div>
+      <table id="tbl_sens_tenor"></table>
+    </div>
+  </div>
+
+  <!-- TAB 3: Cash Flow Schedule -->
+  <div id="tab_cf" class="tab-panel">
+    <div class="table-card">
+      <div class="card-title"><span>Projected Semi-Annual Cash Flows per $100 Original Face</span></div>
+      <table id="tbl_cash_flows"></table>
     </div>
   </div>
 
   <script>
-    // Global parameters object
     const params = {
-      neg_months: 8,
-      distress_rate: 22.0,
-      haircut: 15.0,
-      extension: 3.0,
-      cash_coupon: 5.0,
-      pik_coupon: 5.5,
-      pik_years: 3.0,
-      post_pik: 9.5,
-      advisory_fee: 2.5,
-      consent_fee: 0.75,
-      sweep: 5.0,
-      exit_yield: 15.5
+      neg_months: 8, distress_rate: 22.0, haircut: 15.0, extension: 3.0,
+      cash_coupon: 5.0, pik_coupon: 5.5, pik_years: 3.0, post_pik: 9.5,
+      advisory_fee: 2.5, consent_fee: 0.75, sweep: 5.0, exit_yield: 15.5
     };
 
     const market_price = 63.50;
@@ -838,8 +732,17 @@
       }
     };
 
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+      if (tabId === 'tab_sens') renderSensitivityTables();
+      if (tabId === 'tab_cf') renderCashFlowTable();
+    }
+
     function loadPreset(key) {
-      document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.preset-pill').forEach(btn => btn.classList.remove('active'));
       event.currentTarget.classList.add('active');
       const p = presets[key];
       for (const k in p) {
@@ -857,7 +760,7 @@
       if (num) num.value = val;
       if (lbl) {
         if (key.includes('months')) lbl.innerText = val + ' Months';
-        else if (key.includes('years') || key.includes('extension')) lbl.innerText = parseFloat(val).toFixed(1) + ' Years';
+        else if (key.includes('years') || key.includes('extension')) lbl.innerText = parseFloat(val).toFixed(1) + ' Yrs';
         else if (key.includes('sweep')) lbl.innerText = '$' + parseFloat(val).toFixed(2);
         else lbl.innerText = parseFloat(val).toFixed(key === 'haircut' || key === 'exit_yield' ? 1 : 2) + '%';
       }
@@ -869,7 +772,6 @@
       calculate();
     }
 
-    // Core financial valuation logic
     function evaluateValuation(p) {
       const initial_face = 100 * (1 - p.haircut / 100);
       const total_tenor_years = 3.5 + p.extension;
@@ -881,34 +783,30 @@
       const r_pik_semi = (p.pik_coupon / 100) / 2;
 
       let pv_bond = 0;
+      let cf_list = [];
 
-      // Project cash flows semi-annually
       for (let t = 1; t <= total_periods; t++) {
         let cash_cf = 0;
+        let p_start = current_principal;
         if (t <= pik_periods) {
-          // Cash coupon on current face
           cash_cf = current_principal * ((p.cash_coupon / 100) / 2);
-          // Compound PIK into principal for next period
           current_principal = current_principal * (1 + r_pik_semi);
         } else {
-          // Post-PIK coupon on compounded face
           cash_cf = current_principal * ((p.post_pik / 100) / 2);
         }
 
         if (t === total_periods) {
-          // Principal bullet repayment
           cash_cf += current_principal;
         }
 
-        // Discount back to exchange closing date at exit yield
         pv_bond += cash_cf / Math.pow(1 + r_exit_semi, t);
+        cf_list.push({ t, years: t * 0.5, p_start, cash_cf, p_end: current_principal });
       }
 
       const upfront_cash = p.consent_fee + p.sweep;
       const friction = p.advisory_fee;
       const total_closing_recovery = pv_bond + upfront_cash - friction;
 
-      // Discount back to TODAY over negotiation months
       const neg_years = p.neg_months / 12;
       const discount_factor = Math.pow(1 + (p.distress_rate / 100), neg_years);
       const fair_value_today = total_closing_recovery / discount_factor;
@@ -920,31 +818,45 @@
         upfront_cash,
         friction,
         total_closing_recovery,
+        discount_factor,
         fair_value_today,
         carry_drag: fair_value_today - total_closing_recovery,
-        net_advisory: p.consent_fee - p.advisory_fee
+        cf_list
       };
     }
 
     function calculate() {
       const res = evaluateValuation(params);
 
-      document.getElementById('out_fair_value').innerHTML = res.fair_value_today.toFixed(1) + '<span>¢</span>';
-      document.getElementById('out_closing_recovery').innerText = res.total_closing_recovery.toFixed(1) + '¢';
-      document.getElementById('out_carry_drag').innerText = res.carry_drag.toFixed(1) + '¢';
-      document.getElementById('out_net_advisory').innerText = (res.net_advisory >= 0 ? '+' : '') + res.net_advisory.toFixed(2) + '¢';
+      document.getElementById('top_fair_val').innerHTML = res.fair_value_today.toFixed(1) + '<span>¢</span>';
+      document.getElementById('top_closing').innerText = res.total_closing_recovery.toFixed(1) + '¢';
 
-      // Delta & IRR
       const delta = res.fair_value_today - market_price;
-      const out_delta = document.getElementById('out_delta');
-      out_delta.innerText = (delta >= 0 ? '+' : '') + delta.toFixed(1) + '¢';
-      out_delta.style.color = delta >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)';
+      const top_spread = document.getElementById('top_spread');
+      top_spread.innerText = (delta >= 0 ? '+' : '') + delta.toFixed(1) + '¢';
+      top_spread.className = delta >= 0 ? 'positive' : 'negative';
 
       const holding_years = Math.max(0.25, params.neg_months / 12);
       const irr = (Math.pow(res.total_closing_recovery / market_price, 1 / holding_years) - 1) * 100;
-      const out_irr = document.getElementById('out_irr');
-      out_irr.innerText = (irr >= 0 ? '+' : '') + irr.toFixed(1) + '%';
-      out_irr.className = 'val ' + (irr >= 0 ? 'positive' : 'negative');
+      const top_irr = document.getElementById('top_irr');
+      top_irr.innerText = (irr >= 0 ? '+' : '') + irr.toFixed(1) + '%';
+      top_irr.className = irr >= 0 ? 'positive' : 'negative';
+
+      const badge = document.getElementById('top_badge');
+      const note = document.getElementById('out_action_note');
+      if (res.fair_value_today < 60.5) {
+        badge.className = 'trade-badge sell';
+        badge.innerHTML = '⚠️ OVERVALUED';
+        note.innerHTML = `Model fair value of <strong>${res.fair_value_today.toFixed(1)}¢</strong> is below market (63.5¢). Bonds fail to price in workout delay. Wait for forced selling into 50¢–53¢.`;
+      } else if (res.fair_value_today > 66.5) {
+        badge.className = 'trade-badge buy';
+        badge.innerHTML = '💎 UNDERVALUED';
+        note.innerHTML = `Model fair value of <strong>${res.fair_value_today.toFixed(1)}¢</strong> provides strong margin of safety over 63.5¢ market price. Annualized return: <strong>+${irr.toFixed(1)}%</strong>.`;
+      } else {
+        badge.className = 'trade-badge fair';
+        badge.innerHTML = '⚖️ FAIRLY PRICED';
+        note.innerHTML = `At 63.5¢, secondary price matches the <strong>${res.fair_value_today.toFixed(1)}¢</strong> base case without cushion for the Oct 23 coupon default.`;
+      }
 
       // Breakdown Box
       document.getElementById('bd_new_principal').innerText = '$' + res.initial_face.toFixed(2);
@@ -953,29 +865,11 @@
       document.getElementById('bd_upfront_cash').innerText = '+$' + res.upfront_cash.toFixed(2);
       document.getElementById('bd_friction').innerText = '-$' + res.friction.toFixed(2);
       document.getElementById('bd_total_closing').innerText = '$' + res.total_closing_recovery.toFixed(2);
-
-      // Signal Badge & Action Note
-      const badge = document.getElementById('out_signal_badge');
-      const note = document.getElementById('out_action_note');
-      if (res.fair_value_today < 60.5) {
-        badge.className = 'signal-badge sell';
-        badge.innerHTML = '⚠️ OVERVALUED VS MARKET (Wait for capitulation)';
-        note.innerHTML = `Model fair value of <strong>${res.fair_value_today.toFixed(1)}¢</strong> is well below current market (63.5¢). Bonds do not reflect execution risks or prolonged negotiation delay. Hold off on buying until forced-selling drives prices to 50¢–53¢.`;
-      } else if (res.fair_value_today > 66.5) {
-        badge.className = 'signal-badge buy';
-        badge.innerHTML = '💎 UNDERVALUED / ASYMMETRIC LONG';
-        note.innerHTML = `Model fair value of <strong>${res.fair_value_today.toFixed(1)}¢</strong> provides a significant margin of safety over the 63.5¢ market price. The proposed workout package yields an annualized return of <strong>+${irr.toFixed(1)}%</strong>.`;
-      } else {
-        badge.className = 'signal-badge fair';
-        badge.innerHTML = '⚖️ FAIRLY VALUED (~63.5¢)';
-        note.innerHTML = `At 63.5¢, secondary market pricing matches the <strong>${res.fair_value_today.toFixed(1)}¢</strong> model value. The market is pricing this exact scenario without safety margin for the October 23 coupon default.`;
-      }
-
-      renderSensitivityTables();
+      document.getElementById('bd_carry_drag').innerText = res.carry_drag.toFixed(1) + '¢';
+      document.getElementById('bd_discount_factor').innerText = res.discount_factor.toFixed(3) + 'x';
     }
 
     function renderSensitivityTables() {
-      // Sensitivity 1: Haircut vs Negotiation Months
       const haircuts = [0, 10, 15, 20, 25, 30];
       const months = [3, 6, 8, 12, 18, 24];
 
@@ -997,7 +891,6 @@
       html1 += '</tbody>';
       document.getElementById('tbl_sens_haircut').innerHTML = html1;
 
-      // Sensitivity 2: Tenor Extension vs Exit Yield
       const extensions = [1.0, 2.0, 3.0, 4.0, 5.0];
       const yields = [12.0, 14.0, 15.5, 18.0, 20.0, 22.0];
 
@@ -1020,6 +913,25 @@
       document.getElementById('tbl_sens_tenor').innerHTML = html2;
     }
 
+    function renderCashFlowTable() {
+      const res = evaluateValuation(params);
+      let html = '<thead><tr><th>Period</th><th>Years</th><th>Start Face ($)</th><th>Cash Flow ($)</th><th>End Face ($)</th><th>Type</th></tr></thead><tbody>';
+      res.cf_list.forEach(item => {
+        const isFinal = (item.t === res.cf_list.length);
+        const type = isFinal ? 'Coupon + Principal Bullet' : (item.t <= params.pik_years * 2 ? 'Cash Coupon + PIK Compound' : 'Post-PIK Cash Coupon');
+        html += `<tr>
+          <td>${item.t}</td>
+          <td>${item.years.toFixed(1)}</td>
+          <td>$${item.p_start.toFixed(2)}</td>
+          <td style="color: var(--accent-cyan); font-weight:700;">$${item.cash_cf.toFixed(2)}</td>
+          <td>$${item.p_end.toFixed(2)}</td>
+          <td style="color: var(--text-muted); font-size:9px;">${type}</td>
+        </tr>`;
+      });
+      html += '</tbody>';
+      document.getElementById('tbl_cash_flows').innerHTML = html;
+    }
+
     function copySummary() {
       const res = evaluateValuation(params);
       const text = `**Zorlu Enerji Restructuring Scenario Summary**
@@ -1027,20 +939,20 @@
 - Nominal Haircut: ${params.haircut}%
 - Extension: +${params.extension} years
 - Coupon: ${params.cash_coupon}% Cash / ${params.pik_coupon}% PIK (${params.pik_years} yrs) -> ${params.post_pik}% Cash
-- Advisory & Legal Fees: ${params.advisory_fee}% | Consent Fee: ${params.consent_fee}%
+- Advisory Fees: ${params.advisory_fee}% | Consent Fee: ${params.consent_fee}% | Sweep: $${params.sweep}
 - Exit Yield: ${params.exit_yield}% | Distressed Rate: ${params.distress_rate}%
 ---
 - **Estimated Fair Value Today:** ${res.fair_value_today.toFixed(1)}¢
 - **Closing Recovery:** ${res.total_closing_recovery.toFixed(1)}¢
-- **Holding Period IRR:** ${document.getElementById('out_irr').innerText}
-- **Delta vs 63.5¢ Market:** ${document.getElementById('out_delta').innerText}`;
+- **Holding Period IRR:** ${document.getElementById('top_irr').innerText}
+- **Delta vs 63.5¢ Market:** ${document.getElementById('top_spread').innerText}`;
 
       navigator.clipboard.writeText(text).then(() => {
         alert('Scenario copied to clipboard!');
       });
     }
 
-    // Initialize
+    // Init
     calculate();
   </script>
 </body>
