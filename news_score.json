@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-09-21T13:32:03Z",
+  "generated_at_utc": "2026-09-21T19:00:07Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: U.S.-listed Greenland stocks surge after Trump announces security deal with Denmark; Bitcoin hits highest level since January at $85,000, as the market debates whether the 'crypto winter' is over. Bearish offsets: Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com.",
+  "score": 8,
+  "label": "Bullish",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq soars 2%, S&P up 1.5% as AI stocks rally, led by surge in Meta Platforms - Investing.com; Update: Equities Rise Intraday as Chip Stocks Rally. Bearish offsets: Wall Street\u2019s most steadfast bulls issue warning: S&P 500 could drop to 7,100 points first if oil prices and the bond market deteriorate further - news.futunn.com.",
   "articles": [
+    {
+      "title": "Nasdaq soars 2%, S&P up 1.5% as AI stocks rally, led by surge in Meta Platforms - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOeW5SWEExSFN6eFdkZkJnOHRYUlloaDN1OFVmMnFTM19mSFRDT2FBLTc3UEJZM3RLNGhKTHNzY3lFVlUwWWxMeWtWMy1PNVpqWGhsd0tJNTVMbGNESGcxa1BZb3hjaG1pbGcyWEVTUWNmQmJTN1FORi1sT3BpRjRhOVNpMHA1MXdaOFdVdGtPOTNQYzdmMG52dGFIZGxzWC1RVTdxY2Vmd0Z0TTl3b3RoUzJvZEhvQVphbWtsZkEwUUlYMHcwWGc?oc=5",
+      "published": "2026-09-21T00:14:55Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Update: Equities Rise Intraday as Chip Stocks Rally",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-rise-intraday-chip-stocks-175229305.html?.tsrc=rss",
+      "published": "2026-09-21T17:52:29Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Market Indexes Rally as Oil Retreats and Chip Stocks Surge",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/investing/2026/09/21/market-indexes-rally-as-oil-retreats/?.tsrc=rss",
+      "published": "2026-09-21T17:11:45Z",
+      "tone": "bullish"
+    },
     {
       "title": "U.S.-listed Greenland stocks surge after Trump announces security deal with Denmark",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/09/21/greenland-trump-denmark-deal-stocks-mining.html",
-      "published": "2026-09-21T11:59:16Z",
+      "published": "2026-09-21T15:34:42Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall Street falls as Fed signals more hikes, Warsh says inflation still too high - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOTzQyMWc4Wkh2eGZTU2NWeTBzR0FDNEx2dEl0cU5tVG13eGNjYnhvYkxnRWtKOXJDOUZLcG9GU3dENERhNlVCd2F4Y2Y3YkhWN04wR3Q5N2NqSlhreXkzZXY0WEJ2d3VXcXcwWjFvM24xSjlxcnQ5d1QtNzdBRTZMUEsxU1Bmdk1CSGpmODQ3ajZJX2lHc1FySFliR0ZEOThYZFB2dmZMeEQwOWtrT1NIajFpZVo?oc=5",
-      "published": "2026-09-16T00:36:45Z",
+      "title": "Wall Street\u2019s most steadfast bulls issue warning: S&P 500 could drop to 7,100 points first if oil prices and the bond market deteriorate further - news.futunn.com",
+      "source": "news.futunn.com",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQQTV4cURxLVFQeTc1c3B2OFk2OEJIa2xzcnoxUzlYZjZnZm8wS2IwVV9QRHZEX084czZfWFl3QThKTFdBNTVyTlNuMG9FMVFWQy1tY2d1SmV3blJtV19iM3lsSkUybFZ1bTBKdE1Tb0duOUM0c2dvYy1VZEZCa3B3aG13SXhwR0hFeTRrXzZBYUM0LWdRSTZDWWJuVQ?oc=5",
+      "published": "2026-09-21T09:10:04Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Bitcoin hits highest level since January at $85,000, as the market debates whether the 'crypto winter' is over",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/21/bitcoin-price-crypto-rally.html",
-      "published": "2026-09-21T11:10:55Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "US stocks rally to their best day in 6 weeks after oil prices and bond yields ease - WHEC.com",
-      "source": "WHEC.com",
-      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOVDVvMTgwd0N6a3haMlRaMFJEVTlITHAwRGhaXzg0eTBHQXF3X0Jsem9ZZU04THl3Nm8xdTFwQjlCbnNTRzFfV19tTkdOVTVCUi1Ua3Z5dWpBcEx1N1pyamZwMFJZckIwcjNEYjBIUXVHNDV5akVGcnUwNXdpUTZVdWQ5dHB2bV9LalljR1h0RldNaENDUG4xZC04ZkJJQlpjZ21tVUtzMXVUVDRuRkdHcGFIenFfQWc?oc=5",
-      "published": "2026-09-18T15:23:26Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today: S&P 500 Rises, Nasdaq Gains 0.5% as Oil Fails - CryptoRank",
-      "source": "CryptoRank",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQWVg2OWxtSnU4bmZyUlJzR2FnWmFORi1vc2tGT2VGUWtUWk9KNEpQTkF5cEZDMHRJUFZMb1lsZDJKaUZLdjRtak44b2Z6RjhBZ1FHUUIzcjRaYnk2ZGt4SnZETGNDem4tOXhnZHp0M3c0Wll0UkU3TVRMVno4a2JrRlRQV0dTSWtXTERwWFFSQkFIeFVIR2N0WXo0SlpmXzQ?oc=5",
-      "published": "2026-09-18T14:32:40Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
