@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-09-22T00:34:37Z",
+  "generated_at_utc": "2026-09-22T12:16:41Z",
   "window_days": 7,
-  "score": 9,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: U.S.-listed Greenland stocks surge after Trump announces security deal with Denmark; Trump, Xi Meet on S&P 500's Best Day Since Early August: Will Markets Stay Bullish?. Bearish offsets: Jim Cramer drops another stock market warning.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street rally nears record high - Northwest Arkansas Democrat-Gazette; Tech Rally Pauses, But Soft Oil Lifts Wall Street Pre-Bell; Asia, Europe Up.",
   "articles": [
     {
-      "title": "U.S.-listed Greenland stocks surge after Trump announces security deal with Denmark",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/21/greenland-trump-denmark-deal-stocks-mining.html",
-      "published": "2026-09-21T15:34:42Z",
+      "title": "Wall Street rally nears record high - Northwest Arkansas Democrat-Gazette",
+      "source": "Northwest Arkansas Democrat-Gazette",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPSE04YmpsQjlZMGp1U0dJRFFtR1VVV1ItNXotVjRzTF9palQ4LWlRWXJXOVg4Y0FLRFJZYjA1QU1vd2lnN2c1aXg1YjhKdFBrQWFiN1dmdW5jTzR4NWJNY2FuMDZSTFk4cWc5dTFEeUp5TklsNUtKRFoxc1k2UzNKcG5xRlVOUQ?oc=5",
+      "published": "2026-09-22T07:03:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Trump, Xi Meet on S&P 500's Best Day Since Early August: Will Markets Stay Bullish?",
+      "title": "Tech Rally Pauses, But Soft Oil Lifts Wall Street Pre-Bell; Asia, Europe Up",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://beincrypto.com/trump-xi-summit-best-day/?.tsrc=rss",
-      "published": "2026-09-21T23:20:00Z",
+      "url": "https://finance.yahoo.com/markets/articles/tech-rally-pauses-soft-oil-110942833.html?.tsrc=rss",
+      "published": "2026-09-22T11:09:42Z",
       "tone": "bullish"
     },
     {
-      "title": "Nasdaq soars to first record close since June as AI stocks rally, led by Meta jump - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOeW5SWEExSFN6eFdkZkJnOHRYUlloaDN1OFVmMnFTM19mSFRDT2FBLTc3UEJZM3RLNGhKTHNzY3lFVlUwWWxMeWtWMy1PNVpqWGhsd0tJNTVMbGNESGcxa1BZb3hjaG1pbGcyWEVTUWNmQmJTN1FORi1sT3BpRjRhOVNpMHA1MXdaOFdVdGtPOTNQYzdmMG52dGFIZGxzWC1RVTdxY2Vmd0Z0TTl3b3RoUzJvZEhvQVphbWtsZkEwUUlYMHcwWGc?oc=5",
-      "published": "2026-09-21T00:14:55Z",
+      "title": "Asian benchmarks mostly rise after Wall Street's rally - New Haven Register",
+      "source": "New Haven Register",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPaHQ1aGc3dDNVbmwzWFlGOGY3c2pUR0hxRG1uSEtKTERvbEc3dS1Nam9kZzFNekVqWjN6clB1Q3ZNODJ6N1NRTVZkZEtyTjkxRWktUFAzVllFV1dkR01RbHNHamdRRUo1NW4xQ0dYanFYMWhKZkpYT3A1cU9lNngtVmVKcS10bi16TW81Z1VWRGlXOXZDRlp2TkV4d3FwekxCZ0VFQV9CLXljbVU?oc=5",
+      "published": "2026-09-22T09:43:31Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall St futures rise as AI stocks rally, crude prices fall - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOQk1MbWpOTWJRdncwWmpEaktzaV9sUEhQSXZNdnNvSmphZXJpZlhUdGEtV2dyOTA4WFh6eTU4SHlZWTdwQ2NqSmRhYVhLUEt3MW5CTG42U0NNbTAxQXE4VjBlZXJiWVpvRTFFXzhxSk5fVWprNXF0TkZqcTh3bVMyaXg2WFl5N2p4bS1jLU9nbF9iQQ?oc=5",
-      "published": "2026-09-21T11:58:36Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Jim Cramer drops another stock market warning",
+      "title": "Nasdaq hits record close as AI stocks rally, futures steady",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.thestreet.com/investing/cramer-fed-rate-hike-fighting-fed-warning?.tsrc=rss",
-      "published": "2026-09-21T23:00:00Z",
-      "tone": "bearish"
+      "url": "https://qz.com/nasdaq-record-close-ai-stocks-futures-steady-092226?.tsrc=rss",
+      "published": "2026-09-22T11:26:26Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "US Stock Futures Steady Ahead of Trump\u2019s UN Address as Alibaba Unveils New AI Chip: Dow Jones, S&P, Nasdaq, Wall Street",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://investorshub.advfn.com/market-news/article/36668/us-stock-futures-steady-ahead-of-trumps-un-address-as-alibaba-unveils-new-ai-chip-dow-jones-sp-nasdaq-wall-street?.tsrc=rss",
+      "published": "2026-09-22T09:36:39Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 88
       }
     ],
-    "headline_count": 140,
+    "headline_count": 138,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
