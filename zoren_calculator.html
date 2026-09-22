@@ -540,104 +540,6 @@
     </div>
   </div>
 
-<!-- TOP TWO-STREAM VALUATION COMMAND CENTER -->
-  <div style="background:var(--bg-card); border:1px solid #334155; border-radius:8px; padding:14px; margin-bottom:14px; box-shadow:0 4px 20px rgba(0,0,0,0.4);">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px; border-bottom:1px solid #1e293b; padding-bottom:10px;">
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span style="font-size:13px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
-          ⚖️ Two-Stream Valuation Command Center
-        </span>
-        <span style="font-size:9.5px; background:rgba(192, 132, 252, 0.15); color:var(--accent-purple); border:1px solid rgba(192, 132, 252, 0.3); padding:2px 7px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-weight:700;">
-          STREAM 1 (PAR ASSET COVERAGE) vs. STREAM 2 (4Y A&amp;E EXTENSION)
-        </span>
-      </div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span style="font-size:10.5px; color:#94a3b8;">Trading Verdict:</span>
-        <span id="reconcile-action-badge" style="font-size:10.5px; font-weight:800; padding:3px 9px; border-radius:4px; font-family:'JetBrains Mono',monospace; background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.3);">
-          ACCUMULATE / BUY
-        </span>
-      </div>
-    </div>
-
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px; font-size:11px; margin-bottom:12px;">
-      <!-- STREAM 1: FUNDAMENTAL EV WATERFALL -->
-      <div style="background:#060913; border:1px solid rgba(56,189,248,0.35); border-radius:6px; padding:12px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:8px;">
-          <div>
-            <span style="font-size:9px; font-weight:800; color:var(--accent-cyan); background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
-              STREAM 1 &bull; ASSET-BACKED
-            </span>
-            <div style="font-size:12px; font-weight:800; color:#fff; margin-top:3px;">Fundamental EV Recovery</div>
-            <div style="font-size:9.5px; color:#94a3b8;">Renewables &amp; Regulated Grid Asset Coverage</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--accent-cyan); line-height:1;" id="stream1-val">100.0c Par</div>
-            <span style="font-size:9px; color:#94a3b8;">Par Coverage (PV)</span>
-          </div>
-        </div>
-        
-        <div style="font-size:10px; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:3px;">
-          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> EBITDA: <span id="s1-ebitda" style="color:#fff; font-weight:600;">$350M</span> &bull; Multiple: <span id="s1-mult" style="color:#fff; font-weight:600;">6.0x</span> &bull; Cash: $240M</div>
-          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> OpCo Priority Debt: $1,200M (Ring-fenced PF + Grid loans)</div>
-          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Net Distributable Pool: <strong style="color:#fff;" id="s1-senior-pool">$1,110M</strong> ($582M Claims)</div>
-          <div><span style="color:#34d399; font-weight:700;">[CALCULATION]</span> Asset Coverage: <strong style="color:#34d399;" id="s1-nominal-rec">190.6% (100.0c)</strong></div>
-          <div><span style="color:#38bdf8; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s1-duration">6M</span> consensual A&amp;E @ <span id="s1-yield">11.00%</span> = <strong style="color:#38bdf8;" id="s1-time-factor">0.0c Drag (Performing)</strong></div>
-          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#94a3b8; font-size:9.5px;">
-            <strong style="color:var(--accent-cyan);">Anchor Question:</strong> What are assets worth if liquidated/reorganized without concessions?
-          </div>
-        </div>
-      </div>
-
-      <!-- STREAM 2: MARKET-BASED PRICING -->
-      <div style="background:#060913; border:1px solid rgba(16,185,129,0.35); border-radius:6px; padding:12px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:8px;">
-          <div>
-            <span style="font-size:9px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
-              STREAM 2 &bull; EXCHANGE TERMS
-            </span>
-            <div style="font-size:12px; font-weight:800; color:#fff; margin-top:3px;">Market-Based Instrument Pricing</div>
-            <div style="font-size:9.5px; color:#94a3b8;">4-Year Amend &amp; Extend (2030) Valuation</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--accent-emerald); line-height:1;" id="stream2-val">95.3c PV</div>
-            <span style="font-size:9px; color:#94a3b8;">Present Value (PV)</span>
-          </div>
-        </div>
-        
-        <div style="font-size:10px; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:3px;">
-          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Terms: 0% Cut &bull; <span id="s2-tenor" style="color:#fff; font-weight:600;">4Y</span> Ext (2030) &bull; <span id="s2-coupon" style="color:#fff; font-weight:600;">9.50%</span> Cpn (+50 bps step-up)</div>
-          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Pro-Forma Leverage: <strong style="color:#fff;" id="s2-leverage">4.16x</strong> &rarr; Implied Exit Yield: <strong style="color:#fbbf24;" id="s2-exit-yield">11.00%</strong></div>
-          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Turkey 4Y (6.75%) + <strong style="color:#38bdf8;" id="s2-spread">+425 bps</strong> Spread</div>
-          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Extended Note PV: <strong style="color:#fbbf24;" id="s2-paper-px">95.3c</strong> (-4.7% Discount to Par)</div>
-          <div><span style="color:#38bdf8; font-weight:700;">[ECONOMIC VALUE]</span> Senior Holding Value: <strong style="color:var(--accent-emerald);" id="s2-true-rec">95.3c</strong></div>
-          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#94a3b8; font-size:9.5px;">
-            <strong style="color:var(--accent-emerald);">Anchor Question:</strong> What will the secondary market pay for the extended paper on Day 1?
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- RECONCILIATION SUMMARY BAR & BUY/SELL SIGNAL -->
-    <div style="background:rgba(15,23,42,0.9); border:1px solid #1e293b; border-radius:6px; padding:10px 14px; font-size:10.5px; color:#cbd5e1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
-        <div>
-          <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px;">Reconciliation Gap (Stream 2 - Stream 1):</span>
-          <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#fbbf24; font-size:12px; margin-left:4px;" id="reconcile-gap">-4.7c</span>
-        </div>
-        <div>
-          <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px;">Market Price:</span>
-          <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; font-size:12px; margin-left:4px;" id="reconcile-mkt-px">94.5c</span>
-        </div>
-      </div>
-      <div>
-        <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px;">Trading Signal:</span>
-        <span id="reconcile-signal-text" style="font-weight:700; color:var(--accent-emerald); margin-left:4px;">BUY / ACCUMULATE &bull; +0.8c Discount + 9.50% Carry</span>
-      </div>
-    </div>
-  </div>
-
-  
-
   <div class="workspace" style="max-width:1600px; margin:0 auto; padding:16px;">
     
   <!-- EXECUTIVE VALUATION BRIDGE & SECONDARY BOND PRICING BAND -->
@@ -998,29 +900,6 @@
           <!-- Populated dynamically -->
         </div>
       </div>
-
-      
-    </div>
-  </div>
-
-  <!-- TAB NAVIGATION BAR FOR DEEP-DIVE SECTIONS -->
-  <div class="tab-navigation-bar">
-    <span style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-right:6px;">Granular Deep Dives:</span>
-    <button id="btn-tab-waterfall" class="tab-btn active" onclick="switchDetailTab('waterfall')">
-      📊 Stream 1: Priority Waterfall (16 Rows)
-    </button>
-    <button id="btn-tab-exityield" class="tab-btn" onclick="switchDetailTab('exityield')">
-      📈 Stream 2: Exit Yield &amp; Extension Pricing Grid
-    </button>
-    <button id="btn-tab-qualitative" class="tab-btn" onclick="switchDetailTab('qualitative')">
-      ⚖️ Qualitative Risk Scorecard
-    </button>
-    <button id="btn-tab-scenarios" class="tab-btn" onclick="switchDetailTab('scenarios')">
-      🎯 Scenario Anatomy &amp; Drivers
-    </button>
-    <button id="btn-tab-all" class="tab-btn" onclick="switchDetailTab('all')" style="margin-left:auto; background:transparent; border-style:dashed;">
-      📋 View All Deep Dives
-    </button>
   
   <!-- Required Terms & Guidance Box -->
   <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px; margin-top:12px;">
@@ -1278,40 +1157,40 @@
     <div class="slider-row">
       <div class="slider-box">
         <div class="slider-header">
-          <span class="slider-label">Turkish Sovereign Macro / Lira FX Beta Delta</span>
-          <span class="slider-val" id="val-qual-macro" style="color:var(--accent-rose);">-1.5c</span>
+          <span class="slider-label">Bank Syndicate Cooperation vs DSRA Cash Trap &amp; Ring-Fencing</span>
+          <span class="slider-val" id="val-qual-yekdem" style="color:var(--accent-rose);">-1.5c</span>
         </div>
-        <input type="range" id="input-qual-macro" min="-5.0" max="2.0" step="0.5" value="-1.5" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Currency volatility &amp; TCMB interest rates (-5c to +2c)</div>
+        <input type="range" id="input-qual-yekdem" min="-4.5" max="2.0" step="0.5" value="-1.5" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">EBRD/IFC &amp; Turkish bank cooperation vs DSRA cash sweep &amp; dividend lockout (-4.5c to +2.0c)</div>
       </div>
 
       <div class="slider-box">
         <div class="slider-header">
-          <span class="slider-label">YEKDEM Tariff Expiry Cliff Risk Delta</span>
-          <span class="slider-val" id="val-qual-yekdem" style="color:var(--accent-rose);">-1.0c</span>
+          <span class="slider-label">Structural Priming &amp; Creditor-on-Creditor Uptier Risk</span>
+          <span class="slider-val" id="val-qual-dorad" style="color:var(--accent-rose);">-0.5c</span>
         </div>
-        <input type="range" id="input-qual-yekdem" min="-4.0" max="2.0" step="0.5" value="-1.0" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">2026–2029 merchant transition (-4c to +2c)</div>
+        <input type="range" id="input-qual-dorad" min="-3.5" max="1.0" step="0.5" value="-0.5" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Bank demands for first-lien share pledges over Yenilenebilir priming HoldCo (-3.5c to +1.0c)</div>
       </div>
     </div>
 
     <div class="slider-row">
       <div class="slider-box">
         <div class="slider-header">
-          <span class="slider-label">Dorad Energy / Geopolitical Tail Delta</span>
-          <span class="slider-val" id="val-qual-dorad" style="color:var(--text-muted);">0.0c</span>
+          <span class="slider-label">Turkish Sovereign Macro &amp; Lira FX Transmission</span>
+          <span class="slider-val" id="val-qual-macro" style="color:var(--accent-rose);">-1.0c</span>
         </div>
-        <input type="range" id="input-qual-dorad" min="-3.0" max="3.0" step="0.5" value="0.0" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Israel asset dividend &amp; sale resolution (-3c to +3c)</div>
+        <input type="range" id="input-qual-macro" min="-4.0" max="2.0" step="0.5" value="-1.0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">TCMB monetary policy, TRY devaluation &amp; sovereign CDS curve (-4.0c to +2.0c)</div>
       </div>
 
       <div class="slider-box">
         <div class="slider-header">
-          <span class="slider-label">Refinancing Execution &amp; Illiquidity Discount</span>
-          <span class="slider-val" id="val-qual-discount" style="color:var(--accent-rose);">-1.0c</span>
+          <span class="slider-label">Zorlu Yenilenebilir IPO &amp; Strategic Monetization Realization</span>
+          <span class="slider-val" id="val-qual-discount" style="color:var(--accent-rose);">-0.5c</span>
         </div>
-        <input type="range" id="input-qual-discount" min="-4.0" max="0.0" step="0.5" value="-1.0" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity (-4c to 0c)</div>
+        <input type="range" id="input-qual-discount" min="-2.5" max="3.5" step="0.5" value="-0.5" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Renewable arm IPO upstreaming vs aborted deal &amp; illiquid firesale (-2.5c to +3.5c)</div>
       </div>
     </div>
 
@@ -1330,96 +1209,73 @@
     <!-- Interactive Qualitative Assessment Guide Accordion -->
     <div style="margin-top:10px; margin-bottom:10px;">
       <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-        <span>📘 Qualitative Assessment Guide: Expressing Risk in Cents of Upside / Discount to Recovery</span>
+        <span>📘 Qualitative Assessment Guide: Creditor Violence, Bank Cooperation &amp; Cents Attribution</span>
         <span id="qual-guide-icon">▼ Click to Expand Guide</span>
       </button>
       
       <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
         <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-          1. Why Express Qualitative Factors in Cents Rather Than %?
+          1. Creditor-on-Creditor Violence vs Bank Syndicate Cooperation: The Game Theory
         </div>
         <p style="margin-bottom:8px;">
-          While Zorlu's fundamental unencumbered asset coverage is robust at <strong>190.6%</strong> ($2,598M EV vs $1,363M net debt), secondary bonds trade at a discount (~94.5c) due to macro and execution frictions. 
-          Expressing qualitative adjustments directly in <strong>cents per dollar of claim (+upside or -discount)</strong> gives direct, actionable attribution:
-          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-weight:700;">Desk Fair Value = Fundamental Senior Recovery + &sum;(&Delta; Cents)</span>.
+          While Zorlu's fundamental asset coverage is <strong>190.6%</strong> ($2,100M operational EV + $240M cash vs $1,200M OpCo loans and $582M HoldCo claims), offshore Eurobond holders ($300M ZOREN 9.00% 2026) are structurally subordinated to project finance banks (EBRD, IFC, Garanti BBVA, Akbank, İşbank).
+          Rather than abstract percentage haircuts, the desk quantifies the real conflict between banks and bondholders in <strong>cents per dollar of claim (+upside or -discount)</strong>:
         </p>
         <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
           <li>
-            <strong style="color:#fff;">Turkish Sovereign Macro / Lira FX Beta (-5.0c to +2.0c):</strong> 
-            Severe Lira devaluation and high domestic CBRT rates compress cash conversion at the regulated grid (-5c discount). Disinflation and currency stabilization provide +2c upside.
+            <strong style="color:#fff;">Bank Syndicate Cooperation vs DSRA Cash Trap (-4.5c to +2.0c):</strong> 
+            Senior secured project finance loans have 6-month Debt Service Reserve Accounts (DSRA) and minimum DSCR covenants (1.15x–1.20x). If banks turn hostile, they can trap all plant cash flows inside OpCo, starving HoldCo of coupon/redemption liquidity (-4.5c discount). If banks cooperate on a consensual A&amp;E, cash flows upstream freely (+2.0c upside). Base Case reflects <strong>-1.5c</strong> friction.
           </li>
           <li>
-            <strong style="color:#fff;">YEKDEM Tariff Expiry Cliff Risk (-4.0c to +2.0c):</strong> 
-            Roll-off of guaranteed feed-in tariffs (10.5c–13.3c/kWh) exposes geothermal assets to merchant volatility (-4c discount). Capacity mechanism reforms provide +2c upside.
+            <strong style="color:#fff;">Structural Priming &amp; Creditor-on-Creditor Uptier Risk (-3.5c to +1.0c):</strong> 
+            Domestic Turkish banks holding bilateral working capital loans could demand first-lien pledges over unencumbered Zorlu Yenilenebilir (renewable subsidiary) or ZES (EV charging) shares as a condition of rolling bank lines, structurally priming HoldCo Eurobonds (-3.5c discount). Supranational DFI oversight (EBRD/IFC) prevents aggressive priming (+1.0c). Base Case reflects <strong>-0.5c</strong>.
           </li>
           <li>
-            <strong style="color:#fff;">Dorad Energy / Geopolitical Tail (-3.0c to +3.0c):</strong> 
-            Trapped cross-border dividends or forced divestment (-3c discount) vs clean stake monetization / dividend resumption (+3c upside).
+            <strong style="color:#fff;">Turkish Sovereign Macro &amp; Lira FX Transmission (-4.0c to +2.0c):</strong> 
+            OEDAŞ grid tariffs and retail revenues are TRY-denominated and EMRA-regulated. Rapid Lira depreciation creates cash conversion lags and high CBRT interest rates compress HoldCo cash (-4.0c discount). Macro stabilization and disinflation yield +2.0c upside. Base Case reflects <strong>-1.0c</strong>.
           </li>
           <li>
-            <strong style="color:#fff;">Refinancing Execution &amp; EM Illiquidity (-4.0c to 0.0c):</strong> 
-            Rollover friction on the $300M 2026 Eurobond maturity wall and CCC/B- dealer spread penalty (-4c to 0c discount).
+            <strong style="color:#fff;">Zorlu Yenilenebilir IPO &amp; Strategic Monetization (-2.5c to +3.5c):</strong> 
+            Successful IPO of the renewable arm on Borsa Istanbul or a minority stake sale to a Gulf sovereign wealth fund (e.g., TAQA, Masdar) would inject $250M+ cash directly to retire 2026 Eurobonds (+3.5c upside). An aborted deal forces high-cost bank refinancing (-2.5c discount). Base Case reflects <strong>-0.5c</strong>.
           </li>
         </ul>
 
         <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-          2. How the Math Works: Direct Cents Addition to Fundamental Value
+          2. Why Banks Cooperate: Four Structural Pillars Preventing Aggressive Foreclosure
         </div>
-        <p style="margin-bottom:6px;">
-          Secondary bond fair value is governed by fundamental recovery plus direct cents adjustments:
-        </p>
-        <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:8px;">
-          &Delta;<sub>qual</sub> = &Delta;<sub>Macro</sub> + &Delta;<sub>YEKDEM</sub> + &Delta;<sub>Dorad</sub> + &Delta;<sub>Illiquidity</sub> (Base = -3.5c)
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:8px; margin-bottom:10px; font-size:10.5px;">
+          <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px; border-radius:4px;">
+            <strong style="color:#38bdf8;">1. Supranational DFI Umbrella (EBRD &amp; IFC):</strong>
+            EBRD and IFC anchor Kızıldere geothermal loans. As multilateral development institutions, their strict charters prevent predatory creditor violence, enforcing consensual, value-maximizing workout standards.
+          </div>
+          <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px; border-radius:4px;">
+            <strong style="color:var(--accent-emerald);">2. Regulatory &amp; Grid Mandate (EMRA):</strong>
+            OEDAŞ supplies 1.95 million customers across 5 Turkish provinces. Turkish energy authorities will not tolerate an aggressive bank enforcement or asset freeze that imperils national grid operations.
+          </div>
+          <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px; border-radius:4px;">
+            <strong style="color:var(--accent-purple);">3. Zorlu Yenilenebilir IPO Equity Cushion:</strong>
+            Banks recognize that their ultimate recovery cushion is the equity value of the renewable arm ($1.2B+). Creditor-on-creditor warfare would destroy the upcoming IPO, destroying bank collateral value.
+          </div>
+          <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px; border-radius:4px;">
+            <strong style="color:var(--accent-amber);">4. Turkish Bank Balance Sheet Shield:</strong>
+            Domestic banks (Garanti, Akbank, İşbank) hold billions in Zorlu conglomerate loans. Forcing a default on ZOREN 2026 Eurobonds triggers Stage 2/3 IFRS 9 NPL provisioning, wiping out bank capital.
+          </div>
         </div>
-        <p style="margin-bottom:8px;">
-          At Base Case: 100.0c fundamental claim + (-3.5c) net qualitative adjustments = <strong>96.5c Desk Fair Value</strong> (vs 94.5c market quote &rarr; +2.0c upside / BUY).
-        </p>
 
         <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-          3. Why Are There 3 Sets of Prices (Floor, Fair, Upside) for Every Scenario?
+          3. How the Math Works: Direct Cents Bridge from Par Coverage to Desk Fair Value
+        </div>
+        <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:8px;">
+          &Delta;<sub>qual</sub> = &Delta;<sub>Bank Cooperation</sub> + &Delta;<sub>Priming Risk</sub> + &Delta;<sub>Macro/FX</sub> + &Delta;<sub>IPO Realization</sub><br>
+          Base: (-1.5c) + (-0.5c) + (-1.0c) + (-0.5c) = -3.5c Net Qualitative Adjustment
         </div>
         <p style="margin-bottom:8px;">
-          A crucial distinction in institutional credit modeling is between <strong>Macro Fundamental Regimes (The Scenario Presets)</strong> and <strong>Secondary Market Trading Bands (Market Execution Dispersion)</strong>:
+          At Base Case: 100.0c fundamental asset coverage + (-3.5c) net qualitative adjustments = <strong>96.5c Desk Fair Value</strong> (vs 94.5c secondary market quote &rarr; +2.0c discount + 9.50% carry &rarr; <strong>ACCUMULATE / BUY</strong>).
         </p>
-        <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px; margin-bottom:10px;">
-          <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px 10px; border-radius:4px;">
-            <strong style="color:#fff;">• The Scenario Presets / Sliders (The Fundamental Reality):</strong>
-            Sets the operational baseline: Consolidated EBITDA ($350M Base), Multiple (6.0x), Priority Secured Loans ($1,200M), and Net Qualitative Friction (-3.5c).
-          </div>
-          <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-            <strong style="color:var(--accent-rose);">• Trading Floor (Stress Exit / Secondary Bid):</strong>
-            Even if the company achieves this scenario's refinancing terms, secondary trading conditions may be hostile. If Turkish sovereign macro risk widens clearing exit yields to 13.00%+ (+200 bps blowout) and dealer illiquidity discounts apply, secondary prices drop to this floor (e.g. ~59c).
-          </div>
-          <div style="border-left:3px solid var(--accent-emerald); background:rgba(16,185,129,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-            <strong style="color:var(--accent-emerald);">• Desk Fair Value (Central Model / Expected PV):</strong>
-            The theoretical present value under dialed-in inputs: 100.0c fundamental asset coverage minus -3.5c net qualitative adjustments = <strong>96.5c Desk Fair Value</strong> (vs 94.5c market quote &rarr; +2.0c upside / BUY).
-          </div>
-          <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-            <strong style="color:var(--accent-cyan);">• Emergence Upside (Post-Reorg Re-Rating):</strong>
-            Conversely, if Turkey sovereign CDS tightens sub-250 bps and Zorlu Yenilenebilir IPO cash injects liquidity, clearing exit yields compress to 9.00% (par) or early tender calls at <strong>100c–102.5c par</strong>.
-          </div>
-        </div>
 
-        <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-          4. Scenario Presets: What Concrete Fundamental Catalysts Drive Bear, Base, and Bull Scenarios?
-        </div>
-        <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
-          <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-            <strong style="color:var(--accent-rose);">🔴 Bear Case Scenario (65c–75c Recovery):</strong>
-            Severe prolonged hydrological drought (hydro output down &gt;40%); EMRA imposes emergency retail tariff caps; Turkish macroeconomic stress spikes CDS &gt;400 bps; EBITDA drops to $190M at 5.0x multiple ($950M EV); asset coverage drops below 100%, forcing a contentious 25% principal haircut.
-          </div>
-          <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-            <strong style="color:var(--accent-gold);">🟡 Base Case Scenario (94c–96c Fair Value):</strong>
-            Normalized hydro and geothermal load factors; $280M EBITDA at 7.0x multiple ($1,960M EV = 143.8% asset coverage); parent Korteks contagion successfully firewalled; consensual 4-year Amend &amp; Extend (A&amp;E) maturity extension to 2030 at a 9.50% coupon. At an 11.0% exit yield, the 2030 paper trades at 95.3c, perfectly validating today's 94.5c secondary price.
-          </div>
-          <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-            <strong style="color:var(--accent-cyan);">🟢 Bull Case Scenario (100c Par Refinancing):</strong>
-            Successful IPO or minority stake sale in Zorlu Yenilenebilir to a Gulf sovereign wealth fund, injecting $400M+ in equity; Turkey sovereign CDS tightens sub-200 bps; EBITDA reaches $350M at 8.0x multiple ($2,800M EV); net debt drops below $900M (&lt;2.6x leverage); notes are refinanced at 100c par.
-          </div>
-        </div>
-        
         <div style="margin-top:8px; text-align:right;">
-          <a href="zoren_background.html#qualitative-guide" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">&rarr; Read Complete Institutional Qualitative Deep Dive in Background Page</a>
+          <a href="zoren_background.html#creditor-violence" target="_blank" style="color:var(--accent-rose); text-decoration:none; font-weight:700; font-size:10px; margin-right:12px;">⚔️ Read Full Creditor Violence Deep Dive in Background Page &rarr;</a>
+          <a href="zoren_background.html#qualitative-guide" target="_blank" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">📖 Complete Qualitative Guide &rarr;</a>
         </div>
       </div>
     </div>
@@ -1604,8 +1460,6 @@
   </div>
   </div>
 
-  </div>
-
   <script>
     function switchDetailTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -1644,18 +1498,18 @@
     // Presets definitions
     const PRESETS = {
       base: {
-        duration: 12,
+        duration: 6,
         sponsorEquity: 0,
         seniorHaircut: 0,
-        extension: 3,
-        coupon: 9.0,
+        extension: 4,
+        coupon: 9.5,
         debtEquity: 0,
         pikCoupon: 0.0,
         pikYears: 0,
-        qualMacro: -1.5,
-        qualYekdem: -1.0,
-        qualDorad: 0.0,
-        qualDiscount: -1.0,
+        qualYekdem: -1.5,
+        qualDorad: -0.5,
+        qualMacro: -1.0,
+        qualDiscount: -0.5,
         assets: { kizildere: [135, 6.5, true], alasehir: [25, 6.0, true], gokcedag: [28, 6.0, true], hydro_fleet: [22, 5.5, true], oedas_grid: [85, 6.5, true], zes_charging: [15, 8.0, true], cogen_thermal: [20, 4.5, true], international: [20, 5.0, true] }
       },
       extend: {
@@ -1663,14 +1517,14 @@
         sponsorEquity: 50,
         seniorHaircut: 0,
         extension: 5,
-        coupon: 8.5,
+        coupon: 9.0,
         debtEquity: 0,
         pikCoupon: 0.0,
         pikYears: 0,
-        qualMacro: -1.0,
         qualYekdem: -0.5,
         qualDorad: 0.0,
-        qualDiscount: -0.5,
+        qualMacro: -0.5,
+        qualDiscount: 0.0,
         assets: { kizildere: [140, 6.5, true], alasehir: [25, 6.0, true], gokcedag: [28, 6.0, true], hydro_fleet: [22, 5.5, true], oedas_grid: [90, 6.5, true], zes_charging: [18, 8.5, true], cogen_thermal: [20, 4.5, true], international: [20, 5.0, true] }
       },
       ipo_recap: {
@@ -1682,10 +1536,10 @@
         debtEquity: 0,
         pikCoupon: 0.0,
         pikYears: 0,
-        qualMacro: 1.0,
-        qualYekdem: 0.5,
-        qualDorad: 1.5,
-        qualDiscount: 0.0,
+        qualYekdem: 2.0,
+        qualDorad: 1.0,
+        qualMacro: 1.5,
+        qualDiscount: 3.5,
         assets: { kizildere: [145, 7.0, true], alasehir: [28, 6.5, true], gokcedag: [30, 6.5, true], hydro_fleet: [25, 6.0, true], oedas_grid: [95, 7.0, true], zes_charging: [20, 10.0, true], cogen_thermal: [20, 4.5, true], international: [22, 5.5, true] }
       },
       haircut: {
@@ -1697,9 +1551,9 @@
         debtEquity: 15,
         pikCoupon: 2.0,
         pikYears: 2,
-        qualMacro: -3.0,
-        qualYekdem: -2.0,
-        qualDorad: -1.5,
+        qualYekdem: -3.0,
+        qualDorad: -2.0,
+        qualMacro: -2.5,
         qualDiscount: -1.5,
         assets: { kizildere: [120, 5.5, true], alasehir: [20, 5.0, true], gokcedag: [24, 5.0, true], hydro_fleet: [18, 4.5, true], oedas_grid: [75, 5.5, true], zes_charging: [12, 6.0, true], cogen_thermal: [15, 3.5, true], international: [15, 4.0, true] }
       },
@@ -1712,9 +1566,9 @@
         debtEquity: 30,
         pikCoupon: 3.5,
         pikYears: 3,
-        qualMacro: -5.0,
-        qualYekdem: -3.5,
-        qualDorad: -2.5,
+        qualYekdem: -4.5,
+        qualDorad: -3.5,
+        qualMacro: -4.0,
         qualDiscount: -2.5,
         assets: { kizildere: [100, 4.5, true], alasehir: [15, 4.0, true], gokcedag: [18, 4.0, true], hydro_fleet: [12, 3.5, true], oedas_grid: [60, 4.5, true], zes_charging: [8, 4.5, true], cogen_thermal: [10, 3.0, true], international: [10, 3.0, true] }
       }
