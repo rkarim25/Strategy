@@ -428,6 +428,44 @@
       line-height: 1.45;
       color: #e2e8f0;
     }
+
+    /* Tab Navigation for Detailed Sections */
+    .tab-navigation-bar {
+      display: flex;
+      gap: 6px;
+      margin: 18px 0 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+      border-color: var(--border-highlight);
+      background: var(--bg-card-sub);
+    }
+    .tab-btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .detail-tab-pane {
+      transition: opacity 0.2s ease;
+    }
   </style>
 </head>
 <body>
@@ -451,15 +489,19 @@
     </div>
 
     <div class="metrics-strip">
-      <div class="metric-hero">
-        <div class="lbl">Economic Recovery (PV)</div>
+      <div class="metric-hero" style="border-color:rgba(56,189,248,0.4);">
+        <div class="lbl" style="color:var(--accent-cyan); font-weight:700;">Stream 1 (Asset PV)</div>
+        <div class="val" id="top-s1-pv" style="color:var(--accent-cyan);">71.5<span>c</span></div>
+      </div>
+      <div class="metric-hero emerald" style="border-color:rgba(16,185,129,0.4);">
+        <div class="lbl" style="color:var(--accent-emerald); font-weight:700;">Stream 2 (Market PV)</div>
         <div class="val" id="top-senior-recovery">54.0<span>c</span></div>
       </div>
       <div class="metric-hero gold">
         <div class="lbl">Pro-Forma Net Lev</div>
         <div class="val" id="top-proforma-lev">3.20<span>x</span></div>
       </div>
-      <div class="metric-hero emerald">
+      <div class="metric-hero">
         <div class="lbl">SOTP Ent. Value</div>
         <div class="val" id="top-sotp-ev">$7,000<span>M</span></div>
       </div>
@@ -469,11 +511,113 @@
     </div>
   </div>
 
+<!-- TOP TWO-STREAM VALUATION COMMAND CENTER -->
+  <div style="background:var(--bg-card); border:1px solid #334155; border-radius:8px; padding:14px; margin-bottom:14px; box-shadow:0 4px 20px rgba(0,0,0,0.4);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px; border-bottom:1px solid #1e293b; padding-bottom:10px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:13px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
+          ⚖️ Two-Stream Valuation Command Center
+        </span>
+        <span style="font-size:9.5px; background:rgba(192, 132, 252, 0.15); color:var(--accent-purple); border:1px solid rgba(192, 132, 252, 0.3); padding:2px 7px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-weight:700;">
+          STREAM 1 (ASSET BACKING) vs. STREAM 2 (EXCHANGE PRICING)
+        </span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:10.5px; color:#94a3b8;">Trading Verdict:</span>
+        <span id="reconcile-action-badge" style="font-size:10.5px; font-weight:800; padding:3px 9px; border-radius:4px; font-family:'JetBrains Mono',monospace; background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3);">
+          HOLD / FAIR VALUE
+        </span>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px; font-size:11px; margin-bottom:12px;">
+      <!-- STREAM 1: FUNDAMENTAL EV WATERFALL -->
+      <div style="background:#060913; border:1px solid rgba(56,189,248,0.35); border-radius:6px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:8px;">
+          <div>
+            <span style="font-size:9px; font-weight:800; color:var(--accent-cyan); background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+              STREAM 1 &bull; ASSET-BACKED
+            </span>
+            <div style="font-size:12px; font-weight:800; color:#fff; margin-top:3px;">Fundamental EV Recovery</div>
+            <div style="font-size:9.5px; color:#94a3b8;">Absolute Priority Enterprise Value Waterfall</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--accent-cyan); line-height:1;" id="stream1-val">71.5c PV</div>
+            <span style="font-size:9px; color:#94a3b8;">Present Value (PV)</span>
+          </div>
+        </div>
+        
+        <div style="font-size:10px; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:3px;">
+          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> EBITDA: <span id="s1-ebitda" style="color:#fff; font-weight:600;">$1,340M</span> &bull; Mult: <span id="s1-mult" style="color:#fff; font-weight:600;">6.5x</span> &bull; Cash: $900M</div>
+          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Priority Claims: $1.1B Bank + <span id="s1-maceio" style="color:#fff; font-weight:600;">$600M</span> Maceió + Burn</div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Net Distributable Pool: <strong style="color:#fff;" id="s1-senior-pool">$7,230M</strong> ($9.2B Claims)</div>
+          <div><span style="color:#34d399; font-weight:700;">[CALCULATION]</span> Nominal Asset Coverage: <strong style="color:#34d399;" id="s1-nominal-rec">78.6c</strong></div>
+          <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s1-duration">12M</span> negotiation @ <span id="s1-yield">9.75%</span> = <strong style="color:#f87171;" id="s1-time-factor">-9.1%</strong></div>
+          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#94a3b8; font-size:9.5px;">
+            <strong style="color:var(--accent-cyan);">Anchor Question:</strong> What are assets worth if liquidated/reorganized without concessions?
+          </div>
+        </div>
+      </div>
+
+      <!-- STREAM 2: MARKET-BASED PRICING -->
+      <div style="background:#060913; border:1px solid rgba(16,185,129,0.35); border-radius:6px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:8px;">
+          <div>
+            <span style="font-size:9px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+              STREAM 2 &bull; EXCHANGE TERMS
+            </span>
+            <div style="font-size:12px; font-weight:800; color:#fff; margin-top:3px;">Market-Based Instrument Pricing</div>
+            <div style="font-size:9.5px; color:#94a3b8;">Restructured Paper Trading &amp; Day-1 Valuation</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--accent-emerald); line-height:1;" id="stream2-val">54.0c PV</div>
+            <span style="font-size:9px; color:#94a3b8;">Present Value (PV)</span>
+          </div>
+        </div>
+        
+        <div style="font-size:10px; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:3px;">
+          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Terms: <span id="s2-haircut" style="color:#fff; font-weight:600;">35%</span> Cut &bull; <span id="s2-swap" style="color:#fff; font-weight:600;">30%</span> Eq Swap &bull; <span id="s2-coupon" style="color:#fff; font-weight:600;">7.50%</span> Cpn &bull; <span id="s2-tenor" style="color:#fff; font-weight:600;">8Y</span> Tenor</div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Pro-Forma Leverage: <strong style="color:#fff;" id="s2-leverage">3.40x</strong> &rarr; Exit Yield: <strong style="color:#fbbf24;" id="s2-exit-yield">9.75%</strong></div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> New Paper Px: <strong style="color:#fbbf24;" id="s2-paper-px">87.7c</strong> (Debt: <span id="s2-debt-pot">39.9c</span> + Eq: <span id="s2-eq-pot">19.5c</span>)</div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Undiscounted Emergence Pot: <strong style="color:#fff;" id="s2-emergence-pot">59.4c</strong></div>
+          <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s2-duration">12M</span> carry bleed @ <span id="s2-yield">9.75%</span> = <strong style="color:#f87171;" id="s2-time-factor">-9.1%</strong></div>
+          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#94a3b8; font-size:9.5px;">
+            <strong style="color:var(--accent-emerald);">Anchor Question:</strong> What will the secondary market pay for restructured paper on Day 1?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECONCILIATION SUMMARY BAR & BUY/SELL SIGNAL -->
+    <div style="background:rgba(15,23,42,0.9); border:1px solid #1e293b; border-radius:6px; padding:10px 14px; font-size:10.5px; color:#cbd5e1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+        <div>
+          <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px;">Reconciliation Gap (Stream 2 - Stream 1):</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#f87171; font-size:12px; margin-left:4px;" id="reconcile-gap">-17.5c</span>
+        </div>
+        <div>
+          <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px;">Market Price:</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; font-size:12px; margin-left:4px;" id="reconcile-mkt-px">54.0c</span>
+        </div>
+      </div>
+      <div>
+        <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px;">Trading Signal:</span>
+        <span id="reconcile-signal-text" style="font-weight:700; color:var(--accent-amber); margin-left:4px;">Fairly Priced &bull; Asset Cushion Prevents Crash</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Main 2-Column Calculation Workspace -->
   <div class="engine-layout">
 
-    <!-- LEFT COLUMN: SOTP Asset Multiples & Restructuring Mechanics -->
+    <!-- LEFT COLUMN: STREAM 1 ASSET VALUATION -->
     <div>
+      <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:6px; padding:6px 12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:11px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.5px;">
+          🏢 STREAM 1 CONTROLS: Asset Valuation &amp; SOTP Multiples
+        </span>
+        <span style="font-size:9px; color:#94a3b8; font-family:'JetBrains Mono',monospace;">Feeds Asset Coverage</span>
+      </div>
 
       <!-- CARD 1: SOTP Asset Selection & Multiples Sandbox -->
       <div class="card">
@@ -637,8 +781,14 @@
 
     </div>
 
-    <!-- RIGHT COLUMN: Sustainability Engine & Qualitative Pricing Bands -->
+    <!-- RIGHT COLUMN: STREAM 2 RESTRUCTURING TERMS & EXIT YIELD -->
     <div>
+      <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:6px; padding:6px 12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:11px; font-weight:800; color:var(--accent-emerald); text-transform:uppercase; letter-spacing:0.5px;">
+          📜 STREAM 2 CONTROLS: Restructuring Terms &amp; Leverage Yield
+        </span>
+        <span style="font-size:9px; color:#94a3b8; font-family:'JetBrains Mono',monospace;">Feeds New Paper Price</span>
+      </div>
 
       <!-- CARD 3: Balance Sheet Sustainability Engine -->
       <div class="card">
@@ -692,7 +842,213 @@
         </div>
       </div>
 
-      <!-- CARD 4: Qualitative Risk Haircut & Dynamic Pricing Bands -->
+      
+    </div>
+  </div>
+
+  <!-- TAB NAVIGATION BAR FOR DEEP-DIVE SECTIONS -->
+  <div class="tab-navigation-bar">
+    <span style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-right:6px;">Granular Deep Dives:</span>
+    <button id="btn-tab-waterfall" class="tab-btn active" onclick="switchDetailTab('waterfall')">
+      📊 Stream 1: Priority Waterfall (16 Rows)
+    </button>
+    <button id="btn-tab-exityield" class="tab-btn" onclick="switchDetailTab('exityield')">
+      📈 Stream 2: Exit Yield &amp; Paper Trading Grid
+    </button>
+    <button id="btn-tab-qualitative" class="tab-btn" onclick="switchDetailTab('qualitative')">
+      ⚖️ Qualitative Risk Adjustments
+    </button>
+    <button id="btn-tab-scenarios" class="tab-btn" onclick="switchDetailTab('scenarios')">
+      🎯 Scenario Anatomy &amp; Drivers
+    </button>
+    <button id="btn-tab-all" class="tab-btn" onclick="switchDetailTab('all')" style="margin-left:auto; background:transparent; border-style:dashed;">
+      📋 View All Deep Dives
+    </button>
+  </div>
+
+  <!-- PANE: WATERFALL (Card 5) -->
+  <div id="pane-waterfall" class="detail-tab-pane">
+    <!-- CARD 5: Comprehensive Step-by-Step Priority Recovery Waterfall (Full Width) -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>🌊</span> 5. Step-by-Step Dynamic Priority Recovery Waterfall &amp; Value Available to Bondholders
+      </span>
+      <span class="sub">Absolute Priority Rule (APR) &bull; Dynamic Capital Structure Value Allocation</span>
+    </div>
+
+    <!-- Visual Stacked Capital Structure Allocation Bar -->
+    <div style="margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
+        <span>Enterprise Value Allocation by Priority Tier:</span>
+        <span id="wf-bar-total-label" style="color:#fff; font-family:'JetBrains Mono',monospace;">Total Distributable Value: $7,900M</span>
+      </div>
+      <div style="height:26px; border-radius:6px; overflow:hidden; display:flex; background:#0f172a; border:1px solid #1e293b; box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);" id="wf-stacked-bar">
+        <!-- Filled dynamically -->
+      </div>
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:8px; font-size:10.5px;">
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#f87171; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Priority Claims (PPE/Maceió/Fees): <strong id="wf-legend-priority" style="color:#f87171;">$1,800M (22.8%)</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#34d399; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Senior Unsecured Pool: <strong id="wf-legend-senior" style="color:#34d399;">$6,100M (77.2%)</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#c084fc; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Subordinated 2081 Hybrid: <strong id="wf-legend-hybrid" style="color:#c084fc;">$0M (0.0%)</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#38bdf8; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Existing Equity Residual: <strong id="wf-legend-equity" style="color:#38bdf8;">$0M (0.0%)</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- The 16-Row Step-by-Step Priority Waterfall Table -->
+    <div style="overflow-x:auto;">
+      <table class="band-table" id="dynamic-waterfall-table" style="width:100%; font-size:11px;">
+        <thead>
+          <tr style="background:#0f172a;">
+            <th style="text-align:left; width:4%;">#</th>
+            <th style="text-align:left; width:34%;">Waterfall Step / Capital Tier</th>
+            <th style="text-align:right; width:16%;">Current Scenario ($M)</th>
+            <th style="text-align:right; width:16%;">Implied Recovery / Unit</th>
+            <th style="text-align:left; width:30%;">Governing Mechanics &amp; Legal Priority</th>
+          </tr>
+        </thead>
+        <tbody id="dynamic-waterfall-tbody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tranche Level Allocation Table -->
+    <div style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
+      <div style="font-size:10.5px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+        Tranche-by-Tranche Claim Allocation &amp; Recovery Dollar Distribution
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="band-table" id="tranche-allocation-table" style="width:100%; font-size:11px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Tranche / Debt Instrument</th>
+              <th style="text-align:left;">Seniority Tier</th>
+              <th style="text-align:right;">Claim Face ($M)</th>
+              <th style="text-align:right;">Market Px</th>
+              <th style="text-align:right;">Allocated Value ($M)</th>
+              <th style="text-align:right;">Clean Recovery Px</th>
+              <th style="text-align:right;">Adjusted Exit Px</th>
+              <th style="text-align:center;">Implied Upside</th>
+            </tr>
+          </thead>
+          <tbody id="tranche-allocation-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- PANE: EXIT YIELD MATRIX (Card 6) -->
+  <div id="pane-exityield" class="detail-tab-pane" style="display:none;">
+    <!-- CARD 6: Exit Yield Discounting & Reinstated Paper Trading Engine -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>🎯</span> 6. Exit Yield Discounting &amp; True Economic Recovery Engine
+      </span>
+      <span class="sub">Market-Clearing Post-Reorg Yield &bull; Bond Duration &amp; Coupon Parity Pricing</span>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Reinstated Exit Note Tenor</span>
+          <span class="slider-val" id="val-exit-tenor">8 Years</span>
+        </div>
+        <input type="range" id="input-exit-tenor" min="3" max="12" step="1" value="8" oninput="syncTenor(this.value)">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new exit debt instruments</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Reinstated Cash Coupon</span>
+          <span class="slider-val" id="val-exit-coupon">7.50%</span>
+        </div>
+        <input type="range" id="input-exit-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="syncCoupon(this.value)">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Annual cash coupon paid semi-annually on new exit notes</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Required Market Exit Yield</span>
+          <span class="slider-val" id="val-exit-yield">9.75%</span>
+        </div>
+        <input type="range" id="input-exit-yield" min="7.0" max="15.0" step="0.25" value="9.75" oninput="onManualExitYield(this.value)">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+          <span>Market-clearing yield for post-reorg paper</span>
+          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
+            <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">3.40x &rarr; 9.75%</span>)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exit Yield Key Valuation Metric Cards -->
+    <div class="meter-grid" style="margin-top:12px;">
+      <div class="meter-card">
+        <div class="meter-title">Trading Price of New Notes</div>
+        <div class="meter-val" id="meter-exit-bond-px" style="color:#fbbf24;">87.7c</div>
+        <div class="meter-sub" id="meter-exit-bond-discount" style="color:var(--accent-rose);">-12.3% Below Par Face Value</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-title">True Senior Economic Recovery</div>
+        <div class="meter-val" id="meter-exit-economic-rec" style="color:var(--accent-emerald);">62.0c</div>
+        <div class="meter-sub" id="meter-exit-nominal-rec" style="color:#94a3b8;">vs 66.3c Nominal Plan Coverage</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-title">Implied Reorg Spread over UST</div>
+        <div class="meter-val" id="meter-exit-spread" style="color:#38bdf8;">+600 bps</div>
+        <div class="meter-sub">Over 8Y US Treasury Yield (3.75%)</div>
+      </div>
+    </div>
+
+    <!-- Interactive Exit Yield Sensitivity Table -->
+    <div style="margin-top:14px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+        <span>Exit Yield Sensitivity Matrix: Post-Emergence Trading Value</span>
+        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Cash Coupon: <span id="matrix-coupon-label">7.50%</span> | PIK: <span id="matrix-pik-label" style="color:var(--accent-purple); font-weight:700;">0.00% (0Y)</span> | Tenor: <span id="matrix-tenor-label">8Y</span></span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Exit Yield (Y_exit)</th>
+              <th style="text-align:right;">Implied Spread</th>
+              <th style="text-align:right;">Trading Px of New Debt</th>
+              <th style="text-align:right;">Debt Value (35c Face)</th>
+              <th style="text-align:right;">Reorg Equity Value</th>
+              <th style="text-align:right;">True Economic Recovery</th>
+              <th style="text-align:right;">Variance vs Nominal</th>
+              <th style="text-align:center;">Desk Action</th>
+            </tr>
+          </thead>
+          <tbody id="exit-yield-matrix-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANE: QUALITATIVE (Card 4) -->
+  <div id="pane-qualitative" class="detail-tab-pane" style="display:none;">
+    <!-- CARD 4: Qualitative Risk Haircut & Dynamic Pricing Bands -->
       <div class="card">
         <div class="card-title">
           <span>4. Exit Yield, Qualitative Risk &amp; Dynamic Secondary Pricing Bands</span>
@@ -909,248 +1265,11 @@
             </tbody>
           </table>
         </div>
-
-      </div>
-
-    </div>
-
   </div>
 
-  <!-- CARD 5: Comprehensive Step-by-Step Priority Recovery Waterfall (Full Width) -->
-  <div class="card" style="margin-top:14px;">
-    <div class="card-title">
-      <span style="display:flex; align-items:center; gap:8px;">
-        <span>🌊</span> 5. Step-by-Step Dynamic Priority Recovery Waterfall &amp; Value Available to Bondholders
-      </span>
-      <span class="sub">Absolute Priority Rule (APR) &bull; Dynamic Capital Structure Value Allocation</span>
-    </div>
-
-    <!-- Visual Stacked Capital Structure Allocation Bar -->
-    <div style="margin-bottom:16px;">
-      <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
-        <span>Enterprise Value Allocation by Priority Tier:</span>
-        <span id="wf-bar-total-label" style="color:#fff; font-family:'JetBrains Mono',monospace;">Total Distributable Value: $7,900M</span>
-      </div>
-      <div style="height:26px; border-radius:6px; overflow:hidden; display:flex; background:#0f172a; border:1px solid #1e293b; box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);" id="wf-stacked-bar">
-        <!-- Filled dynamically -->
-      </div>
-      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:8px; font-size:10.5px;">
-        <div style="display:flex; align-items:center; gap:5px;">
-          <span style="width:10px; height:10px; background:#f87171; border-radius:2px; display:inline-block;"></span>
-          <span style="color:#94a3b8;">Priority Claims (PPE/Maceió/Fees): <strong id="wf-legend-priority" style="color:#f87171;">$1,800M (22.8%)</strong></span>
-        </div>
-        <div style="display:flex; align-items:center; gap:5px;">
-          <span style="width:10px; height:10px; background:#34d399; border-radius:2px; display:inline-block;"></span>
-          <span style="color:#94a3b8;">Senior Unsecured Pool: <strong id="wf-legend-senior" style="color:#34d399;">$6,100M (77.2%)</strong></span>
-        </div>
-        <div style="display:flex; align-items:center; gap:5px;">
-          <span style="width:10px; height:10px; background:#c084fc; border-radius:2px; display:inline-block;"></span>
-          <span style="color:#94a3b8;">Subordinated 2081 Hybrid: <strong id="wf-legend-hybrid" style="color:#c084fc;">$0M (0.0%)</strong></span>
-        </div>
-        <div style="display:flex; align-items:center; gap:5px;">
-          <span style="width:10px; height:10px; background:#38bdf8; border-radius:2px; display:inline-block;"></span>
-          <span style="color:#94a3b8;">Existing Equity Residual: <strong id="wf-legend-equity" style="color:#38bdf8;">$0M (0.0%)</strong></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- The 16-Row Step-by-Step Priority Waterfall Table -->
-    <div style="overflow-x:auto;">
-      <table class="band-table" id="dynamic-waterfall-table" style="width:100%; font-size:11px;">
-        <thead>
-          <tr style="background:#0f172a;">
-            <th style="text-align:left; width:4%;">#</th>
-            <th style="text-align:left; width:34%;">Waterfall Step / Capital Tier</th>
-            <th style="text-align:right; width:16%;">Current Scenario ($M)</th>
-            <th style="text-align:right; width:16%;">Implied Recovery / Unit</th>
-            <th style="text-align:left; width:30%;">Governing Mechanics &amp; Legal Priority</th>
-          </tr>
-        </thead>
-        <tbody id="dynamic-waterfall-tbody">
-          <!-- Populated dynamically via JS -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Tranche Level Allocation Table -->
-    <div style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
-      <div style="font-size:10.5px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
-        Tranche-by-Tranche Claim Allocation &amp; Recovery Dollar Distribution
-      </div>
-      <div style="overflow-x:auto;">
-        <table class="band-table" id="tranche-allocation-table" style="width:100%; font-size:11px;">
-          <thead>
-            <tr>
-              <th style="text-align:left;">Tranche / Debt Instrument</th>
-              <th style="text-align:left;">Seniority Tier</th>
-              <th style="text-align:right;">Claim Face ($M)</th>
-              <th style="text-align:right;">Market Px</th>
-              <th style="text-align:right;">Allocated Value ($M)</th>
-              <th style="text-align:right;">Clean Recovery Px</th>
-              <th style="text-align:right;">Adjusted Exit Px</th>
-              <th style="text-align:center;">Implied Upside</th>
-            </tr>
-          </thead>
-          <tbody id="tranche-allocation-tbody">
-            <!-- Populated dynamically via JS -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- CARD 6: Exit Yield Discounting & Reinstated Paper Trading Engine -->
-  <div class="card" style="margin-top:14px;">
-    <div class="card-title">
-      <span style="display:flex; align-items:center; gap:8px;">
-        <span>🎯</span> 6. Exit Yield Discounting &amp; True Economic Recovery Engine
-      </span>
-      <span class="sub">Market-Clearing Post-Reorg Yield &bull; Bond Duration &amp; Coupon Parity Pricing</span>
-    </div>
-
-    <div class="slider-row">
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Reinstated Exit Note Tenor</span>
-          <span class="slider-val" id="val-exit-tenor">8 Years</span>
-        </div>
-        <input type="range" id="input-exit-tenor" min="3" max="12" step="1" value="8" oninput="syncTenor(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new exit debt instruments</div>
-      </div>
-
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Reinstated Cash Coupon</span>
-          <span class="slider-val" id="val-exit-coupon">7.50%</span>
-        </div>
-        <input type="range" id="input-exit-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="syncCoupon(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Annual cash coupon paid semi-annually on new exit notes</div>
-      </div>
-
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Required Market Exit Yield</span>
-          <span class="slider-val" id="val-exit-yield">9.75%</span>
-        </div>
-        <input type="range" id="input-exit-yield" min="7.0" max="15.0" step="0.25" value="9.75" oninput="onManualExitYield(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-          <span>Market-clearing yield for post-reorg paper</span>
-          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
-            <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">3.40x &rarr; 9.75%</span>)
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Exit Yield Key Valuation Metric Cards -->
-    <div class="meter-grid" style="margin-top:12px;">
-      <div class="meter-card">
-        <div class="meter-title">Trading Price of New Notes</div>
-        <div class="meter-val" id="meter-exit-bond-px" style="color:#fbbf24;">87.7c</div>
-        <div class="meter-sub" id="meter-exit-bond-discount" style="color:var(--accent-rose);">-12.3% Below Par Face Value</div>
-      </div>
-
-      <div class="meter-card">
-        <div class="meter-title">True Senior Economic Recovery</div>
-        <div class="meter-val" id="meter-exit-economic-rec" style="color:var(--accent-emerald);">62.0c</div>
-        <div class="meter-sub" id="meter-exit-nominal-rec" style="color:#94a3b8;">vs 66.3c Nominal Plan Coverage</div>
-      </div>
-
-      <div class="meter-card">
-        <div class="meter-title">Implied Reorg Spread over UST</div>
-        <div class="meter-val" id="meter-exit-spread" style="color:#38bdf8;">+600 bps</div>
-        <div class="meter-sub">Over 8Y US Treasury Yield (3.75%)</div>
-      </div>
-    </div>
-
-    <!-- Interactive Exit Yield Sensitivity Table -->
-    <div style="margin-top:14px;">
-      <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-        <span>Exit Yield Sensitivity Matrix: Post-Emergence Trading Value</span>
-        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Cash Coupon: <span id="matrix-coupon-label">7.50%</span> | PIK: <span id="matrix-pik-label" style="color:var(--accent-purple); font-weight:700;">0.00% (0Y)</span> | Tenor: <span id="matrix-tenor-label">8Y</span></span>
-      </div>
-      <div style="overflow-x:auto;">
-        <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
-          <thead>
-            <tr>
-              <th style="text-align:left;">Exit Yield (Y_exit)</th>
-              <th style="text-align:right;">Implied Spread</th>
-              <th style="text-align:right;">Trading Px of New Debt</th>
-              <th style="text-align:right;">Debt Value (35c Face)</th>
-              <th style="text-align:right;">Reorg Equity Value</th>
-              <th style="text-align:right;">True Economic Recovery</th>
-              <th style="text-align:right;">Variance vs Nominal</th>
-              <th style="text-align:center;">Desk Action</th>
-            </tr>
-          </thead>
-          <tbody id="exit-yield-matrix-tbody">
-            <!-- Populated dynamically via JS -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TWO-STREAM RECONCILIATION BRIDGE: FUNDAMENTAL EV VS MARKET-BASED PRICING -->
-    <div style="background:var(--bg-card-sub); border:1px solid #334155; border-radius:8px; padding:14px; margin-top:14px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-        <span style="font-size:11.5px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.5px;">
-          ⚖️ Two-Stream Valuation Reconciliation: Fundamental EV vs Market-Based Pricing
-        </span>
-        <span id="reconcile-action-badge" style="font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; font-family:'JetBrains Mono',monospace; background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3);">HOLD / FAIR VALUE</span>
-      </div>
-
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; font-size:11px;">
-        <!-- STREAM 1: FUNDAMENTAL EV WATERFALL -->
-        <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
-            <strong style="color:var(--accent-emerald);">STREAM 1: FUNDAMENTAL EV RECOVERY</strong>
-            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-emerald);" id="stream1-val">71.5c PV</span>
-          </div>
-          <div style="font-size:10px; color:#94a3b8; line-height:1.5;">
-            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> EBITDA: <span id="s1-ebitda">$1,340M</span> &bull; Multiple: <span id="s1-mult">6.5x</span> &bull; Cash: $900M</div>
-            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Priority Claims: $1.1B Bank + <span id="s1-maceio">$600M</span> Maceió + Legal Burn</div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Net Distributable Senior Pool: <strong style="color:#fff;" id="s1-senior-pool">$7,230M</strong> ($9.2B Claims)</div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Nominal Asset Coverage: <strong style="color:#34d399;" id="s1-nominal-rec">78.6c</strong></div>
-            <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s1-duration">12M</span> negotiation @ <span id="s1-yield">9.75%</span> = <strong style="color:#f87171;" id="s1-time-factor">-9.1%</strong></div>
-            <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#cbd5e1;">
-              <strong>Anchor Question:</strong> What are assets worth if liquidated/reorganized without exchange concessions?
-            </div>
-          </div>
-        </div>
-
-        <!-- STREAM 2: MARKET-BASED PRICING -->
-        <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
-            <strong style="color:#38bdf8;">STREAM 2: MARKET-BASED EXCHANGE PV</strong>
-            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#38bdf8;" id="stream2-val">54.0c PV</span>
-          </div>
-          <div style="font-size:10px; color:#94a3b8; line-height:1.5;">
-            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Terms: <span id="s2-haircut">35%</span> Cut &bull; <span id="s2-swap">30%</span> Eq Swap &bull; <span id="s2-coupon">7.50%</span> Cpn &bull; <span id="s2-tenor">8Y</span> Tenor</div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Pro-Forma Leverage: <strong style="color:#fff;" id="s2-leverage">3.40x</strong> &rarr; Implied Exit Yield: <strong style="color:#fbbf24;" id="s2-exit-yield">9.75%</strong></div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> New Paper Trading Px: <strong style="color:#fbbf24;" id="s2-paper-px">87.7c</strong> (Reinstated Debt: <span id="s2-debt-pot">39.9c</span> + Eq: <span id="s2-eq-pot">19.5c</span>)</div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Undiscounted Emergence Pot: <strong style="color:#fff;" id="s2-emergence-pot">59.4c</strong></div>
-            <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s2-duration">12M</span> carrying bleed @ <span id="s2-yield">9.75%</span> = <strong style="color:#f87171;" id="s2-time-factor">-9.1%</strong></div>
-            <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#cbd5e1;">
-              <strong>Anchor Question:</strong> What will the secondary market pay for the restructured paper on Day 1?
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RECONCILIATION SUMMARY BAR & BUY/SELL SIGNAL -->
-      <div style="margin-top:10px; background:rgba(15,23,42,0.9); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; font-size:10.5px; color:#cbd5e1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <strong>Reconciliation Gap:</strong> <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#f87171;" id="reconcile-gap">-17.5c</span> 
-          <span style="color:var(--text-muted); font-size:9.5px;">(Market PV sits below Fundamental Asset Coverage due to 35% haircut &amp; 9.75% exit yield)</span>
-        </div>
-        <div>
-          <strong>Trading Signal vs Market (<span id="reconcile-mkt-px">54.0c</span>):</strong> <span id="reconcile-signal-text" style="font-weight:700; color:var(--accent-amber);">Fairly Priced &bull; Asset Cushion Prevents Crash</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
+  <!-- PANE: SCENARIOS (Card 7) -->
+  <div id="pane-scenarios" class="detail-tab-pane" style="display:none;">
+    <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
   <div class="card" style="margin-top:14px;">
     <div class="card-title">
       <span style="display:flex; align-items:center; gap:8px;">
@@ -1211,9 +1330,25 @@
 
     </div>
   </div>
+  </div>
 
 
-  <script>
+  
+<script>
+    function switchDetailTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-tab-' + tabId);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (tabId === 'all') {
+        document.querySelectorAll('.detail-tab-pane').forEach(p => p.style.display = 'block');
+      } else {
+        document.querySelectorAll('.detail-tab-pane').forEach(p => p.style.display = 'none');
+        const activePane = document.getElementById('pane-' + tabId);
+        if (activePane) activePane.style.display = 'block';
+      }
+    }
+  
     // Asset SOTP Baseline Definitions
     const ASSETS = [
       { id: "camacari", name: "Camaçari Complex (Bahia)", capacity: "1,400 kt Ethylene (Petrobras RLAM)", ebitda: 380.0, multiple: 5.0, included: true },
