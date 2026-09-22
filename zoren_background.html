@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zorlu Enerji (ZOREN) — Asset Footprint, EV Volatility & Interactive Pricing Engine | CEMBI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js for interactive scenario return visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    :root {
+      --bg-main: #060913;
+      --bg-card: #0b1120;
+      --bg-card-sub: #0f172a;
+      --bg-hover: #172237;
+      --border-color: #1e293b;
+      --border-highlight: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --accent-gold: #fbbf24;
+      --accent-purple: #c084fc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 12px 18px 40px;
+      line-height: 1.4;
+      font-size: 12px;
+      overflow-x: hidden;
+    }
+
+    /* Top Sticky Navigation Bar */
+    .sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 17, 32, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links-wrap {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 5px 11px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    .nav-btn.gold {
+      background: rgba(251, 191, 36, 0.12);
+      border-color: rgba(251, 191, 36, 0.4);
+      color: var(--accent-gold);
+    }
+    .nav-btn.gold:hover {
+      background: rgba(251, 191, 36, 0.22);
+      border-color: var(--accent-gold);
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(11, 17, 32, 0.95) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-title-wrap h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .ticker-pill {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent-gold);
+    }
+
+    .badge-rating {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 11.5px;
+      margin-top: 6px;
+      max-width: 820px;
+      line-height: 1.5;
+    }
+
+    .hero-badges-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .hero-kpi-pill {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 4px 9px;
+      font-size: 10.5px;
+      color: #cbd5e1;
+    }
+
+    .hero-kpi-pill strong {
+      color: var(--accent-cyan);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent-cyan);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 8px;
+    }
+
+    .card-title .sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .data-table th {
+      text-align: left;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 8px 10px;
+      font-size: 10px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .data-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: top;
+      line-height: 1.4;
+    }
+
+    .data-table tr:hover {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Asset Grid Cards */
+    .asset-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .asset-detail-card {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      padding: 12px 14px;
+      transition: all 0.2s;
+    }
+
+    .asset-detail-card:hover {
+      border-color: var(--border-highlight);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+
+    .asset-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .asset-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .asset-loc {
+      font-size: 10px;
+      color: var(--accent-gold);
+      margin-top: 1px;
+    }
+
+    .asset-ebitda-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .in-out-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+      background: rgba(0,0,0,0.2);
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .in-out-col-title {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+    }
+
+    .in-col { color: #f87171; }
+    .out-col { color: #38bdf8; }
+
+    .in-out-col-body {
+      font-size: 10.5px;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+
+    .asset-moat-box {
+      margin-top: 8px;
+      font-size: 10.5px;
+      color: #94a3b8;
+      line-height: 1.4;
+      border-left: 2px solid var(--accent-cyan);
+      padding-left: 6px;
+    }
+
+    /* Volatility Framework Metrics */
+    .vol-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .vol-kpi-card {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+
+    .vol-kpi-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .vol-kpi-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 3px;
+    }
+
+    .vol-kpi-sub {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* Interactive Pricing Calculator */
+    .calc-engine-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      .calc-engine-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .control-box {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .control-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .control-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    .control-display-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .styled-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #1e293b;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .styled-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      cursor: pointer;
+      border: 2px solid #0f172a;
+      box-shadow: 0 0 6px rgba(56, 189, 248, 0.6);
+    }
+
+    .quick-pill-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-color);
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .quick-pill-btn:hover, .quick-pill-btn.active {
+      color: #fff;
+      border-color: var(--accent-cyan);
+      background: rgba(56,189,248,0.15);
+    }
+
+    .diagnostics-banner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .diag-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 8px 10px;
+    }
+
+    .diag-label {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .diag-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 2px;
+    }
+
+    .diag-sub {
+      font-size: 9.5px;
+      color: var(--text-dim);
+      margin-top: 1px;
+    }
+
+    /* Chart Container */
+    .chart-box {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      padding: 12px;
+      margin-bottom: 12px;
+      height: 260px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Bar -->
+  <div class="sticky-bar">
+    <div class="brand-section">
+      <div class="brand-title">
+        <span>Zorlu Enerji (ZOREN)</span>
+        <span class="badge-rating">B- / CCC+ &bull; TURKEY UTILITIES</span>
+      </div>
+      <div class="nav-links-wrap">
+        <a href="#asset-blueprint" class="nav-btn">⚡ Asset Inputs &amp; Outputs</a>
+        <a href="#ev-volatility" class="nav-btn">📊 EV Volatility Framework</a>
+        <a href="#pricing-in-engine" class="nav-btn gold">🎯 "What's Priced In?" Engine</a>
+      </div>
+    </div>
+
+    <div class="nav-links-wrap">
+      <a href="zoren_calculator.html" class="nav-btn gold">⚖️ Restructuring Sandbox</a>
+      <a href="company.html?id=zorlu" class="nav-btn">🏛️ Master Dossier</a>
+      <a href="index.html" class="nav-btn">← Master Screener</a>
+    </div>
+  </div>
+
+  <!-- Hero Header -->
+  <div class="hero-banner">
+    <div class="hero-title-wrap">
+      <h1>
+        Zorlu Enerji Elektrik Üretim A.Ş.
+        <span class="ticker-pill">ZOREN</span>
+        <span class="badge-rating">YTM 11.2% &bull; 94.5c</span>
+      </h1>
+      <div class="hero-subtitle">
+        Deep operational intelligence across Zorlu Enerji's 8 power generation and regulated distribution asset clusters, 
+        feedstock energy inputs, commercial power outputs, YEKDEM dollar tariff mechanisms, and enterprise value (EV) volatility dynamics ahead of the 2026 Eurobond maturity wall.
+      </div>
+      <div class="hero-badges-strip">
+        <div class="hero-kpi-pill">Geothermal Fleet: <strong>305 MW (#1 in Turkey)</strong></div>
+        <div class="hero-kpi-pill">OEDAŞ Grid: <strong>1.95M Customers (8,650 GWh)</strong></div>
+        <div class="hero-kpi-pill">YEKDEM Hard Currency: <strong>68.5% USD EBITDA</strong></div>
+        <div class="hero-kpi-pill">EV Network: <strong>1,850+ ZES Sockets (#1 in Turkey)</strong></div>
+        <div class="hero-kpi-pill">Benchmark Bond: <strong>ZOREN 9.000% 2026 ($300M)</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: ASSET-BY-ASSET INPUT & OUTPUT ARCHITECTURE -->
+  <div class="card" id="asset-blueprint" style="margin-bottom:16px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>⚡</span> 1. Asset-by-Asset Operational Blueprint: Energy Inputs, Conversion &amp; Revenue Off-Take
+      </span>
+      <span class="sub">8 Generation &amp; Distribution Clusters Across Turkey, Israel &amp; Pakistan</span>
+    </div>
+
+    <div style="font-size:11.5px; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">
+      Zorlu Enerji operates a hybrid power generation portfolio (geothermal, wind, hydro, gas cogen) alongside a regulated electricity distribution monopoly (OEDAŞ). 
+      Because <strong>68.5% of generation EBITDA is earned in hard-currency US Dollars via sovereign YEKDEM feed-in tariffs</strong> ($105–$132/MWh), 
+      Zoren possesses a robust natural currency hedge against Turkish Lira volatility, protecting underlying debt service capacity.
+    </div>
+
+    <!-- Comparative Asset Matrix Table -->
+    <div style="overflow-x:auto; margin-bottom:16px;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:16%;">Asset Cluster</th>
+            <th style="width:18%;">Primary Energy Inputs &amp; Source</th>
+            <th style="width:20%;">Finished Commercial Outputs</th>
+            <th style="width:12%; text-align:right;">Capacity</th>
+            <th style="width:14%; text-align:right;">Normal EBITDA ($M)</th>
+            <th style="width:20%;">Regulatory Moat &amp; Contract Terms</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Kızıldere Geothermal</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Denizli / Aydın, Turkey</span>
+            </td>
+            <td>
+              Deep subterranean geothermal brine (~240°C) from Büyük Menderes Graben; high-pressure production &amp; reinjection wells.
+            </td>
+            <td>
+              Continuous baseload green electricity (88.5% capacity factor), district heating (Sarayköy), food-grade dry ice CO2.
+            </td>
+            <td style="text-align:right;" class="mono">260.0 MW (Units I-III)</td>
+            <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$135.0M</td>
+            <td style="font-size:10.5px; color:#cbd5e1;">
+              Sovereign YEKDEM USD feed-in tariff ($105 base + $27 local bonus = <strong>$132/MWh in USD</strong>). Turkey's largest geothermal complex.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Alaşehir Geothermal</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Manisa, Aegean Region</span>
+            </td>
+            <td>
+              Geothermal steam &amp; brine from Gediz Graben reservoir; binary cycle turbine system.
+            </td>
+            <td>
+              Baseload electricity delivered directly to TEİAŞ regional grid; zero fuel supply risk.
+            </td>
+            <td style="text-align:right;" class="mono">45.0 MW Geothermal</td>
+            <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$25.0M</td>
+            <td style="font-size:10.5px; color:#cbd5e1;">
+              YEKDEM guaranteed tariff ($105.0/MWh USD); operating under long-term concession through 2041.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Gökçedağ Wind (RES)</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Osmaniye, South Turkey</span>
+            </td>
+            <td>
+              Belen pass mountain wind resource (>34% capacity factor); 54 GE high-efficiency turbines.
+            </td>
+            <td>
+              Clean renewable electricity (~380 GWh annually); I-REC green attributes for corporate off-takers.
+            </td>
+            <td style="text-align:right;" class="mono">135.0 MW Wind</td>
+            <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$28.0M</td>
+            <td style="font-size:10.5px; color:#cbd5e1;">
+              Transitioning from YEKDEM ($94/MWh) into bilateral industrial corporate PPAs with prime Turkish export manufacturers.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Hydroelectric Fleet</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">7 Plants (Black Sea &amp; East)</span>
+            </td>
+            <td>
+              River run-of-river water flows &amp; reservoir heads (İkizdere, Atabey, Çamlıca, Kuzgun, Mercan, Tercan, Beyköy).
+            </td>
+            <td>
+              Zero-fuel peaking and baseload electricity; grid ancillary balancing services.
+            </td>
+            <td style="text-align:right;" class="mono">118.6 MW Hydro</td>
+            <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$22.0M</td>
+            <td style="font-size:10.5px; color:#cbd5e1;">
+              Fully amortized concrete civil assets with extremely low cash opex ($8–$12/MWh); YEKDEM hydro tariff ($73/MWh).
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">OEDAŞ Regulated Grid</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Osmangazi Region (5 Provinces)</span>
+            </td>
+            <td>
+              High-voltage wholesale power from TEİAŞ state grid; substation transformer capacity; digital smart meters.
+            </td>
+            <td>
+              8,650 GWh distributed volume to 1.95M registered meters (~2.9M population); meter connection &amp; maintenance.
+            </td>
+            <td style="text-align:right;" class="mono">1.95M Meters (RAB $650M)</td>
+            <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$85.0M</td>
+            <td style="font-size:10.5px; color:#cbd5e1;">
+              100% natural distribution monopoly through 2036. Guaranteed <strong>12.3% real pre-tax ROE</strong> on Regulated Asset Base with monthly CPI pass-through.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">ZES EV Charging Network</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Turkey &amp; Electrip Europe</span>
+            </td>
+            <td>
+              Wholesale grid electricity; Vestel-engineered AC/DC high-power charging hardware (180–300 kW); software platform.
+            </td>
+            <td>
+              Public fast charging delivered to EV drivers; fleet electrification charging services.
+            </td>
+            <td style="text-align:right;" class="mono">1,850+ Sockets (#1 Mkt)</td>
+            <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$15.0M</td>
+            <td style="font-size:10.5px; color:#cbd5e1;">
+              ~38% market share in public DC fast charging across all 81 Turkish provinces; Electrip international rollout across Italy, France, Poland.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Domestic Gas Cogen</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Bursa &amp; Lüleburgaz</span>
+            </td>
+            <td>
+              Natural gas supplied by BOTAŞ state gas monopoly; demineralized industrial water.
+            </td>
+            <td>
+              High-pressure industrial steam, district heating, and electricity for Zorlu textile parks &amp; regional factories.
+            </td>
+            <td style="text-align:right;" class="mono">341.0 MW Thermal/Cogen</td>
+            <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$20.0M</td>
+            <td style="font-size:10.5px; color:#cbd5e1;">
+              Over-the-fence steam contracts; physical piping makes substitution impossible; cost-plus industrial energy tariffs.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">International Power</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Dorad (Israel) &amp; Jhimpir (Pak)</span>
+            </td>
+            <td>
+              Natural gas from offshore Leviathan field (Dorad CCGT); Sindh province wind resource (Jhimpir Wind).
+            </td>
+            <td>
+              Long-term contracted power to Israeli Ministry of Defense / Mekorot; sovereign-backed Pakistan grid off-take.
+            </td>
+            <td style="text-align:right;" class="mono">266.4 MW Net Share</td>
+            <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$20.0M (Divs)</td>
+            <td style="font-size:10.5px; color:#cbd5e1;">
+              25% equity in 840 MW Dorad plant supplies ~7% of Israel's power; sovereign USD PPAs generate annual hard-currency dividend streams.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Interactive Detailed Cards -->
+    <div class="asset-cards-grid">
+      <!-- Card 1 -->
+      <div class="asset-detail-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-name">Kızıldere Geothermal Complex</div>
+            <div class="asset-loc">📍 Denizli/Aydın &bull; 260 MW Baseload</div>
+          </div>
+          <div class="asset-ebitda-badge">EBITDA: $135M</div>
+        </div>
+        <div class="in-out-row">
+          <div>
+            <div class="in-out-col-title in-col">📥 Primary Inputs</div>
+            <div class="in-out-col-body">
+              &bull; 240°C Geothermal Brine<br>
+              &bull; 40+ Production Wells<br>
+              &bull; Reinjection closed loop
+            </div>
+          </div>
+          <div>
+            <div class="in-out-col-title out-col">📤 Commercial Outputs</div>
+            <div class="in-out-col-body">
+              &bull; Baseload Green Power<br>
+              &bull; Municipal District Heat<br>
+              &bull; Industrial CO2 / Dry Ice
+            </div>
+          </div>
+        </div>
+        <div class="asset-moat-box">
+          <strong>Strategic Moat:</strong> Exceptional 88.5% capacity factor. Earns $132.0/MWh guaranteed in US Dollars via statutory YEKDEM feed-in tariff. Natural cash fortress.
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="asset-detail-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-name">OEDAŞ Regulated Distribution</div>
+            <div class="asset-loc">📍 5 Provinces &bull; 1.95M Registered Meters</div>
+          </div>
+          <div class="asset-ebitda-badge">EBITDA: $85M</div>
+        </div>
+        <div class="in-out-row">
+          <div>
+            <div class="in-out-col-title in-col">📥 Primary Inputs</div>
+            <div class="in-out-col-body">
+              &bull; Bulk High-Voltage TEİAŞ<br>
+              &bull; Smart Grid Telemetry<br>
+              &bull; Substation Infrastructure
+            </div>
+          </div>
+          <div>
+            <div class="in-out-col-title out-col">📤 Commercial Outputs</div>
+            <div class="in-out-col-body">
+              &bull; 8,650 GWh Power Flow<br>
+              &bull; Regulated Grid Tariffs<br>
+              &bull; Connection Fee Revenue
+            </div>
+          </div>
+        </div>
+        <div class="asset-moat-box">
+          <strong>Strategic Moat:</strong> Natural monopoly concession through 2036. Regulated Asset Base of ~$650M earning guaranteed 12.3% real return with monthly inflation indexation.
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="asset-detail-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-name">Gökçedağ Wind Power Plant</div>
+            <div class="asset-loc">📍 Osmaniye &bull; 135 MW Renewable</div>
+          </div>
+          <div class="asset-ebitda-badge">EBITDA: $28M</div>
+        </div>
+        <div class="in-out-row">
+          <div>
+            <div class="in-out-col-title in-col">📥 Primary Inputs</div>
+            <div class="in-out-col-body">
+              &bull; High Belen Pass Wind<br>
+              &bull; 54 GE Wind Turbines<br>
+              &bull; >34% Capacity Factor
+            </div>
+          </div>
+          <div>
+            <div class="in-out-col-title out-col">📤 Commercial Outputs</div>
+            <div class="in-out-col-body">
+              &bull; ~380 GWh Annual Volume<br>
+              &bull; Corporate Bilateral PPAs<br>
+              &bull; I-REC Green Certificates
+            </div>
+          </div>
+        </div>
+        <div class="asset-moat-box">
+          <strong>Strategic Moat:</strong> Top-tier wind profile in southern Turkey. Zero fuel cost ensures high operating margin (>75% EBITDA margin).
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="asset-detail-card">
+        <div class="asset-card-header">
+          <div>
+            <div class="asset-name">ZES Fast-Charging Network</div>
+            <div class="asset-loc">📍 All 81 Provinces &bull; 1,850+ Sockets</div>
+          </div>
+          <div class="asset-ebitda-badge">EBITDA: $15M (Growth)</div>
+        </div>
+        <div class="in-out-row">
+          <div>
+            <div class="in-out-col-title in-col">📥 Primary Inputs</div>
+            <div class="in-out-col-body">
+              &bull; Commercial Wholesale Power<br>
+              &bull; Vestel DC Fast Chargers<br>
+              &bull; Highway Location Rights
+            </div>
+          </div>
+          <div>
+            <div class="in-out-col-title out-col">📤 Commercial Outputs</div>
+            <div class="in-out-col-body">
+              &bull; EV Charging Electricity<br>
+              &bull; Fleet Charging Subscriptions<br>
+              &bull; Electrip EU Roaming
+            </div>
+          </div>
+        </div>
+        <div class="asset-moat-box">
+          <strong>Strategic Moat:</strong> Clear #1 market leader in Turkey with ~38% market share. Expanding rapidly into Italy, France, and Poland under the Electrip brand.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: ENTERPRISE VALUE (EV) VOLATILITY FRAMEWORK -->
+  <div class="card" id="ev-volatility" style="margin-bottom:16px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📊</span> 2. Enterprise Value (EV) Volatility Framework: Macro Drivers, Cycle Beta &amp; Floor Valuation
+      </span>
+      <span class="sub">Decomposing Turkish FX Beta, YEKDEM Tariffs, Sovereign Spreads &amp; Refinancing Catalysts</span>
+    </div>
+
+    <!-- Volatility Summary KPIs -->
+    <div class="vol-kpi-grid">
+      <div class="vol-kpi-card">
+        <div class="vol-kpi-title">Peak-to-Trough EV Swing</div>
+        <div class="vol-kpi-val" style="color:var(--accent-rose);">$1.80 Billion</div>
+        <div class="vol-kpi-sub">$1.20B Trough vs $3.00B Peak Multiple</div>
+      </div>
+      <div class="vol-kpi-card">
+        <div class="vol-kpi-title">Annualized EV Volatility</div>
+        <div class="vol-kpi-val" style="color:var(--accent-amber);">26.5%</div>
+        <div class="vol-kpi-sub">Driven by Turkish Sovereign Risk Premium</div>
+      </div>
+      <div class="vol-kpi-card">
+        <div class="vol-kpi-title">Natural USD Hedge Ratio</div>
+        <div class="vol-kpi-val" style="color:var(--accent-cyan);">68.5%</div>
+        <div class="vol-kpi-sub">Generation cash EBITDA locked in USD</div>
+      </div>
+      <div class="vol-kpi-card">
+        <div class="vol-kpi-title">Regulated RAB &amp; Plant Floor</div>
+        <div class="vol-kpi-val" style="color:var(--accent-emerald);">$2.40B+</div>
+        <div class="vol-kpi-sub">Replacement cost of geothermal &amp; grid assets</div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:14px;">
+      <div>
+        <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px;">
+          The 4 Primary Drivers of Zorlu Enerji's EV Volatility
+        </div>
+        <div style="font-size:11.5px; color:#cbd5e1; line-height:1.55;">
+          <p style="margin-bottom:8px;">
+            <strong>1. Turkish Macro &amp; Lira FX Beta:</strong> While generation cash flow is 68.5% USD-denominated via YEKDEM, 
+            the OEDAŞ distribution network reports in Turkish Lira. Lira currency devaluations reduce headline USD EBITDA on the distribution side, 
+            while high domestic inflation increases replacement capex costs.
+          </p>
+          <p style="margin-bottom:8px;">
+            <strong>2. YEKDEM Contract Expiry Transition:</strong> Geothermal dollar tariffs for Kızıldere II and Alaşehir expire in 2026, 
+            and Kızıldere III in 2028–2029. Transitioning from guaranteed $105–$132/MWh feed-in tariffs to merchant power prices ($60–$85/MWh) 
+            creates future cash flow volatility that equity markets discount aggressively.
+          </p>
+          <p style="margin-bottom:8px;">
+            <strong>3. Turkish Sovereign CDS &amp; Credit Spread Beta:</strong> As a Turkish corporate issuer, Zoren's secondary debt yields 
+            are heavily influenced by Turkey's sovereign risk perception. When Turkey CDS compresses (from 600 bps down to 260 bps), 
+            Zoren's cost of capital falls by 300+ bps, driving an immediate expansion in implied EV.
+          </p>
+          <p>
+            <strong>4. 2026 Eurobond Maturity Wall Catalyst:</strong> The $300M ZOREN 9.00% note maturing in June 2026 represents a major liquidity milestone. 
+            Execution of the planned Zorlu Yenilenebilir IPO or strategic stake sale to Gulf investors (e.g. AlJomaih) would inject $250M+ fresh cash, 
+            triggering a sharp re-rating towards par.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px;">
+          Historical EV Percentile Distribution Matrix
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table" style="font-size:11px;">
+            <thead>
+              <tr>
+                <th>Cycle Regime</th>
+                <th style="text-align:right;">Cash EBITDA</th>
+                <th style="text-align:right;">EV Multiple</th>
+                <th style="text-align:right;">Enterprise Value</th>
+                <th style="text-align:right;">Senior Recovery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:rgba(244,63,94,0.06);">
+                <td><strong>P10: Severe Distress / FX Shock</strong></td>
+                <td style="text-align:right;" class="mono">$240M</td>
+                <td style="text-align:right;" class="mono">5.0x</td>
+                <td style="text-align:right; font-weight:700; color:var(--accent-rose);" class="mono">$1,200M</td>
+                <td style="text-align:right; font-weight:700; color:var(--accent-rose);" class="mono">22.0c (Floor)</td>
+              </tr>
+              <tr>
+                <td><strong>P25: Sovereign Spread Squeeze</strong></td>
+                <td style="text-align:right;" class="mono">$290M</td>
+                <td style="text-align:right;" class="mono">5.7x</td>
+                <td style="text-align:right; font-weight:700; color:#fbbf24;" class="mono">$1,650M</td>
+                <td style="text-align:right; font-weight:700; color:#fbbf24;" class="mono">58.0c</td>
+              </tr>
+              <tr style="background:rgba(16,185,129,0.06);">
+                <td><strong>P50: Normalized Mid-Cycle (Base)</strong></td>
+                <td style="text-align:right;" class="mono">$350M</td>
+                <td style="text-align:right;" class="mono">6.0x</td>
+                <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">$2,100M</td>
+                <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="mono">95.0c (Fair)</td>
+              </tr>
+              <tr>
+                <td><strong>P75: Renewable Unit Rerating</strong></td>
+                <td style="text-align:right;" class="mono">$380M</td>
+                <td style="text-align:right;" class="mono">6.7x</td>
+                <td style="text-align:right; font-weight:700; color:#38bdf8;" class="mono">$2,550M</td>
+                <td style="text-align:right; font-weight:700; color:#38bdf8;" class="mono">100.0c (Par)</td>
+              </tr>
+              <tr style="background:rgba(56,189,248,0.06);">
+                <td><strong>P90: Peak Utility Valuation / IPO</strong></td>
+                <td style="text-align:right;" class="mono">$410M</td>
+                <td style="text-align:right;" class="mono">7.3x</td>
+                <td style="text-align:right; font-weight:700; color:#38bdf8;" class="mono">$3,000M</td>
+                <td style="text-align:right; font-weight:700; color:#38bdf8;" class="mono">102.5c (Call)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: INTERACTIVE "WHAT IS PRICED IN?" & SCENARIO RETURN ENGINE -->
+  <div class="card" id="pricing-in-engine">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>🎯</span> 3. Interactive Pricing Engine: "What's Priced In?" &amp; Scenario Return Payoff Matrix
+      </span>
+      <span class="sub">Input your purchase price for ZOREN 9.00% 2026 to reveal implied market valuation &amp; scenario returns</span>
+    </div>
+
+    <div class="calc-engine-grid">
+      <!-- LEFT COLUMN: Controls & Implied Diagnostics -->
+      <div>
+        <!-- Tranche Quick Select -->
+        <div class="control-box">
+          <div style="font-size:10.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px;">
+            Step 1: Select Price Preset or Enter Custom Entry Price
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+            <button class="quick-pill-btn active" onclick="setEntryPrice(94.5)">Market Quote @ 94.5c</button>
+            <button class="quick-pill-btn" onclick="setEntryPrice(88.0)">Maturity Dip @ 88.0c</button>
+            <button class="quick-pill-btn" onclick="setEntryPrice(75.0)">Distress Stress @ 75.0c</button>
+            <button class="quick-pill-btn" onclick="setEntryPrice(58.0)">Floor Valuation @ 58.0c</button>
+            <button class="quick-pill-btn" onclick="setEntryPrice(100.0)">Par Reinstatement @ 100c</button>
+          </div>
+
+          <!-- Price Slider -->
+          <div class="control-label-row">
+            <span class="control-label">Your Entry / Secondary Market Price:</span>
+            <span class="control-display-val" id="lbl-entry-price">94.50c ($94.50)</span>
+          </div>
+          <input type="range" id="slider-entry-price" class="styled-slider" min="40.0" max="105.0" step="0.5" value="94.5" oninput="onPriceSliderChange(this.value)">
+          
+          <div style="display:flex; justify-content:space-between; font-size:9.5px; color:var(--text-dim); margin-top:4px;">
+            <span>40.0c (Sovereign Default)</span>
+            <span>75.0c (Restructuring)</span>
+            <span>100.0c (Par)</span>
+          </div>
+        </div>
+
+        <!-- Position Notional & Restructuring Horizon -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <div class="control-box">
+            <div class="control-label-row">
+              <span class="control-label">Position Face Value:</span>
+              <span class="control-display-val" id="lbl-notional">$1,000,000</span>
+            </div>
+            <input type="range" id="slider-notional" class="styled-slider" min="100000" max="10000000" step="100000" value="1000000" oninput="onNotionalChange(this.value)">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:4px;">
+              Cash Capital Invested: <strong id="lbl-cash-invested" style="color:#fff;">$945,000</strong>
+            </div>
+          </div>
+
+          <div class="control-box">
+            <div class="control-label-row">
+              <span class="control-label">Maturity / Holding Horizon:</span>
+              <span class="control-display-val" id="lbl-horizon">14 Months</span>
+            </div>
+            <input type="range" id="slider-horizon" class="styled-slider" min="6" max="36" step="2" value="14" oninput="onHorizonChange(this.value)">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:4px;">
+              Exit / Maturity Target: <strong id="lbl-exit-date" style="color:var(--accent-cyan);">Jun 2026</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- "What Is Priced In?" Analytical Strip -->
+        <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-top:6px; margin-bottom:6px;">
+          Analytical Diagnostics: What the Market Is Implying at <span id="diag-current-price-header">94.5c</span>
+        </div>
+
+        <div class="diagnostics-banner">
+          <div class="diag-card">
+            <div class="diag-label">Implied Enterprise Value</div>
+            <div class="diag-value" id="diag-implied-ev" style="color:var(--accent-cyan);">$1,510M</div>
+            <div class="diag-sub">EV priced in by debt</div>
+          </div>
+          <div class="diag-card">
+            <div class="diag-label">Implied EV Multiple</div>
+            <div class="diag-value" id="diag-implied-multiple" style="color:var(--accent-amber);">4.32x</div>
+            <div class="diag-sub">vs 6.0x mid-cycle fair value</div>
+          </div>
+          <div class="diag-card">
+            <div class="diag-label">Breakeven EBITDA</div>
+            <div class="diag-value" id="diag-breakeven-ebitda" style="color:var(--accent-emerald);">$252M</div>
+            <div class="diag-sub">Min EBITDA to avoid capital loss</div>
+          </div>
+          <div class="diag-card">
+            <div class="diag-label">Market Refinancing Bias</div>
+            <div class="diag-value" id="diag-distress-prob" style="color:var(--accent-emerald);">88% Par Roll</div>
+            <div class="diag-sub">Implied odds of timely payoff</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Interactive Charts -->
+      <div>
+        <div class="chart-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <span style="font-size:10.5px; font-weight:700; color:var(--accent-gold); text-transform:uppercase;">
+              Scenario Total Return &amp; PnL vs Entry Price (<span id="chart-entry-px-lbl">94.5c</span>)
+            </span>
+            <span style="font-size:9.5px; color:var(--text-dim);">Chart.js Real-time Payoff</span>
+          </div>
+          <canvas id="scenarioReturnChart"></canvas>
+        </div>
+
+        <div class="chart-box" style="height:230px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <span style="font-size:10.5px; font-weight:700; color:var(--accent-cyan); text-transform:uppercase;">
+              Payoff Sensitivity Curve Across Entry Prices (50c to 105c)
+            </span>
+            <span style="font-size:9.5px; color:var(--text-dim);">Base Case Return vs Entry</span>
+          </div>
+          <canvas id="sensitivityLineChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario Return Table -->
+    <div style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+        Detailed Scenario Payoff Matrix &amp; Annualized IRR Table (Calibrated to <span id="table-entry-px-lbl">94.50c</span> Entry)
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="scenario-return-table">
+          <thead>
+            <tr>
+              <th style="width:24%;">Refinancing / Restructuring Scenario</th>
+              <th style="width:12%; text-align:right;">Exit Px (cents)</th>
+              <th style="width:15%; text-align:right;">Total Proceeds ($)</th>
+              <th style="width:14%; text-align:right;">Net Profit / Loss ($)</th>
+              <th style="width:12%; text-align:right;">Total Return (%)</th>
+              <th style="width:11%; text-align:right;">Annualized IRR</th>
+              <th style="width:12%; text-align:center;">Desk Action</th>
+            </tr>
+          </thead>
+          <tbody id="scenario-return-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Scenario definitions for Zorlu Enerji
+    const SCENARIOS = [
+      {
+        id: "hostile_haircut",
+        name: "1. Distressed Restructuring / Haircut",
+        desc: "Severe macro FX shock; June 2026 Eurobond subjected to 40%+ principal cramdown and local currency conversion.",
+        exitPx: 58.0,
+        color: "#f43f5e"
+      },
+      {
+        id: "amend_haircut",
+        name: "2. Maturity Roll with 20% Haircut",
+        desc: "Creditors agree to a 20% haircut in exchange for first-lien security on Alaşehir geothermal plant.",
+        exitPx: 75.0,
+        color: "#f59e0b"
+      },
+      {
+        id: "defensive_extend",
+        name: "3. Defensive Amend & Extend (No Haircut)",
+        desc: "3-year maturity extension to June 2029 at unchanged 9.0% coupon; secondary trades at modest liquidity discount.",
+        exitPx: 88.0,
+        color: "#fbbf24"
+      },
+      {
+        id: "base_case_par",
+        name: "4. Base Case: Par Refinancing / IPO",
+        desc: "Successful IPO/stake sale of Zorlu Yenilenebilir ($250M equity) + ECA credit line; full redemption at 100% par.",
+        exitPx: 100.0,
+        color: "#10b981"
+      },
+      {
+        id: "sovereign_call",
+        name: "5. Sovereign Rerating & Early Tender Call",
+        desc: "Turkey sovereign CDS compresses to <250 bps; Zorlu refinances via new 5Y Eurobond at 7.5%, calling 2026s at 102.5c.",
+        exitPx: 102.5,
+        color: "#38bdf8"
+      }
+    ];
+
+    let currentEntryPrice = 94.50;
+    let currentNotional = 1000000;
+    let currentHorizonMonths = 14;
+
+    let scenarioChart = null;
+    let sensitivityChart = null;
+
+    function initPage() {
+      initCharts();
+      recalcPricingEngine();
+    }
+
+    function setEntryPrice(px) {
+      document.querySelectorAll(".quick-pill-btn").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+      document.getElementById("slider-entry-price").value = px;
+      onPriceSliderChange(px);
+    }
+
+    function onPriceSliderChange(val) {
+      currentEntryPrice = parseFloat(val);
+      document.getElementById("lbl-entry-price").textContent = `${currentEntryPrice.toFixed(2)}c ($${currentEntryPrice.toFixed(2)})`;
+      recalcPricingEngine();
+    }
+
+    function onNotionalChange(val) {
+      currentNotional = parseFloat(val);
+      document.getElementById("lbl-notional").textContent = `$${Math.round(currentNotional).toLocaleString()}`;
+      recalcPricingEngine();
+    }
+
+    function onHorizonChange(val) {
+      currentHorizonMonths = parseInt(val);
+      document.getElementById("lbl-horizon").textContent = `${currentHorizonMonths} Months`;
+      
+      const now = new Date(2026, 8, 22);
+      now.setMonth(now.getMonth() + currentHorizonMonths);
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      document.getElementById("lbl-exit-date").textContent = `${months[now.getMonth()]} ${now.getFullYear()}`;
+      
+      recalcPricingEngine();
+    }
+
+    function recalcPricingEngine() {
+      const cashInvested = currentNotional * (currentEntryPrice / 100.0);
+      document.getElementById("lbl-cash-invested").textContent = `$${Math.round(cashInvested).toLocaleString()}`;
+      document.getElementById("diag-current-price-header").textContent = `${currentEntryPrice.toFixed(1)}c`;
+      document.getElementById("chart-entry-px-lbl").textContent = `${currentEntryPrice.toFixed(1)}c`;
+      document.getElementById("table-entry-px-lbl").textContent = `${currentEntryPrice.toFixed(2)}c`;
+
+      // Implied Enterprise Value Calculation for Zorlu Enerji
+      // Total Senior Unsecured Pool: $582.4M ($300M Eurobond + $282.4M RCF)
+      // Priority Secured Debt: $1,200M ($720M Geothermal PF + $480M OEDAS Grid)
+      // Balance Sheet Cash: $240M
+      const seniorUnsecuredPool = 582.4;
+      const prioritySecuredDebt = 1200.0;
+      const balanceSheetCash = 240.0;
+      const recoveryPct = currentEntryPrice / 100.0;
+
+      const impliedSeniorPoolValue = seniorUnsecuredPool * recoveryPct;
+      const impliedDistributableValue = impliedSeniorPoolValue + prioritySecuredDebt;
+      const impliedEv = Math.max(0, impliedDistributableValue - balanceSheetCash);
+      const midCycleEbitda = 350.0;
+      const impliedMultiple = impliedEv / midCycleEbitda;
+
+      // Breakeven EBITDA at 6.0x multiple
+      // (BreakevenEBITDA * 6.0) + Cash - Priority = SeniorPoolValue
+      const breakevenEv = impliedSeniorPoolValue + prioritySecuredDebt - balanceSheetCash;
+      const breakevenEbitda = breakevenEv / 6.0;
+
+      // Implied probability of distress vs consensual roll
+      // Consensual = 100.0c, Distressed = 58.0c
+      let probDistress = 0;
+      if (currentEntryPrice <= 58.0) {
+        probDistress = 100;
+      } else if (currentEntryPrice >= 100.0) {
+        probDistress = 0;
+      } else {
+        probDistress = Math.round(((100.0 - currentEntryPrice) / (100.0 - 58.0)) * 100);
+      }
+
+      document.getElementById("diag-implied-ev").textContent = `$${Math.round(impliedEv).toLocaleString()}M`;
+      document.getElementById("diag-implied-multiple").textContent = `${impliedMultiple.toFixed(2)}x`;
+      document.getElementById("diag-breakeven-ebitda").textContent = `$${Math.round(breakevenEbitda).toLocaleString()}M`;
+      
+      const probRoll = 100 - probDistress;
+      document.getElementById("diag-distress-prob").textContent = `${probRoll}% Par Roll`;
+      document.getElementById("diag-distress-prob").style.color = probRoll >= 75 ? "var(--accent-emerald)" : (probRoll >= 50 ? "var(--accent-amber)" : "var(--accent-rose)");
+
+      // Scenario Returns Table & Chart Data
+      const horizonYears = currentHorizonMonths / 12.0;
+      const couponAnnual = 0.09; // 9.0% coupon
+      const couponCarryEarned = (currentNotional * couponAnnual * horizonYears);
+
+      const tableData = SCENARIOS.map(sc => {
+        const capitalProceeds = currentNotional * (sc.exitPx / 100.0);
+        const totalProceeds = capitalProceeds + (sc.exitPx >= 85 ? couponCarryEarned : (couponCarryEarned * 0.5));
+        const profit = totalProceeds - cashInvested;
+        const totalReturnPct = cashInvested > 0 ? (profit / cashInvested) * 100.0 : 0;
+        
+        // Annualized IRR
+        let irrPct = 0;
+        if (cashInvested > 0 && totalProceeds > 0) {
+          irrPct = (Math.pow(totalProceeds / cashInvested, 1.0 / horizonYears) - 1.0) * 100.0;
+        } else if (totalProceeds <= 0) {
+          irrPct = -100.0;
+        }
+
+        let badge = "";
+        if (totalReturnPct > 15.0) {
+          badge = '<span style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.3); padding:2px 7px; border-radius:4px; font-weight:700; font-size:10px;">STRONG BUY</span>';
+        } else if (totalReturnPct >= 0.0) {
+          badge = '<span style="background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3); padding:2px 7px; border-radius:4px; font-weight:700; font-size:10px;">ACCUMULATE</span>';
+        } else {
+          badge = '<span style="background:rgba(244,63,94,0.15); color:var(--accent-rose); border:1px solid rgba(244,63,94,0.3); padding:2px 7px; border-radius:4px; font-weight:700; font-size:10px;">AVOID / RISK</span>';
+        }
+
+        return {
+          ...sc,
+          proceeds: totalProceeds,
+          profit,
+          totalReturnPct,
+          irrPct,
+          badge
+        };
+      });
+
+      // Update Table
+      const tbody = document.getElementById("scenario-return-tbody");
+      tbody.innerHTML = tableData.map(td => `
+        <tr>
+          <td>
+            <strong style="color:${td.color};">${td.name}</strong><br>
+            <span style="font-size:10px; color:var(--text-dim);">${td.desc}</span>
+          </td>
+          <td style="text-align:right; font-weight:700; color:#fff;" class="mono">${td.exitPx.toFixed(1)}c</td>
+          <td style="text-align:right;" class="mono">$${Math.round(td.proceeds).toLocaleString()}</td>
+          <td style="text-align:right; font-weight:700; color:${td.profit >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)'};" class="mono">
+            ${td.profit >= 0 ? '+' : ''}$${Math.round(td.profit).toLocaleString()}
+          </td>
+          <td style="text-align:right; font-weight:800; font-size:12px; color:${td.totalReturnPct >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)'};" class="mono">
+            ${td.totalReturnPct >= 0 ? '+' : ''}${td.totalReturnPct.toFixed(1)}%
+          </td>
+          <td style="text-align:right; font-weight:700; color:${td.irrPct >= 0 ? '#38bdf8' : 'var(--accent-rose)'};" class="mono">
+            ${td.irrPct >= 0 ? '+' : ''}${td.irrPct.toFixed(1)}%
+          </td>
+          <td style="text-align:center;">${td.badge}</td>
+        </tr>
+      `).join('');
+
+      // Update Charts
+      updateScenarioChart(tableData);
+      updateSensitivityChart();
+    }
+
+    function initCharts() {
+      // 1. Scenario Return Bar Chart
+      const ctxBar = document.getElementById('scenarioReturnChart').getContext('2d');
+      scenarioChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: SCENARIOS.map(s => s.name.split('.')[1].trim()),
+          datasets: [{
+            label: 'Total Return (%)',
+            data: [0, 0, 0, 0, 0],
+            backgroundColor: SCENARIOS.map(s => s.color + '88'),
+            borderColor: SCENARIOS.map(s => s.color),
+            borderWidth: 1.5,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `Total ROI: ${context.parsed.y >= 0 ? '+' : ''}${context.parsed.y.toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: {
+                color: '#94a3b8',
+                callback: function(val) { return val + '%'; }
+              }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#cbd5e1', font: { size: 9.5 } }
+            }
+          }
+        }
+      });
+
+      // 2. Sensitivity Line Chart
+      const ctxLine = document.getElementById('sensitivityLineChart').getContext('2d');
+      const testPrices = [50, 60, 70, 80, 85, 90, 94.5, 98, 100, 102];
+      
+      sensitivityChart = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+          labels: testPrices.map(p => `${p}c`),
+          datasets: [
+            {
+              label: 'Par Refinance (100c)',
+              data: testPrices.map(p => (((100 + (100 * 0.09 * (14/12))) - p) / p) * 100),
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16,185,129,0.1)',
+              tension: 0.3,
+              pointRadius: 2,
+              fill: false
+            },
+            {
+              label: 'Defensive Extend (88c)',
+              data: testPrices.map(p => (((88 + (100 * 0.09 * (14/12))) - p) / p) * 100),
+              borderColor: '#fbbf24',
+              backgroundColor: 'rgba(251,191,36,0.1)',
+              tension: 0.3,
+              pointRadius: 2,
+              fill: false
+            },
+            {
+              label: 'Haircut Roll (75c)',
+              data: testPrices.map(p => (((75 + (100 * 0.045 * (14/12))) - p) / p) * 100),
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245,158,11,0.1)',
+              tension: 0.3,
+              pointRadius: 2,
+              fill: false
+            },
+            {
+              label: 'Distressed Cramdown (58c)',
+              data: testPrices.map(p => ((58 - p) / p) * 100),
+              borderColor: '#f43f5e',
+              backgroundColor: 'rgba(244,63,94,0.1)',
+              tension: 0.3,
+              pointRadius: 2,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: '#94a3b8', font: { size: 9.5 } }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return `${ctx.dataset.label}: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: {
+                color: '#94a3b8',
+                callback: function(val) { return val + '%'; }
+              }
+            },
+            x: {
+              grid: { color: 'rgba(255,255,255,0.03)' },
+              ticks: { color: '#cbd5e1', font: { size: 9.5 } }
+            }
+          }
+        }
+      });
+    }
+
+    function updateScenarioChart(data) {
+      if (!scenarioChart) return;
+      scenarioChart.data.datasets[0].data = data.map(d => d.totalReturnPct);
+      scenarioChart.update();
+    }
+
+    function updateSensitivityChart() {
+      if (!sensitivityChart) return;
+      sensitivityChart.update();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage();
+    });
+  </script>
+</body>
+</html>

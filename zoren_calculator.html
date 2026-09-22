@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zorlu Enerji Restructuring & Fair Value Engine</title>
+  <title>Zorlu Enerji (ZOREN) — Interactive Refinancing, SOTP Recovery & Pricing Band Engine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,6 +20,8 @@
       --accent-emerald: #10b981;
       --accent-rose: #f43f5e;
       --accent-amber: #f59e0b;
+      --accent-gold: #fbbf24;
+      --accent-purple: #c084fc;
     }
 
     * {
@@ -32,7 +34,7 @@
       background-color: var(--bg-main);
       color: var(--text-main);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      padding: 8px 12px;
+      padding: 10px 16px 40px;
       line-height: 1.35;
       font-size: 12px;
       overflow-x: hidden;
@@ -44,23 +46,24 @@
       top: 0;
       z-index: 100;
       background: rgba(18, 25, 41, 0.96);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--border-highlight);
       border-radius: 8px;
-      padding: 8px 14px;
-      margin-bottom: 8px;
+      padding: 10px 16px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
     }
 
     .brand-section {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .brand-title {
@@ -69,14 +72,14 @@
       color: #fff;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .brand-title .badge {
       font-size: 10px;
-      background: rgba(244, 63, 94, 0.15);
-      color: var(--accent-rose);
-      border: 1px solid rgba(244, 63, 94, 0.3);
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
       padding: 2px 6px;
       border-radius: 4px;
       font-family: 'JetBrains Mono', monospace;
@@ -84,8 +87,9 @@
 
     .presets-wrap {
       display: flex;
-      gap: 4px;
+      gap: 5px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .preset-pill {
@@ -94,176 +98,109 @@
       color: var(--text-muted);
       font-size: 11px;
       font-weight: 600;
-      padding: 4px 8px;
-      border-radius: 4px;
+      padding: 5px 10px;
+      border-radius: 5px;
       cursor: pointer;
       transition: all 0.15s;
     }
 
-    .preset-pill:hover {
+    .preset-pill:hover, .preset-pill.active {
       color: #fff;
       border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.15);
     }
 
-    .preset-pill.active {
-      background: var(--accent-cyan);
-      color: #031021;
-      border-color: var(--accent-cyan);
-    }
-
-    /* Live Output Ticker in Header */
     .metrics-strip {
       display: flex;
+      gap: 16px;
       align-items: center;
-      gap: 14px;
+      flex-wrap: wrap;
     }
 
     .metric-hero {
       display: flex;
-      align-items: baseline;
-      gap: 6px;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      padding: 4px 10px;
-      border-radius: 6px;
+      flex-direction: column;
+      gap: 2px;
     }
 
     .metric-hero .lbl {
-      font-size: 10px;
-      font-weight: 700;
+      font-size: 9.5px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-weight: 600;
       color: var(--text-muted);
     }
 
     .metric-hero .val {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       color: #fff;
       line-height: 1;
     }
 
     .metric-hero .val span {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
     }
 
-    .metric-sub {
-      display: flex;
-      flex-direction: column;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      line-height: 1.2;
-    }
+    .metric-hero.gold .val { color: var(--accent-gold); }
+    .metric-hero.emerald .val { color: var(--accent-emerald); }
 
-    .metric-sub span {
-      font-size: 9px;
-      color: var(--text-muted);
-    }
-
-    .metric-sub strong.positive { color: var(--accent-emerald); }
-    .metric-sub strong.negative { color: var(--accent-rose); }
-    .metric-sub strong.neutral { color: var(--accent-amber); }
-
-    .trade-badge {
-      font-size: 10px;
+    .status-badge {
+      font-size: 10.5px;
       font-weight: 700;
       text-transform: uppercase;
-      padding: 4px 8px;
+      padding: 5px 9px;
       border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
-    .trade-badge.fair {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--accent-amber);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .trade-badge.sell {
-      background: rgba(244, 63, 94, 0.15);
-      color: var(--accent-rose);
-      border: 1px solid rgba(244, 63, 94, 0.3);
-    }
-
-    .trade-badge.buy {
+    .status-sustainable {
       background: rgba(16, 185, 129, 0.15);
       color: var(--accent-emerald);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid rgba(16, 185, 129, 0.4);
     }
 
-    .fullscreen-btn {
+    .status-borderline {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .status-distressed {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+
+    .nav-btn {
       background: var(--bg-card-sub);
       border: 1px solid var(--border-color);
-      color: var(--accent-cyan);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 8px;
-      border-radius: 4px;
-      cursor: pointer;
+      color: var(--text-main);
+      padding: 5px 10px;
+      border-radius: 5px;
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .fullscreen-btn:hover {
-      background: var(--accent-cyan);
-      color: #000;
-    }
-
-    /* Tab Switcher */
-    .tabs-bar {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 4px;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
       font-size: 11px;
       font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 4px;
-      cursor: pointer;
       transition: all 0.15s;
     }
-
-    .tab-btn:hover {
-      color: #fff;
-    }
-
-    .tab-btn.active {
-      background: var(--bg-card-sub);
+    .nav-btn:hover {
+      border-color: var(--accent-cyan);
       color: var(--accent-cyan);
-      border: 1px solid var(--border-color);
     }
 
-    /* Tab Content Panels */
-    .tab-panel {
-      display: none;
-    }
-
-    .tab-panel.active {
-      display: block;
-    }
-
-    /* 2-Column Grid for Tab 1 */
-    .calc-grid {
+    /* Main Grid Layout */
+    .engine-layout {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 10px;
+      gap: 12px;
     }
 
-    @media (max-width: 860px) {
-      .calc-grid {
+    @media (max-width: 1024px) {
+      .engine-layout {
         grid-template-columns: 1fr;
       }
     }
@@ -272,688 +209,1054 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 10px 12px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
     }
 
     .card-title {
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--accent-cyan);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 6px;
     }
 
-    /* Compact Slider Rows */
-    .ctrl-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-
-    .ctrl-box {
-      background: var(--bg-card-sub);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 6px;
-      padding: 6px 8px;
-    }
-
-    .ctrl-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
-      font-size: 11px;
-    }
-
-    .ctrl-head span {
+    .card-title .sub {
+      font-size: 10px;
       color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 400;
+      text-transform: none;
     }
 
-    .ctrl-head strong {
-      font-family: 'JetBrains Mono', monospace;
-      color: #fff;
+    /* Asset Table */
+    .asset-table {
+      width: 100%;
+      border-collapse: collapse;
       font-size: 11px;
     }
 
-    .slider-wrap {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .asset-table th {
+      text-align: left;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 10px;
+      text-transform: uppercase;
     }
 
-    input[type="range"] {
-      flex: 1;
-      height: 4px;
+    .asset-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    .asset-checkbox {
       accent-color: var(--accent-cyan);
-      background: #202e48;
-      border-radius: 2px;
+      width: 15px;
+      height: 15px;
       cursor: pointer;
     }
 
-    input[type="number"] {
-      width: 52px;
-      background: #090e18;
+    .num-input {
+      background: var(--bg-main);
       border: 1px solid var(--border-color);
       color: #fff;
-      padding: 2px 4px;
+      padding: 4px 6px;
       border-radius: 4px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
+      width: 65px;
       text-align: right;
     }
 
-    /* Breakdown Box */
-    .breakdown-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 4px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      font-size: 11px;
+    .num-input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
     }
 
-    .breakdown-row span:last-child {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
+    /* Sliders & Controls */
+    .slider-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
     }
 
-    .breakdown-row.highlight {
-      border-top: 1px solid var(--border-highlight);
-      border-bottom: none;
-      padding-top: 6px;
-      margin-top: 4px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-    }
-
-    .note-box {
-      background: rgba(56, 189, 248, 0.06);
-      border: 1px solid rgba(56, 189, 248, 0.18);
+    .slider-box {
+      background: var(--bg-card-sub);
+      border: 1px solid rgba(255,255,255,0.04);
       border-radius: 6px;
       padding: 8px 10px;
-      margin-top: 8px;
-      font-size: 11px;
-      color: #cbd5e1;
-      line-height: 1.3;
     }
 
-    /* Sensitivity Tables */
-    .table-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 10px;
-      overflow-x: auto;
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: 'JetBrains Mono', monospace;
+    .slider-label {
       font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .slider-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    input[type=range] {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      cursor: pointer;
+      border: 2px solid var(--bg-card);
+    }
+
+    /* Meters & Gauges */
+    .meter-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .meter-card {
+      background: var(--bg-card-sub);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 6px;
+      padding: 8px 10px;
       text-align: center;
     }
 
-    th, td {
-      padding: 5px 6px;
-      border: 1px solid var(--border-color);
-    }
-
-    th {
-      background: var(--bg-card-sub);
+    .meter-title {
+      font-size: 9.5px;
+      text-transform: uppercase;
       color: var(--text-muted);
       font-weight: 600;
     }
 
-    td.active-cell {
-      background: rgba(56, 189, 248, 0.25);
-      border: 2px solid var(--accent-cyan);
+    .meter-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
       font-weight: 700;
       color: #fff;
+      margin-top: 3px;
+    }
+
+    .meter-sub {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Pricing Bands Table */
+    .band-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .band-table th {
+      text-align: right;
+      color: var(--text-muted);
+      padding: 6px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .band-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .band-table td.name {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .callout-box {
+      background: rgba(14, 116, 144, 0.12);
+      border-left: 3px solid var(--accent-cyan);
+      border-radius: 4px;
+      padding: 8px 12px;
+      margin-top: 10px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #e2e8f0;
     }
   </style>
 </head>
 <body>
-  <!-- Top Sticky Header -->
+
+  <!-- Top Sticky Navigation & Live Output Header -->
   <div class="sticky-bar">
     <div class="brand-section">
+      <a href="company.html?id=zorlu" class="nav-btn">← Back to Zorlu Dossier</a>
+      <a href="zoren_background.html" class="nav-btn" style="background:rgba(56,189,248,0.12); color:#38bdf8; border-color:rgba(56,189,248,0.35);">📖 Asset Inputs &amp; EV Vol</a>
       <div class="brand-title">
-        <span>Zorlu Enerji Restructuring</span>
-        <span class="badge">XS2926261426 (63.5¢)</span>
+        <span>Zorlu Enerji (ZOREN)</span>
+        <span class="badge">REFINANCING &amp; SOTP ENGINE</span>
       </div>
       <div class="presets-wrap">
-        <button class="preset-pill active" onclick="loadPreset('hybrid')">⚡ Base (65%)</button>
-        <button class="preset-pill" onclick="loadPreset('amend')">🔄 A&E (15%)</button>
-        <button class="preset-pill" onclick="loadPreset('haircut')">✂️ Haircut (10%)</button>
-        <button class="preset-pill" onclick="loadPreset('litigation')">⚖️ Stalled (10%)</button>
+        <button class="preset-pill active" onclick="loadPreset('base')">Base Case Par Roll</button>
+        <button class="preset-pill" onclick="loadPreset('extend')">3Y Amend &amp; Extend</button>
+        <button class="preset-pill" onclick="loadPreset('ipo_recap')">Renewable IPO Recap</button>
+        <button class="preset-pill" onclick="loadPreset('haircut')">Maturity Haircut (20%)</button>
+        <button class="preset-pill" onclick="loadPreset('crisis')">Severe FX Crisis (Floor)</button>
       </div>
     </div>
 
     <div class="metrics-strip">
       <div class="metric-hero">
-        <span class="lbl">FAIR VALUE:</span>
-        <div class="val" id="top_fair_val">64.5<span>¢</span></div>
+        <div class="lbl">Senior Recovery</div>
+        <div class="val" id="top-senior-recovery">100.0<span>c</span></div>
       </div>
-
-      <div class="metric-sub">
-        <span>SPREAD VS 63.5¢</span>
-        <strong id="top_spread" class="positive">+1.0¢</strong>
+      <div class="metric-hero gold">
+        <div class="lbl">Pro-Forma Net Lev</div>
+        <div class="val" id="top-proforma-lev">3.63<span>x</span></div>
       </div>
-
-      <div class="metric-sub">
-        <span>ANNUALIZED IRR</span>
-        <strong id="top_irr" class="positive">+26.4%</strong>
+      <div class="metric-hero emerald">
+        <div class="lbl">SOTP Ent. Value</div>
+        <div class="val" id="top-sotp-ev">$2,100<span>M</span></div>
       </div>
-
-      <div class="metric-sub">
-        <span>EXIT RECOVERY</span>
-        <strong id="top_closing" style="color: #fff;">74.2¢</strong>
+      <div id="top-status-badge" class="status-badge status-sustainable">
+        ✓ Sustainable
       </div>
-
-      <div id="top_badge" class="trade-badge fair">⚖️ FAIRLY PRICED</div>
-
-      <a href="https://rkarim25.github.io/Strategy/zoren_calculator.html" target="_blank" class="fullscreen-btn" title="Open full screen in a new browser tab">
-        ↗ Pop Out
-      </a>
     </div>
   </div>
 
-  <!-- Tab Bar -->
-  <div class="tabs-bar">
-    <button class="tab-btn active" onclick="switchTab('tab_calc')">🎛️ Workout Levers & Economics</button>
-    <button class="tab-btn" onclick="switchTab('tab_sens')">📊 Sensitivity Grids (Haircut / Tenor / Yield)</button>
-    <button class="tab-btn" onclick="switchTab('tab_cf')">📋 Semi-Annual Cash Flows</button>
-  </div>
+  <!-- Main 2-Column Calculation Workspace -->
+  <div class="engine-layout">
 
-  <!-- TAB 1: Main Calculator Grid -->
-  <div id="tab_calc" class="tab-panel active">
-    <div class="calc-grid">
-      <!-- Left Column: Controls -->
+    <!-- LEFT COLUMN: SOTP Asset Footprint & Refinancing Sliders -->
+    <div>
+
+      <!-- CARD 1: SOTP Asset Perimeter & Multiples -->
       <div class="card">
         <div class="card-title">
-          <span>Workout Negotiation Parameters</span>
-          <button onclick="copySummary()" style="background:transparent; border:none; color:var(--accent-cyan); font-size:10px; cursor:pointer; font-weight:600;">📋 Copy</button>
+          <span>1. Asset Perimeter Selection &amp; Sum-of-the-Parts (SOTP) Multiples</span>
+          <span class="sub"><a href="zoren_background.html" style="color:var(--accent-cyan); text-decoration:none;">[View Asset Blueprint &amp; EV Volatility →]</a></span>
         </div>
 
-        <!-- Row 1: Duration & Carry -->
-        <div class="ctrl-row">
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Negotiation to Closing</span>
-              <strong id="lbl_neg_months">8 Months</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_neg_months" min="1" max="36" step="1" value="8" oninput="sync('neg_months', this.value)">
-              <input type="number" id="num_neg_months" min="1" max="36" value="8" oninput="sync('neg_months', this.value)">
-            </div>
-          </div>
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Distressed Discount Rate</span>
-              <strong id="lbl_distress_rate">22.0%</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_distress_rate" min="10" max="35" step="0.5" value="22" oninput="sync('distress_rate', this.value)">
-              <input type="number" id="num_distress_rate" min="10" max="35" step="0.5" value="22" oninput="sync('distress_rate', this.value)">
-            </div>
-          </div>
-        </div>
-
-        <!-- Row 2: Haircut & Tenor -->
-        <div class="ctrl-row">
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Principal Haircut</span>
-              <strong id="lbl_haircut">15.0%</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_haircut" min="0" max="60" step="0.5" value="15" oninput="sync('haircut', this.value)">
-              <input type="number" id="num_haircut" min="0" max="60" step="0.5" value="15" oninput="sync('haircut', this.value)">
-            </div>
-          </div>
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Maturity Extension</span>
-              <strong id="lbl_extension">3.0 Yrs</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_extension" min="0" max="7" step="0.5" value="3" oninput="sync('extension', this.value)">
-              <input type="number" id="num_extension" min="0" max="7" step="0.5" value="3" oninput="sync('extension', this.value)">
-            </div>
-          </div>
-        </div>
-
-        <!-- Row 3: Cash & PIK Coupon -->
-        <div class="ctrl-row">
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>New Cash Coupon (p.a.)</span>
-              <strong id="lbl_cash_coupon">5.0%</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_cash_coupon" min="0" max="12" step="0.25" value="5.0" oninput="sync('cash_coupon', this.value)">
-              <input type="number" id="num_cash_coupon" min="0" max="12" step="0.25" value="5.0" oninput="sync('cash_coupon', this.value)">
-            </div>
-          </div>
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>PIK Coupon Rate (p.a.)</span>
-              <strong id="lbl_pik_coupon">5.5%</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_pik_coupon" min="0" max="10" step="0.25" value="5.5" oninput="sync('pik_coupon', this.value)">
-              <input type="number" id="num_pik_coupon" min="0" max="10" step="0.25" value="5.5" oninput="sync('pik_coupon', this.value)">
-            </div>
-          </div>
-        </div>
-
-        <!-- Row 4: PIK Window & Step-Up -->
-        <div class="ctrl-row">
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>PIK Window Duration</span>
-              <strong id="lbl_pik_years">3.0 Yrs</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_pik_years" min="0" max="5" step="0.5" value="3" oninput="sync('pik_years', this.value)">
-              <input type="number" id="num_pik_years" min="0" max="5" step="0.5" value="3" oninput="sync('pik_years', this.value)">
-            </div>
-          </div>
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Post-PIK Step-up Coupon</span>
-              <strong id="lbl_post_pik">9.5%</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_post_pik" min="4" max="14" step="0.25" value="9.5" oninput="sync('post_pik', this.value)">
-              <input type="number" id="num_post_pik" min="4" max="14" step="0.25" value="9.5" oninput="sync('post_pik', this.value)">
-            </div>
-          </div>
-        </div>
-
-        <!-- Row 5: Fees & Exit Yield -->
-        <div class="ctrl-row">
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Advisory & Legal Fees</span>
-              <strong id="lbl_advisory_fee">2.5%</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_advisory_fee" min="0.5" max="6" step="0.25" value="2.5" oninput="sync('advisory_fee', this.value)">
-              <input type="number" id="num_advisory_fee" min="0.5" max="6" step="0.25" value="2.5" oninput="sync('advisory_fee', this.value)">
-            </div>
-          </div>
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Post-Restructure Exit Yield</span>
-              <strong id="lbl_exit_yield">15.5%</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_exit_yield" min="10" max="25" step="0.5" value="15.5" oninput="sync('exit_yield', this.value)">
-              <input type="number" id="num_exit_yield" min="10" max="25" step="0.5" value="15.5" oninput="sync('exit_yield', this.value)">
-            </div>
-          </div>
-        </div>
-
-        <!-- Row 6: Consent Sweetener & Cash Sweep -->
-        <div class="ctrl-row">
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Upfront Consent Fee (%)</span>
-              <strong id="lbl_consent_fee">0.75%</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_consent_fee" min="0" max="3" step="0.25" value="0.75" oninput="sync('consent_fee', this.value)">
-              <input type="number" id="num_consent_fee" min="0" max="3" step="0.25" value="0.75" oninput="sync('consent_fee', this.value)">
-            </div>
-          </div>
-          <div class="ctrl-box">
-            <div class="ctrl-head">
-              <span>Asset Sweep Paydown ($)</span>
-              <strong id="lbl_sweep">$5.00</strong>
-            </div>
-            <div class="slider-wrap">
-              <input type="range" id="inp_sweep" min="0" max="25" step="0.5" value="5.0" oninput="sync('sweep', this.value)">
-              <input type="number" id="num_sweep" min="0" max="25" step="0.5" value="5.0" oninput="sync('sweep', this.value)">
-            </div>
-          </div>
+        <div style="overflow-x:auto;">
+          <table class="asset-table" id="asset-table">
+            <thead>
+              <tr>
+                <th style="width:30px; text-align:center;">Inc</th>
+                <th>Asset Complex</th>
+                <th>Capacity / Type</th>
+                <th style="text-align:right;">EBITDA ($M)</th>
+                <th style="text-align:right;">EV Multiple</th>
+                <th style="text-align:right;">Implied EV</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populated dynamically via JS -->
+            </tbody>
+            <tfoot>
+              <tr style="font-weight:700; border-top:1px solid #334155;">
+                <td colspan="3" style="text-align:right; color:#fff;">Total Selected SOTP Enterprise Value:</td>
+                <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);" id="sotp-total-ebitda">$350.0M</td>
+                <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#94a3b8;" id="sotp-blended-mult">6.00x</td>
+                <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-size:12px;" id="sotp-total-ev">$2,100.0M</td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </div>
 
-      <!-- Right Column: Economic Outputs -->
+      <!-- CARD 2: Refinancing, Duration & Haircut Calibration -->
       <div class="card">
         <div class="card-title">
-          <span>Restructured Instrument Breakdown</span>
-          <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--text-muted);">PER $100 FACE</span>
+          <span>2. Refinancing Mechanics, Maturity Extension &amp; Debt Calibration</span>
+          <span class="sub">Size Eurobond roll terms, sponsor injections &amp; coupon calibration</span>
         </div>
 
-        <div class="breakdown-row">
-          <span>New Initial Face Value</span>
-          <span id="bd_new_principal">$85.00</span>
-        </div>
-        <div class="breakdown-row">
-          <span>Compounded Face (post-PIK)</span>
-          <span id="bd_compounded_principal">$99.98</span>
-        </div>
-        <div class="breakdown-row">
-          <span>PV of New Bond at Exit Yield</span>
-          <span id="bd_pv_bond">$70.95</span>
-        </div>
-        <div class="breakdown-row">
-          <span>Upfront Cash (Consent + Sweep)</span>
-          <span id="bd_upfront_cash" style="color: var(--accent-emerald);">+$5.75</span>
-        </div>
-        <div class="breakdown-row">
-          <span>Less: Advisory Fee Leakage</span>
-          <span id="bd_friction" style="color: var(--accent-rose);">-$2.50</span>
-        </div>
-        <div class="breakdown-row highlight">
-          <span>Gross Realized Recovery at Closing</span>
-          <span id="bd_total_closing">$74.20</span>
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Standstill &amp; Refinancing Window</span>
+              <span class="slider-val" id="val-duration">12 Months</span>
+            </div>
+            <input type="range" id="input-duration" min="3" max="36" step="3" value="12" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Carrying cost &amp; syndication fees: <strong style="color:#f87171;" id="lbl-advisor-drain">-$30M</strong>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Sponsor Equity / Zorlu Yenilenebilir IPO</span>
+              <span class="slider-val" id="val-sponsor-equity">$0M</span>
+            </div>
+            <input type="range" id="input-sponsor-equity" min="0" max="500" step="50" value="0" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Fresh cash to pay down 2026 Eurobond or bank debt
+            </div>
+          </div>
         </div>
 
-        <div class="breakdown-row" style="margin-top: 6px;">
-          <span>Negotiation Negative Carry Drag</span>
-          <span id="bd_carry_drag" style="color: var(--accent-rose);">-9.7¢</span>
-        </div>
-        <div class="breakdown-row">
-          <span>Time Discount Factor</span>
-          <span id="bd_discount_factor">1.150x</span>
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Senior Eurobond Principal Haircut</span>
+              <span class="slider-val" id="val-senior-haircut">0%</span>
+            </div>
+            <input type="range" id="input-senior-haircut" min="0" max="50" step="5" value="0" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Cuts $300M Eurobond pool by: <strong style="color:#34d399;" id="lbl-senior-debt-cut">$0M</strong>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Maturity Extension</span>
+              <span class="slider-val" id="val-extension">3 Years</span>
+            </div>
+            <input type="range" id="input-extension" min="0" max="8" step="1" value="3" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              New maturity year: <strong style="color:#fbbf24;" id="lbl-new-maturity">2029</strong>
+            </div>
+          </div>
         </div>
 
-        <div class="note-box">
-          <strong style="color: var(--accent-cyan); display:block; margin-bottom:2px;">Desk Strategy Directive:</strong>
-          <span id="out_action_note">
-            At 63.5¢, the bond fully prices in this 64.5¢ base case without safety margin. Wait for the post-Oct 23 coupon default capitulation into 50¢–53¢ to enter.
-          </span>
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Reinstated Senior Coupon Rate</span>
+              <span class="slider-val" id="val-coupon">9.00%</span>
+            </div>
+            <input type="range" id="input-coupon" min="6.0" max="14.0" step="0.5" value="9.0" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              New annual Eurobond interest burden: <strong style="color:#fff;" id="lbl-new-interest">$27.0M</strong>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Senior Debt-to-Equity Swap Ratio</span>
+              <span class="slider-val" id="val-debt-equity">0%</span>
+            </div>
+            <input type="range" id="input-debt-equity" min="0" max="40" step="5" value="0" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Eurobond holders receive <strong style="color:#38bdf8;" id="lbl-reorg-equity-share">0%</strong> reorganized equity
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Sustainability Engine & Qualitative Pricing Bands -->
+    <div>
+
+      <!-- CARD 3: Balance Sheet Sustainability Engine -->
+      <div class="card">
+        <div class="card-title">
+          <span>3. Balance Sheet Sustainability Engine</span>
+          <span class="sub">Target: Net Leverage &lt; 3.50x &bull; Interest Coverage &gt; 2.50x</span>
+        </div>
+
+        <div class="meter-grid">
+          <div class="meter-card">
+            <div class="meter-title">Pro-Forma Net Debt</div>
+            <div class="meter-val" id="meter-net-debt">$1,464M</div>
+            <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-net-debt-delta">-$78M vs FY24</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Pro-Forma Leverage</div>
+            <div class="meter-val" id="meter-leverage">4.16x</div>
+            <div class="meter-sub" id="meter-leverage-target">Target: &lt; 3.50x</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Interest Coverage</div>
+            <div class="meter-val" id="meter-coverage">2.43x</div>
+            <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-coverage-target">Covenant: &gt; 2.0x</div>
+          </div>
+        </div>
+
+        <div class="meter-grid">
+          <div class="meter-card">
+            <div class="meter-title">Annual Cash Interest</div>
+            <div class="meter-val" id="meter-interest">$145M</div>
+            <div class="meter-sub" style="color:#38bdf8;">Down from $151M</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Post-Reorg FCF</div>
+            <div class="meter-val" id="meter-fcf" style="color:var(--accent-emerald);">+$181M</div>
+            <div class="meter-sub">Covers 100% Amort</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Debt Cut Required</div>
+            <div class="meter-val" id="meter-cut-req">$239M</div>
+            <div class="meter-sub" id="meter-cut-status" style="color:var(--accent-amber);">Modest Cushion</div>
+          </div>
+        </div>
+
+        <div id="sustainability-verdict" class="callout-box">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- CARD 4: Qualitative Risk Weighting & Dynamic Pricing Bands -->
+      <div class="card">
+        <div class="card-title">
+          <span>4. Qualitative Risk Weighting &amp; Implied Pricing Bands</span>
+          <span class="sub">Discount for Turkish macro/FX beta, YEKDEM expiry &amp; bank roll friction</span>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Turkish Sovereign Macro / Lira FX Beta</span>
+              <span class="slider-val" id="val-qual-macro">20%</span>
+            </div>
+            <input type="range" id="input-qual-macro" min="0" max="50" step="5" value="20" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Currency volatility &amp; TCMB interest rates</div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">YEKDEM Tariff Expiry Cliff Risk</span>
+              <span class="slider-val" id="val-qual-yekdem">15%</span>
+            </div>
+            <input type="range" id="input-qual-yekdem" min="0" max="40" step="5" value="15" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">2026–2029 transition to merchant pricing</div>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Dorad Energy / Geopolitical Tail</span>
+              <span class="slider-val" id="val-qual-dorad">10%</span>
+            </div>
+            <input type="range" id="input-qual-dorad" min="0" max="30" step="5" value="10" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Israel asset dividend &amp; valuation risk</div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Refinancing / Execution Illiquidity</span>
+              <span class="slider-val" id="val-qual-discount">10%</span>
+            </div>
+            <input type="range" id="input-qual-discount" min="5" max="30" step="5" value="10" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity</div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <div style="font-size:10px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px;">
+            Dynamic Secondary Pricing Bands vs Market Quotes
+          </div>
+
+          <table class="band-table" id="pricing-band-table">
+            <thead>
+              <tr>
+                <th style="text-align:left;">Instrument</th>
+                <th style="text-align:right;">Market Px</th>
+                <th style="text-align:right;">Bear (Floor)</th>
+                <th style="text-align:right;">Base (Fair)</th>
+                <th style="text-align:right;">Bull (Upside)</th>
+                <th style="text-align:center;">Desk Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populated dynamically via JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CARD 5: Comprehensive Step-by-Step Priority Recovery Waterfall (Full Width) -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>🌊</span> 5. Step-by-Step Dynamic Priority Recovery Waterfall &amp; Value Available to Bondholders
+      </span>
+      <span class="sub">Absolute Priority Rule (APR) &bull; Dynamic Capital Structure Value Allocation</span>
+    </div>
+
+    <!-- Visual Stacked Capital Structure Allocation Bar -->
+    <div style="margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
+        <span>Enterprise Value Allocation by Priority Tier:</span>
+        <span id="wf-bar-total-label" style="color:#fff; font-family:'JetBrains Mono',monospace;">Total Distributable Value: $2,340M</span>
+      </div>
+      <div style="height:26px; border-radius:6px; overflow:hidden; display:flex; background:#0f172a; border:1px solid #1e293b; box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);" id="wf-stacked-bar">
+        <!-- Filled dynamically -->
+      </div>
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:8px; font-size:10.5px;">
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#f87171; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Priority Secured Loans (Geothermal + Grid): <strong id="wf-legend-priority" style="color:#f87171;">$1,230M (52.6%)</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#34d399; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Senior Unsecured Pool (Eurobond + RCF): <strong id="wf-legend-senior" style="color:#34d399;">$582M (24.9%)</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#38bdf8; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Existing Equity Residual (Zorlu Holding): <strong id="wf-legend-equity" style="color:#38bdf8;">$528M (22.5%)</strong></span>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- TAB 2: Sensitivities -->
-  <div id="tab_sens" class="tab-panel">
-    <div class="table-card">
-      <div class="card-title"><span>Sensitivity 1: Fair Value Today (¢) vs. Haircut % and Negotiation Months</span></div>
-      <table id="tbl_sens_haircut"></table>
+    <!-- The 16-Row Step-by-Step Priority Waterfall Table -->
+    <div style="overflow-x:auto;">
+      <table class="band-table" id="dynamic-waterfall-table" style="width:100%; font-size:11px;">
+        <thead>
+          <tr style="background:#0f172a;">
+            <th style="text-align:left; width:4%;">#</th>
+            <th style="text-align:left; width:34%;">Waterfall Step / Capital Tier</th>
+            <th style="text-align:right; width:16%;">Current Scenario ($M)</th>
+            <th style="text-align:right; width:16%;">Implied Recovery / Unit</th>
+            <th style="text-align:left; width:30%;">Governing Mechanics &amp; Legal Priority</th>
+          </tr>
+        </thead>
+        <tbody id="dynamic-waterfall-tbody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
     </div>
 
-    <div class="table-card">
-      <div class="card-title"><span>Sensitivity 2: Fair Value Today (¢) vs. Maturity Extension and Exit Yield</span></div>
-      <table id="tbl_sens_tenor"></table>
-    </div>
-  </div>
-
-  <!-- TAB 3: Cash Flow Schedule -->
-  <div id="tab_cf" class="tab-panel">
-    <div class="table-card">
-      <div class="card-title"><span>Projected Semi-Annual Cash Flows per $100 Original Face</span></div>
-      <table id="tbl_cash_flows"></table>
+    <!-- Tranche Level Allocation Table -->
+    <div style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
+      <div style="font-size:10.5px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+        Tranche-by-Tranche Claim Allocation &amp; Recovery Dollar Distribution
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="band-table" id="tranche-allocation-table" style="width:100%; font-size:11px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Tranche / Debt Instrument</th>
+              <th style="text-align:left;">Seniority Tier</th>
+              <th style="text-align:right;">Claim Face ($M)</th>
+              <th style="text-align:right;">Market Px</th>
+              <th style="text-align:right;">Allocated Value ($M)</th>
+              <th style="text-align:right;">Clean Recovery Px</th>
+              <th style="text-align:right;">Adjusted Exit Px</th>
+              <th style="text-align:center;">Implied Upside</th>
+            </tr>
+          </thead>
+          <tbody id="tranche-allocation-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <script>
-    const params = {
-      neg_months: 8, distress_rate: 22.0, haircut: 15.0, extension: 3.0,
-      cash_coupon: 5.0, pik_coupon: 5.5, pik_years: 3.0, post_pik: 9.5,
-      advisory_fee: 2.5, consent_fee: 0.75, sweep: 5.0, exit_yield: 15.5
-    };
+    // Asset SOTP Baseline Definitions for Zorlu Enerji
+    const ASSETS = [
+      { id: "kizildere", name: "Kızıldere Geothermal Complex", capacity: "260 MW (Units I-III, 88.5% CF)", ebitda: 135.0, multiple: 6.5, included: true },
+      { id: "alasehir", name: "Alaşehir Geothermal Plant", capacity: "45 MW (YEKDEM $105/MWh USD)", ebitda: 25.0, multiple: 6.0, included: true },
+      { id: "gokcedag", name: "Gökçedağ Wind Power Plant", capacity: "135 MW (54 GE Turbines, >34% CF)", ebitda: 28.0, multiple: 6.0, included: true },
+      { id: "hydro_fleet", name: "Hydroelectric Fleet (7 Plants)", capacity: "118.6 MW (Run-of-River/Reservoir)", ebitda: 22.0, multiple: 5.5, included: true },
+      { id: "oedas_grid", name: "OEDAŞ Regulated Distribution Grid", capacity: "1.95M Meters, RAB ~$650M", ebitda: 85.0, multiple: 6.5, included: true },
+      { id: "zes_charging", name: "ZES EV Fast-Charging Network", capacity: "1,850+ Sockets (#1 in Turkey)", ebitda: 15.0, multiple: 8.0, included: true },
+      { id: "cogen_thermal", name: "Domestic Gas Cogeneration", capacity: "341 MW (Bursa & Lüleburgaz)", ebitda: 20.0, multiple: 4.5, included: true },
+      { id: "international", name: "International Assets (Dorad/Pak)", capacity: "266.4 MW Net Share (USD PPAs)", ebitda: 20.0, multiple: 5.0, included: true }
+    ];
 
-    const market_price = 63.50;
+    // Tranche Debt Baseline Definitions
+    const TRANCHES = [
+      { id: "z2026", name: "ZOREN 9.000% 2026 Eurobond", claim: 300.0, marketPx: 94.50, seniority: "senior" },
+      { id: "geothermal_pf", name: "Geothermal Project Loans (EBRD/IFC)", claim: 720.0, marketPx: 100.00, seniority: "priority_secured" },
+      { id: "oedas_loans", name: "OEDAŞ Regulated Grid Loans (TLREF)", claim: 480.0, marketPx: 100.00, seniority: "priority_secured" },
+      { id: "rcf_working", name: "Syndicated RCF & Working Capital", claim: 282.4, marketPx: 100.00, seniority: "senior" }
+    ];
 
-    const presets = {
-      hybrid: {
-        neg_months: 8, distress_rate: 22.0, haircut: 15.0, extension: 3.0,
-        cash_coupon: 5.0, pik_coupon: 5.5, pik_years: 3.0, post_pik: 9.5,
-        advisory_fee: 2.5, consent_fee: 0.75, sweep: 5.0, exit_yield: 15.5
+    // Presets definitions
+    const PRESETS = {
+      base: {
+        duration: 12,
+        sponsorEquity: 0,
+        seniorHaircut: 0,
+        extension: 3,
+        coupon: 9.0,
+        debtEquity: 0,
+        qualMacro: 20,
+        qualYekdem: 15,
+        qualDorad: 10,
+        qualDiscount: 10,
+        assets: { kizildere: [135, 6.5, true], alasehir: [25, 6.0, true], gokcedag: [28, 6.0, true], hydro_fleet: [22, 5.5, true], oedas_grid: [85, 6.5, true], zes_charging: [15, 8.0, true], cogen_thermal: [20, 4.5, true], international: [20, 5.0, true] }
       },
-      amend: {
-        neg_months: 6, distress_rate: 20.0, haircut: 0.0, extension: 3.0,
-        cash_coupon: 8.5, pik_coupon: 0.0, pik_years: 0.0, post_pik: 8.5,
-        advisory_fee: 2.0, consent_fee: 1.0, sweep: 2.0, exit_yield: 14.0
+      extend: {
+        duration: 6,
+        sponsorEquity: 50,
+        seniorHaircut: 0,
+        extension: 5,
+        coupon: 8.5,
+        debtEquity: 0,
+        qualMacro: 15,
+        qualYekdem: 10,
+        qualDorad: 10,
+        qualDiscount: 10,
+        assets: { kizildere: [140, 6.5, true], alasehir: [25, 6.0, true], gokcedag: [28, 6.0, true], hydro_fleet: [22, 5.5, true], oedas_grid: [90, 6.5, true], zes_charging: [18, 8.5, true], cogen_thermal: [20, 4.5, true], international: [20, 5.0, true] }
+      },
+      ipo_recap: {
+        duration: 6,
+        sponsorEquity: 250,
+        seniorHaircut: 0,
+        extension: 4,
+        coupon: 7.5,
+        debtEquity: 0,
+        qualMacro: 10,
+        qualYekdem: 10,
+        qualDorad: 5,
+        qualDiscount: 5,
+        assets: { kizildere: [145, 7.0, true], alasehir: [28, 6.5, true], gokcedag: [30, 6.5, true], hydro_fleet: [25, 6.0, true], oedas_grid: [95, 7.0, true], zes_charging: [20, 10.0, true], cogen_thermal: [20, 4.5, true], international: [22, 5.5, true] }
       },
       haircut: {
-        neg_months: 10, distress_rate: 24.0, haircut: 27.5, extension: 2.0,
-        cash_coupon: 8.5, pik_coupon: 0.0, pik_years: 0.0, post_pik: 8.5,
-        advisory_fee: 3.0, consent_fee: 0.5, sweep: 7.5, exit_yield: 16.5
+        duration: 18,
+        sponsorEquity: 0,
+        seniorHaircut: 20,
+        extension: 6,
+        coupon: 7.0,
+        debtEquity: 15,
+        qualMacro: 30,
+        qualYekdem: 25,
+        qualDorad: 15,
+        qualDiscount: 15,
+        assets: { kizildere: [120, 5.5, true], alasehir: [20, 5.0, true], gokcedag: [24, 5.0, true], hydro_fleet: [18, 4.5, true], oedas_grid: [75, 5.5, true], zes_charging: [12, 6.0, true], cogen_thermal: [15, 3.5, true], international: [15, 4.0, true] }
       },
-      litigation: {
-        neg_months: 20, distress_rate: 28.0, haircut: 45.0, extension: 5.0,
-        cash_coupon: 4.0, pik_coupon: 0.0, pik_years: 0.0, post_pik: 4.0,
-        advisory_fee: 5.0, consent_fee: 0.0, sweep: 0.0, exit_yield: 22.0
+      crisis: {
+        duration: 24,
+        sponsorEquity: 0,
+        seniorHaircut: 40,
+        extension: 8,
+        coupon: 6.0,
+        debtEquity: 30,
+        qualMacro: 45,
+        qualYekdem: 35,
+        qualDorad: 25,
+        qualDiscount: 25,
+        assets: { kizildere: [100, 4.5, true], alasehir: [15, 4.0, true], gokcedag: [18, 4.0, true], hydro_fleet: [12, 3.5, true], oedas_grid: [60, 4.5, true], zes_charging: [8, 4.5, true], cogen_thermal: [10, 3.0, true], international: [10, 3.0, true] }
       }
     };
 
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-      document.getElementById(tabId).classList.add('active');
-      if (tabId === 'tab_sens') renderSensitivityTables();
-      if (tabId === 'tab_cf') renderCashFlowTable();
+    function initPage() {
+      renderAssetTable();
+      recalcEngine();
     }
 
-    function loadPreset(key) {
-      document.querySelectorAll('.preset-pill').forEach(btn => btn.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-      const p = presets[key];
-      for (const k in p) {
-        params[k] = p[k];
-        updateInputUI(k, p[k]);
+    function renderAssetTable() {
+      const tbody = document.querySelector("#asset-table tbody");
+      tbody.innerHTML = ASSETS.map((a, idx) => `
+        <tr id="row-${a.id}">
+          <td style="text-align:center;">
+            <input type="checkbox" class="asset-checkbox" id="chk-${a.id}" ${a.included ? 'checked' : ''} onchange="onAssetToggle('${a.id}')">
+          </td>
+          <td><strong style="color:#fff;">${a.name}</strong></td>
+          <td style="color:var(--text-muted); font-size:10px;">${a.capacity}</td>
+          <td style="text-align:right;">
+            <input type="number" step="5" class="num-input" id="ebitda-${a.id}" value="${a.ebitda}" onchange="recalcEngine()">
+          </td>
+          <td style="text-align:right;">
+            <input type="number" step="0.5" class="num-input" id="mult-${a.id}" value="${a.multiple}" onchange="recalcEngine()">
+          </td>
+          <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent-cyan);" id="ev-${a.id}">
+            $${(a.ebitda * a.multiple).toFixed(1)}M
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function onAssetToggle(id) {
+      const asset = ASSETS.find(a => a.id === id);
+      if (asset) {
+        asset.included = document.getElementById(`chk-${id}`).checked;
+        const row = document.getElementById(`row-${id}`);
+        row.style.opacity = asset.included ? "1.0" : "0.4";
+        recalcEngine();
       }
-      calculate();
     }
 
-    function updateInputUI(key, val) {
-      const inp = document.getElementById('inp_' + key);
-      const num = document.getElementById('num_' + key);
-      const lbl = document.getElementById('lbl_' + key);
-      if (inp) inp.value = val;
-      if (num) num.value = val;
-      if (lbl) {
-        if (key.includes('months')) lbl.innerText = val + ' Months';
-        else if (key.includes('years') || key.includes('extension')) lbl.innerText = parseFloat(val).toFixed(1) + ' Yrs';
-        else if (key.includes('sweep')) lbl.innerText = '$' + parseFloat(val).toFixed(2);
-        else lbl.innerText = parseFloat(val).toFixed(key === 'haircut' || key === 'exit_yield' ? 1 : 2) + '%';
-      }
-    }
+    function loadPreset(name) {
+      document.querySelectorAll(".preset-pill").forEach(p => p.classList.remove("active"));
+      event.target.classList.add("active");
 
-    function sync(key, val) {
-      params[key] = parseFloat(val);
-      updateInputUI(key, val);
-      calculate();
-    }
+      const p = PRESETS[name];
+      if (!p) return;
 
-    function evaluateValuation(p) {
-      const initial_face = 100 * (1 - p.haircut / 100);
-      const total_tenor_years = 3.5 + p.extension;
-      const total_periods = Math.round(total_tenor_years * 2);
-      const pik_periods = Math.round(p.pik_years * 2);
+      document.getElementById("input-duration").value = p.duration;
+      document.getElementById("input-sponsor-equity").value = p.sponsorEquity;
+      document.getElementById("input-senior-haircut").value = p.seniorHaircut;
+      document.getElementById("input-extension").value = p.extension;
+      document.getElementById("input-coupon").value = p.coupon;
+      document.getElementById("input-debt-equity").value = p.debtEquity;
 
-      let current_principal = initial_face;
-      const r_exit_semi = (p.exit_yield / 100) / 2;
-      const r_pik_semi = (p.pik_coupon / 100) / 2;
+      document.getElementById("input-qual-macro").value = p.qualMacro;
+      document.getElementById("input-qual-yekdem").value = p.qualYekdem;
+      document.getElementById("input-qual-dorad").value = p.qualDorad;
+      document.getElementById("input-qual-discount").value = p.qualDiscount;
 
-      let pv_bond = 0;
-      let cf_list = [];
-
-      for (let t = 1; t <= total_periods; t++) {
-        let cash_cf = 0;
-        let p_start = current_principal;
-        if (t <= pik_periods) {
-          cash_cf = current_principal * ((p.cash_coupon / 100) / 2);
-          current_principal = current_principal * (1 + r_pik_semi);
-        } else {
-          cash_cf = current_principal * ((p.post_pik / 100) / 2);
+      // Update assets
+      ASSETS.forEach(a => {
+        if (p.assets[a.id]) {
+          const [eb, m, inc] = p.assets[a.id];
+          document.getElementById(`ebitda-${a.id}`).value = eb;
+          document.getElementById(`mult-${a.id}`).value = m;
+          document.getElementById(`chk-${a.id}`).checked = inc;
+          a.included = inc;
+          document.getElementById(`row-${a.id}`).style.opacity = inc ? "1.0" : "0.4";
         }
+      });
 
-        if (t === total_periods) {
-          cash_cf += current_principal;
-        }
-
-        pv_bond += cash_cf / Math.pow(1 + r_exit_semi, t);
-        cf_list.push({ t, years: t * 0.5, p_start, cash_cf, p_end: current_principal });
-      }
-
-      const upfront_cash = p.consent_fee + p.sweep;
-      const friction = p.advisory_fee;
-      const total_closing_recovery = pv_bond + upfront_cash - friction;
-
-      const neg_years = p.neg_months / 12;
-      const discount_factor = Math.pow(1 + (p.distress_rate / 100), neg_years);
-      const fair_value_today = total_closing_recovery / discount_factor;
-
-      return {
-        initial_face,
-        compounded_face: current_principal,
-        pv_bond,
-        upfront_cash,
-        friction,
-        total_closing_recovery,
-        discount_factor,
-        fair_value_today,
-        carry_drag: fair_value_today - total_closing_recovery,
-        cf_list
-      };
+      recalcEngine();
     }
 
-    function calculate() {
-      const res = evaluateValuation(params);
+    function recalcEngine() {
+      // 1. Read Inputs
+      const durationMonths = parseInt(document.getElementById("input-duration").value);
+      const sponsorEquity = parseFloat(document.getElementById("input-sponsor-equity").value);
+      const seniorHaircutPct = parseFloat(document.getElementById("input-senior-haircut").value) / 100.0;
+      const extensionYears = parseInt(document.getElementById("input-extension").value);
+      const newCouponPct = parseFloat(document.getElementById("input-coupon").value) / 100.0;
+      const debtToEquityPct = parseFloat(document.getElementById("input-debt-equity").value) / 100.0;
 
-      document.getElementById('top_fair_val').innerHTML = res.fair_value_today.toFixed(1) + '<span>¢</span>';
-      document.getElementById('top_closing').innerText = res.total_closing_recovery.toFixed(1) + '¢';
+      const qualMacro = parseFloat(document.getElementById("input-qual-macro").value) / 100.0;
+      const qualYekdem = parseFloat(document.getElementById("input-qual-yekdem").value) / 100.0;
+      const qualDorad = parseFloat(document.getElementById("input-qual-dorad").value) / 100.0;
+      const qualDiscount = parseFloat(document.getElementById("input-qual-discount").value) / 100.0;
 
-      const delta = res.fair_value_today - market_price;
-      const top_spread = document.getElementById('top_spread');
-      top_spread.innerText = (delta >= 0 ? '+' : '') + delta.toFixed(1) + '¢';
-      top_spread.className = delta >= 0 ? 'positive' : 'negative';
+      // Update UI slider values
+      document.getElementById("val-duration").textContent = `${durationMonths} Months`;
+      document.getElementById("val-sponsor-equity").textContent = `$${sponsorEquity.toLocaleString()}M`;
+      document.getElementById("val-senior-haircut").textContent = `${(seniorHaircutPct * 100).toFixed(0)}%`;
+      document.getElementById("val-extension").textContent = `${extensionYears} Years`;
+      document.getElementById("val-coupon").textContent = `${(newCouponPct * 100).toFixed(2)}%`;
+      document.getElementById("val-debt-equity").textContent = `${(debtToEquityPct * 100).toFixed(0)}%`;
 
-      const holding_years = Math.max(0.25, params.neg_months / 12);
-      const irr = (Math.pow(res.total_closing_recovery / market_price, 1 / holding_years) - 1) * 100;
-      const top_irr = document.getElementById('top_irr');
-      top_irr.innerText = (irr >= 0 ? '+' : '') + irr.toFixed(1) + '%';
-      top_irr.className = irr >= 0 ? 'positive' : 'negative';
+      document.getElementById("val-qual-macro").textContent = `${(qualMacro * 100).toFixed(0)}%`;
+      document.getElementById("val-qual-yekdem").textContent = `${(qualYekdem * 100).toFixed(0)}%`;
+      document.getElementById("val-qual-dorad").textContent = `${(qualDorad * 100).toFixed(0)}%`;
+      document.getElementById("val-qual-discount").textContent = `${(qualDiscount * 100).toFixed(0)}%`;
 
-      const badge = document.getElementById('top_badge');
-      const note = document.getElementById('out_action_note');
-      if (res.fair_value_today < 60.5) {
-        badge.className = 'trade-badge sell';
-        badge.innerHTML = '⚠️ OVERVALUED';
-        note.innerHTML = `Model fair value of <strong>${res.fair_value_today.toFixed(1)}¢</strong> is below market (63.5¢). Bonds fail to price in workout delay. Wait for forced selling into 50¢–53¢.`;
-      } else if (res.fair_value_today > 66.5) {
-        badge.className = 'trade-badge buy';
-        badge.innerHTML = '💎 UNDERVALUED';
-        note.innerHTML = `Model fair value of <strong>${res.fair_value_today.toFixed(1)}¢</strong> provides strong margin of safety over 63.5¢ market price. Annualized return: <strong>+${irr.toFixed(1)}%</strong>.`;
+      document.getElementById("lbl-new-maturity").textContent = `${2026 + extensionYears}`;
+
+      // 2. SOTP Asset Valuation
+      let totalSotpEv = 0;
+      let totalOperatingEbitda = 0;
+
+      ASSETS.forEach(a => {
+        const isInc = document.getElementById(`chk-${a.id}`).checked;
+        const eb = parseFloat(document.getElementById(`ebitda-${a.id}`).value) || 0;
+        const m = parseFloat(document.getElementById(`mult-${a.id}`).value) || 0;
+        const assetEv = isInc ? (eb * m) : 0;
+        document.getElementById(`ev-${a.id}`).textContent = `$${assetEv.toFixed(1)}M`;
+        if (isInc) {
+          totalSotpEv += assetEv;
+          totalOperatingEbitda += eb;
+        }
+      });
+
+      const balanceSheetCash = 240.0;
+      const totalDistributableAssetValue = totalSotpEv + balanceSheetCash + sponsorEquity;
+      const blendedMultiple = totalOperatingEbitda > 0 ? (totalSotpEv / totalOperatingEbitda) : 0;
+
+      document.getElementById("sotp-total-ebitda").textContent = `$${totalOperatingEbitda.toFixed(1)}M`;
+      document.getElementById("sotp-blended-mult").textContent = `${blendedMultiple.toFixed(2)}x`;
+      document.getElementById("sotp-total-ev").textContent = `$${totalSotpEv.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}M`;
+      document.getElementById("top-sotp-ev").innerHTML = `$${Math.round(totalSotpEv).toLocaleString()}<span>M</span>`;
+
+      // 3. Priority Deductions
+      const monthlyAdvisorBurn = 2.5; // $2.5M/mo in restructuring/refinancing advisory fees
+      const totalAdvisorDrain = durationMonths * monthlyAdvisorBurn;
+      document.getElementById("lbl-advisor-drain").textContent = `-$${totalAdvisorDrain.toFixed(0)}M`;
+
+      const prioritySecuredDebt = 1200.0; // $720M Geothermal PF + $480M OEDAS Grid loans
+      const totalPriorityDeductions = totalAdvisorDrain + prioritySecuredDebt;
+
+      // 4. Net Distributable to Senior Unsecured Debt Pool
+      const totalSeniorClaims = 582.4; // $300M Eurobonds + $282.4M RCF
+      const netDistributableToSenior = Math.max(0, totalDistributableAssetValue - totalPriorityDeductions);
+      const rawSeniorRecoveryPct = Math.min(1.0, netDistributableToSenior / totalSeniorClaims);
+      const rawSeniorRecoveryCents = rawSeniorRecoveryPct * 100.0;
+
+      // 5. Post-Restructuring Balance Sheet Pro-Forma Metrics
+      const eurobondClaims = 300.0;
+      const rcfClaims = 282.4;
+      const seniorHaircutDollar = totalSeniorClaims * seniorHaircutPct;
+      document.getElementById("lbl-senior-debt-cut").textContent = `-$${Math.round(seniorHaircutDollar)}M`;
+
+      const seniorDebtAfterHaircut = totalSeniorClaims * (1.0 - seniorHaircutPct);
+      const seniorReinstatedDebt = seniorDebtAfterHaircut * (1.0 - debtToEquityPct);
+
+      const proFormaGrossDebt = prioritySecuredDebt + seniorReinstatedDebt;
+      const postReorgCash = Math.max(120, balanceSheetCash + sponsorEquity - totalAdvisorDrain);
+      const proFormaNetDebt = proFormaGrossDebt - postReorgCash;
+      const proFormaNetLeverage = totalOperatingEbitda > 0 ? (proFormaNetDebt / totalOperatingEbitda) : 99.0;
+
+      const proFormaSeniorInterest = seniorReinstatedDebt * newCouponPct;
+      const priorityLoansInterest = (720.0 * 0.0815) + (480.0 * 0.125); // PF SOFR+325 & Grid TLREF
+      const proFormaTotalCashInterest = proFormaSeniorInterest + priorityLoansInterest;
+      const proFormaInterestCoverage = proFormaTotalCashInterest > 0 ? (totalOperatingEbitda / proFormaTotalCashInterest) : 0;
+      const proFormaCapex = 115.0;
+      const proFormaFcf = totalOperatingEbitda - proFormaCapex - proFormaTotalCashInterest - 30.0 - 28.0; // WC & Tax
+
+      // Update Meter Displays
+      document.getElementById("top-senior-recovery").innerHTML = `${rawSeniorRecoveryCents.toFixed(1)}<span>c</span>`;
+      document.getElementById("top-proforma-lev").innerHTML = `${proFormaNetLeverage.toFixed(2)}<span>x</span>`;
+      document.getElementById("meter-net-debt").textContent = `$${Math.round(proFormaNetDebt).toLocaleString()}M`;
+      document.getElementById("meter-net-debt-delta").textContent = `${proFormaNetDebt < 1542 ? '-' : '+'}$${Math.abs(Math.round(proFormaNetDebt - 1542)).toLocaleString()}M vs FY24`;
+      document.getElementById("meter-leverage").textContent = `${proFormaNetLeverage.toFixed(2)}x`;
+      document.getElementById("meter-coverage").textContent = `${proFormaInterestCoverage.toFixed(2)}x`;
+      document.getElementById("meter-interest").textContent = `$${Math.round(proFormaTotalCashInterest)}M`;
+      document.getElementById("meter-fcf").textContent = `${proFormaFcf >= 0 ? '+' : ''}$${Math.round(proFormaFcf)}M`;
+      document.getElementById("meter-fcf").style.color = proFormaFcf >= 0 ? "var(--accent-emerald)" : "var(--accent-rose)";
+
+      document.getElementById("lbl-new-interest").textContent = `$${(eurobondClaims * (1.0 - seniorHaircutPct) * newCouponPct).toFixed(1)}M`;
+      document.getElementById("lbl-reorg-equity-share").textContent = `${Math.min(50, Math.round(debtToEquityPct * 100))}%`;
+
+      // Required Debt Cut to hit Target 3.50x Net Leverage
+      const targetNetDebt = totalOperatingEbitda * 3.50;
+      const excessDebt = Math.max(0, proFormaNetDebt - targetNetDebt);
+      document.getElementById("meter-cut-req").textContent = excessDebt > 0 ? `$${Math.round(excessDebt).toLocaleString()}M` : "$0M";
+      document.getElementById("meter-cut-status").textContent = excessDebt > 0 ? "Over-Leveraged" : "Adequately Sized";
+      document.getElementById("meter-cut-status").style.color = excessDebt > 0 ? "var(--accent-amber)" : "var(--accent-emerald)";
+
+      // Sustainability Status & Verdict Callout
+      const statusBadge = document.getElementById("top-status-badge");
+      const verdictBox = document.getElementById("sustainability-verdict");
+
+      let isSustainable = proFormaNetLeverage <= 3.65 && proFormaInterestCoverage >= 2.2 && proFormaFcf > 0;
+      let isBorderline = proFormaNetLeverage <= 4.40 && proFormaInterestCoverage >= 1.8;
+
+      if (isSustainable) {
+        statusBadge.className = "status-badge status-sustainable";
+        statusBadge.textContent = "✓ Sustainable Plan";
+        verdictBox.style.borderLeftColor = "var(--accent-emerald)";
+        verdictBox.style.background = "rgba(16, 185, 129, 0.1)";
+        verdictBox.innerHTML = `
+          <strong style="color:var(--accent-emerald);">Plan Verdict: FULLY SUSTAINABLE BALANCE SHEET.</strong> 
+          Pro-forma Net Leverage (${proFormaNetLeverage.toFixed(2)}x) aligns with rating agency upgrade thresholds (&lt;3.50x target envelope), interest coverage (${proFormaInterestCoverage.toFixed(2)}x) provides ample headroom, and robust FCF (+$${Math.round(proFormaFcf)}M) covers scheduled amortization without re-financing strain.
+        `;
+      } else if (isBorderline) {
+        statusBadge.className = "status-badge status-borderline";
+        statusBadge.textContent = "⚠️ Borderline Risk";
+        verdictBox.style.borderLeftColor = "var(--accent-amber)";
+        verdictBox.style.background = "rgba(245, 158, 11, 0.1)";
+        verdictBox.innerHTML = `
+          <strong style="color:var(--accent-amber);">Plan Verdict: BORDERLINE SUSTAINABILITY.</strong> 
+          Leverage (${proFormaNetLeverage.toFixed(2)}x) exceeds the 3.50x covenant ceiling, leaving Zoren sensitive to Turkish Lira devaluations. Consider securing at least $100M from the Zorlu Yenilenebilir IPO or extending maturities by +2 years to rebuild liquidity headroom.
+        `;
       } else {
-        badge.className = 'trade-badge fair';
-        badge.innerHTML = '⚖️ FAIRLY PRICED';
-        note.innerHTML = `At 63.5¢, secondary price matches the <strong>${res.fair_value_today.toFixed(1)}¢</strong> base case without cushion for the Oct 23 coupon default.`;
+        statusBadge.className = "status-badge status-distressed";
+        statusBadge.textContent = "✕ Refinancing Deficit";
+        verdictBox.style.borderLeftColor = "var(--accent-rose)";
+        verdictBox.style.background = "rgba(244, 63, 94, 0.1)";
+        verdictBox.innerHTML = `
+          <strong style="color:var(--accent-rose);">Plan Verdict: ELEVATED RE-DEFAULT &amp; ROLLOVER RISK.</strong> 
+          Debt burden is unmanageable at ${proFormaNetLeverage.toFixed(2)}x Net Leverage with $${Math.round(excessDebt)}M in excess debt. Eurobonds will face severe rollover resistance upon the June 2026 maturity wall without structural equitization.
+        `;
       }
 
-      // Breakdown Box
-      document.getElementById('bd_new_principal').innerText = '$' + res.initial_face.toFixed(2);
-      document.getElementById('bd_compounded_principal').innerText = '$' + res.compounded_face.toFixed(2);
-      document.getElementById('bd_pv_bond').innerText = '$' + res.pv_bond.toFixed(2);
-      document.getElementById('bd_upfront_cash').innerText = '+$' + res.upfront_cash.toFixed(2);
-      document.getElementById('bd_friction').innerText = '-$' + res.friction.toFixed(2);
-      document.getElementById('bd_total_closing').innerText = '$' + res.total_closing_recovery.toFixed(2);
-      document.getElementById('bd_carry_drag').innerText = res.carry_drag.toFixed(1) + '¢';
-      document.getElementById('bd_discount_factor').innerText = res.discount_factor.toFixed(3) + 'x';
+      // 6. Pricing in Qualitative Friction to Produce Dynamic Pricing Bands
+      const qualitativeFrictionFactor = (qualMacro * 0.40) + (qualYekdem * 0.30) + (qualDorad * 0.15) + (qualDiscount * 0.15);
+      
+      const tbodyBand = document.querySelector("#pricing-band-table tbody");
+      tbodyBand.innerHTML = TRANCHES.map(t => {
+        let baseRecovery = 0;
+        let bearRecovery = 0;
+        let bullRecovery = 0;
+
+        if (t.seniority === "senior") {
+          baseRecovery = Math.min(100.0, rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.30)));
+          bearRecovery = Math.max(50.0, rawSeniorRecoveryCents * 0.65 * (1.0 - qualitativeFrictionFactor));
+          bullRecovery = Math.min(105.0, rawSeniorRecoveryCents * 1.05);
+        } else {
+          // Priority Secured
+          baseRecovery = 100.0;
+          bearRecovery = 95.0;
+          bullRecovery = 100.0;
+        }
+
+        const deltaBase = baseRecovery - t.marketPx;
+        const deltaPct = (deltaBase / t.marketPx) * 100.0;
+
+        let badgeHtml = "";
+        if (deltaPct > 5.0) {
+          badgeHtml = '<span style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">ACCUMULATE</span>';
+        } else if (deltaPct >= -3.0) {
+          badgeHtml = '<span style="background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">PAR HOLD</span>';
+        } else {
+          badgeHtml = '<span style="background:rgba(244,63,94,0.15); color:var(--accent-rose); border:1px solid rgba(244,63,94,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">AVOID / HEDGE</span>';
+        }
+
+        return `
+          <tr>
+            <td class="name">${t.name}</td>
+            <td style="text-align:right; color:#cbd5e1;">${t.marketPx.toFixed(1)}c</td>
+            <td style="text-align:right; color:#f87171; font-weight:700;">${bearRecovery.toFixed(1)}c</td>
+            <td style="text-align:right; color:#34d399; font-weight:700;">${baseRecovery.toFixed(1)}c</td>
+            <td style="text-align:right; color:#38bdf8; font-weight:700;">${bullRecovery.toFixed(1)}c</td>
+            <td style="text-align:center;">${badgeHtml}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // 7. Render Card 5: Step-by-Step Priority Recovery Waterfall & Tranche Allocation
+      const seniorAllocatedValue = Math.min(totalSeniorClaims, netDistributableToSenior);
+      const valueRemainingAfterSenior = Math.max(0, netDistributableToSenior - totalSeniorClaims);
+      const equityResidual = valueRemainingAfterSenior;
+
+      // Stacked Bar Calculation
+      const safeTotalPot = Math.max(1, totalDistributableAssetValue);
+      const pctPriority = Math.min(100, (totalPriorityDeductions / safeTotalPot) * 100);
+      const pctSenior = Math.min(100 - pctPriority, (seniorAllocatedValue / safeTotalPot) * 100);
+      const pctEquity = Math.max(0, 100 - pctPriority - pctSenior);
+
+      document.getElementById("wf-bar-total-label").textContent = `Total Distributable Value: $${Math.round(totalDistributableAssetValue).toLocaleString()}M`;
+      
+      const stackedBar = document.getElementById("wf-stacked-bar");
+      stackedBar.innerHTML = `
+        <div style="width:${pctPriority.toFixed(1)}%; background:linear-gradient(90deg, #ef4444, #f87171); display:flex; align-items:center; justify-content:center; color:#fff; font-size:9.5px; font-weight:700; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Priority Secured Loans: $${Math.round(totalPriorityDeductions).toLocaleString()}M (${pctPriority.toFixed(1)}%)">
+          ${pctPriority > 12 ? `Secured Loans: $${Math.round(totalPriorityDeductions)}M (${pctPriority.toFixed(0)}%)` : ''}
+        </div>
+        <div style="width:${pctSenior.toFixed(1)}%; background:linear-gradient(90deg, #059669, #34d399); display:flex; align-items:center; justify-content:center; color:#0f172a; font-size:9.5px; font-weight:800; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Senior Unsecured Pool: $${Math.round(seniorAllocatedValue).toLocaleString()}M (${pctSenior.toFixed(1)}%)">
+          ${pctSenior > 12 ? `Senior Debt: $${Math.round(seniorAllocatedValue)}M (${pctSenior.toFixed(0)}%)` : (pctSenior > 5 ? `${pctSenior.toFixed(0)}%` : '')}
+        </div>
+        <div style="width:${pctEquity.toFixed(1)}%; background:linear-gradient(90deg, #0284c7, #38bdf8); display:flex; align-items:center; justify-content:center; color:#0f172a; font-size:9.5px; font-weight:800; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Zorlu Holding Equity: $${Math.round(equityResidual).toLocaleString()}M (${pctEquity.toFixed(1)}%)">
+          ${pctEquity > 8 ? `Equity: $${Math.round(equityResidual)}M (${pctEquity.toFixed(0)}%)` : ''}
+        </div>
+      `;
+
+      document.getElementById("wf-legend-priority").textContent = `$${Math.round(totalPriorityDeductions).toLocaleString()}M (${pctPriority.toFixed(1)}%)`;
+      document.getElementById("wf-legend-senior").textContent = `$${Math.round(seniorAllocatedValue).toLocaleString()}M (${pctSenior.toFixed(1)}%)`;
+      document.getElementById("wf-legend-equity").textContent = `$${Math.round(equityResidual).toLocaleString()}M (${pctEquity.toFixed(1)}%)`;
+
+      // 16-Row Step-by-Step Waterfall
+      const waterfallRows = [
+        { num: "01", name: "Consolidated Cash EBITDA Baseline", val: `$${totalOperatingEbitda.toFixed(1)}M`, unit: "Run-Rate Cash Flow", desc: "Aggregated across all active geothermal, wind, hydro & grid operations", isSub: false },
+        { num: "02", name: "Implied Blended SOTP EV Multiple", val: `${blendedMultiple.toFixed(2)}x`, unit: "EV / EBITDA", desc: "Weighted operational multiple across selected renewable & utility assets", isSub: false },
+        { num: "03", name: "Operational Enterprise Value (EV)", val: `$${totalSotpEv.toFixed(1)}M`, unit: "EV Baseline", desc: "Total core operating utility valuation derived from SOTP asset selections", isSub: false },
+        { num: "04", name: "Add: Balance Sheet Unrestricted Cash", val: `+$${balanceSheetCash.toFixed(1)}M`, unit: "Liquid Reserves", desc: "Unrestricted cash and liquid bank balances held across Akbank, Garanti, Isbank", isSub: false },
+        { num: "05", name: "Add: Sponsor Equity / Renewable IPO Proceeds", val: `+$${sponsorEquity.toFixed(1)}M`, unit: "Fresh Equity Check", desc: "Fresh capital injection from Zorlu Holding or minority Zorlu Yenilenebilir IPO", isSub: false },
+        { num: "06", name: "TOTAL DISTRIBUTABLE ASSET VALUE", val: `$${totalDistributableAssetValue.toFixed(1)}M`, unit: "100.0% Distributable Pot", desc: "Aggregate gross dollar liquidity pool available across all capital layers", isSub: true, color: "#38bdf8" },
+        { num: "07", name: "Less: Refinancing & Professional Advisory Fees", val: `-$${totalAdvisorDrain.toFixed(1)}M`, unit: `-$2.5M/mo x ${durationMonths}M`, desc: `Legal, trustee, rating agency and syndication expenses during maturity negotiation`, isSub: false },
+        { num: "08", name: "Less: Geothermal Project Loans (EBRD/IFC)", val: `-$720.0M`, unit: "100.0% Par Reinstated", desc: "First lien on Kızıldere & Alaşehir plants and offshore USD collection accounts", isSub: false },
+        { num: "09", name: "Less: OEDAŞ Regulated Grid Distribution Loans", val: `-$480.0M`, unit: "100.0% Par Reinstated", desc: "Senior secured pledge over regulated tariff receivables and RAB grid assets", isSub: false },
+        { num: "10", name: "TOTAL PRIORITY CLAIMS DEDUCTED", val: `-$${totalPriorityDeductions.toFixed(1)}M`, unit: `-${pctPriority.toFixed(1)}% of Total Pot`, desc: "Senior secured project finance debt ranking ahead of Eurobonds under APR", isSub: true, color: "#f87171" },
+        { num: "11", name: "NET VALUE AVAILABLE TO SENIOR UNSECURED", val: `$${seniorAllocatedValue.toFixed(1)}M`, unit: `$${Math.min(totalSeniorClaims, seniorAllocatedValue).toFixed(0)}M of $${totalSeniorClaims.toFixed(0)}M`, desc: "Unencumbered asset value legally available to satisfy Eurobonds and RCF", isSub: true, color: "#34d399" },
+        { num: "12", name: "Total Senior Unsecured Claims Pool", val: `$${totalSeniorClaims.toFixed(1)}M`, unit: "Pari Passu Claims", desc: "Aggregate face value of ZOREN 9.00% 2026 Eurobonds ($300M) + Drawn RCF ($282M)", isSub: false },
+        { num: "13", name: "SENIOR UNSECURED RECOVERY PERCENTAGE (%)", val: `${(rawSeniorRecoveryPct * 100).toFixed(1)}%`, unit: "APR Recovery Ratio", desc: "Exact entitlement under Absolute Priority Rule (Net Available ÷ Total Claims)", isHighlight: true, color: "#34d399" },
+        { num: "14", name: "SENIOR UNSECURED RECOVERY PRICE (CENTS)", val: `${rawSeniorRecoveryCents.toFixed(1)}c`, unit: "Per $1.00 Face Value", desc: "Clean fundamental asset-backed recovery floor (before qualitative friction)", isHighlight: true, color: "#fbbf24" },
+        { num: "15", name: "Value Residual to Junior Guarantees / Subordinated", val: `$0.0M`, unit: "0.0c (None Outstanding)", desc: "Zorlu Enerji has no subordinated hybrid tranches in active capital structure", isSub: false },
+        { num: "16", name: "Value Residual Remaining for Existing Equity", val: `$${equityResidual.toFixed(1)}M`, unit: `${equityResidual > 0 ? ((equityResidual / safeTotalPot) * 100).toFixed(1) + '% equity pot' : '0.0% (Wiped Out)'}`, desc: "Zorlu Holding common equity value after satisfying all secured and senior claims", isSub: true, color: "#38bdf8" }
+      ];
+
+      const tbodyWf = document.getElementById("dynamic-waterfall-tbody");
+      tbodyWf.innerHTML = waterfallRows.map(r => {
+        const isSub = r.isSub;
+        const isHigh = r.isHighlight;
+        let rowBg = 'transparent';
+        let borderTop = '1px solid rgba(255,255,255,0.04)';
+        let fontWeight = isSub || isHigh ? '700' : '400';
+
+        if (isHigh) {
+          rowBg = 'rgba(251,191,36,0.08)';
+          borderTop = '2px solid rgba(251,191,36,0.4)';
+        } else if (isSub) {
+          rowBg = 'rgba(255,255,255,0.03)';
+          borderTop = '1px solid #334155';
+        }
+
+        const textColor = isHigh ? (r.color || '#fbbf24') : (isSub ? (r.color || '#fff') : '#cbd5e1');
+
+        return `
+          <tr style="background:${rowBg}; border-top:${borderTop};">
+            <td style="color:var(--text-muted); font-family:'JetBrains Mono',monospace;">${r.num}</td>
+            <td style="font-weight:${fontWeight}; color:${textColor};">${r.name}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:${fontWeight}; color:${textColor}; font-size:${isHigh ? '13px' : '11px'};">${r.val}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:${isHigh ? '#fbbf24' : '#94a3b8'}; font-weight:${fontWeight};">${r.unit}</td>
+            <td style="color:#94a3b8; font-size:10.5px;">${r.desc}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Tranche Allocation Table
+      const allInstruments = [
+        { name: "Kızıldere & Alaşehir Geothermal Project Loans", tier: "Senior Secured", claim: 720.0, marketPx: 100.0, allocVal: 720.0, cleanPx: 100.0, exitPx: 100.0, isPriority: true },
+        { name: "OEDAŞ Regulated Grid Capex Loans", tier: "Senior Secured", claim: 480.0, marketPx: 100.0, allocVal: 480.0, cleanPx: 100.0, exitPx: 100.0, isPriority: true },
+        { name: "ZOREN 9.000% 2026 Senior Notes (Eurobond)", tier: "Senior Unsecured", claim: 300.0, marketPx: 94.50, allocVal: 300.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: Math.min(100.0, rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.30))) },
+        { name: "Syndicated RCF & Working Capital Facilities", tier: "Senior Unsecured", claim: 282.4, marketPx: 100.0, allocVal: 282.4 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: Math.min(100.0, rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.30))) }
+      ];
+
+      const tbodyAlloc = document.getElementById("tranche-allocation-tbody");
+      tbodyAlloc.innerHTML = allInstruments.map(inst => {
+        const upsideDollar = inst.exitPx - inst.marketPx;
+        const upsidePct = inst.marketPx > 0 ? (upsideDollar / inst.marketPx) * 100.0 : 0;
+        const isUp = upsidePct > 0;
+
+        let badge = "";
+        if (inst.isPriority) {
+          badge = '<span style="color:#38bdf8; font-weight:700;">PAR REINSTATED</span>';
+        } else if (upsidePct > 4) {
+          badge = `<span style="color:var(--accent-emerald); font-weight:700;">+${upsidePct.toFixed(1)}% (BUY)</span>`;
+        } else if (upsidePct >= -2) {
+          badge = `<span style="color:var(--accent-amber); font-weight:700;">${upsidePct >= 0 ? '+' : ''}${upsidePct.toFixed(1)}% (HOLD)</span>`;
+        } else {
+          badge = `<span style="color:var(--accent-rose); font-weight:700;">${upsidePct.toFixed(1)}% (SHORT)</span>`;
+        }
+
+        return `
+          <tr>
+            <td style="font-weight:600; color:#fff;">${inst.name}</td>
+            <td style="color:#94a3b8; font-size:10.5px;">${inst.tier}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">$${inst.claim.toFixed(0)}M</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#cbd5e1;">${inst.marketPx.toFixed(1)}c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:${inst.isPriority ? '#38bdf8' : '#34d399'};">$${inst.allocVal.toFixed(1)}M</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:#fbbf24;">${inst.cleanPx.toFixed(1)}c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:${isUp ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${inst.exitPx.toFixed(1)}c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px;">${badge}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
-    function renderSensitivityTables() {
-      const haircuts = [0, 10, 15, 20, 25, 30];
-      const months = [3, 6, 8, 12, 18, 24];
-
-      let html1 = '<thead><tr><th>Months / Haircut</th>';
-      haircuts.forEach(h => html1 += `<th>${h}% Haircut</th>`);
-      html1 += '</tr></thead><tbody>';
-
-      months.forEach(m => {
-        html1 += `<tr><td><strong>${m} Months</strong></td>`;
-        haircuts.forEach(h => {
-          const testP = Object.assign({}, params, { neg_months: m, haircut: h });
-          const val = evaluateValuation(testP).fair_value_today;
-          const isActive = (m === params.neg_months && Math.abs(h - params.haircut) < 2.5);
-          const color = val > 65 ? 'var(--accent-emerald)' : (val < 55 ? 'var(--accent-rose)' : 'var(--text-main)');
-          html1 += `<td class="${isActive ? 'active-cell' : ''}" style="color: ${color};">${val.toFixed(1)}¢</td>`;
-        });
-        html1 += '</tr>';
-      });
-      html1 += '</tbody>';
-      document.getElementById('tbl_sens_haircut').innerHTML = html1;
-
-      const extensions = [1.0, 2.0, 3.0, 4.0, 5.0];
-      const yields = [12.0, 14.0, 15.5, 18.0, 20.0, 22.0];
-
-      let html2 = '<thead><tr><th>Exit Yield / Ext</th>';
-      extensions.forEach(e => html2 += `<th>+${e} Yrs Ext</th>`);
-      html2 += '</tr></thead><tbody>';
-
-      yields.forEach(y => {
-        html2 += `<tr><td><strong>${y.toFixed(1)}% YTM</strong></td>`;
-        extensions.forEach(e => {
-          const testP = Object.assign({}, params, { extension: e, exit_yield: y });
-          const val = evaluateValuation(testP).fair_value_today;
-          const isActive = (Math.abs(y - params.exit_yield) < 0.75 && Math.abs(e - params.extension) < 0.5);
-          const color = val > 65 ? 'var(--accent-emerald)' : (val < 55 ? 'var(--accent-rose)' : 'var(--text-main)');
-          html2 += `<td class="${isActive ? 'active-cell' : ''}" style="color: ${color};">${val.toFixed(1)}¢</td>`;
-        });
-        html2 += '</tr>';
-      });
-      html2 += '</tbody>';
-      document.getElementById('tbl_sens_tenor').innerHTML = html2;
-    }
-
-    function renderCashFlowTable() {
-      const res = evaluateValuation(params);
-      let html = '<thead><tr><th>Period</th><th>Years</th><th>Start Face ($)</th><th>Cash Flow ($)</th><th>End Face ($)</th><th>Type</th></tr></thead><tbody>';
-      res.cf_list.forEach(item => {
-        const isFinal = (item.t === res.cf_list.length);
-        const type = isFinal ? 'Coupon + Principal Bullet' : (item.t <= params.pik_years * 2 ? 'Cash Coupon + PIK Compound' : 'Post-PIK Cash Coupon');
-        html += `<tr>
-          <td>${item.t}</td>
-          <td>${item.years.toFixed(1)}</td>
-          <td>$${item.p_start.toFixed(2)}</td>
-          <td style="color: var(--accent-cyan); font-weight:700;">$${item.cash_cf.toFixed(2)}</td>
-          <td>$${item.p_end.toFixed(2)}</td>
-          <td style="color: var(--text-muted); font-size:9px;">${type}</td>
-        </tr>`;
-      });
-      html += '</tbody>';
-      document.getElementById('tbl_cash_flows').innerHTML = html;
-    }
-
-    function copySummary() {
-      const res = evaluateValuation(params);
-      const text = `**Zorlu Enerji Restructuring Scenario Summary**
-- Negotiation Time: ${params.neg_months} months
-- Nominal Haircut: ${params.haircut}%
-- Extension: +${params.extension} years
-- Coupon: ${params.cash_coupon}% Cash / ${params.pik_coupon}% PIK (${params.pik_years} yrs) -> ${params.post_pik}% Cash
-- Advisory Fees: ${params.advisory_fee}% | Consent Fee: ${params.consent_fee}% | Sweep: $${params.sweep}
-- Exit Yield: ${params.exit_yield}% | Distressed Rate: ${params.distress_rate}%
----
-- **Estimated Fair Value Today:** ${res.fair_value_today.toFixed(1)}¢
-- **Closing Recovery:** ${res.total_closing_recovery.toFixed(1)}¢
-- **Holding Period IRR:** ${document.getElementById('top_irr').innerText}
-- **Delta vs 63.5¢ Market:** ${document.getElementById('top_spread').innerText}`;
-
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Scenario copied to clipboard!');
-      });
-    }
-
-    // Init
-    calculate();
+    // Initialize on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage();
+    });
   </script>
 </body>
 </html>
