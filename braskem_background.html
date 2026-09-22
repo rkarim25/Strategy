@@ -511,6 +511,40 @@
       height: 260px;
       position: relative;
     }
+
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent-cyan);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 8px;
+    }
+
+    .section-title .sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    .recovery-formula-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -1119,85 +1153,298 @@
     </div>
   </div>
 
-  <!-- SECTION 4: Exit Yield Discounting & Reinstated Paper Trading Matrix -->
+  <!-- SECTION 4: Closed-Loop Bond Recovery & Valuation Engine: Exit Yield, Tenor Extension, Haircut & Standstill Negotiation Drag -->
   <div class="content-card" style="margin-top:14px;">
     <div class="section-title">
       <span style="display:flex; align-items:center; gap:8px;">
-        <span>📉</span> 4. Exit Yield Sensitivity Matrix: Post-Emergence Paper Valuation
+        <span>📉</span> 4. Closed-Loop Bond Recovery &amp; Valuation Engine: Exit Yield, Tenor Extension, Haircuts &amp; Standstill Drag
       </span>
-      <span class="sub">Bridging Theoretical Distributable Value to Market Clearing Prices via Exit Yield Discounting</span>
+      <span class="sub">Bridging Theoretical Enterprise Value to Secondary Market Clearing Prices for All Traded Bonds</span>
     </div>
 
     <div style="font-size:11.5px; color:#cbd5e1; line-height:1.5; margin-bottom:12px;">
-      In an extrajudicial or Chapter 11 emergence, senior bondholders receive a consideration package of <strong>new exit notes</strong> and <strong>reorganized equity</strong>. 
-      Under the Base Case plan, senior creditors receive ~35c in 8-year senior exit notes (7.50% cash coupon) + ~31.3c in equity. 
-      The market-clearing <strong>Exit Yield ($Y_{\text{exit}}$)</strong> determines the day-one trading price of the newly issued debt:
+      In an extrajudicial or Chapter 11 restructuring, senior creditors do not receive a single static cash recovery. 
+      Instead, consideration is paid in a package of <strong>reinstated exit notes</strong> and <strong>reorganized equity</strong>. 
+      The fair market value of that package depends on four dynamic, interacting variables: the <strong>Exit Yield ($Y_{\text{exit}}$)</strong>, 
+      the <strong>Extension Tenor ($T_{\text{ext}}$)</strong>, the <strong>Senior Principal Haircut ($H$) &amp; Equitization ($E_{\text{swap}}$)</strong>, 
+      and the <strong>Standstill Negotiation Duration ($T_{\text{nego}}$)</strong>. 
+      Every shift in exit yield or restructuring delay directly reprices every bond in the capital structure.
     </div>
 
-    <div style="overflow-x:auto;">
-      <table class="data-table" style="min-width:700px;">
+    <!-- Live Base Case Decomposition Strip -->
+    <div class="recovery-formula-strip" style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:10px 14px; margin-bottom:14px; font-size:11px;">
+      <div>
+        <div style="color:var(--text-muted); font-size:9.5px; text-transform:uppercase; font-weight:600;">Pillar 1: Exit Paper Px (P<sub>new</sub>)</div>
+        <div style="font-weight:700; color:#fbbf24; font-family:'JetBrains Mono',monospace; font-size:13px; margin-top:2px;">87.7c (-12.3% Disct)</div>
+        <div style="color:var(--text-dim); font-size:9.5px;">8Y 7.50% note @ 9.75% Y<sub>exit</sub></div>
+      </div>
+      <div>
+        <div style="color:var(--text-muted); font-size:9.5px; text-transform:uppercase; font-weight:600;">Pillar 2: Emergence Pot (Rec<sub>emergence</sub>)</div>
+        <div style="font-weight:700; color:#38bdf8; font-family:'JetBrains Mono',monospace; font-size:13px; margin-top:2px;">59.4c Undiscounted</div>
+        <div style="color:var(--text-dim); font-size:9.5px;">Debt: 39.9c | Equity: 19.5c</div>
+      </div>
+      <div>
+        <div style="color:var(--text-muted); font-size:9.5px; text-transform:uppercase; font-weight:600;">Pillar 3: Standstill Time Drag (DF<sub>nego</sub>)</div>
+        <div style="font-weight:700; color:#f87171; font-family:'JetBrains Mono',monospace; font-size:13px; margin-top:2px;">-9.08% Time Drag</div>
+        <div style="color:var(--text-dim); font-size:9.5px;">12M carrying bleed (DF = 0.9092)</div>
+      </div>
+      <div>
+        <div style="color:var(--text-muted); font-size:9.5px; text-transform:uppercase; font-weight:600;">Pillar 4: Net Present Recovery (Rec<sub>PV</sub>)</div>
+        <div style="font-weight:800; color:var(--accent-emerald); font-family:'JetBrains Mono',monospace; font-size:13px; margin-top:2px;">54.0c Net PV</div>
+        <div style="color:var(--text-dim); font-size:9.5px;">Emergence &times; DF<sub>nego</sub> discount</div>
+      </div>
+    </div>
+
+    <!-- Mathematical Mechanics Box -->
+    <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:8px; padding:14px; margin-bottom:14px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:8px;">
+        ⚙️ The Closed-Loop Mathematical Framework
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:11px; line-height:1.5;">
+        <div>
+          <div style="color:#cbd5e1; margin-bottom:4px;"><strong>1. Reinstated Exit Debt Pricing ($P_{\text{new}}$):</strong></div>
+          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#fbbf24; margin-bottom:6px;">
+            P<sub>new</sub> = &sum; [ (C/2) / (1 + Y<sub>exit</sub>/2)<sup>t</sup> ] + [ 100 / (1 + Y<sub>exit</sub>/2)<sup>2&times;T<sub>ext</sub></sup> ]
+          </div>
+          <p style="color:var(--text-muted); font-size:10px;">
+            Exit debt issued with coupon $C$ below the market clearing yield $Y_{\text{exit}}$ trades at an immediate day-one discount. At Base ($C = 7.50\%$, $Y_{\text{exit}} = 9.75\%$, $T_{\text{ext}} = 8\text{Y}$), the new paper trades at <strong>87.7c</strong>.
+          </p>
+
+          <div style="color:#cbd5e1; margin-top:8px; margin-bottom:4px;"><strong>2. Plan Emergence Pot ($\text{Rec}_{\text{emergence}}$):</strong></div>
+          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:6px;">
+            Rec<sub>emergence</sub> = [ (1 - H) &middot; (1 - E<sub>swap</sub>) &middot; P<sub>new</sub> ] + [ (1 - H) &middot; E<sub>swap</sub> &middot; 100 &middot; &mu;<sub>eq</sub> ]
+          </div>
+          <p style="color:var(--text-muted); font-size:10px;">
+            After a 35% haircut ($H = 0.35$) and 30% equitization ($E_{\text{swap}} = 0.30$), senior creditors receive 45.5c in reinstated debt (worth $45.5 \times 0.877 = 39.9\text{c}$) + 19.5c in reorganized equity = <strong>59.4c total emergence pot</strong>.
+          </p>
+        </div>
+
+        <div>
+          <div style="color:#cbd5e1; margin-bottom:4px;"><strong>3. Standstill Negotiation Time Drag ($\text{DF}_{\text{nego}}$):</strong></div>
+          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#f87171; margin-bottom:6px;">
+            DF<sub>nego</sub> = 1 / (1 + Y<sub>exit</sub> / 2)<sup>2 &times; (T<sub>nego</sub> / 12)</sup>
+          </div>
+          <p style="color:var(--text-muted); font-size:10px;">
+            Creditors suffer zero coupon flow during negotiations while legal fees bleed -$15M/month. A 12-month standstill discounts emergence proceeds by <strong>-9.08% ($\text{DF} = 0.9092$)</strong>.
+          </p>
+
+          <div style="color:#cbd5e1; margin-top:8px; margin-bottom:4px;"><strong>4. Present Economic Recovery ($\text{Rec}_{\text{PV}}$):</strong></div>
+          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--accent-emerald); margin-bottom:6px;">
+            Rec<sub>PV</sub> = Rec<sub>emergence</sub> &times; DF<sub>nego</sub> = 59.4c &times; 0.9092 = 54.0c Net PV
+          </div>
+          <p style="color:var(--text-muted); font-size:10px;">
+            This 54.0c true economic recovery serves as the core anchor. Individual bond prices are derived by applying tranche-specific indenture deltas.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exit Yield Sensitivity Table -->
+    <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+      Exit Yield Sensitivity Matrix: Post-Emergence Paper &amp; True Economic Value
+    </div>
+    <div style="overflow-x:auto; margin-bottom:16px;">
+      <table class="data-table" style="min-width:750px;">
         <thead>
           <tr>
-            <th style="text-align:left;">Exit Yield ($Y_{\text{exit}}$)</th>
-            <th style="text-align:right;">Implied Spread (bps)</th>
-            <th style="text-align:right;">Trading Px of 8Y 7.5% Note</th>
-            <th style="text-align:right;">Debt Value (35c Face)</th>
-            <th style="text-align:right;">Reorg Equity Value</th>
-            <th style="text-align:right;">True Economic Recovery</th>
-            <th style="text-align:right;">Variance vs Nominal</th>
-            <th style="text-align:center;">Desk Action</th>
+            <th style="text-align:left;">Exit Yield (Y<sub>exit</sub>)</th>
+            <th style="text-align:right;">Implied Spread</th>
+            <th style="text-align:right;">Day-1 Px of 8Y 7.5% Note</th>
+            <th style="text-align:right;">Emergence Pot (59.4c Base)</th>
+            <th style="text-align:right;">12M Standstill Drag</th>
+            <th style="text-align:right;">True Net PV Recovery</th>
+            <th style="text-align:right;">Variance vs 66.3c Nominal</th>
+            <th style="text-align:center;">Desk Action (2033s)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style="font-weight:700; color:#38bdf8;">8.50% (Tight / Bull)</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+475 bps</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">94.2c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">33.0c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">64.3c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-2.0c</td>
+            <td style="text-align:right;" class="mono">+475 bps</td>
+            <td style="text-align:right; color:#fbbf24; font-weight:700;" class="mono">94.3c</td>
+            <td style="text-align:right; color:#93c5fd;" class="mono">62.4c</td>
+            <td style="text-align:right; color:#f87171;" class="mono">-8.0% (0.9201)</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:800;" class="mono">57.4c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">-8.9c</td>
             <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">CONVICTION BUY</span></td>
           </tr>
           <tr>
             <td style="font-weight:700; color:#fff;">9.25% (Base Tight)</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+550 bps</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">90.3c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">31.6c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">62.9c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-3.4c</td>
-            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">STRONG BUY</span></td>
+            <td style="text-align:right;" class="mono">+550 bps</td>
+            <td style="text-align:right; color:#fbbf24; font-weight:700;" class="mono">90.3c</td>
+            <td style="text-align:right; color:#93c5fd;" class="mono">60.6c</td>
+            <td style="text-align:right; color:#f87171;" class="mono">-8.6% (0.9135)</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:800;" class="mono">55.4c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">-10.9c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">BUY</span></td>
           </tr>
           <tr style="background:rgba(56,189,248,0.1); font-weight:700;">
             <td style="color:var(--accent-cyan);">9.75% (Desk Base Case)</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+600 bps</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">87.7c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">30.7c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">62.0c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-4.3c</td>
-            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">BUY (+27% to Mkt)</span></td>
-          </tr>
-          <tr>
-            <td style="font-weight:700; color:#fff;">10.50% (Stress Exit)</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+675 bps</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">84.0c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">29.4c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">60.7c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-5.6c</td>
+            <td style="text-align:right;" class="mono">+600 bps</td>
+            <td style="text-align:right; color:#fbbf24; font-weight:700;" class="mono">87.7c</td>
+            <td style="text-align:right; color:#93c5fd;" class="mono">59.4c</td>
+            <td style="text-align:right; color:#f87171;" class="mono">-9.1% (0.9092)</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:800;" class="mono">54.0c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">-12.3c</td>
             <td style="text-align:center;"><span style="color:var(--accent-amber); font-weight:700; font-size:10px;">HOLD / FAIR</span></td>
           </tr>
           <tr>
+            <td style="font-weight:700; color:#fff;">10.50% (Stress Exit)</td>
+            <td style="text-align:right;" class="mono">+675 bps</td>
+            <td style="text-align:right; color:#fbbf24; font-weight:700;" class="mono">84.0c</td>
+            <td style="text-align:right; color:#93c5fd;" class="mono">57.7c</td>
+            <td style="text-align:right; color:#f87171;" class="mono">-9.7% (0.9027)</td>
+            <td style="text-align:right; color:var(--accent-amber); font-weight:800;" class="mono">52.1c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">-14.2c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-amber); font-weight:700; font-size:10px;">NEUTRAL / TRIM</span></td>
+          </tr>
+          <tr>
             <td style="font-weight:700; color:var(--accent-rose);">11.25% (Distressed Exit)</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+750 bps</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">80.5c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">28.2c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-amber); font-weight:800;">59.5c</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-6.8c</td>
-            <td style="text-align:center;"><span style="color:var(--accent-amber); font-weight:700; font-size:10px;">NEUTRAL</span></td>
+            <td style="text-align:right;" class="mono">+750 bps</td>
+            <td style="text-align:right; color:#fbbf24; font-weight:700;" class="mono">80.6c</td>
+            <td style="text-align:right; color:#93c5fd;" class="mono">56.2c</td>
+            <td style="text-align:right; color:#f87171;" class="mono">-10.4% (0.8963)</td>
+            <td style="text-align:right; color:var(--accent-rose); font-weight:800;" class="mono">50.4c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">-15.9c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-rose); font-weight:700; font-size:10px;">UNDERWEIGHT</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tranche-by-Tranche Indenture Transmission Table -->
+    <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+      Tranche Indenture Transmission: Why All Traded Bonds Move Differently
+    </div>
+    <div style="overflow-x:auto; margin-bottom:16px;">
+      <table class="data-table" style="min-width:800px;">
+        <thead>
+          <tr>
+            <th style="width:20%;">Instrument</th>
+            <th style="width:24%;">Indenture Characteristics &amp; Delta</th>
+            <th style="width:10%; text-align:right;">Market Px</th>
+            <th style="width:10%; text-align:right;">Bear (Floor)</th>
+            <th style="width:11%; text-align:right;">Base (Fair)</th>
+            <th style="width:10%; text-align:right;">Bull (Par)</th>
+            <th style="width:11%; text-align:right;">Base Return</th>
+            <th style="width:14%; text-align:center;">Desk Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color:#fff;">BRASKM 7.250% 2030</strong><br><span style="color:var(--text-dim); font-size:10px;">Senior Unsecured (USD)</span></td>
+            <td style="font-size:10.5px; color:#cbd5e1;">Shorter 4Y maturity; institutional blocking minority; <strong style="color:var(--accent-emerald);">+2.0c holdout premium</strong></td>
+            <td style="text-align:right;" class="mono">48.60c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">21.0c</td>
+            <td style="text-align:right; color:var(--accent-gold); font-weight:700;" class="mono">52.2c</td>
+            <td style="text-align:right; color:var(--accent-cyan);" class="mono">98.0c</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:700;" class="mono">+7.4%</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">BUY (Top Pick)</span></td>
+          </tr>
+          <tr style="background:rgba(255,255,255,0.02);">
+            <td><strong style="color:#fff;">BRASKM 8.500% 2033</strong><br><span style="color:var(--text-dim); font-size:10px;">Senior Unsecured (USD)</span></td>
+            <td style="font-size:10.5px; color:#cbd5e1;">Liquid desk benchmark; reference tranche; <strong style="color:var(--accent-cyan);">0.0c base delta</strong></td>
+            <td style="text-align:right;" class="mono">56.30c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">19.0c</td>
+            <td style="text-align:right; color:var(--accent-gold); font-weight:700;" class="mono">50.2c</td>
+            <td style="text-align:right; color:var(--accent-cyan);" class="mono">96.0c</td>
+            <td style="text-align:right; color:var(--accent-rose); font-weight:700;" class="mono">-10.8%</td>
+            <td style="text-align:center;"><span style="color:var(--accent-amber); font-weight:700; font-size:10px;">HOLD / FAIR</span></td>
+          </tr>
+          <tr>
+            <td><strong style="color:#fff;">BRASKM 5.875% 2050</strong><br><span style="color:var(--text-dim); font-size:10px;">Senior Unsecured (USD)</span></td>
+            <td style="font-size:10.5px; color:#cbd5e1;">Ultra-long duration (24Y tail); rate sensitive; <strong style="color:var(--accent-rose);">-2.5c duration discount</strong></td>
+            <td style="text-align:right;" class="mono">44.70c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">16.5c</td>
+            <td style="text-align:right; color:var(--accent-gold); font-weight:700;" class="mono">47.7c</td>
+            <td style="text-align:right; color:var(--accent-cyan);" class="mono">93.5c</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:700;" class="mono">+6.7%</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">BUY (Duration Upside)</span></td>
+          </tr>
+          <tr style="background:rgba(255,255,255,0.02);">
+            <td><strong style="color:#fff;">BRASKM 7.125% 2034</strong><br><span style="color:var(--text-dim); font-size:10px;">Senior Unsecured (USD)</span></td>
+            <td style="font-size:10.5px; color:#cbd5e1;">High running coupon carry; intermediate maturity; <strong style="color:var(--accent-emerald);">+1.5c carry delta</strong></td>
+            <td style="text-align:right;" class="mono">49.50c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">20.5c</td>
+            <td style="text-align:right; color:var(--accent-gold); font-weight:700;" class="mono">51.7c</td>
+            <td style="text-align:right; color:var(--accent-cyan);" class="mono">97.5c</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:700;" class="mono">+4.4%</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">BUY</span></td>
+          </tr>
+          <tr>
+            <td><strong style="color:#fff;">Debentures (BRL / CDI)</strong><br><span style="color:var(--text-dim); font-size:10px;">Local Debentures</span></td>
+            <td style="font-size:10.5px; color:#cbd5e1;">Local Brazilian jurisdiction subject to court delays; <strong style="color:var(--accent-rose);">-0.5c jurisdiction delta</strong></td>
+            <td style="text-align:right;" class="mono">52.00c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">18.5c</td>
+            <td style="text-align:right; color:var(--accent-gold); font-weight:700;" class="mono">49.7c</td>
+            <td style="text-align:right; color:var(--accent-cyan);" class="mono">95.5c</td>
+            <td style="text-align:right; color:var(--accent-rose); font-weight:700;" class="mono">-4.4%</td>
+            <td style="text-align:center;"><span style="color:var(--accent-amber); font-weight:700; font-size:10px;">HOLD / FAIR</span></td>
+          </tr>
+          <tr style="background:rgba(244,63,94,0.06);">
+            <td><strong style="color:var(--accent-rose);">BRASKM 8.250% 2081 Hybrid</strong><br><span style="color:var(--text-dim); font-size:10px;">Subordinated Perpetual</span></td>
+            <td style="font-size:10.5px; color:#fca5a5;">Absolute Priority Rule cramdown; wiped out in RJ; warrants in Base; <strong style="color:var(--accent-rose);">APR Cramdown</strong></td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">31.80c</td>
+            <td style="text-align:right; color:var(--accent-rose);" class="mono">0.0c</td>
+            <td style="text-align:right; color:var(--accent-gold); font-weight:700;" class="mono">12.0c</td>
+            <td style="text-align:right; color:var(--accent-cyan);" class="mono">45.0c</td>
+            <td style="text-align:right; color:var(--accent-rose); font-weight:700;" class="mono">-62.3%</td>
+            <td style="text-align:center;"><span style="color:var(--accent-rose); font-weight:700; font-size:10px;">AVOID / EXPENSIVE</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2D Sensitivity Cross-Matrix: Exit Yield vs Standstill Duration -->
+    <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+      2D Cross-Sensitivity: True Net PV Recovery Across Exit Yield &amp; Standstill Duration
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="data-table" style="min-width:650px;">
+        <thead>
+          <tr>
+            <th style="text-align:left;">Exit Yield (Y<sub>exit</sub>)</th>
+            <th style="text-align:right;">6 Months Standstill</th>
+            <th style="text-align:right; background:rgba(56,189,248,0.15); color:var(--accent-cyan);">12 Months (Base)</th>
+            <th style="text-align:right;">18 Months Standstill</th>
+            <th style="text-align:right;">24 Months (In-Court RJ)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700; color:#38bdf8;">8.50% (Tight Exit)</td>
+            <td style="text-align:right; color:#fff;" class="mono">59.8c</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:700; background:rgba(56,189,248,0.08);" class="mono">57.4c</td>
+            <td style="text-align:right; color:#cbd5e1;" class="mono">55.1c</td>
+            <td style="text-align:right; color:#94a3b8;" class="mono">52.8c</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:#fff;">9.25% (Base Tight)</td>
+            <td style="text-align:right; color:#fff;" class="mono">57.9c</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:700; background:rgba(56,189,248,0.08);" class="mono">55.4c</td>
+            <td style="text-align:right; color:#cbd5e1;" class="mono">52.9c</td>
+            <td style="text-align:right; color:#94a3b8;" class="mono">50.6c</td>
+          </tr>
+          <tr style="background:rgba(251,191,36,0.08); font-weight:700;">
+            <td style="color:var(--accent-gold);">9.75% (Desk Base Case)</td>
+            <td style="text-align:right; color:#fff;" class="mono">56.6c</td>
+            <td style="text-align:right; color:var(--accent-emerald); font-weight:800; font-size:12px; background:rgba(56,189,248,0.18);" class="mono">54.0c</td>
+            <td style="text-align:right; color:#cbd5e1;" class="mono">51.5c</td>
+            <td style="text-align:right; color:#f87171;" class="mono">49.1c</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:#fff;">10.50% (Stress Exit)</td>
+            <td style="text-align:right; color:#fff;" class="mono">54.8c</td>
+            <td style="text-align:right; color:var(--accent-amber); font-weight:700; background:rgba(56,189,248,0.08);" class="mono">52.1c</td>
+            <td style="text-align:right; color:#cbd5e1;" class="mono">49.5c</td>
+            <td style="text-align:right; color:#f87171;" class="mono">47.0c</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:var(--accent-rose);">11.25% (Distressed Exit)</td>
+            <td style="text-align:right; color:#fff;" class="mono">53.2c</td>
+            <td style="text-align:right; color:var(--accent-rose); font-weight:700; background:rgba(56,189,248,0.08);" class="mono">50.4c</td>
+            <td style="text-align:right; color:#f87171;" class="mono">47.7c</td>
+            <td style="text-align:right; color:var(--accent-rose); font-weight:700;" class="mono">45.2c</td>
           </tr>
         </tbody>
       </table>

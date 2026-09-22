@@ -223,6 +223,17 @@
       }
     }
 
+    .recovery-formula-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 768px) {
+      .recovery-formula-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -441,8 +452,8 @@
 
     <div class="metrics-strip">
       <div class="metric-hero">
-        <div class="lbl">Senior Recovery</div>
-        <div class="val" id="top-senior-recovery">66.3<span>c</span></div>
+        <div class="lbl">Economic Recovery (PV)</div>
+        <div class="val" id="top-senior-recovery">54.0<span>c</span></div>
       </div>
       <div class="metric-hero gold">
         <div class="lbl">Pro-Forma Net Lev</div>
@@ -511,7 +522,7 @@
             </div>
             <input type="range" id="input-duration" min="3" max="36" step="3" value="12" oninput="recalcEngine()">
             <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              Carrying cost &amp; advisor drain: <strong style="color:#f87171;" id="lbl-advisor-drain">-$180M</strong> ($15M/mo)
+              Carrying cost: <strong style="color:#f87171;" id="lbl-advisor-drain">-$180M</strong> &bull; Time drag: <strong style="color:#f87171;" id="lbl-time-drag">-9.1%</strong>
             </div>
           </div>
 
@@ -541,12 +552,12 @@
 
           <div class="slider-box">
             <div class="slider-header">
-              <span class="slider-label">Senior Maturity Extension</span>
-              <span class="slider-val" id="val-extension">6 Years</span>
+              <span class="slider-label">Senior Maturity Extension / Tenor</span>
+              <span class="slider-val" id="val-extension">8 Years</span>
             </div>
-            <input type="range" id="input-extension" min="0" max="10" step="1" value="6" oninput="recalcEngine()">
+            <input type="range" id="input-extension" min="3" max="12" step="1" value="8" oninput="syncTenor(this.value)">
             <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              New benchmark maturity: <strong style="color:#fbbf24;" id="lbl-new-maturity">2036</strong>
+              New exit note maturity: <strong style="color:#fbbf24;" id="lbl-new-maturity">2034</strong>
             </div>
           </div>
         </div>
@@ -557,7 +568,7 @@
               <span class="slider-label">Reinstated Senior Cash Coupon Rate</span>
               <span class="slider-val" id="val-coupon">7.50%</span>
             </div>
-            <input type="range" id="input-coupon" min="4.0" max="11.0" step="0.5" value="7.5" oninput="recalcEngine()">
+            <input type="range" id="input-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="syncCoupon(this.value)">
             <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
               New annual senior interest burden: <strong style="color:#fff;" id="lbl-new-interest">$448M</strong>
             </div>
@@ -660,8 +671,8 @@
       <!-- CARD 4: Qualitative Risk Haircut & Dynamic Pricing Bands -->
       <div class="card">
         <div class="card-title">
-          <span>4. Qualitative Risk Weighting &amp; Implied Pricing Bands</span>
-          <span class="sub">Discount for Petrobras friction, Maceió tail risk &amp; court delay</span>
+          <span>4. Exit Yield, Qualitative Risk &amp; Dynamic Secondary Pricing Bands</span>
+          <span class="sub">Closed-loop link: Exit Yield &bull; Duration &bull; Haircuts &bull; Standstill Drag</span>
         </div>
 
         <div class="slider-row">
@@ -702,6 +713,20 @@
             <input type="range" id="input-qual-discount" min="5" max="30" step="5" value="15" oninput="recalcEngine()">
             <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity penalty</div>
           </div>
+        </div>
+
+        <!-- Linked Market Exit Yield Slider in Card 4 -->
+        <div class="slider-row" style="margin-top:6px;">
+          <div class="slider-box" style="border:1px solid rgba(56,189,248,0.35); background:rgba(56,189,248,0.04); grid-column:span 2;">
+            <div class="slider-header">
+              <span class="slider-label" style="color:#38bdf8; font-weight:700;">🎯 Required Market Exit Yield (r<sub>exit</sub>)</span>
+              <span class="slider-val" id="val-exit-yield-card4" style="color:#38bdf8; font-weight:800;">9.75%</span>
+            </div>
+            <input type="range" id="input-exit-yield-card4" min="7.0" max="15.0" step="0.25" value="9.75" oninput="syncExitYield(this.value)">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Market-clearing yield for post-reorg exit notes &bull; Live synced with Card 6</div>
+          </div>
+        </div>
+
         <!-- Interactive Qualitative Assessment Guide Accordion -->
         <div style="margin-top:10px; margin-bottom:10px;">
           <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
@@ -733,29 +758,32 @@
             </ul>
 
             <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              2. How the Math Works: The Pricing Band Formula
+              2. How the Math Works: The Unified Recovery &amp; Pricing Band Formula
             </div>
             <p style="margin-bottom:6px;">
-              The engine combines these 4 sliders into a weighted <strong>Composite Qualitative Friction Factor (&Phi;)</strong>:
+              Secondary bond fair value is governed by a closed-loop link between <strong>Exit Yield ($Y_{\text{exit}}$)</strong>, <strong>Extension Tenor ($T_{\text{ext}}$)</strong>, <strong>Reinstated Coupon ($C$)</strong>, <strong>Principal Haircut ($H$)</strong>, <strong>Debt-to-Equity Swap ($E_{\text{swap}}$)</strong>, and <strong>Negotiation Duration ($T_{\text{nego}}$)</strong>:
             </p>
-            <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:8px;">
-              &Phi; = (Petrobras &times; 0.35) + (Maceió &times; 0.25) + (RJ Risk &times; 0.25) + (Liquidity &times; 0.15)
+            <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:8px 10px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#38bdf8; margin-bottom:8px; line-height:1.6;">
+              <div><strong>1. Exit Paper Price (P<sub>new</sub>):</strong> P<sub>new</sub> = &sum; [ (C/2) / (1 + Y<sub>exit</sub>/2)<sup>t</sup> ] + 100 / (1 + Y<sub>exit</sub>/2)<sup>2T<sub>ext</sub></sup></div>
+              <div><strong>2. Standstill Time Discount (DF<sub>nego</sub>):</strong> DF<sub>nego</sub> = 1 / (1 + Y<sub>exit</sub>/2)<sup>2 &times; (T<sub>nego</sub> / 12)</sup></div>
+              <div><strong>3. Present Economic Recovery:</strong> Rec<sub>PV</sub> = [ (1 - H) &times; (1 - E<sub>swap</sub>) &times; P<sub>new</sub> + (1 - H) &times; E<sub>swap</sub> &times; &mu;<sub>eq</sub> ] &times; DF<sub>nego</sub></div>
+              <div><strong>4. Composite Qualitative Friction (&Phi;):</strong> &Phi; = (Petrobras &times; 0.35) + (Maceió &times; 0.25) + (RJ Risk &times; 0.25) + (Liquidity &times; 0.15)</div>
             </div>
             <p style="margin-bottom:8px;">
-              This composite friction factor directly drives the three pricing band columns in the table below:
+              This composite friction factor and tranche-specific indenture terms drive the three pricing band columns in the table below:
             </p>
             <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; margin-bottom:10px;">
               <div style="background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3); padding:6px; border-radius:4px;">
                 <strong style="color:var(--accent-rose);">Bear (Floor):</strong><br>
-                Raw Recovery &times; 0.45 &times; (1 - &Phi;)
+                (Rec<sub>PV</sub> + &Delta;<sub>tranche</sub>) &times; 0.55 &times; (1 - &Phi;)
               </div>
               <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:6px; border-radius:4px;">
                 <strong style="color:var(--accent-emerald);">Base (Fair):</strong><br>
-                Raw Recovery &times; (1 - &Phi; &times; 0.40)
+                (Rec<sub>PV</sub> + &Delta;<sub>tranche</sub>) &times; (1 - &Phi; &times; 0.35)
               </div>
               <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:6px; border-radius:4px;">
                 <strong style="color:var(--accent-cyan);">Bull (Upside):</strong><br>
-                min(100c, Raw Recovery &times; 1.35)
+                min(100c, (Rec<sub>emergence</sub> + &Delta;<sub>tranche</sub>) &times; 1.25)
               </div>
             </div>
 
@@ -780,6 +808,26 @@
             <div style="margin-top:8px; text-align:right;">
               <a href="braskem_background.html#qualitative-guide" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">→ Read Complete Institutional Qualitative Deep Dive in Background Page</a>
             </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Valuation Breakdown Strip -->
+        <div class="recovery-formula-strip" style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:10px; margin-bottom:10px; font-size:11px;">
+          <div>
+            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Exit Paper Px (P<sub>new</sub>)</div>
+            <div style="font-weight:700; color:#fbbf24; font-family:'JetBrains Mono',monospace;" id="strip-paper-px">87.7c (-12.3%)</div>
+          </div>
+          <div>
+            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Debt / Equity Split</div>
+            <div style="font-weight:700; color:#38bdf8; font-family:'JetBrains Mono',monospace;" id="strip-debt-equity-split">Debt: 39.9c | Eq: 19.5c</div>
+          </div>
+          <div>
+            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Standstill Drag (T<sub>nego</sub>)</div>
+            <div style="font-weight:700; color:#f87171; font-family:'JetBrains Mono',monospace;" id="strip-time-drag">-9.1% (12M @ 9.75%)</div>
+          </div>
+          <div>
+            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">True Net PV Recovery</div>
+            <div style="font-weight:800; color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;" id="strip-true-recovery">54.0c Net PV</div>
           </div>
         </div>
 
@@ -909,7 +957,7 @@
           <span class="slider-label">Reinstated Exit Note Tenor</span>
           <span class="slider-val" id="val-exit-tenor">8 Years</span>
         </div>
-        <input type="range" id="input-exit-tenor" min="3" max="12" step="1" value="8" oninput="recalcEngine()">
+        <input type="range" id="input-exit-tenor" min="3" max="12" step="1" value="8" oninput="syncTenor(this.value)">
         <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new exit debt instruments</div>
       </div>
 
@@ -918,7 +966,7 @@
           <span class="slider-label">Reinstated Cash Coupon</span>
           <span class="slider-val" id="val-exit-coupon">7.50%</span>
         </div>
-        <input type="range" id="input-exit-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="recalcEngine()">
+        <input type="range" id="input-exit-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="syncCoupon(this.value)">
         <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Annual cash coupon paid semi-annually on new exit notes</div>
       </div>
 
@@ -927,7 +975,7 @@
           <span class="slider-label">Required Market Exit Yield</span>
           <span class="slider-val" id="val-exit-yield">9.75%</span>
         </div>
-        <input type="range" id="input-exit-yield" min="7.0" max="15.0" step="0.25" value="9.75" oninput="recalcEngine()">
+        <input type="range" id="input-exit-yield" min="7.0" max="15.0" step="0.25" value="9.75" oninput="syncExitYield(this.value)">
         <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Market-clearing yield for post-reorg B+/BB- cyclical paper</div>
       </div>
     </div>
@@ -1073,7 +1121,7 @@
         duration: 12,
         sponsorEquity: 0,
         seniorHaircut: 35,
-        extension: 6,
+        extension: 8,
         coupon: 7.5,
         debtEquity: 30,
         hybridHaircut: 85,
@@ -1082,6 +1130,9 @@
         qualMaceio: 15,
         qualRj: 20,
         qualDiscount: 15,
+        exitTenor: 8,
+        exitCoupon: 7.5,
+        exitYield: 9.75,
         assets: { camacari: [380, 5.0, true], triunfo: [420, 5.0, true], sp_abc: [180, 4.5, true], duque: [140, 4.5, true], us_pp: [220, 6.0, true], eu_pp: [60, 4.5, true], braskem_idesa: [50, 5.0, true], green_pe: [70, 7.5, true] }
       },
       aggressive: {
@@ -1097,13 +1148,16 @@
         qualMaceio: 25,
         qualRj: 30,
         qualDiscount: 20,
+        exitTenor: 8,
+        exitCoupon: 6.5,
+        exitYield: 11.50,
         assets: { camacari: [350, 4.5, true], triunfo: [380, 4.5, true], sp_abc: [160, 4.0, true], duque: [120, 4.0, true], us_pp: [190, 5.5, true], eu_pp: [50, 4.0, true], braskem_idesa: [30, 4.0, true], green_pe: [60, 6.5, true] }
       },
       recap: {
         duration: 6,
         sponsorEquity: 2500,
         seniorHaircut: 15,
-        extension: 5,
+        extension: 6,
         coupon: 8.5,
         debtEquity: 20,
         hybridHaircut: 60,
@@ -1112,13 +1166,16 @@
         qualMaceio: 10,
         qualRj: 10,
         qualDiscount: 10,
+        exitTenor: 6,
+        exitCoupon: 8.5,
+        exitYield: 8.25,
         assets: { camacari: [420, 5.5, true], triunfo: [450, 5.5, true], sp_abc: [200, 5.0, true], duque: [160, 5.0, true], us_pp: [250, 6.5, true], eu_pp: [70, 5.0, true], braskem_idesa: [60, 5.5, true], green_pe: [80, 8.0, true] }
       },
       liquidation: {
         duration: 24,
         sponsorEquity: 0,
         seniorHaircut: 55,
-        extension: 0,
+        extension: 4,
         coupon: 5.0,
         debtEquity: 50,
         hybridHaircut: 100,
@@ -1127,6 +1184,9 @@
         qualMaceio: 35,
         qualRj: 45,
         qualDiscount: 25,
+        exitTenor: 4,
+        exitCoupon: 5.0,
+        exitYield: 14.00,
         assets: { camacari: [250, 3.5, true], triunfo: [280, 3.5, true], sp_abc: [100, 3.0, true], duque: [80, 3.0, true], us_pp: [140, 4.0, true], eu_pp: [30, 3.0, true], braskem_idesa: [0, 0.0, false], green_pe: [40, 5.0, true] }
       },
       rj: {
@@ -1142,9 +1202,39 @@
         qualMaceio: 30,
         qualRj: 50,
         qualDiscount: 25,
+        exitTenor: 10,
+        exitCoupon: 6.0,
+        exitYield: 13.00,
         assets: { camacari: [300, 4.0, true], triunfo: [330, 4.0, true], sp_abc: [130, 3.5, true], duque: [100, 3.5, true], us_pp: [160, 5.0, true], eu_pp: [40, 3.5, true], braskem_idesa: [20, 3.0, true], green_pe: [50, 6.0, true] }
       }
     };
+
+    function syncExitYield(val) {
+      const y = parseFloat(val);
+      const elCard6 = document.getElementById("input-exit-yield");
+      const elCard4 = document.getElementById("input-exit-yield-card4");
+      if (elCard6 && parseFloat(elCard6.value) !== y) elCard6.value = y;
+      if (elCard4 && parseFloat(elCard4.value) !== y) elCard4.value = y;
+      recalcEngine();
+    }
+
+    function syncCoupon(val) {
+      const c = parseFloat(val);
+      const elCard2 = document.getElementById("input-coupon");
+      const elCard6 = document.getElementById("input-exit-coupon");
+      if (elCard2 && parseFloat(elCard2.value) !== c) elCard2.value = c;
+      if (elCard6 && parseFloat(elCard6.value) !== c) elCard6.value = c;
+      recalcEngine();
+    }
+
+    function syncTenor(val) {
+      const t = parseInt(val);
+      const elCard2 = document.getElementById("input-extension");
+      const elCard6 = document.getElementById("input-exit-tenor");
+      if (elCard2 && parseInt(elCard2.value) !== t) elCard2.value = t;
+      if (elCard6 && parseInt(elCard6.value) !== t) elCard6.value = t;
+      recalcEngine();
+    }
 
     function initPage() {
       renderAssetTable();
@@ -1204,6 +1294,15 @@
       document.getElementById("input-qual-rj").value = p.qualRj;
       document.getElementById("input-qual-discount").value = p.qualDiscount;
 
+      const exitTenorVal = p.exitTenor || p.extension || 8;
+      const exitCouponVal = p.exitCoupon || p.coupon || 7.5;
+      const exitYieldVal = p.exitYield || 9.75;
+
+      if (document.getElementById("input-exit-tenor")) document.getElementById("input-exit-tenor").value = exitTenorVal;
+      if (document.getElementById("input-exit-coupon")) document.getElementById("input-exit-coupon").value = exitCouponVal;
+      if (document.getElementById("input-exit-yield")) document.getElementById("input-exit-yield").value = exitYieldVal;
+      if (document.getElementById("input-exit-yield-card4")) document.getElementById("input-exit-yield-card4").value = exitYieldVal;
+
       // Update assets
       ASSETS.forEach(a => {
         if (p.assets[a.id]) {
@@ -1235,7 +1334,11 @@
       const qualRj = parseFloat(document.getElementById("input-qual-rj").value) / 100.0;
       const qualDiscount = parseFloat(document.getElementById("input-qual-discount").value) / 100.0;
 
-      // Update UI slider values
+      const exitTenor = parseFloat(document.getElementById("input-exit-tenor")?.value || extensionYears);
+      const exitCoupon = parseFloat(document.getElementById("input-exit-coupon")?.value || (newCouponPct * 100.0));
+      const exitYield = parseFloat(document.getElementById("input-exit-yield")?.value || 9.75);
+
+      // Update UI slider labels
       document.getElementById("val-duration").textContent = `${durationMonths} Months`;
       document.getElementById("val-sponsor-equity").textContent = `$${sponsorEquity.toLocaleString()}M`;
       document.getElementById("val-senior-haircut").textContent = `${(seniorHaircutPct * 100).toFixed(0)}%`;
@@ -1250,7 +1353,12 @@
       document.getElementById("val-qual-rj").textContent = `${(qualRj * 100).toFixed(0)}%`;
       document.getElementById("val-qual-discount").textContent = `${(qualDiscount * 100).toFixed(0)}%`;
 
-      document.getElementById("lbl-new-maturity").textContent = `${2030 + extensionYears}`;
+      if (document.getElementById("val-exit-tenor")) document.getElementById("val-exit-tenor").textContent = `${exitTenor} Years`;
+      if (document.getElementById("val-exit-coupon")) document.getElementById("val-exit-coupon").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${exitYield.toFixed(2)}%`;
+      if (document.getElementById("val-exit-yield-card4")) document.getElementById("val-exit-yield-card4").textContent = `${exitYield.toFixed(2)}%`;
+
+      document.getElementById("lbl-new-maturity").textContent = `${2026 + Math.round(exitTenor)}`;
 
       // 2. SOTP Asset Valuation
       let totalSotpEv = 0;
@@ -1273,7 +1381,7 @@
       document.getElementById("sotp-total-ev").textContent = `$${totalSotpEv.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}M`;
       document.getElementById("top-sotp-ev").innerHTML = `$${Math.round(totalSotpEv).toLocaleString()}<span>M</span>`;
 
-      // 3. Priority Deductions
+      // 3. Priority Deductions & Standstill Carrying Costs
       const monthlyAdvisorBurn = 15.0; // $15M/mo
       const totalAdvisorDrain = durationMonths * monthlyAdvisorBurn;
       document.getElementById("lbl-advisor-drain").textContent = `-$${totalAdvisorDrain.toFixed(0)}M`;
@@ -1298,39 +1406,14 @@
       const proFormaNetDebt = proFormaGrossDebt - postReorgCash;
       const proFormaNetLeverage = totalOperatingEbitda > 0 ? (proFormaNetDebt / totalOperatingEbitda) : 99.0;
 
-      const proFormaSeniorInterest = seniorReinstatedDebt * newCouponPct;
+      const proFormaSeniorInterest = seniorReinstatedDebt * (exitCoupon / 100.0);
       const priorityBankInterest = priorityBankDebt * 0.075;
       const proFormaTotalCashInterest = proFormaSeniorInterest + priorityBankInterest;
       const proFormaInterestCoverage = proFormaTotalCashInterest > 0 ? (totalOperatingEbitda / proFormaTotalCashInterest) : 0;
       const proFormaCapex = 600.0;
       const proFormaFcf = totalOperatingEbitda - proFormaCapex - proFormaTotalCashInterest - 40.0 - 70.0; // WC & Tax
 
-      // Update Meter Displays
-      document.getElementById("top-senior-recovery").innerHTML = `${rawSeniorRecoveryCents.toFixed(1)}<span>c</span>`;
-      document.getElementById("top-proforma-lev").innerHTML = `${proFormaNetLeverage.toFixed(2)}<span>x</span>`;
-      document.getElementById("meter-net-debt").textContent = `$${Math.round(proFormaNetDebt).toLocaleString()}M`;
-      document.getElementById("meter-net-debt-delta").textContent = `${proFormaNetDebt < 9450 ? '-' : '+'}$${Math.abs(Math.round(proFormaNetDebt - 9450)).toLocaleString()}M vs FY24`;
-      document.getElementById("meter-leverage").textContent = `${proFormaNetLeverage.toFixed(2)}x`;
-      document.getElementById("meter-coverage").textContent = `${proFormaInterestCoverage.toFixed(2)}x`;
-      document.getElementById("meter-interest").textContent = `$${Math.round(proFormaTotalCashInterest)}M`;
-      document.getElementById("meter-fcf").textContent = `${proFormaFcf >= 0 ? '+' : ''}$${Math.round(proFormaFcf)}M`;
-      document.getElementById("meter-fcf").style.color = proFormaFcf >= 0 ? "var(--accent-emerald)" : "var(--accent-rose)";
-
-      document.getElementById("lbl-senior-debt-cut").textContent = `-$${Math.round(totalSeniorClaims * seniorHaircutPct).toLocaleString()}M`;
-      document.getElementById("lbl-new-interest").textContent = `$${Math.round(proFormaSeniorInterest)}M`;
-      document.getElementById("lbl-reorg-equity-share").textContent = `${Math.min(95, Math.round(debtToEquityPct * 180))}%`;
-
-      const hybridRecoveryCents = (1.0 - hybridHaircutPct) * 100.0;
-      document.getElementById("lbl-hybrid-cramdown").textContent = `${hybridRecoveryCents.toFixed(1)}c`;
-
-      // Required Debt Cut to hit Target 3.20x Net Leverage
-      const targetNetDebt = totalOperatingEbitda * 3.20;
-      const excessDebt = Math.max(0, proFormaNetDebt - targetNetDebt);
-      document.getElementById("meter-cut-req").textContent = excessDebt > 0 ? `$${Math.round(excessDebt).toLocaleString()}M` : "$0M";
-      document.getElementById("meter-cut-status").textContent = excessDebt > 0 ? "Under-Haircut / At Risk" : "Adequately Sized";
-      document.getElementById("meter-cut-status").style.color = excessDebt > 0 ? "var(--accent-rose)" : "var(--accent-emerald)";
-
-      // Sustainability Status & Verdict Callout
+      // Balance Sheet Sustainability Verdict Callout
       const statusBadge = document.getElementById("top-status-badge");
       const verdictBox = document.getElementById("sustainability-verdict");
 
@@ -1362,36 +1445,114 @@
         verdictBox.style.background = "rgba(244, 63, 94, 0.1)";
         verdictBox.innerHTML = `
           <strong style="color:var(--accent-rose);">Plan Verdict: UNSUSTAINABLE PLAN / HIGH RE-DEFAULT RISK.</strong> 
-          Debt burden remains too heavy with ${proFormaNetLeverage.toFixed(2)}x Net Leverage and $${Math.round(excessDebt)}M in excess unamortizable debt. Rating agencies will not upgrade out of CCC/B category, leading to another restructuring within 24–36 months.
+          Debt burden remains too heavy with ${proFormaNetLeverage.toFixed(2)}x Net Leverage and $${Math.round(Math.max(0, proFormaNetDebt - (totalOperatingEbitda * 3.20)))}M in excess unamortizable debt. Rating agencies will not upgrade out of CCC/B category, leading to another restructuring within 24–36 months.
         `;
       }
 
-      // 6. Pricing in Qualitative Friction to Produce Dynamic Pricing Bands
-      // Composite Qualitative Friction Factor (0 to 1)
+      // 6. Unified Exit Yield, Haircut, Tenor & Standstill Drag Engine
+      const newDebtTradingPx = calcBondPrice(exitCoupon, exitYield, exitTenor);
+      const parDiscountPct = ((newDebtTradingPx - 100.0) / 100.0) * 100.0;
+      const ustBenchmark = 3.75;
+      const impliedSpreadBps = Math.round((exitYield - ustBenchmark) * 100);
+
+      // Standstill Time-Discount Factor
+      const timeDiscountFactor = 1.0 / Math.pow(1.0 + (exitYield / 200.0), 2.0 * (durationMonths / 12.0));
+      const timeDiscountPct = (1.0 - timeDiscountFactor) * 100.0;
+      if (document.getElementById("lbl-time-drag")) document.getElementById("lbl-time-drag").textContent = `-${timeDiscountPct.toFixed(1)}%`;
+
+      // Senior Claim Allocation Breakdown (per $100 claim)
+      const postHaircutClaimFace = 100.0 * (1.0 - seniorHaircutPct);
+      const reinstatedDebtFace = postHaircutClaimFace * (1.0 - debtToEquityPct);
+      const convertedEquityFace = postHaircutClaimFace * debtToEquityPct;
+
+      const reinstatedDebtEmergenceVal = (reinstatedDebtFace * newDebtTradingPx) / 100.0;
+      const equityEmergenceMult = isSustainable ? 1.0 : (isBorderline ? 0.75 : 0.40);
+      const convertedEquityEmergenceVal = convertedEquityFace * equityEmergenceMult;
+
+      const seniorEmergenceVal = reinstatedDebtEmergenceVal + convertedEquityEmergenceVal;
+      const seniorPresentEconRecovery = seniorEmergenceVal * timeDiscountFactor;
+
+      // Update Top Meter Strip
+      document.getElementById("top-senior-recovery").innerHTML = `${seniorPresentEconRecovery.toFixed(1)}<span>c</span>`;
+      document.getElementById("top-proforma-lev").innerHTML = `${proFormaNetLeverage.toFixed(2)}<span>x</span>`;
+      document.getElementById("meter-net-debt").textContent = `$${Math.round(proFormaNetDebt).toLocaleString()}M`;
+      document.getElementById("meter-net-debt-delta").textContent = `${proFormaNetDebt < 9450 ? '-' : '+'}$${Math.abs(Math.round(proFormaNetDebt - 9450)).toLocaleString()}M vs FY24`;
+      document.getElementById("meter-leverage").textContent = `${proFormaNetLeverage.toFixed(2)}x`;
+      document.getElementById("meter-coverage").textContent = `${proFormaInterestCoverage.toFixed(2)}x`;
+      document.getElementById("meter-interest").textContent = `$${Math.round(proFormaTotalCashInterest)}M`;
+      document.getElementById("meter-fcf").textContent = `${proFormaFcf >= 0 ? '+' : ''}$${Math.round(proFormaFcf)}M`;
+      document.getElementById("meter-fcf").style.color = proFormaFcf >= 0 ? "var(--accent-emerald)" : "var(--accent-rose)";
+
+      document.getElementById("lbl-senior-debt-cut").textContent = `-$${Math.round(totalSeniorClaims * seniorHaircutPct).toLocaleString()}M`;
+      document.getElementById("lbl-new-interest").textContent = `$${Math.round(proFormaSeniorInterest)}M`;
+      document.getElementById("lbl-reorg-equity-share").textContent = `${Math.min(95, Math.round(debtToEquityPct * 180))}%`;
+
+      const hybridRecoveryCents = (1.0 - hybridHaircutPct) * 100.0;
+      document.getElementById("lbl-hybrid-cramdown").textContent = `${hybridRecoveryCents.toFixed(1)}c`;
+
+      // Required Debt Cut to hit Target 3.20x Net Leverage
+      const targetNetDebt = totalOperatingEbitda * 3.20;
+      const excessDebt = Math.max(0, proFormaNetDebt - targetNetDebt);
+      document.getElementById("meter-cut-req").textContent = excessDebt > 0 ? `$${Math.round(excessDebt).toLocaleString()}M` : "$0M";
+      document.getElementById("meter-cut-status").textContent = excessDebt > 0 ? "Under-Haircut / At Risk" : "Adequately Sized";
+      document.getElementById("meter-cut-status").style.color = excessDebt > 0 ? "var(--accent-rose)" : "var(--accent-emerald)";
+
+      // Update Card 4 Real-Time Breakdown Strip
+      if (document.getElementById("strip-paper-px")) {
+        document.getElementById("strip-paper-px").textContent = `${newDebtTradingPx.toFixed(1)}c (${parDiscountPct >= 0 ? '+' : ''}${parDiscountPct.toFixed(1)}%)`;
+      }
+      if (document.getElementById("strip-debt-equity-split")) {
+        document.getElementById("strip-debt-equity-split").textContent = `Debt: ${reinstatedDebtEmergenceVal.toFixed(1)}c | Eq: ${convertedEquityEmergenceVal.toFixed(1)}c`;
+      }
+      if (document.getElementById("strip-time-drag")) {
+        document.getElementById("strip-time-drag").textContent = `-${timeDiscountPct.toFixed(1)}% (${durationMonths}M @ ${exitYield.toFixed(2)}%)`;
+      }
+      if (document.getElementById("strip-true-recovery")) {
+        document.getElementById("strip-true-recovery").textContent = `${seniorPresentEconRecovery.toFixed(1)}c PV`;
+      }
+
+      // 7. Render Card 4: Pricing in Qualitative Friction & Tranche Indentures
       const qualitativeFrictionFactor = (qualPetrobras * 0.35) + (qualMaceio * 0.25) + (qualRj * 0.25) + (qualDiscount * 0.15);
-      
+
+      const TRANCHE_DELTAS = {
+        b2030: { delta: +2.0, desc: "Shorter 2030 legal maturity (4Y); holds maximum holdout & amendment leverage" },
+        b2033: { delta: 0.0, desc: "Liquid institutional benchmark; reference trading note" },
+        b2050: { delta: -2.5, desc: "Ultra-long duration (26Y); deep discount market pricing" },
+        b2034: { delta: +1.5, desc: "High coupon carrier (8.000%); carry preference" },
+        debentures: { delta: -0.5, desc: "Local CDI-linked debt; local court jurisdiction" },
+        b2081: { delta: 0.0, desc: "Contractually subordinated hybrid; zero debt reinstatement under APR" }
+      };
+
       const tbodyBand = document.querySelector("#pricing-band-table tbody");
       tbodyBand.innerHTML = TRANCHES.map(t => {
         let baseRecovery = 0;
         let bearRecovery = 0;
         let bullRecovery = 0;
+        const delta = TRANCHE_DELTAS[t.id]?.delta || 0;
 
         if (t.seniority === "senior") {
-          baseRecovery = rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40));
-          bearRecovery = Math.max(16.0, rawSeniorRecoveryCents * 0.45 * (1.0 - qualitativeFrictionFactor));
-          bullRecovery = Math.min(100.0, rawSeniorRecoveryCents * 1.35);
+          const tranchePresentRec = Math.max(15.0, seniorPresentEconRecovery + delta);
+          const trancheEmergenceRec = Math.max(15.0, seniorEmergenceVal + delta);
+
+          baseRecovery = tranchePresentRec * (1.0 - (qualitativeFrictionFactor * 0.35));
+          bearRecovery = Math.max(16.0, tranchePresentRec * 0.55 * (1.0 - qualitativeFrictionFactor));
+          bullRecovery = Math.min(100.0, trancheEmergenceRec * 1.25);
         } else {
           // Hybrid 2081
-          baseRecovery = hybridRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.70));
+          const hybridWarrantFace = 100.0 * (1.0 - hybridHaircutPct);
+          const hybridEmergenceVal = hybridWarrantFace * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35);
+          const hybridPresentVal = hybridEmergenceVal * timeDiscountFactor;
+
+          baseRecovery = hybridPresentVal * (1.0 - (qualitativeFrictionFactor * 0.65));
           bearRecovery = 0.0;
-          bullRecovery = Math.min(50.0, hybridRecoveryCents * 2.2);
+          bullRecovery = Math.min(50.0, hybridEmergenceVal * 2.0);
         }
 
         const deltaBase = baseRecovery - t.marketPx;
         const deltaPct = (deltaBase / t.marketPx) * 100.0;
 
         let badgeHtml = "";
-        if (deltaPct > 20.0) {
+        if (deltaPct > 15.0) {
           badgeHtml = '<span style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">STRONG BUY</span>';
         } else if (deltaPct >= -5.0) {
           badgeHtml = '<span style="background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">HOLD / FAIR</span>';
@@ -1401,26 +1562,27 @@
 
         return `
           <tr>
-            <td class="name">${t.name}</td>
-            <td style="text-align:right; color:#cbd5e1;">${t.marketPx.toFixed(1)}c</td>
-            <td style="text-align:right; color:#f87171; font-weight:700;">${bearRecovery.toFixed(1)}c</td>
-            <td style="text-align:right; color:#34d399; font-weight:700;">${baseRecovery.toFixed(1)}c</td>
-            <td style="text-align:right; color:#38bdf8; font-weight:700;">${bullRecovery.toFixed(1)}c</td>
+            <td class="name">
+              ${t.name}
+              <div style="font-size:9px; color:var(--text-muted); font-weight:400;">${TRANCHE_DELTAS[t.id]?.desc || ''}</div>
+            </td>
+            <td style="text-align:right; color:#cbd5e1; font-family:'JetBrains Mono',monospace;">${t.marketPx.toFixed(1)}c</td>
+            <td style="text-align:right; color:#f87171; font-weight:700; font-family:'JetBrains Mono',monospace;">${bearRecovery.toFixed(1)}c</td>
+            <td style="text-align:right; color:#34d399; font-weight:700; font-family:'JetBrains Mono',monospace;">${baseRecovery.toFixed(1)}c</td>
+            <td style="text-align:right; color:#38bdf8; font-weight:700; font-family:'JetBrains Mono',monospace;">${bullRecovery.toFixed(1)}c</td>
             <td style="text-align:center;">${badgeHtml}</td>
           </tr>
         `;
       }).join('');
 
-      // 7. Render Card 5: Step-by-Step Priority Recovery Waterfall & Tranche Allocation
+      // 8. Render Card 5: Step-by-Step Priority Recovery Waterfall & Tranche Allocation
       const seniorAllocatedValue = Math.min(totalSeniorClaims, netDistributableToSenior);
       const valueRemainingAfterSenior = Math.max(0, netDistributableToSenior - totalSeniorClaims);
       
-      // Hybrid gets residual under strict APR, or if consensual plan retains warrants/stub
       let hybridAllocatedValue = 0;
       if (valueRemainingAfterSenior > 0) {
         hybridAllocatedValue = Math.min(hybridClaims, valueRemainingAfterSenior);
       } else {
-        // Under consensual restructuring, hybrid retains out-of-the-money warrants if senior recovery > 35c
         const impliedWarrantVal = hybridClaims * (1.0 - hybridHaircutPct);
         hybridAllocatedValue = rawSeniorRecoveryCents > 35 ? Math.min(180, impliedWarrantVal) : 0;
       }
@@ -1472,7 +1634,8 @@
         { num: "11", name: "NET RESIDUAL VALUE AVAILABLE TO SENIOR UNSECURED", val: `$${seniorAllocatedValue.toFixed(1)}M`, unit: `$${Math.min(totalSeniorClaims, seniorAllocatedValue).toFixed(0)}M of $${totalSeniorClaims.toFixed(0)}M`, desc: "Unencumbered asset value legally available to satisfy General Unsecured Creditors", isSub: true, color: "#34d399" },
         { num: "12", name: "Total Senior Unsecured Claims Pool", val: `$${totalSeniorClaims.toFixed(1)}M`, unit: "Pari Passu Claims", desc: "Aggregate face value of 144A/RegS Eurobonds ($7.8B) and local Debentures ($1.4B)", isSub: false },
         { num: "13", name: "SENIOR UNSECURED RECOVERY PERCENTAGE (%)", val: `${(rawSeniorRecoveryPct * 100).toFixed(1)}%`, unit: "APR Recovery Ratio", desc: "Exact entitlement under Absolute Priority Rule (Net Available ÷ Total Claims)", isHighlight: true, color: "#34d399" },
-        { num: "14", name: "SENIOR UNSECURED RECOVERY PRICE (CENTS)", val: `${rawSeniorRecoveryCents.toFixed(1)}c`, unit: "Per $1.00 Face Value", desc: "Clean fundamental asset-backed recovery floor (before qualitative friction)", isHighlight: true, color: "#fbbf24" },
+        { num: "14", name: "SENIOR NOMINAL PLAN POT PRICE", val: `${rawSeniorRecoveryCents.toFixed(1)}c`, unit: "Undiscounted Face", desc: "Clean fundamental asset-backed pot recovery (before exit yield discounting & time drag)", isHighlight: true, color: "#fbbf24" },
+        { num: "14b", name: "TRUE ECONOMIC PRESENT VALUE (DISCOUNTED)", val: `${seniorPresentEconRecovery.toFixed(1)}c`, unit: `Net PV @ ${exitYield.toFixed(2)}% Yld`, desc: `Reflects ${newDebtTradingPx.toFixed(1)}c paper price and -${timeDiscountPct.toFixed(1)}% standstill time drag over ${durationMonths}M`, isHighlight: true, color: "#38bdf8" },
         { num: "15", name: "Value Residual to Subordinated 2081 Hybrid", val: `$${hybridAllocatedValue.toFixed(1)}M`, unit: `${((hybridAllocatedValue / hybridClaims) * 100).toFixed(1)}c per Hybrid`, desc: "Contractually subordinated perpetual notes; recovers only via stub warrants", isSub: true, color: "#c084fc" },
         { num: "16", name: "Value Residual Remaining for Existing Equity", val: `$${equityResidual.toFixed(1)}M`, unit: `${equityResidual > 0 ? ((equityResidual / safeTotalPot) * 100).toFixed(1) + '% equity pot' : '0.0% (Out-of-Money)'}`, desc: "Novonor & Petrobras common equity residual after satisfying all debt claims", isSub: false }
       ];
@@ -1500,7 +1663,7 @@
             <td style="color:var(--text-muted); font-family:'JetBrains Mono',monospace;">${r.num}</td>
             <td style="font-weight:${fontWeight}; color:${textColor};">${r.name}</td>
             <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:${fontWeight}; color:${textColor}; font-size:${isHigh ? '13px' : '11px'};">${r.val}</td>
-            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:${isHigh ? '#fbbf24' : '#94a3b8'}; font-weight:${fontWeight};">${r.unit}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:${isHigh ? (r.color || '#fbbf24') : '#94a3b8'}; font-weight:${fontWeight};">${r.unit}</td>
             <td style="color:#94a3b8; font-size:10.5px;">${r.desc}</td>
           </tr>
         `;
@@ -1509,12 +1672,31 @@
       // Tranche Allocation Table
       const allInstruments = [
         { name: "Priority PPE Secured Bank Debt", tier: "Senior Secured", claim: 1100.0, marketPx: 100.0, allocVal: 1100.0, cleanPx: 100.0, exitPx: 100.0, isPriority: true },
-        { name: "BRASKM 4.500% 2030 Senior Notes", tier: "Senior Unsecured", claim: 1450.0, marketPx: 48.60, allocVal: 1450.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
-        { name: "BRASKM 7.250% 2033 Senior Notes", tier: "Senior Unsecured", claim: 1200.0, marketPx: 56.30, allocVal: 1200.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
-        { name: "BRASKM 5.875% 2050 Senior Notes", tier: "Senior Unsecured", claim: 1420.0, marketPx: 44.70, allocVal: 1420.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
-        { name: "BRASKM 8.000% 2034 Senior Notes", tier: "Senior Unsecured", claim: 980.0, marketPx: 57.50, allocVal: 980.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
-        { name: "Domestic Brazilian Debentures (CDI)", tier: "Senior Unsecured", claim: 1400.0, marketPx: 52.00, allocVal: 1400.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
-        { name: "BRASKM 8.50% / 12.00% 2081 Hybrid", tier: "Junior Subordinated", claim: 1000.0, marketPx: 31.80, allocVal: hybridAllocatedValue, cleanPx: (hybridAllocatedValue / 1000.0) * 100.0, exitPx: ((hybridAllocatedValue / 1000.0) * 100.0) * (1.0 - (qualitativeFrictionFactor * 0.70)), isHybrid: true }
+        { name: "BRASKM 4.500% 2030 Senior Notes", tier: "Senior Unsecured", claim: 1450.0, marketPx: 48.60, 
+          cleanPx: seniorPresentEconRecovery + 2.0, 
+          exitPx: (seniorPresentEconRecovery + 2.0) * (1.0 - (qualitativeFrictionFactor * 0.35)),
+          allocVal: 1450.0 * (((seniorPresentEconRecovery + 2.0) * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+        { name: "BRASKM 7.250% 2033 Senior Notes", tier: "Senior Unsecured", claim: 1200.0, marketPx: 56.30, 
+          cleanPx: seniorPresentEconRecovery, 
+          exitPx: seniorPresentEconRecovery * (1.0 - (qualitativeFrictionFactor * 0.35)),
+          allocVal: 1200.0 * ((seniorPresentEconRecovery * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+        { name: "BRASKM 5.875% 2050 Senior Notes", tier: "Senior Unsecured", claim: 1420.0, marketPx: 44.70, 
+          cleanPx: seniorPresentEconRecovery - 2.5, 
+          exitPx: (seniorPresentEconRecovery - 2.5) * (1.0 - (qualitativeFrictionFactor * 0.35)),
+          allocVal: 1420.0 * (((seniorPresentEconRecovery - 2.5) * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+        { name: "BRASKM 8.000% 2034 Senior Notes", tier: "Senior Unsecured", claim: 980.0, marketPx: 57.50, 
+          cleanPx: seniorPresentEconRecovery + 1.5, 
+          exitPx: (seniorPresentEconRecovery + 1.5) * (1.0 - (qualitativeFrictionFactor * 0.35)),
+          allocVal: 980.0 * (((seniorPresentEconRecovery + 1.5) * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+        { name: "Domestic Brazilian Debentures (CDI)", tier: "Senior Unsecured", claim: 1400.0, marketPx: 52.00, 
+          cleanPx: seniorPresentEconRecovery - 0.5, 
+          exitPx: (seniorPresentEconRecovery - 0.5) * (1.0 - (qualitativeFrictionFactor * 0.35)),
+          allocVal: 1400.0 * (((seniorPresentEconRecovery - 0.5) * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+        { name: "BRASKM 8.50% / 12.00% 2081 Hybrid", tier: "Junior Subordinated", claim: 1000.0, marketPx: 31.80, 
+          cleanPx: (100.0 * (1.0 - hybridHaircutPct) * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35)) * timeDiscountFactor,
+          exitPx: ((100.0 * (1.0 - hybridHaircutPct) * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35)) * timeDiscountFactor) * (1.0 - (qualitativeFrictionFactor * 0.65)),
+          allocVal: 1000.0 * ((((100.0 * (1.0 - hybridHaircutPct) * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35)) * timeDiscountFactor) * (1.0 - (qualitativeFrictionFactor * 0.65))) / 100.0),
+          isHybrid: true }
       ];
 
       const tbodyAlloc = document.getElementById("tranche-allocation-tbody");
@@ -1548,35 +1730,14 @@
         `;
       }).join('');
 
-      // 8. Render Card 6: Exit Yield Discounting & Sensitivity Matrix
-      const exitTenor = parseFloat(document.getElementById("input-exit-tenor")?.value || 8);
-      const exitCoupon = parseFloat(document.getElementById("input-exit-coupon")?.value || 7.5);
-      const exitYield = parseFloat(document.getElementById("input-exit-yield")?.value || 9.75);
-
-      if (document.getElementById("val-exit-tenor")) document.getElementById("val-exit-tenor").textContent = `${exitTenor} Years`;
-      if (document.getElementById("val-exit-coupon")) document.getElementById("val-exit-coupon").textContent = `${exitCoupon.toFixed(2)}%`;
-      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${exitYield.toFixed(2)}%`;
-
-      const newDebtTradingPx = calcBondPrice(exitCoupon, exitYield, exitTenor);
-      const parDiscountPct = ((newDebtTradingPx - 100.0) / 100.0) * 100.0;
-      const ustBenchmark = 3.75;
-      const impliedSpreadBps = Math.round((exitYield - ustBenchmark) * 100);
-
-      // Debt vs Equity allocation per $1.00 of pre-petition claim
-      const seniorHaircutVal = seniorHaircutPct * 100.0;
-      const debtEquityVal = debtToEquityPct * 100.0;
-      const debtAllocationFace = Math.max(0, 100.0 - seniorHaircutVal - debtEquityVal);
-      const equityAllocationVal = debtEquityVal;
-      const discountedDebtVal = (debtAllocationFace * newDebtTradingPx) / 100.0;
-      const trueEconomicRecoveryCents = discountedDebtVal + equityAllocationVal;
-
+      // 9. Render Card 6: Exit Yield Discounting & Sensitivity Matrix
       if (document.getElementById("meter-exit-bond-px")) document.getElementById("meter-exit-bond-px").textContent = `${newDebtTradingPx.toFixed(1)}c`;
       if (document.getElementById("meter-exit-bond-discount")) {
         document.getElementById("meter-exit-bond-discount").textContent = `${parDiscountPct >= 0 ? '+' : ''}${parDiscountPct.toFixed(1)}% ${parDiscountPct >= 0 ? 'Premium to Par' : 'Below Par Face Value'}`;
         document.getElementById("meter-exit-bond-discount").style.color = parDiscountPct >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)';
       }
-      if (document.getElementById("meter-exit-economic-rec")) document.getElementById("meter-exit-economic-rec").textContent = `${trueEconomicRecoveryCents.toFixed(1)}c`;
-      if (document.getElementById("meter-exit-nominal-rec")) document.getElementById("meter-exit-nominal-rec").textContent = `vs ${rawSeniorRecoveryCents.toFixed(1)}c Nominal Plan Coverage`;
+      if (document.getElementById("meter-exit-economic-rec")) document.getElementById("meter-exit-economic-rec").textContent = `${seniorPresentEconRecovery.toFixed(1)}c`;
+      if (document.getElementById("meter-exit-nominal-rec")) document.getElementById("meter-exit-nominal-rec").textContent = `vs ${rawSeniorRecoveryCents.toFixed(1)}c Nominal Pot (Time Drag: -${timeDiscountPct.toFixed(1)}%)`;
       if (document.getElementById("meter-exit-spread")) document.getElementById("meter-exit-spread").textContent = `+${impliedSpreadBps} bps`;
 
       if (document.getElementById("matrix-coupon-label")) document.getElementById("matrix-coupon-label").textContent = `${exitCoupon.toFixed(2)}%`;
@@ -1595,15 +1756,18 @@
         matrixTbody.innerHTML = exitYieldSteps.map(step => {
           const yVal = Math.max(1.0, step.y);
           const px = calcBondPrice(exitCoupon, yVal, exitTenor);
-          const debtVal = (debtAllocationFace * px) / 100.0;
-          const econRec = debtVal + equityAllocationVal;
+          const debtVal = (reinstatedDebtFace * px) / 100.0;
+          const eqVal = convertedEquityEmergenceVal;
+          const stepDiscountFactor = 1.0 / Math.pow(1.0 + (yVal / 200.0), 2.0 * (durationMonths / 12.0));
+          const stepUndiscounted = debtVal + eqVal;
+          const econRec = stepUndiscounted * stepDiscountFactor;
           const varNominal = econRec - rawSeniorRecoveryCents;
           const sprd = Math.round((yVal - ustBenchmark) * 100);
 
           let action = "";
-          if (econRec > 63) {
+          if (econRec > 60) {
             action = '<span style="color:var(--accent-emerald); font-weight:700;">STRONG BUY</span>';
-          } else if (econRec >= 58) {
+          } else if (econRec >= 48) {
             action = '<span style="color:var(--accent-amber); font-weight:700;">HOLD / FAIR</span>';
           } else {
             action = '<span style="color:var(--accent-rose); font-weight:700;">UNDERWEIGHT</span>';
@@ -1616,7 +1780,7 @@
               <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#cbd5e1;">+${sprd} bps</td>
               <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">${px.toFixed(1)}c</td>
               <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">${debtVal.toFixed(1)}c</td>
-              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">${equityAllocationVal.toFixed(1)}c</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">${eqVal.toFixed(1)}c</td>
               <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">${econRec.toFixed(1)}c</td>
               <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:${varNominal >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${varNominal >= 0 ? '+' : ''}${varNominal.toFixed(1)}c</td>
               <td style="text-align:center; font-size:10px;">${action}</td>
