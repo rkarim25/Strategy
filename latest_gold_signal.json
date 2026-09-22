@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-09-22T23:22:21Z",
+  "generated_at_utc": "2026-09-22T23:58:25Z",
   "data_asof": "2026-09-22",
   "daily_rows": 6540,
-  "quote_price": 4400.7001953125,
+  "quote_price": 4399.10009765625,
   "quote_timestamp": "2026-09-22",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1790205741&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1790207905&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-09-22",
-      "close": 4400.7001953125
+      "close": 4399.10009765625
     },
-    "latestSma": 4462.399975585938,
+    "latestSma": 4462.319970703125,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.17255184338936824,
+    "latestDd": -0.17285270411545706,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-09-22",
-      "close": 4400.7001953125
+      "close": 4399.10009765625
     },
-    "latestSma": 4447.709985351563,
+    "latestSma": 4447.549975585937,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.17255184338936824,
+    "latestDd": -0.17285270411545706,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-09-22",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-09-22T23:22:21Z",
+    "last_checked_at_utc": "2026-09-22T23:58:25Z",
     "last_email_sent_on": "2026-09-10",
     "last_transition": {
       "id": "2026-09-09:1->2026-09-10:0",
