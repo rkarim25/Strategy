@@ -1513,93 +1513,91 @@
     </div>
   </div>
 
-  <!-- SECTION 6: Qualitative Risk Assessment Demystified: The Meaning of the % Sliders, Mathematical Friction & Pricing Band Mechanics -->
+  <!-- SECTION 6: Qualitative Risk Assessment Demystified: Expressing Qualitative Factors in Cents of Upside or Discount to Recovery -->
   <div class="content-card" id="qualitative-guide" style="margin-top:14px; margin-bottom:16px;">
     <div class="section-title">
       <span style="display:flex; align-items:center; gap:8px;">
-        <span>📘</span> 6. Qualitative Risk Assessment Demystified: Decoding the % Sliders, Mathematical Friction &amp; Pricing Band Mechanics
+        <span>📘</span> 6. Qualitative Risk Assessment Demystified: Expressing Qualitative Factors in Cents of Upside or Discount to Recovery
       </span>
-      <span class="sub">Why Fundamental EV Waterfalls Overstate Distressed Recoveries Without Probability-Weighted Execution Frictions</span>
+      <span class="sub">Replacing Abstract % Multipliers with Transparent Cents Attribution per Dollar of Claim</span>
     </div>
 
     <div style="font-size:11.5px; color:var(--text-muted); line-height:1.55; margin-bottom:14px;">
-      In classical credit analysis, analysts calculate theoretical recovery by multiplying projected EBITDA by an exit multiple and subtracting priority debt:
-      <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan);">(EBITDA &times; Multiple - Priority Debt) / Senior Claims</span>.
-      However, in complex cross-border restructurings like Braskem S.A., <strong>this theoretical number is almost never what trades in the secondary market</strong>.
-      Market clearing prices reflect non-balance-sheet execution frictions: sponsor political motivations, court cramdown thresholds, unreserved litigation tails, and institutional illiquidity.
-      The <strong>Qualitative %</strong> is an explicit <strong>Probability-Weighted Economic Friction Haircut</strong> designed to bridge this gap.
+      In classical distressed debt models, analysts often use abstract percentage multipliers (e.g. "25% friction" or "15% discount"). 
+      However, institutional credit traders and portfolio managers demand direct attribution: <em>"How many cents per dollar does this specific risk take off my bond?"</em>
+      By expressing qualitative risk factors directly as <strong>Cents of Upside (+cents) or Discount (-cents) to Recovery</strong>, the bridge between financial models and market pricing becomes completely transparent:
+      <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-weight:700;">Desk Fair Value = Present Economic Recovery + Tranche Indenture Delta + &sum;(&Delta; Cents)</span>.
     </div>
 
-    <!-- The 4 Sliders Deep Dive Table -->
+    <!-- The 4 Cents Dimensions Deep Dive Table -->
     <div style="overflow-x:auto; margin-bottom:16px;">
       <table class="data-table" style="font-size:11px;">
         <thead>
           <tr>
-            <th style="width:20%;">Qualitative Risk Dimension</th>
-            <th style="width:12%; text-align:center;">Slider Range</th>
-            <th style="width:10%; text-align:center;">Base Weight</th>
-            <th style="width:30%;">Underlying Economic &amp; Legal Reality Captured</th>
-            <th style="width:28%;">Mathematical &amp; Secondary Pricing Transmission</th>
+            <th style="width:22%;">Qualitative Risk Dimension</th>
+            <th style="width:14%; text-align:center;">Cents Slider Range</th>
+            <th style="width:12%; text-align:center;">Desk Base Delta</th>
+            <th style="width:28%;">Underlying Economic &amp; Legal Reality Captured</th>
+            <th style="width:24%;">Mathematical &amp; Secondary Pricing Transmission</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>
-              <strong style="color:#fff;">Petrobras Sponsor Friction / Reluctance</strong><br>
-              <span style="color:var(--text-dim); font-size:10px;">Political Governance &amp; Shareholder Deficit</span>
+              <strong style="color:#fff;">Petrobras Sponsor Action &amp; Governance</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Shareholder Deficit vs Equity Injection</span>
             </td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 60%</td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">35%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">-6.0c to +4.0c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-weight:700;">-1.5c</td>
             <td>
-              Petrobras owns 36.1% of capital (47.0% of voting shares). Governed by state political appointees, Petrobras cannot easily bail out bankrupt controlling shareholder Novonor (38.3%) without facing intense political backlash and Court of Audit (TCU) scrutiny. 
-              A higher % captures the probability that Petrobras refuses an equity check, only providing commercial credit (e.g. the R$2.35B feedstock facility).
-            </td>
-            <td>
-              Forces bondholders to absorb 100% of the balance sheet recapitalization via equity equitization (30%+ share dilution), lowering cash recovery and forcing higher debt cuts to hit the &lt;3.20x leverage target.
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <strong style="color:#fff;">Maceió Litigation / Dutch Class Action Tail</strong><br>
-              <span style="color:var(--text-dim); font-size:10px;">Cross-Border Contingent Liabilities</span>
-            </td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 40%</td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">25%</td>
-            <td>
-              Braskem has provisioned ~R$15.8B for the Alagoas rock-salt subsidence. However, foreign courts (Rotterdam District Court hearing claims on behalf of Maceió victims) and ongoing Brazilian federal prosecutor class actions seek damages exceeding R$25B–R$30B.
-              A higher % captures the risk that settlement caps are breached or foreign enforcement actions freeze export cash flows.
+              Petrobras owns 36.1% of capital (47.0% voting). Governed by state political appointees, Petrobras cannot easily bail out bankrupt Novonor (38.3%). 
+              Refusal to provide equity forces heavier creditor dilution (-6.0c discount). A negotiated cash equity check or ADNOC buyout provides +4.0c upside.
             </td>
             <td>
-              Directly increases priority cash deductions ahead of unsecured creditors ($600M–$1,200M NPV deduction), draining unencumbered enterprise value and widening post-reorganization exit yields.
+              Directly adjusts senior fair value by +4.0c to -6.0c. At Base, -1.5c reflects commercial support (feedstock line) without cash equity.
             </td>
           </tr>
           <tr>
             <td>
-              <strong style="color:#fff;">Judicial RJ In-Court Cramdown Risk</strong><br>
-              <span style="color:var(--text-dim); font-size:10px;">Formal Insolvency Breakdown Friction</span>
+              <strong style="color:#fff;">Maceió Litigation &amp; Dutch Class Action Tail</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Cross-Border Contingent Overhang</span>
             </td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 50%</td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">25%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">-6.0c to +1.0c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-weight:700;">-1.0c</td>
             <td>
-              The ongoing <em>Recuperação Extrajudicial</em> (RE) requires 50%+1 creditor approval by 22 Nov 2026. If holdouts (such as US-issued 2041 bondholders or bank committees) reject terms, the company must file for full in-court <em>Recuperação Judicial</em> (RJ) or US Chapter 11.
-              In RJ, proceedings average 24–36 months with monthly advisor fees of $15M–$20M and court supervision.
+              Braskem has provisioned ~R$15.8B for Alagoas salt-cavern damages. If foreign courts (Rotterdam) pierce provisions, priority cash drains widen (-6.0c discount). 
+              A comprehensive federal release with definitive settlement capping provides +1.0c upside.
             </td>
             <td>
-              Applies a severe time-value-of-money discounting penalty, introduces DIP loan super-priority claims ($500M+), and subjects creditors to hostile debtor plan cramdown under Brazilian bankruptcy law.
+              Deducts cash consideration ahead of unsecured bondholders. Base incorporates -1.0c expected value of litigation overhang.
             </td>
           </tr>
           <tr>
             <td>
-              <strong style="color:#fff;">Distressed Liquidity &amp; Execution Discount</strong><br>
-              <span style="color:var(--text-dim); font-size:10px;">Market Microstructure &amp; Forced Selling</span>
+              <strong style="color:#fff;">Judicial Resolution Pathway (Consensual vs RJ)</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Extrajudicial Plan vs 24M In-Court Bleed</span>
             </td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">5% – 30%</td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">15%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">-8.0c to +2.0c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-weight:700;">-1.0c</td>
             <td>
-              When corporate credit enters default or CCC territory, investment-grade and benchmark-tracking High Yield funds face strict mandate-driven forced-selling rules. Broker-dealers widen bid/ask spreads to 3–5 points and reduce balance-sheet inventory.
+              The ongoing <em>Recuperação Extrajudicial</em> (RE) targets consensual 50%+1 approval. Collapse into formal in-court <em>Recuperação Judicial</em> (RJ) triggers 24–36 months of litigation, $15M/mo advisor fees, and DIP super-priority (-8.0c discount). Fast-track confirmation adds +2.0c.
             </td>
             <td>
-              Imposes an immediate illiquidity penalty on secondary trading prices, causing paper to trade 5c–12c below theoretical mathematical present value until restructuring confirmation.
+              Captures judicial process friction and cramdown risk. Base reflects -1.0c friction for extrajudicial holdout risk.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Secondary Market Liquidity &amp; Mandate Selling</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Market Microstructure &amp; Dealer Inventory</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">-5.0c to 0.0c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-weight:700;">-0.5c</td>
+            <td>
+              Upon default or CCC downgrades, investment-grade and benchmark-tracking HY funds face mandatory forced-selling rules. Dealers widen bid/ask spreads to 3–5 points and reduce balance-sheet inventory (-5.0c to 0.0c).
+            </td>
+            <td>
+              Applies a direct liquidity haircut to secondary trading value. Base incorporates -0.5c baseline illiquidity drag.
             </td>
           </tr>
         </tbody>
@@ -1609,37 +1607,37 @@
     <!-- Mathematical Mechanics: How the Pricing Bands are Generated -->
     <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:8px; padding:14px; margin-bottom:16px;">
       <div style="font-size:11px; font-weight:700; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:8px;">
-        ⚙️ The Mathematical Synthesis: From Qualitative % to Secondary Pricing Bands
+        ⚙️ The Mathematical Synthesis: From Qualitative Cents to Secondary Pricing Bands
       </div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:11px; line-height:1.5;">
         <div>
           <p style="color:#cbd5e1; margin-bottom:8px;">
-            The engine aggregates the 4 qualitative sliders into a single <strong>Composite Qualitative Friction Factor (&Phi;)</strong>:
+            The engine sums the 4 qualitative sliders into a single <strong>Net Qualitative Adjustment (&Delta;<sub>qual</sub>)</strong>:
           </p>
-          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:8px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#38bdf8; margin-bottom:8px;">
-            &Phi; = (Petrobras &times; 0.35) + (Maceió &times; 0.25) + (RJ Risk &times; 0.25) + (Liquidity &times; 0.15)
+          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:8px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#fbbf24; margin-bottom:8px;">
+            &Delta;<sub>qual</sub> = &Delta;<sub>Petrobras</sub> + &Delta;<sub>Maceió</sub> + &Delta;<sub>RJ</sub> + &Delta;<sub>Liquidity</sub>
           </div>
           <p style="color:var(--text-muted); font-size:10.5px;">
-            In the Desk Base Case (25% Petrobras, 15% Maceió, 20% RJ, 15% Liquidity), <strong>&Phi; = 19.75%</strong>. 
-            This aggregate friction directly discounts the raw asset waterfall recovery to compute trading price bounds.
+            In the Desk Base Case: (-1.5c) + (-1.0c) + (-1.0c) + (-0.5c) = <strong>-4.0c Net Qualitative Discount</strong>.
+            This is added directly to the Present Economic Recovery (54.0c) to yield the benchmark 2033 fair value of <strong>50.0c</strong>.
           </p>
         </div>
         <div>
           <p style="color:#cbd5e1; margin-bottom:8px;">
-            The three pricing band columns in the calculator are generated dynamically as follows:
+            Dynamic Pricing Band Formulation for All Traded Bonds:
           </p>
           <ul style="margin-left:14px; display:flex; flex-direction:column; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
             <li>
               <span style="color:var(--accent-rose); font-weight:700;">Bear (Floor):</span> 
-              <span style="color:#e2e8f0;">max(16.0c, Raw Recovery &times; 0.45 &times; (1 - &Phi;))</span>
+              <span style="color:#e2e8f0;">max(16.0c, (Rec<sub>PV</sub> + &Delta;<sub>tranche</sub>) &times; 0.45 + min(-6.0c, &Delta;<sub>qual</sub> &times; 1.5))</span>
             </li>
             <li>
               <span style="color:var(--accent-emerald); font-weight:700;">Base (Fair):</span> 
-              <span style="color:#e2e8f0;">Raw Recovery &times; (1 - &Phi; &times; 0.40)</span>
+              <span style="color:#e2e8f0;">max(10.0c, Rec<sub>PV</sub> + &Delta;<sub>tranche</sub> + &Delta;<sub>qual</sub>)</span>
             </li>
             <li>
               <span style="color:var(--accent-cyan); font-weight:700;">Bull (Upside):</span> 
-              <span style="color:#e2e8f0;">min(100.0c, Raw Recovery &times; 1.35)</span>
+              <span style="color:#e2e8f0;">min(100.0c, Rec<sub>emergence</sub> + &Delta;<sub>tranche</sub> + max(0.0c, &Delta;<sub>qual</sub>) + 20.0c)</span>
             </li>
           </ul>
         </div>

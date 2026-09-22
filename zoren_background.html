@@ -521,7 +521,7 @@
         <a href="#asset-blueprint" class="nav-btn">⚡ Asset Inputs &amp; Outputs</a>
         <a href="#ev-volatility" class="nav-btn">📊 EV Volatility Framework</a>
         <a href="#pricing-in-engine" class="nav-btn gold">🎯 "What's Priced In?" Engine</a>
-        <a href="#qualitative-guide" class="nav-btn" style="color:var(--accent-purple); border-color:rgba(192,132,252,0.4);">📘 Qualitative % Guide</a>
+        <a href="#qualitative-guide" class="nav-btn" style="color:var(--accent-purple); border-color:rgba(192,132,252,0.4);">📘 Qualitative Cents Guide</a>
       </div>
     </div>
 
@@ -1258,34 +1258,35 @@
     </div>
   </div>
 
-  <!-- SECTION 6: Qualitative Risk Assessment Demystified: The Meaning of the % Sliders, Turkish Macro Beta & Pricing Band Mechanics -->
+  <!-- SECTION 6: Qualitative Risk Assessment Demystified: Expressing Qualitative Factors in Cents of Upside or Discount to Recovery -->
   <div class="content-card" id="qualitative-guide" style="margin-top:14px; margin-bottom:16px;">
     <div class="section-title">
       <span style="display:flex; align-items:center; gap:8px;">
-        <span>📘</span> 6. Qualitative Risk Assessment Demystified: Decoding the % Sliders, Turkish Macro Beta &amp; Pricing Band Mechanics
+        <span>📘</span> 6. Qualitative Risk Assessment Demystified: Expressing Qualitative Factors in Cents of Upside or Discount to Recovery
       </span>
-      <span class="sub">Why Fundamental Asset Coverage of 190.6% Still Trades at 94.5c in the Secondary Market</span>
+      <span class="sub">Replacing Abstract % Multipliers with Direct, Transparent Cents Attribution per Dollar of Claim</span>
     </div>
 
     <div style="font-size:11.5px; color:var(--text-muted); line-height:1.55; margin-bottom:14px;">
       On a pure unencumbered asset liquidation basis, Zorlu Enerji provides <strong>190.6% asset coverage</strong> for its senior unsecured Eurobonds:
-      Enterprise Value ($2,598M) minus Priority Secured Project Debt ($1,235M) leaves $1,363M of net asset value to cover $715M of senior claims. 
-      Under classical asset coverage math, recovery is 100.0c. 
+      Enterprise Value ($2,100M operational EV + $240M unrestricted cash) minus Priority Secured Project Debt ($1,200M) leaves $1,140M of net asset value to cover $582.4M of senior claims ($300M Eurobond + $282.4M RCF). 
+      Under classical asset coverage math, clean recovery is <strong>100.0c</strong>. 
       Yet, the 2026 notes trade at <strong>~94.5c</strong>. 
-      The explanation lies in <strong>qualitative friction</strong>: Turkish sovereign macro beta, CBRT interest rate pressure, YEKDEM tariff rolloff timing, parent company Korteks contagion, and execution illiquidity.
-      The <strong>Qualitative %</strong> is an explicit <strong>Probability-Weighted Economic Friction Haircut</strong> that reconciles theoretical asset coverage with real secondary market trading prices.
+      Rather than using obscure percentage multipliers (e.g. 15% friction), institutional credit desks demand direct attribution: <em>"How many cents per dollar does each specific risk or catalyst move my bond?"</em>
+      By expressing qualitative risk factors directly as <strong>Cents of Upside (+cents) or Discount (-cents) to Recovery</strong>, the bridge between theoretical asset coverage and market pricing is transparent and direct:
+      <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-weight:700;">Desk Fair Value = Fundamental Senior Recovery + &sum;(&Delta; Cents)</span>.
     </div>
 
-    <!-- The 4 Sliders Deep Dive Table -->
+    <!-- The 4 Cents Dimensions Deep Dive Table -->
     <div style="overflow-x:auto; margin-bottom:16px;">
       <table class="data-table" style="font-size:11px;">
         <thead>
           <tr>
-            <th style="width:20%;">Qualitative Risk Dimension</th>
-            <th style="width:12%; text-align:center;">Slider Range</th>
-            <th style="width:10%; text-align:center;">Base Weight</th>
-            <th style="width:30%;">Underlying Economic &amp; Legal Reality Captured</th>
-            <th style="width:28%;">Mathematical &amp; Secondary Pricing Transmission</th>
+            <th style="width:22%;">Qualitative Risk Dimension</th>
+            <th style="width:14%; text-align:center;">Cents Slider Range</th>
+            <th style="width:12%; text-align:center;">Desk Base Delta</th>
+            <th style="width:28%;">Underlying Economic &amp; Legal Reality Captured</th>
+            <th style="width:24%;">Mathematical &amp; Secondary Pricing Transmission</th>
           </tr>
         </thead>
         <tbody>
@@ -1294,13 +1295,13 @@
               <strong style="color:#fff;">Turkish Sovereign Macro / Lira FX Beta</strong><br>
               <span style="color:var(--text-dim); font-size:10px;">Macro Inflation, CBRT Rates &amp; FX Pass-Through</span>
             </td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 50%</td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">35%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">-5.0c to +2.0c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-weight:700;">-1.5c</td>
             <td>
               Zorlu generates substantial revenue through OEDAŞ, its regulated electricity distribution grid. Tariffs are regulated by EMRA and indexed to inflation, but high domestic interest rates (CBRT policy rate ~50%) increase working capital financing costs, and rapid Lira depreciation creates cash conversion lags before tariff adjustments catch up.
             </td>
             <td>
-              Compresses short-term dollar EBITDA conversion and raises local-currency commercial bank refinancing rates, widening secondary Eurobond yields.
+              Severe currency stress and high domestic rates compress dollar cash conversion (-5.0c discount). Currency stabilization and disinflation yield +2.0c upside. Base incorporates -1.5c macro drag.
             </td>
           </tr>
           <tr>
@@ -1308,13 +1309,13 @@
               <strong style="color:#fff;">YEKDEM Tariff Expiry Cliff Risk</strong><br>
               <span style="color:var(--text-dim); font-size:10px;">Transition from Dollar Guarantees to Merchant Spot</span>
             </td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 40%</td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">30%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">-4.0c to +2.0c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-weight:700;">-1.0c</td>
             <td>
               Zorlu's geothermal and wind fleet historically enjoyed guaranteed USD feed-in tariffs of $105–$133/MWh under the statutory YEKDEM scheme. These contracts roll off progressively between 2026 and 2029, transitioning generation assets to Turkish merchant market pricing (PTF, typically $60–$75/MWh).
             </td>
             <td>
-              Directly contracts annual cash generation by $40M–$70M post-2027, reducing sustainable debt capacity and requiring a longer debt amortization runway.
+              Exposing unhedged capacity to lower spot power tariffs (-4.0c discount). Capacity mechanism reforms or extended green PPA tariffs provide +2.0c upside. Base incorporates -1.0c cliff risk discount.
             </td>
           </tr>
           <tr>
@@ -1322,67 +1323,67 @@
               <strong style="color:#fff;">Dorad Energy / Geopolitical Tail</strong><br>
               <span style="color:var(--text-dim); font-size:10px;">Cross-Border Israel Power Asset &amp; Dividend Trap</span>
             </td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 30%</td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">20%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">-3.0c to +3.0c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--text-muted); font-weight:700;">0.0c</td>
             <td>
-              Zorlu holds a 25% economic interest in Dorad Energy, an 860 MW combined-cycle gas turbine plant in Ashkelon, Israel. Ongoing Middle Eastern geopolitical conflict creates domestic Turkish public scrutiny, risks dividend repatriation delays, and introduces potential forced divestment friction.
+              Zorlu holds a 25% economic interest in Dorad Energy, an 860 MW combined-cycle gas turbine plant in Ashkelon, Israel. Middle Eastern geopolitical conflict creates domestic Turkish public scrutiny, risks dividend repatriation delays, and introduces potential forced divestment friction.
             </td>
             <td>
-              Strips out $20M–$30M of annual high-margin dividend inflows from HoldCo debt service, increasing reliance on domestic Turkish generation cash sweeps.
+              Trapped cross-border dividends or forced fire-sale (-3.0c discount) vs clean stake monetization / dividend resumption (+3.0c upside). Base case reflects 0.0c neutral impact as domestic assets fully cover senior debt.
             </td>
           </tr>
           <tr>
             <td>
-              <strong style="color:#fff;">Refinancing / Execution Illiquidity</strong><br>
+              <strong style="color:#fff;">Refinancing Execution &amp; Illiquidity Discount</strong><br>
               <span style="color:var(--text-dim); font-size:10px;">2026 Maturity Wall &amp; Turkish Banking Syndicate</span>
             </td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">5% – 30%</td>
-            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">15%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">-4.0c to 0.0c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-weight:700;">-1.0c</td>
             <td>
-              The $530M June 2026 Eurobond maturity represents a major concentration wall. While domestic banks (Akbank, Garanti, Isbank) and international lenders (EBRD) maintain strong bilateral support, negotiating a 4-year Amend &amp; Extend (A&amp;E) extension creates dealer inventory risk and secondary illiquidity penalties.
+              The $300M June 2026 Eurobond maturity represents a concentration wall. While domestic and multilateral banks (EBRD, IFC) maintain strong bilateral ties, executing a 4-year Amend &amp; Extend (A&amp;E) rollover creates dealer inventory risk and secondary CCC/B- liquidity discounts.
             </td>
             <td>
-              Requires an elevated clearing Exit Yield (11.00%–11.50%) on extended paper, explaining why secondary notes trade at 94.5c despite 190.6% asset coverage.
+              Secondary market bid/ask illiquidity and dealer syndicate roll friction (-4.0c to 0.0c). Base incorporates -1.0c liquidity discount.
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Mathematical Mechanics -->
+    <!-- Mathematical Mechanics: How the Pricing Bands are Generated -->
     <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:8px; padding:14px; margin-bottom:16px;">
       <div style="font-size:11px; font-weight:700; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:8px;">
-        ⚙️ The Mathematical Synthesis: From Qualitative % to Secondary Pricing Bands
+        ⚙️ The Mathematical Synthesis: From Qualitative Cents to Secondary Pricing Bands
       </div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:11px; line-height:1.5;">
         <div>
           <p style="color:#cbd5e1; margin-bottom:8px;">
-            The engine aggregates the 4 qualitative sliders into a single <strong>Composite Qualitative Friction Factor (&Phi;)</strong>:
+            The engine sums the 4 qualitative sliders into a single <strong>Net Qualitative Adjustment (&Delta;<sub>qual</sub>)</strong>:
           </p>
-          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:8px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#38bdf8; margin-bottom:8px;">
-            &Phi; = (Macro Beta &times; 0.35) + (YEKDEM Cliff &times; 0.30) + (Dorad Tail &times; 0.20) + (Illiquidity &times; 0.15)
+          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:8px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#fbbf24; margin-bottom:8px;">
+            &Delta;<sub>qual</sub> = &Delta;<sub>Macro</sub> + &Delta;<sub>YEKDEM</sub> + &Delta;<sub>Dorad</sub> + &Delta;<sub>Illiquidity</sub>
           </div>
           <p style="color:var(--text-muted); font-size:10.5px;">
-            In the Desk Base Case (20% Macro, 15% YEKDEM, 10% Dorad, 10% Illiquidity), <strong>&Phi; = 15.00%</strong>. 
-            This friction directly determines the discount on A&amp;E paper and secondary pricing bands.
+            In the Desk Base Case: (-1.5c) + (-1.0c) + (0.0c) + (-1.0c) = <strong>-3.5c Net Qualitative Discount</strong>.
+            This is added directly to the Fundamental Senior Coverage (100.0c) to yield the benchmark ZOREN '26 fair value of <strong>96.5c</strong> (vs 94.5c market quote &rarr; +2.0c upside / BUY).
           </p>
         </div>
         <div>
           <p style="color:#cbd5e1; margin-bottom:8px;">
-            The pricing bands for Zorlu's senior claims are governed by:
+            Dynamic Pricing Band Formulation for Senior Claims:
           </p>
           <ul style="margin-left:14px; display:flex; flex-direction:column; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
             <li>
               <span style="color:var(--accent-rose); font-weight:700;">Bear (Floor):</span> 
-              <span style="color:#e2e8f0;">max(50.0c, Raw Recovery &times; 0.65 &times; (1 - &Phi;))</span>
+              <span style="color:#e2e8f0;">max(50.0c, Raw Recovery &times; 0.65 + min(-6.0c, &Delta;<sub>qual</sub> &times; 1.5))</span>
             </li>
             <li>
               <span style="color:var(--accent-emerald); font-weight:700;">Base (Fair):</span> 
-              <span style="color:#e2e8f0;">Raw Recovery &times; (1 - &Phi; &times; 0.35)</span>
+              <span style="color:#e2e8f0;">min(100.0c, Raw Recovery + &Delta;<sub>qual</sub>)</span>
             </li>
             <li>
               <span style="color:var(--accent-cyan); font-weight:700;">Bull (Upside):</span> 
-              <span style="color:#e2e8f0;">min(100.0c, Raw Recovery &times; 1.15)</span>
+              <span style="color:#e2e8f0;">min(105.0c, Raw Recovery + max(0.0c, &Delta;<sub>qual</sub>) + 2.0c)</span>
             </li>
           </ul>
         </div>

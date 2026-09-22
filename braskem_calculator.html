@@ -678,40 +678,52 @@
         <div class="slider-row">
           <div class="slider-box">
             <div class="slider-header">
-              <span class="slider-label">Petrobras Sponsor Friction / Reluctance</span>
-              <span class="slider-val" id="val-qual-petrobras">25%</span>
+              <span class="slider-label">Petrobras Sponsor Action &amp; Governance Delta</span>
+              <span class="slider-val" id="val-qual-petrobras" style="color:var(--accent-rose);">-1.5c</span>
             </div>
-            <input type="range" id="input-qual-petrobras" min="0" max="60" step="5" value="25" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Political governance &amp; refusal to fund Novonor</div>
+            <input type="range" id="input-qual-petrobras" min="-6.0" max="4.0" step="0.5" value="-1.5" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Dilution / refusal to fund Novonor (-6c) vs Sponsor equity injection (+4c)</div>
           </div>
 
           <div class="slider-box">
             <div class="slider-header">
-              <span class="slider-label">Maceió Litigation / Dutch Class Action Tail</span>
-              <span class="slider-val" id="val-qual-maceio">15%</span>
+              <span class="slider-label">Maceió Lawsuit &amp; Dutch Liability Overhang</span>
+              <span class="slider-val" id="val-qual-maceio" style="color:var(--accent-rose);">-1.0c</span>
             </div>
-            <input type="range" id="input-qual-maceio" min="0" max="40" step="5" value="15" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Contingent foreign lawsuit damages</div>
+            <input type="range" id="input-qual-maceio" min="-6.0" max="1.0" step="0.5" value="-1.0" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Rotterdam lawsuit piercing provisions (-6c) vs Federal settlement release (+1c)</div>
           </div>
         </div>
 
         <div class="slider-row">
           <div class="slider-box">
             <div class="slider-header">
-              <span class="slider-label">Judicial RJ In-Court Cramdown Risk</span>
-              <span class="slider-val" id="val-qual-rj">20%</span>
+              <span class="slider-label">Judicial Resolution Pathway (Consensual RE vs RJ)</span>
+              <span class="slider-val" id="val-qual-rj" style="color:var(--accent-rose);">-1.0c</span>
             </div>
-            <input type="range" id="input-qual-rj" min="0" max="50" step="5" value="20" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Risk of breakdown into formal Brazilian bankruptcy</div>
+            <input type="range" id="input-qual-rj" min="-8.0" max="2.0" step="0.5" value="-1.0" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">In-court RJ litigation / DIP priority (-8c) vs Consensual extrajudicial plan (+2c)</div>
           </div>
 
           <div class="slider-box">
             <div class="slider-header">
-              <span class="slider-label">Distressed Liquidity &amp; Execution Discount</span>
-              <span class="slider-val" id="val-qual-discount">15%</span>
+              <span class="slider-label">Secondary Market Liquidity &amp; Mandate Selling</span>
+              <span class="slider-val" id="val-qual-discount" style="color:var(--accent-rose);">-0.5c</span>
             </div>
-            <input type="range" id="input-qual-discount" min="5" max="30" step="5" value="15" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity penalty</div>
+            <input type="range" id="input-qual-discount" min="-5.0" max="0.0" step="0.5" value="-0.5" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">CCC rating forced-selling &amp; dealer inventory discount (-5c to 0c)</div>
+          </div>
+        </div>
+
+        <!-- Net Qualitative Adjustment Metric Strip -->
+        <div style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div style="font-size:11px; font-weight:700; color:#cbd5e1;">
+            Net Qualitative Adjustment: 
+            <span id="lbl-total-qual-delta" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-rose); font-size:12px;">-4.0c</span>
+          </div>
+          <div style="font-size:10px; color:var(--text-muted);">
+            Raw Economic PV: <strong id="lbl-qual-raw-rec" style="color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;">54.0c</strong> 
+            &plus; Qual Delta &rarr; <strong id="lbl-qual-adj-rec" style="color:var(--accent-gold); font-family:'JetBrains Mono',monospace;">50.0c</strong> (2033 Fair)
           </div>
         </div>
 
@@ -730,78 +742,67 @@
         <!-- Interactive Qualitative Assessment Guide Accordion -->
         <div style="margin-top:10px; margin-bottom:10px;">
           <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-            <span>📘 Qualitative Assessment Guide: What do the % Sliders Mean &amp; How Do They Price Risk?</span>
+            <span>📘 Qualitative Assessment Guide: Expressing Risk in Cents of Upside / Discount to Recovery</span>
             <span id="qual-guide-icon">▼ Click to Expand Guide</span>
           </button>
           
           <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
             <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              1. What Does the "%" Mean in Qualitative Assessment?
+              1. Why Express Qualitative Factors in Cents Rather Than Abstract %?
             </div>
             <p style="margin-bottom:8px;">
-              In distressed credit, a company's recovery is never determined purely by accounting EV minus priority debt. 
-              The <strong>Qualitative %</strong> is a <strong>Probability-Weighted Economic Friction Haircut</strong> that quantifies the real-world execution, legal, and political frictions standing between theoretical asset value and actual cash recovery in secondary bond markets:
+              In distressed credit trading, percentage multipliers obscure how much economic value is actually at stake. 
+              Expressing qualitative adjustments directly in <strong>cents per dollar of claim (+upside or -discount)</strong> gives direct attribution:
+              <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-weight:700;">Desk Fair Value = Present Economic Recovery + Indenture Delta + &sum;(&Delta; Cents)</span>.
             </p>
             <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
               <li>
-                <strong style="color:#fff;">Petrobras Sponsor Friction % (0%–60%):</strong> Probability and severity that state-owned Petrobras refuses an equity check or backstop for Novonor's insolvent stake without demanding operational concessions or forcing severe creditor dilution. Higher % assumes zero sponsor equity and an adversarial relationship with bondholders.
+                <strong style="color:#fff;">Petrobras Sponsor Governance (-6.0c to +4.0c):</strong> 
+                Refusal to fund Novonor forces heavy creditor equitization (-6c discount). A direct sponsor equity check or ADNOC buyout provides +4c upside.
               </li>
               <li>
-                <strong style="color:#fff;">Maceió Litigation / Dutch Class Action Tail % (0%–40%):</strong> Probability that foreign (Rotterdam) or Brazilian federal courts pierce the current R$15B settlement provision and award massive unreserved damages (e.g. Dutch litigation claiming R$25B+), creating an unreserved structural liability overhang.
+                <strong style="color:#fff;">Maceió Litigation Overhang (-6.0c to +1.0c):</strong> 
+                Rotterdam class action piercing provisions threatens priority cash sweeps (-6c discount). Final federal judicial release caps liabilities (+1c upside).
               </li>
               <li>
-                <strong style="color:#fff;">Judicial RJ In-Court Cramdown Risk % (0%–50%):</strong> Probability that the consensual Extrajudicial Plan fails to reach the 50%+1 creditor approval threshold by 22 Nov 2026, plunging Braskem into full in-court <em>Recuperação Judicial</em> (RJ) or US Chapter 11, triggering 24+ months of litigation, $15M/mo advisor fee bleed, and DIP priority claims.
+                <strong style="color:#fff;">Judicial Resolution Pathway (-8.0c to +2.0c):</strong> 
+                Collapse into a 24-month in-court RJ burns $15M/mo in advisor fees and adds DIP super-priority (-8c discount). Fast-track consensual plan approval preserves +2c.
               </li>
               <li>
-                <strong style="color:#fff;">Distressed Liquidity &amp; Execution Discount % (5%–30%):</strong> The structural secondary market liquidity penalty. Reflects dealer balance-sheet haircuts, wide bid/ask spreads, and institutional forced-selling mandates (mandates requiring HY/IG funds to dump paper upon CCC/D rating downgrades).
+                <strong style="color:#fff;">Secondary Market Liquidity (-5.0c to 0.0c):</strong> 
+                Mandate-driven forced-selling and wide dealer bid/ask spreads during restructuring impose a -5c to 0c illiquidity haircut.
               </li>
             </ul>
 
             <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              2. How the Math Works: The Unified Recovery &amp; Pricing Band Formula
+              2. How the Math Works: Direct Cents Addition to Present Value
             </div>
             <p style="margin-bottom:6px;">
-              Secondary bond fair value is governed by a closed-loop link between <strong>Exit Yield ($Y_{\text{exit}}$)</strong>, <strong>Extension Tenor ($T_{\text{ext}}$)</strong>, <strong>Reinstated Coupon ($C$)</strong>, <strong>Principal Haircut ($H$)</strong>, <strong>Debt-to-Equity Swap ($E_{\text{swap}}$)</strong>, and <strong>Negotiation Duration ($T_{\text{nego}}$)</strong>:
+              Secondary bond fair value is governed by the closed-loop link between Exit Yield ($Y_{\text{exit}}$), Tenor ($T_{\text{ext}}$), Haircut ($H$), and Negotiation Duration ($T_{\text{nego}}$), adjusted directly by qualitative cents:
             </p>
             <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:8px 10px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#38bdf8; margin-bottom:8px; line-height:1.6;">
               <div><strong>1. Exit Paper Price (P<sub>new</sub>):</strong> P<sub>new</sub> = &sum; [ (C/2) / (1 + Y<sub>exit</sub>/2)<sup>t</sup> ] + 100 / (1 + Y<sub>exit</sub>/2)<sup>2T<sub>ext</sub></sup></div>
               <div><strong>2. Standstill Time Discount (DF<sub>nego</sub>):</strong> DF<sub>nego</sub> = 1 / (1 + Y<sub>exit</sub>/2)<sup>2 &times; (T<sub>nego</sub> / 12)</sup></div>
               <div><strong>3. Present Economic Recovery:</strong> Rec<sub>PV</sub> = [ (1 - H) &times; (1 - E<sub>swap</sub>) &times; P<sub>new</sub> + (1 - H) &times; E<sub>swap</sub> &times; &mu;<sub>eq</sub> ] &times; DF<sub>nego</sub></div>
-              <div><strong>4. Composite Qualitative Friction (&Phi;):</strong> &Phi; = (Petrobras &times; 0.35) + (Maceió &times; 0.25) + (RJ Risk &times; 0.25) + (Liquidity &times; 0.15)</div>
-            </div>
-            <p style="margin-bottom:8px;">
-              This composite friction factor and tranche-specific indenture terms drive the three pricing band columns in the table below:
-            </p>
-            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; margin-bottom:10px;">
-              <div style="background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3); padding:6px; border-radius:4px;">
-                <strong style="color:var(--accent-rose);">Bear (Floor):</strong><br>
-                (Rec<sub>PV</sub> + &Delta;<sub>tranche</sub>) &times; 0.55 &times; (1 - &Phi;)
-              </div>
-              <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:6px; border-radius:4px;">
-                <strong style="color:var(--accent-emerald);">Base (Fair):</strong><br>
-                (Rec<sub>PV</sub> + &Delta;<sub>tranche</sub>) &times; (1 - &Phi; &times; 0.35)
-              </div>
-              <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:6px; border-radius:4px;">
-                <strong style="color:var(--accent-cyan);">Bull (Upside):</strong><br>
-                min(100c, (Rec<sub>emergence</sub> + &Delta;<sub>tranche</sub>) &times; 1.25)
-              </div>
+              <div><strong>4. Net Qualitative Delta (&Delta;<sub>qual</sub>):</strong> &Delta;<sub>qual</sub> = &Delta;<sub>Petrobras</sub> + &Delta;<sub>Maceió</sub> + &Delta;<sub>RJ</sub> + &Delta;<sub>Liquidity</sub> (Base = -4.0c)</div>
+              <div><strong>5. Desk Fair Value:</strong> Fair Value = Rec<sub>PV</sub> + &Delta;<sub>tranche</sub> + &Delta;<sub>qual</sub> (Base: 54.0c + 0c - 4.0c = 50.0c)</div>
             </div>
 
             <div style="font-weight:700; color:var(--accent-emerald); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              3. What Gets You Bear, Base, and Bull in Every Scenario?
+              3. What Concrete Catalysts Drive Bear, Base, and Bull?
             </div>
             <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
               <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-rose);">🔴 What Gets You Bear (17c–22c Recovery):</strong>
-                Chemical spread collapse (&lt;$180/t PE); $800M EBITDA at 3.5x fire-sale multiple ($2.8B EV); Petrobras blocks liquidity lines and refuses to fund Novonor; Maceió claims expand past R$25B in foreign courts; Extrajudicial talks fail; full in-court RJ liquidation wipes out Subordinated Hybrids (0c) and leaves &lt;20c for Senior notes.
+                <strong style="color:var(--accent-rose);">🔴 Bear Case (17c–22c Recovery):</strong>
+                Chemical spreads collapse (&lt;$180/t PE); $800M EBITDA at 3.5x fire-sale multiple ($2.8B EV); Petrobras blocks credit lines; Maceió damages exceed R$25B in Rotterdam court; consensual talks collapse into hostile 24M in-court RJ (-16c to -22c qualitative discount). Subordinated 2081 Hybrid is wiped out (0c).
               </div>
               <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-gold);">🟡 What Gets You Base (62c–66c Recovery):</strong>
-                Normalized mid-cycle spreads ($350/t PE); $1,400M EBITDA at 5.0x multiple ($7.0B EV); Petrobras maintains R$2.35B commercial facility; Maceió liabilities capped at R$15B provisions; consensual Extrajudicial Plan approved (50%+1) with a 35% principal haircut + 30% debt-for-equity swap (3.2x net leverage). Senior paper discounts to 87.7c at 9.75% exit yield for 62c net economic recovery.
+                <strong style="color:var(--accent-gold);">🟡 Base Case (49c–54c Recovery):</strong>
+                Mid-cycle EBITDA ($1,400M) at 5.0x EV ($7.0B); Petrobras maintains commercial feedstock line; Maceió settled within provisions; consensual Extrajudicial Plan confirmed with 35% haircut + 30% equitization; exit debt issued at 87.7c for 54.0c present recovery minus -4.0c qualitative frictions = 50.0c fair value.
               </div>
               <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-cyan);">🟢 What Gets You Bull (95c–100c Par):</strong>
-                Global petrochemical supply squeeze (&gt;$600/t PE spreads); $2,100M EBITDA at 6.0x multiple ($12.6B EV); Petrobras / ADNOC consortium executes full equity buyout of Novonor with $2.5B cash injection; final federal judicial liability cap on Maceió; unimpaired maturity extension or cash par tender offer.
+                <strong style="color:var(--accent-cyan);">🟢 Bull Case (95c–100c Par):</strong>
+                Petrochemical spread recovery (&gt;$600/t PE); $2,100M EBITDA at 6.0x multiple ($12.6B EV); Petrobras / ADNOC consortium buys out Novonor with $2.5B cash equity (+4c qualitative upside); unimpaired debt reinstatement at 100c par.
               </div>
             </div>
             
@@ -1126,10 +1127,10 @@
         debtEquity: 30,
         hybridHaircut: 85,
         maceioNpv: 600,
-        qualPetrobras: 25,
-        qualMaceio: 15,
-        qualRj: 20,
-        qualDiscount: 15,
+        qualPetrobras: -1.5,
+        qualMaceio: -1.0,
+        qualRj: -1.0,
+        qualDiscount: -0.5,
         exitTenor: 8,
         exitCoupon: 7.5,
         exitYield: 9.75,
@@ -1144,10 +1145,10 @@
         debtEquity: 40,
         hybridHaircut: 95,
         maceioNpv: 750,
-        qualPetrobras: 35,
-        qualMaceio: 25,
-        qualRj: 30,
-        qualDiscount: 20,
+        qualPetrobras: -3.0,
+        qualMaceio: -2.0,
+        qualRj: -3.0,
+        qualDiscount: -2.0,
         exitTenor: 8,
         exitCoupon: 6.5,
         exitYield: 11.50,
@@ -1162,10 +1163,10 @@
         debtEquity: 20,
         hybridHaircut: 60,
         maceioNpv: 500,
-        qualPetrobras: 10,
-        qualMaceio: 10,
-        qualRj: 10,
-        qualDiscount: 10,
+        qualPetrobras: 3.0,
+        qualMaceio: 0.5,
+        qualRj: 1.5,
+        qualDiscount: 0.0,
         exitTenor: 6,
         exitCoupon: 8.5,
         exitYield: 8.25,
@@ -1180,10 +1181,10 @@
         debtEquity: 50,
         hybridHaircut: 100,
         maceioNpv: 900,
-        qualPetrobras: 50,
-        qualMaceio: 35,
-        qualRj: 45,
-        qualDiscount: 25,
+        qualPetrobras: -6.0,
+        qualMaceio: -4.0,
+        qualRj: -8.0,
+        qualDiscount: -4.0,
         exitTenor: 4,
         exitCoupon: 5.0,
         exitYield: 14.00,
@@ -1198,10 +1199,10 @@
         debtEquity: 45,
         hybridHaircut: 100,
         maceioNpv: 800,
-        qualPetrobras: 45,
-        qualMaceio: 30,
-        qualRj: 50,
-        qualDiscount: 25,
+        qualPetrobras: -4.5,
+        qualMaceio: -3.0,
+        qualRj: -6.0,
+        qualDiscount: -3.0,
         exitTenor: 10,
         exitCoupon: 6.0,
         exitYield: 13.00,
@@ -1329,10 +1330,11 @@
       const hybridHaircutPct = parseFloat(document.getElementById("input-hybrid-haircut").value) / 100.0;
       const maceioNpv = parseFloat(document.getElementById("input-maceio-npv").value);
 
-      const qualPetrobras = parseFloat(document.getElementById("input-qual-petrobras").value) / 100.0;
-      const qualMaceio = parseFloat(document.getElementById("input-qual-maceio").value) / 100.0;
-      const qualRj = parseFloat(document.getElementById("input-qual-rj").value) / 100.0;
-      const qualDiscount = parseFloat(document.getElementById("input-qual-discount").value) / 100.0;
+      const qualPetrobrasCents = parseFloat(document.getElementById("input-qual-petrobras").value) || 0;
+      const qualMaceioCents = parseFloat(document.getElementById("input-qual-maceio").value) || 0;
+      const qualRjCents = parseFloat(document.getElementById("input-qual-rj").value) || 0;
+      const qualDiscountCents = parseFloat(document.getElementById("input-qual-discount").value) || 0;
+      const totalQualDeltaCents = qualPetrobrasCents + qualMaceioCents + qualRjCents + qualDiscountCents;
 
       const exitTenor = parseFloat(document.getElementById("input-exit-tenor")?.value || extensionYears);
       const exitCoupon = parseFloat(document.getElementById("input-exit-coupon")?.value || (newCouponPct * 100.0));
@@ -1348,10 +1350,17 @@
       document.getElementById("val-hybrid-haircut").textContent = `${(hybridHaircutPct * 100).toFixed(0)}%`;
       document.getElementById("val-maceio-npv").textContent = `$${maceioNpv.toFixed(0)}M`;
 
-      document.getElementById("val-qual-petrobras").textContent = `${(qualPetrobras * 100).toFixed(0)}%`;
-      document.getElementById("val-qual-maceio").textContent = `${(qualMaceio * 100).toFixed(0)}%`;
-      document.getElementById("val-qual-rj").textContent = `${(qualRj * 100).toFixed(0)}%`;
-      document.getElementById("val-qual-discount").textContent = `${(qualDiscount * 100).toFixed(0)}%`;
+      function formatCentsBadge(id, val) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const sign = val > 0 ? "+" : "";
+        el.textContent = `${sign}${val.toFixed(1)}c`;
+        el.style.color = val > 0 ? "var(--accent-emerald)" : (val < 0 ? "var(--accent-rose)" : "var(--text-muted)");
+      }
+      formatCentsBadge("val-qual-petrobras", qualPetrobrasCents);
+      formatCentsBadge("val-qual-maceio", qualMaceioCents);
+      formatCentsBadge("val-qual-rj", qualRjCents);
+      formatCentsBadge("val-qual-discount", qualDiscountCents);
 
       if (document.getElementById("val-exit-tenor")) document.getElementById("val-exit-tenor").textContent = `${exitTenor} Years`;
       if (document.getElementById("val-exit-coupon")) document.getElementById("val-exit-coupon").textContent = `${exitCoupon.toFixed(2)}%`;
@@ -1511,9 +1520,7 @@
         document.getElementById("strip-true-recovery").textContent = `${seniorPresentEconRecovery.toFixed(1)}c PV`;
       }
 
-      // 7. Render Card 4: Pricing in Qualitative Friction & Tranche Indentures
-      const qualitativeFrictionFactor = (qualPetrobras * 0.35) + (qualMaceio * 0.25) + (qualRj * 0.25) + (qualDiscount * 0.15);
-
+      // 7. Render Card 4: Direct Cents Qualitative Adjustment & Tranche Indentures
       const TRANCHE_DELTAS = {
         b2030: { delta: +2.0, desc: "Shorter 2030 legal maturity (4Y); holds maximum holdout & amendment leverage" },
         b2033: { delta: 0.0, desc: "Liquid institutional benchmark; reference trading note" },
@@ -1523,6 +1530,15 @@
         b2081: { delta: 0.0, desc: "Contractually subordinated hybrid; zero debt reinstatement under APR" }
       };
 
+      const elTotalQual = document.getElementById("lbl-total-qual-delta");
+      if (elTotalQual) {
+        const sign = totalQualDeltaCents > 0 ? "+" : "";
+        elTotalQual.textContent = `${sign}${totalQualDeltaCents.toFixed(1)}c`;
+        elTotalQual.style.color = totalQualDeltaCents > 0 ? "var(--accent-emerald)" : (totalQualDeltaCents < 0 ? "var(--accent-rose)" : "var(--text-muted)");
+      }
+      if (document.getElementById("lbl-qual-raw-rec")) document.getElementById("lbl-qual-raw-rec").textContent = `${seniorPresentEconRecovery.toFixed(1)}c`;
+      if (document.getElementById("lbl-qual-adj-rec")) document.getElementById("lbl-qual-adj-rec").textContent = `${Math.max(10.0, seniorPresentEconRecovery + totalQualDeltaCents).toFixed(1)}c`;
+
       const tbodyBand = document.querySelector("#pricing-band-table tbody");
       tbodyBand.innerHTML = TRANCHES.map(t => {
         let baseRecovery = 0;
@@ -1531,21 +1547,28 @@
         const delta = TRANCHE_DELTAS[t.id]?.delta || 0;
 
         if (t.seniority === "senior") {
-          const tranchePresentRec = Math.max(15.0, seniorPresentEconRecovery + delta);
-          const trancheEmergenceRec = Math.max(15.0, seniorEmergenceVal + delta);
+          const tranchePresentRec = Math.max(10.0, seniorPresentEconRecovery + delta);
+          const trancheEmergenceRec = Math.max(10.0, seniorEmergenceVal + delta);
 
-          baseRecovery = tranchePresentRec * (1.0 - (qualitativeFrictionFactor * 0.35));
-          bearRecovery = Math.max(16.0, tranchePresentRec * 0.55 * (1.0 - qualitativeFrictionFactor));
-          bullRecovery = Math.min(100.0, trancheEmergenceRec * 1.25);
+          // Direct Cents Adjustment to Fair Value:
+          baseRecovery = Math.max(10.0, tranchePresentRec + totalQualDeltaCents);
+          
+          // Bear Floor reflects severe macro trough plus negative qualitative stress:
+          const bearStressDelta = Math.min(-6.0, totalQualDeltaCents * 1.5);
+          bearRecovery = Math.max(16.0, (tranchePresentRec * 0.45) + bearStressDelta);
+          
+          // Bull Upside reflects super-cycle expansion plus any positive sponsor upside:
+          const bullUpsideDelta = Math.max(0.0, totalQualDeltaCents * 1.2);
+          bullRecovery = Math.min(100.0, trancheEmergenceRec + bullUpsideDelta + 20.0);
         } else {
           // Hybrid 2081
           const hybridWarrantFace = 100.0 * (1.0 - hybridHaircutPct);
           const hybridEmergenceVal = hybridWarrantFace * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35);
           const hybridPresentVal = hybridEmergenceVal * timeDiscountFactor;
 
-          baseRecovery = hybridPresentVal * (1.0 - (qualitativeFrictionFactor * 0.65));
+          baseRecovery = Math.max(0.0, hybridPresentVal + (totalQualDeltaCents * 0.4));
           bearRecovery = 0.0;
-          bullRecovery = Math.min(50.0, hybridEmergenceVal * 2.0);
+          bullRecovery = Math.min(50.0, hybridEmergenceVal * 2.0 + Math.max(0.0, totalQualDeltaCents * 2.0));
         }
 
         const deltaBase = baseRecovery - t.marketPx;
@@ -1674,28 +1697,28 @@
         { name: "Priority PPE Secured Bank Debt", tier: "Senior Secured", claim: 1100.0, marketPx: 100.0, allocVal: 1100.0, cleanPx: 100.0, exitPx: 100.0, isPriority: true },
         { name: "BRASKM 4.500% 2030 Senior Notes", tier: "Senior Unsecured", claim: 1450.0, marketPx: 48.60, 
           cleanPx: seniorPresentEconRecovery + 2.0, 
-          exitPx: (seniorPresentEconRecovery + 2.0) * (1.0 - (qualitativeFrictionFactor * 0.35)),
-          allocVal: 1450.0 * (((seniorPresentEconRecovery + 2.0) * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+          exitPx: Math.max(10.0, seniorPresentEconRecovery + 2.0 + totalQualDeltaCents),
+          allocVal: 1450.0 * (Math.max(10.0, seniorPresentEconRecovery + 2.0 + totalQualDeltaCents) / 100.0) },
         { name: "BRASKM 7.250% 2033 Senior Notes", tier: "Senior Unsecured", claim: 1200.0, marketPx: 56.30, 
           cleanPx: seniorPresentEconRecovery, 
-          exitPx: seniorPresentEconRecovery * (1.0 - (qualitativeFrictionFactor * 0.35)),
-          allocVal: 1200.0 * ((seniorPresentEconRecovery * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+          exitPx: Math.max(10.0, seniorPresentEconRecovery + totalQualDeltaCents),
+          allocVal: 1200.0 * (Math.max(10.0, seniorPresentEconRecovery + totalQualDeltaCents) / 100.0) },
         { name: "BRASKM 5.875% 2050 Senior Notes", tier: "Senior Unsecured", claim: 1420.0, marketPx: 44.70, 
           cleanPx: seniorPresentEconRecovery - 2.5, 
-          exitPx: (seniorPresentEconRecovery - 2.5) * (1.0 - (qualitativeFrictionFactor * 0.35)),
-          allocVal: 1420.0 * (((seniorPresentEconRecovery - 2.5) * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+          exitPx: Math.max(10.0, seniorPresentEconRecovery - 2.5 + totalQualDeltaCents),
+          allocVal: 1420.0 * (Math.max(10.0, seniorPresentEconRecovery - 2.5 + totalQualDeltaCents) / 100.0) },
         { name: "BRASKM 8.000% 2034 Senior Notes", tier: "Senior Unsecured", claim: 980.0, marketPx: 57.50, 
           cleanPx: seniorPresentEconRecovery + 1.5, 
-          exitPx: (seniorPresentEconRecovery + 1.5) * (1.0 - (qualitativeFrictionFactor * 0.35)),
-          allocVal: 980.0 * (((seniorPresentEconRecovery + 1.5) * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+          exitPx: Math.max(10.0, seniorPresentEconRecovery + 1.5 + totalQualDeltaCents),
+          allocVal: 980.0 * (Math.max(10.0, seniorPresentEconRecovery + 1.5 + totalQualDeltaCents) / 100.0) },
         { name: "Domestic Brazilian Debentures (CDI)", tier: "Senior Unsecured", claim: 1400.0, marketPx: 52.00, 
           cleanPx: seniorPresentEconRecovery - 0.5, 
-          exitPx: (seniorPresentEconRecovery - 0.5) * (1.0 - (qualitativeFrictionFactor * 0.35)),
-          allocVal: 1400.0 * (((seniorPresentEconRecovery - 0.5) * (1.0 - (qualitativeFrictionFactor * 0.35))) / 100.0) },
+          exitPx: Math.max(10.0, seniorPresentEconRecovery - 0.5 + totalQualDeltaCents),
+          allocVal: 1400.0 * (Math.max(10.0, seniorPresentEconRecovery - 0.5 + totalQualDeltaCents) / 100.0) },
         { name: "BRASKM 8.50% / 12.00% 2081 Hybrid", tier: "Junior Subordinated", claim: 1000.0, marketPx: 31.80, 
           cleanPx: (100.0 * (1.0 - hybridHaircutPct) * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35)) * timeDiscountFactor,
-          exitPx: ((100.0 * (1.0 - hybridHaircutPct) * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35)) * timeDiscountFactor) * (1.0 - (qualitativeFrictionFactor * 0.65)),
-          allocVal: 1000.0 * ((((100.0 * (1.0 - hybridHaircutPct) * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35)) * timeDiscountFactor) * (1.0 - (qualitativeFrictionFactor * 0.65))) / 100.0),
+          exitPx: Math.max(0.0, ((100.0 * (1.0 - hybridHaircutPct) * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35)) * timeDiscountFactor) + (totalQualDeltaCents * 1.5)),
+          allocVal: 1000.0 * (Math.max(0.0, ((100.0 * (1.0 - hybridHaircutPct) * (rawSeniorRecoveryCents > 45 ? 1.0 : 0.35)) * timeDiscountFactor) + (totalQualDeltaCents * 1.5)) / 100.0),
           isHybrid: true }
       ];
 
