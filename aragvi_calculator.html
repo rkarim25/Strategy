@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aragvi Holding (Trans-Oil) — Refinancing & Restructuring Valuation Sandbox | CEMBI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #060913;
+      --bg-card: #0b1120;
+      --bg-card-sub: #0f172a;
+      --bg-hover: #172237;
+      --border-color: #1e293b;
+      --border-highlight: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --accent-gold: #fbbf24;
+      --accent-purple: #c084fc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 0;
+      line-height: 1.4;
+      font-size: 11.5px;
+      overflow-x: hidden;
+    }
+
+    /* Top Sticky Header */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 17, 32, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-ticker {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--accent-gold);
+    }
+
+    .nav-btn {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 4px 9px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 10.5px;
+      font-weight: 600;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    .nav-btn.gold {
+      background: rgba(251, 191, 36, 0.12);
+      border-color: rgba(251, 191, 36, 0.4);
+      color: var(--accent-gold);
+    }
+
+    .kpi-strip {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .kpi-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .kpi-item .lbl {
+      font-size: 9px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .kpi-item .val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .status-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-sustainable {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .status-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .status-distressed {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent-cyan);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 8px;
+    }
+
+    .card-title .sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    /* Slider Containers */
+    .slider-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .slider-box {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .slider-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+
+    .slider-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 5px;
+      border-radius: 3px;
+      background: #1e293b;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      cursor: pointer;
+      border: 2px solid #0f172a;
+      box-shadow: 0 0 5px rgba(56, 189, 248, 0.6);
+    }
+
+    /* Tables */
+    .asset-table, .band-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5px;
+    }
+
+    .asset-table th, .band-table th {
+      text-align: left;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 6px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .asset-table td, .band-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      vertical-align: middle;
+    }
+
+    .num-input {
+      background: #090d16;
+      border: 1px solid #1e293b;
+      color: #fff;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      width: 70px;
+      text-align: right;
+    }
+
+    /* Preset Buttons */
+    .preset-pill {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      color: #94a3b8;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .preset-pill:hover, .preset-pill.active {
+      border-color: var(--accent-cyan);
+      color: #fff;
+      background: rgba(56, 189, 248, 0.12);
+    }
+
+    /* Meters */
+    .meter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .meter-card {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .meter-title {
+      font-size: 9px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .meter-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 2px;
+    }
+
+    .meter-sub {
+      font-size: 9px;
+      color: var(--text-dim);
+      margin-top: 1px;
+    }
+
+    .callout-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 10.5px;
+      line-height: 1.5;
+    }
+
+    .pricing-band-container {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-top: 8px;
+    }
+
+    .pricing-band-track {
+      position: relative;
+      height: 8px;
+      background: linear-gradient(90deg, #f43f5e 0%, #f59e0b 40%, #10b981 70%, #38bdf8 100%);
+      border-radius: 4px;
+      margin: 18px 0 10px;
+    }
+
+    .pricing-marker {
+      position: absolute;
+      top: -6px;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: #fff;
+    }
+
+    .pricing-marker.distressed { border-color: var(--accent-rose); color: var(--accent-rose); }
+    .pricing-marker.market { border-color: #fff; background: #fff; color: #000; }
+    .pricing-marker.fair-value { border-color: var(--accent-emerald); color: var(--accent-emerald); }
+    .pricing-marker.asset-floor { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+    .pricing-marker.target { border-color: var(--accent-purple); color: var(--accent-purple); }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY TOP COMMAND BAR -->
+  <div class="sticky-header">
+    <div class="brand-group">
+      <div class="brand-title">
+        <span>Aragvi Holding / Trans-Oil</span>
+        <span class="badge-ticker">ARAGVI</span>
+      </div>
+      <a href="aragvi_background.html" class="nav-btn">📖 Asset Intelligence Subpage</a>
+      <a href="aragvi_background.html#creditor-violence" class="nav-btn" style="color:var(--accent-rose); border-color:rgba(244,63,94,0.4);">⚔️ Creditor Violence vs Banks</a>
+      <a href="company.html?id=aragvi" class="nav-btn">🏛️ Master Dossier</a>
+      <a href="index.html" class="nav-btn">← Screener</a>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi-item">
+        <div class="lbl">Methodology 1 (Asset PV)</div>
+        <div class="val" id="top-stream1-val" style="color:var(--accent-cyan);">100.0c Par</div>
+      </div>
+      <div class="kpi-item">
+        <div class="lbl">Methodology 2 (4Y A&amp;E PV)</div>
+        <div class="val" id="top-stream2-val" style="color:var(--accent-emerald);">96.8c PV</div>
+      </div>
+      <div class="kpi-item">
+        <div class="lbl">Secondary Quote</div>
+        <div class="val" id="top-mkt-px" style="color:#fff;">89.0c</div>
+      </div>
+      <div class="kpi-item">
+        <div class="lbl">Pro-Forma Leverage</div>
+        <div class="val" id="top-leverage">2.63x</div>
+      </div>
+      <div class="kpi-item">
+        <div class="lbl">SOTP Enterprise Value</div>
+        <div class="val" id="top-sotp-ev">$1,033<span>M</span></div>
+      </div>
+      <div id="top-status-badge" class="status-badge status-sustainable">
+        ✓ Sustainable
+      </div>
+    </div>
+  </div>
+
+  <div class="workspace" style="max-width:1600px; margin:0 auto; padding:16px;">
+    
+  <!-- EXECUTIVE VALUATION BRIDGE & SECONDARY BOND PRICING BAND -->
+  <div class="card" style="border-color:#334155; box-shadow:0 4px 20px rgba(0,0,0,0.5); margin-bottom:16px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px; border-bottom:1px solid #1e293b; padding-bottom:8px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:13px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
+          ⚖️ The Executive Valuation Bridge &amp; Secondary Bond Pricing Band
+        </span>
+        <span style="font-size:9.5px; background:rgba(192, 132, 252, 0.15); color:var(--accent-purple); border:1px solid rgba(192, 132, 252, 0.3); padding:2px 7px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-weight:700;">
+          QUALITATIVE BRIDGE &bull; BUY/SELL DECISION DESK
+        </span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:10.5px; color:#94a3b8;">Trading Verdict:</span>
+        <span id="reconcile-action-badge" style="font-size:11px; font-weight:800; padding:4px 10px; border-radius:4px; font-family:'JetBrains Mono',monospace; background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.4);">
+          STRONG BUY / CONVICTION
+        </span>
+      </div>
+    </div>
+
+    <!-- 3-Column Summary: Methodology 1, Qualitative Bridge Band, Methodology 2 -->
+    <div style="display:grid; grid-template-columns: 1fr 1.3fr 1fr; gap:12px; margin-bottom:14px;">
+      
+      <!-- METHODOLOGY 1 CARD -->
+      <div style="background:#060913; border:1px solid rgba(56,189,248,0.35); border-radius:6px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+          <div>
+            <span style="font-size:9px; font-weight:800; color:var(--accent-cyan); background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+              METHODOLOGY 1 &bull; ASSET-BACKED
+            </span>
+            <div style="font-size:12px; font-weight:800; color:#fff; margin-top:4px;">Fundamental EV Recovery</div>
+            <div style="font-size:9.5px; color:#94a3b8;">Giurgiulești Port &amp; Crushing Fleet Asset Coverage</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--accent-cyan); line-height:1;" id="stream1-val">100.0c Par</div>
+            <span style="font-size:9px; color:#94a3b8;">Asset Coverage: <strong id="s1-nominal-rec" style="color:#34d399;">219.0%</strong></span>
+          </div>
+        </div>
+        <div style="font-size:10px; color:#cbd5e1; line-height:1.5; margin-top:8px;">
+          <div>&bull; <strong>SOTP EV:</strong> <span id="s1-senior-pool">$870M</span> Net Distributable Pool</div>
+          <div>&bull; <strong>EBITDA &bull; Multiple:</strong> <span id="s1-ebitda">$180M</span> &bull; <span id="s1-mult">5.74x</span></div>
+          <div>&bull; <strong>Priority Carve-Outs:</strong> $268M PXF Trade Lines &amp; DFI Mortgages</div>
+          <div>&bull; <strong>Standstill Bleed:</strong> <span id="s1-duration">6M</span> @ <span id="s1-yield">12.50%</span> = <span id="s1-time-factor" style="color:#38bdf8; font-weight:700;">Performing (0.0c drag)</span></div>
+          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#94a3b8; font-size:9.5px;">
+            <strong>Anchor:</strong> What are the port terminal and crushing plants worth if liquidated under APR?
+          </div>
+        </div>
+      </div>
+
+      <!-- THE QUALITATIVE BRIDGE & SECONDARY PRICING BAND -->
+      <div style="background:#060913; border:1px solid rgba(192,132,252,0.35); border-radius:6px; padding:12px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-size:9px; font-weight:800; color:var(--accent-purple); background:rgba(192,132,252,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+              THE QUALITATIVE BRIDGE
+            </span>
+            <span style="font-size:10px; color:#94a3b8; font-family:'JetBrains Mono',monospace;">Secondary Quote: <strong style="color:#fff;" id="reconcile-mkt-px">89.0c</strong></span>
+          </div>
+          <div style="font-size:10px; color:#cbd5e1; line-height:1.4; margin-bottom:8px;">
+            Trade bank liquidity, Black Sea transit risks, Swiss holding company ring-fencing, and port strategic expansion bridge Par Asset Coverage to Secondary Market Realization:
+          </div>
+
+          <!-- Pricing Band Track -->
+          <div class="pricing-band-container">
+            <div style="display:flex; justify-content:space-between; font-size:9.5px; color:#94a3b8; margin-bottom:4px; font-family:'JetBrains Mono',monospace;">
+              <span>Bear Floor: <strong id="pricing-band-distressed" style="color:var(--accent-rose);">68.0c</strong></span>
+              <span>Secondary Mkt: <strong id="pricing-band-mkt" style="color:#fff;">89.0c</strong></span>
+              <span>Fair Value: <strong id="pricing-band-fv" style="color:var(--accent-emerald);">97.0c</strong></span>
+              <span>Asset Floor: <strong id="pricing-band-asset" style="color:var(--accent-cyan);">100.0c</strong></span>
+              <span>Bull Target: <strong id="pricing-band-target" style="color:var(--accent-purple);">103.5c</strong></span>
+            </div>
+            <div class="pricing-band-track">
+              <div class="pricing-marker distressed" style="left:12%;">68c</div>
+              <div class="pricing-marker market" style="left:52%;">89c</div>
+              <div class="pricing-marker fair-value" style="left:76%;">97c</div>
+              <div class="pricing-marker asset-floor" style="left:88%;">100c</div>
+              <div class="pricing-marker target" style="left:98%;">104c</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; font-size:10px; margin-top:6px; background:rgba(255,255,255,0.02); padding:6px 10px; border-radius:4px;">
+          <div>
+            <span style="color:#94a3b8;">Upside to Fair Value:</span>
+            <strong id="lbl-upside-fv" style="color:var(--accent-emerald); margin-left:4px;">+8.0c (+9.0%)</strong>
+          </div>
+          <div>
+            <span style="color:#94a3b8;">Downside Protection (Asset Floor):</span>
+            <strong id="lbl-upside-asset" style="color:var(--accent-cyan); margin-left:4px;">+11.0c (+12.4%)</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- METHODOLOGY 2 CARD -->
+      <div style="background:#060913; border:1px solid rgba(16,185,129,0.35); border-radius:6px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+          <div>
+            <span style="font-size:9px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+              METHODOLOGY 2 &bull; EXCHANGE TERMS
+            </span>
+            <div style="font-size:12px; font-weight:800; color:#fff; margin-top:4px;">Market-Based Instrument Pricing</div>
+            <div style="font-size:9.5px; color:#94a3b8;">4-Year Amend &amp; Extend (2030) Valuation</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--accent-emerald); line-height:1;" id="stream2-val">96.8c PV</div>
+            <span style="font-size:9px; color:#94a3b8;">Present Value (PV)</span>
+          </div>
+        </div>
+        <div style="font-size:10px; color:#cbd5e1; line-height:1.5; margin-top:8px;">
+          <div>&bull; <strong>Terms:</strong> 0% Cut &bull; <span id="s2-tenor">4Y</span> Ext &bull; <span id="s2-coupon">12.50%</span> Cpn (+35 bps step-up)</div>
+          <div>&bull; <strong>Leverage &amp; Yield:</strong> <span id="s2-leverage">2.63x</span> &rarr; <span id="s2-exit-yield" style="color:#fbbf24; font-weight:700;">12.50%</span> Exit Yield</div>
+          <div>&bull; <strong>Sovereign Spread:</strong> CEEMEA Single-B Benchmark + <span id="s2-spread" style="color:#38bdf8; font-weight:700;">+580 bps</span></div>
+          <div>&bull; <strong>Extended Note PV:</strong> <span id="s2-paper-px" style="color:#fbbf24; font-weight:700;">96.8c</span> &bull; Holding: <span id="s2-true-rec" style="color:var(--accent-emerald); font-weight:700;">96.8c</span></div>
+          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#94a3b8; font-size:9.5px;">
+            <strong>Anchor:</strong> What will secondary traders pay for the extended paper on Day 1?
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Live Execution Directive Banner -->
+    <div style="background:rgba(15,23,42,0.9); border:1px solid #1e293b; border-radius:6px; padding:8px 14px; font-size:11px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px; font-weight:700;">Desk Action Directive:</span>
+        <span id="reconcile-signal-text" style="font-weight:700; color:var(--accent-emerald); margin-left:6px;">
+          STRONG BUY / CONVICTION &bull; +8.0c Discount + 12.15% Carry &bull; 219% Asset Backing
+        </span>
+      </div>
+      <div>
+        <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px;">Reconciliation Gap (Method 2 - Method 1):</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#fbbf24; font-size:12px; margin-left:4px;" id="reconcile-gap">-3.2c</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PART 1: METHODOLOGY 1 — FUNDAMENTAL EV RECOVERY ENGINE (ASSET-BACKED)    -->
+  <!-- ========================================================================= -->
+  <div style="border-left: 4px solid var(--accent-cyan); padding-left: 6px; margin-bottom: 20px;">
+    <div style="font-size: 13px; font-weight: 800; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+      🏢 Methodology 1: Fundamental EV Recovery Engine (Asset-Backed)
+    </div>
+
+    <!-- 1. SOTP ASSET PERIMETER & MULTIPLES (FIRST ON TOP!) -->
+    <div class="card">
+      <div class="card-title">
+        <span>1. Asset Perimeter Selection &amp; Sum-of-the-Parts (SOTP) Multiples</span>
+        <span class="sub"><a href="aragvi_background.html" style="color:var(--accent-cyan); text-decoration:none;">[View Asset Footprint &amp; Port Concession Blueprint →]</a></span>
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table class="asset-table" id="asset-table">
+          <thead>
+            <tr>
+              <th style="width:30px; text-align:center;">Inc</th>
+              <th>Operational Asset Cluster</th>
+              <th>Capacity / Concession Type</th>
+              <th style="text-align:right;">EBITDA ($M)</th>
+              <th style="text-align:right;">EV Multiple</th>
+              <th style="text-align:right;">Implied EV</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Populated dynamically via JS -->
+          </tbody>
+          <tfoot>
+            <tr style="font-weight:700; border-top:1px solid #334155;">
+              <td colspan="3" style="text-align:right; color:#fff;">Total Selected SOTP Enterprise Value:</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);" id="sotp-total-ebitda">$180.0M</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#94a3b8;" id="sotp-blended-mult">5.74x</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-size:12px;" id="sotp-total-ev">$1,033.0M</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2. STANDSTILL TIMELINE & CAPITAL INJECTION DIALS (FOLLOWS SOTP DIRECTLY!) -->
+    <div class="card" style="margin-bottom:14px; border:1px solid var(--border-color);">
+      <div class="card-title">
+        <span>⏱️ Standstill Timeline &amp; Sponsor Equity Injection Dials</span>
+        <span class="sub">Macro restructuring parameters determining trade finance burn and equity support</span>
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Standstill &amp; Refinancing Negotiation Duration</span>
+            <span class="slider-val" id="val-duration">6 Months</span>
+          </div>
+          <input type="range" id="input-duration" min="1" max="24" step="1" value="6" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+            Restructuring advisory &amp; trade finance fee burn: <strong style="color:#f87171;" id="lbl-advisor-drain">-$15.0M</strong>
+          </div>
+        </div>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Sponsor Equity Injection / Strategic Western Partner</span>
+            <span class="slider-val" id="val-sponsor-equity">$0M</span>
+          </div>
+          <input type="range" id="input-sponsor-equity" min="0" max="150" step="10" value="0" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+            Fresh equity check from Vaja Jhashi or strategic Western agribusiness partner
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. CAPITAL STRUCTURE WATERFALL TO BONDHOLDERS (FOLLOWS DIRECTLY!) -->
+    <div class="card" style="margin-top:14px;">
+      <div class="card-title">
+        <span style="display:flex; align-items:center; gap:8px;">
+          <span>🌊</span> 3. Step-by-Step Priority Recovery Waterfall &amp; Value Available to Bondholders
+        </span>
+        <span class="sub">Absolute Priority Rule (APR) &bull; Dynamic Capital Structure Value Allocation</span>
+      </div>
+
+      <!-- Visual Stacked Capital Structure Allocation Bar -->
+      <div style="margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
+          <span>Enterprise Value Allocation by Priority Tier:</span>
+          <span id="wf-bar-total-label" style="color:#fff; font-family:'JetBrains Mono',monospace;">Total Distributable Value: $1,153M</span>
+        </div>
+        <div style="height:26px; border-radius:6px; overflow:hidden; display:flex; background:#0f172a; border:1px solid #1e293b; box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);" id="wf-stacked-bar">
+          <!-- Filled dynamically -->
+        </div>
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:8px; font-size:10.5px;">
+          <div style="display:flex; align-items:center; gap:5px;">
+            <span style="width:10px; height:10px; background:#f87171; border-radius:2px; display:inline-block;"></span>
+            <span style="color:#94a3b8;">Priority Secured Debt (PXF + DFI Mortgages): <strong id="wf-legend-priority" style="color:#f87171;">$268M (23.2%)</strong></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:5px;">
+            <span style="width:10px; height:10px; background:#34d399; border-radius:2px; display:inline-block;"></span>
+            <span style="color:#94a3b8;">Senior Eurobonds &amp; Pari Passu Credit Lines: <strong id="wf-legend-senior" style="color:#34d399;">$398M (34.5%)</strong></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:5px;">
+            <span style="width:10px; height:10px; background:#38bdf8; border-radius:2px; display:inline-block;"></span>
+            <span style="color:#94a3b8;">Residual Sponsor Equity: <strong id="wf-legend-equity" style="color:#38bdf8;">$487M (42.3%)</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16-Row Comprehensive Step-by-Step Priority Waterfall Table -->
+      <div style="overflow-x:auto;">
+        <table class="data-table" style="font-size:10.5px; width:100%; border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border-color); color:var(--text-muted); text-align:left;">
+              <th style="padding:6px 8px; width:45px;">Step</th>
+              <th style="padding:6px 8px;">Capital Structure Layer / Waterfall Component</th>
+              <th style="padding:6px 8px; text-align:right; width:110px;">Amount ($M)</th>
+              <th style="padding:6px 8px; text-align:right; width:130px;">Metric / Multiplier</th>
+              <th style="padding:6px 8px;">Governing Restructuring Mechanic &amp; Legal Context</th>
+            </tr>
+          </thead>
+          <tbody id="dynamic-waterfall-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tranche Allocation & Recovery Table -->
+      <div style="margin-top:16px;">
+        <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; margin-bottom:8px;">
+          🏷️ Instrument-by-Instrument Recovery Allocation Under Absolute Priority
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table" style="font-size:10.5px; width:100%; border-collapse:collapse;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border-color); color:var(--text-muted); text-align:left;">
+                <th style="padding:6px 8px;">Debt Instrument</th>
+                <th style="padding:6px 8px; width:120px;">Seniority Tier</th>
+                <th style="padding:6px 8px; text-align:right; width:80px;">Claim ($M)</th>
+                <th style="padding:6px 8px; text-align:right; width:80px;">Market Px</th>
+                <th style="padding:6px 8px; text-align:right; width:90px;">Allocated Pot</th>
+                <th style="padding:6px 8px; text-align:right; width:85px;">APR Recov (%)</th>
+                <th style="padding:6px 8px; text-align:right; width:85px;">Clean Px</th>
+                <th style="padding:6px 8px; text-align:right; width:95px;">Fair Value</th>
+              </tr>
+            </thead>
+            <tbody id="dynamic-tranche-tbody">
+              <!-- Populated dynamically via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PART 2: BALANCE SHEET SUSTAINABILITY & RESTRUCTURING TARGETS             -->
+  <!-- ========================================================================= -->
+  <div style="border-left: 4px solid var(--accent-amber); padding-left: 6px; margin-bottom: 20px;">
+    <div style="font-size: 13px; font-weight: 800; color: var(--accent-amber); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+      🎯 Balance Sheet Sustainability &amp; Deleveraging Diagnostics
+    </div>
+
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-title">
+        <span>Post-Restructuring Leverage, Coverage &amp; Liquidity Profile</span>
+        <span class="sub">Determining required debt cuts or maturity extensions to achieve single-B / BB- sustainability</span>
+      </div>
+
+      <div class="meter-grid">
+        <div class="meter-card">
+          <div class="meter-title">Pro-Forma Net Debt</div>
+          <div class="meter-val" id="meter-net-debt">$398M</div>
+          <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-net-debt-delta">-$23M vs FY24</div>
+        </div>
+
+        <div class="meter-card">
+          <div class="meter-title">Pro-Forma Net Leverage</div>
+          <div class="meter-val" id="meter-leverage">2.49x</div>
+          <div class="meter-sub" id="meter-leverage-target">Target: &lt; 3.00x</div>
+        </div>
+
+        <div class="meter-card">
+          <div class="meter-title">EBITDA Interest Coverage</div>
+          <div class="meter-val" id="meter-coverage">3.46x</div>
+          <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-coverage-target">Covenant: &gt; 2.50x</div>
+        </div>
+      </div>
+
+      <div class="meter-grid">
+        <div class="meter-card">
+          <div class="meter-title">Annual Cash Interest</div>
+          <div class="meter-val" id="meter-interest">$52M</div>
+          <div class="meter-sub" style="color:#38bdf8;">Stable vs $54M FY24</div>
+        </div>
+
+        <div class="meter-card">
+          <div class="meter-title">Post-Reorg FCF</div>
+          <div class="meter-val" id="meter-fcf" style="color:var(--accent-emerald);">+$48M</div>
+          <div class="meter-sub">Covers 100% Amortization</div>
+        </div>
+
+        <div class="meter-card">
+          <div class="meter-title">Debt Cut Required</div>
+          <div class="meter-val" id="meter-cut-req">$0M</div>
+          <div class="meter-sub" id="meter-cut-status" style="color:var(--accent-emerald);">Fully Covered</div>
+        </div>
+      </div>
+
+      <div id="sustainability-verdict" class="callout-box">
+        <!-- Populated dynamically -->
+      </div>
+      
+      <!-- Required Terms & Guidance Box -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px; margin-top:12px;">
+        <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:6px; padding:12px;">
+          <div style="font-size:11px; font-weight:800; color:var(--accent-amber); text-transform:uppercase; margin-bottom:6px;">
+            🎯 Required Balance Sheet Concessions to Achieve Sustainability
+          </div>
+          <ul style="font-size:10.5px; color:#cbd5e1; line-height:1.6; margin-left:14px;">
+            <li><strong>Target Net Leverage Ceiling:</strong> <strong style="color:#fff;">&le; 3.00x</strong> (Rating upgrade &amp; trade finance covenant threshold).</li>
+            <li><strong>Required Gross Debt Reduction:</strong> <strong id="lbl-required-debt-cut" style="color:var(--accent-emerald);">$0M</strong> (Fully sustainable under base $180M EBITDA).</li>
+            <li><strong>Minimum Maturity Extension:</strong> <strong id="lbl-required-extension" style="color:var(--accent-cyan);">At least 4 Years (to 2030)</strong> to clear the 2026/2029 Eurobond refinancing wall without operational disruption.</li>
+          </ul>
+        </div>
+
+        <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:6px; padding:12px;">
+          <div style="font-size:11px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:6px;">
+            💡 Indication of Terms Justified by Fundamental EV Recovery
+          </div>
+          <div id="lbl-ev-guidance" style="font-size:10.5px; color:#cbd5e1; line-height:1.5;">
+            Because Fundamental EV Recovery shows <strong>100.0c Par Coverage (219.0% Asset Backing)</strong>, noteholders will vehemently reject any nominal haircut. The consensual path is a <strong>0% Haircut</strong> paired with a <strong>4-Year Amend &amp; Extend</strong> and a 35 bps coupon step-up to <strong>12.50%</strong>.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PART 3: METHODOLOGY 2 — MARKET EXCHANGE PRICING ENGINE (VARIABLE TERMS)  -->
+  <!-- ========================================================================= -->
+  <div style="border-left: 4px solid var(--accent-emerald); padding-left: 6px; margin-bottom: 20px;">
+    <div style="font-size: 13px; font-weight: 800; color: var(--accent-emerald); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+      📜 Methodology 2: Market Exchange Pricing Engine (Variable Terms &amp; Qualitative Bridge)
+    </div>
+
+    <!-- CARD 2B: VARIABLE RESTRUCTURING EXCHANGE TERMS & DYNAMIC TENOR EXTENSION ARCHITECTURE -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-title">
+        <span>2. Amend &amp; Extend Terms &amp; Dynamic Tenor Architecture</span>
+        <span class="sub">Fully variable exchange package offered to Aragvi noteholders &bull; Maturity roll terms</span>
+      </div>
+
+      <!-- Tenor Extension Architecture Selector & Container -->
+      <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-radius:6px; padding:10px 12px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+          <div>
+            <span style="font-size:11px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase;">
+              Tenor Extension Architecture &amp; Structure
+            </span>
+            <span style="font-size:10px; color:var(--text-muted); margin-left:6px;">
+              Choose uniform maturity roll vs fixed consolidated exit tranches
+            </span>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button type="button" id="btn-ext-mode-uniform" class="preset-pill active" onclick="setExtensionMode('uniform')">
+              Mode A: Uniform Extension (+N Years)
+            </button>
+            <button type="button" id="btn-ext-mode-fixed" class="preset-pill" onclick="setExtensionMode('fixed')">
+              Mode B: Fixed Consolidated Exit Notes
+            </button>
+          </div>
+        </div>
+
+        <!-- CONTAINER FOR MODE A: UNIFORM EXTENSION -->
+        <div id="container-ext-uniform">
+          <div class="slider-row" style="margin-bottom:0;">
+            <div class="slider-box">
+              <div class="slider-header">
+                <span class="slider-label">Uniform Maturity Extension Tenor (from Current Maturity)</span>
+                <span class="slider-val" id="val-extension">4 Years</span>
+              </div>
+              <input type="range" id="input-extension" min="1" max="7" step="1" value="4" oninput="recalcEngine()">
+              <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+                Extended Eurobond maturity wall: <strong style="color:#fbbf24;" id="lbl-new-maturity">2030</strong>
+              </div>
+            </div>
+
+            <div class="slider-box">
+              <div class="slider-header">
+                <span class="slider-label">Reinstated Cash Coupon Rate</span>
+                <span class="slider-val" id="val-coupon">12.50%</span>
+              </div>
+              <input type="range" id="input-coupon" min="8.0" max="16.0" step="0.25" value="12.50" oninput="recalcEngine()">
+              <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+                Annual senior interest burden: <strong style="color:#fff;" id="lbl-new-interest">$30.4M</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTAINER FOR MODE B: FIXED CONSOLIDATED EXIT NOTES -->
+        <div id="container-ext-fixed" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+            <div style="font-size:10.5px; color:#cbd5e1;">
+              Consolidate existing notes into a fixed set of newly issued benchmark exit notes:
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:10px; color:var(--text-muted);">Number of Tranches:</span>
+              <button type="button" class="preset-pill" id="btn-tranches-1" onclick="setTrancheCount(1)">1 Note</button>
+              <button type="button" class="preset-pill active" id="btn-tranches-2" onclick="setTrancheCount(2)">2 Notes (Dual-Tranche)</button>
+              <button type="button" class="preset-pill" id="btn-tranches-3" onclick="setTrancheCount(3)">3 Notes (3-Tier)</button>
+            </div>
+          </div>
+
+          <!-- Live Tranche Inputs Table -->
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:10.5px; margin-bottom:6px;">
+              <thead>
+                <tr style="border-bottom:1px solid #334155; color:var(--text-muted); text-align:left;">
+                  <th style="padding:4px 6px;">Exit Tranche Description</th>
+                  <th style="padding:4px 6px; width:110px;">Tenor (Yrs)</th>
+                  <th style="padding:4px 6px; width:120px;">Cash Coupon (%)</th>
+                  <th style="padding:4px 6px; width:120px;">Allocation Split (%)</th>
+                  <th style="padding:4px 6px; text-align:right; width:110px;">Trading Px (r<sub>exit</sub>)</th>
+                  <th style="padding:4px 6px; text-align:right; width:110px;">Prorated Value</th>
+                </tr>
+              </thead>
+              <tbody id="fixed-tranches-tbody">
+                <!-- Rendered dynamically via JS -->
+              </tbody>
+              <tfoot id="fixed-tranches-tfoot" style="border-top:1px solid #334155; font-weight:700;">
+                <!-- Rendered dynamically via JS -->
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- General Exchange Terms -->
+      <div class="slider-row">
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Senior Nominal Principal Haircut</span>
+            <span class="slider-val" id="val-senior-haircut">0%</span>
+          </div>
+          <input type="range" id="input-senior-haircut" min="0" max="50" step="5" value="0" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+            Principal debt relief: <strong style="color:#f87171;" id="lbl-haircut-savings">$0M</strong>
+          </div>
+        </div>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Senior Debt-to-Equity Swap Percentage</span>
+            <span class="slider-val" id="val-debt-equity">0%</span>
+          </div>
+          <input type="range" id="input-debt-equity" min="0" max="40" step="5" value="0" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+            Equity consideration: <strong style="color:var(--accent-cyan);" id="lbl-equity-swap-val">0.0c</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Payment-in-Kind (PIK) Capitalized Coupon</span>
+            <span class="slider-val" id="val-pik-coupon">0.00%</span>
+          </div>
+          <input type="range" id="input-pik-coupon" min="0.0" max="5.0" step="0.25" value="0.0" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+            Semi-annually capitalized principal accretion sweetener
+          </div>
+        </div>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">PIK Sweetener Horizon</span>
+            <span class="slider-val" id="val-pik-years">0 Years</span>
+          </div>
+          <input type="range" id="input-pik-years" min="0" max="4" step="1" value="0" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+            Cumulative face value step-up: <strong style="color:#fbbf24;" id="lbl-pik-accrued">+0.0c</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Valuation Output Meters -->
+      <div class="meter-grid" style="margin-top:10px; margin-bottom:6px;">
+        <div class="meter-card" style="border-color:rgba(56,189,248,0.4);">
+          <div class="meter-title" style="color:var(--accent-cyan);">Trading Px of New Paper</div>
+          <div class="meter-val" id="meter-paper-px" style="color:var(--accent-cyan);">96.8c</div>
+          <div class="meter-sub">Day-1 Market Price</div>
+        </div>
+
+        <div class="meter-card" style="border-color:rgba(16,185,129,0.4);">
+          <div class="meter-title" style="color:var(--accent-emerald);">Senior Economic Recovery</div>
+          <div class="meter-val" id="meter-senior-rec" style="color:var(--accent-emerald);">96.8c</div>
+          <div class="meter-sub">Total Consideration</div>
+        </div>
+
+        <div class="meter-card" style="border-color:rgba(251,191,36,0.4);">
+          <div class="meter-title" style="color:var(--accent-gold);">Implied Reorg Spread</div>
+          <div class="meter-val" id="meter-reorg-spread" style="color:var(--accent-gold);">+580 bps</div>
+          <div class="meter-sub">Over Single-B Benchmark</div>
+        </div>
+      </div>
+
+      <!-- Dynamic 2D Exit Yield Sensitivity Matrix -->
+      <div style="margin-top:12px; background:rgba(6,9,19,0.7); border:1px solid #1e293b; border-radius:6px; padding:10px 12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:4px;">
+          <span style="font-size:11px; font-weight:800; color:#fff; text-transform:uppercase;">
+            📈 Exit Yield Sensitivity Matrix: Bond Prices &amp; Economic Recovery vs. Market Yield
+          </span>
+          <span style="font-size:9.5px; color:var(--text-muted);">
+            Evaluates current restructuring terms across market-clearing yield environments
+          </span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; font-size:10px; text-align:center;" id="exit-sensitivity-grid">
+            <!-- Populated dynamically via JS -->
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4: QUALITATIVE RISK & DYNAMIC SECONDARY PRICING BANDS -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-title">
+        <span>4. Exit Yield, Qualitative Risk Weighting &amp; Dynamic Secondary Pricing Bands</span>
+        <span class="sub">Closed-loop link: Exit Yield &bull; Commodity Trade Finance &bull; Black Sea Transit &bull; Port Concession</span>
+      </div>
+
+      <!-- Market Exit Yield Slider with Auto-Leverage Link -->
+      <div class="slider-row" style="margin-bottom:10px;">
+        <div class="slider-box" style="border:1px solid rgba(56,189,248,0.35); background:rgba(56,189,248,0.04); grid-column:span 2;">
+          <div class="slider-header">
+            <span class="slider-label" style="color:#38bdf8; font-weight:700;">🎯 Required Market Exit Yield (r<sub>exit</sub>)</span>
+            <span class="slider-val" id="val-exit-yield" style="color:#38bdf8; font-weight:800;">12.50%</span>
+          </div>
+          <input type="range" id="input-exit-yield" min="9.0" max="18.0" step="0.25" value="12.50" oninput="onManualExitYield(this.value)">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+            <span>Market-clearing yield for post-extension paper &bull; Calibrated to CEEMEA single-B sovereign/corporate curve</span>
+            <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
+              <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">2.49x &rarr; 12.50%</span>)
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Qualitative Sliders for Aragvi -->
+      <div class="slider-row">
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Trade Finance Syndicate Cooperation vs Grain Collateral Freeze</span>
+            <span class="slider-val" id="val-qual-yekdem" style="color:var(--accent-rose);">-1.5c</span>
+          </div>
+          <input type="range" id="input-qual-yekdem" min="-4.5" max="2.0" step="0.5" value="-1.5" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">ING, Rabobank &amp; SocGen trade lines vs silo grain lockups (-4.5c to +2.0c)</div>
+        </div>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Structural Priming &amp; Swiss/Romanian Share Pledges</span>
+            <span class="slider-val" id="val-qual-dorad" style="color:var(--accent-rose);">-0.5c</span>
+          </div>
+          <input type="range" id="input-qual-dorad" min="-3.5" max="1.0" step="0.5" value="-0.5" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Bank demands for first-lien pledges over Swiss trading arm or EU plants (-3.5c to +1.0c)</div>
+        </div>
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Black Sea Geopolitical Transit Risk &amp; Danube Drone Threat</span>
+            <span class="slider-val" id="val-qual-macro" style="color:var(--accent-rose);">-1.5c</span>
+          </div>
+          <input type="range" id="input-qual-macro" min="-4.0" max="2.0" step="0.5" value="-1.5" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Reni/Izmail proximity, Transnistria security &amp; shipping insurance (-4.0c to +2.0c)</div>
+        </div>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span class="slider-label">Giurgiulești Port Expansion &amp; Western Strategic Monetization</span>
+            <span class="slider-val" id="val-qual-discount" style="color:var(--accent-emerald);">+0.5c</span>
+          </div>
+          <input type="range" id="input-qual-discount" min="-2.5" max="3.5" step="0.5" value="0.5" oninput="recalcEngine()">
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Danube Solidarity Lane monopoly &amp; EBRD terminal backing (-2.5c to +3.5c)</div>
+        </div>
+      </div>
+
+      <!-- Net Qualitative Adjustment Metric Strip -->
+      <div style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div style="font-size:11px; font-weight:700; color:#cbd5e1;">
+          Net Qualitative Adjustment: 
+          <span id="lbl-total-qual-delta" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-rose); font-size:12px;">-3.0c</span>
+        </div>
+        <div style="font-size:10px; color:var(--text-muted);">
+          Fundamental Senior Coverage: <strong id="lbl-qual-raw-rec" style="color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;">100.0c</strong> 
+          &plus; Qual Delta &rarr; <strong id="lbl-qual-adj-rec" style="color:var(--accent-gold); font-family:'JetBrains Mono',monospace;">97.0c</strong> (ARAGVI '26 Fair)
+        </div>
+      </div>
+
+      <!-- Interactive Qualitative Assessment Guide Accordion -->
+      <div style="margin-top:10px; margin-bottom:10px;">
+        <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+          <span>📘 Qualitative Assessment Guide: Trade Finance Violence, Bank Cooperation &amp; Cents Attribution</span>
+          <span id="qual-guide-icon">▼ Click to Expand Guide</span>
+        </button>
+        
+        <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
+          <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+            1. Creditor-on-Creditor Violence vs Trade Finance Syndicate Cooperation
+          </div>
+          <p style="margin-bottom:8px;">
+            Aragvi Holding (Trans-Oil Group) demonstrates overwhelming fundamental asset backing at <strong>219.0% asset coverage</strong> ($1,033M SOTP EV + $120M cash vs $268M priority debt and $398M senior claims). However, secondary notes trade at <strong>89.0c</strong> due to the complex interaction between trade finance banks, multilateral lenders, and geopolitical risk:
+          </p>
+          <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
+            <li>
+              <strong style="color:#fff;">Trade Finance Cooperation vs Collateral Freeze (-4.5c to +2.0c):</strong> 
+              Commodity trade lenders (ING, Rabobank, SocGen) hold security over physical grain inventories in silos and export receivables. Hostile action would freeze seasonal working capital (-4.5c). Consensual rollovers support processing operations (+2.0c). Base: <strong>-1.5c</strong>.
+            </li>
+            <li>
+              <strong style="color:#fff;">Structural Priming &amp; Swiss/Romanian Share Pledges (-3.5c to +1.0c):</strong> 
+              Risk that banks demand share pledges over unencumbered entities (Swiss trading arm or Țăndărei EU plant) to roll bilateral credit lines (-3.5c). DFI oversight limits aggressive priming (+1.0c). Base: <strong>-0.5c</strong>.
+            </li>
+            <li>
+              <strong style="color:#fff;">Black Sea Geopolitical Transit Risk (-4.0c to +2.0c):</strong> 
+              Proximity to Ukrainian Danube ports (Reni/Izmail) subject to drone strikes, Transnistria political frictions, and maritime shipping insurance spikes (-4.0c). Solid EU "Solidarity Lanes" support yields +2.0c. Base: <strong>-1.5c</strong>.
+            </li>
+            <li>
+              <strong style="color:#fff;">Giurgiulești Port Concession Moat (+0.5c to +3.5c):</strong> 
+              Monopoly control of Moldova's only maritime port, terminal expansion, and potential strategic equity participation by Western grain majors or EBRD (+3.5c). Base: <strong>+0.5c</strong>.
+            </li>
+          </ul>
+
+          <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+            2. The Mathematical Synthesis: Direct Cents Bridge to Desk Fair Value
+          </div>
+          <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:8px;">
+            &Delta;<sub>qual</sub> = (-1.5c) + (-0.5c) + (-1.5c) + (+0.5c) = -3.0c Net Qualitative Adjustment<br>
+            Desk Fair Value = 100.0c Par Coverage + (-3.0c) = 97.0c (vs 89.0c Secondary Mkt Quote &rarr; +8.0c Discount / STRONG BUY)
+          </div>
+
+          <div style="margin-top:8px; text-align:right;">
+            <a href="aragvi_background.html#creditor-violence" target="_blank" style="color:var(--accent-rose); text-decoration:none; font-weight:700; font-size:10px; margin-right:12px;">⚔️ Read Complete Creditor Violence Deep Dive in Background Page &rarr;</a>
+            <a href="aragvi_background.html#qualitative-guide" target="_blank" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">📖 Complete Qualitative Guide &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Market Pricing Across Core Scenarios -->
+      <div style="margin-top:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+          <div style="font-size:11px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
+            📊 Secondary Market Pricing Across Core Scenarios (Bear &bull; Base &bull; Bull)
+          </div>
+          <div style="font-size:9.5px; color:var(--text-muted);">
+            Clear scenario bounds &bull; Click links for detailed operational &amp; refinancing models
+          </div>
+        </div>
+
+        <table class="band-table" id="pricing-band-table">
+          <thead>
+            <tr>
+              <th style="text-align:left; width:28%;">Instrument</th>
+              <th style="text-align:right; width:12%;">Market Px</th>
+              <th style="text-align:right; width:18%;">
+                <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                  <span style="color:var(--accent-rose); font-weight:800;">🔴 Bear Case</span>
+                  <a href="aragvi_background.html#scenario-bear" target="_blank" style="font-size:9px; color:#f87171; text-decoration:underline;">[📖 Subpage]</a>
+                </div>
+                <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#f87171;">Danube Blockade / 15% Cut</span>
+              </th>
+              <th style="text-align:right; width:18%;">
+                <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                  <span style="color:var(--accent-gold); font-weight:800;">🟡 Base Case</span>
+                  <a href="aragvi_background.html#scenario-base" target="_blank" style="font-size:9px; color:#fbbf24; text-decoration:underline;">[📖 Subpage]</a>
+                </div>
+                <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#fbbf24;">4Y A&amp;E / Active Model</span>
+              </th>
+              <th style="text-align:right; width:18%;">
+                <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                  <span style="color:var(--accent-cyan); font-weight:800;">🟢 Bull Case</span>
+                  <a href="aragvi_background.html#scenario-bull" target="_blank" style="font-size:9px; color:#38bdf8; text-decoration:underline;">[📖 Subpage]</a>
+                </div>
+                <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#38bdf8;">Strategic Western Entry / Par Call</span>
+              </th>
+              <th style="text-align:center; width:14%;">Desk Action</th>
+            </tr>
+          </thead>
+          <tbody id="pricing-band-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+
+        <!-- Scenario Assumptions Cards -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px; margin-top:12px; background:rgba(6,9,19,0.8); border:1px solid #1e293b; border-radius:6px; padding:12px;">
+          <!-- Bear Assumptions -->
+          <div style="border-left:3px solid var(--accent-rose); padding-left:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <strong style="color:var(--accent-rose); font-size:11px;">🔴 Bear Scenario Assumptions</strong>
+              <button type="button" onclick="loadPreset('crisis')" style="background:rgba(244,63,94,0.15); border:1px solid rgba(244,63,94,0.35); color:#f87171; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+            </div>
+            <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+              <div>&bull; <strong>EBITDA &bull; Mult:</strong> $115M &bull; 4.5x ($518M EV)</div>
+              <div>&bull; <strong>Geopolitics:</strong> Drone disruptions close Danube transit; shipping insurance spikes</div>
+              <div>&bull; <strong>Terms:</strong> 15% Haircut &bull; 15.00% Exit Yield</div>
+              <div>&bull; <strong>Trade Banks:</strong> PXF lines frozen; grain inventory seized</div>
+            </div>
+            <div style="margin-top:6px;">
+              <a href="aragvi_background.html#scenario-bear" target="_blank" style="color:var(--accent-rose); font-size:10px; font-weight:700; text-decoration:none;">
+                📖 View Full Bear Subpage Analysis &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Base Assumptions -->
+          <div style="border-left:3px solid var(--accent-gold); padding-left:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <strong style="color:var(--accent-gold); font-size:11px;">🟡 Base Scenario Assumptions</strong>
+              <button type="button" onclick="loadPreset('base')" style="background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+            </div>
+            <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+              <div>&bull; <strong>EBITDA &bull; Mult:</strong> $180M &bull; 5.74x ($1,033M EV)</div>
+              <div>&bull; <strong>Operations:</strong> Normal crop yields; full Giurgiulești port throughput</div>
+              <div>&bull; <strong>Terms:</strong> 0% Cut &bull; 12.50% Cpn &bull; 12.50% Exit Yield</div>
+              <div>&bull; <strong>Asset Backing:</strong> 219.0% par asset coverage</div>
+            </div>
+            <div style="margin-top:6px;">
+              <a href="aragvi_background.html#scenario-base" target="_blank" style="color:var(--accent-gold); font-size:10px; font-weight:700; text-decoration:none;">
+                📖 View Full Base Subpage Analysis &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Bull Assumptions -->
+          <div style="border-left:3px solid var(--accent-cyan); padding-left:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <strong style="color:var(--accent-cyan); font-size:11px;">🟢 Bull Scenario Assumptions</strong>
+              <button type="button" onclick="loadPreset('ipo_recap')" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.35); color:#38bdf8; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+            </div>
+            <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+              <div>&bull; <strong>EBITDA &bull; Mult:</strong> $220M &bull; 6.8x ($1,496M EV)</div>
+              <div>&bull; <strong>Catalyst:</strong> Strategic minority stake sale to Western grain major (Cargill/ADM)</div>
+              <div>&bull; <strong>Terms:</strong> 0% Cut &bull; 11.00% Cpn &bull; 10.50% Exit Yield</div>
+              <div>&bull; <strong>Capital Action:</strong> Notes tendered or called at 103.5c premium</div>
+            </div>
+            <div style="margin-top:6px;">
+              <a href="aragvi_background.html#scenario-bull" target="_blank" style="color:var(--accent-cyan); font-size:10px; font-weight:700; text-decoration:none;">
+                📖 View Full Bull Subpage Analysis &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PART 4: SCENARIO ANATOMY & STRUCTURAL TRIGGERS                          -->
+  <!-- ========================================================================= -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📐</span> 7. Scenario Anatomy: What Gets You Bear, Base &amp; Bull?
+      </span>
+      <span class="sub">Danube Maritime Logistics, Sunflower Oil Margins, PXF Trade Facilities &amp; Geopolitics</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-top:8px;">
+      
+      <!-- BEAR CARD -->
+      <div style="background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-rose); letter-spacing:0.5px; text-transform:uppercase;">🔴 Bear / Danube Chokepoint</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-rose); background:rgba(244,63,94,0.15); padding:2px 6px; border-radius:4px;">68.0c – 75.0c Senior</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $115.0M (Severe regional drought + drone strikes near Danube ports freeze shipping).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 4.5x EV multiple (Distressed valuation = $518M EV).</div>
+          <div style="margin-bottom:4px;"><strong>• Trade Bank Action:</strong> PXF commodity banks freeze revolving inventory lines; demand cash sweeps.</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Hostile debt standstill; forced 15% principal cramdown.</div>
+          <div><strong>• Final Verdict:</strong> $235M left for $398M senior claims (59c fundamental / 68c secondary floor). <strong>Equity wiped out.</strong></div>
+        </div>
+      </div>
+
+      <!-- BASE CARD -->
+      <div style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-gold); letter-spacing:0.5px; text-transform:uppercase;">🟡 Base Case Refinancing</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:4px;">96.8c Mkt / 100.0c Par</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $180.0M (High crushing utilization; Giurgiulești port operates at 90% capacity; 68% hard currency).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 5.74x EV multiple ($1,033M EV + $120M Cash = $1,153M total distributable value).</div>
+          <div style="margin-bottom:4px;"><strong>• Trade Debt Serviced:</strong> $268M priority secured PXF &amp; DFI loans roll smoothly under seasonal lines.</div>
+          <div style="margin-bottom:4px;"><strong>• Refinancing Pathway:</strong> Consensual 4-year Amend-and-Extend to 2030 at 12.50% coupon (+35 bps step-up).</div>
+          <div><strong>• Final Verdict:</strong> $870M net value for $398M senior claims (<strong>219.0% asset coverage / 100c Par</strong>). <strong>At 12.5% exit yield, trades at 96.8c.</strong></div>
+        </div>
+      </div>
+
+      <!-- BULL CARD -->
+      <div style="background:rgba(56, 189, 248, 0.05); border:1px solid rgba(56, 189, 248, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-cyan); letter-spacing:0.5px; text-transform:uppercase;">🟢 Bull / Western Strategic Entry</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:#38bdf8; background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:4px;">103.5c Par Call / Tender</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $220.0M (Record crop processing; Romanian crushing operations expand; Black Sea shipping normalized).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 6.8x global agribusiness multiple ($1,496M EV).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Catalyst:</strong> Strategic equity investment by Western grain major or EBRD terminal co-investment ($100M+).</div>
+          <div style="margin-bottom:4px;"><strong>• Capital Action:</strong> Full cash tender or make-whole call at 103.5c takes out legacy Eurobonds.</div>
+          <div><strong>• Final Verdict:</strong> Full par redemption + carry. <strong>$820M+ equity value preserved for sponsor Vaja Jhashi.</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+  <script>
+    // Asset SOTP Baseline Definitions for Aragvi / Trans-Oil
+    const ASSETS = [
+      { id: "giurgiulesti_port", name: "Giurgiulești Port Terminal (PILG)", capacity: "Danube Grain & Oil Terminal (1.6M t Grain)", ebitda: 55.0, multiple: 6.5, included: true },
+      { id: "balti_crush", name: "Floarea Soarelui Oilseed Crushing", capacity: "Bălți Plant (1,200 t/day, Floris Brand)", ebitda: 45.0, multiple: 5.5, included: true },
+      { id: "ceadir_crush", name: "Trans Oil Refinery (Ceadîr-Lunga)", capacity: "Southern Plant (400 t/day Extraction)", ebitda: 22.0, multiple: 5.0, included: true },
+      { id: "tandarei_eu", name: "Țăndărei Crushing & EU Operations", capacity: "Romania Plant (1,000 t/day, EU Access)", ebitda: 28.0, multiple: 6.0, included: true },
+      { id: "silo_network", name: "Silo Network & Inland Elevators", capacity: "16 Silos (>1.0M t Capacity, MD/UA/RO)", ebitda: 18.0, multiple: 5.0, included: true },
+      { id: "logistics_fleet", name: "Danube Barges & Rail Logistics Fleet", capacity: "400+ Railcars, Danube Convoys", ebitda: 12.0, multiple: 5.0, included: true }
+    ];
+
+    // Tranche Debt Baseline Definitions
+    const TRANCHES = [
+      { id: "pxf_trade_finance", name: "Senior Secured Pre-Export (PXF) & Working Capital", claim: 186.5, marketPx: 100.00, seniority: "priority_secured" },
+      { id: "dfi_capex_loans", name: "DFI Capex & Port Mortgages (EBRD/BSTDB)", claim: 81.1, marketPx: 100.00, seniority: "priority_secured" },
+      { id: "aragvi_2026_bond", name: "ARAGVI 12.150% 2026 Senior Notes", claim: 243.4, marketPx: 89.00, seniority: "senior" },
+      { id: "aragvi_2031_bond", name: "ARAGVI 12.750% 2031 Senior Notes", claim: 100.0, marketPx: 91.00, seniority: "senior" },
+      { id: "bilateral_working_cap", name: "Drawn Bank Credit Lines & Bilateral Debt", claim: 54.1, marketPx: 100.00, seniority: "senior" }
+    ];
+
+    // Presets definitions
+    const PRESETS = {
+      base: {
+        duration: 6,
+        sponsorEquity: 0,
+        seniorHaircut: 0,
+        extension: 4,
+        coupon: 12.50,
+        debtEquity: 0,
+        pikCoupon: 0.0,
+        pikYears: 0,
+        qualYekdem: -1.5,
+        qualDorad: -0.5,
+        qualMacro: -1.5,
+        qualDiscount: 0.5,
+        assets: { giurgiulesti_port: [55, 6.5, true], balti_crush: [45, 5.5, true], ceadir_crush: [22, 5.0, true], tandarei_eu: [28, 6.0, true], silo_network: [18, 5.0, true], logistics_fleet: [12, 5.0, true] }
+      },
+      extend: {
+        duration: 6,
+        sponsorEquity: 25,
+        seniorHaircut: 0,
+        extension: 5,
+        coupon: 12.00,
+        debtEquity: 0,
+        pikCoupon: 0.0,
+        pikYears: 0,
+        qualYekdem: -0.5,
+        qualDorad: 0.0,
+        qualMacro: -1.0,
+        qualDiscount: 1.0,
+        assets: { giurgiulesti_port: [58, 6.5, true], balti_crush: [46, 5.5, true], ceadir_crush: [24, 5.0, true], tandarei_eu: [30, 6.0, true], silo_network: [18, 5.0, true], logistics_fleet: [14, 5.0, true] }
+      },
+      ipo_recap: {
+        duration: 6,
+        sponsorEquity: 100,
+        seniorHaircut: 0,
+        extension: 4,
+        coupon: 11.00,
+        debtEquity: 0,
+        pikCoupon: 0.0,
+        pikYears: 0,
+        qualYekdem: 2.0,
+        qualDorad: 1.0,
+        qualMacro: 1.5,
+        qualDiscount: 3.5,
+        assets: { giurgiulesti_port: [65, 7.5, true], balti_crush: [50, 6.0, true], ceadir_crush: [26, 5.5, true], tandarei_eu: [35, 6.5, true], silo_network: [22, 5.5, true], logistics_fleet: [16, 5.5, true] }
+      },
+      haircut: {
+        duration: 18,
+        sponsorEquity: 0,
+        seniorHaircut: 15,
+        extension: 6,
+        coupon: 10.00,
+        debtEquity: 15,
+        pikCoupon: 2.0,
+        pikYears: 2,
+        qualYekdem: -3.0,
+        qualDorad: -2.0,
+        qualMacro: -2.5,
+        qualDiscount: -1.0,
+        assets: { giurgiulesti_port: [45, 5.5, true], balti_crush: [35, 4.5, true], ceadir_crush: [18, 4.0, true], tandarei_eu: [22, 5.0, true], silo_network: [14, 4.5, true], logistics_fleet: [10, 4.0, true] }
+      },
+      crisis: {
+        duration: 24,
+        sponsorEquity: 0,
+        seniorHaircut: 30,
+        extension: 8,
+        coupon: 9.00,
+        debtEquity: 25,
+        pikCoupon: 3.0,
+        pikYears: 3,
+        qualYekdem: -4.5,
+        qualDorad: -3.5,
+        qualMacro: -4.0,
+        qualDiscount: -2.5,
+        assets: { giurgiulesti_port: [35, 4.5, true], balti_crush: [28, 4.0, true], ceadir_crush: [14, 3.5, true], tandarei_eu: [18, 4.5, true], silo_network: [12, 4.0, true], logistics_fleet: [8, 3.5, true] }
+      }
+    };
+
+    function onManualExitYield(val) {
+      const chk = document.getElementById("chk-auto-exit-yield");
+      if (chk) chk.checked = false;
+      const y = parseFloat(val);
+      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${y.toFixed(2)}%`;
+      recalcEngine();
+    }
+
+    function toggleAutoExitYield(isChecked) {
+      recalcEngine();
+    }
+
+    let extensionMode = 'uniform'; // 'uniform' or 'fixed'
+    let trancheCount = 2;
+    let fixedTranches = [
+      { id: 1, name: "Series A (3Y 2029 Notes)", tenor: 3, coupon: 12.00, split: 50 },
+      { id: 2, name: "Series B (5Y 2031 Notes)", tenor: 5, coupon: 13.00, split: 50 },
+      { id: 3, name: "Series C (7Y 2033 Notes)", tenor: 7, coupon: 13.50, split: 0 }
+    ];
+
+    function setExtensionMode(mode) {
+      extensionMode = mode;
+      const btnUniform = document.getElementById("btn-ext-mode-uniform");
+      const btnFixed = document.getElementById("btn-ext-mode-fixed");
+      const cntUniform = document.getElementById("container-ext-uniform");
+      const cntFixed = document.getElementById("container-ext-fixed");
+
+      if (btnUniform) btnUniform.classList.toggle("active", mode === 'uniform');
+      if (btnFixed) btnFixed.classList.toggle("active", mode === 'fixed');
+      if (cntUniform) cntUniform.style.display = mode === 'uniform' ? 'block' : 'none';
+      if (cntFixed) cntFixed.style.display = mode === 'fixed' ? 'block' : 'none';
+
+      recalcEngine();
+    }
+
+    function setTrancheCount(count) {
+      trancheCount = count;
+      [1, 2, 3].forEach(c => {
+        const btn = document.getElementById("btn-tranches-" + c);
+        if (btn) btn.classList.toggle("active", c === count);
+      });
+
+      if (count === 1) {
+        fixedTranches[0].split = 100;
+        fixedTranches[1].split = 0;
+        fixedTranches[2].split = 0;
+      } else if (count === 2) {
+        fixedTranches[0].split = 50;
+        fixedTranches[1].split = 50;
+        fixedTranches[2].split = 0;
+      } else if (count === 3) {
+        fixedTranches[0].split = 25;
+        fixedTranches[1].split = 50;
+        fixedTranches[2].split = 25;
+      }
+      recalcEngine();
+    }
+
+    function updateTrancheProp(idx, prop, val) {
+      if (prop === 'name') {
+        fixedTranches[idx].name = val;
+      } else {
+        fixedTranches[idx][prop] = parseFloat(val) || 0;
+      }
+      recalcEngine();
+    }
+
+    function initPage() {
+      renderAssetTable();
+      recalcEngine();
+    }
+
+    function renderAssetTable() {
+      const tbody = document.querySelector("#asset-table tbody");
+      tbody.innerHTML = ASSETS.map((a, idx) => `
+        <tr id="row-${a.id}">
+          <td style="text-align:center;">
+            <input type="checkbox" class="asset-checkbox" id="chk-${a.id}" ${a.included ? 'checked' : ''} onchange="onAssetToggle('${a.id}')">
+          </td>
+          <td><strong style="color:#fff;">${a.name}</strong></td>
+          <td style="color:var(--text-muted); font-size:10px;">${a.capacity}</td>
+          <td style="text-align:right;">
+            <input type="number" step="2" class="num-input" id="ebitda-${a.id}" value="${a.ebitda}" onchange="recalcEngine()">
+          </td>
+          <td style="text-align:right;">
+            <input type="number" step="0.25" class="num-input" id="mult-${a.id}" value="${a.multiple}" onchange="recalcEngine()">
+          </td>
+          <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent-cyan);" id="ev-${a.id}">
+            $${(a.ebitda * a.multiple).toFixed(1)}M
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function onAssetToggle(id) {
+      const asset = ASSETS.find(a => a.id === id);
+      if (asset) {
+        asset.included = document.getElementById(`chk-${id}`).checked;
+        const row = document.getElementById(`row-${id}`);
+        if (row) row.style.opacity = asset.included ? "1.0" : "0.4";
+        recalcEngine();
+      }
+    }
+
+    function loadPreset(name) {
+      document.querySelectorAll(".preset-pill").forEach(p => p.classList.remove("active"));
+      if (typeof event !== 'undefined' && event && event.target) {
+        event.target.classList.add("active");
+      }
+      setExtensionMode('uniform');
+
+      const p = PRESETS[name];
+      if (!p) return;
+
+      document.getElementById("input-duration").value = p.duration;
+      document.getElementById("input-sponsor-equity").value = p.sponsorEquity;
+      document.getElementById("input-senior-haircut").value = p.seniorHaircut;
+      document.getElementById("input-extension").value = p.extension;
+      document.getElementById("input-coupon").value = p.coupon;
+      document.getElementById("input-debt-equity").value = p.debtEquity;
+      document.getElementById("input-pik-coupon").value = p.pikCoupon !== undefined ? p.pikCoupon : 0.0;
+      document.getElementById("input-pik-years").value = p.pikYears !== undefined ? p.pikYears : 0;
+
+      document.getElementById("input-qual-macro").value = p.qualMacro;
+      document.getElementById("input-qual-yekdem").value = p.qualYekdem;
+      document.getElementById("input-qual-dorad").value = p.qualDorad;
+      document.getElementById("input-qual-discount").value = p.qualDiscount;
+
+      // Update assets
+      ASSETS.forEach(a => {
+        if (p.assets[a.id]) {
+          const [eb, m, inc] = p.assets[a.id];
+          document.getElementById(`ebitda-${a.id}`).value = eb;
+          document.getElementById(`mult-${a.id}`).value = m;
+          document.getElementById(`chk-${a.id}`).checked = inc;
+          a.included = inc;
+          const row = document.getElementById(`row-${a.id}`);
+          if (row) row.style.opacity = inc ? "1.0" : "0.4";
+        }
+      });
+
+      recalcEngine();
+    }
+
+    function recalcEngine() {
+      // 1. Read Inputs
+      const durationMonths = parseInt(document.getElementById("input-duration").value);
+      const sponsorEquity = parseFloat(document.getElementById("input-sponsor-equity").value);
+      const seniorHaircutPct = parseFloat(document.getElementById("input-senior-haircut").value) / 100.0;
+      const extensionYears = parseInt(document.getElementById("input-extension").value);
+      const newCouponPct = parseFloat(document.getElementById("input-coupon").value) / 100.0;
+      const debtToEquityPct = parseFloat(document.getElementById("input-debt-equity").value) / 100.0;
+      const pikCouponPct = parseFloat(document.getElementById("input-pik-coupon")?.value) || 0.0;
+      const pikYears = parseInt(document.getElementById("input-pik-years")?.value) || 0;
+
+      const qualMacroCents = parseFloat(document.getElementById("input-qual-macro").value) || 0;
+      const qualYekdemCents = parseFloat(document.getElementById("input-qual-yekdem").value) || 0;
+      const qualDoradCents = parseFloat(document.getElementById("input-qual-dorad").value) || 0;
+      const qualDiscountCents = parseFloat(document.getElementById("input-qual-discount").value) || 0;
+      const totalQualDeltaCents = qualMacroCents + qualYekdemCents + qualDoradCents + qualDiscountCents;
+
+      // Update UI slider values
+      document.getElementById("val-duration").textContent = `${durationMonths} Months`;
+      document.getElementById("val-sponsor-equity").textContent = `$${sponsorEquity.toLocaleString()}M`;
+      document.getElementById("val-senior-haircut").textContent = `${(seniorHaircutPct * 100).toFixed(0)}%`;
+      document.getElementById("val-extension").textContent = `${extensionYears} Years`;
+      document.getElementById("val-coupon").textContent = `${(newCouponPct * 100).toFixed(2)}%`;
+      document.getElementById("val-debt-equity").textContent = `${(debtToEquityPct * 100).toFixed(0)}%`;
+      if (document.getElementById("val-pik-coupon")) document.getElementById("val-pik-coupon").textContent = `${pikCouponPct.toFixed(2)}%`;
+      if (document.getElementById("val-pik-years")) document.getElementById("val-pik-years").textContent = `${pikYears} Year${pikYears === 1 ? '' : 's'}`;
+
+      function formatCentsBadge(id, val) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const sign = val > 0 ? "+" : "";
+        el.textContent = `${sign}${val.toFixed(1)}c`;
+        el.style.color = val > 0 ? "var(--accent-emerald)" : (val < 0 ? "var(--accent-rose)" : "var(--text-muted)");
+      }
+      formatCentsBadge("val-qual-macro", qualMacroCents);
+      formatCentsBadge("val-qual-yekdem", qualYekdemCents);
+      formatCentsBadge("val-qual-dorad", qualDoradCents);
+      formatCentsBadge("val-qual-discount", qualDiscountCents);
+
+      // 2. SOTP Asset Aggregation
+      let totalOperatingEbitda = 0;
+      let totalSotpEv = 0;
+
+      ASSETS.forEach(a => {
+        const eb = parseFloat(document.getElementById(`ebitda-${a.id}`)?.value) || 0;
+        const m = parseFloat(document.getElementById(`mult-${a.id}`)?.value) || 0;
+        a.ebitda = eb;
+        a.multiple = m;
+        const impliedEv = eb * m;
+        const elEv = document.getElementById(`ev-${a.id}`);
+        if (elEv) elEv.textContent = `$${impliedEv.toFixed(1)}M`;
+
+        if (a.included) {
+          totalOperatingEbitda += eb;
+          totalSotpEv += impliedEv;
+        }
+      });
+
+      const blendedMultiple = totalOperatingEbitda > 0 ? (totalSotpEv / totalOperatingEbitda) : 0;
+      document.getElementById("sotp-total-ebitda").textContent = `$${totalOperatingEbitda.toFixed(1)}M`;
+      document.getElementById("sotp-blended-mult").textContent = `${blendedMultiple.toFixed(2)}x`;
+      document.getElementById("sotp-total-ev").textContent = `$${totalSotpEv.toFixed(1)}M`;
+
+      // 3. Priority Deductions & Distributable Value
+      const balanceSheetCash = 120.0;
+      const totalDistributableAssetValue = totalSotpEv + balanceSheetCash + sponsorEquity;
+
+      // Refinancing fees: $2.5M/mo
+      const totalAdvisorDrain = durationMonths * 2.5;
+      document.getElementById("lbl-advisor-drain").textContent = `-$${totalAdvisorDrain.toFixed(1)}M`;
+
+      // Priority Secured Debt: $186.5M Trade Finance + $81.1M DFI Loans = $267.6M
+      const prioritySecuredTrade = 186.5;
+      const prioritySecuredDfi = 81.1;
+      const totalPriorityDeductions = totalAdvisorDrain + prioritySecuredTrade + prioritySecuredDfi;
+
+      // Senior Unsecured Claims: $243.4M 2026 Bond + $100.0M 2031 Bond + $54.1M Credit Lines = $397.5M
+      const seniorBonds2026 = 243.4;
+      const seniorBonds2031 = 100.0;
+      const seniorCreditLines = 54.1;
+      const totalSeniorClaims = seniorBonds2026 + seniorBonds2031 + seniorCreditLines;
+
+      const netDistributableToSenior = Math.max(0, totalDistributableAssetValue - totalPriorityDeductions);
+      const rawSeniorRecoveryPct = totalSeniorClaims > 0 ? Math.min(1.0, netDistributableToSenior / totalSeniorClaims) : 0;
+      const rawSeniorRecoveryCents = rawSeniorRecoveryPct * 100.0;
+
+      // 4. Mode B Tranches Table Rendering
+      const tbodyFixed = document.getElementById("fixed-tranches-tbody");
+      const tfootFixed = document.getElementById("fixed-tranches-tfoot");
+      let blendedNewPaperPrice = 0;
+      let totalSplitPct = 0;
+
+      // Auto-Link Exit Yield to Leverage
+      const existingGrossDebt = 540.8;
+      const proFormaGrossDebt = totalPriorityDeductions - totalAdvisorDrain + (totalSeniorClaims * (1.0 - seniorHaircutPct - debtToEquityPct));
+      const proFormaNetDebt = Math.max(0, proFormaGrossDebt - balanceSheetCash - sponsorEquity);
+      const proFormaLeverage = totalOperatingEbitda > 0 ? (proFormaNetDebt / totalOperatingEbitda) : 0;
+
+      const chkAuto = document.getElementById("chk-auto-exit-yield");
+      let activeExitYield = parseFloat(document.getElementById("input-exit-yield").value) || 12.50;
+
+      if (chkAuto && chkAuto.checked) {
+        // Aragvi leverage link: 6.75% CEEMEA Benchmark + [250 bps + (Leverage * 130 bps)]
+        const baseSpreadBps = 250;
+        const leverageSpreadBps = Math.round(proFormaLeverage * 130);
+        const dynamicSpreadBps = Math.max(350, Math.min(1100, baseSpreadBps + leverageSpreadBps));
+        activeExitYield = 6.75 + (dynamicSpreadBps / 100.0);
+        document.getElementById("input-exit-yield").value = activeExitYield.toFixed(2);
+        document.getElementById("val-exit-yield").textContent = `${activeExitYield.toFixed(2)}%`;
+        document.getElementById("lbl-implied-rating").textContent = `${proFormaLeverage.toFixed(2)}x \u2192 ${activeExitYield.toFixed(2)}%`;
+      }
+
+      const rExit = activeExitYield / 100.0;
+
+      if (extensionMode === 'fixed') {
+        const activeFixedList = fixedTranches.slice(0, trancheCount);
+        tbodyFixed.innerHTML = activeFixedList.map((tr, idx) => {
+          totalSplitPct += tr.split;
+          const couponRate = tr.coupon / 100.0;
+          const nPeriods = tr.tenor * 2;
+          const rPeriod = rExit / 2.0;
+          
+          let pv = 0;
+          if (rPeriod > 0) {
+            pv = ((couponRate / 2.0) * (1 - Math.pow(1 + rPeriod, -nPeriods)) / rPeriod) + Math.pow(1 + rPeriod, -nPeriods);
+          } else {
+            pv = 1.0;
+          }
+          const priceCents = pv * 100.0;
+          const prorated = (priceCents * (tr.split / 100.0));
+          blendedNewPaperPrice += prorated;
+
+          return `
+            <tr style="border-bottom:1px solid #1e293b;">
+              <td style="padding:4px 6px;">
+                <input type="text" class="num-input" style="width:160px; text-align:left;" value="${tr.name}" onchange="updateTrancheProp(${idx}, 'name', this.value)">
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" step="1" min="1" max="10" class="num-input" style="width:75px;" value="${tr.tenor}" onchange="updateTrancheProp(${idx}, 'tenor', this.value)">
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" step="0.25" min="6" max="18" class="num-input" style="width:75px;" value="${tr.coupon}" onchange="updateTrancheProp(${idx}, 'coupon', this.value)">%
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" step="5" min="0" max="100" class="num-input" style="width:75px;" value="${tr.split}" onchange="updateTrancheProp(${idx}, 'split', this.value)">%
+              </td>
+              <td style="padding:4px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent-gold);">
+                ${priceCents.toFixed(1)}c
+              </td>
+              <td style="padding:4px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent-cyan);">
+                ${prorated.toFixed(1)}c
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        tfootFixed.innerHTML = `
+          <tr>
+            <td colspan="3" style="padding:6px; color:#fff;">Blended Package Valuation (${trancheCount} Tranches):</td>
+            <td style="padding:6px; font-family:'JetBrains Mono',monospace; color:${totalSplitPct === 100 ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${totalSplitPct}% Split</td>
+            <td colspan="2" style="padding:6px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent-emerald);">${blendedNewPaperPrice.toFixed(1)}c Blended Px</td>
+          </tr>
+        `;
+      } else {
+        // Mode A Uniform Pricing
+        const nPeriods = extensionYears * 2;
+        const rPeriod = rExit / 2.0;
+        let pv = 0;
+        if (rPeriod > 0) {
+          pv = ((newCouponPct / 2.0) * (1 - Math.pow(1 + rPeriod, -nPeriods)) / rPeriod) + Math.pow(1 + rPeriod, -nPeriods);
+        } else {
+          pv = 1.0;
+        }
+        blendedNewPaperPrice = pv * 100.0;
+      }
+
+      // PIK Coupon Accretion Sweetener
+      const pikCompoundedFactor = Math.pow(1 + (pikCouponPct / 200.0), pikYears * 2);
+      const pikSweetenerCents = (pikCompoundedFactor - 1.0) * 100.0;
+      if (document.getElementById("lbl-pik-accrued")) {
+        document.getElementById("lbl-pik-accrued").textContent = `+${pikSweetenerCents.toFixed(1)}c face lift`;
+      }
+
+      // 5. Total Consideration Package
+      const remainingDebtPct = (1.0 - seniorHaircutPct - debtToEquityPct);
+      const newNotesConsiderationCents = remainingDebtPct * blendedNewPaperPrice * pikCompoundedFactor;
+      const equitySwapConsiderationCents = debtToEquityPct * 40.0; // Equity valued at 40c per dollar swapped
+      const totalSeniorConsiderationCents = Math.min(100.0, newNotesConsiderationCents + equitySwapConsiderationCents);
+
+      // Time discount factor (standstill delay)
+      const timeDiscountFactor = 1.0; // performing under consensual A&E
+
+      // Live Output Meters
+      document.getElementById("meter-paper-px").textContent = `${blendedNewPaperPrice.toFixed(1)}c`;
+      document.getElementById("meter-senior-rec").textContent = `${totalSeniorConsiderationCents.toFixed(1)}c`;
+      const impliedSpreadBps = Math.round((activeExitYield - 6.75) * 100);
+      document.getElementById("meter-reorg-spread").textContent = `+${impliedSpreadBps} bps`;
+
+      // 6. Exit Yield Sensitivity Matrix Grid
+      const exitYieldSteps = [10.0, 11.0, 12.0, 12.5, 13.0, 14.0, 15.0];
+      const matrixThead = `
+        <thead>
+          <tr style="border-bottom:1px solid #334155; color:var(--text-muted);">
+            <th style="padding:4px; text-align:left;">Metric / Exit Yield</th>
+            ${exitYieldSteps.map(y => `<th style="padding:4px; ${Math.abs(y - activeExitYield) < 0.26 ? 'color:var(--accent-gold); font-weight:800; background:rgba(251,191,36,0.1);' : ''}">${y.toFixed(1)}%</th>`).join('')}
+          </tr>
+        </thead>
+      `;
+
+      const matrixRows = [
+        { label: "New Paper Trading Px", fn: (y) => {
+          const rP = (y / 200.0);
+          const nP = extensionYears * 2;
+          return (((newCouponPct / 2.0) * (1 - Math.pow(1 + rP, -nP)) / rP) + Math.pow(1 + rP, -nP)) * 100.0;
+        }},
+        { label: "Senior Total Consideration", fn: (y) => {
+          const rP = (y / 200.0);
+          const nP = extensionYears * 2;
+          const px = (((newCouponPct / 2.0) * (1 - Math.pow(1 + rP, -nP)) / rP) + Math.pow(1 + rP, -nP)) * 100.0;
+          return Math.min(100.0, (remainingDebtPct * px * pikCompoundedFactor) + equitySwapConsiderationCents);
+        }}
+      ];
+
+      const matrixTbody = `
+        <tbody>
+          ${matrixRows.map(mr => `
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
+              <td style="padding:4px; text-align:left; font-weight:600; color:#fff;">${mr.label}</td>
+              ${exitYieldSteps.map(y => {
+                const val = mr.fn(y);
+                const isCur = Math.abs(y - activeExitYield) < 0.26;
+                return `<td style="padding:4px; font-family:'JetBrains Mono',monospace; font-weight:700; ${isCur ? 'color:var(--accent-gold); background:rgba(251,191,36,0.1);' : 'color:#cbd5e1;'}">${val.toFixed(1)}c</td>`;
+              }).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      `;
+      document.getElementById("exit-sensitivity-grid").innerHTML = matrixThead + matrixTbody;
+
+      // 7. Qualitative Adjustment & Desk Fair Value
+      const adjustedSeniorFairVal = Math.min(100.0, Math.max(10.0, rawSeniorRecoveryCents + totalQualDeltaCents));
+      const elTotalQual = document.getElementById("lbl-total-qual-delta");
+      if (elTotalQual) {
+        const sign = totalQualDeltaCents > 0 ? "+" : "";
+        elTotalQual.textContent = `${sign}${totalQualDeltaCents.toFixed(1)}c`;
+        elTotalQual.style.color = totalQualDeltaCents > 0 ? "var(--accent-emerald)" : (totalQualDeltaCents < 0 ? "var(--accent-rose)" : "var(--text-muted)");
+      }
+      if (document.getElementById("lbl-qual-raw-rec")) document.getElementById("lbl-qual-raw-rec").textContent = `${rawSeniorRecoveryCents.toFixed(1)}c`;
+      if (document.getElementById("lbl-qual-adj-rec")) document.getElementById("lbl-qual-adj-rec").textContent = `${adjustedSeniorFairVal.toFixed(1)}c`;
+
+      // 8. Secondary Pricing Table (Bear / Base / Bull)
+      const tbodyBand = document.querySelector("#pricing-band-table tbody");
+      tbodyBand.innerHTML = TRANCHES.map(t => {
+        let baseRecovery = 0;
+        let bearRecovery = 0;
+        let bullRecovery = 0;
+
+        if (t.seniority === "senior") {
+          // Base Case: Active Model PV + Qualitative adjustments
+          baseRecovery = adjustedSeniorFairVal;
+          // Bear Case (Danube Chokepoint / 15% Cut / 15.0% Yield):
+          bearRecovery = 72.0 + Math.min(0.0, totalQualDeltaCents * 0.7);
+          // Bull Case (Strategic Western Entry / Par Call at 103.5c):
+          bullRecovery = 103.5 + Math.max(0.0, totalQualDeltaCents * 0.5);
+        } else {
+          // Priority Secured Debt (PXF + DFI)
+          baseRecovery = 100.0;
+          bearRecovery = 98.0;
+          bullRecovery = 100.0;
+        }
+
+        const deltaBase = baseRecovery - t.marketPx;
+        const deltaPct = (deltaBase / t.marketPx) * 100.0;
+
+        let badgeHtml = "";
+        if (deltaPct > 4.0) {
+          badgeHtml = '<span style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">STRONG BUY</span>';
+        } else if (deltaPct >= -2.0) {
+          badgeHtml = '<span style="background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">ACCUMULATE</span>';
+        } else {
+          badgeHtml = '<span style="background:rgba(244,63,94,0.15); color:var(--accent-rose); border:1px solid rgba(244,63,94,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">AVOID</span>';
+        }
+
+        const bearDelta = bearRecovery - t.marketPx;
+        const bullDelta = bullRecovery - t.marketPx;
+
+        return `
+          <tr>
+            <td style="font-weight:700; color:#fff;">${t.name}</td>
+            <td style="text-align:right; color:#cbd5e1; font-weight:600;">${t.marketPx.toFixed(1)}c</td>
+            <td style="text-align:right;">
+              <strong style="color:var(--accent-rose); font-family:'JetBrains Mono',monospace;">${bearRecovery.toFixed(1)}c</strong>
+              <div style="font-size:9px; color:#f87171;">${bearDelta >= 0 ? '+' : ''}${bearDelta.toFixed(1)}c</div>
+            </td>
+            <td style="text-align:right;">
+              <strong style="color:var(--accent-gold); font-family:'JetBrains Mono',monospace;">${baseRecovery.toFixed(1)}c</strong>
+              <div style="font-size:9px; color:${deltaBase >= 0 ? 'var(--accent-emerald)' : 'var(--accent-amber)'};">${deltaBase >= 0 ? '+' : ''}${deltaBase.toFixed(1)}c</div>
+            </td>
+            <td style="text-align:right;">
+              <strong style="color:var(--accent-cyan); font-family:'JetBrains Mono',monospace;">${bullRecovery.toFixed(1)}c</strong>
+              <div style="font-size:9px; color:var(--accent-emerald);">+${bullDelta.toFixed(1)}c</div>
+            </td>
+            <td style="text-align:center;">${badgeHtml}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // 9. Render Step-by-Step Priority Waterfall
+      const seniorAllocatedValue = Math.min(totalSeniorClaims, netDistributableToSenior);
+      const equityResidual = Math.max(0, netDistributableToSenior - totalSeniorClaims);
+
+      const safeTotalPot = Math.max(1, totalDistributableAssetValue);
+      const pctPriority = Math.min(100, (totalPriorityDeductions / safeTotalPot) * 100);
+      const pctSenior = Math.min(100 - pctPriority, (seniorAllocatedValue / safeTotalPot) * 100);
+      const pctEquity = Math.max(0, 100 - pctPriority - pctSenior);
+
+      document.getElementById("wf-bar-total-label").textContent = `Total Distributable Value: $${Math.round(totalDistributableAssetValue).toLocaleString()}M`;
+      
+      const stackedBar = document.getElementById("wf-stacked-bar");
+      stackedBar.innerHTML = `
+        <div style="width:${pctPriority.toFixed(1)}%; background:linear-gradient(90deg, #ef4444, #f87171); display:flex; align-items:center; justify-content:center; color:#fff; font-size:9.5px; font-weight:700; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Priority Secured Debt: $${Math.round(totalPriorityDeductions).toLocaleString()}M (${pctPriority.toFixed(1)}%)">
+          ${pctPriority > 12 ? `Secured Debt: $${Math.round(totalPriorityDeductions)}M (${pctPriority.toFixed(0)}%)` : ''}
+        </div>
+        <div style="width:${pctSenior.toFixed(1)}%; background:linear-gradient(90deg, #059669, #34d399); display:flex; align-items:center; justify-content:center; color:#0f172a; font-size:9.5px; font-weight:800; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Senior Eurobonds: $${Math.round(seniorAllocatedValue).toLocaleString()}M (${pctSenior.toFixed(1)}%)">
+          ${pctSenior > 12 ? `Senior Notes: $${Math.round(seniorAllocatedValue)}M (${pctSenior.toFixed(0)}%)` : (pctSenior > 5 ? `${pctSenior.toFixed(0)}%` : '')}
+        </div>
+        <div style="width:${pctEquity.toFixed(1)}%; background:linear-gradient(90deg, #0284c7, #38bdf8); display:flex; align-items:center; justify-content:center; color:#0f172a; font-size:9.5px; font-weight:800; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Sponsor Equity Cushion: $${Math.round(equityResidual).toLocaleString()}M (${pctEquity.toFixed(1)}%)">
+          ${pctEquity > 8 ? `Equity: $${Math.round(equityResidual)}M (${pctEquity.toFixed(0)}%)` : ''}
+        </div>
+      `;
+
+      document.getElementById("wf-legend-priority").textContent = `$${Math.round(totalPriorityDeductions).toLocaleString()}M (${pctPriority.toFixed(1)}%)`;
+      document.getElementById("wf-legend-senior").textContent = `$${Math.round(seniorAllocatedValue).toLocaleString()}M (${pctSenior.toFixed(1)}%)`;
+      document.getElementById("wf-legend-equity").textContent = `$${Math.round(equityResidual).toLocaleString()}M (${pctEquity.toFixed(1)}%)`;
+
+      // 16-Row Step-by-Step Waterfall
+      const waterfallRows = [
+        { num: "01", name: "Consolidated Cash EBITDA Baseline", val: `$${totalOperatingEbitda.toFixed(1)}M`, unit: "Run-Rate Cash Flow", desc: "Aggregated across Giurgiulești port, crushing plants & logistics fleet", isSub: false },
+        { num: "02", name: "Implied Blended SOTP EV Multiple", val: `${blendedMultiple.toFixed(2)}x`, unit: "EV / EBITDA", desc: "Weighted operational multiple across selected port and agribusiness assets", isSub: false },
+        { num: "03", name: "Operational Enterprise Value (EV)", val: `$${totalSotpEv.toFixed(1)}M`, unit: "EV Baseline", desc: "Core agribusiness & port infrastructure valuation derived from SOTP selections", isSub: false },
+        { num: "04", name: "Add: Balance Sheet Unrestricted Cash", val: `+$${balanceSheetCash.toFixed(1)}M`, unit: "Liquid Reserves", desc: "Unrestricted cash and liquid bank balances held across Swiss & Moldovan accounts", isSub: false },
+        { num: "05", name: "Add: Sponsor Equity / Strategic Partner Injection", val: `+$${sponsorEquity.toFixed(1)}M`, unit: "Fresh Equity Check", desc: "Fresh capital injection from Vaja Jhashi or strategic Western agribusiness investor", isSub: false },
+        { num: "06", name: "TOTAL DISTRIBUTABLE ASSET VALUE", val: `$${totalDistributableAssetValue.toFixed(1)}M`, unit: "100.0% Distributable Pot", desc: "Aggregate gross dollar liquidity pool available across all capital layers", isSub: true, color: "#38bdf8" },
+        { num: "07", name: "Less: Restructuring & Legal Advisory Fees", val: `-$${totalAdvisorDrain.toFixed(1)}M`, unit: `-$2.5M/mo x ${durationMonths}M`, desc: "Legal, trustee, rating agency and syndication expenses during maturity negotiation", isSub: false },
+        { num: "08", name: "Less: Senior Secured Pre-Export (PXF) Facilities", val: `-$186.5M`, unit: "100.0% Par Reinstated", desc: "First lien over physical grain silos, crop inventory, and Swiss collection accounts", isSub: false },
+        { num: "09", name: "Less: DFI Port Mortgages & Term Loans (EBRD/BSTDB)", val: `-$81.1M`, unit: "100.0% Par Reinstated", desc: "First mortgage over Giurgiulești port infrastructure and crushing machinery", isSub: false },
+        { num: "10", name: "TOTAL PRIORITY CLAIMS DEDUCTED", val: `-$${totalPriorityDeductions.toFixed(1)}M`, unit: `-${pctPriority.toFixed(1)}% of Total Pot`, desc: "Senior secured commodity and project debt ranking ahead of Eurobonds under APR", isSub: true, color: "#f87171" },
+        { num: "11", name: "NET VALUE AVAILABLE TO SENIOR UNSECURED", val: `$${seniorAllocatedValue.toFixed(1)}M`, unit: `$${Math.min(totalSeniorClaims, seniorAllocatedValue).toFixed(0)}M of $${totalSeniorClaims.toFixed(0)}M`, desc: "Unencumbered asset value legally available to satisfy Eurobonds and credit lines", isSub: true, color: "#34d399" },
+        { num: "12", name: "Total Senior Unsecured Claims Pool", val: `$${totalSeniorClaims.toFixed(1)}M`, unit: "Pari Passu Claims", desc: "Aggregate face value of ARAGVI Eurobonds ($343.4M) + Drawn Credit Lines ($54.1M)", isSub: false },
+        { num: "13", name: "SENIOR UNSECURED RECOVERY PERCENTAGE (%)", val: `${(rawSeniorRecoveryPct * 100).toFixed(1)}%`, unit: "APR Recovery Ratio", desc: "Exact entitlement under Absolute Priority Rule (Net Available ÷ Total Claims)", isHighlight: true, color: "#34d399" },
+        { num: "14", name: "SENIOR UNSECURED RECOVERY PRICE (CENTS)", val: `${rawSeniorRecoveryCents.toFixed(1)}c`, unit: "Per $1.00 Face Value", desc: "Clean fundamental asset-backed recovery floor (before qualitative friction)", isHighlight: true, color: "#fbbf24" },
+        { num: "15", name: "Value Residual to Junior Guarantees / Subordinated", val: `$0.0M`, unit: "0.0c (None Outstanding)", desc: "Aragvi Holding has no subordinated hybrid tranches in capital structure", isSub: false },
+        { num: "16", name: "Value Residual Remaining for Existing Equity", val: `$${equityResidual.toFixed(1)}M`, unit: `${equityResidual > 0 ? ((equityResidual / safeTotalPot) * 100).toFixed(1) + '% equity pot' : '0.0% (Wiped Out)'}`, desc: "Sponsor equity value retained by Vaja Jhashi / Trans-Oil after satisfying all claims", isSub: true, color: "#38bdf8" }
+      ];
+
+      const tbodyWf = document.getElementById("dynamic-waterfall-tbody");
+      tbodyWf.innerHTML = waterfallRows.map(r => {
+        const isSub = r.isSub;
+        const isHigh = r.isHighlight;
+        let rowBg = 'transparent';
+        let borderTop = '1px solid rgba(255,255,255,0.04)';
+        let fontWeight = isSub || isHigh ? '700' : '400';
+
+        if (isHigh) {
+          rowBg = 'rgba(251,191,36,0.08)';
+          borderTop = '2px solid rgba(251,191,36,0.4)';
+        } else if (isSub) {
+          rowBg = 'rgba(255,255,255,0.03)';
+          borderTop = '1px solid #334155';
+        }
+
+        const textColor = isHigh ? (r.color || '#fbbf24') : (isSub ? (r.color || '#fff') : '#cbd5e1');
+
+        return `
+          <tr style="background:${rowBg}; border-top:${borderTop};">
+            <td style="color:var(--text-muted); font-family:'JetBrains Mono',monospace;">${r.num}</td>
+            <td style="font-weight:${fontWeight}; color:${textColor};">${r.name}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:${fontWeight}; color:${textColor}; font-size:${isHigh ? '13px' : '11px'};">${r.val}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:${isHigh ? '#fbbf24' : '#94a3b8'}; font-weight:${fontWeight};">${r.unit}</td>
+            <td style="color:#94a3b8; font-size:10.5px;">${r.desc}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Instrument Tranche Allocation Table
+      const allInstruments = [
+        { name: "Senior Secured Pre-Export (PXF) & Trade Lines", tier: "Senior Secured", claim: 186.5, marketPx: 100.0, allocVal: 186.5, cleanPx: 100.0, exitPx: 100.0 },
+        { name: "DFI Capex & Port Mortgages (EBRD/BSTDB)", tier: "Senior Secured", claim: 81.1, marketPx: 100.0, allocVal: 81.1, cleanPx: 100.0, exitPx: 100.0 },
+        { name: "ARAGVI 12.150% 2026 Senior Notes", tier: "Senior Unsecured", claim: 243.4, marketPx: 89.0, allocVal: 243.4 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: adjustedSeniorFairVal },
+        { name: "ARAGVI 12.750% 2031 Senior Notes", tier: "Senior Unsecured", claim: 100.0, marketPx: 91.0, allocVal: 100.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: adjustedSeniorFairVal },
+        { name: "Drawn Revolving Credit Lines & Bilateral Debt", tier: "Senior Unsecured", claim: 54.1, marketPx: 100.0, allocVal: 54.1 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: adjustedSeniorFairVal }
+      ];
+
+      const tbodyTranches = document.getElementById("dynamic-tranche-tbody");
+      tbodyTranches.innerHTML = allInstruments.map(inst => {
+        const isPriority = inst.tier === "Senior Secured";
+        const recoveryPct = (inst.allocVal / inst.claim) * 100.0;
+        return `
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
+            <td style="font-weight:700; color:#fff;">${inst.name}</td>
+            <td style="color:${isPriority ? '#f87171' : 'var(--accent-cyan)'}; font-size:10px;">${inst.tier}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">$${inst.claim.toFixed(1)}M</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">${inst.marketPx.toFixed(1)}c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald);">$${inst.allocVal.toFixed(1)}M</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:${recoveryPct >= 99.9 ? 'var(--accent-emerald)' : '#fbbf24'};">${recoveryPct.toFixed(1)}%</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24;">${inst.cleanPx.toFixed(1)}c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:${inst.exitPx >= inst.marketPx ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${inst.exitPx.toFixed(1)}c</td>
+          </tr>
+        `;
+      }).join('');
+
+      // 10. Update Top Bar and Executive Bridge
+      document.getElementById("top-stream1-val").textContent = `${rawSeniorRecoveryCents.toFixed(1)}c Par`;
+      document.getElementById("top-stream2-val").textContent = `${blendedNewPaperPrice.toFixed(1)}c PV`;
+      document.getElementById("top-mkt-px").textContent = `89.0c`;
+      document.getElementById("top-leverage").textContent = `${proFormaLeverage.toFixed(2)}x`;
+      document.getElementById("top-sotp-ev").innerHTML = `$${Math.round(totalSotpEv)}<span>M</span>`;
+
+      document.getElementById("stream1-val").textContent = `${rawSeniorRecoveryCents.toFixed(1)}c Par`;
+      document.getElementById("s1-nominal-rec").textContent = `${(rawSeniorRecoveryPct * 100).toFixed(1)}%`;
+      document.getElementById("s1-senior-pool").textContent = `$${Math.round(seniorAllocatedValue)}M`;
+      document.getElementById("s1-ebitda").textContent = `$${Math.round(totalOperatingEbitda)}M`;
+      document.getElementById("s1-mult").textContent = `${blendedMultiple.toFixed(2)}x`;
+      document.getElementById("s1-duration").textContent = `${durationMonths}M`;
+      document.getElementById("s1-yield").textContent = `${activeExitYield.toFixed(2)}%`;
+
+      document.getElementById("stream2-val").textContent = `${blendedNewPaperPrice.toFixed(1)}c PV`;
+      document.getElementById("s2-tenor").textContent = `${extensionYears}Y`;
+      document.getElementById("s2-coupon").textContent = `${(newCouponPct * 100).toFixed(2)}%`;
+      document.getElementById("s2-leverage").textContent = `${proFormaLeverage.toFixed(2)}x`;
+      document.getElementById("s2-exit-yield").textContent = `${activeExitYield.toFixed(2)}%`;
+      document.getElementById("s2-spread").textContent = `+${impliedSpreadBps} bps`;
+      document.getElementById("s2-paper-px").textContent = `${blendedNewPaperPrice.toFixed(1)}c`;
+      document.getElementById("s2-true-rec").textContent = `${totalSeniorConsiderationCents.toFixed(1)}c`;
+
+      const gapCents = blendedNewPaperPrice - rawSeniorRecoveryCents;
+      document.getElementById("reconcile-gap").textContent = `${gapCents >= 0 ? '+' : ''}${gapCents.toFixed(1)}c`;
+      
+      const upsideFv = adjustedSeniorFairVal - 89.0;
+      const upsideAsset = rawSeniorRecoveryCents - 89.0;
+      document.getElementById("lbl-upside-fv").textContent = `+${upsideFv.toFixed(1)}c (+${((upsideFv / 89.0) * 100).toFixed(1)}%)`;
+      document.getElementById("lbl-upside-asset").textContent = `+${upsideAsset.toFixed(1)}c (+${((upsideAsset / 89.0) * 100).toFixed(1)}%)`;
+
+      // Status Badge
+      const elStatus = document.getElementById("top-status-badge");
+      if (proFormaLeverage <= 3.0 && rawSeniorRecoveryPct >= 0.99) {
+        elStatus.className = "status-badge status-sustainable";
+        elStatus.textContent = "✓ Sustainable";
+      } else if (rawSeniorRecoveryPct >= 0.85) {
+        elStatus.className = "status-badge status-warning";
+        elStatus.textContent = "⚠ Moderate Risk";
+      } else {
+        elStatus.className = "status-badge status-distressed";
+        elStatus.textContent = "⚡ Distressed";
+      }
+
+      // Balance Sheet Sustainability Section Meters
+      document.getElementById("meter-net-debt").textContent = `$${Math.round(proFormaNetDebt)}M`;
+      const netDebtDelta = proFormaNetDebt - 420.8;
+      document.getElementById("meter-net-debt-delta").textContent = `${netDebtDelta >= 0 ? '+' : ''}$${Math.round(netDebtDelta)}M vs FY24`;
+      document.getElementById("meter-leverage").textContent = `${proFormaLeverage.toFixed(2)}x`;
+      
+      const annualInterest = (proFormaGrossDebt * newCouponPct);
+      document.getElementById("meter-interest").textContent = `$${Math.round(annualInterest)}M`;
+      const interestCoverage = annualInterest > 0 ? (totalOperatingEbitda / annualInterest) : 9.9;
+      document.getElementById("meter-coverage").textContent = `${interestCoverage.toFixed(2)}x`;
+      
+      const postReorgFcf = totalOperatingEbitda - 60.0 - annualInterest - 20.0;
+      document.getElementById("meter-fcf").textContent = `+$${Math.round(postReorgFcf)}M`;
+
+      const targetNetDebt = totalOperatingEbitda * 3.0;
+      const debtCutRequired = Math.max(0, proFormaNetDebt - targetNetDebt);
+      document.getElementById("meter-cut-req").textContent = `$${Math.round(debtCutRequired)}M`;
+      document.getElementById("lbl-required-debt-cut").textContent = debtCutRequired > 0 ? `$${Math.round(debtCutRequired)}M` : "$0M";
+
+      const elVerdict = document.getElementById("sustainability-verdict");
+      if (proFormaLeverage <= 3.0) {
+        elVerdict.innerHTML = `<strong>SUSTAINABLE PROFILE:</strong> Pro-forma Net Leverage is <strong>${proFormaLeverage.toFixed(2)}x</strong> (well below the 3.00x ceiling) and EBITDA Interest Coverage is <strong>${interestCoverage.toFixed(2)}x</strong>. Free Cash Flow of <strong>+$${Math.round(postReorgFcf)}M</strong> comfortably services all debt obligations without requiring nominal principal debt haircuts.`;
+        elVerdict.style.borderColor = "var(--accent-emerald)";
+      } else {
+        elVerdict.innerHTML = `<strong>DELEVERAGING REQUIRED:</strong> Pro-forma Net Leverage of <strong>${proFormaLeverage.toFixed(2)}x</strong> exceeds the 3.00x target. An additional <strong>$${Math.round(debtCutRequired)}M</strong> of debt reduction or sponsor equity injection is needed.`;
+        elVerdict.style.borderColor = "var(--accent-amber)";
+      }
+    }
+
+    function toggleQualGuide() {
+      const cnt = document.getElementById("qual-guide-content");
+      const icon = document.getElementById("qual-guide-icon");
+      if (cnt.style.display === "none") {
+        cnt.style.display = "block";
+        icon.textContent = "▲ Click to Collapse Guide";
+      } else {
+        cnt.style.display = "none";
+        icon.textContent = "▼ Click to Expand Guide";
+      }
+    }
+
+    // Initialize page on load
+    window.addEventListener("DOMContentLoaded", initPage);
+  </script>
+</body>
+</html>
