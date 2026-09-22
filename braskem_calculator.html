@@ -918,13 +918,101 @@
 
     <!-- Variable Exchange Terms & Restructuring Mechanics Sandbox -->
     
-  <!-- CARD 2B: VARIABLE RESTRUCTURING EXCHANGE TERMS & RESTRUCTURING MECHANICS -->
+  <!-- CARD 2B: VARIABLE RESTRUCTURING EXCHANGE TERMS & DYNAMIC TENOR EXTENSION ARCHITECTURE -->
   <div class="card" style="margin-bottom:14px;">
     <div class="card-title">
-      <span>2. Restructuring Exchange Terms &amp; Restructuring Mechanics</span>
+      <span>2. Restructuring Exchange Terms &amp; Dynamic Tenor Architecture</span>
       <span class="sub">Fully variable exchange package offered to senior noteholders &bull; Balance sheet deleveraging mechanics</span>
     </div>
 
+    <!-- Tenor Extension Architecture Selector & Container -->
+    <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-radius:6px; padding:10px 12px; margin-bottom:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+        <div>
+          <span style="font-size:11px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase;">
+            Tenor Extension Architecture &amp; Structure
+          </span>
+          <span style="font-size:10px; color:var(--text-muted); margin-left:6px;">
+            Choose uniform maturity roll vs fixed consolidated exit tranches
+          </span>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button type="button" id="btn-ext-mode-uniform" class="preset-pill active" onclick="setExtensionMode('uniform')">
+            Mode A: Uniform Extension (+N Years)
+          </button>
+          <button type="button" id="btn-ext-mode-fixed" class="preset-pill" onclick="setExtensionMode('fixed')">
+            Mode B: Fixed Consolidated Exit Notes
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTAINER FOR MODE A: UNIFORM EXTENSION -->
+      <div id="container-ext-uniform">
+        <div class="slider-row" style="margin-bottom:0;">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Uniform Senior Maturity Extension (+N Years)</span>
+              <span class="slider-val" id="val-extension">8 Years</span>
+            </div>
+            <input type="range" id="input-extension" min="3" max="12" step="1" value="8" oninput="syncTenor(this.value)">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Rolls all bonds forward: e.g. 2030 &rarr; 2038, 2033 &rarr; <strong style="color:#fbbf24;" id="lbl-new-maturity">2041</strong>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Reinstated Senior Cash Coupon Rate</span>
+              <span class="slider-val" id="val-coupon">7.50%</span>
+            </div>
+            <input type="range" id="input-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="syncCoupon(this.value)">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              New annual senior interest burden: <strong style="color:#fff;" id="lbl-new-interest">$448M</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTAINER FOR MODE B: FIXED CONSOLIDATED EXIT NOTES -->
+      <div id="container-ext-fixed" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+          <div style="font-size:10.5px; color:#cbd5e1;">
+            Consolidate existing notes into a fixed set of newly issued benchmark exit notes:
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:10px; color:var(--text-muted);">Number of Tranches:</span>
+            <button type="button" class="preset-pill" id="btn-tranches-1" onclick="setTrancheCount(1)">1 Note</button>
+            <button type="button" class="preset-pill active" id="btn-tranches-2" onclick="setTrancheCount(2)">2 Notes (Dual-Tranche)</button>
+            <button type="button" class="preset-pill" id="btn-tranches-3" onclick="setTrancheCount(3)">3 Notes (3-Tier)</button>
+          </div>
+        </div>
+
+        <!-- Live Tranche Inputs Table -->
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; font-size:10.5px; margin-bottom:6px;">
+            <thead>
+              <tr style="border-bottom:1px solid #334155; color:var(--text-muted); text-align:left;">
+                <th style="padding:4px 6px;">Exit Tranche Description</th>
+                <th style="padding:4px 6px; width:110px;">Tenor (Yrs)</th>
+                <th style="padding:4px 6px; width:120px;">Cash Coupon (%)</th>
+                <th style="padding:4px 6px; width:120px;">Allocation Split (%)</th>
+                <th style="padding:4px 6px; text-align:right; width:110px;">Trading Px (r<sub>exit</sub>)</th>
+                <th style="padding:4px 6px; text-align:right; width:110px;">Prorated Value</th>
+              </tr>
+            </thead>
+            <tbody id="fixed-tranches-tbody">
+              <!-- Rendered dynamically via JS -->
+            </tbody>
+            <tfoot id="fixed-tranches-tfoot" style="border-top:1px solid #334155; font-weight:700;">
+              <!-- Rendered dynamically via JS -->
+            </tfoot>
+          </table>
+        </div>
+        <div id="fixed-tranches-warning" style="font-size:10px; color:var(--accent-amber); display:none; margin-top:4px;"></div>
+      </div>
+    </div>
+
+    <!-- Variable Restructuring Concession Sliders -->
     <div class="slider-row">
       <div class="slider-box">
         <div class="slider-header">
@@ -934,30 +1022,6 @@
         <input type="range" id="input-senior-haircut" min="0" max="60" step="5" value="35" oninput="recalcEngine()">
         <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
           Cuts $9,200M senior pool by: <strong style="color:#34d399;" id="lbl-senior-debt-cut">-$3,220M</strong>
-        </div>
-      </div>
-
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Senior Maturity Extension / Tenor</span>
-          <span class="slider-val" id="val-extension">8 Years</span>
-        </div>
-        <input type="range" id="input-extension" min="3" max="12" step="1" value="8" oninput="syncTenor(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-          New exit note maturity: <strong style="color:#fbbf24;" id="lbl-new-maturity">2034</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="slider-row">
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Reinstated Senior Cash Coupon Rate</span>
-          <span class="slider-val" id="val-coupon">7.50%</span>
-        </div>
-        <input type="range" id="input-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="syncCoupon(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-          New annual senior interest burden: <strong style="color:#fff;" id="lbl-new-interest">$448M</strong>
         </div>
       </div>
 
@@ -1020,362 +1084,9 @@
         </div>
       </div>
     </div>
-  </div>
 
-
-    <!-- Qualitative Risk Haircut & Dynamic Pricing Bands -->
-    <!-- CARD 4: Qualitative Risk Haircut & Dynamic Pricing Bands -->
-      <div class="card">
-        <div class="card-title">
-          <span>4. Exit Yield, Qualitative Risk &amp; Dynamic Secondary Pricing Bands</span>
-          <span class="sub">Closed-loop link: Exit Yield &bull; Duration &bull; Haircuts &bull; Standstill Drag</span>
-        </div>
-
-        <div class="slider-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Petrobras Sponsor Action &amp; Governance Delta</span>
-              <span class="slider-val" id="val-qual-petrobras" style="color:var(--accent-rose);">-1.5c</span>
-            </div>
-            <input type="range" id="input-qual-petrobras" min="-6.0" max="4.0" step="0.5" value="-1.5" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Dilution / refusal to fund Novonor (-6c) vs Sponsor equity injection (+4c)</div>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Maceió Lawsuit &amp; Dutch Liability Overhang</span>
-              <span class="slider-val" id="val-qual-maceio" style="color:var(--accent-rose);">-1.0c</span>
-            </div>
-            <input type="range" id="input-qual-maceio" min="-6.0" max="1.0" step="0.5" value="-1.0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Rotterdam lawsuit piercing provisions (-6c) vs Federal settlement release (+1c)</div>
-          </div>
-        </div>
-
-        <div class="slider-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Judicial Resolution Pathway (Consensual RE vs RJ)</span>
-              <span class="slider-val" id="val-qual-rj" style="color:var(--accent-rose);">-1.0c</span>
-            </div>
-            <input type="range" id="input-qual-rj" min="-8.0" max="2.0" step="0.5" value="-1.0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">In-court RJ litigation / DIP priority (-8c) vs Consensual extrajudicial plan (+2c)</div>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Secondary Market Liquidity &amp; Mandate Selling</span>
-              <span class="slider-val" id="val-qual-discount" style="color:var(--accent-rose);">-0.5c</span>
-            </div>
-            <input type="range" id="input-qual-discount" min="-5.0" max="0.0" step="0.5" value="-0.5" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">CCC rating forced-selling &amp; dealer inventory discount (-5c to 0c)</div>
-          </div>
-        </div>
-
-        <!-- Net Qualitative Adjustment Metric Strip -->
-        <div style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <div style="font-size:11px; font-weight:700; color:#cbd5e1;">
-            Net Qualitative Adjustment: 
-            <span id="lbl-total-qual-delta" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-rose); font-size:12px;">-4.0c</span>
-          </div>
-          <div style="font-size:10px; color:var(--text-muted);">
-            Raw Economic PV: <strong id="lbl-qual-raw-rec" style="color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;">54.0c</strong> 
-            &plus; Qual Delta &rarr; <strong id="lbl-qual-adj-rec" style="color:var(--accent-gold); font-family:'JetBrains Mono',monospace;">50.0c</strong> (2033 Fair)
-          </div>
-        </div>
-
-        <!-- Linked Market Exit Yield Slider in Card 4 -->
-        <div class="slider-row" style="margin-top:6px;">
-          <div class="slider-box" style="border:1px solid rgba(56,189,248,0.35); background:rgba(56,189,248,0.04); grid-column:span 2;">
-            <div class="slider-header">
-              <span class="slider-label" style="color:#38bdf8; font-weight:700;">🎯 Required Market Exit Yield (r<sub>exit</sub>)</span>
-              <span class="slider-val" id="val-exit-yield-card4" style="color:#38bdf8; font-weight:800;">9.75%</span>
-            </div>
-            <input type="range" id="input-exit-yield-card4" min="7.0" max="15.0" step="0.25" value="9.75" oninput="onManualExitYield(this.value)">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-              <span>Market-clearing yield for post-reorg exit notes &bull; Live synced with Card 6</span>
-              <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
-                <input type="checkbox" id="chk-auto-exit-yield-card4" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating-card4">3.40x &rarr; 9.75%</span>)
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Interactive Qualitative Assessment Guide Accordion -->
-        <div style="margin-top:10px; margin-bottom:10px;">
-          <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-            <span>📘 Qualitative Assessment Guide: Expressing Risk in Cents of Upside / Discount to Recovery</span>
-            <span id="qual-guide-icon">▼ Click to Expand Guide</span>
-          </button>
-          
-          <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
-            <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              1. Why Express Qualitative Factors in Cents Rather Than Abstract %?
-            </div>
-            <p style="margin-bottom:8px;">
-              In distressed credit trading, percentage multipliers obscure how much economic value is actually at stake. 
-              Expressing qualitative adjustments directly in <strong>cents per dollar of claim (+upside or -discount)</strong> gives direct attribution:
-              <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-weight:700;">Desk Fair Value = Present Economic Recovery + Indenture Delta + &sum;(&Delta; Cents)</span>.
-            </p>
-            <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
-              <li>
-                <strong style="color:#fff;">Petrobras Sponsor Governance (-6.0c to +4.0c):</strong> 
-                Refusal to fund Novonor forces heavy creditor equitization (-6c discount). A direct sponsor equity check or ADNOC buyout provides +4c upside.
-              </li>
-              <li>
-                <strong style="color:#fff;">Maceió Litigation Overhang (-6.0c to +1.0c):</strong> 
-                Rotterdam class action piercing provisions threatens priority cash sweeps (-6c discount). Final federal judicial release caps liabilities (+1c upside).
-              </li>
-              <li>
-                <strong style="color:#fff;">Judicial Resolution Pathway (-8.0c to +2.0c):</strong> 
-                Collapse into a 24-month in-court RJ burns $15M/mo in advisor fees and adds DIP super-priority (-8c discount). Fast-track consensual plan approval preserves +2c.
-              </li>
-              <li>
-                <strong style="color:#fff;">Secondary Market Liquidity (-5.0c to 0.0c):</strong> 
-                Mandate-driven forced-selling and wide dealer bid/ask spreads during restructuring impose a -5c to 0c illiquidity haircut.
-              </li>
-            </ul>
-
-            <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              2. How the Math Works: Direct Cents Addition to Present Value
-            </div>
-            <p style="margin-bottom:6px;">
-              Secondary bond fair value is governed by the closed-loop link between Exit Yield ($Y_{\text{exit}}$), Tenor ($T_{\text{ext}}$), Haircut ($H$), and Negotiation Duration ($T_{\text{nego}}$), adjusted directly by qualitative cents:
-            </p>
-            <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:8px 10px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#38bdf8; margin-bottom:8px; line-height:1.6;">
-              <div><strong>1. Exit Paper Price (P<sub>new</sub>):</strong> P<sub>new</sub> = &sum; [ (C/2) / (1 + Y<sub>exit</sub>/2)<sup>t</sup> ] + 100 / (1 + Y<sub>exit</sub>/2)<sup>2T<sub>ext</sub></sup></div>
-              <div><strong>2. Standstill Time Discount (DF<sub>nego</sub>):</strong> DF<sub>nego</sub> = 1 / (1 + Y<sub>exit</sub>/2)<sup>2 &times; (T<sub>nego</sub> / 12)</sup></div>
-              <div><strong>3. Present Economic Recovery:</strong> Rec<sub>PV</sub> = [ (1 - H) &times; (1 - E<sub>swap</sub>) &times; P<sub>new</sub> + (1 - H) &times; E<sub>swap</sub> &times; &mu;<sub>eq</sub> ] &times; DF<sub>nego</sub></div>
-              <div><strong>4. Net Qualitative Delta (&Delta;<sub>qual</sub>):</strong> &Delta;<sub>qual</sub> = &Delta;<sub>Petrobras</sub> + &Delta;<sub>Maceió</sub> + &Delta;<sub>RJ</sub> + &Delta;<sub>Liquidity</sub> (Base = -4.0c)</div>
-              <div><strong>5. Desk Fair Value:</strong> Fair Value = Rec<sub>PV</sub> + &Delta;<sub>tranche</sub> + &Delta;<sub>qual</sub> (Base: 54.0c + 0c - 4.0c = 50.0c)</div>
-            </div>
-
-            <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              3. Why Are There 3 Sets of Prices (Floor, Fair, Upside) for Every Scenario?
-            </div>
-            <p style="margin-bottom:8px;">
-              A crucial distinction in institutional distressed credit is between <strong>Macro Fundamental Regimes (The Scenario Presets)</strong> and <strong>Secondary Market Trading Bands (Market Execution Dispersion)</strong>:
-            </p>
-            <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px; margin-bottom:10px;">
-              <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px 10px; border-radius:4px;">
-                <strong style="color:#fff;">• The Scenario Presets / Sliders (The Fundamental Reality):</strong>
-                Sets the macro balance sheet parameters: Operating EBITDA ($1,400M Base), Multiple (5.0x), Haircut (35%), Equitization (30%), Exit Yield (9.75%), Standstill (18M), and Net Qualitative Friction (-4.0c).
-              </div>
-              <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-rose);">• Trading Floor (Stress Exit / Secondary Bid):</strong>
-                Even if the company achieves this scenario's restructuring terms, secondary market conditions may be hostile upon emergence. If exit yields blow out +200 bps (to 11.75%), dealer inventories are frozen, and mandate selling floods the street, secondary clearing prices fall to this liquidation floor (e.g. ~35c–40c for 2033s).
-              </div>
-              <div style="border-left:3px solid var(--accent-emerald); background:rgba(16,185,129,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-emerald);">• Desk Fair Value (Central Model / Expected PV):</strong>
-                The theoretical present value of the reinstated paper plus reorganized equity under the exact dialed-in inputs (e.g. 50.0c for the benchmark 2033s). This is your central trading anchor.
-              </div>
-              <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-cyan);">• Emergence Upside (Post-Reorg Re-Rating):</strong>
-                Conversely, once the default cloud clears and leverage drops to &lt;3.2x, the market often re-rates the company aggressively: exit yields compress -150 bps (to 8.25%), new equity trades at a premium public multiple (6.0x+), or a strategic sponsor tenders for paper, pulling the trading value toward par (e.g. ~65c–75c).
-              </div>
-            </div>
-
-            <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              4. Scenario Presets: What Concrete Fundamental Catalysts Drive Bear, Base, and Bull Scenarios?
-            </div>
-            <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
-              <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-rose);">🔴 Bear Case Scenario (17c–22c Recovery):</strong>
-                Chemical spreads collapse (&lt;$180/t PE); $800M EBITDA at 3.5x fire-sale multiple ($2.8B EV); Petrobras blocks credit lines; Maceió damages exceed R$25B in Rotterdam court; consensual talks collapse into hostile 24M in-court RJ (-16c to -22c qualitative discount). Subordinated 2081 Hybrid is wiped out (0c).
-              </div>
-              <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-gold);">🟡 Base Case Scenario (49c–54c Recovery):</strong>
-                Mid-cycle EBITDA ($1,400M) at 5.0x EV ($7.0B); Petrobras maintains commercial feedstock line; Maceió settled within provisions; consensual Extrajudicial Plan confirmed with 35% haircut + 30% equitization; exit debt issued at 87.7c for 54.0c present recovery minus -4.0c qualitative frictions = 50.0c fair value.
-              </div>
-              <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-cyan);">🟢 Bull Case Scenario (95c–100c Par):</strong>
-                Petrochemical spread recovery (&gt;$600/t PE); $2,100M EBITDA at 6.0x multiple ($12.6B EV); Petrobras / ADNOC consortium buys out Novonor with $2.5B cash equity (+4c qualitative upside); unimpaired debt reinstatement at 100c par.
-              </div>
-            </div>
-            
-            <div style="margin-top:8px; text-align:right;">
-              <a href="braskem_background.html#qualitative-guide" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">→ Read Complete Institutional Qualitative Deep Dive in Background Page</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Real-Time Valuation Breakdown Strip -->
-        <div class="recovery-formula-strip" style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:10px; margin-bottom:10px; font-size:11px;">
-          <div>
-            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Exit Paper Px (P<sub>new</sub>)</div>
-            <div style="font-weight:700; color:#fbbf24; font-family:'JetBrains Mono',monospace;" id="strip-paper-px">87.7c (-12.3%)</div>
-          </div>
-          <div>
-            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Debt / Equity Split</div>
-            <div style="font-weight:700; color:#38bdf8; font-family:'JetBrains Mono',monospace;" id="strip-debt-equity-split">Debt: 39.9c | Eq: 19.5c</div>
-          </div>
-          <div>
-            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Standstill Drag</div>
-            <div style="font-weight:700; color:var(--accent-rose); font-family:'JetBrains Mono',monospace;" id="strip-time-drag">-9.0% (18M @ 9.75%)</div>
-          </div>
-          <div>
-            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">True Net PV Recovery</div>
-            <div style="font-weight:800; color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;" id="strip-true-recovery">54.0c Net PV</div>
-          </div>
-        </div>
-
-        <div style="margin-top:10px;">
-        <div style="margin-top:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
-            <div style="font-size:11px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
-              📊 Secondary Market Pricing Across Core Scenarios (Bear &bull; Base &bull; Bull)
-            </div>
-            <div style="font-size:9.5px; color:var(--text-muted);">
-              Clear scenario bounds &bull; Click links for detailed legal &amp; capital structure models
-            </div>
-          </div>
-
-          <table class="band-table" id="pricing-band-table">
-            <thead>
-              <tr>
-                <th style="text-align:left; width:28%;">Instrument</th>
-                <th style="text-align:right; width:12%;">Market Px</th>
-                <th style="text-align:right; width:18%;" title="Bear Case: Hostile In-Court Brazilian RJ, 50% Haircut, 13.00% Exit Yield, 24M Delay">
-                  <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
-                    <span style="color:var(--accent-rose); font-weight:800;">🔴 Bear Case</span>
-                    <a href="braskem_background.html#scenario-bear" target="_blank" style="font-size:9px; color:#f87171; text-decoration:underline;">[📖 Subpage]</a>
-                  </div>
-                  <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#f87171;">Hostile RJ / 50% Cut</span>
-                </th>
-                <th style="text-align:right; width:18%;" title="Base Case: Consensual Out-of-Court Reorg, 35% Haircut + 30% Eq, 9.75% Exit Yield, 12M Delay">
-                  <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
-                    <span style="color:var(--accent-gold); font-weight:800;">🟡 Base Case</span>
-                    <a href="braskem_background.html#scenario-base" target="_blank" style="font-size:9px; color:#fbbf24; text-decoration:underline;">[📖 Subpage]</a>
-                  </div>
-                  <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#fbbf24;">Consensual / Active Model</span>
-                </th>
-                <th style="text-align:right; width:18%;" title="Bull Case: Petrobras Sponsor Recap, $2.5B Cash Equity Check, 15% Haircut, 8.25% Exit Yield">
-                  <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
-                    <span style="color:var(--accent-cyan); font-weight:800;">🟢 Bull Case</span>
-                    <a href="braskem_background.html#scenario-bull" target="_blank" style="font-size:9px; color:#38bdf8; text-decoration:underline;">[📖 Subpage]</a>
-                  </div>
-                  <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#38bdf8;">Petrobras Recap / Par Roll</span>
-                </th>
-                <th style="text-align:center; width:14%;">Desk Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Populated dynamically via JS -->
-            </tbody>
-          </table>
-
-          <!-- Scenario Assumptions & Subpage Deep-Dive Card -->
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px; margin-top:12px; background:rgba(6,9,19,0.8); border:1px solid #1e293b; border-radius:6px; padding:12px;">
-            <!-- Bear Assumptions -->
-            <div style="border-left:3px solid var(--accent-rose); padding-left:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="color:var(--accent-rose); font-size:11px;">🔴 Bear Scenario Assumptions</strong>
-                <button type="button" onclick="loadPreset('rj')" style="background:rgba(244,63,94,0.15); border:1px solid rgba(244,63,94,0.35); color:#f87171; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
-              </div>
-              <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
-                <div>&bull; <strong>EBITDA &bull; Mult:</strong> $800M &bull; 3.5x ($2.8B EV)</div>
-                <div>&bull; <strong>Standstill:</strong> 24–30M hostile court delay</div>
-                <div>&bull; <strong>Terms:</strong> 50% Cut &bull; 13.00% Exit Yield</div>
-                <div>&bull; <strong>Deductions:</strong> -$850M Maceió &bull; $0 Sponsor</div>
-              </div>
-              <div style="margin-top:6px;">
-                <a href="braskem_background.html#scenario-bear" target="_blank" style="color:var(--accent-rose); font-size:10px; font-weight:700; text-decoration:none;">
-                  📖 View Full Bear Subpage Analysis &rarr;
-                </a>
-              </div>
-            </div>
-
-            <!-- Base Assumptions -->
-            <div style="border-left:3px solid var(--accent-gold); padding-left:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="color:var(--accent-gold); font-size:11px;">🟡 Base Scenario Assumptions</strong>
-                <button type="button" onclick="loadPreset('base')" style="background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
-              </div>
-              <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
-                <div>&bull; <strong>EBITDA &bull; Mult:</strong> $1,340M &bull; 5.0x ($6.7B EV)</div>
-                <div>&bull; <strong>Standstill:</strong> 12M consensual out-of-court</div>
-                <div>&bull; <strong>Terms:</strong> 35% Cut + 30% Eq &bull; 9.75% Yield</div>
-                <div>&bull; <strong>Deductions:</strong> -$600M Maceió &bull; $0 Sponsor</div>
-              </div>
-              <div style="margin-top:6px;">
-                <a href="braskem_background.html#scenario-base" target="_blank" style="color:var(--accent-gold); font-size:10px; font-weight:700; text-decoration:none;">
-                  📖 View Full Base Subpage Analysis &rarr;
-                </a>
-              </div>
-            </div>
-
-            <!-- Bull Assumptions -->
-            <div style="border-left:3px solid var(--accent-cyan); padding-left:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="color:var(--accent-cyan); font-size:11px;">🟢 Bull Scenario Assumptions</strong>
-                <button type="button" onclick="loadPreset('recap')" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.35); color:#38bdf8; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
-              </div>
-              <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
-                <div>&bull; <strong>EBITDA &bull; Mult:</strong> $1,640M &bull; 6.0x ($9.8B EV)</div>
-                <div>&bull; <strong>Standstill:</strong> 6M quick consensual recap</div>
-                <div>&bull; <strong>Terms:</strong> 15% Cut &bull; 8.25% Exit Yield</div>
-                <div>&bull; <strong>Sponsor Check:</strong> +$2,500M Cash Equity</div>
-              </div>
-              <div style="margin-top:6px;">
-                <a href="braskem_background.html#scenario-bull" target="_blank" style="color:var(--accent-cyan); font-size:10px; font-weight:700; text-decoration:none;">
-                  📖 View Full Bull Subpage Analysis &rarr;
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-    <!-- Exit Yield Discounting & Reinstated Paper Trading Engine -->
-    <!-- CARD 6: Exit Yield Discounting & Reinstated Paper Trading Engine -->
-  <div class="card" style="margin-top:14px;">
-    <div class="card-title">
-      <span style="display:flex; align-items:center; gap:8px;">
-        <span>🎯</span> 6. Exit Yield Discounting &amp; True Economic Recovery Engine
-      </span>
-      <span class="sub">Market-Clearing Post-Reorg Yield &bull; Bond Duration &amp; Coupon Parity Pricing</span>
-    </div>
-
-    <div class="slider-row">
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Reinstated Exit Note Tenor</span>
-          <span class="slider-val" id="val-exit-tenor">8 Years</span>
-        </div>
-        <input type="range" id="input-exit-tenor" min="3" max="12" step="1" value="8" oninput="syncTenor(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new exit debt instruments</div>
-      </div>
-
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Reinstated Cash Coupon</span>
-          <span class="slider-val" id="val-exit-coupon">7.50%</span>
-        </div>
-        <input type="range" id="input-exit-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="syncCoupon(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Annual cash coupon paid semi-annually on new exit notes</div>
-      </div>
-
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Required Market Exit Yield</span>
-          <span class="slider-val" id="val-exit-yield">9.75%</span>
-        </div>
-        <input type="range" id="input-exit-yield" min="7.0" max="15.0" step="0.25" value="9.75" oninput="onManualExitYield(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-          <span>Market-clearing yield for post-reorg paper</span>
-          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
-            <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">3.40x &rarr; 9.75%</span>)
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Exit Yield Key Valuation Metric Cards -->
-    <div class="meter-grid" style="margin-top:12px;">
+    <!-- Live Valuation Output Meters Directly in Methodology 2 -->
+    <div class="meter-grid" style="margin-top:14px;">
       <div class="meter-card">
         <div class="meter-title">Trading Price of New Notes</div>
         <div class="meter-val" id="meter-exit-bond-px" style="color:#fbbf24;">87.7c</div>
@@ -1395,17 +1106,17 @@
       </div>
     </div>
 
-    <!-- Interactive Exit Yield Sensitivity Table -->
-    <div style="margin-top:14px;">
+    <!-- Exit Yield Sensitivity Matrix Grid Directly in Methodology 2 -->
+    <div style="margin-top:14px; background:rgba(6,9,19,0.5); border:1px solid #1e293b; border-radius:6px; padding:10px 12px;">
       <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-        <span>Exit Yield Sensitivity Matrix: Post-Emergence Trading Value</span>
-        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Cash Coupon: <span id="matrix-coupon-label">7.50%</span> | PIK: <span id="matrix-pik-label" style="color:var(--accent-purple); font-weight:700;">0.00% (0Y)</span> | Tenor: <span id="matrix-tenor-label">8Y</span></span>
+        <span>📈 Exit Yield Sensitivity Matrix: Post-Emergence Trading Value</span>
+        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Coupon: <span id="matrix-coupon-label">7.50%</span> | PIK: <span id="matrix-pik-label" style="color:var(--accent-purple); font-weight:700;">0.00% (0Y)</span> | Tenor: <span id="matrix-tenor-label">8Y</span></span>
       </div>
       <div style="overflow-x:auto;">
         <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
           <thead>
             <tr>
-              <th style="text-align:left;">Exit Yield (Y_exit)</th>
+              <th style="text-align:left;">Exit Yield (Y<sub>exit</sub>)</th>
               <th style="text-align:right;">Implied Spread</th>
               <th style="text-align:right;">Trading Px of New Debt</th>
               <th style="text-align:right;">Debt Value (35c Face)</th>
@@ -1421,71 +1132,381 @@
         </table>
       </div>
     </div>
+  </div>
 
-    <!-- TWO-STREAM RECONCILIATION BRIDGE: FUNDAMENTAL EV VS MARKET-BASED PRICING -->
-    <div style="background:var(--bg-card-sub); border:1px solid #334155; border-radius:8px; padding:14px; margin-top:14px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-        <span style="font-size:11.5px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.5px;">
-          ⚖️ Two-Stream Valuation Reconciliation: Fundamental EV vs Market-Based Pricing
-        </span>
-        <span id="reconcile-action-badge" style="font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; font-family:'JetBrains Mono',monospace; background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3);">HOLD / FAIR VALUE</span>
-      </div>
+  <!-- CARD 4: QUALITATIVE RISK & DYNAMIC SECONDARY PRICING BANDS -->
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-title">
+      <span>4. Exit Yield, Qualitative Risk &amp; Dynamic Secondary Pricing Bands</span>
+      <span class="sub">Closed-loop link: Exit Yield &bull; Duration &bull; Haircuts &bull; Standstill Drag</span>
+    </div>
 
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; font-size:11px;">
-        <!-- STREAM 1: FUNDAMENTAL EV WATERFALL -->
-        <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
-            <strong style="color:var(--accent-emerald);">STREAM 1: FUNDAMENTAL EV RECOVERY</strong>
-            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-emerald);" id="stream1-val">71.5c PV</span>
-          </div>
-          <div style="font-size:10px; color:#94a3b8; line-height:1.5;">
-            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> EBITDA: <span id="s1-ebitda">$1,340M</span> &bull; Multiple: <span id="s1-mult">6.5x</span> &bull; Cash: $900M</div>
-            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Priority Claims: $1.1B Bank + <span id="s1-maceio">$600M</span> Maceió + Legal Burn</div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Net Distributable Senior Pool: <strong style="color:#fff;" id="s1-senior-pool">$7,230M</strong> ($9.2B Claims)</div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Nominal Asset Coverage: <strong style="color:#34d399;" id="s1-nominal-rec">78.6c</strong></div>
-            <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s1-duration">12M</span> negotiation @ <span id="s1-yield">9.75%</span> = <strong style="color:#f87171;" id="s1-time-factor">-9.1%</strong></div>
-            <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#cbd5e1;">
-              <strong>Anchor Question:</strong> What are assets worth if liquidated/reorganized without exchange concessions?
-            </div>
-          </div>
+    <!-- Market Exit Yield Slider with Auto-Leverage Link -->
+    <div class="slider-row" style="margin-bottom:10px;">
+      <div class="slider-box" style="border:1px solid rgba(56,189,248,0.35); background:rgba(56,189,248,0.04); grid-column:span 2;">
+        <div class="slider-header">
+          <span class="slider-label" style="color:#38bdf8; font-weight:700;">🎯 Required Market Exit Yield (r<sub>exit</sub>)</span>
+          <span class="slider-val" id="val-exit-yield-card4" style="color:#38bdf8; font-weight:800;">9.75%</span>
         </div>
-
-        <!-- STREAM 2: MARKET-BASED PRICING -->
-        <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
-            <strong style="color:#38bdf8;">STREAM 2: MARKET-BASED EXCHANGE PV</strong>
-            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#38bdf8;" id="stream2-val">54.0c PV</span>
-          </div>
-          <div style="font-size:10px; color:#94a3b8; line-height:1.5;">
-            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Terms: <span id="s2-haircut">35%</span> Cut &bull; <span id="s2-swap">30%</span> Eq Swap &bull; <span id="s2-coupon">7.50%</span> Cpn &bull; <span id="s2-tenor">8Y</span> Tenor</div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Pro-Forma Leverage: <strong style="color:#fff;" id="s2-leverage">3.40x</strong> &rarr; Implied Exit Yield: <strong style="color:#fbbf24;" id="s2-exit-yield">9.75%</strong></div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> New Paper Trading Px: <strong style="color:#fbbf24;" id="s2-paper-px">87.7c</strong> (Reinstated Debt: <span id="s2-debt-pot">39.9c</span> + Eq: <span id="s2-eq-pot">19.5c</span>)</div>
-            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Undiscounted Emergence Pot: <strong style="color:#fff;" id="s2-emergence-pot">59.4c</strong></div>
-            <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s2-duration">12M</span> carrying bleed @ <span id="s2-yield">9.75%</span> = <strong style="color:#f87171;" id="s2-time-factor">-9.1%</strong></div>
-            <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#cbd5e1;">
-              <strong>Anchor Question:</strong> What will the secondary market pay for the restructured paper on Day 1?
-            </div>
-          </div>
+        <input type="range" id="input-exit-yield-card4" min="7.0" max="15.0" step="0.25" value="9.75" oninput="onManualExitYield(this.value)">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+          <span>Market-clearing yield for post-reorg exit notes &bull; Calibrated to post-emergence leverage</span>
+          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
+            <input type="checkbox" id="chk-auto-exit-yield-card4" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating-card4">3.40x &rarr; 9.75%</span>)
+          </label>
         </div>
       </div>
+    </div>
 
-      <!-- RECONCILIATION SUMMARY BAR & BUY/SELL SIGNAL -->
-      <div style="margin-top:10px; background:rgba(15,23,42,0.9); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; font-size:10.5px; color:#cbd5e1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <strong>Reconciliation Gap:</strong> <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#f87171;" id="reconcile-gap">-17.5c</span> 
-          <span style="color:var(--text-muted); font-size:9.5px;">(Market PV sits below Fundamental Asset Coverage due to 35% haircut &amp; 9.75% exit yield)</span>
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Petrobras Sponsor Action &amp; Governance Delta</span>
+          <span class="slider-val" id="val-qual-petrobras" style="color:var(--accent-rose);">-1.5c</span>
         </div>
-        <div>
-          <strong>Trading Signal vs Market (<span id="reconcile-mkt-px">54.0c</span>):</strong> <span id="reconcile-signal-text" style="font-weight:700; color:var(--accent-amber);">Fairly Priced &bull; Asset Cushion Prevents Crash</span>
+        <input type="range" id="input-qual-petrobras" min="-6.0" max="4.0" step="0.5" value="-1.5" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Dilution / refusal to fund Novonor (-6c) vs Sponsor equity injection (+4c)</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Maceió Lawsuit &amp; Dutch Liability Overhang</span>
+          <span class="slider-val" id="val-qual-maceio" style="color:var(--accent-rose);">-1.0c</span>
+        </div>
+        <input type="range" id="input-qual-maceio" min="-6.0" max="1.0" step="0.5" value="-1.0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Rotterdam lawsuit piercing provisions (-6c) vs Federal settlement release (+1c)</div>
+      </div>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Judicial Resolution Pathway (Consensual RE vs RJ)</span>
+          <span class="slider-val" id="val-qual-rj" style="color:var(--accent-rose);">-1.0c</span>
+        </div>
+        <input type="range" id="input-qual-rj" min="-8.0" max="2.0" step="0.5" value="-1.0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">In-court RJ litigation / DIP priority (-8c) vs Consensual extrajudicial plan (+2c)</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Secondary Market Liquidity &amp; Mandate Selling</span>
+          <span class="slider-val" id="val-qual-discount" style="color:var(--accent-rose);">-0.5c</span>
+        </div>
+        <input type="range" id="input-qual-discount" min="-5.0" max="0.0" step="0.5" value="-0.5" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">CCC rating forced-selling &amp; dealer inventory discount (-5c to 0c)</div>
+      </div>
+    </div>
+
+    <!-- Net Qualitative Adjustment Metric Strip -->
+    <div style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div style="font-size:11px; font-weight:700; color:#cbd5e1;">
+        Net Qualitative Adjustment: 
+        <span id="lbl-total-qual-delta" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-rose); font-size:12px;">-4.0c</span>
+      </div>
+      <div style="font-size:10px; color:var(--text-muted);">
+        Raw Economic PV: <strong id="lbl-qual-raw-rec" style="color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;">54.0c</strong> 
+        &plus; Qual Delta &rarr; <strong id="lbl-qual-adj-rec" style="color:var(--accent-gold); font-family:'JetBrains Mono',monospace;">50.0c</strong> (2033 Fair)
+      </div>
+    </div>
+
+    <!-- Interactive Qualitative Assessment Guide Accordion -->
+    <div style="margin-top:10px; margin-bottom:10px;">
+      <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+        <span>📘 Qualitative Assessment Guide: Expressing Risk in Cents of Upside / Discount to Recovery</span>
+        <span id="qual-guide-icon">▼ Click to Expand Guide</span>
+      </button>
+      
+      <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
+        <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+          1. Why Express Qualitative Factors in Cents Rather Than Abstract %?
+        </div>
+        <p style="margin-bottom:8px;">
+          In distressed credit trading, percentage multipliers obscure how much economic value is actually at stake. 
+          Expressing qualitative adjustments directly in <strong>cents per dollar of claim (+upside or -discount)</strong> gives direct attribution:
+          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-weight:700;">Desk Fair Value = Present Economic Recovery + Indenture Delta + &sum;(&Delta; Cents)</span>.
+        </p>
+        <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
+          <li>
+            <strong style="color:#fff;">Petrobras Sponsor Governance (-6.0c to +4.0c):</strong> 
+            Refusal to fund Novonor forces heavy creditor equitization (-6c discount). A direct sponsor equity check or ADNOC buyout provides +4c upside.
+          </li>
+          <li>
+            <strong style="color:#fff;">Maceió Litigation Overhang (-6.0c to +1.0c):</strong> 
+            Rotterdam class action piercing provisions threatens priority cash sweeps (-6c discount). Final federal judicial release caps liabilities (+1c upside).
+          </li>
+          <li>
+            <strong style="color:#fff;">Judicial Resolution Pathway (-8.0c to +2.0c):</strong> 
+            Collapse into a 24-month in-court RJ burns $15M/mo in advisor fees and adds DIP super-priority (-8c discount). Fast-track consensual plan approval preserves +2c.
+          </li>
+          <li>
+            <strong style="color:#fff;">Secondary Market Liquidity (-5.0c to 0.0c):</strong> 
+            Mandate-driven forced-selling and wide dealer bid/ask spreads during restructuring impose a -5c to 0c illiquidity haircut.
+          </li>
+        </ul>
+
+        <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+          2. How the Math Works: Direct Cents Addition to Present Value
+        </div>
+        <p style="margin-bottom:6px;">
+          Secondary bond fair value is governed by the closed-loop link between Exit Yield ($Y_{\text{exit}}$), Tenor ($T_{\text{ext}}$), Haircut ($H$), and Negotiation Duration ($T_{\text{nego}}$), adjusted directly by qualitative cents:
+        </p>
+        <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:8px 10px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#38bdf8; margin-bottom:8px; line-height:1.6;">
+          <div><strong>1. Exit Paper Price (P<sub>new</sub>):</strong> P<sub>new</sub> = &sum; [ (C/2) / (1 + Y<sub>exit</sub>/2)<sup>t</sup> ] + 100 / (1 + Y<sub>exit</sub>/2)<sup>2T<sub>ext</sub></sup></div>
+          <div><strong>2. Standstill Time Discount (DF<sub>nego</sub>):</strong> DF<sub>nego</sub> = 1 / (1 + Y<sub>exit</sub>/2)<sup>2 &times; (T<sub>nego</sub> / 12)</sup></div>
+          <div><strong>3. Present Economic Recovery:</strong> Rec<sub>PV</sub> = [ (1 - H) &times; (1 - E<sub>swap</sub>) &times; P<sub>new</sub> + (1 - H) &times; E<sub>swap</sub> &times; &mu;<sub>eq</sub> ] &times; DF<sub>nego</sub></div>
+          <div><strong>4. Net Qualitative Delta (&Delta;<sub>qual</sub>):</strong> &Delta;<sub>qual</sub> = &Delta;<sub>Petrobras</sub> + &Delta;<sub>Maceió</sub> + &Delta;<sub>RJ</sub> + &Delta;<sub>Liquidity</sub> (Base = -4.0c)</div>
+          <div><strong>5. Desk Fair Value:</strong> Fair Value = Rec<sub>PV</sub> + &Delta;<sub>tranche</sub> + &Delta;<sub>qual</sub> (Base: 54.0c + 0c - 4.0c = 50.0c)</div>
+        </div>
+
+        <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+          3. Why Are There 3 Sets of Prices (Floor, Fair, Upside) for Every Scenario?
+        </div>
+        <p style="margin-bottom:8px;">
+          A crucial distinction in institutional distressed credit is between <strong>Macro Fundamental Regimes (The Scenario Presets)</strong> and <strong>Secondary Market Trading Bands (Market Execution Dispersion)</strong>:
+        </p>
+        <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px; margin-bottom:10px;">
+          <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px 10px; border-radius:4px;">
+            <strong style="color:#fff;">• The Scenario Presets / Sliders (The Fundamental Reality):</strong>
+            Sets the macro balance sheet parameters: Operating EBITDA ($1,400M Base), Multiple (5.0x), Haircut (35%), Equitization (30%), Exit Yield (9.75%), Standstill (18M), and Net Qualitative Friction (-4.0c).
+          </div>
+          <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-rose);">• Trading Floor (Stress Exit / Secondary Bid):</strong>
+            Even if the company achieves this scenario's restructuring terms, secondary market conditions may be hostile upon emergence. If exit yields blow out +200 bps (to 11.75%), dealer inventories are frozen, and mandate selling floods the street, secondary clearing prices fall to this liquidation floor (e.g. ~35c–40c for 2033s).
+          </div>
+          <div style="border-left:3px solid var(--accent-emerald); background:rgba(16,185,129,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-emerald);">• Desk Fair Value (Central Model / Expected PV):</strong>
+            The theoretical present value of the reinstated paper plus reorganized equity under the exact dialed-in inputs (e.g. 50.0c for the benchmark 2033s). This is your central trading anchor.
+          </div>
+          <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-cyan);">• Emergence Upside (Post-Reorg Re-Rating):</strong>
+            Conversely, once the default cloud clears and leverage drops to &lt;3.2x, the market often re-rates the company aggressively: exit yields compress -150 bps (to 8.25%), new equity trades at a premium public multiple (6.0x+), or a strategic sponsor tenders for paper, pulling the trading value toward par (e.g. ~65c–75c).
+          </div>
+        </div>
+
+        <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+          4. Scenario Presets: What Concrete Fundamental Catalysts Drive Bear, Base, and Bull Scenarios?
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
+          <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-rose);">🔴 Bear Case Scenario (17c–22c Recovery):</strong>
+            Chemical spreads collapse (&lt;$180/t PE); $800M EBITDA at 3.5x fire-sale multiple ($2.8B EV); Petrobras blocks credit lines; Maceió damages exceed R$25B in Rotterdam court; consensual talks collapse into hostile 24M in-court RJ (-16c to -22c qualitative discount). Subordinated 2081 Hybrid is wiped out (0c).
+          </div>
+          <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-gold);">🟡 Base Case Scenario (49c–54c Recovery):</strong>
+            Mid-cycle EBITDA ($1,400M) at 5.0x EV ($7.0B); Petrobras maintains commercial feedstock line; Maceió settled within provisions; consensual Extrajudicial Plan confirmed with 35% haircut + 30% equitization; exit debt issued at 87.7c for 54.0c present recovery minus -4.0c qualitative frictions = 50.0c fair value.
+          </div>
+          <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-cyan);">🟢 Bull Case Scenario (95c–100c Par):</strong>
+            Petrochemical spread recovery (&gt;$600/t PE); $2,100M EBITDA at 6.0x multiple ($12.6B EV); Petrobras / ADNOC consortium buys out Novonor with $2.5B cash equity (+4c qualitative upside); unimpaired debt reinstatement at 100c par.
+          </div>
+        </div>
+        
+        <div style="margin-top:8px; text-align:right;">
+          <a href="braskem_background.html#qualitative-guide" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">&rarr; Read Complete Institutional Qualitative Deep Dive in Background Page</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-Time Valuation Breakdown Strip -->
+    <div class="recovery-formula-strip" style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:10px; margin-bottom:10px; font-size:11px;">
+      <div>
+        <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Exit Paper Px (P<sub>new</sub>)</div>
+        <div style="font-weight:700; color:#fbbf24; font-family:'JetBrains Mono',monospace;" id="strip-paper-px">87.7c (-12.3%)</div>
+      </div>
+      <div>
+        <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Debt / Equity Split</div>
+        <div style="font-weight:700; color:#38bdf8; font-family:'JetBrains Mono',monospace;" id="strip-debt-equity-split">Debt: 39.9c | Eq: 19.5c</div>
+      </div>
+      <div>
+        <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Standstill Drag</div>
+        <div style="font-weight:700; color:var(--accent-rose); font-family:'JetBrains Mono',monospace;" id="strip-time-drag">-9.0% (18M @ 9.75%)</div>
+      </div>
+      <div>
+        <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">True Net PV Recovery</div>
+        <div style="font-weight:800; color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;" id="strip-true-recovery">54.0c Net PV</div>
+      </div>
+    </div>
+
+    <!-- Secondary Market Pricing Across Core Scenarios -->
+    <div style="margin-top:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+        <div style="font-size:11px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
+          📊 Secondary Market Pricing Across Core Scenarios (Bear &bull; Base &bull; Bull)
+        </div>
+        <div style="font-size:9.5px; color:var(--text-muted);">
+          Clear scenario bounds &bull; Click links for detailed legal &amp; capital structure models
+        </div>
+      </div>
+
+      <table class="band-table" id="pricing-band-table">
+        <thead>
+          <tr>
+            <th style="text-align:left; width:28%;">Instrument</th>
+            <th style="text-align:right; width:12%;">Market Px</th>
+            <th style="text-align:right; width:18%;" title="Bear Case: Hostile In-Court Brazilian RJ, 50% Haircut, 13.00% Exit Yield, 24M Delay">
+              <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                <span style="color:var(--accent-rose); font-weight:800;">🔴 Bear Case</span>
+                <a href="braskem_background.html#scenario-bear" target="_blank" style="font-size:9px; color:#f87171; text-decoration:underline;">[📖 Subpage]</a>
+              </div>
+              <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#f87171;">Hostile RJ / 50% Cut</span>
+            </th>
+            <th style="text-align:right; width:18%;" title="Base Case: Consensual Out-of-Court Reorg, 35% Haircut + 30% Eq, 9.75% Exit Yield, 12M Delay">
+              <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                <span style="color:var(--accent-gold); font-weight:800;">🟡 Base Case</span>
+                <a href="braskem_background.html#scenario-base" target="_blank" style="font-size:9px; color:#fbbf24; text-decoration:underline;">[📖 Subpage]</a>
+              </div>
+              <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#fbbf24;">Consensual / Active Model</span>
+            </th>
+            <th style="text-align:right; width:18%;" title="Bull Case: Petrobras Sponsor Recap, $2.5B Cash Equity Check, 15% Haircut, 8.25% Exit Yield">
+              <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                <span style="color:var(--accent-cyan); font-weight:800;">🟢 Bull Case</span>
+                <a href="braskem_background.html#scenario-bull" target="_blank" style="font-size:9px; color:#38bdf8; text-decoration:underline;">[📖 Subpage]</a>
+              </div>
+              <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#38bdf8;">Petrobras Recap / Par Roll</span>
+            </th>
+            <th style="text-align:center; width:14%;">Desk Action</th>
+          </tr>
+        </thead>
+        <tbody id="pricing-band-tbody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+
+      <!-- Scenario Assumptions & Subpage Deep-Dive Card -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px; margin-top:12px; background:rgba(6,9,19,0.8); border:1px solid #1e293b; border-radius:6px; padding:12px;">
+        <!-- Bear Assumptions -->
+        <div style="border-left:3px solid var(--accent-rose); padding-left:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="color:var(--accent-rose); font-size:11px;">🔴 Bear Scenario Assumptions</strong>
+            <button type="button" onclick="loadPreset('rj')" style="background:rgba(244,63,94,0.15); border:1px solid rgba(244,63,94,0.35); color:#f87171; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+          </div>
+          <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+            <div>&bull; <strong>EBITDA &bull; Mult:</strong> $800M &bull; 3.5x ($2.8B EV)</div>
+            <div>&bull; <strong>Standstill:</strong> 24–30M hostile court delay</div>
+            <div>&bull; <strong>Terms:</strong> 50% Cut &bull; 13.00% Exit Yield</div>
+            <div>&bull; <strong>Deductions:</strong> -$850M Maceió &bull; $0 Sponsor</div>
+          </div>
+          <div style="margin-top:6px;">
+            <a href="braskem_background.html#scenario-bear" target="_blank" style="color:var(--accent-rose); font-size:10px; font-weight:700; text-decoration:none;">
+              📖 View Full Bear Subpage Analysis &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Base Assumptions -->
+        <div style="border-left:3px solid var(--accent-gold); padding-left:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="color:var(--accent-gold); font-size:11px;">🟡 Base Scenario Assumptions</strong>
+            <button type="button" onclick="loadPreset('base')" style="background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+          </div>
+          <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+            <div>&bull; <strong>EBITDA &bull; Mult:</strong> $1,340M &bull; 5.0x ($6.7B EV)</div>
+            <div>&bull; <strong>Standstill:</strong> 12M consensual out-of-court</div>
+            <div>&bull; <strong>Terms:</strong> 35% Cut + 30% Eq &bull; 9.75% Yield</div>
+            <div>&bull; <strong>Deductions:</strong> -$600M Maceió &bull; $0 Sponsor</div>
+          </div>
+          <div style="margin-top:6px;">
+            <a href="braskem_background.html#scenario-base" target="_blank" style="color:var(--accent-gold); font-size:10px; font-weight:700; text-decoration:none;">
+              📖 View Full Base Subpage Analysis &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Bull Assumptions -->
+        <div style="border-left:3px solid var(--accent-cyan); padding-left:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="color:var(--accent-cyan); font-size:11px;">🟢 Bull Scenario Assumptions</strong>
+            <button type="button" onclick="loadPreset('recap')" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.35); color:#38bdf8; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+          </div>
+          <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+            <div>&bull; <strong>EBITDA &bull; Mult:</strong> $1,640M &bull; 6.0x ($9.8B EV)</div>
+            <div>&bull; <strong>Standstill:</strong> 6M quick consensual recap</div>
+            <div>&bull; <strong>Terms:</strong> 15% Cut &bull; 8.25% Exit Yield</div>
+            <div>&bull; <strong>Sponsor Check:</strong> +$2,500M Cash Equity</div>
+          </div>
+          <div style="margin-top:6px;">
+            <a href="braskem_background.html#scenario-bull" target="_blank" style="color:var(--accent-cyan); font-size:10px; font-weight:700; text-decoration:none;">
+              📖 View Full Bull Subpage Analysis &rarr;
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- TWO-STREAM RECONCILIATION BRIDGE: FUNDAMENTAL EV VS MARKET-BASED PRICING -->
+  <div style="background:var(--bg-card-sub); border:1px solid #334155; border-radius:8px; padding:14px; margin-bottom:14px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+      <span style="font-size:11.5px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.5px;">
+        ⚖️ Two-Stream Valuation Reconciliation: Fundamental EV vs Market-Based Pricing
+      </span>
+      <span id="reconcile-action-badge" style="font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; font-family:'JetBrains Mono',monospace; background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3);">HOLD / FAIR VALUE</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; font-size:11px;">
+      <!-- STREAM 1: FUNDAMENTAL EV WATERFALL -->
+      <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
+          <strong style="color:var(--accent-emerald);">STREAM 1: FUNDAMENTAL EV RECOVERY</strong>
+          <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-emerald);" id="stream1-val">71.5c PV</span>
+        </div>
+        <div style="font-size:10px; color:#94a3b8; line-height:1.5;">
+          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> EBITDA: <span id="s1-ebitda">$1,340M</span> &bull; Multiple: <span id="s1-mult">6.5x</span> &bull; Cash: $900M</div>
+          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Priority Claims: $1.1B Bank + <span id="s1-maceio">$600M</span> Maceió + Legal Burn</div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Net Distributable Senior Pool: <strong style="color:#fff;" id="s1-senior-pool">$7,230M</strong> ($9.2B Claims)</div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Nominal Asset Coverage: <strong style="color:#34d399;" id="s1-nominal-rec">78.6c</strong></div>
+          <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s1-duration">12M</span> negotiation @ <span id="s1-yield">9.75%</span> = <strong style="color:#f87171;" id="s1-time-factor">-9.1%</strong></div>
+          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#cbd5e1;">
+            <strong>Anchor Question:</strong> What are assets worth if liquidated/reorganized without exchange concessions?
+          </div>
+        </div>
+      </div>
+
+      <!-- STREAM 2: MARKET-BASED PRICING -->
+      <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
+          <strong style="color:#38bdf8;">STREAM 2: MARKET-BASED EXCHANGE PV</strong>
+          <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#38bdf8;" id="stream2-val">54.0c PV</span>
+        </div>
+        <div style="font-size:10px; color:#94a3b8; line-height:1.5;">
+          <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Terms: <span id="s2-haircut">35%</span> Cut &bull; <span id="s2-swap">30%</span> Eq Swap &bull; <span id="s2-coupon">7.50%</span> Cpn &bull; <span id="s2-tenor">8Y</span> Tenor</div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Pro-Forma Leverage: <strong style="color:#fff;" id="s2-leverage">3.40x</strong> &rarr; Implied Exit Yield: <strong style="color:#fbbf24;" id="s2-exit-yield">9.75%</strong></div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> New Paper Trading Px: <strong style="color:#fbbf24;" id="s2-paper-px">87.7c</strong> (Reinstated Debt: <span id="s2-debt-pot">39.9c</span> + Eq: <span id="s2-eq-pot">19.5c</span>)</div>
+          <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Undiscounted Emergence Pot: <strong style="color:#fff;" id="s2-emergence-pot">59.4c</strong></div>
+          <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s2-duration">12M</span> carrying bleed @ <span id="s2-yield">9.75%</span> = <strong style="color:#f87171;" id="s2-time-factor">-9.1%</strong></div>
+          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#cbd5e1;">
+            <strong>Anchor Question:</strong> What will the secondary market pay for the restructured paper on Day 1?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECONCILIATION SUMMARY BAR & BUY/SELL SIGNAL -->
+    <div style="margin-top:10px; background:rgba(15,23,42,0.9); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; font-size:10.5px; color:#cbd5e1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <strong>Reconciliation Gap:</strong> <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#f87171;" id="reconcile-gap">-17.5c</span> 
+        <span style="color:var(--text-muted); font-size:9.5px;">(Market PV sits below Fundamental Asset Coverage due to 35% haircut &amp; 9.75% exit yield)</span>
+      </div>
+      <div>
+        <strong>Trading Signal vs Market (<span id="reconcile-mkt-px">54.0c</span>):</strong> <span id="reconcile-signal-text" style="font-weight:700; color:var(--accent-amber);">Fairly Priced &bull; Asset Cushion Prevents Crash</span>
+      </div>
+    </div>
   </div>
 
-    
-  <!-- ========================================================================= -->
-  <!-- PART 4: SCENARIO ANATOMY & STRUCTURAL TRIGGERS                          -->
+  <!-- HIDDEN CONTAINER PRESERVING DEPRECATED SECTION 6 IDS FOR FULL BACKWARD/SCRIPT COMPATIBILITY -->
+  <div style="display:none;" id="deprecated-card6-elements">
+    <input type="range" id="input-exit-tenor" min="3" max="12" step="1" value="8">
+    <span id="val-exit-tenor">8 Years</span>
+    <input type="range" id="input-exit-coupon" min="4.0" max="12.0" step="0.25" value="7.50">
+    <span id="val-exit-coupon">7.50%</span>
+    <input type="range" id="input-exit-yield" min="7.0" max="15.0" step="0.25" value="9.75">
+    <span id="val-exit-yield">9.75%</span>
+    <input type="checkbox" id="chk-auto-exit-yield" checked>
+    <span id="lbl-implied-rating">3.40x &rarr; 9.75%</span>
+  </div>
+</div>
+<!-- PART 4: SCENARIO ANATOMY & STRUCTURAL TRIGGERS                          -->
   <!-- ========================================================================= -->
   <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
   <div class="card" style="margin-top:14px;">
@@ -1723,6 +1744,61 @@
       recalcEngine();
     }
 
+    let extensionMode = 'uniform'; // 'uniform' or 'fixed'
+    let trancheCount = 2;
+    let fixedTranches = [
+      { id: 1, name: "Series A (5Y Short Notes)", tenor: 5, coupon: 7.00, split: 50 },
+      { id: 2, name: "Series B (10Y Long Notes)", tenor: 10, coupon: 8.00, split: 50 },
+      { id: 3, name: "Series C (12Y Long Notes)", tenor: 12, coupon: 8.50, split: 0 }
+    ];
+
+    function setExtensionMode(mode) {
+      extensionMode = mode;
+      const btnUniform = document.getElementById("btn-ext-mode-uniform");
+      const btnFixed = document.getElementById("btn-ext-mode-fixed");
+      const cntUniform = document.getElementById("container-ext-uniform");
+      const cntFixed = document.getElementById("container-ext-fixed");
+
+      if (btnUniform) btnUniform.classList.toggle("active", mode === 'uniform');
+      if (btnFixed) btnFixed.classList.toggle("active", mode === 'fixed');
+      if (cntUniform) cntUniform.style.display = mode === 'uniform' ? 'block' : 'none';
+      if (cntFixed) cntFixed.style.display = mode === 'fixed' ? 'block' : 'none';
+
+      recalcEngine();
+    }
+
+    function setTrancheCount(count) {
+      trancheCount = count;
+      [1, 2, 3].forEach(c => {
+        const btn = document.getElementById("btn-tranches-" + c);
+        if (btn) btn.classList.toggle("active", c === count);
+      });
+
+      if (count === 1) {
+        fixedTranches[0].split = 100;
+        fixedTranches[1].split = 0;
+        fixedTranches[2].split = 0;
+      } else if (count === 2) {
+        fixedTranches[0].split = 50;
+        fixedTranches[1].split = 50;
+        fixedTranches[2].split = 0;
+      } else if (count === 3) {
+        fixedTranches[0].split = 30;
+        fixedTranches[1].split = 40;
+        fixedTranches[2].split = 30;
+      }
+      recalcEngine();
+    }
+
+    function updateTrancheProp(idx, prop, val) {
+      if (prop === 'name') {
+        fixedTranches[idx].name = val;
+      } else {
+        fixedTranches[idx][prop] = parseFloat(val) || 0;
+      }
+      recalcEngine();
+    }
+
     function initPage() {
       renderAssetTable();
       recalcEngine();
@@ -1762,7 +1838,10 @@
 
     function loadPreset(name) {
       document.querySelectorAll(".preset-pill").forEach(p => p.classList.remove("active"));
-      event.target.classList.add("active");
+      if (typeof event !== 'undefined' && event && event.target) {
+        event.target.classList.add("active");
+      }
+      setExtensionMode('uniform');
 
       const p = PRESETS[name];
       if (!p) return;
@@ -1996,7 +2075,90 @@
           : 'Manual Mode (Unlinked)';
       }
 
-      const newDebtTradingPx = calcBondPrice(exitCoupon, effectiveExitYield, exitTenor, pikCouponPct, pikYears);
+      let effectiveNewDebtTradingPx = 0;
+      let effectiveCoupon = exitCoupon;
+      let effectiveTenor = exitTenor;
+
+      if (extensionMode === 'uniform') {
+        effectiveNewDebtTradingPx = calcBondPrice(exitCoupon, effectiveExitYield, exitTenor, pikCouponPct, pikYears);
+        effectiveCoupon = exitCoupon;
+        effectiveTenor = exitTenor;
+      } else {
+        const activeTranches = fixedTranches.slice(0, trancheCount);
+        let totalSplit = 0;
+        let blendedPx = 0;
+        let blendedCoupon = 0;
+        let blendedTenor = 0;
+
+        const tbody = document.getElementById("fixed-tranches-tbody");
+        let rowsHtml = "";
+
+        activeTranches.forEach((t, i) => {
+          totalSplit += t.split;
+          const px = calcBondPrice(t.coupon, effectiveExitYield, t.tenor, pikCouponPct, pikYears);
+          const weight = t.split / 100.0;
+          const proratedVal = weight * px;
+          blendedPx += proratedVal;
+          blendedCoupon += weight * t.coupon;
+          blendedTenor += weight * t.tenor;
+
+          rowsHtml += `
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td style="padding:4px 6px;">
+                <input type="text" value="${t.name}" class="num-input" style="width:100%; text-align:left; font-size:10.5px;" onchange="updateTrancheProp(${i}, 'name', this.value)">
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" min="1" max="25" step="1" value="${t.tenor}" class="num-input" style="width:60px; font-family:'JetBrains Mono',monospace;" onchange="updateTrancheProp(${i}, 'tenor', this.value)"> Yrs
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" min="0" max="20" step="0.25" value="${t.coupon.toFixed(2)}" class="num-input" style="width:65px; font-family:'JetBrains Mono',monospace;" onchange="updateTrancheProp(${i}, 'coupon', this.value)"> %
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" min="0" max="100" step="5" value="${t.split}" class="num-input" style="width:60px; font-family:'JetBrains Mono',monospace;" onchange="updateTrancheProp(${i}, 'split', this.value)"> %
+              </td>
+              <td style="padding:4px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:#fbbf24;">
+                ${px.toFixed(1)}c
+              </td>
+              <td style="padding:4px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:#38bdf8;">
+                ${proratedVal.toFixed(1)}c
+              </td>
+            </tr>
+          `;
+        });
+
+        if (tbody) tbody.innerHTML = rowsHtml;
+
+        const tfoot = document.getElementById("fixed-tranches-tfoot");
+        const isSplitValid = Math.abs(totalSplit - 100.0) < 0.01;
+        if (tfoot) {
+          tfoot.innerHTML = `
+            <tr>
+              <td style="padding:6px; color:#fff;">Blended Package</td>
+              <td style="padding:6px; font-family:'JetBrains Mono',monospace; color:#38bdf8;">${blendedTenor.toFixed(1)} Yrs</td>
+              <td style="padding:6px; font-family:'JetBrains Mono',monospace; color:#fbbf24;">${blendedCoupon.toFixed(2)}%</td>
+              <td style="padding:6px; font-family:'JetBrains Mono',monospace; color:${isSplitValid ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${totalSplit.toFixed(0)}% ${isSplitValid ? '✓' : '⚠️'}</td>
+              <td style="padding:6px; text-align:right; color:var(--text-muted); font-size:9.5px;">Blended Px:</td>
+              <td style="padding:6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-emerald); font-size:12px;">${blendedPx.toFixed(1)}c</td>
+            </tr>
+          `;
+        }
+
+        const warningEl = document.getElementById("fixed-tranches-warning");
+        if (warningEl) {
+          if (!isSplitValid) {
+            warningEl.style.display = "block";
+            warningEl.textContent = `⚠️ Total allocation split is ${totalSplit.toFixed(0)}%. Splits must sum to 100% for accurate portfolio recovery.`;
+          } else {
+            warningEl.style.display = "none";
+          }
+        }
+
+        effectiveNewDebtTradingPx = blendedPx;
+        effectiveCoupon = blendedCoupon;
+        effectiveTenor = blendedTenor;
+      }
+
+      const newDebtTradingPx = effectiveNewDebtTradingPx;
       const parDiscountPct = ((newDebtTradingPx - 100.0) / 100.0) * 100.0;
       const impliedSpreadBps = Math.round((effectiveExitYield - ustBenchmark) * 100);
 
@@ -2301,9 +2463,9 @@
       if (document.getElementById("meter-exit-nominal-rec")) document.getElementById("meter-exit-nominal-rec").textContent = `vs ${rawSeniorRecoveryCents.toFixed(1)}c Nominal Pot (Time Drag: -${timeDiscountPct.toFixed(1)}%)`;
       if (document.getElementById("meter-exit-spread")) document.getElementById("meter-exit-spread").textContent = `+${impliedSpreadBps} bps`;
 
-      if (document.getElementById("matrix-coupon-label")) document.getElementById("matrix-coupon-label").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("matrix-coupon-label")) document.getElementById("matrix-coupon-label").textContent = `${effectiveCoupon.toFixed(2)}%${extensionMode === 'fixed' ? ' (Blended)' : ''}`;
       if (document.getElementById("matrix-pik-label")) document.getElementById("matrix-pik-label").textContent = `${pikCouponPct.toFixed(2)}% (${pikYears}Y)`;
-      if (document.getElementById("matrix-tenor-label")) document.getElementById("matrix-tenor-label").textContent = `${exitTenor}Y`;
+      if (document.getElementById("matrix-tenor-label")) document.getElementById("matrix-tenor-label").textContent = `${effectiveTenor.toFixed(1)}Y${extensionMode === 'fixed' ? ' (Blended)' : ''}`;
 
       const matrixTbody = document.getElementById("exit-yield-matrix-tbody");
       if (matrixTbody) {
@@ -2317,7 +2479,16 @@
 
         matrixTbody.innerHTML = exitYieldSteps.map(step => {
           const yVal = Math.max(1.0, step.y);
-          const px = calcBondPrice(exitCoupon, yVal, exitTenor, pikCouponPct, pikYears);
+          let px = 0;
+          if (extensionMode === 'uniform') {
+            px = calcBondPrice(exitCoupon, yVal, exitTenor, pikCouponPct, pikYears);
+          } else {
+            const activeTranches = fixedTranches.slice(0, trancheCount);
+            activeTranches.forEach(t => {
+              const tPx = calcBondPrice(t.coupon, yVal, t.tenor, pikCouponPct, pikYears);
+              px += (t.split / 100.0) * tPx;
+            });
+          }
           const debtVal = (reinstatedDebtFace * px) / 100.0;
           const eqVal = convertedEquityEmergenceVal;
           const stepDiscountFactor = 1.0 / Math.pow(1.0 + (yVal / 200.0), 2.0 * (durationMonths / 12.0));

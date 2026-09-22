@@ -1061,13 +1061,101 @@
 
     <!-- Variable Exchange Terms & Restructuring Mechanics Sandbox -->
     
-  <!-- CARD 2B: VARIABLE RESTRUCTURING EXCHANGE TERMS & RESTRUCTURING MECHANICS -->
+  <!-- CARD 2B: VARIABLE RESTRUCTURING EXCHANGE TERMS & DYNAMIC TENOR EXTENSION ARCHITECTURE -->
   <div class="card" style="margin-bottom:14px;">
     <div class="card-title">
-      <span>2. Amend &amp; Extend Terms &amp; Restructuring Mechanics</span>
+      <span>2. Amend &amp; Extend Terms &amp; Dynamic Tenor Architecture</span>
       <span class="sub">Fully variable exchange package offered to Zoren 2026 Eurobond holders &bull; Maturity roll terms</span>
     </div>
 
+    <!-- Tenor Extension Architecture Selector & Container -->
+    <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-radius:6px; padding:10px 12px; margin-bottom:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+        <div>
+          <span style="font-size:11px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase;">
+            Tenor Extension Architecture &amp; Structure
+          </span>
+          <span style="font-size:10px; color:var(--text-muted); margin-left:6px;">
+            Choose uniform maturity roll vs fixed consolidated exit tranches
+          </span>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button type="button" id="btn-ext-mode-uniform" class="preset-pill active" onclick="setExtensionMode('uniform')">
+            Mode A: Uniform Extension (+N Years)
+          </button>
+          <button type="button" id="btn-ext-mode-fixed" class="preset-pill" onclick="setExtensionMode('fixed')">
+            Mode B: Fixed Consolidated Exit Notes
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTAINER FOR MODE A: UNIFORM EXTENSION -->
+      <div id="container-ext-uniform">
+        <div class="slider-row" style="margin-bottom:0;">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Uniform Maturity Extension Tenor (from June 2026)</span>
+              <span class="slider-val" id="val-extension">4 Years</span>
+            </div>
+            <input type="range" id="input-extension" min="1" max="7" step="1" value="4" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Extended Eurobond maturity wall: <strong style="color:#fbbf24;" id="lbl-new-maturity">2030</strong>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Reinstated Cash Coupon Rate</span>
+              <span class="slider-val" id="val-coupon">9.50%</span>
+            </div>
+            <input type="range" id="input-coupon" min="7.0" max="14.0" step="0.25" value="9.50" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Annual senior interest burden: <strong style="color:#fff;" id="lbl-new-interest">$28.5M</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTAINER FOR MODE B: FIXED CONSOLIDATED EXIT NOTES -->
+      <div id="container-ext-fixed" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+          <div style="font-size:10.5px; color:#cbd5e1;">
+            Consolidate existing notes into a fixed set of newly issued benchmark exit notes:
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:10px; color:var(--text-muted);">Number of Tranches:</span>
+            <button type="button" class="preset-pill" id="btn-tranches-1" onclick="setTrancheCount(1)">1 Note</button>
+            <button type="button" class="preset-pill active" id="btn-tranches-2" onclick="setTrancheCount(2)">2 Notes (Dual-Tranche)</button>
+            <button type="button" class="preset-pill" id="btn-tranches-3" onclick="setTrancheCount(3)">3 Notes (3-Tier)</button>
+          </div>
+        </div>
+
+        <!-- Live Tranche Inputs Table -->
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; font-size:10.5px; margin-bottom:6px;">
+            <thead>
+              <tr style="border-bottom:1px solid #334155; color:var(--text-muted); text-align:left;">
+                <th style="padding:4px 6px;">Exit Tranche Description</th>
+                <th style="padding:4px 6px; width:110px;">Tenor (Yrs)</th>
+                <th style="padding:4px 6px; width:120px;">Cash Coupon (%)</th>
+                <th style="padding:4px 6px; width:120px;">Allocation Split (%)</th>
+                <th style="padding:4px 6px; text-align:right; width:110px;">Trading Px (r<sub>exit</sub>)</th>
+                <th style="padding:4px 6px; text-align:right; width:110px;">Prorated Value</th>
+              </tr>
+            </thead>
+            <tbody id="fixed-tranches-tbody">
+              <!-- Rendered dynamically via JS -->
+            </tbody>
+            <tfoot id="fixed-tranches-tfoot" style="border-top:1px solid #334155; font-weight:700;">
+              <!-- Rendered dynamically via JS -->
+            </tfoot>
+          </table>
+        </div>
+        <div id="fixed-tranches-warning" style="font-size:10px; color:var(--accent-amber); display:none; margin-top:4px;"></div>
+      </div>
+    </div>
+
+    <!-- Variable Restructuring Concession Sliders -->
     <div class="slider-row">
       <div class="slider-box">
         <div class="slider-header">
@@ -1077,30 +1165,6 @@
         <input type="range" id="input-senior-haircut" min="0" max="40" step="5" value="0" oninput="recalcEngine()">
         <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
           Debt reduction across $582M senior claims: <strong style="color:#34d399;" id="lbl-senior-debt-cut">-$0M</strong>
-        </div>
-      </div>
-
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Maturity Extension Tenor (from June 2026)</span>
-          <span class="slider-val" id="val-extension">4 Years</span>
-        </div>
-        <input type="range" id="input-extension" min="1" max="7" step="1" value="4" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-          Extended Eurobond maturity wall: <strong style="color:#fbbf24;" id="lbl-new-maturity">2030</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="slider-row">
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Reinstated Cash Coupon Rate</span>
-          <span class="slider-val" id="val-coupon">9.50%</span>
-        </div>
-        <input type="range" id="input-coupon" min="7.0" max="14.0" step="0.25" value="9.50" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-          Annual senior interest burden: <strong style="color:#fff;" id="lbl-new-interest">$28.5M</strong>
         </div>
       </div>
 
@@ -1139,338 +1203,11 @@
         </div>
       </div>
     </div>
-  </div>
 
-
-    <!-- Qualitative Risk Haircut & Dynamic Pricing Bands -->
-    <!-- CARD 4: Qualitative Risk Weighting & Dynamic Pricing Bands -->
-      <div class="card">
-        <div class="card-title">
-          <span>4. Qualitative Risk Weighting &amp; Implied Pricing Bands</span>
-          <span class="sub">Discount for Turkish macro/FX beta, YEKDEM expiry &amp; bank roll friction</span>
-        </div>
-
-        <div class="slider-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Turkish Sovereign Macro / Lira FX Beta Delta</span>
-              <span class="slider-val" id="val-qual-macro" style="color:var(--accent-rose);">-1.5c</span>
-            </div>
-            <input type="range" id="input-qual-macro" min="-5.0" max="2.0" step="0.5" value="-1.5" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Currency volatility &amp; TCMB interest rates (-5c to +2c)</div>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">YEKDEM Tariff Expiry Cliff Risk Delta</span>
-              <span class="slider-val" id="val-qual-yekdem" style="color:var(--accent-rose);">-1.0c</span>
-            </div>
-            <input type="range" id="input-qual-yekdem" min="-4.0" max="2.0" step="0.5" value="-1.0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">2026–2029 merchant transition (-4c to +2c)</div>
-          </div>
-        </div>
-
-        <div class="slider-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Dorad Energy / Geopolitical Tail Delta</span>
-              <span class="slider-val" id="val-qual-dorad" style="color:var(--text-muted);">0.0c</span>
-            </div>
-            <input type="range" id="input-qual-dorad" min="-3.0" max="3.0" step="0.5" value="0.0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Israel asset dividend &amp; sale resolution (-3c to +3c)</div>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Refinancing Execution &amp; Illiquidity Discount</span>
-              <span class="slider-val" id="val-qual-discount" style="color:var(--accent-rose);">-1.0c</span>
-            </div>
-            <input type="range" id="input-qual-discount" min="-4.0" max="0.0" step="0.5" value="-1.0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity (-4c to 0c)</div>
-          </div>
-        </div>
-
-        <!-- Net Qualitative Adjustment Metric Strip -->
-        <div style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <div style="font-size:11px; font-weight:700; color:#cbd5e1;">
-            Net Qualitative Adjustment: 
-            <span id="lbl-total-qual-delta" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-rose); font-size:12px;">-3.5c</span>
-          </div>
-          <div style="font-size:10px; color:var(--text-muted);">
-            Fundamental Senior Coverage: <strong id="lbl-qual-raw-rec" style="color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;">100.0c</strong> 
-            &plus; Qual Delta &rarr; <strong id="lbl-qual-adj-rec" style="color:var(--accent-gold); font-family:'JetBrains Mono',monospace;">96.5c</strong> (ZOREN '26 Fair)
-          </div>
-        </div>
-
-        <!-- Interactive Qualitative Assessment Guide Accordion -->
-        <div style="margin-top:10px; margin-bottom:10px;">
-          <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-            <span>📘 Qualitative Assessment Guide: Expressing Risk in Cents of Upside / Discount to Recovery</span>
-            <span id="qual-guide-icon">▼ Click to Expand Guide</span>
-          </button>
-          
-          <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
-            <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              1. Why Express Qualitative Factors in Cents Rather Than %?
-            </div>
-            <p style="margin-bottom:8px;">
-              While Zorlu's fundamental unencumbered asset coverage is robust at <strong>190.6%</strong> ($2,598M EV vs $1,363M net debt), secondary bonds trade at a discount (~94.5c) due to macro and execution frictions. 
-              Expressing qualitative adjustments directly in <strong>cents per dollar of claim (+upside or -discount)</strong> gives direct, actionable attribution:
-              <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-weight:700;">Desk Fair Value = Fundamental Senior Recovery + &sum;(&Delta; Cents)</span>.
-            </p>
-            <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
-              <li>
-                <strong style="color:#fff;">Turkish Sovereign Macro / Lira FX Beta (-5.0c to +2.0c):</strong> 
-                Severe Lira devaluation and high domestic CBRT rates compress cash conversion at the regulated grid (-5c discount). Disinflation and currency stabilization provide +2c upside.
-              </li>
-              <li>
-                <strong style="color:#fff;">YEKDEM Tariff Expiry Cliff Risk (-4.0c to +2.0c):</strong> 
-                Roll-off of guaranteed feed-in tariffs (10.5c–13.3c/kWh) exposes geothermal assets to merchant volatility (-4c discount). Capacity mechanism reforms provide +2c upside.
-              </li>
-              <li>
-                <strong style="color:#fff;">Dorad Energy / Geopolitical Tail (-3.0c to +3.0c):</strong> 
-                Trapped cross-border dividends or forced divestment (-3c discount) vs clean stake monetization / dividend resumption (+3c upside).
-              </li>
-              <li>
-                <strong style="color:#fff;">Refinancing Execution &amp; EM Illiquidity (-4.0c to 0.0c):</strong> 
-                Rollover friction on the $300M 2026 Eurobond maturity wall and CCC/B- dealer spread penalty (-4c to 0c discount).
-              </li>
-            </ul>
-
-            <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              2. How the Math Works: Direct Cents Addition to Fundamental Value
-            </div>
-            <p style="margin-bottom:6px;">
-              Secondary bond fair value is governed by fundamental recovery plus direct cents adjustments:
-            </p>
-            <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:8px;">
-              &Delta;<sub>qual</sub> = &Delta;<sub>Macro</sub> + &Delta;<sub>YEKDEM</sub> + &Delta;<sub>Dorad</sub> + &Delta;<sub>Illiquidity</sub> (Base = -3.5c)
-            </div>
-            <p style="margin-bottom:8px;">
-              At Base Case: 100.0c fundamental claim + (-3.5c) net qualitative adjustments = <strong>96.5c Desk Fair Value</strong> (vs 94.5c market quote &rarr; +2.0c upside / BUY).
-            </p>
-            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; margin-bottom:10px;">
-              <div style="background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3); padding:6px; border-radius:4px;">
-                <strong style="color:var(--accent-rose);">Bear (Floor):</strong><br>
-                max(50.0c, Raw Recovery &times; 0.65 + min(-6.0c, &Delta;<sub>qual</sub> &times; 1.5))
-              </div>
-              <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:6px; border-radius:4px;">
-                <strong style="color:var(--accent-emerald);">Base (Fair):</strong><br>
-                min(100.0c, Raw Recovery + &Delta;<sub>qual</sub>)
-              </div>
-              <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:6px; border-radius:4px;">
-                <strong style="color:var(--accent-cyan);">Bull (Upside):</strong><br>
-                min(105.0c, Raw Recovery + max(0.0c, &Delta;<sub>qual</sub>) + 2.0c)
-              </div>
-            </div>
-
-            <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              3. Why Are There 3 Sets of Prices (Floor, Fair, Upside) for Every Scenario?
-            </div>
-            <p style="margin-bottom:8px;">
-              A crucial distinction in institutional credit modeling is between <strong>Macro Fundamental Regimes (The Scenario Presets)</strong> and <strong>Secondary Market Trading Bands (Market Execution Dispersion)</strong>:
-            </p>
-            <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px; margin-bottom:10px;">
-              <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px 10px; border-radius:4px;">
-                <strong style="color:#fff;">• The Scenario Presets / Sliders (The Fundamental Reality):</strong>
-                Sets the operational baseline: Consolidated EBITDA ($350M Base), Multiple (6.0x), Priority Secured Loans ($1,200M), and Net Qualitative Friction (-3.5c).
-              </div>
-              <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-rose);">• Trading Floor (Stress Exit / Secondary Bid):</strong>
-                Even if the company achieves this scenario's refinancing terms, secondary trading conditions may be hostile. If Turkish sovereign macro risk widens clearing exit yields to 13.00%+ (+200 bps blowout) and dealer illiquidity discounts apply, secondary prices drop to this floor (e.g. ~59c).
-              </div>
-              <div style="border-left:3px solid var(--accent-emerald); background:rgba(16,185,129,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-emerald);">• Desk Fair Value (Central Model / Expected PV):</strong>
-                The theoretical present value under dialed-in inputs: 100.0c fundamental asset coverage minus -3.5c net qualitative adjustments = <strong>96.5c Desk Fair Value</strong> (vs 94.5c market quote &rarr; +2.0c upside / BUY).
-              </div>
-              <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-cyan);">• Emergence Upside (Post-Reorg Re-Rating):</strong>
-                Conversely, if Turkey sovereign CDS tightens sub-250 bps and Zorlu Yenilenebilir IPO cash injects liquidity, clearing exit yields compress to 9.00% (par) or early tender calls at <strong>100c–102.5c par</strong>.
-              </div>
-            </div>
-
-            <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              4. Scenario Presets: What Concrete Fundamental Catalysts Drive Bear, Base, and Bull Scenarios?
-            </div>
-            <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
-              <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-rose);">🔴 Bear Case Scenario (65c–75c Recovery):</strong>
-                Severe prolonged hydrological drought (hydro output down &gt;40%); EMRA imposes emergency retail tariff caps; Turkish macroeconomic stress spikes CDS &gt;400 bps; EBITDA drops to $190M at 5.0x multiple ($950M EV); asset coverage drops below 100%, forcing a contentious 25% principal haircut.
-              </div>
-              <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-gold);">🟡 Base Case Scenario (94c–96c Fair Value):</strong>
-                Normalized hydro and geothermal load factors; $280M EBITDA at 7.0x multiple ($1,960M EV = 143.8% asset coverage); parent Korteks contagion successfully firewalled; consensual 4-year Amend &amp; Extend (A&amp;E) maturity extension to 2030 at a 9.50% coupon. At an 11.0% exit yield, the 2030 paper trades at 95.3c, perfectly validating today's 94.5c secondary price.
-              </div>
-              <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-cyan);">🟢 Bull Case Scenario (100c Par Refinancing):</strong>
-                Successful IPO or minority stake sale in Zorlu Yenilenebilir to a Gulf sovereign wealth fund, injecting $400M+ in equity; Turkey sovereign CDS tightens sub-200 bps; EBITDA reaches $350M at 8.0x multiple ($2,800M EV); net debt drops below $900M (&lt;2.6x leverage); notes are refinanced at 100c par.
-              </div>
-            </div>
-            
-            <div style="margin-top:8px; text-align:right;">
-              <a href="zoren_background.html#qualitative-guide" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">→ Read Complete Institutional Qualitative Deep Dive in Background Page</a>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top:10px;">
-        <div style="margin-top:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
-            <div style="font-size:11px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
-              📊 Secondary Market Pricing Across Core Scenarios (Bear &bull; Base &bull; Bull)
-            </div>
-            <div style="font-size:9.5px; color:var(--text-muted);">
-              Clear scenario bounds &bull; Click links for detailed operational &amp; refinancing models
-            </div>
-          </div>
-
-          <table class="band-table" id="pricing-band-table">
-            <thead>
-              <tr>
-                <th style="text-align:left; width:28%;">Instrument</th>
-                <th style="text-align:right; width:12%;">Market Px</th>
-                <th style="text-align:right; width:18%;" title="Bear Case: Refinancing Crisis / Maturity Wall Haircut, 20% Haircut, 13.50% Exit Yield, 18M Delay">
-                  <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
-                    <span style="color:var(--accent-rose); font-weight:800;">🔴 Bear Case</span>
-                    <a href="zoren_background.html#scenario-bear" target="_blank" style="font-size:9px; color:#f87171; text-decoration:underline;">[📖 Subpage]</a>
-                  </div>
-                  <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#f87171;">Refi Crisis / 20% Cut</span>
-                </th>
-                <th style="text-align:right; width:18%;" title="Base Case: Consensual 4Y Amend & Extend to 2030, 0% Haircut, 9.50% Coupon, 11.00% Exit Yield">
-                  <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
-                    <span style="color:var(--accent-gold); font-weight:800;">🟡 Base Case</span>
-                    <a href="zoren_background.html#scenario-base" target="_blank" style="font-size:9px; color:#fbbf24; text-decoration:underline;">[📖 Subpage]</a>
-                  </div>
-                  <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#fbbf24;">4Y A&amp;E / Active Model</span>
-                </th>
-                <th style="text-align:right; width:18%;" title="Bull Case: Zorlu Yenilenebilir IPO Recap, $250M Cash Injection, 0% Haircut, 9.00% Exit Yield">
-                  <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
-                    <span style="color:var(--accent-cyan); font-weight:800;">🟢 Bull Case</span>
-                    <a href="zoren_background.html#scenario-bull" target="_blank" style="font-size:9px; color:#38bdf8; text-decoration:underline;">[📖 Subpage]</a>
-                  </div>
-                  <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#38bdf8;">Renewable IPO Call</span>
-                </th>
-                <th style="text-align:center; width:14%;">Desk Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Populated dynamically via JS -->
-            </tbody>
-          </table>
-
-          <!-- Scenario Assumptions & Subpage Deep-Dive Card -->
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px; margin-top:12px; background:rgba(6,9,19,0.8); border:1px solid #1e293b; border-radius:6px; padding:12px;">
-            <!-- Bear Assumptions -->
-            <div style="border-left:3px solid var(--accent-rose); padding-left:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="color:var(--accent-rose); font-size:11px;">🔴 Bear Scenario Assumptions</strong>
-                <button type="button" onclick="loadPreset('crisis')" style="background:rgba(244,63,94,0.15); border:1px solid rgba(244,63,94,0.35); color:#f87171; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
-              </div>
-              <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
-                <div>&bull; <strong>EBITDA &bull; Mult:</strong> $240M &bull; 5.0x ($1.2B EV)</div>
-                <div>&bull; <strong>Standstill:</strong> 18M refi standstill / FX crisis</div>
-                <div>&bull; <strong>Terms:</strong> 20% Haircut &bull; 13.50% Exit Yield</div>
-                <div>&bull; <strong>Sponsor:</strong> $0M &bull; OpCo loans consume cash</div>
-              </div>
-              <div style="margin-top:6px;">
-                <a href="zoren_background.html#scenario-bear" target="_blank" style="color:var(--accent-rose); font-size:10px; font-weight:700; text-decoration:none;">
-                  📖 View Full Bear Subpage Analysis &rarr;
-                </a>
-              </div>
-            </div>
-
-            <!-- Base Assumptions -->
-            <div style="border-left:3px solid var(--accent-gold); padding-left:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="color:var(--accent-gold); font-size:11px;">🟡 Base Scenario Assumptions</strong>
-                <button type="button" onclick="loadPreset('base')" style="background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
-              </div>
-              <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
-                <div>&bull; <strong>EBITDA &bull; Mult:</strong> $350M &bull; 6.0x ($2.1B EV)</div>
-                <div>&bull; <strong>Standstill:</strong> 6M consensual A&amp;E to 2030</div>
-                <div>&bull; <strong>Terms:</strong> 0% Cut &bull; 9.50% Cpn &bull; 11.00% Yield</div>
-                <div>&bull; <strong>Asset Backing:</strong> 190.6% par asset coverage</div>
-              </div>
-              <div style="margin-top:6px;">
-                <a href="zoren_background.html#scenario-base" target="_blank" style="color:var(--accent-gold); font-size:10px; font-weight:700; text-decoration:none;">
-                  📖 View Full Base Subpage Analysis &rarr;
-                </a>
-              </div>
-            </div>
-
-            <!-- Bull Assumptions -->
-            <div style="border-left:3px solid var(--accent-cyan); padding-left:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="color:var(--accent-cyan); font-size:11px;">🟢 Bull Scenario Assumptions</strong>
-                <button type="button" onclick="loadPreset('ipo_recap')" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.35); color:#38bdf8; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
-              </div>
-              <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
-                <div>&bull; <strong>EBITDA &bull; Mult:</strong> $410M &bull; 7.3x ($3.0B EV)</div>
-                <div>&bull; <strong>Standstill:</strong> 6M quick recapitalization</div>
-                <div>&bull; <strong>Terms:</strong> 0% Cut &bull; 7.50% Cpn &bull; 9.00% Yield</div>
-                <div>&bull; <strong>Sponsor Check:</strong> +$250M IPO proceeds / tender</div>
-              </div>
-              <div style="margin-top:6px;">
-                <a href="zoren_background.html#scenario-bull" target="_blank" style="color:var(--accent-cyan); font-size:10px; font-weight:700; text-decoration:none;">
-                  📖 View Full Bull Subpage Analysis &rarr;
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-  </div>
-
-  <!-- PANE: SCENARIOS (Card 7) -->
-  <div id="pane-scenarios" class="detail-tab-pane" style="display:none;">
-
-    <!-- Exit Yield Discounting & 2026 Extension Pricing Engine -->
-    <!-- CARD 6: Exit Yield Discounting & 2026 Extension Pricing Engine -->
-  <div class="card" style="margin-top:14px;">
-    <div class="card-title">
-      <span style="display:flex; align-items:center; gap:8px;">
-        <span>🎯</span> 6. Exit Yield Discounting &amp; 2026 Maturity Extension Engine
-      </span>
-      <span class="sub">Market-Clearing Yield for Post-Extension Turkish Utility Paper &bull; Duration &amp; Coupon Parity</span>
-    </div>
-
-    <div class="slider-row">
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Maturity Extension Tenor</span>
-          <span class="slider-val" id="val-exit-tenor">4 Years</span>
-        </div>
-        <input type="range" id="input-exit-tenor" min="2" max="7" step="1" value="4" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new 2030 Eurobonds</div>
-      </div>
-
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Extended Cash Coupon</span>
-          <span class="slider-val" id="val-exit-coupon">9.50%</span>
-        </div>
-        <input type="range" id="input-exit-coupon" min="7.0" max="13.0" step="0.25" value="9.50" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Reinstated coupon (+50 bps step-up over 9.00% legacy)</div>
-      </div>
-
-      <div class="slider-box">
-        <div class="slider-header">
-          <span class="slider-label">Required Market Exit Yield</span>
-          <span class="slider-val" id="val-exit-yield">11.00%</span>
-        </div>
-        <input type="range" id="input-exit-yield" min="8.0" max="15.0" step="0.25" value="11.00" oninput="onManualExitYield(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-          <span>Market-clearing yield for post-extension paper</span>
-          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
-            <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">4.16x &rarr; 11.00%</span>)
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Exit Yield Key Valuation Metric Cards -->
-    <div class="meter-grid" style="margin-top:12px;">
+    <!-- Live Valuation Output Meters Directly in Methodology 2 -->
+    <div class="meter-grid" style="margin-top:14px;">
       <div class="meter-card">
-        <div class="meter-title">Trading Px of Extended 4Y Note</div>
+        <div class="meter-title">Trading Px of Extended Note</div>
         <div class="meter-val" id="meter-exit-bond-px" style="color:#fbbf24;">95.3c</div>
         <div class="meter-sub" id="meter-exit-bond-discount" style="color:var(--accent-amber);">-4.7% Discount to Par (Matches Mkt: 94.5c)</div>
       </div>
@@ -1488,17 +1225,17 @@
       </div>
     </div>
 
-    <!-- Interactive Exit Yield Sensitivity Table -->
-    <div style="margin-top:14px;">
+    <!-- Exit Yield Sensitivity Matrix Grid Directly in Methodology 2 -->
+    <div style="margin-top:14px; background:rgba(6,9,19,0.5); border:1px solid #1e293b; border-radius:6px; padding:10px 12px;">
       <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-        <span>Exit Yield Sensitivity Matrix: Post-Extension Trading Value</span>
+        <span>📈 Exit Yield Sensitivity Matrix: Post-Extension Trading Value</span>
         <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Coupon: <span id="matrix-coupon-label">9.50%</span> | PIK: <span id="matrix-pik-label" style="color:var(--accent-purple); font-weight:700;">0.00% (0Y)</span> | Tenor: <span id="matrix-tenor-label">4Y</span></span>
       </div>
       <div style="overflow-x:auto;">
         <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
           <thead>
             <tr>
-              <th style="text-align:left;">Exit Yield (Y_exit)</th>
+              <th style="text-align:left;">Exit Yield (Y<sub>exit</sub>)</th>
               <th style="text-align:right;">Implied Spread</th>
               <th style="text-align:right;">Extended Note Px</th>
               <th style="text-align:right;">Senior Economic Recovery</th>
@@ -1514,13 +1251,297 @@
     </div>
   </div>
 
-  <!-- PANE: QUALITATIVE (Card 4) -->
-  <div id="pane-qualitative" class="detail-tab-pane" style="display:none;">
+  <!-- CARD 4: QUALITATIVE RISK & DYNAMIC SECONDARY PRICING BANDS -->
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-title">
+      <span>4. Exit Yield, Qualitative Risk Weighting &amp; Dynamic Secondary Pricing Bands</span>
+      <span class="sub">Closed-loop link: Exit Yield &bull; Duration &bull; Sovereign Beta &bull; YEKDEM Cliff</span>
+    </div>
+
+    <!-- Market Exit Yield Slider with Auto-Leverage Link -->
+    <div class="slider-row" style="margin-bottom:10px;">
+      <div class="slider-box" style="border:1px solid rgba(56,189,248,0.35); background:rgba(56,189,248,0.04); grid-column:span 2;">
+        <div class="slider-header">
+          <span class="slider-label" style="color:#38bdf8; font-weight:700;">🎯 Required Market Exit Yield (r<sub>exit</sub>)</span>
+          <span class="slider-val" id="val-exit-yield" style="color:#38bdf8; font-weight:800;">11.00%</span>
+        </div>
+        <input type="range" id="input-exit-yield" min="8.0" max="15.0" step="0.25" value="11.00" oninput="onManualExitYield(this.value)">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+          <span>Market-clearing yield for post-extension paper &bull; Calibrated to Turkish sovereign curve + credit spread</span>
+          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
+            <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">4.16x &rarr; 11.00%</span>)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Turkish Sovereign Macro / Lira FX Beta Delta</span>
+          <span class="slider-val" id="val-qual-macro" style="color:var(--accent-rose);">-1.5c</span>
+        </div>
+        <input type="range" id="input-qual-macro" min="-5.0" max="2.0" step="0.5" value="-1.5" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Currency volatility &amp; TCMB interest rates (-5c to +2c)</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">YEKDEM Tariff Expiry Cliff Risk Delta</span>
+          <span class="slider-val" id="val-qual-yekdem" style="color:var(--accent-rose);">-1.0c</span>
+        </div>
+        <input type="range" id="input-qual-yekdem" min="-4.0" max="2.0" step="0.5" value="-1.0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">2026–2029 merchant transition (-4c to +2c)</div>
+      </div>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Dorad Energy / Geopolitical Tail Delta</span>
+          <span class="slider-val" id="val-qual-dorad" style="color:var(--text-muted);">0.0c</span>
+        </div>
+        <input type="range" id="input-qual-dorad" min="-3.0" max="3.0" step="0.5" value="0.0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Israel asset dividend &amp; sale resolution (-3c to +3c)</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Refinancing Execution &amp; Illiquidity Discount</span>
+          <span class="slider-val" id="val-qual-discount" style="color:var(--accent-rose);">-1.0c</span>
+        </div>
+        <input type="range" id="input-qual-discount" min="-4.0" max="0.0" step="0.5" value="-1.0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity (-4c to 0c)</div>
+      </div>
+    </div>
+
+    <!-- Net Qualitative Adjustment Metric Strip -->
+    <div style="background:rgba(15,23,42,0.85); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-top:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div style="font-size:11px; font-weight:700; color:#cbd5e1;">
+        Net Qualitative Adjustment: 
+        <span id="lbl-total-qual-delta" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-rose); font-size:12px;">-3.5c</span>
+      </div>
+      <div style="font-size:10px; color:var(--text-muted);">
+        Fundamental Senior Coverage: <strong id="lbl-qual-raw-rec" style="color:var(--accent-emerald); font-family:'JetBrains Mono',monospace;">100.0c</strong> 
+        &plus; Qual Delta &rarr; <strong id="lbl-qual-adj-rec" style="color:var(--accent-gold); font-family:'JetBrains Mono',monospace;">96.5c</strong> (ZOREN '26 Fair)
+      </div>
+    </div>
+
+    <!-- Interactive Qualitative Assessment Guide Accordion -->
+    <div style="margin-top:10px; margin-bottom:10px;">
+      <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+        <span>📘 Qualitative Assessment Guide: Expressing Risk in Cents of Upside / Discount to Recovery</span>
+        <span id="qual-guide-icon">▼ Click to Expand Guide</span>
+      </button>
+      
+      <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
+        <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+          1. Why Express Qualitative Factors in Cents Rather Than %?
+        </div>
+        <p style="margin-bottom:8px;">
+          While Zorlu's fundamental unencumbered asset coverage is robust at <strong>190.6%</strong> ($2,598M EV vs $1,363M net debt), secondary bonds trade at a discount (~94.5c) due to macro and execution frictions. 
+          Expressing qualitative adjustments directly in <strong>cents per dollar of claim (+upside or -discount)</strong> gives direct, actionable attribution:
+          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-weight:700;">Desk Fair Value = Fundamental Senior Recovery + &sum;(&Delta; Cents)</span>.
+        </p>
+        <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
+          <li>
+            <strong style="color:#fff;">Turkish Sovereign Macro / Lira FX Beta (-5.0c to +2.0c):</strong> 
+            Severe Lira devaluation and high domestic CBRT rates compress cash conversion at the regulated grid (-5c discount). Disinflation and currency stabilization provide +2c upside.
+          </li>
+          <li>
+            <strong style="color:#fff;">YEKDEM Tariff Expiry Cliff Risk (-4.0c to +2.0c):</strong> 
+            Roll-off of guaranteed feed-in tariffs (10.5c–13.3c/kWh) exposes geothermal assets to merchant volatility (-4c discount). Capacity mechanism reforms provide +2c upside.
+          </li>
+          <li>
+            <strong style="color:#fff;">Dorad Energy / Geopolitical Tail (-3.0c to +3.0c):</strong> 
+            Trapped cross-border dividends or forced divestment (-3c discount) vs clean stake monetization / dividend resumption (+3c upside).
+          </li>
+          <li>
+            <strong style="color:#fff;">Refinancing Execution &amp; EM Illiquidity (-4.0c to 0.0c):</strong> 
+            Rollover friction on the $300M 2026 Eurobond maturity wall and CCC/B- dealer spread penalty (-4c to 0c discount).
+          </li>
+        </ul>
+
+        <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+          2. How the Math Works: Direct Cents Addition to Fundamental Value
+        </div>
+        <p style="margin-bottom:6px;">
+          Secondary bond fair value is governed by fundamental recovery plus direct cents adjustments:
+        </p>
+        <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:8px;">
+          &Delta;<sub>qual</sub> = &Delta;<sub>Macro</sub> + &Delta;<sub>YEKDEM</sub> + &Delta;<sub>Dorad</sub> + &Delta;<sub>Illiquidity</sub> (Base = -3.5c)
+        </div>
+        <p style="margin-bottom:8px;">
+          At Base Case: 100.0c fundamental claim + (-3.5c) net qualitative adjustments = <strong>96.5c Desk Fair Value</strong> (vs 94.5c market quote &rarr; +2.0c upside / BUY).
+        </p>
+
+        <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+          3. Why Are There 3 Sets of Prices (Floor, Fair, Upside) for Every Scenario?
+        </div>
+        <p style="margin-bottom:8px;">
+          A crucial distinction in institutional credit modeling is between <strong>Macro Fundamental Regimes (The Scenario Presets)</strong> and <strong>Secondary Market Trading Bands (Market Execution Dispersion)</strong>:
+        </p>
+        <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px; margin-bottom:10px;">
+          <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px 10px; border-radius:4px;">
+            <strong style="color:#fff;">• The Scenario Presets / Sliders (The Fundamental Reality):</strong>
+            Sets the operational baseline: Consolidated EBITDA ($350M Base), Multiple (6.0x), Priority Secured Loans ($1,200M), and Net Qualitative Friction (-3.5c).
+          </div>
+          <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-rose);">• Trading Floor (Stress Exit / Secondary Bid):</strong>
+            Even if the company achieves this scenario's refinancing terms, secondary trading conditions may be hostile. If Turkish sovereign macro risk widens clearing exit yields to 13.00%+ (+200 bps blowout) and dealer illiquidity discounts apply, secondary prices drop to this floor (e.g. ~59c).
+          </div>
+          <div style="border-left:3px solid var(--accent-emerald); background:rgba(16,185,129,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-emerald);">• Desk Fair Value (Central Model / Expected PV):</strong>
+            The theoretical present value under dialed-in inputs: 100.0c fundamental asset coverage minus -3.5c net qualitative adjustments = <strong>96.5c Desk Fair Value</strong> (vs 94.5c market quote &rarr; +2.0c upside / BUY).
+          </div>
+          <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-cyan);">• Emergence Upside (Post-Reorg Re-Rating):</strong>
+            Conversely, if Turkey sovereign CDS tightens sub-250 bps and Zorlu Yenilenebilir IPO cash injects liquidity, clearing exit yields compress to 9.00% (par) or early tender calls at <strong>100c–102.5c par</strong>.
+          </div>
+        </div>
+
+        <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+          4. Scenario Presets: What Concrete Fundamental Catalysts Drive Bear, Base, and Bull Scenarios?
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
+          <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-rose);">🔴 Bear Case Scenario (65c–75c Recovery):</strong>
+            Severe prolonged hydrological drought (hydro output down &gt;40%); EMRA imposes emergency retail tariff caps; Turkish macroeconomic stress spikes CDS &gt;400 bps; EBITDA drops to $190M at 5.0x multiple ($950M EV); asset coverage drops below 100%, forcing a contentious 25% principal haircut.
+          </div>
+          <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-gold);">🟡 Base Case Scenario (94c–96c Fair Value):</strong>
+            Normalized hydro and geothermal load factors; $280M EBITDA at 7.0x multiple ($1,960M EV = 143.8% asset coverage); parent Korteks contagion successfully firewalled; consensual 4-year Amend &amp; Extend (A&amp;E) maturity extension to 2030 at a 9.50% coupon. At an 11.0% exit yield, the 2030 paper trades at 95.3c, perfectly validating today's 94.5c secondary price.
+          </div>
+          <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+            <strong style="color:var(--accent-cyan);">🟢 Bull Case Scenario (100c Par Refinancing):</strong>
+            Successful IPO or minority stake sale in Zorlu Yenilenebilir to a Gulf sovereign wealth fund, injecting $400M+ in equity; Turkey sovereign CDS tightens sub-200 bps; EBITDA reaches $350M at 8.0x multiple ($2,800M EV); net debt drops below $900M (&lt;2.6x leverage); notes are refinanced at 100c par.
+          </div>
+        </div>
+        
+        <div style="margin-top:8px; text-align:right;">
+          <a href="zoren_background.html#qualitative-guide" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">&rarr; Read Complete Institutional Qualitative Deep Dive in Background Page</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Market Pricing Across Core Scenarios -->
+    <div style="margin-top:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+        <div style="font-size:11px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
+          📊 Secondary Market Pricing Across Core Scenarios (Bear &bull; Base &bull; Bull)
+        </div>
+        <div style="font-size:9.5px; color:var(--text-muted);">
+          Clear scenario bounds &bull; Click links for detailed operational &amp; refinancing models
+        </div>
+      </div>
+
+      <table class="band-table" id="pricing-band-table">
+        <thead>
+          <tr>
+            <th style="text-align:left; width:28%;">Instrument</th>
+            <th style="text-align:right; width:12%;">Market Px</th>
+            <th style="text-align:right; width:18%;" title="Bear Case: Refinancing Crisis / Maturity Wall Haircut, 20% Haircut, 13.50% Exit Yield, 18M Delay">
+              <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                <span style="color:var(--accent-rose); font-weight:800;">🔴 Bear Case</span>
+                <a href="zoren_background.html#scenario-bear" target="_blank" style="font-size:9px; color:#f87171; text-decoration:underline;">[📖 Subpage]</a>
+              </div>
+              <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#f87171;">Refi Crisis / 20% Cut</span>
+            </th>
+            <th style="text-align:right; width:18%;" title="Base Case: Consensual 4Y Amend & Extend to 2030, 0% Haircut, 9.50% Coupon, 11.00% Exit Yield">
+              <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                <span style="color:var(--accent-gold); font-weight:800;">🟡 Base Case</span>
+                <a href="zoren_background.html#scenario-base" target="_blank" style="font-size:9px; color:#fbbf24; text-decoration:underline;">[📖 Subpage]</a>
+              </div>
+              <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#fbbf24;">4Y A&amp;E / Active Model</span>
+            </th>
+            <th style="text-align:right; width:18%;" title="Bull Case: Zorlu Yenilenebilir IPO Recap, $250M Cash Injection, 0% Haircut, 9.00% Exit Yield">
+              <div style="display:flex; justify-content:flex-end; align-items:center; gap:4px;">
+                <span style="color:var(--accent-cyan); font-weight:800;">🟢 Bull Case</span>
+                <a href="zoren_background.html#scenario-bull" target="_blank" style="font-size:9px; color:#38bdf8; text-decoration:underline;">[📖 Subpage]</a>
+              </div>
+              <span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#38bdf8;">Renewable IPO Call</span>
+            </th>
+            <th style="text-align:center; width:14%;">Desk Action</th>
+          </tr>
+        </thead>
+        <tbody id="pricing-band-tbody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+
+      <!-- Scenario Assumptions & Subpage Deep-Dive Card -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px; margin-top:12px; background:rgba(6,9,19,0.8); border:1px solid #1e293b; border-radius:6px; padding:12px;">
+        <!-- Bear Assumptions -->
+        <div style="border-left:3px solid var(--accent-rose); padding-left:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="color:var(--accent-rose); font-size:11px;">🔴 Bear Scenario Assumptions</strong>
+            <button type="button" onclick="loadPreset('crisis')" style="background:rgba(244,63,94,0.15); border:1px solid rgba(244,63,94,0.35); color:#f87171; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+          </div>
+          <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+            <div>&bull; <strong>EBITDA &bull; Mult:</strong> $240M &bull; 5.0x ($1.2B EV)</div>
+            <div>&bull; <strong>Standstill:</strong> 18M refi standstill / FX crisis</div>
+            <div>&bull; <strong>Terms:</strong> 20% Haircut &bull; 13.50% Exit Yield</div>
+            <div>&bull; <strong>Sponsor:</strong> $0M &bull; OpCo loans consume cash</div>
+          </div>
+          <div style="margin-top:6px;">
+            <a href="zoren_background.html#scenario-bear" target="_blank" style="color:var(--accent-rose); font-size:10px; font-weight:700; text-decoration:none;">
+              📖 View Full Bear Subpage Analysis &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Base Assumptions -->
+        <div style="border-left:3px solid var(--accent-gold); padding-left:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="color:var(--accent-gold); font-size:11px;">🟡 Base Scenario Assumptions</strong>
+            <button type="button" onclick="loadPreset('base')" style="background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+          </div>
+          <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+            <div>&bull; <strong>EBITDA &bull; Mult:</strong> $350M &bull; 6.0x ($2.1B EV)</div>
+            <div>&bull; <strong>Standstill:</strong> 6M consensual A&amp;E to 2030</div>
+            <div>&bull; <strong>Terms:</strong> 0% Cut &bull; 9.50% Cpn &bull; 11.00% Yield</div>
+            <div>&bull; <strong>Asset Backing:</strong> 190.6% par asset coverage</div>
+          </div>
+          <div style="margin-top:6px;">
+            <a href="zoren_background.html#scenario-base" target="_blank" style="color:var(--accent-gold); font-size:10px; font-weight:700; text-decoration:none;">
+              📖 View Full Base Subpage Analysis &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Bull Assumptions -->
+        <div style="border-left:3px solid var(--accent-cyan); padding-left:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="color:var(--accent-cyan); font-size:11px;">🟢 Bull Scenario Assumptions</strong>
+            <button type="button" onclick="loadPreset('ipo_recap')" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.35); color:#38bdf8; border-radius:3px; padding:2px 7px; font-size:9.5px; font-weight:700; cursor:pointer;">⚡ Load</button>
+          </div>
+          <div style="font-size:10px; color:#94a3b8; line-height:1.45;">
+            <div>&bull; <strong>EBITDA &bull; Mult:</strong> $410M &bull; 7.3x ($3.0B EV)</div>
+            <div>&bull; <strong>Standstill:</strong> 6M quick recapitalization</div>
+            <div>&bull; <strong>Terms:</strong> 0% Cut &bull; 7.50% Cpn &bull; 9.00% Yield</div>
+            <div>&bull; <strong>Sponsor Check:</strong> +$250M IPO proceeds / tender</div>
+          </div>
+          <div style="margin-top:6px;">
+            <a href="zoren_background.html#scenario-bull" target="_blank" style="color:var(--accent-cyan); font-size:10px; font-weight:700; text-decoration:none;">
+              📖 View Full Bull Subpage Analysis &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-    
-  <!-- ========================================================================= -->
-  <!-- PART 4: SCENARIO ANATOMY & STRUCTURAL TRIGGERS                          -->
+  <!-- HIDDEN CONTAINER PRESERVING DEPRECATED SECTION 6 AND PANE IDS -->
+  <div style="display:none;" id="deprecated-zoren-elements">
+    <input type="range" id="input-exit-tenor" min="2" max="7" step="1" value="4">
+    <span id="val-exit-tenor">4 Years</span>
+    <input type="range" id="input-exit-coupon" min="7.0" max="13.0" step="0.25" value="9.50">
+    <span id="val-exit-coupon">9.50%</span>
+    <div id="pane-scenarios" class="detail-tab-pane"></div>
+    <div id="pane-qualitative" class="detail-tab-pane"></div>
+  </div>
+</div>
+<!-- PART 4: SCENARIO ANATOMY & STRUCTURAL TRIGGERS                          -->
   <!-- ========================================================================= -->
   <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
   <div class="card" style="margin-top:14px;">
@@ -1711,6 +1732,61 @@
       recalcEngine();
     }
 
+    let extensionMode = 'uniform'; // 'uniform' or 'fixed'
+    let trancheCount = 2;
+    let fixedTranches = [
+      { id: 1, name: "Series A (3Y 2029 Notes)", tenor: 3, coupon: 9.00, split: 50 },
+      { id: 2, name: "Series B (5Y 2031 Notes)", tenor: 5, coupon: 10.00, split: 50 },
+      { id: 3, name: "Series C (7Y 2033 Notes)", tenor: 7, coupon: 10.50, split: 0 }
+    ];
+
+    function setExtensionMode(mode) {
+      extensionMode = mode;
+      const btnUniform = document.getElementById("btn-ext-mode-uniform");
+      const btnFixed = document.getElementById("btn-ext-mode-fixed");
+      const cntUniform = document.getElementById("container-ext-uniform");
+      const cntFixed = document.getElementById("container-ext-fixed");
+
+      if (btnUniform) btnUniform.classList.toggle("active", mode === 'uniform');
+      if (btnFixed) btnFixed.classList.toggle("active", mode === 'fixed');
+      if (cntUniform) cntUniform.style.display = mode === 'uniform' ? 'block' : 'none';
+      if (cntFixed) cntFixed.style.display = mode === 'fixed' ? 'block' : 'none';
+
+      recalcEngine();
+    }
+
+    function setTrancheCount(count) {
+      trancheCount = count;
+      [1, 2, 3].forEach(c => {
+        const btn = document.getElementById("btn-tranches-" + c);
+        if (btn) btn.classList.toggle("active", c === count);
+      });
+
+      if (count === 1) {
+        fixedTranches[0].split = 100;
+        fixedTranches[1].split = 0;
+        fixedTranches[2].split = 0;
+      } else if (count === 2) {
+        fixedTranches[0].split = 50;
+        fixedTranches[1].split = 50;
+        fixedTranches[2].split = 0;
+      } else if (count === 3) {
+        fixedTranches[0].split = 25;
+        fixedTranches[1].split = 50;
+        fixedTranches[2].split = 25;
+      }
+      recalcEngine();
+    }
+
+    function updateTrancheProp(idx, prop, val) {
+      if (prop === 'name') {
+        fixedTranches[idx].name = val;
+      } else {
+        fixedTranches[idx][prop] = parseFloat(val) || 0;
+      }
+      recalcEngine();
+    }
+
     function initPage() {
       renderAssetTable();
       recalcEngine();
@@ -1750,7 +1826,10 @@
 
     function loadPreset(name) {
       document.querySelectorAll(".preset-pill").forEach(p => p.classList.remove("active"));
-      event.target.classList.add("active");
+      if (typeof event !== 'undefined' && event && event.target) {
+        event.target.classList.add("active");
+      }
+      setExtensionMode('uniform');
 
       const p = PRESETS[name];
       if (!p) return;
@@ -2179,7 +2258,90 @@
           : 'Manual Mode (Unlinked)';
       }
 
-      const newDebtTradingPx = calcBondPrice(exitCoupon, effectiveExitYield, exitTenor, pikCouponPct, pikYears);
+      let effectiveNewDebtTradingPx = 0;
+      let effectiveCoupon = exitCoupon;
+      let effectiveTenor = exitTenor;
+
+      if (extensionMode === 'uniform') {
+        effectiveNewDebtTradingPx = calcBondPrice(exitCoupon, effectiveExitYield, exitTenor, pikCouponPct, pikYears);
+        effectiveCoupon = exitCoupon;
+        effectiveTenor = exitTenor;
+      } else {
+        const activeTranches = fixedTranches.slice(0, trancheCount);
+        let totalSplit = 0;
+        let blendedPx = 0;
+        let blendedCoupon = 0;
+        let blendedTenor = 0;
+
+        const tbody = document.getElementById("fixed-tranches-tbody");
+        let rowsHtml = "";
+
+        activeTranches.forEach((t, i) => {
+          totalSplit += t.split;
+          const px = calcBondPrice(t.coupon, effectiveExitYield, t.tenor, pikCouponPct, pikYears);
+          const weight = t.split / 100.0;
+          const proratedVal = weight * px;
+          blendedPx += proratedVal;
+          blendedCoupon += weight * t.coupon;
+          blendedTenor += weight * t.tenor;
+
+          rowsHtml += `
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td style="padding:4px 6px;">
+                <input type="text" value="${t.name}" class="num-input" style="width:100%; text-align:left; font-size:10.5px;" onchange="updateTrancheProp(${i}, 'name', this.value)">
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" min="1" max="25" step="1" value="${t.tenor}" class="num-input" style="width:60px; font-family:'JetBrains Mono',monospace;" onchange="updateTrancheProp(${i}, 'tenor', this.value)"> Yrs
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" min="0" max="20" step="0.25" value="${t.coupon.toFixed(2)}" class="num-input" style="width:65px; font-family:'JetBrains Mono',monospace;" onchange="updateTrancheProp(${i}, 'coupon', this.value)"> %
+              </td>
+              <td style="padding:4px 6px;">
+                <input type="number" min="0" max="100" step="5" value="${t.split}" class="num-input" style="width:60px; font-family:'JetBrains Mono',monospace;" onchange="updateTrancheProp(${i}, 'split', this.value)"> %
+              </td>
+              <td style="padding:4px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:#fbbf24;">
+                ${px.toFixed(1)}c
+              </td>
+              <td style="padding:4px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:#38bdf8;">
+                ${proratedVal.toFixed(1)}c
+              </td>
+            </tr>
+          `;
+        });
+
+        if (tbody) tbody.innerHTML = rowsHtml;
+
+        const tfoot = document.getElementById("fixed-tranches-tfoot");
+        const isSplitValid = Math.abs(totalSplit - 100.0) < 0.01;
+        if (tfoot) {
+          tfoot.innerHTML = `
+            <tr>
+              <td style="padding:6px; color:#fff;">Blended Package</td>
+              <td style="padding:6px; font-family:'JetBrains Mono',monospace; color:#38bdf8;">${blendedTenor.toFixed(1)} Yrs</td>
+              <td style="padding:6px; font-family:'JetBrains Mono',monospace; color:#fbbf24;">${blendedCoupon.toFixed(2)}%</td>
+              <td style="padding:6px; font-family:'JetBrains Mono',monospace; color:${isSplitValid ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${totalSplit.toFixed(0)}% ${isSplitValid ? '✓' : '⚠️'}</td>
+              <td style="padding:6px; text-align:right; color:var(--text-muted); font-size:9.5px;">Blended Px:</td>
+              <td style="padding:6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-emerald); font-size:12px;">${blendedPx.toFixed(1)}c</td>
+            </tr>
+          `;
+        }
+
+        const warningEl = document.getElementById("fixed-tranches-warning");
+        if (warningEl) {
+          if (!isSplitValid) {
+            warningEl.style.display = "block";
+            warningEl.textContent = `⚠️ Total allocation split is ${totalSplit.toFixed(0)}%. Splits must sum to 100% for accurate portfolio recovery.`;
+          } else {
+            warningEl.style.display = "none";
+          }
+        }
+
+        effectiveNewDebtTradingPx = blendedPx;
+        effectiveCoupon = blendedCoupon;
+        effectiveTenor = blendedTenor;
+      }
+
+      const newDebtTradingPx = effectiveNewDebtTradingPx;
       const parDiscountPct = ((newDebtTradingPx - 100.0) / 100.0) * 100.0;
       const impliedSpreadBps = Math.round((effectiveExitYield - turkeyBenchmark) * 100);
 
@@ -2195,9 +2357,9 @@
       if (document.getElementById("meter-exit-nominal-rec")) document.getElementById("meter-exit-nominal-rec").textContent = `vs ${rawSeniorRecoveryCents.toFixed(1)}c Nominal Asset Coverage`;
       if (document.getElementById("meter-exit-spread")) document.getElementById("meter-exit-spread").textContent = `+${impliedSpreadBps} bps`;
 
-      if (document.getElementById("matrix-coupon-label")) document.getElementById("matrix-coupon-label").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("matrix-coupon-label")) document.getElementById("matrix-coupon-label").textContent = `${effectiveCoupon.toFixed(2)}%${extensionMode === 'fixed' ? ' (Blended)' : ''}`;
       if (document.getElementById("matrix-pik-label")) document.getElementById("matrix-pik-label").textContent = `${pikCouponPct.toFixed(2)}% (${pikYears}Y)`;
-      if (document.getElementById("matrix-tenor-label")) document.getElementById("matrix-tenor-label").textContent = `${exitTenor}Y`;
+      if (document.getElementById("matrix-tenor-label")) document.getElementById("matrix-tenor-label").textContent = `${effectiveTenor.toFixed(1)}Y${extensionMode === 'fixed' ? ' (Blended)' : ''}`;
 
       const matrixTbody = document.getElementById("exit-yield-matrix-tbody");
       if (matrixTbody) {
@@ -2211,7 +2373,16 @@
 
         matrixTbody.innerHTML = exitYieldSteps.map(step => {
           const yVal = Math.max(1.0, step.y);
-          const px = calcBondPrice(exitCoupon, yVal, exitTenor, pikCouponPct, pikYears);
+          let px = 0;
+          if (extensionMode === 'uniform') {
+            px = calcBondPrice(exitCoupon, yVal, exitTenor, pikCouponPct, pikYears);
+          } else {
+            const activeTranches = fixedTranches.slice(0, trancheCount);
+            activeTranches.forEach(t => {
+              const tPx = calcBondPrice(t.coupon, yVal, t.tenor, pikCouponPct, pikYears);
+              px += (t.split / 100.0) * tPx;
+            });
+          }
           const econRec = rawSeniorRecoveryPct * px;
           const varNominal = econRec - rawSeniorRecoveryCents;
           const sprd = Math.round((yVal - turkeyBenchmark) * 100);
