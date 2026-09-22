@@ -39,6 +39,26 @@ This skill provides an autonomous execution protocol for reading raw research du
    - Canonical historical financials (Revenue, Cash, Gross Debt) must never be silently overwritten or corrupted by conflicting broker estimates.
    - Model-derived or calculated metrics (Calculated EBITDA, FCF identity, broker consensus) must be tagged with explicit sources.
 
+6. **The Living Company Dossier & Historical Intelligence Standard**:
+   - Whenever research or a note is ingested for an issuer (e.g. Zoren, Braskem, Aragvi):
+     * Expand the existing dossier with the **most recent intelligence first**.
+     * **Top of Dossier (Living 'Current Stock / Credit View')**:
+       1. **Credit Verdict & Investment Stance**: Stance (Overweight / Neutral / Underweight / Distressed Hold), Indicative Market Price, Target Price, YTM, Spread (bps), and concise desk executive thesis summary.
+       2. **Positives (Key Credit Strengths)**: Core asset collateral, hard-currency cash flow floors (e.g. YEKDEM), regulated monopoly tariffs, market share moats.
+       3. **Negatives (Key Credit Risks & Subordination)**: Structural subordination (HoldCo vs OpCo), creditor-on-creditor violence risks, upcoming regulatory/tariff cliffs, corporate governance leakage.
+       4. **Background & Operational Perimeter**: Total operating capacity, asset perimeter, international stakes, parentage/ownership.
+       5. **Recent Drivers & Earnings Pulse**: Normalized run-rate EBITDA, margin inflection, adviser appointments, recent facility signings, live restructuring sandbox status.
+       6. **Upcoming Catalysts & Refinancing Milestones**: Explicit upcoming dates with expected credit impact (coupon dates, earnings releases, bullet maturities, regulatory cliffs).
+       7. **Management Questions & Due Diligence Queue**: 4–5 sharp diligence questions with relevance and conviction triggers.
+     * **Attached Interactive Tools & Models**: Direct links to attached Excel model and live interactive calculator sandbox.
+     * **Sections Below (📜 Historical Notes & Chronological Intelligence Timeline)**:
+       - Previous research runs, broker memos, and earlier notes are placed below the living view in **reverse chronological order** (most recent past run first).
+       - Each historical note must be **explicitly demarked** with:
+         * Status badge: `[Archived / Previous Note Run: <date>] — <Title>`
+         * Date stamp and research source / broker tag.
+         * Executive summary of the historical intake and what was concluded at that point in time.
+       - Historical notes are NEVER deleted or overwritten; they preserve a clear audit trail of thesis evolution.
+
 ---
 
 ## 1. Execution Protocol
@@ -58,20 +78,24 @@ Classify the dump into:
 1. **Issuer Identification**:
    - Existing issuer: Locate matching `database/issuers/<issuer_id>.json`.
    - New issuer: Generate standard metadata (`id`, `name`, `ticker`, `country`, `region`, `sector`, `rating`, `benchmark_bond`, `price`, `ytm`, `spread_bp`).
-2. **Financials & Multi-Year P&L**:
+2. **Living Credit View & Up-to-Date Thesis**:
+   - Construct or update the 7 structured sections (`credit_view`): Verdict, Positives, Negatives, Background, Recent Drivers, Catalysts, Management Questions.
+3. **Archived Research Intake Note**:
+   - Generate historical note entry (`date`, `title`, `source`, `status`: `"Archived / Previous Note Run"`, `summary`, `details`).
+4. **Financials & Multi-Year P&L**:
    - Revenue, EBITDA (both Reported and Calculated Cash EBITDA).
    - Capex, Cash Interest, Working Capital changes, Taxes, and strict FCF bridge:
      `FCF = EBITDA - Capex - Cash Interest - ΔNWC - Tax`.
-3. **Capital Structure & Debt Maturing Schedule**:
+5. **Capital Structure & Debt Maturing Schedule**:
    - Tranche amounts, currency, coupon, maturity dates, seniority tier, and security pledges.
-4. **Credit News / Catalyst Entry**:
+6. **Credit News / Catalyst Entry**:
    - Headline, summary, credit impact (`Positive`, `Neutral`, `Negative`, `Watch`), category, and clickable source URL.
-5. **Restructuring & Valuation Mechanics (if distressed)**:
-   - EV multiples, recovery waterfalls, and exchange terms.
 
 ### Step 3: Dual-Persistence — Website Database Update
 Execute the database update and compiler:
-1. Save or update `database/issuers/<issuer_id>.json`.
+1. Save or update `database/issuers/<issuer_id>.json`:
+   - Set `issuer_doc["credit_view"] = credit_view`.
+   - Prepend historical note: `issuer_doc["historical_notes"].insert(0, historical_note)`.
 2. Append new event to `database/credit_news.json`.
 3. Run compiler:
 ```powershell
@@ -80,11 +104,13 @@ python "C:\Users\Reza Karim\cembicredit\scripts\build_database.py"
 This automatically updates:
 - `database/credit_master.db` (SQLite tables: `issuers`, `financials_multi_year`, `debt_maturities`, `recovery_waterfalls`, `qualitative_annotations`, `credit_news`, `notes_search`).
 - `database/annotations.json`.
-- `js/issuers_data.js` (Web frontend bundle).
+- `js/issuers_data.js` (Web frontend bundle consumed by `company.html` Tab 8).
 
-### Step 4: Notion Research Repository Sync
-If the research constitutes a detailed issuer tear-sheet:
-1. Create a structured research dossier in the Notion Research Database (`3df1d0ad-68c6-815e-b5c2-cffb3b540b1b`) using `scripts/notion_dossier_helper.py`.
+### Step 4: Notion Research Repository Sync (Living Dossier)
+Update or create the structured research dossier in the Notion Research Database (`3df1d0ad-68c6-815e-b5c2-cffb3b540b1b`):
+1. Use `scripts/notion_dossier_helper.py` or `scripts/process_notion_inbox.py`:
+   - Prepend/update the living credit view at the top of the Notion page (most recent first).
+   - Append/insert the new intake note into the `📜 Historical Notes & Chronological Intelligence Timeline` section with explicit `[Archived / Previous Note Run: <date>]` demarkation.
 2. Link the generated Notion page ID into the issuer's JSON metadata (`notion_id`).
 
 ### Step 5: Prepend Receipt & Whisk Away Inbox
