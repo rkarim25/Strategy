@@ -788,20 +788,45 @@
               <div><strong>5. Desk Fair Value:</strong> Fair Value = Rec<sub>PV</sub> + &Delta;<sub>tranche</sub> + &Delta;<sub>qual</sub> (Base: 54.0c + 0c - 4.0c = 50.0c)</div>
             </div>
 
-            <div style="font-weight:700; color:var(--accent-emerald); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              3. What Concrete Catalysts Drive Bear, Base, and Bull?
+            <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              3. Why Are There 3 Sets of Prices (Floor, Fair, Upside) for Every Scenario?
+            </div>
+            <p style="margin-bottom:8px;">
+              A crucial distinction in institutional distressed credit is between <strong>Macro Fundamental Regimes (The Scenario Presets)</strong> and <strong>Secondary Market Trading Bands (Market Execution Dispersion)</strong>:
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px; margin-bottom:10px;">
+              <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px 10px; border-radius:4px;">
+                <strong style="color:#fff;">• The Scenario Presets / Sliders (The Fundamental Reality):</strong>
+                Sets the macro balance sheet parameters: Operating EBITDA ($1,400M Base), Multiple (5.0x), Haircut (35%), Equitization (30%), Exit Yield (9.75%), Standstill (18M), and Net Qualitative Friction (-4.0c).
+              </div>
+              <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-rose);">• Trading Floor (Stress Exit / Secondary Bid):</strong>
+                Even if the company achieves this scenario's restructuring terms, secondary market conditions may be hostile upon emergence. If exit yields blow out +200 bps (to 11.75%), dealer inventories are frozen, and mandate selling floods the street, secondary clearing prices fall to this liquidation floor (e.g. ~35c–40c for 2033s).
+              </div>
+              <div style="border-left:3px solid var(--accent-emerald); background:rgba(16,185,129,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-emerald);">• Desk Fair Value (Central Model / Expected PV):</strong>
+                The theoretical present value of the reinstated paper plus reorganized equity under the exact dialed-in inputs (e.g. 50.0c for the benchmark 2033s). This is your central trading anchor.
+              </div>
+              <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-cyan);">• Emergence Upside (Post-Reorg Re-Rating):</strong>
+                Conversely, once the default cloud clears and leverage drops to &lt;3.2x, the market often re-rates the company aggressively: exit yields compress -150 bps (to 8.25%), new equity trades at a premium public multiple (6.0x+), or a strategic sponsor tenders for paper, pulling the trading value toward par (e.g. ~65c–75c).
+              </div>
+            </div>
+
+            <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              4. Scenario Presets: What Concrete Fundamental Catalysts Drive Bear, Base, and Bull Scenarios?
             </div>
             <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
               <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-rose);">🔴 Bear Case (17c–22c Recovery):</strong>
+                <strong style="color:var(--accent-rose);">🔴 Bear Case Scenario (17c–22c Recovery):</strong>
                 Chemical spreads collapse (&lt;$180/t PE); $800M EBITDA at 3.5x fire-sale multiple ($2.8B EV); Petrobras blocks credit lines; Maceió damages exceed R$25B in Rotterdam court; consensual talks collapse into hostile 24M in-court RJ (-16c to -22c qualitative discount). Subordinated 2081 Hybrid is wiped out (0c).
               </div>
               <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-gold);">🟡 Base Case (49c–54c Recovery):</strong>
+                <strong style="color:var(--accent-gold);">🟡 Base Case Scenario (49c–54c Recovery):</strong>
                 Mid-cycle EBITDA ($1,400M) at 5.0x EV ($7.0B); Petrobras maintains commercial feedstock line; Maceió settled within provisions; consensual Extrajudicial Plan confirmed with 35% haircut + 30% equitization; exit debt issued at 87.7c for 54.0c present recovery minus -4.0c qualitative frictions = 50.0c fair value.
               </div>
               <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-cyan);">🟢 Bull Case (95c–100c Par):</strong>
+                <strong style="color:var(--accent-cyan);">🟢 Bull Case Scenario (95c–100c Par):</strong>
                 Petrochemical spread recovery (&gt;$600/t PE); $2,100M EBITDA at 6.0x multiple ($12.6B EV); Petrobras / ADNOC consortium buys out Novonor with $2.5B cash equity (+4c qualitative upside); unimpaired debt reinstatement at 100c par.
               </div>
             </div>
@@ -823,8 +848,8 @@
             <div style="font-weight:700; color:#38bdf8; font-family:'JetBrains Mono',monospace;" id="strip-debt-equity-split">Debt: 39.9c | Eq: 19.5c</div>
           </div>
           <div>
-            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Standstill Drag (T<sub>nego</sub>)</div>
-            <div style="font-weight:700; color:#f87171; font-family:'JetBrains Mono',monospace;" id="strip-time-drag">-9.1% (12M @ 9.75%)</div>
+            <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">Standstill Drag</div>
+            <div style="font-weight:700; color:var(--accent-rose); font-family:'JetBrains Mono',monospace;" id="strip-time-drag">-9.0% (18M @ 9.75%)</div>
           </div>
           <div>
             <div style="color:var(--text-muted); font-size:9px; text-transform:uppercase; font-weight:600;">True Net PV Recovery</div>
@@ -833,8 +858,15 @@
         </div>
 
         <div style="margin-top:10px;">
-          <div style="font-size:10px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px;">
-            Dynamic Secondary Pricing Bands vs Market Quotes
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+            <div style="font-size:10px; font-weight:700; color:var(--accent-gold); text-transform:uppercase;">
+              Secondary Market Trading Band for Current Scenario
+            </div>
+            <div style="font-size:9.5px; color:var(--text-muted);">
+              <span style="color:#f87171; font-weight:700;">Floor:</span> Stressed Exit Yield (+200bps) &bull; 
+              <span style="color:#34d399; font-weight:700;">Fair:</span> Model PV &bull; 
+              <span style="color:#38bdf8; font-weight:700;">Upside:</span> Re-Rating &amp; Par Pull
+            </div>
           </div>
 
           <table class="band-table" id="pricing-band-table">
@@ -842,9 +874,9 @@
               <tr>
                 <th style="text-align:left;">Instrument</th>
                 <th style="text-align:right;">Market Px</th>
-                <th style="text-align:right;">Bear (Floor)</th>
-                <th style="text-align:right;">Base (Fair)</th>
-                <th style="text-align:right;">Bull (Upside)</th>
+                <th style="text-align:right;" title="Worst-case market clearing price under this scenario: Exit yield blows out +200 bps and dealer illiquidity discount applies">Trading Floor<br><span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#f87171;">(Stress Exit)</span></th>
+                <th style="text-align:right;" title="Central Desk Fair Value: Model present value under currently dialed-in fundamental assumptions">Desk Fair Value<br><span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#34d399;">(Central Model)</span></th>
+                <th style="text-align:right;" title="Post-restructuring upside: Credit spread compresses -150 bps and reorganized equity multiples expand">Emergence Upside<br><span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#38bdf8;">(Post-Reorg)</span></th>
                 <th style="text-align:center;">Desk Action</th>
               </tr>
             </thead>

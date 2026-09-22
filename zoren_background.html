@@ -1369,20 +1369,23 @@
           </p>
         </div>
         <div>
-          <p style="color:#cbd5e1; margin-bottom:8px;">
-            Dynamic Pricing Band Formulation for Senior Claims:
+          <p style="color:#cbd5e1; margin-bottom:6px;">
+            <strong>Secondary Trading Band per Scenario (Floor vs Fair vs Upside):</strong>
+          </p>
+          <p style="color:var(--text-muted); font-size:10px; margin-bottom:8px;">
+            The sliders define the operational regime (EBITDA, Multiple). Within that regime, secondary bond prices trade across an execution band depending on market clearing yields:
           </p>
           <ul style="margin-left:14px; display:flex; flex-direction:column; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
             <li>
-              <span style="color:var(--accent-rose); font-weight:700;">Bear (Floor):</span> 
+              <span style="color:var(--accent-rose); font-weight:700;">Trading Floor (Stress Exit):</span> 
               <span style="color:#e2e8f0;">max(50.0c, Raw Recovery &times; 0.65 + min(-6.0c, &Delta;<sub>qual</sub> &times; 1.5))</span>
             </li>
             <li>
-              <span style="color:var(--accent-emerald); font-weight:700;">Base (Fair):</span> 
+              <span style="color:var(--accent-emerald); font-weight:700;">Desk Fair Value (Model PV):</span> 
               <span style="color:#e2e8f0;">min(100.0c, Raw Recovery + &Delta;<sub>qual</sub>)</span>
             </li>
             <li>
-              <span style="color:var(--accent-cyan); font-weight:700;">Bull (Upside):</span> 
+              <span style="color:var(--accent-cyan); font-weight:700;">Emergence Upside (Re-Rating):</span> 
               <span style="color:#e2e8f0;">min(105.0c, Raw Recovery + max(0.0c, &Delta;<sub>qual</sub>) + 2.0c)</span>
             </li>
           </ul>

@@ -750,20 +750,45 @@
               </div>
             </div>
 
-            <div style="font-weight:700; color:var(--accent-emerald); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
-              3. What Gets You Bear, Base, and Bull in Every Scenario?
+            <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              3. Why Are There 3 Sets of Prices (Floor, Fair, Upside) for Every Scenario?
+            </div>
+            <p style="margin-bottom:8px;">
+              A crucial distinction in institutional credit modeling is between <strong>Macro Fundamental Regimes (The Scenario Presets)</strong> and <strong>Secondary Market Trading Bands (Market Execution Dispersion)</strong>:
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px; margin-bottom:10px;">
+              <div style="background:rgba(15,23,42,0.6); border:1px solid #1e293b; padding:8px 10px; border-radius:4px;">
+                <strong style="color:#fff;">• The Scenario Presets / Sliders (The Fundamental Reality):</strong>
+                Sets the operational baseline: Consolidated EBITDA ($350M Base), Multiple (6.0x), Priority Secured Loans ($1,200M), and Net Qualitative Friction (-3.5c).
+              </div>
+              <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-rose);">• Trading Floor (Stress Exit / Secondary Bid):</strong>
+                Even if the company achieves this scenario's refinancing terms, secondary trading conditions may be hostile. If Turkish sovereign macro risk widens clearing exit yields to 13.00%+ (+200 bps blowout) and dealer illiquidity discounts apply, secondary prices drop to this floor (e.g. ~59c).
+              </div>
+              <div style="border-left:3px solid var(--accent-emerald); background:rgba(16,185,129,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-emerald);">• Desk Fair Value (Central Model / Expected PV):</strong>
+                The theoretical present value under dialed-in inputs: 100.0c fundamental asset coverage minus -3.5c net qualitative adjustments = <strong>96.5c Desk Fair Value</strong> (vs 94.5c market quote &rarr; +2.0c upside / BUY).
+              </div>
+              <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-cyan);">• Emergence Upside (Post-Reorg Re-Rating):</strong>
+                Conversely, if Turkey sovereign CDS tightens sub-250 bps and Zorlu Yenilenebilir IPO cash injects liquidity, clearing exit yields compress to 9.00% (par) or early tender calls at <strong>100c–102.5c par</strong>.
+              </div>
+            </div>
+
+            <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              4. Scenario Presets: What Concrete Fundamental Catalysts Drive Bear, Base, and Bull Scenarios?
             </div>
             <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
               <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-rose);">🔴 What Gets You Bear (65c–75c Recovery):</strong>
+                <strong style="color:var(--accent-rose);">🔴 Bear Case Scenario (65c–75c Recovery):</strong>
                 Severe prolonged hydrological drought (hydro output down &gt;40%); EMRA imposes emergency retail tariff caps; Turkish macroeconomic stress spikes CDS &gt;400 bps; EBITDA drops to $190M at 5.0x multiple ($950M EV); asset coverage drops below 100%, forcing a contentious 25% principal haircut.
               </div>
               <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-gold);">🟡 What Gets You Base (94c–96c Fair Value):</strong>
+                <strong style="color:var(--accent-gold);">🟡 Base Case Scenario (94c–96c Fair Value):</strong>
                 Normalized hydro and geothermal load factors; $280M EBITDA at 7.0x multiple ($1,960M EV = 143.8% asset coverage); parent Korteks contagion successfully firewalled; consensual 4-year Amend &amp; Extend (A&amp;E) maturity extension to 2030 at a 9.50% coupon. At an 11.0% exit yield, the 2030 paper trades at 95.3c, perfectly validating today's 94.5c secondary price.
               </div>
               <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
-                <strong style="color:var(--accent-cyan);">🟢 What Gets You Bull (100c Par Refinancing):</strong>
+                <strong style="color:var(--accent-cyan);">🟢 Bull Case Scenario (100c Par Refinancing):</strong>
                 Successful IPO or minority stake sale in Zorlu Yenilenebilir to a Gulf sovereign wealth fund, injecting $400M+ in equity; Turkey sovereign CDS tightens sub-200 bps; EBITDA reaches $350M at 8.0x multiple ($2,800M EV); net debt drops below $900M (&lt;2.6x leverage); notes are refinanced at 100c par.
               </div>
             </div>
@@ -775,8 +800,15 @@
         </div>
 
         <div style="margin-top:10px;">
-          <div style="font-size:10px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px;">
-            Dynamic Secondary Pricing Bands vs Market Quotes
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+            <div style="font-size:10px; font-weight:700; color:var(--accent-gold); text-transform:uppercase;">
+              Secondary Market Trading Band for Current Scenario
+            </div>
+            <div style="font-size:9.5px; color:var(--text-muted);">
+              <span style="color:#f87171; font-weight:700;">Floor:</span> Stressed Exit Yield (+200bps) &bull; 
+              <span style="color:#34d399; font-weight:700;">Fair:</span> Model PV &bull; 
+              <span style="color:#38bdf8; font-weight:700;">Upside:</span> Re-Rating &amp; Par Roll
+            </div>
           </div>
 
           <table class="band-table" id="pricing-band-table">
@@ -784,9 +816,9 @@
               <tr>
                 <th style="text-align:left;">Instrument</th>
                 <th style="text-align:right;">Market Px</th>
-                <th style="text-align:right;">Bear (Floor)</th>
-                <th style="text-align:right;">Base (Fair)</th>
-                <th style="text-align:right;">Bull (Upside)</th>
+                <th style="text-align:right;" title="Worst-case market clearing price under this scenario: Exit yield blows out +200 bps and dealer illiquidity discount applies">Trading Floor<br><span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#f87171;">(Stress Exit)</span></th>
+                <th style="text-align:right;" title="Central Desk Fair Value: Model present value under currently dialed-in fundamental assumptions">Desk Fair Value<br><span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#34d399;">(Central Model)</span></th>
+                <th style="text-align:right;" title="Post-restructuring upside: Credit spread compresses -150 bps and sovereign rating improves">Emergence Upside<br><span style="font-size:8.5px; font-weight:normal; text-transform:none; color:#38bdf8;">(Post-Reorg)</span></th>
                 <th style="text-align:center;">Desk Action</th>
               </tr>
             </thead>
