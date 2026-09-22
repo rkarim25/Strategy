@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Braskem S.A. — Interactive Restructuring, SOTP Recovery & Pricing Band Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0a0e1a;
+      --bg-card: #121929;
+      --bg-card-sub: #172237;
+      --border-color: #1e2c45;
+      --border-highlight: #2c4166;
+      --text-main: #f1f5f9;
+      --text-muted: #8493a8;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --accent-gold: #fbbf24;
+      --accent-purple: #c084fc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 10px 16px;
+      line-height: 1.35;
+      font-size: 12px;
+      overflow-x: hidden;
+    }
+
+    /* Top Sticky Summary Bar */
+    .sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(18, 25, 41, 0.96);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-highlight);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-title .badge {
+      font-size: 10px;
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .presets-wrap {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .preset-pill {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .preset-pill:hover {
+      color: #fff;
+      border-color: var(--accent-cyan);
+    }
+
+    .preset-pill.active {
+      background: var(--accent-cyan);
+      color: #031021;
+      border-color: var(--accent-cyan);
+    }
+
+    /* Live Output Ticker in Header */
+    .metrics-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .metric-hero {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .metric-hero.gold {
+      background: rgba(251, 191, 36, 0.08);
+      border-color: rgba(251, 191, 36, 0.25);
+    }
+
+    .metric-hero.emerald {
+      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(16, 185, 129, 0.25);
+    }
+
+    .metric-hero .lbl {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+
+    .metric-hero .val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .metric-hero .val span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-sustainable {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .status-borderline {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .status-distressed {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+
+    /* Back / Link button */
+    .nav-btn {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .nav-btn:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    /* Main Grid Layout */
+    .engine-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 1024px) {
+      .engine-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 6px;
+    }
+
+    .card-title .sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    /* Asset Table */
+    .asset-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .asset-table th {
+      text-align: left;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .asset-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    .asset-checkbox {
+      accent-color: var(--accent-cyan);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+
+    .num-input {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 4px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      width: 70px;
+      text-align: right;
+    }
+
+    .num-input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+    }
+
+    /* Sliders & Controls */
+    .slider-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .slider-box {
+      background: var(--bg-card-sub);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-size: 10.5px;
+    }
+
+    .slider-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .slider-val {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-gold);
+      font-weight: 700;
+    }
+
+    input[type=range] {
+      width: 100%;
+      height: 4px;
+      background: #23334d;
+      border-radius: 2px;
+      accent-color: var(--accent-cyan);
+      cursor: pointer;
+    }
+
+    /* Sustainability Meters */
+    .meter-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .meter-card {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .meter-title {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .meter-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .meter-sub {
+      font-size: 9.5px;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* Pricing Band Table */
+    .band-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .band-table th {
+      background: #0f172a;
+      color: var(--text-muted);
+      padding: 6px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .band-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .band-table td.name {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .callout-box {
+      background: rgba(14, 116, 144, 0.12);
+      border-left: 3px solid var(--accent-cyan);
+      border-radius: 4px;
+      padding: 8px 12px;
+      margin-top: 10px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation & Live Output Header -->
+  <div class="sticky-bar">
+    <div class="brand-section">
+      <a href="company.html?id=braskem" class="nav-btn">← Back to Braskem Dossier</a>
+      <div class="brand-title">
+        <span>Braskem (BRASKM)</span>
+        <span class="badge">RECOVERY &amp; HAIRCUT ENGINE</span>
+      </div>
+      <div class="presets-wrap">
+        <button class="preset-pill active" onclick="loadPreset('base')">Base Case Reorg</button>
+        <button class="preset-pill" onclick="loadPreset('aggressive')">Aggressive Haircut</button>
+        <button class="preset-pill" onclick="loadPreset('recap')">Petrobras Recap</button>
+        <button class="preset-pill" onclick="loadPreset('liquidation')">Liquidation Floor</button>
+        <button class="preset-pill" onclick="loadPreset('rj')">Hostile RJ Court</button>
+      </div>
+    </div>
+
+    <div class="metrics-strip">
+      <div class="metric-hero">
+        <div class="lbl">Senior Recovery</div>
+        <div class="val" id="top-senior-recovery">66.3<span>c</span></div>
+      </div>
+      <div class="metric-hero gold">
+        <div class="lbl">Pro-Forma Net Lev</div>
+        <div class="val" id="top-proforma-lev">3.20<span>x</span></div>
+      </div>
+      <div class="metric-hero emerald">
+        <div class="lbl">SOTP Ent. Value</div>
+        <div class="val" id="top-sotp-ev">$7,000<span>M</span></div>
+      </div>
+      <div id="top-status-badge" class="status-badge status-sustainable">
+        ✓ Sustainable
+      </div>
+    </div>
+  </div>
+
+  <!-- Main 2-Column Calculation Workspace -->
+  <div class="engine-layout">
+
+    <!-- LEFT COLUMN: SOTP Asset Multiples & Restructuring Mechanics -->
+    <div>
+
+      <!-- CARD 1: SOTP Asset Selection & Multiples Sandbox -->
+      <div class="card">
+        <div class="card-title">
+          <span>1. Sum-of-the-Parts (SOTP) Asset Selection &amp; Valuation Multiples</span>
+          <span class="sub">Select active operating clusters &amp; set EV multiples</span>
+        </div>
+
+        <table class="asset-table" id="asset-table">
+          <thead>
+            <tr>
+              <th style="width:30px; text-align:center;">Inc</th>
+              <th>Asset / Industrial Complex</th>
+              <th>Capacity / Moat</th>
+              <th style="text-align:right;">EBITDA ($M)</th>
+              <th style="text-align:right;">EV Multiple</th>
+              <th style="text-align:right;">Asset EV ($M)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:8px; border-top:1px solid var(--border-color); font-size:11px;">
+          <span style="color:var(--text-muted);">Unrestricted Cash Added to EV: <strong style="color:#fff;" id="lbl-cash-add">$900M</strong></span>
+          <div>
+            <span style="color:var(--text-muted); margin-right:8px;">Total SOTP Enterprise Value:</span>
+            <strong style="color:var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size:14px;" id="sotp-total-ev">$7,000.0M</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: Restructuring Standstill, Negotiation Timeline & Haircut Sandbox -->
+      <div class="card">
+        <div class="card-title">
+          <span>2. Restructuring Mechanics, Duration &amp; Haircut Calibration</span>
+          <span class="sub">Size debt cuts &amp; maturity extensions to hit balance sheet targets</span>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Standstill &amp; Negotiation Duration</span>
+              <span class="slider-val" id="val-duration">12 Months</span>
+            </div>
+            <input type="range" id="input-duration" min="3" max="36" step="3" value="12" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Carrying cost &amp; advisor drain: <strong style="color:#f87171;" id="lbl-advisor-drain">-$180M</strong> ($15M/mo)
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Sponsor Cash Equity Check (Petrobras/Novonor)</span>
+              <span class="slider-val" id="val-sponsor-equity">$0M</span>
+            </div>
+            <input type="range" id="input-sponsor-equity" min="0" max="3500" step="250" value="0" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Fresh liquidity to pay down claims or working capital
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Senior Unsecured Principal Haircut</span>
+              <span class="slider-val" id="val-senior-haircut">35%</span>
+            </div>
+            <input type="range" id="input-senior-haircut" min="0" max="60" step="5" value="35" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Cuts $9,200M senior pool by: <strong style="color:#34d399;" id="lbl-senior-debt-cut">-$3,220M</strong>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Senior Maturity Extension</span>
+              <span class="slider-val" id="val-extension">6 Years</span>
+            </div>
+            <input type="range" id="input-extension" min="0" max="10" step="1" value="6" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              New benchmark maturity: <strong style="color:#fbbf24;" id="lbl-new-maturity">2036</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Reinstated Senior Cash Coupon Rate</span>
+              <span class="slider-val" id="val-coupon">7.50%</span>
+            </div>
+            <input type="range" id="input-coupon" min="4.0" max="11.0" step="0.5" value="7.5" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              New annual senior interest burden: <strong style="color:#fff;" id="lbl-new-interest">$448M</strong>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Senior Debt-for-Equity Swap Allocation</span>
+              <span class="slider-val" id="val-debt-equity">30%</span>
+            </div>
+            <input type="range" id="input-debt-equity" min="0" max="50" step="5" value="30" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Senior lenders receive <strong style="color:#38bdf8;" id="lbl-reorg-equity-share">75%</strong> of reorganized equity
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Subordinated 2081 Hybrid Notes Cramdown</span>
+              <span class="slider-val" id="val-hybrid-haircut">85%</span>
+            </div>
+            <input type="range" id="input-hybrid-haircut" min="50" max="100" step="5" value="85" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Hybrid recovery floor: <strong style="color:#f87171;" id="lbl-hybrid-cramdown">15c</strong> (Out-of-the-money warrants)
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Maceió Settlement Balance Sheet Deductions</span>
+              <span class="slider-val" id="val-maceio-npv">$600M</span>
+            </div>
+            <input type="range" id="input-maceio-npv" min="200" max="1200" step="50" value="600" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Net present value of remaining Alagoas obligations
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Sustainability Engine & Qualitative Pricing Bands -->
+    <div>
+
+      <!-- CARD 3: Balance Sheet Sustainability Engine -->
+      <div class="card">
+        <div class="card-title">
+          <span>3. Balance Sheet Sustainability Engine</span>
+          <span class="sub">Target: Net Leverage &lt; 3.20x &bull; Interest Coverage &gt; 2.50x</span>
+        </div>
+
+        <div class="meter-grid">
+          <div class="meter-card">
+            <div class="meter-title">Pro-Forma Net Debt</div>
+            <div class="meter-val" id="meter-net-debt">$4,480M</div>
+            <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-net-debt-delta">-$4,970M vs FY24</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Pro-Forma Leverage</div>
+            <div class="meter-val" id="meter-leverage">3.20x</div>
+            <div class="meter-sub" id="meter-leverage-target">Target: &lt; 3.20x</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Interest Coverage</div>
+            <div class="meter-val" id="meter-coverage">2.69x</div>
+            <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-coverage-target">Covenant: &gt; 2.0x</div>
+          </div>
+        </div>
+
+        <div class="meter-grid">
+          <div class="meter-card">
+            <div class="meter-title">Annual Cash Interest</div>
+            <div class="meter-val" id="meter-interest">$520M</div>
+            <div class="meter-sub" style="color:#38bdf8;">Down from $630M</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Post-Reorg FCF</div>
+            <div class="meter-val" id="meter-fcf" style="color:var(--accent-emerald);">+$170M</div>
+            <div class="meter-sub">Positive Cash Gen</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Debt Cut Required</div>
+            <div class="meter-val" id="meter-cut-req">$0M</div>
+            <div class="meter-sub" id="meter-cut-status" style="color:var(--accent-emerald);">Adequately Sized</div>
+          </div>
+        </div>
+
+        <div id="sustainability-verdict" class="callout-box">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- CARD 4: Qualitative Risk Haircut & Dynamic Pricing Bands -->
+      <div class="card">
+        <div class="card-title">
+          <span>4. Qualitative Risk Weighting &amp; Implied Pricing Bands</span>
+          <span class="sub">Discount for Petrobras friction, Maceió tail risk &amp; court delay</span>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Petrobras Sponsor Friction / Reluctance</span>
+              <span class="slider-val" id="val-qual-petrobras">25%</span>
+            </div>
+            <input type="range" id="input-qual-petrobras" min="0" max="60" step="5" value="25" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Political governance &amp; refusal to fund Novonor</div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Maceió Litigation / Dutch Class Action Tail</span>
+              <span class="slider-val" id="val-qual-maceio">15%</span>
+            </div>
+            <input type="range" id="input-qual-maceio" min="0" max="40" step="5" value="15" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Contingent foreign lawsuit damages</div>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Judicial RJ In-Court Cramdown Risk</span>
+              <span class="slider-val" id="val-qual-rj">20%</span>
+            </div>
+            <input type="range" id="input-qual-rj" min="0" max="50" step="5" value="20" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Risk of breakdown into formal Brazilian bankruptcy</div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">Distressed Liquidity &amp; Execution Discount</span>
+              <span class="slider-val" id="val-qual-discount">15%</span>
+            </div>
+            <input type="range" id="input-qual-discount" min="5" max="30" step="5" value="15" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity penalty</div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <div style="font-size:10px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px;">
+            Dynamic Secondary Pricing Bands vs Market Quotes
+          </div>
+
+          <table class="band-table" id="pricing-band-table">
+            <thead>
+              <tr>
+                <th style="text-align:left;">Instrument</th>
+                <th style="text-align:right;">Market Px</th>
+                <th style="text-align:right;">Bear (Floor)</th>
+                <th style="text-align:right;">Base (Fair)</th>
+                <th style="text-align:right;">Bull (Upside)</th>
+                <th style="text-align:center;">Desk Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populated dynamically via JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Asset SOTP Baseline Definitions
+    const ASSETS = [
+      { id: "camacari", name: "Camaçari Complex (Bahia)", capacity: "1,400 kt Ethylene (Petrobras RLAM)", ebitda: 380.0, multiple: 5.0, included: true },
+      { id: "triunfo", name: "Triunfo Complex (RS)", capacity: "1,450 kt Ethylene (Mercosur Pack)", ebitda: 420.0, multiple: 5.0, included: true },
+      { id: "sp_abc", name: "São Paulo / ABC Complex", capacity: "700 kt Ethylene (Auto Heartland)", ebitda: 180.0, multiple: 4.5, included: true },
+      { id: "duque", name: "Duque de Caxias (RJ)", capacity: "520 kt Ethylene (REDUC / Pre-Salt)", ebitda: 140.0, multiple: 4.5, included: true },
+      { id: "us_pp", name: "United States PP Fleet (5 Plants)", capacity: "2,100 kt PP (#1 US Producer)", ebitda: 220.0, multiple: 6.0, included: true },
+      { id: "eu_pp", name: "European PP Fleet (Germany)", capacity: "540 kt PP (Specialty Copolymers)", ebitda: 60.0, multiple: 4.5, included: true },
+      { id: "braskem_idesa", name: "Braskem Idesa Mexico (75% JV)", capacity: "1,050 kt PE (Restructured Debt)", ebitda: 50.0, multiple: 5.0, included: true },
+      { id: "green_pe", name: "Bio-Polymers 'I'm green' (Triunfo)", capacity: "260 kt Bio-PE (Global Leader)", ebitda: 70.0, multiple: 7.5, included: true }
+    ];
+
+    // Tranche Debt Baseline Definitions
+    const TRANCHES = [
+      { id: "b2030", name: "BRASKM 4.500% 2030", claim: 1450.0, marketPx: 48.60, seniority: "senior" },
+      { id: "b2033", name: "BRASKM 7.250% 2033", claim: 1200.0, marketPx: 56.30, seniority: "senior" },
+      { id: "b2050", name: "BRASKM 5.875% 2050", claim: 1420.0, marketPx: 44.70, seniority: "senior" },
+      { id: "b2034", name: "BRASKM 8.000% 2034", claim: 980.0, marketPx: 57.50, seniority: "senior" },
+      { id: "debentures", name: "Domestic Brazilian Debentures", claim: 1400.0, marketPx: 52.00, seniority: "senior" },
+      { id: "b2081", name: "BRASKM 8.50% / 12.00% 2081 Hybrid", claim: 1000.0, marketPx: 31.80, seniority: "hybrid" }
+    ];
+
+    // Presets definitions
+    const PRESETS = {
+      base: {
+        duration: 12,
+        sponsorEquity: 0,
+        seniorHaircut: 35,
+        extension: 6,
+        coupon: 7.5,
+        debtEquity: 30,
+        hybridHaircut: 85,
+        maceioNpv: 600,
+        qualPetrobras: 25,
+        qualMaceio: 15,
+        qualRj: 20,
+        qualDiscount: 15,
+        assets: { camacari: [380, 5.0, true], triunfo: [420, 5.0, true], sp_abc: [180, 4.5, true], duque: [140, 4.5, true], us_pp: [220, 6.0, true], eu_pp: [60, 4.5, true], braskem_idesa: [50, 5.0, true], green_pe: [70, 7.5, true] }
+      },
+      aggressive: {
+        duration: 18,
+        sponsorEquity: 500,
+        seniorHaircut: 45,
+        extension: 8,
+        coupon: 6.5,
+        debtEquity: 40,
+        hybridHaircut: 95,
+        maceioNpv: 750,
+        qualPetrobras: 35,
+        qualMaceio: 25,
+        qualRj: 30,
+        qualDiscount: 20,
+        assets: { camacari: [350, 4.5, true], triunfo: [380, 4.5, true], sp_abc: [160, 4.0, true], duque: [120, 4.0, true], us_pp: [190, 5.5, true], eu_pp: [50, 4.0, true], braskem_idesa: [30, 4.0, true], green_pe: [60, 6.5, true] }
+      },
+      recap: {
+        duration: 6,
+        sponsorEquity: 2500,
+        seniorHaircut: 15,
+        extension: 5,
+        coupon: 8.5,
+        debtEquity: 20,
+        hybridHaircut: 60,
+        maceioNpv: 500,
+        qualPetrobras: 10,
+        qualMaceio: 10,
+        qualRj: 10,
+        qualDiscount: 10,
+        assets: { camacari: [420, 5.5, true], triunfo: [450, 5.5, true], sp_abc: [200, 5.0, true], duque: [160, 5.0, true], us_pp: [250, 6.5, true], eu_pp: [70, 5.0, true], braskem_idesa: [60, 5.5, true], green_pe: [80, 8.0, true] }
+      },
+      liquidation: {
+        duration: 24,
+        sponsorEquity: 0,
+        seniorHaircut: 55,
+        extension: 0,
+        coupon: 5.0,
+        debtEquity: 50,
+        hybridHaircut: 100,
+        maceioNpv: 900,
+        qualPetrobras: 50,
+        qualMaceio: 35,
+        qualRj: 45,
+        qualDiscount: 25,
+        assets: { camacari: [250, 3.5, true], triunfo: [280, 3.5, true], sp_abc: [100, 3.0, true], duque: [80, 3.0, true], us_pp: [140, 4.0, true], eu_pp: [30, 3.0, true], braskem_idesa: [0, 0.0, false], green_pe: [40, 5.0, true] }
+      },
+      rj: {
+        duration: 30,
+        sponsorEquity: 0,
+        seniorHaircut: 50,
+        extension: 10,
+        coupon: 6.0,
+        debtEquity: 45,
+        hybridHaircut: 100,
+        maceioNpv: 800,
+        qualPetrobras: 45,
+        qualMaceio: 30,
+        qualRj: 50,
+        qualDiscount: 25,
+        assets: { camacari: [300, 4.0, true], triunfo: [330, 4.0, true], sp_abc: [130, 3.5, true], duque: [100, 3.5, true], us_pp: [160, 5.0, true], eu_pp: [40, 3.5, true], braskem_idesa: [20, 3.0, true], green_pe: [50, 6.0, true] }
+      }
+    };
+
+    function initPage() {
+      renderAssetTable();
+      recalcEngine();
+    }
+
+    function renderAssetTable() {
+      const tbody = document.querySelector("#asset-table tbody");
+      tbody.innerHTML = ASSETS.map((a, idx) => `
+        <tr id="row-${a.id}">
+          <td style="text-align:center;">
+            <input type="checkbox" class="asset-checkbox" id="chk-${a.id}" ${a.included ? 'checked' : ''} onchange="onAssetToggle('${a.id}')">
+          </td>
+          <td><strong style="color:#fff;">${a.name}</strong></td>
+          <td style="color:var(--text-muted); font-size:10px;">${a.capacity}</td>
+          <td style="text-align:right;">
+            <input type="number" step="5" class="num-input" id="ebitda-${a.id}" value="${a.ebitda}" onchange="recalcEngine()">
+          </td>
+          <td style="text-align:right;">
+            <input type="number" step="0.5" class="num-input" id="mult-${a.id}" value="${a.multiple}" onchange="recalcEngine()">
+          </td>
+          <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent-cyan);" id="ev-${a.id}">
+            $${(a.ebitda * a.multiple).toFixed(1)}M
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function onAssetToggle(id) {
+      const asset = ASSETS.find(a => a.id === id);
+      if (asset) {
+        asset.included = document.getElementById(`chk-${id}`).checked;
+        const row = document.getElementById(`row-${id}`);
+        row.style.opacity = asset.included ? "1.0" : "0.4";
+        recalcEngine();
+      }
+    }
+
+    function loadPreset(name) {
+      document.querySelectorAll(".preset-pill").forEach(p => p.classList.remove("active"));
+      event.target.classList.add("active");
+
+      const p = PRESETS[name];
+      if (!p) return;
+
+      document.getElementById("input-duration").value = p.duration;
+      document.getElementById("input-sponsor-equity").value = p.sponsorEquity;
+      document.getElementById("input-senior-haircut").value = p.seniorHaircut;
+      document.getElementById("input-extension").value = p.extension;
+      document.getElementById("input-coupon").value = p.coupon;
+      document.getElementById("input-debt-equity").value = p.debtEquity;
+      document.getElementById("input-hybrid-haircut").value = p.hybridHaircut;
+      document.getElementById("input-maceio-npv").value = p.maceioNpv;
+
+      document.getElementById("input-qual-petrobras").value = p.qualPetrobras;
+      document.getElementById("input-qual-maceio").value = p.qualMaceio;
+      document.getElementById("input-qual-rj").value = p.qualRj;
+      document.getElementById("input-qual-discount").value = p.qualDiscount;
+
+      // Update assets
+      ASSETS.forEach(a => {
+        if (p.assets[a.id]) {
+          const [eb, m, inc] = p.assets[a.id];
+          document.getElementById(`ebitda-${a.id}`).value = eb;
+          document.getElementById(`mult-${a.id}`).value = m;
+          document.getElementById(`chk-${a.id}`).checked = inc;
+          a.included = inc;
+          document.getElementById(`row-${a.id}`).style.opacity = inc ? "1.0" : "0.4";
+        }
+      });
+
+      recalcEngine();
+    }
+
+    function recalcEngine() {
+      // 1. Read Inputs
+      const durationMonths = parseInt(document.getElementById("input-duration").value);
+      const sponsorEquity = parseFloat(document.getElementById("input-sponsor-equity").value);
+      const seniorHaircutPct = parseFloat(document.getElementById("input-senior-haircut").value) / 100.0;
+      const extensionYears = parseInt(document.getElementById("input-extension").value);
+      const newCouponPct = parseFloat(document.getElementById("input-coupon").value) / 100.0;
+      const debtToEquityPct = parseFloat(document.getElementById("input-debt-equity").value) / 100.0;
+      const hybridHaircutPct = parseFloat(document.getElementById("input-hybrid-haircut").value) / 100.0;
+      const maceioNpv = parseFloat(document.getElementById("input-maceio-npv").value);
+
+      const qualPetrobras = parseFloat(document.getElementById("input-qual-petrobras").value) / 100.0;
+      const qualMaceio = parseFloat(document.getElementById("input-qual-maceio").value) / 100.0;
+      const qualRj = parseFloat(document.getElementById("input-qual-rj").value) / 100.0;
+      const qualDiscount = parseFloat(document.getElementById("input-qual-discount").value) / 100.0;
+
+      // Update UI slider values
+      document.getElementById("val-duration").textContent = `${durationMonths} Months`;
+      document.getElementById("val-sponsor-equity").textContent = `$${sponsorEquity.toLocaleString()}M`;
+      document.getElementById("val-senior-haircut").textContent = `${(seniorHaircutPct * 100).toFixed(0)}%`;
+      document.getElementById("val-extension").textContent = `${extensionYears} Years`;
+      document.getElementById("val-coupon").textContent = `${(newCouponPct * 100).toFixed(2)}%`;
+      document.getElementById("val-debt-equity").textContent = `${(debtToEquityPct * 100).toFixed(0)}%`;
+      document.getElementById("val-hybrid-haircut").textContent = `${(hybridHaircutPct * 100).toFixed(0)}%`;
+      document.getElementById("val-maceio-npv").textContent = `$${maceioNpv.toFixed(0)}M`;
+
+      document.getElementById("val-qual-petrobras").textContent = `${(qualPetrobras * 100).toFixed(0)}%`;
+      document.getElementById("val-qual-maceio").textContent = `${(qualMaceio * 100).toFixed(0)}%`;
+      document.getElementById("val-qual-rj").textContent = `${(qualRj * 100).toFixed(0)}%`;
+      document.getElementById("val-qual-discount").textContent = `${(qualDiscount * 100).toFixed(0)}%`;
+
+      document.getElementById("lbl-new-maturity").textContent = `${2030 + extensionYears}`;
+
+      // 2. SOTP Asset Valuation
+      let totalSotpEv = 0;
+      let totalOperatingEbitda = 0;
+
+      ASSETS.forEach(a => {
+        const isInc = document.getElementById(`chk-${a.id}`).checked;
+        const eb = parseFloat(document.getElementById(`ebitda-${a.id}`).value) || 0;
+        const m = parseFloat(document.getElementById(`mult-${a.id}`).value) || 0;
+        const assetEv = isInc ? (eb * m) : 0;
+        document.getElementById(`ev-${a.id}`).textContent = `$${assetEv.toFixed(1)}M`;
+        if (isInc) {
+          totalSotpEv += assetEv;
+          totalOperatingEbitda += eb;
+        }
+      });
+
+      const balanceSheetCash = 900.0;
+      const totalDistributableAssetValue = totalSotpEv + balanceSheetCash + sponsorEquity;
+      document.getElementById("sotp-total-ev").textContent = `$${totalSotpEv.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}M`;
+      document.getElementById("top-sotp-ev").innerHTML = `$${Math.round(totalSotpEv).toLocaleString()}<span>M</span>`;
+
+      // 3. Priority Deductions
+      const monthlyAdvisorBurn = 15.0; // $15M/mo
+      const totalAdvisorDrain = durationMonths * monthlyAdvisorBurn;
+      document.getElementById("lbl-advisor-drain").textContent = `-$${totalAdvisorDrain.toFixed(0)}M`;
+
+      const priorityBankDebt = 1100.0; // Reinstated PPE facilities
+      const totalPriorityDeductions = totalAdvisorDrain + priorityBankDebt + maceioNpv;
+
+      // 4. Net Distributable to Senior Unsecured Debt Pool
+      const totalSeniorClaims = 9200.0; // Eurobonds $7.8B + Debentures $1.4B
+      const netDistributableToSenior = Math.max(0, totalDistributableAssetValue - totalPriorityDeductions);
+      const rawSeniorRecoveryPct = Math.min(1.0, netDistributableToSenior / totalSeniorClaims);
+      const rawSeniorRecoveryCents = rawSeniorRecoveryPct * 100.0;
+
+      // 5. Post-Restructuring Balance Sheet Pro-Forma Metrics
+      const seniorDebtAfterHaircut = totalSeniorClaims * (1.0 - seniorHaircutPct);
+      const seniorReinstatedDebt = seniorDebtAfterHaircut * (1.0 - debtToEquityPct);
+      const hybridClaims = 1000.0;
+      const hybridReinstatedDebt = hybridClaims * (1.0 - hybridHaircutPct);
+
+      const proFormaGrossDebt = priorityBankDebt + seniorReinstatedDebt + hybridReinstatedDebt;
+      const postReorgCash = Math.max(400, balanceSheetCash + sponsorEquity - totalAdvisorDrain - (maceioNpv * 0.15));
+      const proFormaNetDebt = proFormaGrossDebt - postReorgCash;
+      const proFormaNetLeverage = totalOperatingEbitda > 0 ? (proFormaNetDebt / totalOperatingEbitda) : 99.0;
+
+      const proFormaSeniorInterest = seniorReinstatedDebt * newCouponPct;
+      const priorityBankInterest = priorityBankDebt * 0.075;
+      const proFormaTotalCashInterest = proFormaSeniorInterest + priorityBankInterest;
+      const proFormaInterestCoverage = proFormaTotalCashInterest > 0 ? (totalOperatingEbitda / proFormaTotalCashInterest) : 0;
+      const proFormaCapex = 600.0;
+      const proFormaFcf = totalOperatingEbitda - proFormaCapex - proFormaTotalCashInterest - 40.0 - 70.0; // WC & Tax
+
+      // Update Meter Displays
+      document.getElementById("top-senior-recovery").innerHTML = `${rawSeniorRecoveryCents.toFixed(1)}<span>c</span>`;
+      document.getElementById("top-proforma-lev").innerHTML = `${proFormaNetLeverage.toFixed(2)}<span>x</span>`;
+      document.getElementById("meter-net-debt").textContent = `$${Math.round(proFormaNetDebt).toLocaleString()}M`;
+      document.getElementById("meter-net-debt-delta").textContent = `${proFormaNetDebt < 9450 ? '-' : '+'}$${Math.abs(Math.round(proFormaNetDebt - 9450)).toLocaleString()}M vs FY24`;
+      document.getElementById("meter-leverage").textContent = `${proFormaNetLeverage.toFixed(2)}x`;
+      document.getElementById("meter-coverage").textContent = `${proFormaInterestCoverage.toFixed(2)}x`;
+      document.getElementById("meter-interest").textContent = `$${Math.round(proFormaTotalCashInterest)}M`;
+      document.getElementById("meter-fcf").textContent = `${proFormaFcf >= 0 ? '+' : ''}$${Math.round(proFormaFcf)}M`;
+      document.getElementById("meter-fcf").style.color = proFormaFcf >= 0 ? "var(--accent-emerald)" : "var(--accent-rose)";
+
+      document.getElementById("lbl-senior-debt-cut").textContent = `-$${Math.round(totalSeniorClaims * seniorHaircutPct).toLocaleString()}M`;
+      document.getElementById("lbl-new-interest").textContent = `$${Math.round(proFormaSeniorInterest)}M`;
+      document.getElementById("lbl-reorg-equity-share").textContent = `${Math.min(95, Math.round(debtToEquityPct * 180))}%`;
+
+      const hybridRecoveryCents = (1.0 - hybridHaircutPct) * 100.0;
+      document.getElementById("lbl-hybrid-cramdown").textContent = `${hybridRecoveryCents.toFixed(1)}c`;
+
+      // Required Debt Cut to hit Target 3.20x Net Leverage
+      const targetNetDebt = totalOperatingEbitda * 3.20;
+      const excessDebt = Math.max(0, proFormaNetDebt - targetNetDebt);
+      document.getElementById("meter-cut-req").textContent = excessDebt > 0 ? `$${Math.round(excessDebt).toLocaleString()}M` : "$0M";
+      document.getElementById("meter-cut-status").textContent = excessDebt > 0 ? "Under-Haircut / At Risk" : "Adequately Sized";
+      document.getElementById("meter-cut-status").style.color = excessDebt > 0 ? "var(--accent-rose)" : "var(--accent-emerald)";
+
+      // Sustainability Status & Verdict Callout
+      const statusBadge = document.getElementById("top-status-badge");
+      const verdictBox = document.getElementById("sustainability-verdict");
+
+      let isSustainable = proFormaNetLeverage <= 3.25 && proFormaInterestCoverage >= 2.2 && proFormaFcf > 0;
+      let isBorderline = proFormaNetLeverage <= 4.2 && proFormaInterestCoverage >= 1.7;
+
+      if (isSustainable) {
+        statusBadge.className = "status-badge status-sustainable";
+        statusBadge.textContent = "✓ Sustainable Plan";
+        verdictBox.style.borderLeftColor = "var(--accent-emerald)";
+        verdictBox.style.background = "rgba(16, 185, 129, 0.1)";
+        verdictBox.innerHTML = `
+          <strong style="color:var(--accent-emerald);">Plan Verdict: SUSTAINABLE BALANCE SHEET.</strong> 
+          Pro-forma Net Leverage (${proFormaNetLeverage.toFixed(2)}x) sits inside the &lt;3.20x target envelope, interest coverage (${proFormaInterestCoverage.toFixed(2)}x) clears covenant headroom, and annual FCF (+$${Math.round(proFormaFcf)}M) supports ongoing capital needs without re-default risk.
+        `;
+      } else if (isBorderline) {
+        statusBadge.className = "status-badge status-borderline";
+        statusBadge.textContent = "⚠️ Borderline Risk";
+        verdictBox.style.borderLeftColor = "var(--accent-amber)";
+        verdictBox.style.background = "rgba(245, 158, 11, 0.1)";
+        verdictBox.innerHTML = `
+          <strong style="color:var(--accent-amber);">Plan Verdict: BORDERLINE SUSTAINABILITY.</strong> 
+          Leverage (${proFormaNetLeverage.toFixed(2)}x) leaves minimal cushion against cyclical petrochem margin dips. Consider increasing the senior haircut by +5% to +10% or securing at least $500M sponsor equity to ensure covenant survival.
+        `;
+      } else {
+        statusBadge.className = "status-badge status-distressed";
+        statusBadge.textContent = "✕ Unsustainable / Re-Default";
+        verdictBox.style.borderLeftColor = "var(--accent-rose)";
+        verdictBox.style.background = "rgba(244, 63, 94, 0.1)";
+        verdictBox.innerHTML = `
+          <strong style="color:var(--accent-rose);">Plan Verdict: UNSUSTAINABLE PLAN / HIGH RE-DEFAULT RISK.</strong> 
+          Debt burden remains too heavy with ${proFormaNetLeverage.toFixed(2)}x Net Leverage and $${Math.round(excessDebt)}M in excess unamortizable debt. Rating agencies will not upgrade out of CCC/B category, leading to another restructuring within 24–36 months.
+        `;
+      }
+
+      // 6. Pricing in Qualitative Friction to Produce Dynamic Pricing Bands
+      // Composite Qualitative Friction Factor (0 to 1)
+      const qualitativeFrictionFactor = (qualPetrobras * 0.35) + (qualMaceio * 0.25) + (qualRj * 0.25) + (qualDiscount * 0.15);
+      
+      const tbodyBand = document.querySelector("#pricing-band-table tbody");
+      tbodyBand.innerHTML = TRANCHES.map(t => {
+        let baseRecovery = 0;
+        let bearRecovery = 0;
+        let bullRecovery = 0;
+
+        if (t.seniority === "senior") {
+          baseRecovery = rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40));
+          bearRecovery = Math.max(16.0, rawSeniorRecoveryCents * 0.45 * (1.0 - qualitativeFrictionFactor));
+          bullRecovery = Math.min(100.0, rawSeniorRecoveryCents * 1.35);
+        } else {
+          // Hybrid 2081
+          baseRecovery = hybridRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.70));
+          bearRecovery = 0.0;
+          bullRecovery = Math.min(50.0, hybridRecoveryCents * 2.2);
+        }
+
+        const deltaBase = baseRecovery - t.marketPx;
+        const deltaPct = (deltaBase / t.marketPx) * 100.0;
+
+        let badgeHtml = "";
+        if (deltaPct > 20.0) {
+          badgeHtml = '<span style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">STRONG BUY</span>';
+        } else if (deltaPct >= -5.0) {
+          badgeHtml = '<span style="background:rgba(245,158,11,0.15); color:var(--accent-amber); border:1px solid rgba(245,158,11,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">HOLD / FAIR</span>';
+        } else {
+          badgeHtml = '<span style="background:rgba(244,63,94,0.15); color:var(--accent-rose); border:1px solid rgba(244,63,94,0.3); padding:2px 6px; border-radius:4px; font-size:9.5px; font-weight:700;">AVOID / SHORT</span>';
+        }
+
+        return `
+          <tr>
+            <td class="name">${t.name}</td>
+            <td style="text-align:right; color:#cbd5e1;">${t.marketPx.toFixed(1)}c</td>
+            <td style="text-align:right; color:#f87171; font-weight:700;">${bearRecovery.toFixed(1)}c</td>
+            <td style="text-align:right; color:#34d399; font-weight:700;">${baseRecovery.toFixed(1)}c</td>
+            <td style="text-align:right; color:#38bdf8; font-weight:700;">${bullRecovery.toFixed(1)}c</td>
+            <td style="text-align:center;">${badgeHtml}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Initialize on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage();
+    });
+  </script>
+</body>
+</html>
