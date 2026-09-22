@@ -50,9 +50,9 @@
     { id: "lab", asset: "Lab", strategy: "Interactive strategy builder", group: "tools", href: "lab.html" },
     { id: "price", asset: "Charts", strategy: "Candles, indicators & drawing tools", group: "tools", href: "price.html" },
     { id: "summary", asset: "Summary results", strategy: "Cross-asset backtests", group: "tools", href: "summary.html" },
-    { id: "ust", asset: "US Treasuries", strategy: "Yield Curve & Macro Model", group: "rates", href: "ust.html", secondary: true },
-    { id: "cdx", asset: "CDX", strategy: "EM CDX, Xover & US HY", group: "rates", href: "cdx.html", secondary: true },
-    { id: "local_em", asset: "Local EM", strategy: "GBI-EM Sovereign Debt & FX", group: "rates", href: "local_em.html", secondary: true },
+    { id: "ust", asset: "US Treasuries ↗", strategy: "Yield Curve & Macro Model (CEMBI)", group: "rates", href: "https://rkarim25.github.io/cembicredit/ust.html", secondary: true },
+    { id: "cdx", asset: "CDX ↗", strategy: "EM CDX, Xover & US HY (CEMBI)", group: "rates", href: "https://rkarim25.github.io/cembicredit/cdx.html", secondary: true },
+    { id: "local_em", asset: "Local EM ↗", strategy: "GBI-EM Sovereign Debt & FX (CEMBI)", group: "rates", href: "https://rkarim25.github.io/cembicredit/local_em.html", secondary: true },
     { id: "instruments", asset: "Tools", strategy: "Instruments", group: "tools", href: "instruments.html", secondary: true },
   ];
 
