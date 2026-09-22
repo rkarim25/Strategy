@@ -1625,6 +1625,8 @@
     function onManualExitYield(val) {
       const chk = document.getElementById("chk-auto-exit-yield");
       if (chk) chk.checked = false;
+      const y = parseFloat(val);
+      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${y.toFixed(2)}%`;
       recalcEngine();
     }
 
@@ -2077,7 +2079,9 @@
       if (document.getElementById("val-exit-coupon")) document.getElementById("val-exit-coupon").textContent = `${exitCoupon.toFixed(2)}%`;
       if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${effectiveExitYield.toFixed(2)}%`;
       if (document.getElementById("lbl-implied-rating")) {
-        document.getElementById("lbl-implied-rating").textContent = `${proFormaNetLeverage.toFixed(2)}x \u2192 ${effectiveExitYield.toFixed(2)}%`;
+        document.getElementById("lbl-implied-rating").textContent = isAutoYield
+          ? `${proFormaNetLeverage.toFixed(2)}x \u2192 ${effectiveExitYield.toFixed(2)}%`
+          : 'Manual Mode (Unlinked)';
       }
 
       const newDebtTradingPx = calcBondPrice(exitCoupon, effectiveExitYield, exitTenor, pikCouponPct, pikYears);

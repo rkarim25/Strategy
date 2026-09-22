@@ -1090,8 +1090,13 @@
               <span class="slider-label" style="color:#38bdf8; font-weight:700;">🎯 Required Market Exit Yield (r<sub>exit</sub>)</span>
               <span class="slider-val" id="val-exit-yield-card4" style="color:#38bdf8; font-weight:800;">9.75%</span>
             </div>
-            <input type="range" id="input-exit-yield-card4" min="7.0" max="15.0" step="0.25" value="9.75" oninput="syncExitYield(this.value)">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Market-clearing yield for post-reorg exit notes &bull; Live synced with Card 6</div>
+            <input type="range" id="input-exit-yield-card4" min="7.0" max="15.0" step="0.25" value="9.75" oninput="onManualExitYield(this.value)">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+              <span>Market-clearing yield for post-reorg exit notes &bull; Live synced with Card 6</span>
+              <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
+                <input type="checkbox" id="chk-auto-exit-yield-card4" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating-card4">3.40x &rarr; 9.75%</span>)
+              </label>
+            </div>
           </div>
         </div>
 
@@ -1602,16 +1607,24 @@
       const elCard4 = document.getElementById("input-exit-yield-card4");
       if (elCard6 && parseFloat(elCard6.value) !== y) elCard6.value = y;
       if (elCard4 && parseFloat(elCard4.value) !== y) elCard4.value = y;
+      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = y.toFixed(2) + "%";
+      if (document.getElementById("val-exit-yield-card4")) document.getElementById("val-exit-yield-card4").textContent = y.toFixed(2) + "%";
       recalcEngine();
     }
 
     function onManualExitYield(val) {
-      const chk = document.getElementById("chk-auto-exit-yield");
-      if (chk) chk.checked = false;
+      const chk6 = document.getElementById("chk-auto-exit-yield");
+      const chk4 = document.getElementById("chk-auto-exit-yield-card4");
+      if (chk6) chk6.checked = false;
+      if (chk4) chk4.checked = false;
       syncExitYield(val);
     }
 
     function toggleAutoExitYield(isChecked) {
+      const chk6 = document.getElementById("chk-auto-exit-yield");
+      const chk4 = document.getElementById("chk-auto-exit-yield-card4");
+      if (chk6) chk6.checked = isChecked;
+      if (chk4) chk4.checked = isChecked;
       recalcEngine();
     }
 
@@ -1896,7 +1909,14 @@
         if (document.getElementById("val-exit-yield-card4")) document.getElementById("val-exit-yield-card4").textContent = `${effectiveExitYield.toFixed(2)}%`;
       }
       if (document.getElementById("lbl-implied-rating")) {
-        document.getElementById("lbl-implied-rating").textContent = `${proFormaNetLeverage.toFixed(2)}x \u2192 ${effectiveExitYield.toFixed(2)}%`;
+        document.getElementById("lbl-implied-rating").textContent = isAutoYield 
+          ? `${proFormaNetLeverage.toFixed(2)}x \u2192 ${effectiveExitYield.toFixed(2)}%` 
+          : 'Manual Mode (Unlinked)';
+      }
+      if (document.getElementById("lbl-implied-rating-card4")) {
+        document.getElementById("lbl-implied-rating-card4").textContent = isAutoYield 
+          ? `${proFormaNetLeverage.toFixed(2)}x \u2192 ${effectiveExitYield.toFixed(2)}%` 
+          : 'Manual Mode (Unlinked)';
       }
 
       const newDebtTradingPx = calcBondPrice(exitCoupon, effectiveExitYield, exitTenor, pikCouponPct, pikYears);
