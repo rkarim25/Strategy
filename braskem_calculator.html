@@ -667,14 +667,123 @@
       🏢 Methodology 1: Fundamental EV Recovery Engine (Asset-Backed)
     </div>
 
-    <!-- 1. SOTP ASSET FOOTPRINT & VALUATION MULTIPLES (FIRST ON TOP!) -->
-    <!-- CARD 1: SOTP Asset Selection & Multiples Sandbox -->
-      <div class="card">
-        <div class="card-title">
-          <span>1. Sum-of-the-Parts (SOTP) Asset Selection &amp; Valuation Multiples</span>
-          <span class="sub">Select active operating clusters &amp; set EV multiples</span>
+    <!-- 1. ENTERPRISE VALUATION & FUNDAMENTAL RECOVERY ENGINE -->
+    <!-- CARD 1: SOTP Asset Selection & Consolidated Group EBITDA Sandbox -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div>
+          <span>1. Enterprise Valuation &amp; Fundamental Recovery Engine</span>
+          <span class="sub">Sum-of-the-Parts (SOTP) asset clusters or direct consolidated EBITDA input</span>
+        </div>
+        <!-- Valuation Mode Toggle Pill -->
+        <div style="display:flex; gap:4px; background:rgba(15,23,42,0.9); border:1px solid var(--border-color); border-radius:6px; padding:3px;">
+          <button type="button" id="btn-mode-sotp" class="mode-tab-btn active" onclick="setEbitdaValuationMode('sotp')" style="padding:4px 10px; font-size:10.5px; font-weight:700; border-radius:4px; border:none; cursor:pointer; background:var(--accent-cyan); color:#0b1120; transition:all 0.15s ease;">
+            🏢 Bottom-Up Asset SOTP
+          </button>
+          <button type="button" id="btn-mode-consolidated" class="mode-tab-btn" onclick="setEbitdaValuationMode('consolidated')" style="padding:4px 10px; font-size:10.5px; font-weight:700; border-radius:4px; border:none; cursor:pointer; background:transparent; color:#94a3b8; transition:all 0.15s ease;">
+            ⚡ Top-Down Consolidated EBITDA
+          </button>
+        </div>
+      </div>
+
+      <!-- TOP-DOWN CONSOLIDATED EBITDA OVERRIDE PANEL -->
+      <div id="panel-consolidated-ebitda" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.35); border-radius:8px; padding:14px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:8px; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:12px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.5px;">⚡ Direct Consolidated EBITDA &amp; Multiple Sandbox</span>
+            <span style="font-size:9.5px; background:rgba(56,189,248,0.15); color:var(--accent-cyan); padding:2px 6px; border-radius:3px; font-weight:700;">ACTIVE VALUATION DRIVER</span>
+          </div>
+          <button type="button" onclick="syncConsolidatedFromSotp()" style="background:rgba(255,255,255,0.06); border:1px solid var(--border-color); color:#cbd5e1; font-size:10px; padding:3px 8px; border-radius:4px; cursor:pointer;" title="Pull current sum of included assets and blended multiple">
+            🔄 Pull Sum from Asset SOTP (<span id="btn-pull-sotp-ebitda">$1,520M</span> @ <span id="btn-pull-sotp-mult">5.14x</span>)
+          </button>
         </div>
 
+        <div style="display:grid; grid-template-columns: 1.2fr 1.2fr 1.4fr; gap:14px; align-items:start;">
+          <!-- 1. Total Group EBITDA Input -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:6px; padding:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:11px; font-weight:700; color:#fff;">Total Consolidated EBITDA</span>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <span style="font-size:10px; color:var(--text-muted);">$</span>
+                <input type="number" id="input-consolidated-ebitda" min="200" max="3500" step="25" value="1520" oninput="onConsolidatedEbitdaInput(this.value)" style="width:75px; background:#0b1120; border:1px solid var(--accent-cyan); color:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; padding:2px 6px; border-radius:4px; text-align:right;">
+                <span style="font-size:10px; color:var(--text-muted);">M</span>
+              </div>
+            </div>
+            <input type="range" id="slider-consolidated-ebitda" min="500" max="2500" step="25" value="1520" oninput="onConsolidatedEbitdaSlider(this.value)" style="width:100%; accent-color:var(--accent-cyan); margin:6px 0;">
+            <div style="display:flex; justify-content:space-between; font-size:9px; color:var(--text-muted); margin-bottom:8px;">
+              <span>$500M (Severe Stress)</span>
+              <span>$1,520M (Base)</span>
+              <span>$2,500M (Supercycle)</span>
+            </div>
+            <!-- Preset Buttons -->
+            <div style="display:flex; flex-wrap:wrap; gap:4px;">
+              <button type="button" class="preset-pill" onclick="setConsolidatedEbitda(950)" style="font-size:9.5px; padding:2px 6px;">Trough $950M</button>
+              <button type="button" class="preset-pill" onclick="setConsolidatedEbitda(1250)" style="font-size:9.5px; padding:2px 6px;">Mid-Cycle $1,250M</button>
+              <button type="button" class="preset-pill active" id="btn-ebitda-base" onclick="setConsolidatedEbitda(1520)" style="font-size:9.5px; padding:2px 6px;">Base $1,520M</button>
+              <button type="button" class="preset-pill" onclick="setConsolidatedEbitda(1950)" style="font-size:9.5px; padding:2px 6px;">Bull $1,950M</button>
+            </div>
+          </div>
+
+          <!-- 2. Consolidated Multiple Input -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:6px; padding:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:11px; font-weight:700; color:#fff;">Consolidated EV Multiple</span>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <input type="number" id="input-consolidated-multiple" min="2.0" max="10.0" step="0.1" value="5.14" oninput="onConsolidatedMultipleInput(this.value)" style="width:65px; background:#0b1120; border:1px solid var(--accent-cyan); color:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; padding:2px 6px; border-radius:4px; text-align:right;">
+                <span style="font-size:10px; color:var(--text-muted);">x</span>
+              </div>
+            </div>
+            <input type="range" id="slider-consolidated-multiple" min="3.0" max="8.0" step="0.1" value="5.14" oninput="onConsolidatedMultipleSlider(this.value)" style="width:100%; accent-color:var(--accent-cyan); margin:6px 0;">
+            <div style="display:flex; justify-content:space-between; font-size:9px; color:var(--text-muted); margin-bottom:8px;">
+              <span>3.0x (Trough)</span>
+              <span>5.14x (SOTP Blended)</span>
+              <span>8.0x (Peak)</span>
+            </div>
+            <!-- Preset Buttons -->
+            <div style="display:flex; flex-wrap:wrap; gap:4px;">
+              <button type="button" class="preset-pill" onclick="setConsolidatedMultiple(4.0)" style="font-size:9.5px; padding:2px 6px;">Distressed 4.0x</button>
+              <button type="button" class="preset-pill" onclick="setConsolidatedMultiple(4.75)" style="font-size:9.5px; padding:2px 6px;">Trough 4.75x</button>
+              <button type="button" class="preset-pill active" id="btn-mult-base" onclick="setConsolidatedMultiple(5.14)" style="font-size:9.5px; padding:2px 6px;">Blended 5.14x</button>
+              <button type="button" class="preset-pill" onclick="setConsolidatedMultiple(6.5)" style="font-size:9.5px; padding:2px 6px;">Expansion 6.5x</button>
+            </div>
+          </div>
+
+          <!-- 3. Real-Time Fundamental Value Output Card -->
+          <div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.3); border-radius:6px; padding:10px;">
+            <div style="font-size:10px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:6px;">Fundamental Value Realization</div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+              <span style="font-size:10.5px; color:#cbd5e1;">Operating EV:</span>
+              <strong id="disp-cons-op-ev" style="font-family:'JetBrains Mono',monospace; color:#fff; font-size:13px;">$7,805.0M</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+              <span style="font-size:10px; color:#94a3b8;">+ Cash ($900M) + Equity:</span>
+              <strong id="disp-cons-gross-pot" style="font-family:'JetBrains Mono',monospace; color:#cbd5e1; font-size:11px;">$8,705.0M</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:4px;">
+              <span style="font-size:10px; color:#94a3b8;">- Priority ($1.1B Bank+Maceió+Burn):</span>
+              <strong id="disp-cons-senior-pool" style="font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-size:11px;">-$1,880.0M</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <div>
+                <span style="font-size:9px; color:var(--text-muted); text-transform:uppercase; display:block;">Fundamental Recovery</span>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:800; color:var(--accent-cyan); line-height:1.1;" id="disp-cons-fund-pv">71.5c PV</div>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-size:9px; color:var(--text-muted); text-transform:uppercase; display:block;">Nominal Pot</span>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#fbbf24;" id="disp-cons-fund-nominal">78.6c</div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; color:#94a3b8; border-top:1px dashed rgba(255,255,255,0.1); padding-top:4px; margin-top:4px;">
+              <span>Net Lev: <strong id="disp-cons-lev" style="color:#fff;">3.40x</strong></span>
+              <span>Coverage: <strong id="disp-cons-cov" style="color:#fff;">2.1x</strong></span>
+              <span id="disp-cons-verdict" style="font-weight:700; color:var(--accent-emerald);">✓ Sustainable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOTP ASSET TABLE -->
+      <div id="container-sotp-table">
         <table class="asset-table" id="asset-table">
           <thead>
             <tr>
@@ -689,16 +798,31 @@
           <tbody>
             <!-- Populated dynamically via JS -->
           </tbody>
+          <tfoot>
+            <tr style="font-weight:700; border-top:2px solid #334155; background:rgba(255,255,255,0.02);">
+              <td colspan="3" style="text-align:right; color:#cbd5e1; padding:8px 6px;">Total Selected SOTP Operating Assets:</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-gold); font-size:12px; padding:8px 6px;" id="sotp-total-ebitda">$1,520.0M</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#94a3b8; font-size:11px; padding:8px 6px;" id="sotp-blended-mult">5.14x</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-cyan); font-size:13px; font-weight:800; padding:8px 6px;" id="sotp-table-total-ev">$7,805.0M</td>
+            </tr>
+          </tfoot>
         </table>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:8px; border-top:1px solid var(--border-color); font-size:11px;">
-          <span style="color:var(--text-muted);">Unrestricted Cash Added to EV: <strong style="color:#fff;" id="lbl-cash-add">$900M</strong></span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:8px; border-top:1px solid var(--border-color); font-size:11px; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="color:var(--text-muted);">Total Active EBITDA: <strong style="color:var(--accent-gold); font-family:'JetBrains Mono',monospace;" id="lbl-total-ebitda">$1,520.0M</strong></span>
+            <span style="color:var(--text-muted);">&bull;</span>
+            <span style="color:var(--text-muted);">Blended Multiple: <strong style="color:#fff; font-family:'JetBrains Mono',monospace;" id="lbl-blended-mult">5.14x</strong></span>
+            <span style="color:var(--text-muted);">&bull;</span>
+            <span style="color:var(--text-muted);">Unrestricted Cash Added: <strong style="color:#fff;" id="lbl-cash-add">+$900M</strong></span>
+          </div>
           <div>
             <span style="color:var(--text-muted); margin-right:8px;">Total SOTP Enterprise Value:</span>
-            <strong style="color:var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size:14px;" id="sotp-total-ev">$7,000.0M</strong>
+            <strong style="color:var(--accent-cyan); font-family:'JetBrains Mono',monospace; font-size:14px;" id="sotp-total-ev">$7,805.0M</strong>
           </div>
         </div>
       </div>
+    </div>
 
     <!-- 2. STANDSTILL DURATION & SPONSOR EQUITY INJECTION DIALS (FOLLOWS SOTP DIRECTLY!) -->
     
@@ -1799,6 +1923,109 @@
       recalcEngine();
     }
 
+    let ebitdaValuationMode = 'sotp'; // 'sotp' or 'consolidated'
+
+    function setEbitdaValuationMode(mode) {
+      ebitdaValuationMode = mode;
+      const btnSotp = document.getElementById("btn-mode-sotp");
+      const btnCons = document.getElementById("btn-mode-consolidated");
+      const panelCons = document.getElementById("panel-consolidated-ebitda");
+      const containerTable = document.getElementById("container-sotp-table");
+
+      if (btnSotp) {
+        btnSotp.style.background = mode === 'sotp' ? 'var(--accent-cyan)' : 'transparent';
+        btnSotp.style.color = mode === 'sotp' ? '#0b1120' : '#94a3b8';
+      }
+      if (btnCons) {
+        btnCons.style.background = mode === 'consolidated' ? 'var(--accent-cyan)' : 'transparent';
+        btnCons.style.color = mode === 'consolidated' ? '#0b1120' : '#94a3b8';
+      }
+      if (panelCons) {
+        panelCons.style.display = mode === 'consolidated' ? 'block' : 'none';
+      }
+      if (containerTable) {
+        containerTable.style.opacity = mode === 'consolidated' ? '0.65' : '1.0';
+      }
+      recalcEngine();
+    }
+
+    function syncConsolidatedFromSotp() {
+      let sumEb = 0;
+      let sumEv = 0;
+      ASSETS.forEach(a => {
+        const isInc = document.getElementById(`chk-${a.id}`) ? document.getElementById(`chk-${a.id}`).checked : a.included;
+        const eb = parseFloat(document.getElementById(`ebitda-${a.id}`)?.value) || 0;
+        const m = parseFloat(document.getElementById(`mult-${a.id}`)?.value) || 0;
+        if (isInc) {
+          sumEb += eb;
+          sumEv += (eb * m);
+        }
+      });
+      const blendedMult = sumEb > 0 ? (sumEv / sumEb) : 5.14;
+      const elEb = document.getElementById("input-consolidated-ebitda");
+      const slEb = document.getElementById("slider-consolidated-ebitda");
+      const elMult = document.getElementById("input-consolidated-multiple");
+      const slMult = document.getElementById("slider-consolidated-multiple");
+
+      if (elEb) elEb.value = Math.round(sumEb);
+      if (slEb) slEb.value = Math.round(sumEb);
+      if (elMult) elMult.value = blendedMult.toFixed(2);
+      if (slMult) slMult.value = blendedMult.toFixed(2);
+      recalcEngine();
+    }
+
+    function setConsolidatedEbitda(val) {
+      const elEb = document.getElementById("input-consolidated-ebitda");
+      const slEb = document.getElementById("slider-consolidated-ebitda");
+      if (elEb) elEb.value = val;
+      if (slEb) slEb.value = val;
+      if (ebitdaValuationMode !== 'consolidated') {
+        setEbitdaValuationMode('consolidated');
+      } else {
+        recalcEngine();
+      }
+    }
+
+    function setConsolidatedMultiple(val) {
+      const elMult = document.getElementById("input-consolidated-multiple");
+      const slMult = document.getElementById("slider-consolidated-multiple");
+      if (elMult) elMult.value = val;
+      if (slMult) slMult.value = val;
+      if (ebitdaValuationMode !== 'consolidated') {
+        setEbitdaValuationMode('consolidated');
+      } else {
+        recalcEngine();
+      }
+    }
+
+    function onConsolidatedEbitdaInput(val) {
+      const slEb = document.getElementById("slider-consolidated-ebitda");
+      if (slEb) slEb.value = val;
+      if (ebitdaValuationMode !== 'consolidated') setEbitdaValuationMode('consolidated');
+      else recalcEngine();
+    }
+
+    function onConsolidatedEbitdaSlider(val) {
+      const elEb = document.getElementById("input-consolidated-ebitda");
+      if (elEb) elEb.value = val;
+      if (ebitdaValuationMode !== 'consolidated') setEbitdaValuationMode('consolidated');
+      else recalcEngine();
+    }
+
+    function onConsolidatedMultipleInput(val) {
+      const slMult = document.getElementById("slider-consolidated-multiple");
+      if (slMult) slMult.value = val;
+      if (ebitdaValuationMode !== 'consolidated') setEbitdaValuationMode('consolidated');
+      else recalcEngine();
+    }
+
+    function onConsolidatedMultipleSlider(val) {
+      const elMult = document.getElementById("input-consolidated-multiple");
+      if (elMult) elMult.value = val;
+      if (ebitdaValuationMode !== 'consolidated') setEbitdaValuationMode('consolidated');
+      else recalcEngine();
+    }
+
     function initPage() {
       renderAssetTable();
       recalcEngine();
@@ -1872,6 +2099,8 @@
       if (document.getElementById("input-exit-yield-card4")) document.getElementById("input-exit-yield-card4").value = exitYieldVal;
 
       // Update assets
+      let presetEb = 0;
+      let presetEv = 0;
       ASSETS.forEach(a => {
         if (p.assets[a.id]) {
           const [eb, m, inc] = p.assets[a.id];
@@ -1880,8 +2109,26 @@
           document.getElementById(`chk-${a.id}`).checked = inc;
           a.included = inc;
           document.getElementById(`row-${a.id}`).style.opacity = inc ? "1.0" : "0.4";
+          if (inc) {
+            presetEb += eb;
+            presetEv += (eb * m);
+          }
         }
       });
+
+      const elConsEb = document.getElementById("input-consolidated-ebitda");
+      const slConsEb = document.getElementById("slider-consolidated-ebitda");
+      const elConsMult = document.getElementById("input-consolidated-multiple");
+      const slConsMult = document.getElementById("slider-consolidated-multiple");
+      if (elConsEb && presetEb > 0) {
+        elConsEb.value = Math.round(presetEb);
+        if (slConsEb) slConsEb.value = Math.round(presetEb);
+      }
+      if (elConsMult && presetEb > 0) {
+        const pm = (presetEv / presetEb).toFixed(2);
+        elConsMult.value = pm;
+        if (slConsMult) slConsMult.value = pm;
+      }
 
       recalcEngine();
     }
@@ -1941,21 +2188,61 @@
 
       document.getElementById("lbl-new-maturity").textContent = `${2026 + Math.round(exitTenor)}`;
 
-      // 2. SOTP Asset Valuation
-      let totalSotpEv = 0;
-      let totalOperatingEbitda = 0;
+      // 2. SOTP Asset Valuation & Consolidated Group EBITDA Sandbox
+      let sotpSumEv = 0;
+      let sotpSumEbitda = 0;
 
       ASSETS.forEach(a => {
-        const isInc = document.getElementById(`chk-${a.id}`).checked;
-        const eb = parseFloat(document.getElementById(`ebitda-${a.id}`).value) || 0;
-        const m = parseFloat(document.getElementById(`mult-${a.id}`).value) || 0;
+        const isInc = document.getElementById(`chk-${a.id}`) ? document.getElementById(`chk-${a.id}`).checked : a.included;
+        const eb = parseFloat(document.getElementById(`ebitda-${a.id}`)?.value) || 0;
+        const m = parseFloat(document.getElementById(`mult-${a.id}`)?.value) || 0;
         const assetEv = isInc ? (eb * m) : 0;
-        document.getElementById(`ev-${a.id}`).textContent = `$${assetEv.toFixed(1)}M`;
+        if (document.getElementById(`ev-${a.id}`)) {
+          document.getElementById(`ev-${a.id}`).textContent = `$${assetEv.toFixed(1)}M`;
+        }
         if (isInc) {
-          totalSotpEv += assetEv;
-          totalOperatingEbitda += eb;
+          sotpSumEv += assetEv;
+          sotpSumEbitda += eb;
         }
       });
+
+      const sotpBlendedMultiple = sotpSumEbitda > 0 ? (sotpSumEv / sotpSumEbitda) : 0;
+
+      // Update SOTP Table Footer & Summary displays
+      if (document.getElementById("sotp-total-ebitda")) {
+        document.getElementById("sotp-total-ebitda").textContent = `$${sotpSumEbitda.toFixed(1)}M`;
+      }
+      if (document.getElementById("sotp-blended-mult")) {
+        document.getElementById("sotp-blended-mult").textContent = `${sotpBlendedMultiple.toFixed(2)}x`;
+      }
+      if (document.getElementById("sotp-table-total-ev")) {
+        document.getElementById("sotp-table-total-ev").textContent = `$${sotpSumEv.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}M`;
+      }
+      if (document.getElementById("lbl-total-ebitda")) {
+        document.getElementById("lbl-total-ebitda").textContent = `$${sotpSumEbitda.toFixed(1)}M`;
+      }
+      if (document.getElementById("lbl-blended-mult")) {
+        document.getElementById("lbl-blended-mult").textContent = `${sotpBlendedMultiple.toFixed(2)}x`;
+      }
+      if (document.getElementById("btn-pull-sotp-ebitda")) {
+        document.getElementById("btn-pull-sotp-ebitda").textContent = `$${Math.round(sotpSumEbitda)}M`;
+      }
+      if (document.getElementById("btn-pull-sotp-mult")) {
+        document.getElementById("btn-pull-sotp-mult").textContent = `${sotpBlendedMultiple.toFixed(2)}x`;
+      }
+
+      let totalOperatingEbitda = 0;
+      let totalSotpEv = 0;
+
+      if (ebitdaValuationMode === 'consolidated') {
+        const consEb = parseFloat(document.getElementById("input-consolidated-ebitda")?.value) || 1520.0;
+        const consMult = parseFloat(document.getElementById("input-consolidated-multiple")?.value) || 5.14;
+        totalOperatingEbitda = consEb;
+        totalSotpEv = consEb * consMult;
+      } else {
+        totalOperatingEbitda = sotpSumEbitda;
+        totalSotpEv = sotpSumEv;
+      }
 
       const balanceSheetCash = 900.0;
       const totalDistributableAssetValue = totalSotpEv + balanceSheetCash + sponsorEquity;
@@ -2536,6 +2823,42 @@
       if (document.getElementById("s1-duration")) document.getElementById("s1-duration").textContent = `${durationMonths}M`;
       if (document.getElementById("s1-yield")) document.getElementById("s1-yield").textContent = `${effectiveExitYield.toFixed(2)}%`;
       if (document.getElementById("s1-time-factor")) document.getElementById("s1-time-factor").textContent = `-${timeDiscountPct.toFixed(1)}%`;
+
+      // Update Consolidated Sandbox Live Card
+      if (document.getElementById("disp-cons-op-ev")) {
+        document.getElementById("disp-cons-op-ev").textContent = `$${totalSotpEv.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}M`;
+      }
+      if (document.getElementById("disp-cons-gross-pot")) {
+        document.getElementById("disp-cons-gross-pot").textContent = `$${totalDistributableAssetValue.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}M`;
+      }
+      if (document.getElementById("disp-cons-senior-pool")) {
+        document.getElementById("disp-cons-senior-pool").textContent = `-$${totalPriorityDeductions.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}M`;
+      }
+      if (document.getElementById("disp-cons-fund-nominal")) {
+        document.getElementById("disp-cons-fund-nominal").textContent = `${rawSeniorRecoveryCents.toFixed(1)}c`;
+      }
+      if (document.getElementById("disp-cons-fund-pv")) {
+        document.getElementById("disp-cons-fund-pv").textContent = `${stream1PV.toFixed(1)}c PV`;
+      }
+      if (document.getElementById("disp-cons-lev")) {
+        document.getElementById("disp-cons-lev").textContent = `${proFormaNetLeverage.toFixed(2)}x`;
+      }
+      if (document.getElementById("disp-cons-cov")) {
+        document.getElementById("disp-cons-cov").textContent = `${proFormaInterestCoverage.toFixed(2)}x`;
+      }
+      if (document.getElementById("disp-cons-verdict")) {
+        const vEl = document.getElementById("disp-cons-verdict");
+        if (isSustainable) {
+          vEl.textContent = "✓ Sustainable";
+          vEl.style.color = "var(--accent-emerald)";
+        } else if (isBorderline) {
+          vEl.textContent = "⚠️ Borderline";
+          vEl.style.color = "var(--accent-amber)";
+        } else {
+          vEl.textContent = "✕ Unsustainable";
+          vEl.style.color = "var(--accent-rose)";
+        }
+      }
 
       if (document.getElementById("stream2-val")) document.getElementById("stream2-val").textContent = `${stream2PV.toFixed(1)}c PV`;
       if (document.getElementById("s2-haircut")) document.getElementById("s2-haircut").textContent = `${(seniorHaircutPct * 100).toFixed(0)}%`;
