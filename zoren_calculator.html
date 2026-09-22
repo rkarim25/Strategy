@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zorlu Enerji (ZOREN) — Interactive Refinancing, SOTP Recovery & Pricing Band Engine</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Zorlu Enerji (ZOREN) 2026 Refinancing &amp; Restructuring Engine</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-main: #0a0e1a;
@@ -449,10 +447,54 @@
     .detail-tab-pane {
       transition: opacity 0.2s ease;
     }
+  
+    /* Pricing Band Track */
+    .pricing-band-container {
+      background: #060913;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 10px 0;
+    }
+    .pricing-band-track {
+      position: relative;
+      height: 8px;
+      background: #1e293b;
+      border-radius: 4px;
+      margin: 24px 10px 18px;
+    }
+    .pricing-marker {
+      position: absolute;
+      top: -20px;
+      transform: translateX(-50%);
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .pricing-marker::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .pricing-marker.distressed { color: var(--accent-rose); }
+    .pricing-marker.distressed::after { background: var(--accent-rose); }
+    .pricing-marker.market { color: #fff; }
+    .pricing-marker.market::after { background: #fff; border: 2px solid var(--accent-cyan); }
+    .pricing-marker.fair-value { color: var(--accent-emerald); }
+    .pricing-marker.fair-value::after { background: var(--accent-emerald); }
+    .pricing-marker.asset-floor { color: var(--accent-cyan); }
+    .pricing-marker.asset-floor::after { background: var(--accent-cyan); }
+    .pricing-marker.target { color: var(--accent-purple); }
+    .pricing-marker.target::after { background: var(--accent-purple); }
   </style>
 </head>
 <body>
-
   <!-- Top Sticky Navigation & Live Output Header -->
   <div class="sticky-bar">
     <div class="brand-section">
@@ -473,12 +515,16 @@
 
     <div class="metrics-strip">
       <div class="metric-hero" style="border-color:rgba(56,189,248,0.4);">
-        <div class="lbl" style="color:var(--accent-cyan); font-weight:700;">Stream 1 (Asset PV)</div>
+        <div class="lbl" style="color:var(--accent-cyan); font-weight:700;">Methodology 1 (Asset Floor PV)</div>
         <div class="val" id="top-s1-pv" style="color:var(--accent-cyan);">100.0<span>c</span></div>
       </div>
       <div class="metric-hero emerald" style="border-color:rgba(16,185,129,0.4);">
-        <div class="lbl" style="color:var(--accent-emerald); font-weight:700;">Stream 2 (Market PV)</div>
+        <div class="lbl" style="color:var(--accent-emerald); font-weight:700;">Methodology 2 (Exchange Fair Value)</div>
         <div class="val" id="top-senior-recovery">95.3<span>c</span></div>
+      </div>
+      <div class="metric-hero" style="border-color:rgba(255,255,255,0.2);">
+        <div class="lbl">Secondary Market Price</div>
+        <div class="val" style="color:#fff;">94.5<span>c</span></div>
       </div>
       <div class="metric-hero gold">
         <div class="lbl">Pro-Forma Net Lev</div>
@@ -590,19 +636,156 @@
     </div>
   </div>
 
-  <!-- Main 2-Column Calculation Workspace -->
-  <div class="engine-layout">
+  
 
-    <!-- LEFT COLUMN: STREAM 1 ASSET VALUATION -->
-    <div>
-      <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:6px; padding:6px 12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:11px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.5px;">
-          🏢 STREAM 1 CONTROLS: Renewables &amp; Grid Asset Multiples
+  <div class="workspace" style="max-width:1600px; margin:0 auto; padding:16px;">
+    
+  <!-- EXECUTIVE VALUATION BRIDGE & SECONDARY BOND PRICING BAND -->
+  <div class="card" style="border-color:#334155; box-shadow:0 4px 20px rgba(0,0,0,0.5); margin-bottom:16px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px; border-bottom:1px solid #1e293b; padding-bottom:8px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:13px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">
+          ⚖️ The Executive Valuation Bridge &amp; Secondary Bond Pricing Band
         </span>
-        <span style="font-size:9px; color:#94a3b8; font-family:'JetBrains Mono',monospace;">Feeds Par Asset Coverage</span>
+        <span style="font-size:9.5px; background:rgba(192, 132, 252, 0.15); color:var(--accent-purple); border:1px solid rgba(192, 132, 252, 0.3); padding:2px 7px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-weight:700;">
+          QUALITATIVE BRIDGE &bull; BUY/SELL DECISION DESK
+        </span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:10.5px; color:#94a3b8;">Trading Verdict:</span>
+        <span id="reconcile-action-badge" style="font-size:11px; font-weight:800; padding:4px 10px; border-radius:4px; font-family:'JetBrains Mono',monospace; background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.4);">
+          ACCUMULATE / BUY
+        </span>
+      </div>
+    </div>
+
+    <!-- 3-Column Summary: Methodology 1, Qualitative Bridge Band, Methodology 2 -->
+    <div style="display:grid; grid-template-columns: 1fr 1.3fr 1fr; gap:12px; margin-bottom:14px;">
+      
+      <!-- METHODOLOGY 1 CARD -->
+      <div style="background:#060913; border:1px solid rgba(56,189,248,0.35); border-radius:6px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+          <div>
+            <span style="font-size:9px; font-weight:800; color:var(--accent-cyan); background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+              METHODOLOGY 1 &bull; ASSET-BACKED
+            </span>
+            <div style="font-size:12px; font-weight:800; color:#fff; margin-top:4px;">Fundamental EV Recovery</div>
+            <div style="font-size:9.5px; color:#94a3b8;">Renewables &amp; Grid Asset Coverage Waterfall</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--accent-cyan); line-height:1;" id="stream1-val">100.0c Par</div>
+            <span style="font-size:9px; color:#94a3b8;">Asset Coverage: <strong id="s1-nominal-rec" style="color:#34d399;">190.6%</strong></span>
+          </div>
+        </div>
+        <div style="font-size:10px; color:#cbd5e1; line-height:1.5; margin-top:8px;">
+          <div>&bull; <strong>SOTP EV:</strong> <span id="s1-senior-pool">$1,110M</span> Net Distributable Pool</div>
+          <div>&bull; <strong>EBITDA &bull; Multiple:</strong> <span id="s1-ebitda">$350M</span> &bull; <span id="s1-mult">6.0x</span></div>
+          <div>&bull; <strong>Priority Carve-Outs:</strong> $1,200M Project Loans + Advisor Burn</div>
+          <div>&bull; <strong>Standstill Bleed:</strong> <span id="s1-duration">6M</span> @ <span id="s1-yield">11.00%</span> = <span id="s1-time-factor" style="color:#38bdf8; font-weight:700;">Performing (0.0c drag)</span></div>
+          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#94a3b8; font-size:9.5px;">
+            <strong>Anchor:</strong> What are assets worth if liquidated/reorganized under APR?
+          </div>
+        </div>
       </div>
 
-      <!-- CARD 1: SOTP Asset Perimeter & Multiples -->
+      <!-- THE QUALITATIVE BRIDGE & SECONDARY PRICING BAND -->
+      <div style="background:#060913; border:1px solid rgba(192,132,252,0.35); border-radius:6px; padding:12px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-size:9px; font-weight:800; color:var(--accent-purple); background:rgba(192,132,252,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+              THE QUALITATIVE BRIDGE
+            </span>
+            <span style="font-size:10px; color:#94a3b8; font-family:'JetBrains Mono',monospace;">Secondary Quote: <strong style="color:#fff;" id="reconcile-mkt-px">94.5c</strong></span>
+          </div>
+          <div style="font-size:10px; color:#cbd5e1; line-height:1.4; margin-bottom:8px;">
+            Qualitative risk drivers (Turkey macro / TRY, YEKDEM USD floor, Dorad Israeli monetization, HoldCo illiquidity) bridge Par Asset Coverage to Secondary Realization:
+          </div>
+
+          <!-- Pricing Band Track -->
+          <div class="pricing-band-container">
+            <div style="display:flex; justify-content:space-between; font-size:9.5px; color:#94a3b8; margin-bottom:4px; font-family:'JetBrains Mono',monospace;">
+              <span>Bear Floor: <strong id="pricing-band-distressed" style="color:var(--accent-rose);">82.0c</strong></span>
+              <span>Secondary Mkt: <strong id="pricing-band-mkt" style="color:#fff;">94.5c</strong></span>
+              <span>Fair Value: <strong id="pricing-band-fv" style="color:var(--accent-emerald);">95.3c</strong></span>
+              <span>Asset Floor: <strong id="pricing-band-asset" style="color:var(--accent-cyan);">100.0c</strong></span>
+              <span>Bull Target: <strong id="pricing-band-target" style="color:var(--accent-purple);">102.5c</strong></span>
+            </div>
+            <div class="pricing-band-track">
+              <div class="pricing-marker distressed" style="left:12%;">82c</div>
+              <div class="pricing-marker market" style="left:55%;">95c</div>
+              <div class="pricing-marker fair-value" style="left:60%;">95c</div>
+              <div class="pricing-marker asset-floor" style="left:85%;">100c</div>
+              <div class="pricing-marker target" style="left:96%;">103c</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; font-size:10px; margin-top:6px; background:rgba(255,255,255,0.02); padding:6px 10px; border-radius:4px;">
+          <div>
+            <span style="color:#94a3b8;">Upside to Fair Value:</span>
+            <strong id="lbl-upside-fv" style="color:var(--accent-emerald); margin-left:4px;">+0.8c (+0.8%)</strong>
+          </div>
+          <div>
+            <span style="color:#94a3b8;">Downside Protection (Asset Floor):</span>
+            <strong id="lbl-upside-asset" style="color:var(--accent-cyan); margin-left:4px;">+5.5c (+5.8%)</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- METHODOLOGY 2 CARD -->
+      <div style="background:#060913; border:1px solid rgba(16,185,129,0.35); border-radius:6px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+          <div>
+            <span style="font-size:9px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+              METHODOLOGY 2 &bull; EXCHANGE TERMS
+            </span>
+            <div style="font-size:12px; font-weight:800; color:#fff; margin-top:4px;">Market-Based Instrument Pricing</div>
+            <div style="font-size:9.5px; color:#94a3b8;">4-Year Amend &amp; Extend (2030) Valuation</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--accent-emerald); line-height:1;" id="stream2-val">95.3c PV</div>
+            <span style="font-size:9px; color:#94a3b8;">Present Value (PV)</span>
+          </div>
+        </div>
+        <div style="font-size:10px; color:#cbd5e1; line-height:1.5; margin-top:8px;">
+          <div>&bull; <strong>Terms:</strong> 0% Cut &bull; <span id="s2-tenor">4Y</span> Ext &bull; <span id="s2-coupon">9.50%</span> Cpn (+50 bps step-up)</div>
+          <div>&bull; <strong>Leverage &amp; Yield:</strong> <span id="s2-leverage">4.16x</span> &rarr; <span id="s2-exit-yield" style="color:#fbbf24; font-weight:700;">11.00%</span> Exit Yield</div>
+          <div>&bull; <strong>Sovereign Spread:</strong> Turkey 4Y (6.75%) + <span id="s2-spread" style="color:#38bdf8; font-weight:700;">+425 bps</span></div>
+          <div>&bull; <strong>Extended Note PV:</strong> <span id="s2-paper-px" style="color:#fbbf24; font-weight:700;">95.3c</span> &bull; Holding: <span id="s2-true-rec" style="color:var(--accent-emerald); font-weight:700;">95.3c</span></div>
+          <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#94a3b8; font-size:9.5px;">
+            <strong>Anchor:</strong> What will the secondary market pay for the extended paper on Day 1?
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Live Execution Directive Banner -->
+    <div style="background:rgba(15,23,42,0.9); border:1px solid #1e293b; border-radius:6px; padding:8px 14px; font-size:11px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px; font-weight:700;">Desk Action Directive:</span>
+        <span id="reconcile-signal-text" style="font-weight:700; color:var(--accent-emerald); margin-left:6px;">
+          BUY / ACCUMULATE &bull; +0.8c Discount + 9.50% Carry &bull; 100c Par Backing
+        </span>
+      </div>
+      <div>
+        <span style="color:#94a3b8; text-transform:uppercase; font-size:9.5px;">Reconciliation Gap (Method 2 - Method 1):</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#fbbf24; font-size:12px; margin-left:4px;" id="reconcile-gap">-4.7c</span>
+      </div>
+    </div>
+  </div>
+
+    
+  <!-- ========================================================================= -->
+  <!-- PART 1: METHODOLOGY 1 — FUNDAMENTAL EV RECOVERY ENGINE (ASSET-BACKED)    -->
+  <!-- ========================================================================= -->
+  <div style="border-left: 4px solid var(--accent-cyan); padding-left: 6px; margin-bottom: 20px;">
+    <div style="font-size: 13px; font-weight: 800; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+      🏢 Methodology 1: Fundamental EV Recovery Engine (Asset-Backed)
+    </div>
+
+    <!-- 1. SOTP ASSET PERIMETER & MULTIPLES (FIRST ON TOP!) -->
+    <!-- CARD 1: SOTP Asset Perimeter & Multiples -->
       <div class="card">
         <div class="card-title">
           <span>1. Asset Perimeter Selection &amp; Sum-of-the-Parts (SOTP) Multiples</span>
@@ -636,199 +819,42 @@
         </div>
       </div>
 
-      <!-- CARD 2: Refinancing, Duration & Haircut Calibration -->
-      <div class="card">
-        <div class="card-title">
-          <span>2. Refinancing Mechanics, Maturity Extension &amp; Debt Calibration</span>
-          <span class="sub">Size Eurobond roll terms, sponsor injections &amp; coupon calibration</span>
-        </div>
-
-        <div class="slider-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Standstill &amp; Refinancing Window</span>
-              <span class="slider-val" id="val-duration">12 Months</span>
-            </div>
-            <input type="range" id="input-duration" min="3" max="36" step="3" value="12" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              Carrying cost &amp; syndication fees: <strong style="color:#f87171;" id="lbl-advisor-drain">-$30M</strong>
-            </div>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Sponsor Equity / Zorlu Yenilenebilir IPO</span>
-              <span class="slider-val" id="val-sponsor-equity">$0M</span>
-            </div>
-            <input type="range" id="input-sponsor-equity" min="0" max="500" step="50" value="0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              Fresh cash to pay down 2026 Eurobond or bank debt
-            </div>
-          </div>
-        </div>
-
-        <div class="slider-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Senior Eurobond Principal Haircut</span>
-              <span class="slider-val" id="val-senior-haircut">0%</span>
-            </div>
-            <input type="range" id="input-senior-haircut" min="0" max="50" step="5" value="0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              Cuts $300M Eurobond pool by: <strong style="color:#34d399;" id="lbl-senior-debt-cut">$0M</strong>
-            </div>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Maturity Extension</span>
-              <span class="slider-val" id="val-extension">3 Years</span>
-            </div>
-            <input type="range" id="input-extension" min="0" max="8" step="1" value="3" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              New maturity year: <strong style="color:#fbbf24;" id="lbl-new-maturity">2029</strong>
-            </div>
-          </div>
-        </div>
-
-        <div class="slider-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Reinstated Senior Coupon Rate</span>
-              <span class="slider-val" id="val-coupon">9.00%</span>
-            </div>
-            <input type="range" id="input-coupon" min="6.0" max="14.0" step="0.5" value="9.0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              New annual Eurobond interest burden: <strong style="color:#fff;" id="lbl-new-interest">$27.0M</strong>
-            </div>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Senior Debt-to-Equity Swap Ratio</span>
-              <span class="slider-val" id="val-debt-equity">0%</span>
-            </div>
-            <input type="range" id="input-debt-equity" min="0" max="40" step="5" value="0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              Eurobond holders receive <strong style="color:#38bdf8;" id="lbl-reorg-equity-share">0%</strong> reorganized equity
-            </div>
-          </div>
-        </div>
-
-        <div class="slider-row">
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">Senior PIK (Payment-in-Kind) Coupon</span>
-              <span class="slider-val" id="val-pik-coupon" style="color:var(--accent-purple);">0.00%</span>
-            </div>
-            <input type="range" id="input-pik-coupon" min="0.0" max="6.0" step="0.25" value="0.00" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              Annual cash interest saved: <strong style="color:var(--accent-emerald);" id="lbl-pik-savings">$0.0M/yr</strong> (Capitalized onto principal)
-            </div>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-header">
-              <span class="slider-label">PIK Duration / Liquidity Runway</span>
-              <span class="slider-val" id="val-pik-years" style="color:var(--accent-purple);">0 Years</span>
-            </div>
-            <input type="range" id="input-pik-years" min="0" max="4" step="1" value="0" oninput="recalcEngine()">
-            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
-              Compounded exit face value: <strong style="color:#fbbf24;" id="lbl-pik-compounded-face">100.0c</strong> (Through <span id="lbl-pik-end-year">2026</span>)
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <!-- 2. STANDSTILL DURATION & SPONSOR EQUITY INJECTION DIALS (FOLLOWS SOTP DIRECTLY!) -->
+    
+  <!-- RESTRUCTURING STANDSTILL & CAPITAL INJECTION DIALS -->
+  <div class="card" style="margin-bottom:14px; border:1px solid var(--border-color);">
+    <div class="card-title">
+      <span>⏱️ Standstill Timeline &amp; Sponsor Equity Injection Dials</span>
+      <span class="sub">Macro restructuring parameters determining advisory cash burn and fresh equity check</span>
     </div>
 
-    <!-- RIGHT COLUMN: STREAM 2 REFINANCING & EXTENSION TERMS -->
-    <div>
-      <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:6px; padding:6px 12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:11px; font-weight:800; color:var(--accent-emerald); text-transform:uppercase; letter-spacing:0.5px;">
-          📜 STREAM 2 CONTROLS: 4Y A&amp;E Terms &amp; Sovereign Linkage
-        </span>
-        <span style="font-size:9px; color:#94a3b8; font-family:'JetBrains Mono',monospace;">Feeds 2030 Paper Price</span>
-      </div>
-
-      <!-- CARD 3: Balance Sheet Sustainability Engine -->
-      <div class="card">
-        <div class="card-title">
-          <span>3. Balance Sheet Sustainability Engine</span>
-          <span class="sub">Target: Net Leverage &lt; 3.50x &bull; Interest Coverage &gt; 2.50x</span>
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Standstill &amp; Refinancing Duration</span>
+          <span class="slider-val" id="val-duration">6 Months</span>
         </div>
-
-        <div class="meter-grid">
-          <div class="meter-card">
-            <div class="meter-title">Pro-Forma Net Debt</div>
-            <div class="meter-val" id="meter-net-debt">$1,464M</div>
-            <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-net-debt-delta">-$78M vs FY24</div>
-          </div>
-
-          <div class="meter-card">
-            <div class="meter-title">Pro-Forma Leverage</div>
-            <div class="meter-val" id="meter-leverage">4.16x</div>
-            <div class="meter-sub" id="meter-leverage-target">Target: &lt; 3.50x</div>
-          </div>
-
-          <div class="meter-card">
-            <div class="meter-title">Interest Coverage</div>
-            <div class="meter-val" id="meter-coverage">2.43x</div>
-            <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-coverage-target">Covenant: &gt; 2.0x</div>
-          </div>
-        </div>
-
-        <div class="meter-grid">
-          <div class="meter-card">
-            <div class="meter-title">Annual Cash Interest</div>
-            <div class="meter-val" id="meter-interest">$145M</div>
-            <div class="meter-sub" style="color:#38bdf8;">Down from $151M</div>
-          </div>
-
-          <div class="meter-card">
-            <div class="meter-title">Post-Reorg FCF</div>
-            <div class="meter-val" id="meter-fcf" style="color:var(--accent-emerald);">+$181M</div>
-            <div class="meter-sub">Covers 100% Amort</div>
-          </div>
-
-          <div class="meter-card">
-            <div class="meter-title">Debt Cut Required</div>
-            <div class="meter-val" id="meter-cut-req">$239M</div>
-            <div class="meter-sub" id="meter-cut-status" style="color:var(--accent-amber);">Modest Cushion</div>
-          </div>
-        </div>
-
-        <div id="sustainability-verdict" class="callout-box">
-          <!-- Populated dynamically -->
+        <input type="range" id="input-duration" min="1" max="24" step="1" value="6" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+          Refinancing advisory cost: <strong style="color:#f87171;" id="lbl-advisor-drain">-$15M</strong> &bull; Bank fee burn
         </div>
       </div>
 
-      
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Sponsor Equity Injection / IPO Proceeds</span>
+          <span class="slider-val" id="val-sponsor-equity">$0M</span>
+        </div>
+        <input type="range" id="input-sponsor-equity" min="0" max="400" step="25" value="0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+          Fresh capital injection from Zorlu Holding or Zorlu Yenilenebilir minority IPO
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- TAB NAVIGATION BAR FOR DEEP-DIVE SECTIONS -->
-  <div class="tab-navigation-bar">
-    <span style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-right:6px;">Granular Deep Dives:</span>
-    <button id="btn-tab-waterfall" class="tab-btn active" onclick="switchDetailTab('waterfall')">
-      📊 Stream 1: Priority Waterfall (16 Rows)
-    </button>
-    <button id="btn-tab-exityield" class="tab-btn" onclick="switchDetailTab('exityield')">
-      📈 Stream 2: Exit Yield &amp; Extension Pricing Grid
-    </button>
-    <button id="btn-tab-qualitative" class="tab-btn" onclick="switchDetailTab('qualitative')">
-      ⚖️ Qualitative Risk Scorecard
-    </button>
-    <button id="btn-tab-scenarios" class="tab-btn" onclick="switchDetailTab('scenarios')">
-      🎯 Scenario Anatomy &amp; Drivers
-    </button>
-    <button id="btn-tab-all" class="tab-btn" onclick="switchDetailTab('all')" style="margin-left:auto; background:transparent; border-style:dashed;">
-      📋 View All Deep Dives
-    </button>
-  </div>
 
-  <!-- PANE: WATERFALL (Card 5) -->
-  <div id="pane-waterfall" class="detail-tab-pane">
+    <!-- 3. CAPITAL STRUCTURE WATERFALL TO BONDHOLDERS (FOLLOWS DIRECTLY!) -->
     <!-- CARD 5: Comprehensive Step-by-Step Priority Recovery Waterfall (Full Width) -->
   <div class="card" style="margin-top:14px;">
     <div class="card-title">
@@ -911,98 +937,212 @@
 
   <!-- PANE: EXIT YIELD MATRIX (Card 6) -->
   <div id="pane-exityield" class="detail-tab-pane" style="display:none;">
-    <!-- CARD 6: Exit Yield Discounting & 2026 Extension Pricing Engine -->
-  <div class="card" style="margin-top:14px;">
+  </div>
+
+    
+  <!-- ========================================================================= -->
+  <!-- PART 2: BALANCE SHEET SUSTAINABILITY & RESTRUCTURING TARGETS             -->
+  <!-- ========================================================================= -->
+  <div style="border-left: 4px solid var(--accent-amber); padding-left: 6px; margin-bottom: 20px;">
+    <div style="font-size: 13px; font-weight: 800; color: var(--accent-amber); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+      🛡️ Balance Sheet Sustainability &amp; Restructuring Targets
+    </div>
+    <!-- CARD 3: Balance Sheet Sustainability Engine -->
+      <div class="card">
+        <div class="card-title">
+          <span>3. Balance Sheet Sustainability Engine</span>
+          <span class="sub">Target: Net Leverage &lt; 3.50x &bull; Interest Coverage &gt; 2.50x</span>
+        </div>
+
+        <div class="meter-grid">
+          <div class="meter-card">
+            <div class="meter-title">Pro-Forma Net Debt</div>
+            <div class="meter-val" id="meter-net-debt">$1,464M</div>
+            <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-net-debt-delta">-$78M vs FY24</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Pro-Forma Leverage</div>
+            <div class="meter-val" id="meter-leverage">4.16x</div>
+            <div class="meter-sub" id="meter-leverage-target">Target: &lt; 3.50x</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Interest Coverage</div>
+            <div class="meter-val" id="meter-coverage">2.43x</div>
+            <div class="meter-sub" style="color:var(--accent-emerald);" id="meter-coverage-target">Covenant: &gt; 2.0x</div>
+          </div>
+        </div>
+
+        <div class="meter-grid">
+          <div class="meter-card">
+            <div class="meter-title">Annual Cash Interest</div>
+            <div class="meter-val" id="meter-interest">$145M</div>
+            <div class="meter-sub" style="color:#38bdf8;">Down from $151M</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Post-Reorg FCF</div>
+            <div class="meter-val" id="meter-fcf" style="color:var(--accent-emerald);">+$181M</div>
+            <div class="meter-sub">Covers 100% Amort</div>
+          </div>
+
+          <div class="meter-card">
+            <div class="meter-title">Debt Cut Required</div>
+            <div class="meter-val" id="meter-cut-req">$239M</div>
+            <div class="meter-sub" id="meter-cut-status" style="color:var(--accent-amber);">Modest Cushion</div>
+          </div>
+        </div>
+
+        <div id="sustainability-verdict" class="callout-box">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <!-- TAB NAVIGATION BAR FOR DEEP-DIVE SECTIONS -->
+  <div class="tab-navigation-bar">
+    <span style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-right:6px;">Granular Deep Dives:</span>
+    <button id="btn-tab-waterfall" class="tab-btn active" onclick="switchDetailTab('waterfall')">
+      📊 Stream 1: Priority Waterfall (16 Rows)
+    </button>
+    <button id="btn-tab-exityield" class="tab-btn" onclick="switchDetailTab('exityield')">
+      📈 Stream 2: Exit Yield &amp; Extension Pricing Grid
+    </button>
+    <button id="btn-tab-qualitative" class="tab-btn" onclick="switchDetailTab('qualitative')">
+      ⚖️ Qualitative Risk Scorecard
+    </button>
+    <button id="btn-tab-scenarios" class="tab-btn" onclick="switchDetailTab('scenarios')">
+      🎯 Scenario Anatomy &amp; Drivers
+    </button>
+    <button id="btn-tab-all" class="tab-btn" onclick="switchDetailTab('all')" style="margin-left:auto; background:transparent; border-style:dashed;">
+      📋 View All Deep Dives
+    </button>
+  
+  <!-- Required Terms & Guidance Box -->
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px; margin-top:12px;">
+    <!-- Required Terms Diagnostics -->
+    <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:6px; padding:12px;">
+      <div style="font-size:11px; font-weight:800; color:var(--accent-amber); text-transform:uppercase; margin-bottom:6px;">
+        🎯 Required Balance Sheet Concessions to Achieve Sustainability
+      </div>
+      <ul style="font-size:10.5px; color:#cbd5e1; line-height:1.6; margin-left:14px;">
+        <li><strong>Target Net Leverage Ceiling:</strong> <strong style="color:#fff;">&le; 3.50x</strong> (Rating upgrade &amp; bank covenant threshold).</li>
+        <li><strong>Required Gross Debt Reduction:</strong> <strong id="lbl-required-debt-cut" style="color:var(--accent-amber);">$0M</strong> (Adequately covered under base EBITDA).</li>
+        <li><strong>Minimum Maturity Extension:</strong> <strong id="lbl-required-extension" style="color:var(--accent-cyan);">At least 4 Years (to June 2030)</strong> to clear the $300M maturity wall without refinancing distress.</li>
+      </ul>
+    </div>
+
+    <!-- EV Scenario Guidance on Terms -->
+    <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:6px; padding:12px;">
+      <div style="font-size:11px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:6px;">
+        💡 Indication of Terms Justified by Fundamental EV Recovery
+      </div>
+      <div id="lbl-ev-guidance" style="font-size:10.5px; color:#cbd5e1; line-height:1.5;">
+        Because your Fundamental EV Recovery shows <strong>100.0c Par Coverage (190.6% Asset Backing)</strong>, bondholders will firmly reject any nominal haircut. The consensual path is a <strong>0% Haircut</strong> paired with a <strong>4-Year Amend &amp; Extend</strong> and a 50 bps coupon step-up to <strong>9.50%</strong>.
+      </div>
+    </div>
+  </div>
+
+      </div>
+  </div>
+
+    
+  <!-- ========================================================================= -->
+  <!-- PART 3: METHODOLOGY 2 — MARKET EXCHANGE PRICING ENGINE (VARIABLE TERMS)  -->
+  <!-- ========================================================================= -->
+  <div style="border-left: 4px solid var(--accent-emerald); padding-left: 6px; margin-bottom: 20px;">
+    <div style="font-size: 13px; font-weight: 800; color: var(--accent-emerald); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+      📜 Methodology 2: Market Exchange Pricing Engine (Variable Terms &amp; Qualitative Bridge)
+    </div>
+
+    <!-- Variable Exchange Terms & Restructuring Mechanics Sandbox -->
+    
+  <!-- CARD 2B: VARIABLE RESTRUCTURING EXCHANGE TERMS & RESTRUCTURING MECHANICS -->
+  <div class="card" style="margin-bottom:14px;">
     <div class="card-title">
-      <span style="display:flex; align-items:center; gap:8px;">
-        <span>🎯</span> 6. Exit Yield Discounting &amp; 2026 Maturity Extension Engine
-      </span>
-      <span class="sub">Market-Clearing Yield for Post-Extension Turkish Utility Paper &bull; Duration &amp; Coupon Parity</span>
+      <span>2. Amend &amp; Extend Terms &amp; Restructuring Mechanics</span>
+      <span class="sub">Fully variable exchange package offered to Zoren 2026 Eurobond holders &bull; Maturity roll terms</span>
     </div>
 
     <div class="slider-row">
       <div class="slider-box">
         <div class="slider-header">
-          <span class="slider-label">Maturity Extension Tenor</span>
-          <span class="slider-val" id="val-exit-tenor">4 Years</span>
+          <span class="slider-label">Senior Unsecured Principal Haircut</span>
+          <span class="slider-val" id="val-senior-haircut">0%</span>
         </div>
-        <input type="range" id="input-exit-tenor" min="2" max="7" step="1" value="4" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new 2030 Eurobonds</div>
+        <input type="range" id="input-senior-haircut" min="0" max="40" step="5" value="0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+          Debt reduction across $582M senior claims: <strong style="color:#34d399;" id="lbl-senior-debt-cut">-$0M</strong>
+        </div>
       </div>
 
       <div class="slider-box">
         <div class="slider-header">
-          <span class="slider-label">Extended Cash Coupon</span>
-          <span class="slider-val" id="val-exit-coupon">9.50%</span>
+          <span class="slider-label">Maturity Extension Tenor (from June 2026)</span>
+          <span class="slider-val" id="val-extension">4 Years</span>
         </div>
-        <input type="range" id="input-exit-coupon" min="7.0" max="13.0" step="0.25" value="9.50" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Reinstated coupon (+50 bps step-up over 9.00% legacy)</div>
+        <input type="range" id="input-extension" min="1" max="7" step="1" value="4" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+          Extended Eurobond maturity wall: <strong style="color:#fbbf24;" id="lbl-new-maturity">2030</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Reinstated Cash Coupon Rate</span>
+          <span class="slider-val" id="val-coupon">9.50%</span>
+        </div>
+        <input type="range" id="input-coupon" min="7.0" max="14.0" step="0.25" value="9.50" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+          Annual senior interest burden: <strong style="color:#fff;" id="lbl-new-interest">$28.5M</strong>
+        </div>
       </div>
 
       <div class="slider-box">
         <div class="slider-header">
-          <span class="slider-label">Required Market Exit Yield</span>
-          <span class="slider-val" id="val-exit-yield">11.00%</span>
+          <span class="slider-label">Debt-for-Equity / Renewable Swap Allocation</span>
+          <span class="slider-val" id="val-debt-equity">0%</span>
         </div>
-        <input type="range" id="input-exit-yield" min="8.0" max="15.0" step="0.25" value="11.00" oninput="onManualExitYield(this.value)">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-          <span>Market-clearing yield for post-extension paper</span>
-          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
-            <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">4.16x &rarr; 11.00%</span>)
-          </label>
+        <input type="range" id="input-debt-equity" min="0" max="40" step="5" value="0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+          Creditors receive <strong style="color:#38bdf8;" id="lbl-reorg-equity-share">0%</strong> in equity / renewable shares
         </div>
       </div>
     </div>
 
-    <!-- Exit Yield Key Valuation Metric Cards -->
-    <div class="meter-grid" style="margin-top:12px;">
-      <div class="meter-card">
-        <div class="meter-title">Trading Px of Extended 4Y Note</div>
-        <div class="meter-val" id="meter-exit-bond-px" style="color:#fbbf24;">95.3c</div>
-        <div class="meter-sub" id="meter-exit-bond-discount" style="color:var(--accent-amber);">-4.7% Discount to Par (Matches Mkt: 94.5c)</div>
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Senior PIK (Payment-in-Kind) Coupon</span>
+          <span class="slider-val" id="val-pik-coupon" style="color:var(--accent-purple);">0.00%</span>
+        </div>
+        <input type="range" id="input-pik-coupon" min="0.0" max="6.0" step="0.25" value="0.00" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+          Annual cash interest saved: <strong style="color:var(--accent-emerald);" id="lbl-pik-savings">$0M/yr</strong> (Capitalized onto principal)
+        </div>
       </div>
 
-      <div class="meter-card">
-        <div class="meter-title">Senior Economic Recovery</div>
-        <div class="meter-val" id="meter-exit-economic-rec" style="color:var(--accent-emerald);">95.3c</div>
-        <div class="meter-sub" id="meter-exit-nominal-rec" style="color:#94a3b8;">vs 100.0c Nominal Asset Coverage</div>
-      </div>
-
-      <div class="meter-card">
-        <div class="meter-title">Implied Corporate Spread</div>
-        <div class="meter-val" id="meter-exit-spread" style="color:#38bdf8;">+425 bps</div>
-        <div class="meter-sub">Over Turkish Sovereign 4Y Curve (6.75%)</div>
-      </div>
-    </div>
-
-    <!-- Interactive Exit Yield Sensitivity Table -->
-    <div style="margin-top:14px;">
-      <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-        <span>Exit Yield Sensitivity Matrix: Post-Extension Trading Value</span>
-        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Coupon: <span id="matrix-coupon-label">9.50%</span> | PIK: <span id="matrix-pik-label" style="color:var(--accent-purple); font-weight:700;">0.00% (0Y)</span> | Tenor: <span id="matrix-tenor-label">4Y</span></span>
-      </div>
-      <div style="overflow-x:auto;">
-        <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
-          <thead>
-            <tr>
-              <th style="text-align:left;">Exit Yield (Y_exit)</th>
-              <th style="text-align:right;">Implied Spread</th>
-              <th style="text-align:right;">Extended Note Px</th>
-              <th style="text-align:right;">Senior Economic Recovery</th>
-              <th style="text-align:right;">Variance vs Nominal</th>
-              <th style="text-align:center;">Desk Action</th>
-            </tr>
-          </thead>
-          <tbody id="exit-yield-matrix-tbody">
-            <!-- Populated dynamically via JS -->
-          </tbody>
-        </table>
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">PIK Duration / Liquidity Runway</span>
+          <span class="slider-val" id="val-pik-years" style="color:var(--accent-purple);">0 Years</span>
+        </div>
+        <input type="range" id="input-pik-years" min="0" max="4" step="1" value="0" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+          Compounded exit face value: <strong style="color:#fbbf24;" id="lbl-pik-compounded-face">100.0c</strong> (Through <span id="lbl-pik-end-year">2026</span>)
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- PANE: QUALITATIVE (Card 4) -->
-  <div id="pane-qualitative" class="detail-tab-pane" style="display:none;">
+
+    <!-- Qualitative Risk Haircut & Dynamic Pricing Bands -->
     <!-- CARD 4: Qualitative Risk Weighting & Dynamic Pricing Bands -->
       <div class="card">
         <div class="card-title">
@@ -1205,7 +1345,107 @@
 
   <!-- PANE: SCENARIOS (Card 7) -->
   <div id="pane-scenarios" class="detail-tab-pane" style="display:none;">
-    <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
+
+    <!-- Exit Yield Discounting & 2026 Extension Pricing Engine -->
+    <!-- CARD 6: Exit Yield Discounting & 2026 Extension Pricing Engine -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>🎯</span> 6. Exit Yield Discounting &amp; 2026 Maturity Extension Engine
+      </span>
+      <span class="sub">Market-Clearing Yield for Post-Extension Turkish Utility Paper &bull; Duration &amp; Coupon Parity</span>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Maturity Extension Tenor</span>
+          <span class="slider-val" id="val-exit-tenor">4 Years</span>
+        </div>
+        <input type="range" id="input-exit-tenor" min="2" max="7" step="1" value="4" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new 2030 Eurobonds</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Extended Cash Coupon</span>
+          <span class="slider-val" id="val-exit-coupon">9.50%</span>
+        </div>
+        <input type="range" id="input-exit-coupon" min="7.0" max="13.0" step="0.25" value="9.50" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Reinstated coupon (+50 bps step-up over 9.00% legacy)</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Required Market Exit Yield</span>
+          <span class="slider-val" id="val-exit-yield">11.00%</span>
+        </div>
+        <input type="range" id="input-exit-yield" min="8.0" max="15.0" step="0.25" value="11.00" oninput="onManualExitYield(this.value)">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+          <span>Market-clearing yield for post-extension paper</span>
+          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
+            <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">4.16x &rarr; 11.00%</span>)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exit Yield Key Valuation Metric Cards -->
+    <div class="meter-grid" style="margin-top:12px;">
+      <div class="meter-card">
+        <div class="meter-title">Trading Px of Extended 4Y Note</div>
+        <div class="meter-val" id="meter-exit-bond-px" style="color:#fbbf24;">95.3c</div>
+        <div class="meter-sub" id="meter-exit-bond-discount" style="color:var(--accent-amber);">-4.7% Discount to Par (Matches Mkt: 94.5c)</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-title">Senior Economic Recovery</div>
+        <div class="meter-val" id="meter-exit-economic-rec" style="color:var(--accent-emerald);">95.3c</div>
+        <div class="meter-sub" id="meter-exit-nominal-rec" style="color:#94a3b8;">vs 100.0c Nominal Asset Coverage</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-title">Implied Corporate Spread</div>
+        <div class="meter-val" id="meter-exit-spread" style="color:#38bdf8;">+425 bps</div>
+        <div class="meter-sub">Over Turkish Sovereign 4Y Curve (6.75%)</div>
+      </div>
+    </div>
+
+    <!-- Interactive Exit Yield Sensitivity Table -->
+    <div style="margin-top:14px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+        <span>Exit Yield Sensitivity Matrix: Post-Extension Trading Value</span>
+        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Coupon: <span id="matrix-coupon-label">9.50%</span> | PIK: <span id="matrix-pik-label" style="color:var(--accent-purple); font-weight:700;">0.00% (0Y)</span> | Tenor: <span id="matrix-tenor-label">4Y</span></span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Exit Yield (Y_exit)</th>
+              <th style="text-align:right;">Implied Spread</th>
+              <th style="text-align:right;">Extended Note Px</th>
+              <th style="text-align:right;">Senior Economic Recovery</th>
+              <th style="text-align:right;">Variance vs Nominal</th>
+              <th style="text-align:center;">Desk Action</th>
+            </tr>
+          </thead>
+          <tbody id="exit-yield-matrix-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANE: QUALITATIVE (Card 4) -->
+  <div id="pane-qualitative" class="detail-tab-pane" style="display:none;">
+  </div>
+
+    
+  <!-- ========================================================================= -->
+  <!-- PART 4: SCENARIO ANATOMY & STRUCTURAL TRIGGERS                          -->
+  <!-- ========================================================================= -->
+  <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
   <div class="card" style="margin-top:14px;">
     <div class="card-title">
       <span style="display:flex; align-items:center; gap:8px;">
@@ -1266,9 +1506,9 @@
   </div>
   </div>
 
+  </div>
 
-  
-<script>
+  <script>
     function switchDetailTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById('btn-tab-' + tabId);
@@ -1994,7 +2234,74 @@
     // Initialize on page load
     document.addEventListener("DOMContentLoaded", () => {
       initPage();
-    });
+    
+      // === NEW SUITE CALCULATIONS FOR ZOREN ===
+      // 1. Balance Sheet Sustainability Requirements
+      const targetLev = 3.50;
+      const excessLevDebt = Math.max(0, proFormaNetDebt - (targetLev * totalOperatingEbitda));
+      const reqHaircutPct = Math.min(100, Math.max(0, (excessLevDebt / totalSeniorClaims) * 100.0));
+
+      const elReqCut = document.getElementById("lbl-required-debt-cut");
+      if (elReqCut) elReqCut.textContent = excessLevDebt > 0 ? "$" + Math.round(excessLevDebt).toLocaleString() + "M" : "$0M (Leverage within " + targetLev.toFixed(2) + "x ceiling)";
+      const elReqExt = document.getElementById("lbl-required-extension");
+      if (elReqExt) elReqExt.textContent = "At least 4 Years (to June 2030)";
+
+      // Dynamic EV-to-terms guidance
+      const elEvGuidance = document.getElementById("lbl-ev-guidance");
+      if (elEvGuidance) {
+        if (rawSeniorRecoveryCents >= 99.0) {
+          elEvGuidance.innerHTML = "Because your Fundamental EV Recovery shows <strong>100.0c Par Coverage (" + (rawSeniorRecoveryPct * 100).toFixed(1) + "% Asset Backing)</strong>, bondholders will firmly reject any nominal haircut. The consensual path is a <strong>0% Haircut</strong> paired with a <strong>4-Year Amend &amp; Extend</strong> and a 50 bps coupon step-up to <strong>9.50%</strong>.";
+        } else if (rawSeniorRecoveryCents >= 80.0) {
+          elEvGuidance.innerHTML = "Under stress asset multiples, senior recovery drops to <strong>" + rawSeniorRecoveryCents.toFixed(1) + "c</strong>. A consensual deal requires a <strong>$50M–$100M Sponsor Equity injection</strong> or a <strong>10%–15% principal haircut</strong> paired with renewable equity warrants to achieve 100c emergence equivalence.";
+        } else {
+          elEvGuidance.innerHTML = "Fundamental EV Recovery is severely impaired at <strong>" + rawSeniorRecoveryCents.toFixed(1) + "c</strong>. Reorganization requires a <strong>25%–35% Haircut</strong> and equitization of the $282M RCF.";
+        }
+      }
+
+      // 2. Secondary Bond Pricing Band updates
+      const distressedFloor = Math.max(50.0, rawSeniorRecoveryCents * 0.82);
+      const mktPx = 94.5;
+      const fairVal = stream2PV;
+      const assetFloor = stream1PV;
+      const bullTarget = Math.min(105.0, stream2PV + 7.5);
+
+      const elDist = document.getElementById("pricing-band-distressed");
+      if (elDist) elDist.textContent = distressedFloor.toFixed(1) + "c";
+      const elMkt = document.getElementById("pricing-band-mkt");
+      if (elMkt) elMkt.textContent = mktPx.toFixed(1) + "c";
+      const elFv = document.getElementById("pricing-band-fv");
+      if (elFv) elFv.textContent = fairVal.toFixed(1) + "c";
+      const elAsset = document.getElementById("pricing-band-asset");
+      if (elAsset) elAsset.textContent = assetFloor.toFixed(1) + "c";
+      const elTgt = document.getElementById("pricing-band-target");
+      if (elTgt) elTgt.textContent = bullTarget.toFixed(1) + "c";
+
+      // Upside in cents and %
+      const upsideFvCents = fairVal - mktPx;
+      const upsideFvPct = (upsideFvCents / mktPx) * 100.0;
+      const upsideAssetCents = assetFloor - mktPx;
+      const upsideAssetPct = (upsideAssetCents / mktPx) * 100.0;
+
+      const elUpFv = document.getElementById("lbl-upside-fv");
+      if (elUpFv) {
+        const sign = upsideFvCents >= 0 ? "+" : "";
+        elUpFv.textContent = sign + upsideFvCents.toFixed(1) + "c (" + sign + upsideFvPct.toFixed(1) + "%)";
+        elUpFv.style.color = upsideFvCents >= 0 ? "var(--accent-emerald)" : "var(--accent-rose)";
+      }
+      const elUpAsset = document.getElementById("lbl-upside-asset");
+      if (elUpAsset) {
+        const sign = upsideAssetCents >= 0 ? "+" : "";
+        elUpAsset.textContent = sign + upsideAssetCents.toFixed(1) + "c (" + sign + upsideAssetPct.toFixed(1) + "%)";
+        elUpAsset.style.color = upsideAssetCents >= 0 ? "var(--accent-cyan)" : "var(--accent-rose)";
+      }
+
+      // Top bar sync
+      const elTopS1 = document.getElementById("top-s1-pv");
+      if (elTopS1) elTopS1.innerHTML = stream1PV.toFixed(1) + "<span>c</span>";
+
+    }
+);
   </script>
 </body>
 </html>
+
