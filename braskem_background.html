@@ -1239,6 +1239,43 @@
       </div>
     </div>
 
+    <!-- Pillar 5: PIK Coupon & Principal Accretion Framework -->
+    <div style="background:var(--bg-card-sub); border:1px solid rgba(192, 132, 252, 0.3); border-radius:8px; padding:14px; margin-bottom:14px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-purple); text-transform:uppercase; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+        <span>⚡</span> 5. Senior PIK (Payment-in-Kind) Provision &amp; Compounding Accretion Framework
+      </div>
+      <div style="font-size:11px; color:#cbd5e1; line-height:1.5; margin-bottom:8px;">
+        In stressed restructurings, debtors often negotiate a <strong>Payment-in-Kind (PIK)</strong> toggle to preserve precious liquidity while plant margins recover. Our valuation engine explicitly models both sides of the PIK contract:
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:10.5px; line-height:1.45;">
+        <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
+          <div style="color:var(--accent-emerald); font-weight:700; margin-bottom:4px;">A. Debtor Liquidity Relief &amp; FCF Expansion:</div>
+          <div style="color:var(--text-muted); margin-bottom:6px;">
+            During the PIK window ($T_{\text{pik}}$ years), the company capitalizes the PIK rate ($C_{\text{pik}}$) onto face value rather than distributing cash from its treasury:
+          </div>
+          <div style="background:rgba(16,185,129,0.08); border-left:2px solid var(--accent-emerald); padding:4px 8px; font-family:'JetBrains Mono',monospace; color:#34d399; margin-bottom:6px;">
+            \text{Annual Cash Saved} = \text{Senior Reinstated Debt} \times C_{\text{pik}}
+          </div>
+          <div style="color:var(--text-muted);">
+            For Braskem, a 2.50% PIK on $4.18B reinstated debt saves <strong>+$105M/year in cash</strong>, directly expanding pro-forma interest coverage from 2.2x to 2.8x and preventing re-default.
+          </div>
+        </div>
+
+        <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
+          <div style="color:#fbbf24; font-weight:700; margin-bottom:4px;">B. Creditor Principal Accretion &amp; Valuation:</div>
+          <div style="color:var(--text-muted); margin-bottom:6px;">
+            Creditors suffer lower initial cash inflow in exchange for semi-annual principal compounding at the rate $C_{\text{pik}}/2$:
+          </div>
+          <div style="background:rgba(251,191,36,0.08); border-left:2px solid #fbbf24; padding:4px 8px; font-family:'JetBrains Mono',monospace; color:#fbbf24; margin-bottom:6px;">
+            F_{\text{exit}} = 100 \times \left(1 + \frac{C_{\text{pik}}}{2}\right)^{2 \cdot T_{\text{pik}}}
+          </div>
+          <div style="color:var(--text-muted);">
+            A 2.50% PIK over 2 years compounds par face value to <strong>105.1c</strong>. Post-PIK, full cash coupon is paid on 105.1c, and 105.1c is redeemed at maturity, expanding discounted exit value ($P_{\text{new}}$).
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Exit Yield Sensitivity Table -->
     <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
       Exit Yield Sensitivity Matrix: Post-Emergence Paper &amp; True Economic Value

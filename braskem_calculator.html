@@ -589,6 +589,30 @@
         <div class="slider-row">
           <div class="slider-box">
             <div class="slider-header">
+              <span class="slider-label">Senior PIK (Payment-in-Kind) Coupon</span>
+              <span class="slider-val" id="val-pik-coupon" style="color:var(--accent-purple);">0.00%</span>
+            </div>
+            <input type="range" id="input-pik-coupon" min="0.0" max="6.0" step="0.25" value="0.00" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Annual cash interest saved: <strong style="color:var(--accent-emerald);" id="lbl-pik-savings">$0M/yr</strong> (Capitalized onto principal)
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-header">
+              <span class="slider-label">PIK Duration / Liquidity Runway</span>
+              <span class="slider-val" id="val-pik-years" style="color:var(--accent-purple);">0 Years</span>
+            </div>
+            <input type="range" id="input-pik-years" min="0" max="5" step="1" value="0" oninput="recalcEngine()">
+            <div style="font-size:9.5px; color:var(--text-muted); margin-top:3px;">
+              Compounded exit face value: <strong style="color:#fbbf24;" id="lbl-pik-compounded-face">100.0c</strong> (Through <span id="lbl-pik-end-year">2026</span>)
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-box">
+            <div class="slider-header">
               <span class="slider-label">Subordinated 2081 Hybrid Notes Cramdown</span>
               <span class="slider-val" id="val-hybrid-haircut">85%</span>
             </div>
@@ -1038,7 +1062,7 @@
     <div style="margin-top:14px;">
       <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
         <span>Exit Yield Sensitivity Matrix: Post-Emergence Trading Value</span>
-        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Coupon: <span id="matrix-coupon-label">7.50%</span> | Tenor: <span id="matrix-tenor-label">8Y</span></span>
+        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Cash Coupon: <span id="matrix-coupon-label">7.50%</span> | PIK: <span id="matrix-pik-label" style="color:var(--accent-purple); font-weight:700;">0.00% (0Y)</span> | Tenor: <span id="matrix-tenor-label">8Y</span></span>
       </div>
       <div style="overflow-x:auto;">
         <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
@@ -1159,6 +1183,8 @@
         debtEquity: 30,
         hybridHaircut: 85,
         maceioNpv: 600,
+        pikCoupon: 0.0,
+        pikYears: 0,
         qualPetrobras: -1.5,
         qualMaceio: -1.0,
         qualRj: -1.0,
@@ -1177,6 +1203,8 @@
         debtEquity: 40,
         hybridHaircut: 95,
         maceioNpv: 750,
+        pikCoupon: 2.5,
+        pikYears: 2,
         qualPetrobras: -3.0,
         qualMaceio: -2.0,
         qualRj: -3.0,
@@ -1195,6 +1223,8 @@
         debtEquity: 20,
         hybridHaircut: 60,
         maceioNpv: 500,
+        pikCoupon: 0.0,
+        pikYears: 0,
         qualPetrobras: 3.0,
         qualMaceio: 0.5,
         qualRj: 1.5,
@@ -1213,6 +1243,8 @@
         debtEquity: 50,
         hybridHaircut: 100,
         maceioNpv: 900,
+        pikCoupon: 0.0,
+        pikYears: 0,
         qualPetrobras: -6.0,
         qualMaceio: -4.0,
         qualRj: -8.0,
@@ -1231,6 +1263,8 @@
         debtEquity: 45,
         hybridHaircut: 100,
         maceioNpv: 800,
+        pikCoupon: 0.0,
+        pikYears: 0,
         qualPetrobras: -4.5,
         qualMaceio: -3.0,
         qualRj: -6.0,
@@ -1321,6 +1355,8 @@
       document.getElementById("input-debt-equity").value = p.debtEquity;
       document.getElementById("input-hybrid-haircut").value = p.hybridHaircut;
       document.getElementById("input-maceio-npv").value = p.maceioNpv;
+      document.getElementById("input-pik-coupon").value = p.pikCoupon !== undefined ? p.pikCoupon : 0.0;
+      document.getElementById("input-pik-years").value = p.pikYears !== undefined ? p.pikYears : 0;
 
       document.getElementById("input-qual-petrobras").value = p.qualPetrobras;
       document.getElementById("input-qual-maceio").value = p.qualMaceio;
@@ -1368,6 +1404,9 @@
       const qualDiscountCents = parseFloat(document.getElementById("input-qual-discount").value) || 0;
       const totalQualDeltaCents = qualPetrobrasCents + qualMaceioCents + qualRjCents + qualDiscountCents;
 
+      const pikCouponPct = parseFloat(document.getElementById("input-pik-coupon")?.value) || 0.0;
+      const pikYears = parseInt(document.getElementById("input-pik-years")?.value) || 0;
+
       const exitTenor = parseFloat(document.getElementById("input-exit-tenor")?.value || extensionYears);
       const exitCoupon = parseFloat(document.getElementById("input-exit-coupon")?.value || (newCouponPct * 100.0));
       const exitYield = parseFloat(document.getElementById("input-exit-yield")?.value || 9.75);
@@ -1381,6 +1420,8 @@
       document.getElementById("val-debt-equity").textContent = `${(debtToEquityPct * 100).toFixed(0)}%`;
       document.getElementById("val-hybrid-haircut").textContent = `${(hybridHaircutPct * 100).toFixed(0)}%`;
       document.getElementById("val-maceio-npv").textContent = `$${maceioNpv.toFixed(0)}M`;
+      if (document.getElementById("val-pik-coupon")) document.getElementById("val-pik-coupon").textContent = `${pikCouponPct.toFixed(2)}%`;
+      if (document.getElementById("val-pik-years")) document.getElementById("val-pik-years").textContent = `${pikYears} Year${pikYears === 1 ? '' : 's'}`;
 
       function formatCentsBadge(id, val) {
         const el = document.getElementById(id);
@@ -1447,9 +1488,23 @@
       const proFormaNetDebt = proFormaGrossDebt - postReorgCash;
       const proFormaNetLeverage = totalOperatingEbitda > 0 ? (proFormaNetDebt / totalOperatingEbitda) : 99.0;
 
+      const annualPikSavings = pikYears > 0 ? (seniorReinstatedDebt * (pikCouponPct / 100.0)) : 0.0;
+      const compoundedFace = 100.0 * Math.pow(1.0 + (pikCouponPct / 200.0), 2.0 * pikYears);
+
+      if (document.getElementById("lbl-pik-savings")) {
+        document.getElementById("lbl-pik-savings").textContent = pikYears > 0 ? `$${Math.round(annualPikSavings)}M/yr` : "$0M/yr";
+      }
+      if (document.getElementById("lbl-pik-compounded-face")) {
+        document.getElementById("lbl-pik-compounded-face").textContent = `${compoundedFace.toFixed(1)}c`;
+      }
+      if (document.getElementById("lbl-pik-end-year")) {
+        document.getElementById("lbl-pik-end-year").textContent = `${2026 + pikYears}`;
+      }
+
       const proFormaSeniorInterest = seniorReinstatedDebt * (exitCoupon / 100.0);
       const priorityBankInterest = priorityBankDebt * 0.075;
-      const proFormaTotalCashInterest = proFormaSeniorInterest + priorityBankInterest;
+      const effectiveSeniorCashInterest = Math.max(0, proFormaSeniorInterest - annualPikSavings);
+      const proFormaTotalCashInterest = effectiveSeniorCashInterest + priorityBankInterest;
       const proFormaInterestCoverage = proFormaTotalCashInterest > 0 ? (totalOperatingEbitda / proFormaTotalCashInterest) : 0;
       const proFormaCapex = 600.0;
       const proFormaFcf = totalOperatingEbitda - proFormaCapex - proFormaTotalCashInterest - 40.0 - 70.0; // WC & Tax
@@ -1491,7 +1546,7 @@
       }
 
       // 6. Unified Exit Yield, Haircut, Tenor & Standstill Drag Engine
-      const newDebtTradingPx = calcBondPrice(exitCoupon, exitYield, exitTenor);
+      const newDebtTradingPx = calcBondPrice(exitCoupon, exitYield, exitTenor, pikCouponPct, pikYears);
       const parDiscountPct = ((newDebtTradingPx - 100.0) / 100.0) * 100.0;
       const ustBenchmark = 3.75;
       const impliedSpreadBps = Math.round((exitYield - ustBenchmark) * 100);
@@ -1525,7 +1580,9 @@
       document.getElementById("meter-fcf").style.color = proFormaFcf >= 0 ? "var(--accent-emerald)" : "var(--accent-rose)";
 
       document.getElementById("lbl-senior-debt-cut").textContent = `-$${Math.round(totalSeniorClaims * seniorHaircutPct).toLocaleString()}M`;
-      document.getElementById("lbl-new-interest").textContent = `$${Math.round(proFormaSeniorInterest)}M`;
+      document.getElementById("lbl-new-interest").textContent = pikYears > 0 && pikCouponPct > 0 
+        ? `$${Math.round(effectiveSeniorCashInterest)}M cash (+$${Math.round(annualPikSavings)}M PIK)` 
+        : `$${Math.round(proFormaSeniorInterest)}M`;
       document.getElementById("lbl-reorg-equity-share").textContent = `${Math.min(95, Math.round(debtToEquityPct * 180))}%`;
 
       const hybridRecoveryCents = (1.0 - hybridHaircutPct) * 100.0;
@@ -1796,6 +1853,7 @@
       if (document.getElementById("meter-exit-spread")) document.getElementById("meter-exit-spread").textContent = `+${impliedSpreadBps} bps`;
 
       if (document.getElementById("matrix-coupon-label")) document.getElementById("matrix-coupon-label").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("matrix-pik-label")) document.getElementById("matrix-pik-label").textContent = `${pikCouponPct.toFixed(2)}% (${pikYears}Y)`;
       if (document.getElementById("matrix-tenor-label")) document.getElementById("matrix-tenor-label").textContent = `${exitTenor}Y`;
 
       const matrixTbody = document.getElementById("exit-yield-matrix-tbody");
@@ -1810,7 +1868,7 @@
 
         matrixTbody.innerHTML = exitYieldSteps.map(step => {
           const yVal = Math.max(1.0, step.y);
-          const px = calcBondPrice(exitCoupon, yVal, exitTenor);
+          const px = calcBondPrice(exitCoupon, yVal, exitTenor, pikCouponPct, pikYears);
           const debtVal = (reinstatedDebtFace * px) / 100.0;
           const eqVal = convertedEquityEmergenceVal;
           const stepDiscountFactor = 1.0 / Math.pow(1.0 + (yVal / 200.0), 2.0 * (durationMonths / 12.0));
@@ -1845,14 +1903,26 @@
       }
     }
 
-    function calcBondPrice(couponPct, exitYieldPct, tenorYears) {
-      const n = tenorYears * 2;
-      const c = couponPct / 2.0;
+    function calcBondPrice(couponPct, exitYieldPct, tenorYears, pikCouponPct = 0, pikYears = 0) {
+      const n = Math.max(1, Math.round(tenorYears * 2));
       const r = (exitYieldPct / 100.0) / 2.0;
       if (r <= 0) return 100.0;
-      const pvCoupons = c * (1 - Math.pow(1 + r, -n)) / r;
-      const pvPar = 100.0 * Math.pow(1 + r, -n);
-      return pvCoupons + pvPar;
+      const cCash = (couponPct / 100.0) / 2.0;
+      const cPik = (pikCouponPct / 100.0) / 2.0;
+      const nPik = Math.min(n, Math.max(0, Math.round(pikYears * 2)));
+      let pv = 0.0;
+      let currentFace = 100.0;
+      for (let i = 1; i <= n; i++) {
+        const discount = Math.pow(1.0 + r, -i);
+        if (i <= nPik) {
+          pv += (currentFace * cCash) * discount;
+          currentFace *= (1.0 + cPik);
+        } else {
+          pv += (currentFace * (cCash + cPik)) * discount;
+        }
+      }
+      pv += currentFace * Math.pow(1.0 + r, -n);
+      return pv;
     }
 
     function toggleQualGuide() {
