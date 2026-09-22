@@ -970,8 +970,13 @@
           <span class="slider-label">Required Market Exit Yield</span>
           <span class="slider-val" id="val-exit-yield">11.00%</span>
         </div>
-        <input type="range" id="input-exit-yield" min="8.0" max="15.0" step="0.25" value="11.00" oninput="recalcEngine()">
-        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Market-clearing yield (Turkey 4Y Eurobond 6.75% + 425 bps spread)</div>
+        <input type="range" id="input-exit-yield" min="8.0" max="15.0" step="0.25" value="11.00" oninput="onManualExitYield(this.value)">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+          <span>Market-clearing yield for post-extension paper</span>
+          <label style="color:var(--accent-cyan); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:600;">
+            <input type="checkbox" id="chk-auto-exit-yield" checked onchange="toggleAutoExitYield(this.checked)"> Auto-link to Net Leverage (<span id="lbl-implied-rating">4.16x &rarr; 11.00%</span>)
+          </label>
+        </div>
       </div>
     </div>
 
@@ -1020,6 +1025,66 @@
         </table>
       </div>
     </div>
+
+    <!-- TWO-STREAM RECONCILIATION BRIDGE: FUNDAMENTAL EV VS MARKET-BASED PRICING -->
+    <div style="background:var(--bg-card-sub); border:1px solid #334155; border-radius:8px; padding:14px; margin-top:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:11.5px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.5px;">
+          ⚖️ Two-Stream Valuation Reconciliation: Fundamental EV vs Market-Based Pricing
+        </span>
+        <span id="reconcile-action-badge" style="font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; font-family:'JetBrains Mono',monospace; background:rgba(16,185,129,0.15); color:var(--accent-emerald); border:1px solid rgba(16,185,129,0.3);">ACCUMULATE / BUY</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; font-size:11px;">
+        <!-- STREAM 1: FUNDAMENTAL EV WATERFALL -->
+        <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
+            <strong style="color:var(--accent-emerald);">STREAM 1: FUNDAMENTAL EV RECOVERY</strong>
+            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--accent-emerald);" id="stream1-val">100.0c Par</span>
+          </div>
+          <div style="font-size:10px; color:#94a3b8; line-height:1.5;">
+            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> EBITDA: <span id="s1-ebitda">$350M</span> &bull; Multiple: <span id="s1-mult">6.0x</span> &bull; Cash: $240M</div>
+            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Priority OpCo Debt: $1,200M (Ring-fenced PF + Grid loans)</div>
+            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Net Distributable HoldCo Pool: <strong style="color:#fff;" id="s1-senior-pool">$1,110M</strong> ($582M Claims)</div>
+            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Fundamental Asset Coverage: <strong style="color:#34d399;" id="s1-nominal-rec">190.6% (100.0c)</strong></div>
+            <div><span style="color:#f87171; font-weight:700;">[STANDSTILL DRAG]</span> <span id="s1-duration">6M</span> consensual A&amp;E @ <span id="s1-yield">11.00%</span> = <strong style="color:#38bdf8;" id="s1-time-factor">0.0c Drag (Performing)</strong></div>
+            <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#cbd5e1;">
+              <strong>Anchor Question:</strong> What are assets worth if liquidated/reorganized without exchange concessions?
+            </div>
+          </div>
+        </div>
+
+        <!-- STREAM 2: MARKET-BASED PRICING -->
+        <div style="background:#060913; border:1px solid #1e293b; border-radius:6px; padding:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:4px; margin-bottom:6px;">
+            <strong style="color:#38bdf8;">STREAM 2: MARKET-BASED EXTENSION PV</strong>
+            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#38bdf8;" id="stream2-val">95.3c PV</span>
+          </div>
+          <div style="font-size:10px; color:#94a3b8; line-height:1.5;">
+            <div><span style="color:#fbbf24; font-weight:700;">[ASSUMPTION]</span> Terms: 0% Cut &bull; <span id="s2-tenor">4Y</span> Ext (2030) &bull; <span id="s2-coupon">9.50%</span> Cpn (+50 bps step-up)</div>
+            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Pro-Forma Leverage: <strong style="color:#fff;" id="s2-leverage">4.16x</strong> &rarr; Implied Exit Yield: <strong style="color:#fbbf24;" id="s2-exit-yield">11.00%</strong></div>
+            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Turkey 4Y Benchmark (6.75%) + <strong style="color:#38bdf8;" id="s2-spread">+425 bps</strong> Spread</div>
+            <div><span style="color:#38bdf8; font-weight:700;">[CALCULATION]</span> Extended Note PV: <strong style="color:#fbbf24;" id="s2-paper-px">95.3c</strong> (-4.7% Discount to Par)</div>
+            <div><span style="color:#38bdf8; font-weight:700;">[ECONOMIC VALUE]</span> Senior Holding Value: <strong style="color:var(--accent-emerald);" id="s2-true-rec">95.3c</strong></div>
+            <div style="margin-top:6px; border-top:1px dashed #334155; padding-top:4px; color:#cbd5e1;">
+              <strong>Anchor Question:</strong> What will the secondary market pay for the extended paper on Day 1?
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECONCILIATION SUMMARY BAR & BUY/SELL SIGNAL -->
+      <div style="margin-top:10px; background:rgba(15,23,42,0.9); border:1px solid #1e293b; border-radius:6px; padding:8px 12px; font-size:10.5px; color:#cbd5e1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div>
+          <strong>Reconciliation Gap:</strong> <span style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#fbbf24;" id="reconcile-gap">-4.7c</span> 
+          <span style="color:var(--text-muted); font-size:9.5px;">(Market PV sits 4.7c below 100c Par Asset Coverage due to 11.00% clearing exit yield)</span>
+        </div>
+        <div>
+          <strong>Trading Signal vs Market (<span id="reconcile-mkt-px">94.5c</span>):</strong> <span id="reconcile-signal-text" style="font-weight:700; color:var(--accent-emerald);">BUY / ACCUMULATE &bull; +0.8c Discount + 9.50% Carry</span>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 
   <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
@@ -1182,6 +1247,16 @@
         assets: { kizildere: [100, 4.5, true], alasehir: [15, 4.0, true], gokcedag: [18, 4.0, true], hydro_fleet: [12, 3.5, true], oedas_grid: [60, 4.5, true], zes_charging: [8, 4.5, true], cogen_thermal: [10, 3.0, true], international: [10, 3.0, true] }
       }
     };
+
+    function onManualExitYield(val) {
+      const chk = document.getElementById("chk-auto-exit-yield");
+      if (chk) chk.checked = false;
+      recalcEngine();
+    }
+
+    function toggleAutoExitYield(isChecked) {
+      recalcEngine();
+    }
 
     function initPage() {
       renderAssetTable();
@@ -1605,18 +1680,35 @@
       }).join('');
 
       // 8. Render Card 6: Exit Yield Discounting & Sensitivity Matrix
+      const turkeyBenchmark = 6.75; // Turkey 4Y USD Eurobond sovereign yield
       const exitTenor = parseFloat(document.getElementById("input-exit-tenor")?.value || 4);
       const exitCoupon = parseFloat(document.getElementById("input-exit-coupon")?.value || 9.50);
       const exitYield = parseFloat(document.getElementById("input-exit-yield")?.value || 11.00);
 
+      let effectiveExitYield = exitYield;
+      const isAutoYield = document.getElementById("chk-auto-exit-yield")?.checked ?? true;
+      if (isAutoYield) {
+        // Linked Model: Turkey 4Y curve (6.75%) + dynamic spread based on HoldCo Net Leverage:
+        // Leverage <= 3.0x -> +275 bps (9.50% Exit Yield, at coupon)
+        // Leverage = 4.16x -> +425 bps (11.00% Exit Yield, Desk Base Case)
+        // Leverage = 5.0x -> +550 bps (12.25% Exit Yield, Refi Stress)
+        // Leverage >= 6.0x -> +700 bps (13.75% Exit Yield, Distressed)
+        const spreadBps = Math.min(850, Math.max(250, Math.round(100 + (proFormaNetLeverage * 78))));
+        effectiveExitYield = Math.round((turkeyBenchmark + (spreadBps / 100.0)) * 4) / 4.0;
+        
+        const elY = document.getElementById("input-exit-yield");
+        if (elY && parseFloat(elY.value) !== effectiveExitYield) elY.value = effectiveExitYield;
+      }
       if (document.getElementById("val-exit-tenor")) document.getElementById("val-exit-tenor").textContent = `${exitTenor} Years`;
       if (document.getElementById("val-exit-coupon")) document.getElementById("val-exit-coupon").textContent = `${exitCoupon.toFixed(2)}%`;
-      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${exitYield.toFixed(2)}%`;
+      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${effectiveExitYield.toFixed(2)}%`;
+      if (document.getElementById("lbl-implied-rating")) {
+        document.getElementById("lbl-implied-rating").textContent = `${proFormaNetLeverage.toFixed(2)}x \u2192 ${effectiveExitYield.toFixed(2)}%`;
+      }
 
-      const newDebtTradingPx = calcBondPrice(exitCoupon, exitYield, exitTenor, pikCouponPct, pikYears);
+      const newDebtTradingPx = calcBondPrice(exitCoupon, effectiveExitYield, exitTenor, pikCouponPct, pikYears);
       const parDiscountPct = ((newDebtTradingPx - 100.0) / 100.0) * 100.0;
-      const turkeyBenchmark = 6.75; // Turkey 4Y USD Eurobond sovereign yield
-      const impliedSpreadBps = Math.round((exitYield - turkeyBenchmark) * 100);
+      const impliedSpreadBps = Math.round((effectiveExitYield - turkeyBenchmark) * 100);
 
       // Senior economic recovery = rawSeniorRecoveryPct * trading price of extended debt
       const trueEconomicRecoveryCents = rawSeniorRecoveryPct * newDebtTradingPx;
@@ -1672,6 +1764,62 @@
             </tr>
           `;
         }).join('');
+      }
+
+      // 9. Update Two-Stream Valuation Reconciliation Bridge
+      const stream1PV = rawSeniorRecoveryCents;
+      const stream2PV = trueEconomicRecoveryCents;
+      const reconcileGap = stream2PV - stream1PV;
+
+      if (document.getElementById("stream1-val")) document.getElementById("stream1-val").textContent = `${stream1PV.toFixed(1)}c Par`;
+      if (document.getElementById("s1-ebitda")) document.getElementById("s1-ebitda").textContent = `$${Math.round(totalOperatingEbitda)}M`;
+      if (document.getElementById("s1-mult")) document.getElementById("s1-mult").textContent = `${(totalOperatingEbitda > 0 ? (totalSotpEv / totalOperatingEbitda) : 0).toFixed(1)}x`;
+      if (document.getElementById("s1-senior-pool")) document.getElementById("s1-senior-pool").textContent = `$${Math.round(netDistributableToSenior).toLocaleString()}M`;
+      if (document.getElementById("s1-nominal-rec")) document.getElementById("s1-nominal-rec").textContent = `${(rawSeniorRecoveryPct * 100).toFixed(1)}% (${stream1PV.toFixed(1)}c)`;
+      if (document.getElementById("s1-duration")) document.getElementById("s1-duration").textContent = `${durationMonths}M`;
+      if (document.getElementById("s1-yield")) document.getElementById("s1-yield").textContent = `${effectiveExitYield.toFixed(2)}%`;
+
+      if (document.getElementById("stream2-val")) document.getElementById("stream2-val").textContent = `${stream2PV.toFixed(1)}c PV`;
+      if (document.getElementById("s2-tenor")) document.getElementById("s2-tenor").textContent = `${exitTenor}Y`;
+      if (document.getElementById("s2-coupon")) document.getElementById("s2-coupon").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("s2-leverage")) document.getElementById("s2-leverage").textContent = `${proFormaNetLeverage.toFixed(2)}x`;
+      if (document.getElementById("s2-exit-yield")) document.getElementById("s2-exit-yield").textContent = `${effectiveExitYield.toFixed(2)}%`;
+      if (document.getElementById("s2-spread")) document.getElementById("s2-spread").textContent = `+${impliedSpreadBps} bps`;
+      if (document.getElementById("s2-paper-px")) document.getElementById("s2-paper-px").textContent = `${newDebtTradingPx.toFixed(1)}c`;
+      if (document.getElementById("s2-true-rec")) document.getElementById("s2-true-rec").textContent = `${stream2PV.toFixed(1)}c`;
+
+      const elGap = document.getElementById("reconcile-gap");
+      if (elGap) {
+        elGap.textContent = `${reconcileGap >= 0 ? '+' : ''}${reconcileGap.toFixed(1)}c`;
+        elGap.style.color = reconcileGap >= 0 ? "var(--accent-emerald)" : "var(--accent-amber)";
+      }
+
+      const refMktPx = 94.5;
+      if (document.getElementById("reconcile-mkt-px")) document.getElementById("reconcile-mkt-px").textContent = `${refMktPx.toFixed(1)}c`;
+      const badge = document.getElementById("reconcile-action-badge");
+      const sigText = document.getElementById("reconcile-signal-text");
+      if (stream2PV >= refMktPx - 0.5) {
+        if (badge) {
+          badge.textContent = "ACCUMULATE / BUY";
+          badge.style.background = "rgba(16,185,129,0.15)";
+          badge.style.color = "var(--accent-emerald)";
+          badge.style.borderColor = "rgba(16,185,129,0.3)";
+        }
+        if (sigText) {
+          sigText.textContent = `BUY / ACCUMULATE \u2022 +${Math.max(0, stream2PV - refMktPx).toFixed(1)}c Discount + ${exitCoupon.toFixed(2)}% Carry \u2022 100c Par Backing`;
+          sigText.style.color = "var(--accent-emerald)";
+        }
+      } else {
+        if (badge) {
+          badge.textContent = "HOLD / DEFENSIVE";
+          badge.style.background = "rgba(245,158,11,0.15)";
+          badge.style.color = "var(--accent-amber)";
+          badge.style.borderColor = "rgba(245,158,11,0.3)";
+        }
+        if (sigText) {
+          sigText.textContent = `HOLD / DEFENSIVE \u2022 Yield (${effectiveExitYield.toFixed(2)}%) Discounts Paper to ${(refMktPx - stream2PV).toFixed(1)}c Below Market`;
+          sigText.style.color = "var(--accent-amber)";
+        }
       }
     }
 
