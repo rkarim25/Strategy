@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-22T12:16:41Z",
+  "generated_at_utc": "2026-09-22T17:07:01Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street rally nears record high - Northwest Arkansas Democrat-Gazette; Tech Rally Pauses, But Soft Oil Lifts Wall Street Pre-Bell; Asia, Europe Up.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street rally nears record high - Northwest Arkansas Democrat-Gazette; Asian benchmarks mostly rise after Wall Street's rally - LancasterOnline. Bearish offsets: Trade Desk Falls 4% as Index-Removal Flows Keep Pressure On; Magnite Drops 3%, AppLovin Pulls Back.",
   "articles": [
     {
       "title": "Wall Street rally nears record high - Northwest Arkansas Democrat-Gazette",
@@ -13,31 +13,31 @@
       "tone": "bullish"
     },
     {
-      "title": "Tech Rally Pauses, But Soft Oil Lifts Wall Street Pre-Bell; Asia, Europe Up",
+      "title": "Trade Desk Falls 4% as Index-Removal Flows Keep Pressure On; Magnite Drops 3%, AppLovin Pulls Back",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/articles/tech-rally-pauses-soft-oil-110942833.html?.tsrc=rss",
-      "published": "2026-09-22T11:09:42Z",
+      "url": "https://247wallst.com/investing/2026/09/22/trade-desk-falls-4-as-index-removal-flows-keep-pressure-on-magnite-drops-3-applovin-pulls-back/?.tsrc=rss",
+      "published": "2026-09-22T15:59:27Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Asian benchmarks mostly rise after Wall Street's rally - LancasterOnline",
+      "source": "LancasterOnline",
+      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQYjlWQTZ3azA2ako0U3dmQUdzeUpNQUtWc2JyUWs0NHZmemtLZWhOUWdxbldKeWNXWTBwVUI0RDM3dHc1MUUyMnpVUmMyWlRVNm9qbHY5aUlINXNzOGZXeWJGeXhuZERUWDJVMGs1WXBZWnlBVFJSZGVELWVSZ3hIVHRiTkF3Y1RHc01fTURjc3JKcHpNT0l3enNZeXlOUnE1VWVWOTBsa2J5Q2cycmlBeW5LMnNwRzE1SnRkMVVpbHlQWnNheWpvblhiNXJJcktaaDVJb3BLY01vVzJRVzJwWHdGekZXZGhC?oc=5",
+      "published": "2026-09-22T09:33:45Z",
       "tone": "bullish"
     },
     {
-      "title": "Asian benchmarks mostly rise after Wall Street's rally - New Haven Register",
-      "source": "New Haven Register",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPaHQ1aGc3dDNVbmwzWFlGOGY3c2pUR0hxRG1uSEtKTERvbEc3dS1Nam9kZzFNekVqWjN6clB1Q3ZNODJ6N1NRTVZkZEtyTjkxRWktUFAzVllFV1dkR01RbHNHamdRRUo1NW4xQ0dYanFYMWhKZkpYT3A1cU9lNngtVmVKcS10bi16TW81Z1VWRGlXOXZDRlp2TkV4d3FwekxCZ0VFQV9CLXljbVU?oc=5",
-      "published": "2026-09-22T09:43:31Z",
+      "title": "Wall Street rallies as AI stocks climb, bond yields ease - \u0633\u0627\u0646\u0627",
+      "source": "\u0633\u0627\u0646\u0627",
+      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE8xclZkMEMxa0NUd3JyMmNsdS1nb241c2VwRkUwdjZ1MGpvTmZacjRVY3RmVVViaFVzNmN0SkV1NXM2M3ZRU0EyWlhQSHY?oc=5",
+      "published": "2026-09-22T07:58:41Z",
       "tone": "bullish"
     },
     {
-      "title": "Nasdaq hits record close as AI stocks rally, futures steady",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://qz.com/nasdaq-record-close-ai-stocks-futures-steady-092226?.tsrc=rss",
-      "published": "2026-09-22T11:26:26Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "US Stock Futures Steady Ahead of Trump\u2019s UN Address as Alibaba Unveils New AI Chip: Dow Jones, S&P, Nasdaq, Wall Street",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://investorshub.advfn.com/market-news/article/36668/us-stock-futures-steady-ahead-of-trumps-un-address-as-alibaba-unveils-new-ai-chip-dow-jones-sp-nasdaq-wall-street?.tsrc=rss",
-      "published": "2026-09-22T09:36:39Z",
+      "title": "Nasdaq soars to first record close since June as AI stocks rally, led by Meta jump - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOeW5SWEExSFN6eFdkZkJnOHRYUlloaDN1OFVmMnFTM19mSFRDT2FBLTc3UEJZM3RLNGhKTHNzY3lFVlUwWWxMeWtWMy1PNVpqWGhsd0tJNTVMbGNESGcxa1BZb3hjaG1pbGcyWEVTUWNmQmJTN1FORi1sT3BpRjRhOVNpMHA1MXdaOFdVdGtPOTNQYzdmMG52dGFIZGxzWC1RVTdxY2Vmd0Z0TTl3b3RoUzJvZEhvQVphbWtsZkEwUUlYMHcwWGc?oc=5",
+      "published": "2026-09-21T00:14:55Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 89
       }
     ],
-    "headline_count": 138,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
