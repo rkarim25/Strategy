@@ -1118,6 +1118,154 @@
     </div>
   </div>
 
+  <!-- SECTION 4: Exit Yield Discounting & Reinstated Paper Trading Matrix -->
+  <div class="content-card" style="margin-top:14px;">
+    <div class="section-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📉</span> 4. Exit Yield Sensitivity Matrix: Post-Emergence Paper Valuation
+      </span>
+      <span class="sub">Bridging Theoretical Distributable Value to Market Clearing Prices via Exit Yield Discounting</span>
+    </div>
+
+    <div style="font-size:11.5px; color:#cbd5e1; line-height:1.5; margin-bottom:12px;">
+      In an extrajudicial or Chapter 11 emergence, senior bondholders receive a consideration package of <strong>new exit notes</strong> and <strong>reorganized equity</strong>. 
+      Under the Base Case plan, senior creditors receive ~35c in 8-year senior exit notes (7.50% cash coupon) + ~31.3c in equity. 
+      The market-clearing <strong>Exit Yield ($Y_{\text{exit}}$)</strong> determines the day-one trading price of the newly issued debt:
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="data-table" style="min-width:700px;">
+        <thead>
+          <tr>
+            <th style="text-align:left;">Exit Yield ($Y_{\text{exit}}$)</th>
+            <th style="text-align:right;">Implied Spread (bps)</th>
+            <th style="text-align:right;">Trading Px of 8Y 7.5% Note</th>
+            <th style="text-align:right;">Debt Value (35c Face)</th>
+            <th style="text-align:right;">Reorg Equity Value</th>
+            <th style="text-align:right;">True Economic Recovery</th>
+            <th style="text-align:right;">Variance vs Nominal</th>
+            <th style="text-align:center;">Desk Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700; color:#38bdf8;">8.50% (Tight / Bull)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+475 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">94.2c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">33.0c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">64.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-2.0c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">CONVICTION BUY</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:#fff;">9.25% (Base Tight)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+550 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">90.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">31.6c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">62.9c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-3.4c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">STRONG BUY</span></td>
+          </tr>
+          <tr style="background:rgba(56,189,248,0.1); font-weight:700;">
+            <td style="color:var(--accent-cyan);">9.75% (Desk Base Case)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+600 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">87.7c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">30.7c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">62.0c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-4.3c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">BUY (+27% to Mkt)</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:#fff;">10.50% (Stress Exit)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+675 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">84.0c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">29.4c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">60.7c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-5.6c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-amber); font-weight:700; font-size:10px;">HOLD / FAIR</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:var(--accent-rose);">11.25% (Distressed Exit)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+750 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">80.5c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">28.2c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">31.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-amber); font-weight:800;">59.5c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-6.8c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-amber); font-weight:700; font-size:10px;">NEUTRAL</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Scenario Anatomy: What Gets You Bear, Base & Bull? (Nested Diagram) -->
+  <div class="content-card" style="margin-top:14px;">
+    <div class="section-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📐</span> 5. Scenario Anatomy: What Gets You Bear, Base &amp; Bull?
+      </span>
+      <span class="sub">Detailed Fundamental Triggers, Sponsor Actions, Legal Pathways &amp; Final Payoff</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:12px; margin-top:8px;">
+      
+      <!-- BEAR CARD -->
+      <div style="background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.3); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-rose); letter-spacing:0.5px; text-transform:uppercase;">🔴 Bear / Distressed Floor</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-rose); background:rgba(244,63,94,0.15); padding:2px 6px; border-radius:4px;">17.0c – 22.0c Senior</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.5;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $800.0M (Global resin spreads crushed at $150/t by China supply dumping).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 3.5x EV multiple (Distressed fire-sale / liquidation valuation = $2,800M EV).</div>
+          <div style="margin-bottom:4px;"><strong>• Maceió Liabilities:</strong> -$850.0M (Dutch class action expands liabilities; un-capped cross-border claim).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Support:</strong> $0.0M (Petrobras refuses to inject equity; Novonor insolvent).</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Hostile in-court Judicial Recovery (RJ) with 24 months of litigation and -$150M legal bleed.</div>
+          <div><strong>• Final Verdict:</strong> $1.55B available for $9.2B senior unsecured claims (17c–22c). <strong>Subordinated 2081 Hybrid completely wiped out (0c).</strong></div>
+        </div>
+      </div>
+
+      <!-- BASE CARD -->
+      <div style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-gold); letter-spacing:0.5px; text-transform:uppercase;">🟡 Base Case Reorg</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:4px;">61.8c – 66.3c Senior</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.5;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $1,400.0M (Normalized mid-cycle spreads $350–$400/t; Brazilian domestic demand stable).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 5.0x EV multiple ($7,000M EV; sole Brazilian cracker with 70% share).</div>
+          <div style="margin-bottom:4px;"><strong>• Maceió Liabilities:</strong> -$600.0M (Scheduled settlement provisions capped).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Support:</strong> R$2.35B raw-material credit line from Petrobras bridging near-term liquidity.</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Consensual Extrajudicial Plan approved (50%+1) with 35% haircut + 30% equitization (3.2x net leverage).</div>
+          <div><strong>• Final Verdict:</strong> Senior creditors receive ~35c new 8Y 7.5% notes + ~30c reorg equity. <strong>2081 Hybrid receives nominal 10c–14c warrants.</strong></div>
+        </div>
+      </div>
+
+      <!-- BULL CARD -->
+      <div style="background:rgba(56, 189, 248, 0.05); border:1px solid rgba(56, 189, 248, 0.3); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-cyan); letter-spacing:0.5px; text-transform:uppercase;">🟢 Bull / Strategic Buyout</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:#38bdf8; background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:4px;">95.0c – 100.0c Par</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.5;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $1,800.0M–$2,150.0M (Petrochemical super-cycle spike; PE cash spreads &gt;$600/t).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 5.5x–6.0x multiple expansion ($9,900M–$12,900M EV).</div>
+          <div style="margin-bottom:4px;"><strong>• Maceió Liabilities:</strong> -$500.0M (Final federal judicial release and liability cap).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Support:</strong> Petrobras / ADNOC consortium buys out Novonor, injecting $2,500M in cash equity.</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Out-of-court recapitalization; 0% principal haircut; notes extended with coupon step-up.</div>
+          <div><strong>• Final Verdict:</strong> Full 100c par reinstatement + coupon carry for senior notes. <strong>2081 Hybrid recovered at 40c–55c.</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
   <script>
     // Scenario definitions
     const SCENARIOS = [

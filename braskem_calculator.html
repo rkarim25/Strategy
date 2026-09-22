@@ -815,6 +815,156 @@
     </div>
   </div>
 
+  <!-- CARD 6: Exit Yield Discounting & Reinstated Paper Trading Engine -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>🎯</span> 6. Exit Yield Discounting &amp; True Economic Recovery Engine
+      </span>
+      <span class="sub">Market-Clearing Post-Reorg Yield &bull; Bond Duration &amp; Coupon Parity Pricing</span>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Reinstated Exit Note Tenor</span>
+          <span class="slider-val" id="val-exit-tenor">8 Years</span>
+        </div>
+        <input type="range" id="input-exit-tenor" min="3" max="12" step="1" value="8" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new exit debt instruments</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Reinstated Cash Coupon</span>
+          <span class="slider-val" id="val-exit-coupon">7.50%</span>
+        </div>
+        <input type="range" id="input-exit-coupon" min="4.0" max="12.0" step="0.25" value="7.50" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Annual cash coupon paid semi-annually on new exit notes</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Required Market Exit Yield</span>
+          <span class="slider-val" id="val-exit-yield">9.75%</span>
+        </div>
+        <input type="range" id="input-exit-yield" min="7.0" max="15.0" step="0.25" value="9.75" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Market-clearing yield for post-reorg B+/BB- cyclical paper</div>
+      </div>
+    </div>
+
+    <!-- Exit Yield Key Valuation Metric Cards -->
+    <div class="meter-grid" style="margin-top:12px;">
+      <div class="meter-card">
+        <div class="meter-title">Trading Price of New Notes</div>
+        <div class="meter-val" id="meter-exit-bond-px" style="color:#fbbf24;">87.7c</div>
+        <div class="meter-sub" id="meter-exit-bond-discount" style="color:var(--accent-rose);">-12.3% Below Par Face Value</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-title">True Senior Economic Recovery</div>
+        <div class="meter-val" id="meter-exit-economic-rec" style="color:var(--accent-emerald);">62.0c</div>
+        <div class="meter-sub" id="meter-exit-nominal-rec" style="color:#94a3b8;">vs 66.3c Nominal Plan Coverage</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-title">Implied Reorg Spread over UST</div>
+        <div class="meter-val" id="meter-exit-spread" style="color:#38bdf8;">+600 bps</div>
+        <div class="meter-sub">Over 8Y US Treasury Yield (3.75%)</div>
+      </div>
+    </div>
+
+    <!-- Interactive Exit Yield Sensitivity Table -->
+    <div style="margin-top:14px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+        <span>Exit Yield Sensitivity Matrix: Post-Emergence Trading Value</span>
+        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Coupon: <span id="matrix-coupon-label">7.50%</span> | Tenor: <span id="matrix-tenor-label">8Y</span></span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Exit Yield (Y_exit)</th>
+              <th style="text-align:right;">Implied Spread</th>
+              <th style="text-align:right;">Trading Px of New Debt</th>
+              <th style="text-align:right;">Debt Value (35c Face)</th>
+              <th style="text-align:right;">Reorg Equity Value</th>
+              <th style="text-align:right;">True Economic Recovery</th>
+              <th style="text-align:right;">Variance vs Nominal</th>
+              <th style="text-align:center;">Desk Action</th>
+            </tr>
+          </thead>
+          <tbody id="exit-yield-matrix-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📐</span> 7. Scenario Anatomy: What Gets You Bear, Base &amp; Bull?
+      </span>
+      <span class="sub">Structural Triggers, Multiple Calibration, Operational Cash Flow &amp; Legal Pathways</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-top:8px;">
+      
+      <!-- BEAR CARD -->
+      <div style="background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-rose); letter-spacing:0.5px; text-transform:uppercase;">🔴 Bear / Distressed Floor</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-rose); background:rgba(244,63,94,0.15); padding:2px 6px; border-radius:4px;">17.0c – 22.0c Senior</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $800.0M (Global resin spreads crushed at $150/t by China supply dumping).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 3.5x EV multiple (Distressed fire-sale / liquidation valuation = $2,800M EV).</div>
+          <div style="margin-bottom:4px;"><strong>• Maceió Liabilities:</strong> -$850.0M (Dutch class action expands liabilities; un-capped cross-border claim).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Support:</strong> $0.0M (Petrobras refuses to inject equity; Novonor insolvent).</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Hostile in-court Judicial Recovery (RJ) with 24 months of litigation and -$150M legal bleed.</div>
+          <div><strong>• Final Verdict:</strong> $1.55B available for $9.2B senior unsecured claims (17c–22c). <strong>Subordinated 2081 Hybrid completely wiped out (0c).</strong></div>
+        </div>
+      </div>
+
+      <!-- BASE CARD -->
+      <div style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-gold); letter-spacing:0.5px; text-transform:uppercase;">🟡 Base Case Reorg</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:4px;">61.8c – 66.3c Senior</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $1,400.0M (Normalized mid-cycle spreads $350–$400/t; Brazilian domestic demand stable).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 5.0x EV multiple ($7,000M EV; sole Brazilian cracker with 70% share).</div>
+          <div style="margin-bottom:4px;"><strong>• Maceió Liabilities:</strong> -$600.0M (Scheduled settlement provisions capped).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Support:</strong> R$2.35B raw-material credit line from Petrobras bridging near-term liquidity.</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Consensual Extrajudicial Plan approved (50%+1) with 35% haircut + 30% equitization (3.2x net leverage).</div>
+          <div><strong>• Final Verdict:</strong> Senior creditors receive ~35c new 8Y 7.5% notes + ~30c reorg equity. <strong>2081 Hybrid receives nominal 10c–14c warrants.</strong></div>
+        </div>
+      </div>
+
+      <!-- BULL CARD -->
+      <div style="background:rgba(56, 189, 248, 0.05); border:1px solid rgba(56, 189, 248, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-cyan); letter-spacing:0.5px; text-transform:uppercase;">🟢 Bull / Strategic Buyout</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:#38bdf8; background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:4px;">95.0c – 100.0c Par</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $1,800.0M–$2,150.0M (Petrochemical super-cycle spike; PE cash spreads &gt;$600/t).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 5.5x–6.0x multiple expansion ($9,900M–$12,900M EV).</div>
+          <div style="margin-bottom:4px;"><strong>• Maceió Liabilities:</strong> -$500.0M (Final federal judicial release and liability cap).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Support:</strong> Petrobras / ADNOC consortium buys out Novonor, injecting $2,500M in cash equity.</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Out-of-court recapitalization; 0% principal haircut; notes extended with coupon step-up.</div>
+          <div><strong>• Final Verdict:</strong> Full 100c par reinstatement + coupon carry for senior notes. <strong>2081 Hybrid recovered at 40c–55c.</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
   <script>
     // Asset SOTP Baseline Definitions
     const ASSETS = [
@@ -1318,6 +1468,93 @@
           </tr>
         `;
       }).join('');
+
+      // 8. Render Card 6: Exit Yield Discounting & Sensitivity Matrix
+      const exitTenor = parseFloat(document.getElementById("input-exit-tenor")?.value || 8);
+      const exitCoupon = parseFloat(document.getElementById("input-exit-coupon")?.value || 7.5);
+      const exitYield = parseFloat(document.getElementById("input-exit-yield")?.value || 9.75);
+
+      if (document.getElementById("val-exit-tenor")) document.getElementById("val-exit-tenor").textContent = `${exitTenor} Years`;
+      if (document.getElementById("val-exit-coupon")) document.getElementById("val-exit-coupon").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${exitYield.toFixed(2)}%`;
+
+      const newDebtTradingPx = calcBondPrice(exitCoupon, exitYield, exitTenor);
+      const parDiscountPct = ((newDebtTradingPx - 100.0) / 100.0) * 100.0;
+      const ustBenchmark = 3.75;
+      const impliedSpreadBps = Math.round((exitYield - ustBenchmark) * 100);
+
+      // Debt vs Equity allocation per $1.00 of pre-petition claim
+      const seniorHaircutVal = seniorHaircutPct * 100.0;
+      const debtEquityVal = debtToEquityPct * 100.0;
+      const debtAllocationFace = Math.max(0, 100.0 - seniorHaircutVal - debtEquityVal);
+      const equityAllocationVal = debtEquityVal;
+      const discountedDebtVal = (debtAllocationFace * newDebtTradingPx) / 100.0;
+      const trueEconomicRecoveryCents = discountedDebtVal + equityAllocationVal;
+
+      if (document.getElementById("meter-exit-bond-px")) document.getElementById("meter-exit-bond-px").textContent = `${newDebtTradingPx.toFixed(1)}c`;
+      if (document.getElementById("meter-exit-bond-discount")) {
+        document.getElementById("meter-exit-bond-discount").textContent = `${parDiscountPct >= 0 ? '+' : ''}${parDiscountPct.toFixed(1)}% ${parDiscountPct >= 0 ? 'Premium to Par' : 'Below Par Face Value'}`;
+        document.getElementById("meter-exit-bond-discount").style.color = parDiscountPct >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)';
+      }
+      if (document.getElementById("meter-exit-economic-rec")) document.getElementById("meter-exit-economic-rec").textContent = `${trueEconomicRecoveryCents.toFixed(1)}c`;
+      if (document.getElementById("meter-exit-nominal-rec")) document.getElementById("meter-exit-nominal-rec").textContent = `vs ${rawSeniorRecoveryCents.toFixed(1)}c Nominal Plan Coverage`;
+      if (document.getElementById("meter-exit-spread")) document.getElementById("meter-exit-spread").textContent = `+${impliedSpreadBps} bps`;
+
+      if (document.getElementById("matrix-coupon-label")) document.getElementById("matrix-coupon-label").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("matrix-tenor-label")) document.getElementById("matrix-tenor-label").textContent = `${exitTenor}Y`;
+
+      const matrixTbody = document.getElementById("exit-yield-matrix-tbody");
+      if (matrixTbody) {
+        const exitYieldSteps = [
+          { label: "-1.25% (Tight/Bull)", y: exitYield - 1.25 },
+          { label: "-0.50% (Base Tight)", y: exitYield - 0.50 },
+          { label: "Selected Yield (Desk Base)", y: exitYield, isSelected: true },
+          { label: "+0.75% (Stress Exit)", y: exitYield + 0.75 },
+          { label: "+1.50% (Distressed Exit)", y: exitYield + 1.50 }
+        ];
+
+        matrixTbody.innerHTML = exitYieldSteps.map(step => {
+          const yVal = Math.max(1.0, step.y);
+          const px = calcBondPrice(exitCoupon, yVal, exitTenor);
+          const debtVal = (debtAllocationFace * px) / 100.0;
+          const econRec = debtVal + equityAllocationVal;
+          const varNominal = econRec - rawSeniorRecoveryCents;
+          const sprd = Math.round((yVal - ustBenchmark) * 100);
+
+          let action = "";
+          if (econRec > 63) {
+            action = '<span style="color:var(--accent-emerald); font-weight:700;">STRONG BUY</span>';
+          } else if (econRec >= 58) {
+            action = '<span style="color:var(--accent-amber); font-weight:700;">HOLD / FAIR</span>';
+          } else {
+            action = '<span style="color:var(--accent-rose); font-weight:700;">UNDERWEIGHT</span>';
+          }
+
+          const rowBg = step.isSelected ? 'background:rgba(56,189,248,0.1); font-weight:700;' : '';
+          return `
+            <tr style="${rowBg}">
+              <td style="font-weight:600; color:${step.isSelected ? '#38bdf8' : '#fff'};">${yVal.toFixed(2)}% <span style="font-size:10px; color:#94a3b8;">(${step.label})</span></td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#cbd5e1;">+${sprd} bps</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">${px.toFixed(1)}c</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#93c5fd;">${debtVal.toFixed(1)}c</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#c084fc;">${equityAllocationVal.toFixed(1)}c</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">${econRec.toFixed(1)}c</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:${varNominal >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${varNominal >= 0 ? '+' : ''}${varNominal.toFixed(1)}c</td>
+              <td style="text-align:center; font-size:10px;">${action}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+    }
+
+    function calcBondPrice(couponPct, exitYieldPct, tenorYears) {
+      const n = tenorYears * 2;
+      const c = couponPct / 2.0;
+      const r = (exitYieldPct / 100.0) / 2.0;
+      if (r <= 0) return 100.0;
+      const pvCoupons = c * (1 - Math.pow(1 + r, -n)) / r;
+      const pvPar = 100.0 * Math.pow(1 + r, -n);
+      return pvCoupons + pvPar;
     }
 
     // Initialize on page load

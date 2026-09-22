@@ -783,6 +783,152 @@
     </div>
   </div>
 
+  <!-- CARD 6: Exit Yield Discounting & 2026 Extension Pricing Engine -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>🎯</span> 6. Exit Yield Discounting &amp; 2026 Maturity Extension Engine
+      </span>
+      <span class="sub">Market-Clearing Yield for Post-Extension Turkish Utility Paper &bull; Duration &amp; Coupon Parity</span>
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Maturity Extension Tenor</span>
+          <span class="slider-val" id="val-exit-tenor">4 Years</span>
+        </div>
+        <input type="range" id="input-exit-tenor" min="2" max="7" step="1" value="4" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Maturity horizon for new 2030 Eurobonds</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Extended Cash Coupon</span>
+          <span class="slider-val" id="val-exit-coupon">9.50%</span>
+        </div>
+        <input type="range" id="input-exit-coupon" min="7.0" max="13.0" step="0.25" value="9.50" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Reinstated coupon (+50 bps step-up over 9.00% legacy)</div>
+      </div>
+
+      <div class="slider-box">
+        <div class="slider-header">
+          <span class="slider-label">Required Market Exit Yield</span>
+          <span class="slider-val" id="val-exit-yield">11.00%</span>
+        </div>
+        <input type="range" id="input-exit-yield" min="8.0" max="15.0" step="0.25" value="11.00" oninput="recalcEngine()">
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Market-clearing yield (Turkey 4Y Eurobond 6.75% + 425 bps spread)</div>
+      </div>
+    </div>
+
+    <!-- Exit Yield Key Valuation Metric Cards -->
+    <div class="meter-grid" style="margin-top:12px;">
+      <div class="meter-card">
+        <div class="meter-title">Trading Px of Extended 4Y Note</div>
+        <div class="meter-val" id="meter-exit-bond-px" style="color:#fbbf24;">95.3c</div>
+        <div class="meter-sub" id="meter-exit-bond-discount" style="color:var(--accent-amber);">-4.7% Discount to Par (Matches Mkt: 94.5c)</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-title">Senior Economic Recovery</div>
+        <div class="meter-val" id="meter-exit-economic-rec" style="color:var(--accent-emerald);">95.3c</div>
+        <div class="meter-sub" id="meter-exit-nominal-rec" style="color:#94a3b8;">vs 100.0c Nominal Asset Coverage</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-title">Implied Corporate Spread</div>
+        <div class="meter-val" id="meter-exit-spread" style="color:#38bdf8;">+425 bps</div>
+        <div class="meter-sub">Over Turkish Sovereign 4Y Curve (6.75%)</div>
+      </div>
+    </div>
+
+    <!-- Interactive Exit Yield Sensitivity Table -->
+    <div style="margin-top:14px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+        <span>Exit Yield Sensitivity Matrix: Post-Extension Trading Value</span>
+        <span style="font-size:10px; color:var(--text-muted); text-transform:none;">Coupon: <span id="matrix-coupon-label">9.50%</span> | Tenor: <span id="matrix-tenor-label">4Y</span></span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="waterfall-table" id="exit-yield-matrix-table" style="min-width:650px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Exit Yield (Y_exit)</th>
+              <th style="text-align:right;">Implied Spread</th>
+              <th style="text-align:right;">Extended Note Px</th>
+              <th style="text-align:right;">Senior Economic Recovery</th>
+              <th style="text-align:right;">Variance vs Nominal</th>
+              <th style="text-align:center;">Desk Action</th>
+            </tr>
+          </thead>
+          <tbody id="exit-yield-matrix-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: Scenario Anatomy & Nested Structural Diagram -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📐</span> 7. Scenario Anatomy: What Gets You Bear, Base &amp; Bull?
+      </span>
+      <span class="sub">Hydrology Triggers, RAB Indexing, Project Finance Subordination &amp; IPO Catalysts</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-top:8px;">
+      
+      <!-- BEAR CARD -->
+      <div style="background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-rose); letter-spacing:0.5px; text-transform:uppercase;">🔴 Bear / Drought Squeeze</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-rose); background:rgba(244,63,94,0.15); padding:2px 6px; border-radius:4px;">24.0c – 58.0c Senior</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $240.0M (Severe drought slashes hydro output by -35%; geothermal steam pressures drop).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 5.0x EV multiple (Distressed valuation = $1,200M EV).</div>
+          <div style="margin-bottom:4px;"><strong>• Structural Subordination:</strong> $1,200M OpCo project loans (EBRD + OEDAŞ TLREF) ring-fenced and consume all cash flow.</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Support:</strong> $0.0M (Zorlu Holding liquidity depleted; banks freeze credit).</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Bank syndicate impasse; forced debt standstill.</div>
+          <div><strong>• Final Verdict:</strong> Only $140M left for $582M HoldCo claims (24.0c fundamental / 58c secondary floor). <strong>Equity wiped out.</strong></div>
+        </div>
+      </div>
+
+      <!-- BASE CARD -->
+      <div style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-gold); letter-spacing:0.5px; text-transform:uppercase;">🟡 Base Case Refinancing</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:4px;">95.3c Mkt / 100.0c Par</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $350.0M (Geothermal &gt;90% CF earning statutory USD YEKDEM $105–$132/MWh; OEDAŞ 12.3% ROE).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 6.0x EV multiple ($2,100M EV + $240M Cash = $2,340M total distributable value).</div>
+          <div style="margin-bottom:4px;"><strong>• OpCo Debt Ring-Fenced:</strong> $1,200M priority secured project loans serviced normally from plant revenues.</div>
+          <div style="margin-bottom:4px;"><strong>• Refinancing Pathway:</strong> Consensual 4-year Amend-and-Extend to June 2030 at 9.50% coupon (+50 bps step-up).</div>
+          <div><strong>• Final Verdict:</strong> $1,110M net value for $582M senior claims (<strong>190.6% asset coverage / 100c Par</strong>). <strong>At 11% exit yield, trades at 95.3c today.</strong></div>
+        </div>
+      </div>
+
+      <!-- BULL CARD -->
+      <div style="background:rgba(56, 189, 248, 0.05); border:1px solid rgba(56, 189, 248, 0.3); border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-cyan); letter-spacing:0.5px; text-transform:uppercase;">🟢 Bull / Renewable IPO Call</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:#38bdf8; background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:4px;">102.5c Par Call / Tender</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $410.0M (Peak hydrology; industrial electricity demand pushes spot PTF; ZES profitable).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 7.3x peer multiple ($3,000M EV, matching Turkish pure-play renewable comps).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Catalyst:</strong> Zorlu Yenilenebilir minority IPO raises +$250M cash or stake sale to Gulf strategic.</div>
+          <div style="margin-bottom:4px;"><strong>• Capital Action:</strong> Cash tender or early make-whole call at 102.5c takes out June 2026 Eurobonds at premium.</div>
+          <div><strong>• Final Verdict:</strong> Full par redemption + carry. <strong>$1,747.6M residual equity value preserved for Zorlu Holding.</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
   <script>
     // Asset SOTP Baseline Definitions for Zorlu Enerji
     const ASSETS = [
@@ -1251,6 +1397,85 @@
           </tr>
         `;
       }).join('');
+
+      // 8. Render Card 6: Exit Yield Discounting & Sensitivity Matrix
+      const exitTenor = parseFloat(document.getElementById("input-exit-tenor")?.value || 4);
+      const exitCoupon = parseFloat(document.getElementById("input-exit-coupon")?.value || 9.50);
+      const exitYield = parseFloat(document.getElementById("input-exit-yield")?.value || 11.00);
+
+      if (document.getElementById("val-exit-tenor")) document.getElementById("val-exit-tenor").textContent = `${exitTenor} Years`;
+      if (document.getElementById("val-exit-coupon")) document.getElementById("val-exit-coupon").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("val-exit-yield")) document.getElementById("val-exit-yield").textContent = `${exitYield.toFixed(2)}%`;
+
+      const newDebtTradingPx = calcBondPrice(exitCoupon, exitYield, exitTenor);
+      const parDiscountPct = ((newDebtTradingPx - 100.0) / 100.0) * 100.0;
+      const turkeyBenchmark = 6.75; // Turkey 4Y USD Eurobond sovereign yield
+      const impliedSpreadBps = Math.round((exitYield - turkeyBenchmark) * 100);
+
+      // Senior economic recovery = rawSeniorRecoveryPct * trading price of extended debt
+      const trueEconomicRecoveryCents = rawSeniorRecoveryPct * newDebtTradingPx;
+
+      if (document.getElementById("meter-exit-bond-px")) document.getElementById("meter-exit-bond-px").textContent = `${newDebtTradingPx.toFixed(1)}c`;
+      if (document.getElementById("meter-exit-bond-discount")) {
+        document.getElementById("meter-exit-bond-discount").textContent = `${parDiscountPct >= 0 ? '+' : ''}${parDiscountPct.toFixed(1)}% ${parDiscountPct >= 0 ? 'Premium to Par' : 'Discount to Par (Matches Mkt: 94.5c)'}`;
+        document.getElementById("meter-exit-bond-discount").style.color = parDiscountPct >= 0 ? 'var(--accent-emerald)' : 'var(--accent-amber)';
+      }
+      if (document.getElementById("meter-exit-economic-rec")) document.getElementById("meter-exit-economic-rec").textContent = `${trueEconomicRecoveryCents.toFixed(1)}c`;
+      if (document.getElementById("meter-exit-nominal-rec")) document.getElementById("meter-exit-nominal-rec").textContent = `vs ${rawSeniorRecoveryCents.toFixed(1)}c Nominal Asset Coverage`;
+      if (document.getElementById("meter-exit-spread")) document.getElementById("meter-exit-spread").textContent = `+${impliedSpreadBps} bps`;
+
+      if (document.getElementById("matrix-coupon-label")) document.getElementById("matrix-coupon-label").textContent = `${exitCoupon.toFixed(2)}%`;
+      if (document.getElementById("matrix-tenor-label")) document.getElementById("matrix-tenor-label").textContent = `${exitTenor}Y`;
+
+      const matrixTbody = document.getElementById("exit-yield-matrix-tbody");
+      if (matrixTbody) {
+        const exitYieldSteps = [
+          { label: "At Coupon Rate", y: exitCoupon },
+          { label: "Tight Spread (-1.00%)", y: exitYield - 1.00 },
+          { label: "Desk Base Case", y: exitYield, isSelected: true },
+          { label: "Stress Refi (+0.75%)", y: exitYield + 0.75 },
+          { label: "Bank Friction (+1.50%)", y: exitYield + 1.50 }
+        ];
+
+        matrixTbody.innerHTML = exitYieldSteps.map(step => {
+          const yVal = Math.max(1.0, step.y);
+          const px = calcBondPrice(exitCoupon, yVal, exitTenor);
+          const econRec = rawSeniorRecoveryPct * px;
+          const varNominal = econRec - rawSeniorRecoveryCents;
+          const sprd = Math.round((yVal - turkeyBenchmark) * 100);
+
+          let action = "";
+          if (px >= 95.0) {
+            action = '<span style="color:var(--accent-emerald); font-weight:700;">ACCUMULATE / BUY</span>';
+          } else if (px >= 92.0) {
+            action = '<span style="color:var(--accent-amber); font-weight:700;">HOLD / PAR ROLL</span>';
+          } else {
+            action = '<span style="color:var(--accent-rose); font-weight:700;">DEFENSIVE</span>';
+          }
+
+          const rowBg = step.isSelected ? 'background:rgba(56,189,248,0.1); font-weight:700;' : '';
+          return `
+            <tr style="${rowBg}">
+              <td style="font-weight:600; color:${step.isSelected ? '#38bdf8' : '#fff'};">${yVal.toFixed(2)}% <span style="font-size:10px; color:#94a3b8;">(${step.label})</span></td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#cbd5e1;">+${sprd} bps</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">${px.toFixed(1)}c</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">${econRec.toFixed(1)}c</td>
+              <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:${varNominal >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${varNominal >= 0 ? '+' : ''}${varNominal.toFixed(1)}c</td>
+              <td style="text-align:center; font-size:10px;">${action}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+    }
+
+    function calcBondPrice(couponPct, exitYieldPct, tenorYears) {
+      const n = tenorYears * 2;
+      const c = couponPct / 2.0;
+      const r = (exitYieldPct / 100.0) / 2.0;
+      if (r <= 0) return 100.0;
+      const pvCoupons = c * (1 - Math.pow(1 + r, -n)) / r;
+      const pvPar = 100.0 * Math.pow(1 + r, -n);
+      return pvCoupons + pvPar;
     }
 
     // Initialize on page load

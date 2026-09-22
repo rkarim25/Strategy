@@ -1117,6 +1117,147 @@
     </div>
   </div>
 
+  <!-- SECTION 4: Exit Yield Discounting & Extension Pricing Matrix -->
+  <div class="content-card" style="margin-top:14px;">
+    <div class="section-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📉</span> 4. Exit Yield Sensitivity Matrix: 2026 Extension Paper Valuation
+      </span>
+      <span class="sub">Why ZOREN 2026 Eurobonds Trade at 94.5c Today Despite 190.6% Fundamental Asset Coverage</span>
+    </div>
+
+    <div style="font-size:11.5px; color:#cbd5e1; line-height:1.5; margin-bottom:12px;">
+      In an Amend-and-Extend (A&E) agreement ahead of June 2026, ZOREN notes ($300M) are extended by 4 years to 2030 with a <strong>9.50% cash coupon</strong> (+50 bps step-up). 
+      The market is not pricing an asset deficit; rather, the secondary quote of <strong>94.5c</strong> is the exact present value of an extended note discounted at an <strong>11.00% market Exit Yield</strong> (Turkey sovereign 4Y curve 6.75% + 425 bps corporate spread):
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="data-table" style="min-width:700px;">
+        <thead>
+          <tr>
+            <th style="text-align:left;">Exit Yield ($Y_{\text{exit}}$)</th>
+            <th style="text-align:right;">Implied Spread (bps)</th>
+            <th style="text-align:right;">Extended 4Y Note Px</th>
+            <th style="text-align:right;">Senior Economic Recovery</th>
+            <th style="text-align:right;">Variance vs Nominal</th>
+            <th style="text-align:center;">Desk Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700; color:#38bdf8;">9.50% (At Coupon)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+275 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">100.0c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">100.0c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald);">0.0c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">PAR ROLLOVER</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:#fff;">10.00% (Tight Spread)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+325 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">98.4c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">98.4c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-amber);">-1.6c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">BUY</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:#fff;">10.50% (Primary Concession)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+375 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">96.8c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">96.8c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-amber);">-3.2c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">ACCUMULATE</span></td>
+          </tr>
+          <tr style="background:rgba(56,189,248,0.1); font-weight:700;">
+            <td style="color:var(--accent-cyan);">11.00% (Desk Base Case)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+425 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">95.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-emerald); font-weight:800;">95.3c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-amber);">-4.7c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-emerald); font-weight:700; font-size:10px;">MATCHES MKT (94.5c)</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:#fff;">11.50% (Stress Refinancing)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+475 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">93.7c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-amber); font-weight:800;">93.7c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-6.3c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-amber); font-weight:700; font-size:10px;">HOLD / FAIR</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; color:var(--accent-rose);">12.00% (Bank Syndicate Friction)</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">+525 bps</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#fbbf24; font-weight:700;">92.2c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose); font-weight:800;">92.2c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:var(--accent-rose);">-7.8c</td>
+            <td style="text-align:center;"><span style="color:var(--accent-rose); font-weight:700; font-size:10px;">DEFENSIVE</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Scenario Anatomy: What Gets You Bear, Base & Bull? (Nested Diagram) -->
+  <div class="content-card" style="margin-top:14px;">
+    <div class="section-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📐</span> 5. Scenario Anatomy: What Gets You Bear, Base &amp; Bull?
+      </span>
+      <span class="sub">Hydrology Triggers, RAB Indexing, Project Finance Subordination &amp; IPO Catalysts</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:12px; margin-top:8px;">
+      
+      <!-- BEAR CARD -->
+      <div style="background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.3); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-rose); letter-spacing:0.5px; text-transform:uppercase;">🔴 Bear / Drought Squeeze</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-rose); background:rgba(244,63,94,0.15); padding:2px 6px; border-radius:4px;">24.0c – 58.0c Senior</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.5;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $240.0M (Severe drought slashes hydro output by -35%; geothermal steam pressures drop).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 5.0x EV multiple (Distressed valuation = $1,200M EV).</div>
+          <div style="margin-bottom:4px;"><strong>• Structural Subordination:</strong> $1,200M OpCo project loans (EBRD + OEDAŞ TLREF) ring-fenced and consume all cash flow.</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Support:</strong> $0.0M (Zorlu Holding liquidity depleted; banks freeze credit).</div>
+          <div style="margin-bottom:4px;"><strong>• Legal Pathway:</strong> Bank syndicate impasse; forced debt standstill.</div>
+          <div><strong>• Final Verdict:</strong> Only $140M left for $582M HoldCo claims (24.0c fundamental / 58c secondary floor). <strong>Equity wiped out.</strong></div>
+        </div>
+      </div>
+
+      <!-- BASE CARD -->
+      <div style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-gold); letter-spacing:0.5px; text-transform:uppercase;">🟡 Base Case Refinancing</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-emerald); background:rgba(16,185,129,0.15); padding:2px 6px; border-radius:4px;">95.3c Mkt / 100.0c Par</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.5;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $350.0M (Geothermal &gt;90% CF earning statutory USD YEKDEM $105–$132/MWh; OEDAŞ 12.3% ROE).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 6.0x EV multiple ($2,100M EV + $240M Cash = $2,340M total distributable value).</div>
+          <div style="margin-bottom:4px;"><strong>• OpCo Debt Ring-Fenced:</strong> $1,200M priority secured project loans serviced normally from plant revenues.</div>
+          <div style="margin-bottom:4px;"><strong>• Refinancing Pathway:</strong> Consensual 4-year Amend-and-Extend to June 2030 at 9.50% coupon (+50 bps step-up).</div>
+          <div><strong>• Final Verdict:</strong> $1,110M net value for $582M senior claims (<strong>190.6% asset coverage / 100c Par</strong>). <strong>At 11% exit yield, trades at 95.3c today.</strong></div>
+        </div>
+      </div>
+
+      <!-- BULL CARD -->
+      <div style="background:rgba(56, 189, 248, 0.05); border:1px solid rgba(56, 189, 248, 0.3); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:800; color:var(--accent-cyan); letter-spacing:0.5px; text-transform:uppercase;">🟢 Bull / Renewable IPO Call</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:#38bdf8; background:rgba(56,189,248,0.15); padding:2px 6px; border-radius:4px;">102.5c Par Call / Tender</span>
+        </div>
+        <div style="font-size:11px; color:#cbd5e1; line-height:1.5;">
+          <div style="margin-bottom:4px;"><strong>• Cash EBITDA:</strong> $410.0M (Peak hydrology; industrial electricity demand pushes spot PTF; ZES profitable).</div>
+          <div style="margin-bottom:4px;"><strong>• Valuation Multiple:</strong> 7.3x peer multiple ($3,000M EV, matching Turkish pure-play renewable comps).</div>
+          <div style="margin-bottom:4px;"><strong>• Sponsor Catalyst:</strong> Zorlu Yenilenebilir minority IPO raises +$250M cash or stake sale to Gulf strategic.</div>
+          <div style="margin-bottom:4px;"><strong>• Capital Action:</strong> Cash tender or early make-whole call at 102.5c takes out June 2026 Eurobonds at premium.</div>
+          <div><strong>• Final Verdict:</strong> Full par redemption + carry. <strong>$1,747.6M residual equity value preserved for Zorlu Holding.</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
   <script>
     // Scenario definitions for Zorlu Enerji
     const SCENARIOS = [
