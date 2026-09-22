@@ -673,6 +673,84 @@
             </div>
             <input type="range" id="input-qual-discount" min="5" max="30" step="5" value="10" oninput="recalcEngine()">
             <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity</div>
+        <!-- Interactive Qualitative Assessment Guide Accordion -->
+        <div style="margin-top:10px; margin-bottom:10px;">
+          <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+            <span>📘 Qualitative Assessment Guide: What do the % Sliders Mean &amp; How Do They Price Risk?</span>
+            <span id="qual-guide-icon">▼ Click to Expand Guide</span>
+          </button>
+          
+          <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
+            <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              1. What Does the "%" Mean in Qualitative Assessment?
+            </div>
+            <p style="margin-bottom:8px;">
+              While Zorlu's fundamental unencumbered asset coverage is robust at <strong>190.6%</strong> ($2,598M EV vs $1,363M net debt), secondary bonds trade at a discount (~94.5c) due to market frictions. 
+              The <strong>Qualitative %</strong> is a <strong>Probability-Weighted Friction Haircut</strong> capturing macro, regulatory, and parent contagion risks that do not appear on individual plant asset sheets:
+            </p>
+            <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
+              <li>
+                <strong style="color:#fff;">Turkish Sovereign Macro / Lira FX Beta % (0%–50%):</strong> Probability and severity that Turkish macroeconomic instability—Lira depreciation, high domestic CBRT interest rates, and regulatory inflation pass-through lag—compresses cash conversion at the regulated distribution grid (OEDAŞ).
+              </li>
+              <li>
+                <strong style="color:#fff;">YEKDEM Tariff Expiry Cliff Risk % (0%–40%):</strong> Probability and earnings impact of high-tariff dollar feed-in guarantees (10.5c–13.3c/kWh) rolling off between 2026 and 2029, exposing geothermal and wind generation assets to volatile Turkish merchant power prices ($60–$75/MWh).
+              </li>
+              <li>
+                <strong style="color:#fff;">Dorad Energy / Geopolitical Tail % (0%–30%):</strong> Valuation and cross-border dividend risk regarding Zorlu's 25% stake in Israel's Dorad power plant. Reflects risks of trapped or delayed dividend repatriation, forced asset divestment, and public boycott friction.
+              </li>
+              <li>
+                <strong style="color:#fff;">Refinancing / Execution Illiquidity % (5%–30%):</strong> Secondary market execution penalty. Reflects the credit spread risk premium international and domestic lenders demand to roll the $530M 2026 Eurobond maturity wall into an extended 2030 facility.
+              </li>
+            </ul>
+
+            <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              2. How the Math Works: The Pricing Band Formula
+            </div>
+            <p style="margin-bottom:6px;">
+              The engine combines these 4 sliders into a weighted <strong>Composite Qualitative Friction Factor (&Phi;)</strong>:
+            </p>
+            <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:8px;">
+              &Phi; = (Macro Beta &times; 0.35) + (YEKDEM Cliff &times; 0.30) + (Dorad Tail &times; 0.20) + (Illiquidity &times; 0.15)
+            </div>
+            <p style="margin-bottom:8px;">
+              This composite friction factor directly scales the pricing bands in the table below:
+            </p>
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; margin-bottom:10px;">
+              <div style="background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3); padding:6px; border-radius:4px;">
+                <strong style="color:var(--accent-rose);">Bear (Floor):</strong><br>
+                max(50c, Raw Recovery &times; 0.65 &times; (1 - &Phi;))
+              </div>
+              <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:6px; border-radius:4px;">
+                <strong style="color:var(--accent-emerald);">Base (Fair):</strong><br>
+                Raw Recovery &times; (1 - &Phi; &times; 0.35)
+              </div>
+              <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:6px; border-radius:4px;">
+                <strong style="color:var(--accent-cyan);">Bull (Upside):</strong><br>
+                min(100c, Raw Recovery &times; 1.15)
+              </div>
+            </div>
+
+            <div style="font-weight:700; color:var(--accent-emerald); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              3. What Gets You Bear, Base, and Bull in Every Scenario?
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
+              <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-rose);">🔴 What Gets You Bear (65c–75c Recovery):</strong>
+                Severe prolonged hydrological drought (hydro output down &gt;40%); EMRA imposes emergency retail tariff caps; Turkish macroeconomic stress spikes CDS &gt;400 bps; EBITDA drops to $190M at 5.0x multiple ($950M EV); asset coverage drops below 100%, forcing a contentious 25% principal haircut.
+              </div>
+              <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-gold);">🟡 What Gets You Base (94c–96c Fair Value):</strong>
+                Normalized hydro and geothermal load factors; $280M EBITDA at 7.0x multiple ($1,960M EV = 143.8% asset coverage); parent Korteks contagion successfully firewalled; consensual 4-year Amend &amp; Extend (A&amp;E) maturity extension to 2030 at a 9.50% coupon. At an 11.0% exit yield, the 2030 paper trades at 95.3c, perfectly validating today's 94.5c secondary price.
+              </div>
+              <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-cyan);">🟢 What Gets You Bull (100c Par Refinancing):</strong>
+                Successful IPO or minority stake sale in Zorlu Yenilenebilir to a Gulf sovereign wealth fund, injecting $400M+ in equity; Turkey sovereign CDS tightens sub-200 bps; EBITDA reaches $350M at 8.0x multiple ($2,800M EV); net debt drops below $900M (&lt;2.6x leverage); notes are refinanced at 100c par.
+              </div>
+            </div>
+            
+            <div style="margin-top:8px; text-align:right;">
+              <a href="zoren_background.html#qualitative-guide" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">→ Read Complete Institutional Qualitative Deep Dive in Background Page</a>
+            </div>
           </div>
         </div>
 
@@ -1476,6 +1554,18 @@
       const pvCoupons = c * (1 - Math.pow(1 + r, -n)) / r;
       const pvPar = 100.0 * Math.pow(1 + r, -n);
       return pvCoupons + pvPar;
+    }
+
+    function toggleQualGuide() {
+      const content = document.getElementById("qual-guide-content");
+      const icon = document.getElementById("qual-guide-icon");
+      if (content.style.display === "none") {
+        content.style.display = "block";
+        icon.textContent = "▲ Click to Collapse Guide";
+      } else {
+        content.style.display = "none";
+        icon.textContent = "▼ Click to Expand Guide";
+      }
     }
 
     // Initialize on page load

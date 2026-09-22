@@ -526,6 +526,7 @@
         <a href="#asset-blueprint" class="nav-btn">🏭 Asset Inputs &amp; Outputs</a>
         <a href="#ev-volatility" class="nav-btn">📊 EV Volatility Framework</a>
         <a href="#pricing-in-engine" class="nav-btn gold">🎯 "What's Priced In?" Engine</a>
+        <a href="#qualitative-guide" class="nav-btn" style="color:var(--accent-purple); border-color:rgba(192,132,252,0.4);">📘 Qualitative % Guide</a>
       </div>
     </div>
 
@@ -1265,6 +1266,192 @@
     </div>
   </div>
 
+  <!-- SECTION 6: Qualitative Risk Assessment Demystified: The Meaning of the % Sliders, Mathematical Friction & Pricing Band Mechanics -->
+  <div class="content-card" id="qualitative-guide" style="margin-top:14px; margin-bottom:16px;">
+    <div class="section-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📘</span> 6. Qualitative Risk Assessment Demystified: Decoding the % Sliders, Mathematical Friction &amp; Pricing Band Mechanics
+      </span>
+      <span class="sub">Why Fundamental EV Waterfalls Overstate Distressed Recoveries Without Probability-Weighted Execution Frictions</span>
+    </div>
+
+    <div style="font-size:11.5px; color:var(--text-muted); line-height:1.55; margin-bottom:14px;">
+      In classical credit analysis, analysts calculate theoretical recovery by multiplying projected EBITDA by an exit multiple and subtracting priority debt:
+      <span style="font-family:'JetBrains Mono',monospace; color:var(--accent-cyan);">(EBITDA &times; Multiple - Priority Debt) / Senior Claims</span>.
+      However, in complex cross-border restructurings like Braskem S.A., <strong>this theoretical number is almost never what trades in the secondary market</strong>.
+      Market clearing prices reflect non-balance-sheet execution frictions: sponsor political motivations, court cramdown thresholds, unreserved litigation tails, and institutional illiquidity.
+      The <strong>Qualitative %</strong> is an explicit <strong>Probability-Weighted Economic Friction Haircut</strong> designed to bridge this gap.
+    </div>
+
+    <!-- The 4 Sliders Deep Dive Table -->
+    <div style="overflow-x:auto; margin-bottom:16px;">
+      <table class="data-table" style="font-size:11px;">
+        <thead>
+          <tr>
+            <th style="width:20%;">Qualitative Risk Dimension</th>
+            <th style="width:12%; text-align:center;">Slider Range</th>
+            <th style="width:10%; text-align:center;">Base Weight</th>
+            <th style="width:30%;">Underlying Economic &amp; Legal Reality Captured</th>
+            <th style="width:28%;">Mathematical &amp; Secondary Pricing Transmission</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Petrobras Sponsor Friction / Reluctance</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Political Governance &amp; Shareholder Deficit</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 60%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">35%</td>
+            <td>
+              Petrobras owns 36.1% of capital (47.0% of voting shares). Governed by state political appointees, Petrobras cannot easily bail out bankrupt controlling shareholder Novonor (38.3%) without facing intense political backlash and Court of Audit (TCU) scrutiny. 
+              A higher % captures the probability that Petrobras refuses an equity check, only providing commercial credit (e.g. the R$2.35B feedstock facility).
+            </td>
+            <td>
+              Forces bondholders to absorb 100% of the balance sheet recapitalization via equity equitization (30%+ share dilution), lowering cash recovery and forcing higher debt cuts to hit the &lt;3.20x leverage target.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Maceió Litigation / Dutch Class Action Tail</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Cross-Border Contingent Liabilities</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 40%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">25%</td>
+            <td>
+              Braskem has provisioned ~R$15.8B for the Alagoas rock-salt subsidence. However, foreign courts (Rotterdam District Court hearing claims on behalf of Maceió victims) and ongoing Brazilian federal prosecutor class actions seek damages exceeding R$25B–R$30B.
+              A higher % captures the risk that settlement caps are breached or foreign enforcement actions freeze export cash flows.
+            </td>
+            <td>
+              Directly increases priority cash deductions ahead of unsecured creditors ($600M–$1,200M NPV deduction), draining unencumbered enterprise value and widening post-reorganization exit yields.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Judicial RJ In-Court Cramdown Risk</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Formal Insolvency Breakdown Friction</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 50%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">25%</td>
+            <td>
+              The ongoing <em>Recuperação Extrajudicial</em> (RE) requires 50%+1 creditor approval by 22 Nov 2026. If holdouts (such as US-issued 2041 bondholders or bank committees) reject terms, the company must file for full in-court <em>Recuperação Judicial</em> (RJ) or US Chapter 11.
+              In RJ, proceedings average 24–36 months with monthly advisor fees of $15M–$20M and court supervision.
+            </td>
+            <td>
+              Applies a severe time-value-of-money discounting penalty, introduces DIP loan super-priority claims ($500M+), and subjects creditors to hostile debtor plan cramdown under Brazilian bankruptcy law.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Distressed Liquidity &amp; Execution Discount</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Market Microstructure &amp; Forced Selling</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">5% – 30%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">15%</td>
+            <td>
+              When corporate credit enters default or CCC territory, investment-grade and benchmark-tracking High Yield funds face strict mandate-driven forced-selling rules. Broker-dealers widen bid/ask spreads to 3–5 points and reduce balance-sheet inventory.
+            </td>
+            <td>
+              Imposes an immediate illiquidity penalty on secondary trading prices, causing paper to trade 5c–12c below theoretical mathematical present value until restructuring confirmation.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mathematical Mechanics: How the Pricing Bands are Generated -->
+    <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:8px; padding:14px; margin-bottom:16px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:8px;">
+        ⚙️ The Mathematical Synthesis: From Qualitative % to Secondary Pricing Bands
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:11px; line-height:1.5;">
+        <div>
+          <p style="color:#cbd5e1; margin-bottom:8px;">
+            The engine aggregates the 4 qualitative sliders into a single <strong>Composite Qualitative Friction Factor (&Phi;)</strong>:
+          </p>
+          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:8px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#38bdf8; margin-bottom:8px;">
+            &Phi; = (Petrobras &times; 0.35) + (Maceió &times; 0.25) + (RJ Risk &times; 0.25) + (Liquidity &times; 0.15)
+          </div>
+          <p style="color:var(--text-muted); font-size:10.5px;">
+            In the Desk Base Case (25% Petrobras, 15% Maceió, 20% RJ, 15% Liquidity), <strong>&Phi; = 19.75%</strong>. 
+            This aggregate friction directly discounts the raw asset waterfall recovery to compute trading price bounds.
+          </p>
+        </div>
+        <div>
+          <p style="color:#cbd5e1; margin-bottom:8px;">
+            The three pricing band columns in the calculator are generated dynamically as follows:
+          </p>
+          <ul style="margin-left:14px; display:flex; flex-direction:column; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
+            <li>
+              <span style="color:var(--accent-rose); font-weight:700;">Bear (Floor):</span> 
+              <span style="color:#e2e8f0;">max(16.0c, Raw Recovery &times; 0.45 &times; (1 - &Phi;))</span>
+            </li>
+            <li>
+              <span style="color:var(--accent-emerald); font-weight:700;">Base (Fair):</span> 
+              <span style="color:#e2e8f0;">Raw Recovery &times; (1 - &Phi; &times; 0.40)</span>
+            </li>
+            <li>
+              <span style="color:var(--accent-cyan); font-weight:700;">Bull (Upside):</span> 
+              <span style="color:#e2e8f0;">min(100.0c, Raw Recovery &times; 1.35)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario Anatomy & Trigger Matrix -->
+    <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+      🎯 Scenario Anatomy: What Concrete Triggers Drive Bear, Base, and Bull?
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+      
+      <!-- Bear Details -->
+      <div style="background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.3); border-radius:6px; padding:12px;">
+        <div style="font-size:11.5px; font-weight:800; color:var(--accent-rose); text-transform:uppercase; margin-bottom:6px;">
+          🔴 What Gets You Bear (17c–22c Recovery)
+        </div>
+        <ul style="font-size:10.5px; color:#cbd5e1; line-height:1.5; margin-left:14px; display:flex; flex-direction:column; gap:4px;">
+          <li><strong>Macro Cycle:</strong> Global PE spreads collapse &lt;$180/t under heavy Chinese capacity dumping; domestic Brazilian sales drop 15%.</li>
+          <li><strong>Operating EBITDA:</strong> Shrinks to $800M (cash burn territory after maintenance capex and debt service).</li>
+          <li><strong>Valuation Multiple:</strong> Compresses to 3.5x EV ($2,800M EV), reflecting distressed liquidation / hostile takeover pricing.</li>
+          <li><strong>Maceió Impact:</strong> Dutch court awards cross-border damages, expanding liabilities to $850M+ NPV.</li>
+          <li><strong>Sponsor Reaction:</strong> Petrobras strictly limits support to commercial terms; Novonor is declared bankrupt.</li>
+          <li><strong>Legal Resolution:</strong> Extrajudicial talks collapse; company files formal in-court RJ. Junior hybrid 2081 is wiped out (0c), senior notes receive &lt;22c.</li>
+        </ul>
+      </div>
+
+      <!-- Base Details -->
+      <div style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.3); border-radius:6px; padding:12px;">
+        <div style="font-size:11.5px; font-weight:800; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px;">
+          🟡 What Gets You Base (62c–66c Recovery)
+        </div>
+        <ul style="font-size:10.5px; color:#cbd5e1; line-height:1.5; margin-left:14px; display:flex; flex-direction:column; gap:4px;">
+          <li><strong>Macro Cycle:</strong> Spreads normalize to mid-cycle $320–$360/t PE; domestic packaging and agricultural demand remains steady.</li>
+          <li><strong>Operating EBITDA:</strong> $1,400M mid-cycle cash generation.</li>
+          <li><strong>Valuation Multiple:</strong> 5.0x blended EV ($7,000M EV), reflecting irreplaceable monopoly position in Brazilian basic petrochemicals.</li>
+          <li><strong>Maceió Impact:</strong> Liabilities contained within provisioned $600M NPV settlement schedule.</li>
+          <li><strong>Sponsor Support:</strong> Petrobras maintains R$2.35B feedstock credit line through 2026.</li>
+          <li><strong>Legal Resolution:</strong> Consensual Extrajudicial Plan approved by 50%+1 of creditors: 35% principal haircut + 30% debt-for-equity swap. Senior notes trade at 87.7c at 9.75% exit yield, delivering 62.0c net economic recovery.</li>
+        </ul>
+      </div>
+
+      <!-- Bull Details -->
+      <div style="background:rgba(56, 189, 248, 0.05); border:1px solid rgba(56, 189, 248, 0.3); border-radius:6px; padding:12px;">
+        <div style="font-size:11.5px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:6px;">
+          🟢 What Gets You Bull (95c–100c Par)
+        </div>
+        <ul style="font-size:10.5px; color:#cbd5e1; line-height:1.5; margin-left:14px; display:flex; flex-direction:column; gap:4px;">
+          <li><strong>Macro Cycle:</strong> Global petrochemical supply chain squeeze; PE spreads surge &gt;$600/t; Brazilian tariff protection enacted.</li>
+          <li><strong>Operating EBITDA:</strong> Rebounds to $2,100M peak cycle run-rate.</li>
+          <li><strong>Valuation Multiple:</strong> Expands to 6.0x EV ($12,600M EV).</li>
+          <li><strong>Maceió Impact:</strong> Comprehensive federal judicial settlement caps all remaining domestic and cross-border liability at $500M.</li>
+          <li><strong>Sponsor Support:</strong> Petrobras / ADNOC consortium buys out Novonor, injecting $2,500M in cash equity to fund growth.</li>
+          <li><strong>Legal Resolution:</strong> Out-of-court recapitalization; 0% principal haircut; existing notes refinanced near par or tendered at 100c.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
 
   <script>
     // Scenario definitions

@@ -702,6 +702,85 @@
             <input type="range" id="input-qual-discount" min="5" max="30" step="5" value="15" oninput="recalcEngine()">
             <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">Secondary market bid/ask illiquidity penalty</div>
           </div>
+        <!-- Interactive Qualitative Assessment Guide Accordion -->
+        <div style="margin-top:10px; margin-bottom:10px;">
+          <button type="button" onclick="toggleQualGuide()" style="width:100%; background:rgba(56,189,248,0.08); border:1px dashed rgba(56,189,248,0.3); border-radius:5px; padding:6px 10px; color:#38bdf8; font-size:10.5px; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+            <span>📘 Qualitative Assessment Guide: What do the % Sliders Mean &amp; How Do They Price Risk?</span>
+            <span id="qual-guide-icon">▼ Click to Expand Guide</span>
+          </button>
+          
+          <div id="qual-guide-content" style="display:none; background:rgba(15,23,42,0.95); border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:12px 14px; margin-top:6px; font-size:11px; line-height:1.5; color:#cbd5e1;">
+            <div style="font-weight:700; color:#38bdf8; margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              1. What Does the "%" Mean in Qualitative Assessment?
+            </div>
+            <p style="margin-bottom:8px;">
+              In distressed credit, a company's recovery is never determined purely by accounting EV minus priority debt. 
+              The <strong>Qualitative %</strong> is a <strong>Probability-Weighted Economic Friction Haircut</strong> that quantifies the real-world execution, legal, and political frictions standing between theoretical asset value and actual cash recovery in secondary bond markets:
+            </p>
+            <ul style="margin-left:16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
+              <li>
+                <strong style="color:#fff;">Petrobras Sponsor Friction % (0%–60%):</strong> Probability and severity that state-owned Petrobras refuses an equity check or backstop for Novonor's insolvent stake without demanding operational concessions or forcing severe creditor dilution. Higher % assumes zero sponsor equity and an adversarial relationship with bondholders.
+              </li>
+              <li>
+                <strong style="color:#fff;">Maceió Litigation / Dutch Class Action Tail % (0%–40%):</strong> Probability that foreign (Rotterdam) or Brazilian federal courts pierce the current R$15B settlement provision and award massive unreserved damages (e.g. Dutch litigation claiming R$25B+), creating an unreserved structural liability overhang.
+              </li>
+              <li>
+                <strong style="color:#fff;">Judicial RJ In-Court Cramdown Risk % (0%–50%):</strong> Probability that the consensual Extrajudicial Plan fails to reach the 50%+1 creditor approval threshold by 22 Nov 2026, plunging Braskem into full in-court <em>Recuperação Judicial</em> (RJ) or US Chapter 11, triggering 24+ months of litigation, $15M/mo advisor fee bleed, and DIP priority claims.
+              </li>
+              <li>
+                <strong style="color:#fff;">Distressed Liquidity &amp; Execution Discount % (5%–30%):</strong> The structural secondary market liquidity penalty. Reflects dealer balance-sheet haircuts, wide bid/ask spreads, and institutional forced-selling mandates (mandates requiring HY/IG funds to dump paper upon CCC/D rating downgrades).
+              </li>
+            </ul>
+
+            <div style="font-weight:700; color:var(--accent-gold); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              2. How the Math Works: The Pricing Band Formula
+            </div>
+            <p style="margin-bottom:6px;">
+              The engine combines these 4 sliders into a weighted <strong>Composite Qualitative Friction Factor (&Phi;)</strong>:
+            </p>
+            <div style="background:#090d16; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#38bdf8; margin-bottom:8px;">
+              &Phi; = (Petrobras &times; 0.35) + (Maceió &times; 0.25) + (RJ Risk &times; 0.25) + (Liquidity &times; 0.15)
+            </div>
+            <p style="margin-bottom:8px;">
+              This composite friction factor directly drives the three pricing band columns in the table below:
+            </p>
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; margin-bottom:10px;">
+              <div style="background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3); padding:6px; border-radius:4px;">
+                <strong style="color:var(--accent-rose);">Bear (Floor):</strong><br>
+                Raw Recovery &times; 0.45 &times; (1 - &Phi;)
+              </div>
+              <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:6px; border-radius:4px;">
+                <strong style="color:var(--accent-emerald);">Base (Fair):</strong><br>
+                Raw Recovery &times; (1 - &Phi; &times; 0.40)
+              </div>
+              <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:6px; border-radius:4px;">
+                <strong style="color:var(--accent-cyan);">Bull (Upside):</strong><br>
+                min(100c, Raw Recovery &times; 1.35)
+              </div>
+            </div>
+
+            <div style="font-weight:700; color:var(--accent-emerald); margin-bottom:6px; text-transform:uppercase; font-size:10.5px;">
+              3. What Gets You Bear, Base, and Bull in Every Scenario?
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px; font-size:10.5px;">
+              <div style="border-left:3px solid var(--accent-rose); background:rgba(244,63,94,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-rose);">🔴 What Gets You Bear (17c–22c Recovery):</strong>
+                Chemical spread collapse (&lt;$180/t PE); $800M EBITDA at 3.5x fire-sale multiple ($2.8B EV); Petrobras blocks liquidity lines and refuses to fund Novonor; Maceió claims expand past R$25B in foreign courts; Extrajudicial talks fail; full in-court RJ liquidation wipes out Subordinated Hybrids (0c) and leaves &lt;20c for Senior notes.
+              </div>
+              <div style="border-left:3px solid var(--accent-gold); background:rgba(245,158,11,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-gold);">🟡 What Gets You Base (62c–66c Recovery):</strong>
+                Normalized mid-cycle spreads ($350/t PE); $1,400M EBITDA at 5.0x multiple ($7.0B EV); Petrobras maintains R$2.35B commercial facility; Maceió liabilities capped at R$15B provisions; consensual Extrajudicial Plan approved (50%+1) with a 35% principal haircut + 30% debt-for-equity swap (3.2x net leverage). Senior paper discounts to 87.7c at 9.75% exit yield for 62c net economic recovery.
+              </div>
+              <div style="border-left:3px solid var(--accent-cyan); background:rgba(56,189,248,0.06); padding:6px 10px; border-radius:0 4px 4px 0;">
+                <strong style="color:var(--accent-cyan);">🟢 What Gets You Bull (95c–100c Par):</strong>
+                Global petrochemical supply squeeze (&gt;$600/t PE spreads); $2,100M EBITDA at 6.0x multiple ($12.6B EV); Petrobras / ADNOC consortium executes full equity buyout of Novonor with $2.5B cash injection; final federal judicial liability cap on Maceió; unimpaired maturity extension or cash par tender offer.
+              </div>
+            </div>
+            
+            <div style="margin-top:8px; text-align:right;">
+              <a href="braskem_background.html#qualitative-guide" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:10px;">→ Read Complete Institutional Qualitative Deep Dive in Background Page</a>
+            </div>
+          </div>
         </div>
 
         <div style="margin-top:10px;">
@@ -1555,6 +1634,18 @@
       const pvCoupons = c * (1 - Math.pow(1 + r, -n)) / r;
       const pvPar = 100.0 * Math.pow(1 + r, -n);
       return pvCoupons + pvPar;
+    }
+
+    function toggleQualGuide() {
+      const content = document.getElementById("qual-guide-content");
+      const icon = document.getElementById("qual-guide-icon");
+      if (content.style.display === "none") {
+        content.style.display = "block";
+        icon.textContent = "▲ Click to Collapse Guide";
+      } else {
+        content.style.display = "none";
+        icon.textContent = "▼ Click to Expand Guide";
+      }
     }
 
     // Initialize on page load

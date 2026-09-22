@@ -521,6 +521,7 @@
         <a href="#asset-blueprint" class="nav-btn">⚡ Asset Inputs &amp; Outputs</a>
         <a href="#ev-volatility" class="nav-btn">📊 EV Volatility Framework</a>
         <a href="#pricing-in-engine" class="nav-btn gold">🎯 "What's Priced In?" Engine</a>
+        <a href="#qualitative-guide" class="nav-btn" style="color:var(--accent-purple); border-color:rgba(192,132,252,0.4);">📘 Qualitative % Guide</a>
       </div>
     </div>
 
@@ -1257,6 +1258,189 @@
     </div>
   </div>
 
+  <!-- SECTION 6: Qualitative Risk Assessment Demystified: The Meaning of the % Sliders, Turkish Macro Beta & Pricing Band Mechanics -->
+  <div class="content-card" id="qualitative-guide" style="margin-top:14px; margin-bottom:16px;">
+    <div class="section-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>📘</span> 6. Qualitative Risk Assessment Demystified: Decoding the % Sliders, Turkish Macro Beta &amp; Pricing Band Mechanics
+      </span>
+      <span class="sub">Why Fundamental Asset Coverage of 190.6% Still Trades at 94.5c in the Secondary Market</span>
+    </div>
+
+    <div style="font-size:11.5px; color:var(--text-muted); line-height:1.55; margin-bottom:14px;">
+      On a pure unencumbered asset liquidation basis, Zorlu Enerji provides <strong>190.6% asset coverage</strong> for its senior unsecured Eurobonds:
+      Enterprise Value ($2,598M) minus Priority Secured Project Debt ($1,235M) leaves $1,363M of net asset value to cover $715M of senior claims. 
+      Under classical asset coverage math, recovery is 100.0c. 
+      Yet, the 2026 notes trade at <strong>~94.5c</strong>. 
+      The explanation lies in <strong>qualitative friction</strong>: Turkish sovereign macro beta, CBRT interest rate pressure, YEKDEM tariff rolloff timing, parent company Korteks contagion, and execution illiquidity.
+      The <strong>Qualitative %</strong> is an explicit <strong>Probability-Weighted Economic Friction Haircut</strong> that reconciles theoretical asset coverage with real secondary market trading prices.
+    </div>
+
+    <!-- The 4 Sliders Deep Dive Table -->
+    <div style="overflow-x:auto; margin-bottom:16px;">
+      <table class="data-table" style="font-size:11px;">
+        <thead>
+          <tr>
+            <th style="width:20%;">Qualitative Risk Dimension</th>
+            <th style="width:12%; text-align:center;">Slider Range</th>
+            <th style="width:10%; text-align:center;">Base Weight</th>
+            <th style="width:30%;">Underlying Economic &amp; Legal Reality Captured</th>
+            <th style="width:28%;">Mathematical &amp; Secondary Pricing Transmission</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Turkish Sovereign Macro / Lira FX Beta</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Macro Inflation, CBRT Rates &amp; FX Pass-Through</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 50%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">35%</td>
+            <td>
+              Zorlu generates substantial revenue through OEDAŞ, its regulated electricity distribution grid. Tariffs are regulated by EMRA and indexed to inflation, but high domestic interest rates (CBRT policy rate ~50%) increase working capital financing costs, and rapid Lira depreciation creates cash conversion lags before tariff adjustments catch up.
+            </td>
+            <td>
+              Compresses short-term dollar EBITDA conversion and raises local-currency commercial bank refinancing rates, widening secondary Eurobond yields.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">YEKDEM Tariff Expiry Cliff Risk</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Transition from Dollar Guarantees to Merchant Spot</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 40%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">30%</td>
+            <td>
+              Zorlu's geothermal and wind fleet historically enjoyed guaranteed USD feed-in tariffs of $105–$133/MWh under the statutory YEKDEM scheme. These contracts roll off progressively between 2026 and 2029, transitioning generation assets to Turkish merchant market pricing (PTF, typically $60–$75/MWh).
+            </td>
+            <td>
+              Directly contracts annual cash generation by $40M–$70M post-2027, reducing sustainable debt capacity and requiring a longer debt amortization runway.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Dorad Energy / Geopolitical Tail</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">Cross-Border Israel Power Asset &amp; Dividend Trap</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">0% – 30%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">20%</td>
+            <td>
+              Zorlu holds a 25% economic interest in Dorad Energy, an 860 MW combined-cycle gas turbine plant in Ashkelon, Israel. Ongoing Middle Eastern geopolitical conflict creates domestic Turkish public scrutiny, risks dividend repatriation delays, and introduces potential forced divestment friction.
+            </td>
+            <td>
+              Strips out $20M–$30M of annual high-margin dividend inflows from HoldCo debt service, increasing reliance on domestic Turkish generation cash sweeps.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color:#fff;">Refinancing / Execution Illiquidity</strong><br>
+              <span style="color:var(--text-dim); font-size:10px;">2026 Maturity Wall &amp; Turkish Banking Syndicate</span>
+            </td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">5% – 30%</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; color:#38bdf8; font-weight:700;">15%</td>
+            <td>
+              The $530M June 2026 Eurobond maturity represents a major concentration wall. While domestic banks (Akbank, Garanti, Isbank) and international lenders (EBRD) maintain strong bilateral support, negotiating a 4-year Amend &amp; Extend (A&amp;E) extension creates dealer inventory risk and secondary illiquidity penalties.
+            </td>
+            <td>
+              Requires an elevated clearing Exit Yield (11.00%–11.50%) on extended paper, explaining why secondary notes trade at 94.5c despite 190.6% asset coverage.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mathematical Mechanics -->
+    <div style="background:var(--bg-card-sub); border:1px solid var(--border-color); border-radius:8px; padding:14px; margin-bottom:16px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:8px;">
+        ⚙️ The Mathematical Synthesis: From Qualitative % to Secondary Pricing Bands
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:11px; line-height:1.5;">
+        <div>
+          <p style="color:#cbd5e1; margin-bottom:8px;">
+            The engine aggregates the 4 qualitative sliders into a single <strong>Composite Qualitative Friction Factor (&Phi;)</strong>:
+          </p>
+          <div style="background:#060913; border:1px solid #1e293b; border-radius:5px; padding:8px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#38bdf8; margin-bottom:8px;">
+            &Phi; = (Macro Beta &times; 0.35) + (YEKDEM Cliff &times; 0.30) + (Dorad Tail &times; 0.20) + (Illiquidity &times; 0.15)
+          </div>
+          <p style="color:var(--text-muted); font-size:10.5px;">
+            In the Desk Base Case (20% Macro, 15% YEKDEM, 10% Dorad, 10% Illiquidity), <strong>&Phi; = 15.00%</strong>. 
+            This friction directly determines the discount on A&amp;E paper and secondary pricing bands.
+          </p>
+        </div>
+        <div>
+          <p style="color:#cbd5e1; margin-bottom:8px;">
+            The pricing bands for Zorlu's senior claims are governed by:
+          </p>
+          <ul style="margin-left:14px; display:flex; flex-direction:column; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
+            <li>
+              <span style="color:var(--accent-rose); font-weight:700;">Bear (Floor):</span> 
+              <span style="color:#e2e8f0;">max(50.0c, Raw Recovery &times; 0.65 &times; (1 - &Phi;))</span>
+            </li>
+            <li>
+              <span style="color:var(--accent-emerald); font-weight:700;">Base (Fair):</span> 
+              <span style="color:#e2e8f0;">Raw Recovery &times; (1 - &Phi; &times; 0.35)</span>
+            </li>
+            <li>
+              <span style="color:var(--accent-cyan); font-weight:700;">Bull (Upside):</span> 
+              <span style="color:#e2e8f0;">min(100.0c, Raw Recovery &times; 1.15)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario Anatomy & Trigger Matrix -->
+    <div style="font-size:11px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+      🎯 Scenario Anatomy: What Concrete Triggers Drive Bear, Base, and Bull?
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+      
+      <!-- Bear Details -->
+      <div style="background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.3); border-radius:6px; padding:12px;">
+        <div style="font-size:11.5px; font-weight:800; color:var(--accent-rose); text-transform:uppercase; margin-bottom:6px;">
+          🔴 What Gets You Bear (65c–75c Recovery)
+        </div>
+        <ul style="font-size:10.5px; color:#cbd5e1; line-height:1.5; margin-left:14px; display:flex; flex-direction:column; gap:4px;">
+          <li><strong>Hydrology &amp; Operations:</strong> Severe multi-year drought cuts hydro generation by &gt;40%; geothermal reinjection pressure drops.</li>
+          <li><strong>Operating EBITDA:</strong> Drops to $190M (barely covering $180M priority project debt service).</li>
+          <li><strong>Valuation Multiple:</strong> Compresses to 5.0x EV ($950M EV), dropping asset coverage below 100%.</li>
+          <li><strong>Regulatory Drag:</strong> EMRA caps retail power prices to suppress consumer inflation, squeezing OEDAŞ margins.</li>
+          <li><strong>Parent Contagion:</strong> Debt restructuring at parent textile affiliate Korteks triggers cross-defaults and bank credit freeze.</li>
+          <li><strong>Restructuring Outcome:</strong> Bank syndicate impasse forces a 25% principal haircut on the 2026 notes, with paper trading down to 65c–70c.</li>
+        </ul>
+      </div>
+
+      <!-- Base Details -->
+      <div style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.3); border-radius:6px; padding:12px;">
+        <div style="font-size:11.5px; font-weight:800; color:var(--accent-gold); text-transform:uppercase; margin-bottom:6px;">
+          🟡 What Gets You Base (94c–96c Fair Value / A&amp;E Rollover)
+        </div>
+        <ul style="font-size:10.5px; color:#cbd5e1; line-height:1.5; margin-left:14px; display:flex; flex-direction:column; gap:4px;">
+          <li><strong>Hydrology &amp; Operations:</strong> Hydro and geothermal generation normalize at historical seasonal run-rates; OEDAŞ achieves full regulated 12.3% ROE.</li>
+          <li><strong>Operating EBITDA:</strong> Solid $280M–$350M annual cash generation.</li>
+          <li><strong>Valuation Multiple:</strong> 6.0x–7.0x blended EV ($1,960M–$2,100M EV = 143.8%–190.6% asset coverage).</li>
+          <li><strong>Parent Firewalled:</strong> Korteks liabilities are ring-fenced; Turkish state and commercial banks support bilateral loan renewals.</li>
+          <li><strong>Restructuring Pathway:</strong> Consensual 4-year Amend &amp; Extend (A&amp;E) maturity rollover to 2030 with a 9.50% coupon (+50 bps step-up).</li>
+          <li><strong>Secondary Valuation:</strong> Discounted at an 11.00% Exit Yield, the extended 2030 paper trades at <strong>95.3c</strong>, perfectly validating the secondary market quote of 94.5c and offering +6.5% to +8.0% total return.</li>
+        </ul>
+      </div>
+
+      <!-- Bull Details -->
+      <div style="background:rgba(56, 189, 248, 0.05); border:1px solid rgba(56, 189, 248, 0.3); border-radius:6px; padding:12px;">
+        <div style="font-size:11.5px; font-weight:800; color:var(--accent-cyan); text-transform:uppercase; margin-bottom:6px;">
+          🟢 What Gets You Bull (100c Par Refinancing / IPO Tender)
+        </div>
+        <ul style="font-size:10.5px; color:#cbd5e1; line-height:1.5; margin-left:14px; display:flex; flex-direction:column; gap:4px;">
+          <li><strong>Renewable Catalyst:</strong> Accelerated minority IPO of Zorlu Yenilenebilir on Borsa Istanbul or strategic stake sale to a Gulf sovereign wealth fund, raising $350M+ in cash.</li>
+          <li><strong>Operating EBITDA:</strong> Expands to $350M–$410M on peak hydrology and industrial spot power demand.</li>
+          <li><strong>Valuation Multiple:</strong> Re-rates to 8.0x pure-play renewable peer multiple ($2,800M EV).</li>
+          <li><strong>Balance Sheet Deleveraging:</strong> Net leverage drops below 2.6x; Turkey sovereign CDS tightens sub-200 bps.</li>
+          <li><strong>Capital Action:</strong> Company executes an early make-whole call or par tender offer, redeeming the June 2026 Eurobonds in cash at <strong>100.0c–102.5c par</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
 
   <script>
     // Scenario definitions for Zorlu Enerji
