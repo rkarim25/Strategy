@@ -731,6 +731,89 @@
 
   </div>
 
+  <!-- CARD 5: Comprehensive Step-by-Step Priority Recovery Waterfall (Full Width) -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">
+      <span style="display:flex; align-items:center; gap:8px;">
+        <span>🌊</span> 5. Step-by-Step Dynamic Priority Recovery Waterfall &amp; Value Available to Bondholders
+      </span>
+      <span class="sub">Absolute Priority Rule (APR) &bull; Dynamic Capital Structure Value Allocation</span>
+    </div>
+
+    <!-- Visual Stacked Capital Structure Allocation Bar -->
+    <div style="margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
+        <span>Enterprise Value Allocation by Priority Tier:</span>
+        <span id="wf-bar-total-label" style="color:#fff; font-family:'JetBrains Mono',monospace;">Total Distributable Value: $7,900M</span>
+      </div>
+      <div style="height:26px; border-radius:6px; overflow:hidden; display:flex; background:#0f172a; border:1px solid #1e293b; box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);" id="wf-stacked-bar">
+        <!-- Filled dynamically -->
+      </div>
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:8px; font-size:10.5px;">
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#f87171; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Priority Claims (PPE/Maceió/Fees): <strong id="wf-legend-priority" style="color:#f87171;">$1,800M (22.8%)</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#34d399; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Senior Unsecured Pool: <strong id="wf-legend-senior" style="color:#34d399;">$6,100M (77.2%)</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#c084fc; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Subordinated 2081 Hybrid: <strong id="wf-legend-hybrid" style="color:#c084fc;">$0M (0.0%)</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="width:10px; height:10px; background:#38bdf8; border-radius:2px; display:inline-block;"></span>
+          <span style="color:#94a3b8;">Existing Equity Residual: <strong id="wf-legend-equity" style="color:#38bdf8;">$0M (0.0%)</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- The 16-Row Step-by-Step Priority Waterfall Table -->
+    <div style="overflow-x:auto;">
+      <table class="band-table" id="dynamic-waterfall-table" style="width:100%; font-size:11px;">
+        <thead>
+          <tr style="background:#0f172a;">
+            <th style="text-align:left; width:4%;">#</th>
+            <th style="text-align:left; width:34%;">Waterfall Step / Capital Tier</th>
+            <th style="text-align:right; width:16%;">Current Scenario ($M)</th>
+            <th style="text-align:right; width:16%;">Implied Recovery / Unit</th>
+            <th style="text-align:left; width:30%;">Governing Mechanics &amp; Legal Priority</th>
+          </tr>
+        </thead>
+        <tbody id="dynamic-waterfall-tbody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tranche Level Allocation Table -->
+    <div style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
+      <div style="font-size:10.5px; font-weight:700; color:var(--accent-gold); text-transform:uppercase; margin-bottom:8px;">
+        Tranche-by-Tranche Claim Allocation &amp; Recovery Dollar Distribution
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="band-table" id="tranche-allocation-table" style="width:100%; font-size:11px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Tranche / Debt Instrument</th>
+              <th style="text-align:left;">Seniority Tier</th>
+              <th style="text-align:right;">Claim Face ($M)</th>
+              <th style="text-align:right;">Market Px</th>
+              <th style="text-align:right;">Allocated Value ($M)</th>
+              <th style="text-align:right;">Clean Recovery Px</th>
+              <th style="text-align:right;">Adjusted Exit Px</th>
+              <th style="text-align:center;">Implied Upside</th>
+            </tr>
+          </thead>
+          <tbody id="tranche-allocation-tbody">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Asset SOTP Baseline Definitions
     const ASSETS = [
@@ -1094,6 +1177,143 @@
             <td style="text-align:right; color:#34d399; font-weight:700;">${baseRecovery.toFixed(1)}c</td>
             <td style="text-align:right; color:#38bdf8; font-weight:700;">${bullRecovery.toFixed(1)}c</td>
             <td style="text-align:center;">${badgeHtml}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // 7. Render Card 5: Step-by-Step Priority Recovery Waterfall & Tranche Allocation
+      const seniorAllocatedValue = Math.min(totalSeniorClaims, netDistributableToSenior);
+      const valueRemainingAfterSenior = Math.max(0, netDistributableToSenior - totalSeniorClaims);
+      
+      // Hybrid gets residual under strict APR, or if consensual plan retains warrants/stub
+      let hybridAllocatedValue = 0;
+      if (valueRemainingAfterSenior > 0) {
+        hybridAllocatedValue = Math.min(hybridClaims, valueRemainingAfterSenior);
+      } else {
+        // Under consensual restructuring, hybrid retains out-of-the-money warrants if senior recovery > 35c
+        const impliedWarrantVal = hybridClaims * (1.0 - hybridHaircutPct);
+        hybridAllocatedValue = rawSeniorRecoveryCents > 35 ? Math.min(180, impliedWarrantVal) : 0;
+      }
+      const equityResidual = Math.max(0, valueRemainingAfterSenior - hybridClaims);
+
+      // Stacked Bar Calculation
+      const safeTotalPot = Math.max(1, totalDistributableAssetValue);
+      const pctPriority = Math.min(100, (totalPriorityDeductions / safeTotalPot) * 100);
+      const pctSenior = Math.min(100 - pctPriority, (seniorAllocatedValue / safeTotalPot) * 100);
+      const pctHybrid = Math.min(Math.max(0, 100 - pctPriority - pctSenior), (hybridAllocatedValue / safeTotalPot) * 100);
+      const pctEquity = Math.max(0, 100 - pctPriority - pctSenior - pctHybrid);
+
+      document.getElementById("wf-bar-total-label").textContent = `Total Distributable Value: $${Math.round(totalDistributableAssetValue).toLocaleString()}M`;
+      
+      const stackedBar = document.getElementById("wf-stacked-bar");
+      stackedBar.innerHTML = `
+        <div style="width:${pctPriority.toFixed(1)}%; background:linear-gradient(90deg, #ef4444, #f87171); display:flex; align-items:center; justify-content:center; color:#fff; font-size:9.5px; font-weight:700; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Priority Claims: $${Math.round(totalPriorityDeductions).toLocaleString()}M (${pctPriority.toFixed(1)}%)">
+          ${pctPriority > 8 ? `Priority: $${Math.round(totalPriorityDeductions)}M (${pctPriority.toFixed(0)}%)` : ''}
+        </div>
+        <div style="width:${pctSenior.toFixed(1)}%; background:linear-gradient(90deg, #059669, #34d399); display:flex; align-items:center; justify-content:center; color:#0f172a; font-size:9.5px; font-weight:800; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Senior Unsecured: $${Math.round(seniorAllocatedValue).toLocaleString()}M (${pctSenior.toFixed(1)}%)">
+          ${pctSenior > 12 ? `Senior Unsecured: $${Math.round(seniorAllocatedValue)}M (${pctSenior.toFixed(0)}%)` : (pctSenior > 5 ? `${pctSenior.toFixed(0)}%` : '')}
+        </div>
+        <div style="width:${pctHybrid.toFixed(1)}%; background:linear-gradient(90deg, #9333ea, #c084fc); display:flex; align-items:center; justify-content:center; color:#fff; font-size:9.5px; font-weight:700; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Subordinated Hybrid: $${Math.round(hybridAllocatedValue).toLocaleString()}M (${pctHybrid.toFixed(1)}%)">
+          ${pctHybrid > 6 ? `Hybrid: $${Math.round(hybridAllocatedValue)}M` : ''}
+        </div>
+        <div style="width:${pctEquity.toFixed(1)}%; background:linear-gradient(90deg, #0284c7, #38bdf8); display:flex; align-items:center; justify-content:center; color:#0f172a; font-size:9.5px; font-weight:800; font-family:'JetBrains Mono',monospace; overflow:hidden; white-space:nowrap;" title="Existing Equity: $${Math.round(equityResidual).toLocaleString()}M (${pctEquity.toFixed(1)}%)">
+          ${pctEquity > 6 ? `Equity: $${Math.round(equityResidual)}M` : ''}
+        </div>
+      `;
+
+      document.getElementById("wf-legend-priority").textContent = `$${Math.round(totalPriorityDeductions).toLocaleString()}M (${pctPriority.toFixed(1)}%)`;
+      document.getElementById("wf-legend-senior").textContent = `$${Math.round(seniorAllocatedValue).toLocaleString()}M (${pctSenior.toFixed(1)}%)`;
+      document.getElementById("wf-legend-hybrid").textContent = `$${Math.round(hybridAllocatedValue).toLocaleString()}M (${pctHybrid.toFixed(1)}%)`;
+      document.getElementById("wf-legend-equity").textContent = `$${Math.round(equityResidual).toLocaleString()}M (${pctEquity.toFixed(1)}%)`;
+
+      // 16-Row Step-by-Step Waterfall
+      const blendedMultiple = totalOperatingEbitda > 0 ? (totalSotpEv / totalOperatingEbitda) : 0;
+      const waterfallRows = [
+        { num: "01", name: "Consolidated Cash EBITDA Baseline", val: `$${totalOperatingEbitda.toFixed(1)}M`, unit: "Run-Rate Cash Flow", desc: "Aggregated across all currently active cracker & chemical complexes", isSub: false },
+        { num: "02", name: "Implied Blended SOTP EV Multiple", val: `${blendedMultiple.toFixed(2)}x`, unit: "EV / EBITDA", desc: "Weighted operational multiple across selected Brazilian & international assets", isSub: false },
+        { num: "03", name: "Enterprise Value (SOTP Valuation)", val: `$${totalSotpEv.toFixed(1)}M`, unit: "EV Baseline", desc: "Total core operating business valuation derived from asset selections", isSub: false },
+        { num: "04", name: "Add: Balance Sheet Unrestricted Cash", val: `+$${balanceSheetCash.toFixed(1)}M`, unit: "Liquid Reserves", desc: "Unrestricted cash and short-term liquid investments at standstill entry", isSub: false },
+        { num: "05", name: "Add: Sponsor Cash Equity Injection", val: `+$${sponsorEquity.toFixed(1)}M`, unit: "Fresh Equity Check", desc: "Committed sponsor cash check from Petrobras / Novonor / IG4 syndicate", isSub: false },
+        { num: "06", name: "TOTAL DISTRIBUTABLE ASSET VALUE", val: `$${totalDistributableAssetValue.toFixed(1)}M`, unit: "100.0% Distributable Pot", desc: "Aggregate gross dollar liquidity pool available across all capital layers", isSub: true, color: "#38bdf8" },
+        { num: "07", name: "Less: Restructuring & Professional Advisory Fees", val: `-$${totalAdvisorDrain.toFixed(1)}M`, unit: `-$15M/mo x ${durationMonths}M`, desc: `Cumulative legal, accounting, investment banking & court fees during standstill`, isSub: false },
+        { num: "08", name: "Less: Priority Senior Secured PPE Bank Loans", val: `-$${priorityBankDebt.toFixed(1)}M`, unit: "100.0% Par Reinstated", desc: "Export Pre-Payment credit facilities fully collateralized by export receivables", isSub: false },
+        { num: "09", name: "Less: Maceió Environmental Settlement NPV", val: `-$${maceioNpv.toFixed(1)}M`, unit: "Alagoas Obligation NPV", desc: "Binding statutory remediation and relocation agreements under Brazilian law", isSub: false },
+        { num: "10", name: "TOTAL PRIORITY CLAIMS DEDUCTED", val: `-$${totalPriorityDeductions.toFixed(1)}M`, unit: `-${pctPriority.toFixed(1)}% of Total Pot`, desc: "Absolute priority claims that must be satisfied in full before bondholders", isSub: true, color: "#f87171" },
+        { num: "11", name: "NET RESIDUAL VALUE AVAILABLE TO SENIOR UNSECURED", val: `$${seniorAllocatedValue.toFixed(1)}M`, unit: `$${Math.min(totalSeniorClaims, seniorAllocatedValue).toFixed(0)}M of $${totalSeniorClaims.toFixed(0)}M`, desc: "Unencumbered asset value legally available to satisfy General Unsecured Creditors", isSub: true, color: "#34d399" },
+        { num: "12", name: "Total Senior Unsecured Claims Pool", val: `$${totalSeniorClaims.toFixed(1)}M`, unit: "Pari Passu Claims", desc: "Aggregate face value of 144A/RegS Eurobonds ($7.8B) and local Debentures ($1.4B)", isSub: false },
+        { num: "13", name: "SENIOR UNSECURED RECOVERY PERCENTAGE (%)", val: `${(rawSeniorRecoveryPct * 100).toFixed(1)}%`, unit: "APR Recovery Ratio", desc: "Exact entitlement under Absolute Priority Rule (Net Available ÷ Total Claims)", isHighlight: true, color: "#34d399" },
+        { num: "14", name: "SENIOR UNSECURED RECOVERY PRICE (CENTS)", val: `${rawSeniorRecoveryCents.toFixed(1)}c`, unit: "Per $1.00 Face Value", desc: "Clean fundamental asset-backed recovery floor (before qualitative friction)", isHighlight: true, color: "#fbbf24" },
+        { num: "15", name: "Value Residual to Subordinated 2081 Hybrid", val: `$${hybridAllocatedValue.toFixed(1)}M`, unit: `${((hybridAllocatedValue / hybridClaims) * 100).toFixed(1)}c per Hybrid`, desc: "Contractually subordinated perpetual notes; recovers only via stub warrants", isSub: true, color: "#c084fc" },
+        { num: "16", name: "Value Residual Remaining for Existing Equity", val: `$${equityResidual.toFixed(1)}M`, unit: `${equityResidual > 0 ? ((equityResidual / safeTotalPot) * 100).toFixed(1) + '% equity pot' : '0.0% (Out-of-Money)'}`, desc: "Novonor & Petrobras common equity residual after satisfying all debt claims", isSub: false }
+      ];
+
+      const tbodyWf = document.getElementById("dynamic-waterfall-tbody");
+      tbodyWf.innerHTML = waterfallRows.map(r => {
+        const isSub = r.isSub;
+        const isHigh = r.isHighlight;
+        let rowBg = 'transparent';
+        let borderTop = '1px solid rgba(255,255,255,0.04)';
+        let fontWeight = isSub || isHigh ? '700' : '400';
+
+        if (isHigh) {
+          rowBg = 'rgba(251,191,36,0.08)';
+          borderTop = '2px solid rgba(251,191,36,0.4)';
+        } else if (isSub) {
+          rowBg = 'rgba(255,255,255,0.03)';
+          borderTop = '1px solid #334155';
+        }
+
+        const textColor = isHigh ? (r.color || '#fbbf24') : (isSub ? (r.color || '#fff') : '#cbd5e1');
+
+        return `
+          <tr style="background:${rowBg}; border-top:${borderTop};">
+            <td style="color:var(--text-muted); font-family:'JetBrains Mono',monospace;">${r.num}</td>
+            <td style="font-weight:${fontWeight}; color:${textColor};">${r.name}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:${fontWeight}; color:${textColor}; font-size:${isHigh ? '13px' : '11px'};">${r.val}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:${isHigh ? '#fbbf24' : '#94a3b8'}; font-weight:${fontWeight};">${r.unit}</td>
+            <td style="color:#94a3b8; font-size:10.5px;">${r.desc}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Tranche Allocation Table
+      const allInstruments = [
+        { name: "Priority PPE Secured Bank Debt", tier: "Senior Secured", claim: 1100.0, marketPx: 100.0, allocVal: 1100.0, cleanPx: 100.0, exitPx: 100.0, isPriority: true },
+        { name: "BRASKM 4.500% 2030 Senior Notes", tier: "Senior Unsecured", claim: 1450.0, marketPx: 48.60, allocVal: 1450.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
+        { name: "BRASKM 7.250% 2033 Senior Notes", tier: "Senior Unsecured", claim: 1200.0, marketPx: 56.30, allocVal: 1200.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
+        { name: "BRASKM 5.875% 2050 Senior Notes", tier: "Senior Unsecured", claim: 1420.0, marketPx: 44.70, allocVal: 1420.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
+        { name: "BRASKM 8.000% 2034 Senior Notes", tier: "Senior Unsecured", claim: 980.0, marketPx: 57.50, allocVal: 980.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
+        { name: "Domestic Brazilian Debentures (CDI)", tier: "Senior Unsecured", claim: 1400.0, marketPx: 52.00, allocVal: 1400.0 * rawSeniorRecoveryPct, cleanPx: rawSeniorRecoveryCents, exitPx: rawSeniorRecoveryCents * (1.0 - (qualitativeFrictionFactor * 0.40)) },
+        { name: "BRASKM 8.50% / 12.00% 2081 Hybrid", tier: "Junior Subordinated", claim: 1000.0, marketPx: 31.80, allocVal: hybridAllocatedValue, cleanPx: (hybridAllocatedValue / 1000.0) * 100.0, exitPx: ((hybridAllocatedValue / 1000.0) * 100.0) * (1.0 - (qualitativeFrictionFactor * 0.70)), isHybrid: true }
+      ];
+
+      const tbodyAlloc = document.getElementById("tranche-allocation-tbody");
+      tbodyAlloc.innerHTML = allInstruments.map(inst => {
+        const upsideDollar = inst.exitPx - inst.marketPx;
+        const upsidePct = inst.marketPx > 0 ? (upsideDollar / inst.marketPx) * 100.0 : 0;
+        const isUp = upsidePct > 0;
+
+        let badge = "";
+        if (inst.isPriority) {
+          badge = '<span style="color:#38bdf8; font-weight:700;">PAR REINSTATED</span>';
+        } else if (upsidePct > 15) {
+          badge = `<span style="color:var(--accent-emerald); font-weight:700;">+${upsidePct.toFixed(1)}% (BUY)</span>`;
+        } else if (upsidePct >= -5) {
+          badge = `<span style="color:var(--accent-amber); font-weight:700;">${upsidePct >= 0 ? '+' : ''}${upsidePct.toFixed(1)}% (HOLD)</span>`;
+        } else {
+          badge = `<span style="color:var(--accent-rose); font-weight:700;">${upsidePct.toFixed(1)}% (SHORT)</span>`;
+        }
+
+        return `
+          <tr>
+            <td style="font-weight:600; color:#fff;">${inst.name}</td>
+            <td style="color:#94a3b8; font-size:10.5px;">${inst.tier}</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace;">$${inst.claim.toFixed(0)}M</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; color:#cbd5e1;">${inst.marketPx.toFixed(1)}c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:${inst.isPriority ? '#38bdf8' : (inst.isHybrid ? '#c084fc' : '#34d399')};">$${inst.allocVal.toFixed(1)}M</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:#fbbf24;">${inst.cleanPx.toFixed(1)}c</td>
+            <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:${isUp ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">${inst.exitPx.toFixed(1)}c</td>
+            <td style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px;">${badge}</td>
           </tr>
         `;
       }).join('');
