@@ -1,20 +1,13 @@
 {
-  "generated_at_utc": "2026-09-23T17:23:18Z",
+  "generated_at_utc": "2026-09-23T23:19:32Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Ryan Specialty Shares Gain 9% in 3 Months: What's Driving the Rally?; Nasdaq reaches record high close, AI stocks rally - reuters.com.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street rally nears record high - The Arkansas Democrat-Gazette. Bearish offsets: Market sees next Fed hike in October, following Barr comments and hot inflation reading.",
   "articles": [
     {
-      "title": "Ryan Specialty Shares Gain 9% in 3 Months: What's Driving the Rally?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ryan-specialty-shares-gain-9-170500502.html?.tsrc=rss",
-      "published": "2026-09-23T17:05:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Nasdaq reaches record high close, AI stocks rally - reuters.com",
-      "source": "reuters.com",
+      "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
+      "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOOUI2bTZ5ZFhnZUozYjg5LXM1WHhuT24xUS0zYmRRZkViWVBreE05ZTNMWFBDSGhHTXUyQ3ZyMWhsUFdxSUlxUXVUUXVHWGRVelg3Z2RuVXo3bndwaXJfRXhEUEFERFNSUVZoaDNERnFxdnhuNkxLdVhnNDRpRGhxYndETzVJdVNnZXJESmpMNmw5QVFQODFGY2w2NzVCcFl0bXBSNjRaTQ?oc=5",
       "published": "2026-09-22T22:25:27Z",
       "tone": "bullish"
@@ -34,10 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Stocks Slump as Wall Street Shifts Risk-Off",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/f5272d73-a59d-3183-95a6-b29eb3c33f44/stocks-slump-as-wall-street.html?.tsrc=rss",
-      "published": "2026-09-23T16:16:40Z",
+      "title": "Market sees next Fed hike in October, following Barr comments and hot inflation reading",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/23/market-sees-next-fed-hike-in-october-following-barr-comments-hot-inflation.html",
+      "published": "2026-09-23T18:12:18Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street\u2019s Nasdaq hits all-time high as AI frenzy gathers pace - Al Jazeera",
+      "source": "Al Jazeera",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPeHpTeHdzUzRDT2hXc052OG13c3p1LXR2QWx2MlJFNF9ZcHNYQTVmNnI5eGZUVXgwd20yUW1CMlBieURxX3RDUkdQOVIyRHQwLWVReHVVZWRGY0kyaGhVdUJ1NnlqNkxBTHlHQjkyeGpnTFlwMlVmekIzNWJGVjAzZzg4XzVjc0JhUHlvR1BuTUx5ZTVfX1NuaU5VTmRrVmN5Snd5RWxvSnlXbnBq0gGyAUFVX3lxTE44TFdKYmIzVjZkam5ELVZnSkJPSEZ0YjVRUDdIUVZfckxDdFl0QVRHWWRpamN6UE04NnpFLXExdlRtZ0s2N0d6a3YzUktXczM0eFd2Q0ctNTJqUkU2LWRIaE15M1lIcUowUENmM3hDd09PdHpHSzdEeXdNWFg0Z1NQWTlSdjNSMUFhZEtDckFScDlFSV9GY0F1UE1xOG42cUpSZGl2Q1Z6YUtuTjBZQlRSV0E?oc=5",
+      "published": "2026-09-23T02:59:46Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 87
       }
     ],
-    "headline_count": 139,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
