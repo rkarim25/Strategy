@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-09-24T17:27:25Z",
+  "generated_at_utc": "2026-09-24T23:40:18Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - reuters.com; Wall Street rally nears record high - The Arkansas Democrat-Gazette. Bearish offsets: Stock futures lower after Wall Street selloff - TradingView.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street rally nears record high - The Arkansas Democrat-Gazette.",
   "articles": [
     {
-      "title": "Nasdaq reaches record high close, AI stocks rally - reuters.com",
-      "source": "reuters.com",
+      "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
+      "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOOUI2bTZ5ZFhnZUozYjg5LXM1WHhuT24xUS0zYmRRZkViWVBreE05ZTNMWFBDSGhHTXUyQ3ZyMWhsUFdxSUlxUXVUUXVHWGRVelg3Z2RuVXo3bndwaXJfRXhEUEFERFNSUVZoaDNERnFxdnhuNkxLdVhnNDRpRGhxYndETzVJdVNnZXJESmpMNmw5QVFQODFGY2w2NzVCcFl0bXBSNjRaTQ?oc=5",
       "published": "2026-09-22T22:25:27Z",
       "tone": "bullish"
@@ -18,13 +18,6 @@
       "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQVEMydXprSjRhVGhjWmtMNktFLWdCNWxlRHU0NlYwWkJQak5XZnZtd0ZMZGpTOG1pdE03YnhOamZHVm4xMnhWdzc4dU5FaGd1V0dtVUdnb2JIWDN1Um1QRFNqQm5mWEFmM09KaGlxNk91SWVhQnR2ZTZXUXZmWXgyWnJ0RC1Vd0NZcERQZQ?oc=5",
       "published": "2026-09-22T07:03:00Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Stock futures lower after Wall Street selloff - TradingView",
-      "source": "TradingView",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQYVgwcEh1SzhocS1TYVdLVVRtMzZKcjJpOUIzSjZKUlVvWnRMSGoxa2k3U1RTR3RsZXI2QjlYel8wN0cxMUh1T0FHSnhXNGtxMTdfbGNZQTh6SkU3QjFYMGlaWWR4ckhkM18xdGM0TGdpd3RWSzBzdzlYRHl5OVJwZVZGWjFXbWNDcVRpZUpSMVJRZi1Kc2thRFZFc2dCY1ZDZnI3a1NrSHM4a2hQ?oc=5",
-      "published": "2026-09-24T08:11:53Z",
-      "tone": "bearish"
     },
     {
       "title": "Asian benchmarks mostly rise after Wall Street's rally - firstcoastnews.com",
@@ -39,6 +32,13 @@
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPeHpTeHdzUzRDT2hXc052OG13c3p1LXR2QWx2MlJFNF9ZcHNYQTVmNnI5eGZUVXgwd20yUW1CMlBieURxX3RDUkdQOVIyRHQwLWVReHVVZWRGY0kyaGhVdUJ1NnlqNkxBTHlHQjkyeGpnTFlwMlVmekIzNWJGVjAzZzg4XzVjc0JhUHlvR1BuTUx5ZTVfX1NuaU5VTmRrVmN5Snd5RWxvSnlXbnBq0gGyAUFVX3lxTE44TFdKYmIzVjZkam5ELVZnSkJPSEZ0YjVRUDdIUVZfckxDdFl0QVRHWWRpamN6UE04NnpFLXExdlRtZ0s2N0d6a3YzUktXczM0eFd2Q0ctNTJqUkU2LWRIaE15M1lIcUowUENmM3hDd09PdHpHSzdEeXdNWFg0Z1NQWTlSdjNSMUFhZEtDckFScDlFSV9GY0F1UE1xOG42cUpSZGl2Q1Z6YUtuTjBZQlRSV0E?oc=5",
       "published": "2026-09-23T02:59:46Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Nasdaq soars to first record close since June as AI stocks rally, led by Meta jump - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOeW5SWEExSFN6eFdkZkJnOHRYUlloaDN1OFVmMnFTM19mSFRDT2FBLTc3UEJZM3RLNGhKTHNzY3lFVlUwWWxMeWtWMy1PNVpqWGhsd0tJNTVMbGNESGcxa1BZb3hjaG1pbGcyWEVTUWNmQmJTN1FORi1sT3BpRjRhOVNpMHA1MXdaOFdVdGtPOTNQYzdmMG52dGFIZGxzWC1RVTdxY2Vmd0Z0TTl3b3RoUzJvZEhvQVphbWtsZkEwUUlYMHcwWGc?oc=5",
+      "published": "2026-09-21T00:14:55Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -72,7 +72,7 @@
         "articles": 86
       }
     ],
-    "headline_count": 135,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
