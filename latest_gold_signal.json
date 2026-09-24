@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-09-24T00:12:45Z",
+  "generated_at_utc": "2026-09-24T12:28:14Z",
   "data_asof": "2026-09-24",
-  "daily_rows": 6541,
-  "quote_price": 4323.7001953125,
+  "daily_rows": 6542,
+  "quote_price": 4304.10009765625,
   "quote_timestamp": "2026-09-24",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1790295165&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1790339293&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-09-24",
-      "close": 4323.7001953125
+      "close": 4304.10009765625
     },
-    "latestSma": 4442.644970703125,
+    "latestSma": 4424.919970703125,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.1870298821630353,
+    "latestDd": -0.1907152194855658,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-09-24",
-      "close": 4323.7001953125
+      "close": 4304.10009765625
     },
-    "latestSma": 4426.164990234375,
+    "latestSma": 4406.924975585937,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.1870298821630353,
+    "latestDd": -0.1907152194855658,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-09-24",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-09-24T00:12:45Z",
+    "last_checked_at_utc": "2026-09-24T12:28:14Z",
     "last_email_sent_on": "2026-09-10",
     "last_transition": {
       "id": "2026-09-09:1->2026-09-10:0",

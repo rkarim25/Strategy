@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-24T00:12:49Z",
+  "generated_at_utc": "2026-09-24T12:28:17Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street rally nears record high - The Arkansas Democrat-Gazette. Bearish offsets: Stock futures are flat after soaring Treasury yields trigger a market sell-off: Live updates; Market sees next Fed hike in October, following Barr comments and hot inflation reading.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street rally nears record high - The Arkansas Democrat-Gazette. Bearish offsets: Stock Market Today: Dow Falls On Rising Treasury Yields; Nvidia Extends Losses (Live Coverage); Stock futures lower after Wall Street selloff (SPX:) - Seeking Alpha.",
   "articles": [
     {
       "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
@@ -20,24 +20,24 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock futures are flat after soaring Treasury yields trigger a market sell-off: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/23/stock-market-today-live-updates.html",
-      "published": "2026-09-23T23:32:13Z",
+      "title": "Stock Market Today: Dow Falls On Rising Treasury Yields; Nvidia Extends Losses (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/a54a90ad-a14d-3ff8-9f09-e455a0eca8cf/stock-market-today%3A-dow-falls.html?.tsrc=rss",
+      "published": "2026-09-24T12:04:36Z",
       "tone": "bearish"
     },
     {
-      "title": "Asian benchmarks mostly rise after Wall Street\u2019s rally - WTOP News",
-      "source": "WTOP News",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPNmpxSE5FemlsZVlkQmxuTEdBejVVYmJlNTI4Nm1BVy11LVQtblNwUlFXcjQ0TjdOcFpZZWx1eXNoVnlTQ2l5Z1FyRzZZbTlJbm01dUVHcEk5VnVpakJLOVR3NHlMS2c1Tm1ndTI5dzRMcEJHX2dSWGFzaGZOY090TDByOTl5cmVOZXpzUjVR?oc=5",
-      "published": "2026-09-22T03:37:35Z",
-      "tone": "bullish"
+      "title": "Stock futures lower after Wall Street selloff (SPX:) - Seeking Alpha",
+      "source": "Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPcFpaa0Z2d3JtTmttRVY1ZHgzQjFCTUp2ckNJSTNlcVJZRDZOMU1TYUZtN3FqQmdFcnF6VzRhQ2lOQTEtZkFCRG5OOG11bmdkOERBRkFCZUtLTkRqa2NfYjdsU2NaVmR1OV8xSDBmT3RCa3QweWowTmRaSWhGeDNlTEZEaF9QSzdQ?oc=5",
+      "published": "2026-09-24T08:11:53Z",
+      "tone": "bearish"
     },
     {
-      "title": "Market sees next Fed hike in October, following Barr comments and hot inflation reading",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/23/market-sees-next-fed-hike-in-october-following-barr-comments-hot-inflation.html",
-      "published": "2026-09-23T18:12:18Z",
+      "title": "Stock futures lower after Wall Street selloff - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQYVgwcEh1SzhocS1TYVdLVVRtMzZKcjJpOUIzSjZKUlVvWnRMSGoxa2k3U1RTR3RsZXI2QjlYel8wN0cxMUh1T0FHSnhXNGtxMTdfbGNZQTh6SkU3QjFYMGlaWWR4ckhkM18xdGM0TGdpd3RWSzBzdzlYRHl5OVJwZVZGWjFXbWNDcVRpZUpSMVJRZi1Kc2thRFZFc2dCY1ZDZnI3a1NrSHM4a2hQ?oc=5",
+      "published": "2026-09-24T08:11:53Z",
       "tone": "bearish"
     }
   ],
