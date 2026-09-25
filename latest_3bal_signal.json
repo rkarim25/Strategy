@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-09-25T17:28:26Z",
-  "data_asof": "2026-09-25",
+  "generated_at_utc": "2026-09-25T23:41:12Z",
+  "data_asof": "2026-09-24",
   "daily_rows": 2968,
-  "quote_price": 8266.0,
-  "quote_timestamp": "2026-09-25",
+  "quote_price": 7953.0,
+  "quote_timestamp": "2026-09-24",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L?period1=0&period2=1790443706&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/3BAL.L?period1=0&period2=1790466072&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -25,13 +25,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-09-25",
-      "close": 8266.0
+      "date": "2026-09-24",
+      "close": 7953.0
     },
-    "latestSma": 8376.325,
+    "latestSma": 8360.675,
     "highWater": 13014.4912109375,
     "highWaterDate": "2015-04-13",
-    "latestDd": -0.3648618400807573,
+    "latestDd": -0.3889119542901359,
     "regime": "sma20",
     "entryClose": null,
     "entryDate": null,
@@ -47,13 +47,13 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-09-25",
-      "close": 8266.0
+      "date": "2026-09-24",
+      "close": 7953.0
     },
-    "latestSma": 8388.975,
+    "latestSma": 8357.675,
     "highWater": 13014.4912109375,
     "highWaterDate": "2015-04-13",
-    "latestDd": -0.3648618400807573,
+    "latestDd": -0.3889119542901359,
     "regime": "sma20",
     "entryClose": null,
     "entryDate": null,
@@ -68,10 +68,10 @@
     "explanation": "Close is below SMA20; hold cash."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-09-25",
+    "last_observed_asof": "2026-09-24",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-09-25T17:28:26Z",
+    "last_checked_at_utc": "2026-09-25T23:41:12Z",
     "last_email_sent_on": "2026-09-22",
     "last_transition": {
       "id": "2026-09-22:1->2026-09-22:0",
