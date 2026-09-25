@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-24T23:40:18Z",
+  "generated_at_utc": "2026-09-25T00:15:11Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street rally nears record high - The Arkansas Democrat-Gazette.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street rally nears record high - arkansasonline.com.",
   "articles": [
     {
       "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
@@ -13,8 +13,8 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street rally nears record high - The Arkansas Democrat-Gazette",
-      "source": "The Arkansas Democrat-Gazette",
+      "title": "Wall Street rally nears record high - arkansasonline.com",
+      "source": "arkansasonline.com",
       "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQVEMydXprSjRhVGhjWmtMNktFLWdCNWxlRHU0NlYwWkJQak5XZnZtd0ZMZGpTOG1pdE03YnhOamZHVm4xMnhWdzc4dU5FaGd1V0dtVUdnb2JIWDN1Um1QRFNqQm5mWEFmM09KaGlxNk91SWVhQnR2ZTZXUXZmWXgyWnJ0RC1Vd0NZcERQZQ?oc=5",
       "published": "2026-09-22T07:03:00Z",
       "tone": "bullish"
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 86
+        "articles": 87
       }
     ],
-    "headline_count": 136,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
