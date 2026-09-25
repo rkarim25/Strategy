@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-25T00:15:11Z",
+  "generated_at_utc": "2026-09-25T12:29:48Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street rally nears record high - arkansasonline.com.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Asian benchmarks mostly rise after Wall Street's rally - firstcoastnews.com. Bearish offsets: World shares mostly advance after global bond sell-off and drop in oil prices - News4JAX.",
   "articles": [
     {
       "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
@@ -13,11 +13,11 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street rally nears record high - arkansasonline.com",
-      "source": "arkansasonline.com",
-      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQVEMydXprSjRhVGhjWmtMNktFLWdCNWxlRHU0NlYwWkJQak5XZnZtd0ZMZGpTOG1pdE03YnhOamZHVm4xMnhWdzc4dU5FaGd1V0dtVUdnb2JIWDN1Um1QRFNqQm5mWEFmM09KaGlxNk91SWVhQnR2ZTZXUXZmWXgyWnJ0RC1Vd0NZcERQZQ?oc=5",
-      "published": "2026-09-22T07:03:00Z",
-      "tone": "bullish"
+      "title": "World shares mostly advance after global bond sell-off and drop in oil prices - News4JAX",
+      "source": "News4JAX",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQVGRKdFVOcUdqNWMyZlJ6UENhSFJ6TnoxYWN6VVY0M1RkNm84SmNFSkRMVlJiMkw2VDlBSjBCRGp6QjVkaTdadXJBOWFlbkFueWlSOFExSEE5YlVvT0JteFM4UE5yaW9tWmtGX1FNZ19pcGp0N2xwUzcwZ0tLX1ZNN2NnOS1wY1c0VU9YV09OeWFKcUM5Y3NMeWZiX3VKbWpuT0lWRWdYeV9ZMXowVl93UVRYU2R5TnB5WFE?oc=5",
+      "published": "2026-09-25T04:30:03Z",
+      "tone": "bearish"
     },
     {
       "title": "Asian benchmarks mostly rise after Wall Street's rally - firstcoastnews.com",
@@ -34,10 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Nasdaq soars to first record close since June as AI stocks rally, led by Meta jump - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOeW5SWEExSFN6eFdkZkJnOHRYUlloaDN1OFVmMnFTM19mSFRDT2FBLTc3UEJZM3RLNGhKTHNzY3lFVlUwWWxMeWtWMy1PNVpqWGhsd0tJNTVMbGNESGcxa1BZb3hjaG1pbGcyWEVTUWNmQmJTN1FORi1sT3BpRjRhOVNpMHA1MXdaOFdVdGtPOTNQYzdmMG52dGFIZGxzWC1RVTdxY2Vmd0Z0TTl3b3RoUzJvZEhvQVphbWtsZkEwUUlYMHcwWGc?oc=5",
-      "published": "2026-09-21T00:14:55Z",
+      "title": "Wall Street rallies as AI stocks climb, bond yields ease - \u0633\u0627\u0646\u0627",
+      "source": "\u0633\u0627\u0646\u0627",
+      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE8xclZkMEMxa0NUd3JyMmNsdS1nb241c2VwRkUwdjZ1MGpvTmZacjRVY3RmVVViaFVzNmN0SkV1NXM2M3ZRU0EyWlhQSHY?oc=5",
+      "published": "2026-09-22T07:58:41Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 92
       }
     ],
-    "headline_count": 137,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
