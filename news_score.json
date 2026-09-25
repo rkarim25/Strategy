@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-25T12:29:48Z",
+  "generated_at_utc": "2026-09-25T17:28:27Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Asian benchmarks mostly rise after Wall Street's rally - firstcoastnews.com. Bearish offsets: World shares mostly advance after global bond sell-off and drop in oil prices - News4JAX.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Stock Market Today: Dow Leads Charge Amid U.S.-Iran Peace Talks; Arista Networks Eyes Buy Point (Live Coverage). Bearish offsets: World shares mostly advance after global bond sell-off and drop in oil prices - ABC News - Breaking News, Latest News and Videos; Nike Slumps After Downgrade. Why the Stock Is in Trouble..",
   "articles": [
     {
       "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
@@ -13,11 +13,18 @@
       "tone": "bullish"
     },
     {
-      "title": "World shares mostly advance after global bond sell-off and drop in oil prices - News4JAX",
-      "source": "News4JAX",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQVGRKdFVOcUdqNWMyZlJ6UENhSFJ6TnoxYWN6VVY0M1RkNm84SmNFSkRMVlJiMkw2VDlBSjBCRGp6QjVkaTdadXJBOWFlbkFueWlSOFExSEE5YlVvT0JteFM4UE5yaW9tWmtGX1FNZ19pcGp0N2xwUzcwZ0tLX1ZNN2NnOS1wY1c0VU9YV09OeWFKcUM5Y3NMeWZiX3VKbWpuT0lWRWdYeV9ZMXowVl93UVRYU2R5TnB5WFE?oc=5",
-      "published": "2026-09-25T04:30:03Z",
+      "title": "World shares mostly advance after global bond sell-off and drop in oil prices - ABC News - Breaking News, Latest News and Videos",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNSTFaOGVyZDJMZ2dfYnJsOXo1V0duTi1ET1RVV0FMd3Z3X3ZPUlVJV1dQRTBPS0NOaDM3Vng5aTRURGo0YXN3Tmk0aHJmeWJYQnFOMXB0d3hsWUpPYUx5U0d4YWxtZURGMV9aRHpSOE5VVW9MS0NxcVlTSUhTRzd5X0I5bjZQQWthUUw5dnZlWkE4Y3BQbkVEV3lR0gGfAUFVX3lxTE9XRnMtNGgwOTk1aW1mSXh1UmxXMllkeG4yOFpFakxHOXB3T2NVMkNORk5OUl9lNmZvQndmbFNYcG1VY1NOQ3RvSm1MQmp3eUZZVmRPX2h3MktGc3Z0ZlloN0N2eHNRcGtjMFJPV196bXZWbGU1Tkx4T2Jqa29LS2UydFpTd183eGhwZUdvanVGVEJjME83eGhyNnNSRmF5WQ?oc=5",
+      "published": "2026-09-25T05:55:58Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Stock Market Today: Dow Leads Charge Amid U.S.-Iran Peace Talks; Arista Networks Eyes Buy Point (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/225d690f-7913-3ffb-a43f-d4610f997f55/stock-market-today%3A-dow-leads.html?.tsrc=rss",
+      "published": "2026-09-25T17:19:30Z",
+      "tone": "bullish"
     },
     {
       "title": "Asian benchmarks mostly rise after Wall Street's rally - firstcoastnews.com",
@@ -27,18 +34,11 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street\u2019s Nasdaq hits all-time high as AI frenzy gathers pace - Al Jazeera",
-      "source": "Al Jazeera",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPeHpTeHdzUzRDT2hXc052OG13c3p1LXR2QWx2MlJFNF9ZcHNYQTVmNnI5eGZUVXgwd20yUW1CMlBieURxX3RDUkdQOVIyRHQwLWVReHVVZWRGY0kyaGhVdUJ1NnlqNkxBTHlHQjkyeGpnTFlwMlVmekIzNWJGVjAzZzg4XzVjc0JhUHlvR1BuTUx5ZTVfX1NuaU5VTmRrVmN5Snd5RWxvSnlXbnBq0gGyAUFVX3lxTE44TFdKYmIzVjZkam5ELVZnSkJPSEZ0YjVRUDdIUVZfckxDdFl0QVRHWWRpamN6UE04NnpFLXExdlRtZ0s2N0d6a3YzUktXczM0eFd2Q0ctNTJqUkU2LWRIaE15M1lIcUowUENmM3hDd09PdHpHSzdEeXdNWFg0Z1NQWTlSdjNSMUFhZEtDckFScDlFSV9GY0F1UE1xOG42cUpSZGl2Q1Z6YUtuTjBZQlRSV0E?oc=5",
-      "published": "2026-09-23T02:59:46Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street rallies as AI stocks climb, bond yields ease - \u0633\u0627\u0646\u0627",
-      "source": "\u0633\u0627\u0646\u0627",
-      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE8xclZkMEMxa0NUd3JyMmNsdS1nb241c2VwRkUwdjZ1MGpvTmZacjRVY3RmVVViaFVzNmN0SkV1NXM2M3ZRU0EyWlhQSHY?oc=5",
-      "published": "2026-09-22T07:58:41Z",
-      "tone": "bullish"
+      "title": "Nike Slumps After Downgrade. Why the Stock Is in Trouble.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/69753b45-6330-3fb6-b017-7aabaf4bb6a8/nike-slumps-after-downgrade..html?.tsrc=rss",
+      "published": "2026-09-25T16:12:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 92
+        "articles": 94
       }
     ],
-    "headline_count": 140,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
