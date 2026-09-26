@@ -1,20 +1,20 @@
 {
-  "generated_at_utc": "2026-09-25T23:41:13Z",
+  "generated_at_utc": "2026-09-26T00:21:03Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - reuters.com; Wall Street ends higher as investors buy AI stocks; Microsoft rallies - reuters.com.",
   "articles": [
     {
-      "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
-      "source": "Reuters",
+      "title": "Nasdaq reaches record high close, AI stocks rally - reuters.com",
+      "source": "reuters.com",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOOUI2bTZ5ZFhnZUozYjg5LXM1WHhuT24xUS0zYmRRZkViWVBreE05ZTNMWFBDSGhHTXUyQ3ZyMWhsUFdxSUlxUXVUUXVHWGRVelg3Z2RuVXo3bndwaXJfRXhEUEFERFNSUVZoaDNERnFxdnhuNkxLdVhnNDRpRGhxYndETzVJdVNnZXJESmpMNmw5QVFQODFGY2w2NzVCcFl0bXBSNjRaTQ?oc=5",
       "published": "2026-09-22T22:25:27Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters",
-      "source": "Reuters",
+      "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - reuters.com",
+      "source": "reuters.com",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOazZwSUsxTDltUG1palRCRG1iQnVRWFQxSGRoVFNKbnVoWExJYk13bVFFMEtkSndpTlh5eVNGYVJlTXpWSmtJZXpTVXRDazdBaUw1eFlUcjdob21NWF9hT2NNWDllOW1fc0lHdjBrQVBmeXY0ZWJLS25xdEJZMFJMUkVsa3NwRS0xSG1LUGVJVkVuSEVOVDlQR2pwWnZjRzliZXNQSTdyREhFVlBuQ185VEYxUWRab01zcThMWUtvOFI?oc=5",
       "published": "2026-09-25T21:39:36Z",
       "tone": "bullish"
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 94
       }
     ],
-    "headline_count": 142,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
