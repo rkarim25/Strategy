@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-09-26T00:21:03Z",
+  "generated_at_utc": "2026-09-28T14:50:40Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - reuters.com; Wall Street ends higher as investors buy AI stocks; Microsoft rallies - reuters.com.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters. Bearish offsets: S&P 500 ends marginally lower as investors focus on US-Iran war By Reuters - Investing.com; S&P 500 ends marginally lower as investors focus on US-Iran war - Yahoo Finance.",
   "articles": [
     {
-      "title": "Nasdaq reaches record high close, AI stocks rally - reuters.com",
-      "source": "reuters.com",
+      "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
+      "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOOUI2bTZ5ZFhnZUozYjg5LXM1WHhuT24xUS0zYmRRZkViWVBreE05ZTNMWFBDSGhHTXUyQ3ZyMWhsUFdxSUlxUXVUUXVHWGRVelg3Z2RuVXo3bndwaXJfRXhEUEFERFNSUVZoaDNERnFxdnhuNkxLdVhnNDRpRGhxYndETzVJdVNnZXJESmpMNmw5QVFQODFGY2w2NzVCcFl0bXBSNjRaTQ?oc=5",
       "published": "2026-09-22T22:25:27Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - reuters.com",
-      "source": "reuters.com",
+      "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters",
+      "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOazZwSUsxTDltUG1palRCRG1iQnVRWFQxSGRoVFNKbnVoWExJYk13bVFFMEtkSndpTlh5eVNGYVJlTXpWSmtJZXpTVXRDazdBaUw1eFlUcjdob21NWF9hT2NNWDllOW1fc0lHdjBrQVBmeXY0ZWJLS25xdEJZMFJMUkVsa3NwRS0xSG1LUGVJVkVuSEVOVDlQR2pwWnZjRzliZXNQSTdyREhFVlBuQ185VEYxUWRab01zcThMWUtvOFI?oc=5",
-      "published": "2026-09-25T21:39:36Z",
+      "published": "2026-09-25T09:48:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Asian benchmarks mostly rise after Wall Street's rally - firstcoastnews.com",
-      "source": "firstcoastnews.com",
-      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxNdnZUVGVmQ2lQZVpWU2JLRU1WRzNjaHdzMVpzRUhHNE00VENoZGNGLWJyMkx6ZF9QVklWdjJ0cDM4Y1hLRnQyc1dKTm9oeVlsWnRjZldwRDNPR25raU1uRXhIc3JlbVdpQTQtRjZTMEhGUXRnbGt0cW54N2VIc3JxcV9uU1AxLVJyTlEyd3FlYXBUUDFWa2hDODhMNzlyVm9WQVBfV0hhOThsWnRnMkRtVC1lRFY5TVpRNm9vSk9LNS1KeXNGZmQ2WW5Ta2JqRjdKQWNkbXpMeUp6MDNMLVlWZWs1OXFkMXFKNGZXMzItTTNrUUU?oc=5",
-      "published": "2026-09-22T03:31:00Z",
+      "title": "Wall Street gains day after Wall Street's tech-led rally (COMP:IND:) - Seeking Alpha",
+      "source": "Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxORFRUZ3ZwSzBzT0NNakQyZ0drOEctMkRjTF9GWjg5bmR4OUU4NlNIdkdIeDlQTzZ3b0Fsb3hMNmpNaW40QnVvZzZUbEFMSGF5WUI4UHFXVklpSlM2anh2TGhlVG1jSC0tekRRLWVSNktDeTZRLWtZQ3Z2R05NRXljblQ5ZVdoVEcy?oc=5",
+      "published": "2026-09-22T13:32:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Dow jumps more than 470 points Friday; stocks notch winning week despite Treasury yield surge",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/24/stock-market-today-live-updates.html",
-      "published": "2026-09-25T22:41:12Z",
-      "tone": "bullish"
+      "title": "S&P 500 ends marginally lower as investors focus on US-Iran war By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPZHFsZGZ5S291TE5Md1dFZTBwRy1UOUl3T19uQ1FpUHNCMWpHRzF6czc2RUdQRlpxMGxqOUEwQl9TV1diRE9BN3RtcUhyTWlVSlhab1N0ZzdrYWZHUmJUOWd6ZFlSclJRZG9zQ0Noa1FNRGJkZWtWclJlRUJaSlFLTVp6QXYtUVh0UjIyRzlqdnVJR2tnYk5zRGI2TWQ4VVhkSV9ER25hTUdOa3ZxQjR5WlliSTc5ZU5tajVYVG1zYjI3UQ?oc=5",
+      "published": "2026-09-24T22:27:47Z",
+      "tone": "bearish"
     },
     {
-      "title": "Wall Street\u2019s Nasdaq hits all-time high as AI frenzy gathers pace - Al Jazeera",
-      "source": "Al Jazeera",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPeHpTeHdzUzRDT2hXc052OG13c3p1LXR2QWx2MlJFNF9ZcHNYQTVmNnI5eGZUVXgwd20yUW1CMlBieURxX3RDUkdQOVIyRHQwLWVReHVVZWRGY0kyaGhVdUJ1NnlqNkxBTHlHQjkyeGpnTFlwMlVmekIzNWJGVjAzZzg4XzVjc0JhUHlvR1BuTUx5ZTVfX1NuaU5VTmRrVmN5Snd5RWxvSnlXbnBq0gGyAUFVX3lxTE44TFdKYmIzVjZkam5ELVZnSkJPSEZ0YjVRUDdIUVZfckxDdFl0QVRHWWRpamN6UE04NnpFLXExdlRtZ0s2N0d6a3YzUktXczM0eFd2Q0ctNTJqUkU2LWRIaE15M1lIcUowUENmM3hDd09PdHpHSzdEeXdNWFg0Z1NQWTlSdjNSMUFhZEtDckFScDlFSV9GY0F1UE1xOG42cUpSZGl2Q1Z6YUtuTjBZQlRSV0E?oc=5",
-      "published": "2026-09-23T02:59:46Z",
-      "tone": "bullish"
+      "title": "S&P 500 ends marginally lower as investors focus on US-Iran war - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNWFJjRkl4UE1ySnB5dXc0bzd2V2tVVmx5OXFSYnBoZG1qVjMtV1BhYWhPcUo1NUo3MTlmZVR0UUZlclJfRnhZQzh6cENqVVh6djNpZWhGMGV3SDd4dWxHdzlRN0RKa3BsdnZRU2lQdXM4ZDk2ZElJQ2JJaHBpbDlPUHhpR19oaDhPWGhjWFl2U2Q0bU0xR0Qw?oc=5",
+      "published": "2026-09-24T20:16:36Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 93
       }
     ],
-    "headline_count": 143,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
