@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-28T14:50:40Z",
+  "generated_at_utc": "2026-09-28T20:59:48Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters. Bearish offsets: S&P 500 ends marginally lower as investors focus on US-Iran war By Reuters - Investing.com; S&P 500 ends marginally lower as investors focus on US-Iran war - Yahoo Finance.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters. Bearish offsets: Trump-Iran Tensions Trigger Fresh Wall Street Selloff.",
   "articles": [
     {
       "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
@@ -20,25 +20,25 @@
       "tone": "bullish"
     },
     {
+      "title": "Trump-Iran Tensions Trigger Fresh Wall Street Selloff",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/articles/trump-iran-tensions-trigger-fresh-202442782.html?.tsrc=rss",
+      "published": "2026-09-28T20:24:42Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "A relief rally could be coming soon for these stocks getting hurt by higher rates, says Katie Stockton",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/28/a-relief-rally-could-be-coming-soon-for-these-stocks-getting-hurt-by-higher-rates-says-katie-stockton.html",
+      "published": "2026-09-28T20:26:41Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Wall Street gains day after Wall Street's tech-led rally (COMP:IND:) - Seeking Alpha",
       "source": "Seeking Alpha",
       "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxORFRUZ3ZwSzBzT0NNakQyZ0drOEctMkRjTF9GWjg5bmR4OUU4NlNIdkdIeDlQTzZ3b0Fsb3hMNmpNaW40QnVvZzZUbEFMSGF5WUI4UHFXVklpSlM2anh2TGhlVG1jSC0tekRRLWVSNktDeTZRLWtZQ3Z2R05NRXljblQ5ZVdoVEcy?oc=5",
       "published": "2026-09-22T13:32:00Z",
       "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 ends marginally lower as investors focus on US-Iran war By Reuters - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPZHFsZGZ5S291TE5Md1dFZTBwRy1UOUl3T19uQ1FpUHNCMWpHRzF6czc2RUdQRlpxMGxqOUEwQl9TV1diRE9BN3RtcUhyTWlVSlhab1N0ZzdrYWZHUmJUOWd6ZFlSclJRZG9zQ0Noa1FNRGJkZWtWclJlRUJaSlFLTVp6QXYtUVh0UjIyRzlqdnVJR2tnYk5zRGI2TWQ4VVhkSV9ER25hTUdOa3ZxQjR5WlliSTc5ZU5tajVYVG1zYjI3UQ?oc=5",
-      "published": "2026-09-24T22:27:47Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "S&P 500 ends marginally lower as investors focus on US-Iran war - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNWFJjRkl4UE1ySnB5dXc0bzd2V2tVVmx5OXFSYnBoZG1qVjMtV1BhYWhPcUo1NUo3MTlmZVR0UUZlclJfRnhZQzh6cENqVVh6djNpZWhGMGV3SDd4dWxHdzlRN0RKa3BsdnZRU2lQdXM4ZDk2ZElJQ2JJaHBpbDlPUHhpR19oaDhPWGhjWFl2U2Q0bU0xR0Qw?oc=5",
-      "published": "2026-09-24T20:16:36Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 96
       }
     ],
-    "headline_count": 142,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
