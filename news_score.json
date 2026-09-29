@@ -1,27 +1,27 @@
 {
-  "generated_at_utc": "2026-09-29T13:39:35Z",
+  "generated_at_utc": "2026-09-29T19:03:28Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - reuters.com; US stocks: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - The Business Times. Bearish offsets: World shares mostly advance after global bond sell-off and drop in oil prices - ABC News - Breaking News, Latest News and Videos.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq reaches record high close, AI stocks rally - Reuters; Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters. Bearish offsets: Update: US Equity Indexes Fall in Midday Trading as Consumer Sentiment Slumps Amid Growing Geopolitical Tensions; World shares mostly advance after global bond sell-off and drop in oil prices - ABC News - Breaking News, Latest News and Videos.",
   "articles": [
     {
-      "title": "Nasdaq reaches record high close, AI stocks rally - reuters.com",
-      "source": "reuters.com",
+      "title": "Nasdaq reaches record high close, AI stocks rally - Reuters",
+      "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOOUI2bTZ5ZFhnZUozYjg5LXM1WHhuT24xUS0zYmRRZkViWVBreE05ZTNMWFBDSGhHTXUyQ3ZyMWhsUFdxSUlxUXVUUXVHWGRVelg3Z2RuVXo3bndwaXJfRXhEUEFERFNSUVZoaDNERnFxdnhuNkxLdVhnNDRpRGhxYndETzVJdVNnZXJESmpMNmw5QVFQODFGY2w2NzVCcFl0bXBSNjRaTQ?oc=5",
       "published": "2026-09-22T22:25:27Z",
       "tone": "bullish"
     },
     {
-      "title": "US stocks: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - The Business Times",
-      "source": "The Business Times",
-      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxNaXhSVEw3ODJhUWpnS2xndWdnc0tNd3QtOGJDMm40NDJqNHNCOUx2UGttTGMzWnpkYnpkNllwcXNNeTl5TC1CVi1JVW1uOFNZYXpVRUFsM29sU3V0QV9vd3N2QzdFcmptRnR5YW5SMElQWHgtWUhhWlBFSlpGa0hCQ3JfQU55WWNENm5xbzZDZENHUGF2LXFvckdiMndad0w0Vko4WFRIbjN3Z0FzMkI0Mlo0WHlZQ0trRGtodDRodmU3bFlBazF6MjcxZGlsdDUyNjJxYWRsWWpGYVBJd1I5aTA2SDZGdXdy?oc=5",
-      "published": "2026-09-25T23:35:00Z",
-      "tone": "bullish"
+      "title": "Update: US Equity Indexes Fall in Midday Trading as Consumer Sentiment Slumps Amid Growing Geopolitical Tensions",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/economy/articles/us-equity-indexes-fall-midday-173858633.html?.tsrc=rss",
+      "published": "2026-09-29T17:38:58Z",
+      "tone": "bearish"
     },
     {
-      "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - reuters.com",
-      "source": "reuters.com",
+      "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters",
+      "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOazZwSUsxTDltUG1palRCRG1iQnVRWFQxSGRoVFNKbnVoWExJYk13bVFFMEtkSndpTlh5eVNGYVJlTXpWSmtJZXpTVXRDazdBaUw1eFlUcjdob21NWF9hT2NNWDllOW1fc0lHdjBrQVBmeXY0ZWJLS25xdEJZMFJMUkVsa3NwRS0xSG1LUGVJVkVuSEVOVDlQR2pwWnZjRzliZXNQSTdyREhFVlBuQ185VEYxUWRab01zcThMWUtvOFI?oc=5",
       "published": "2026-09-25T09:48:00Z",
       "tone": "bullish"
@@ -34,11 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "Stocks Rise Pre-Bell as Investors Weigh Growing AI Safety Concerns",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-rise-pre-bell-investors-120013584.html?.tsrc=rss",
-      "published": "2026-09-29T12:00:13Z",
-      "tone": "bullish"
+      "title": "S&P 500 ends marginally lower as investors focus on US-Iran war - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNWFJjRkl4UE1ySnB5dXc0bzd2V2tVVmx5OXFSYnBoZG1qVjMtV1BhYWhPcUo1NUo3MTlmZVR0UUZlclJfRnhZQzh6cENqVVh6djNpZWhGMGV3SDd4dWxHdzlRN0RKa3BsdnZRU2lQdXM4ZDk2ZElJQ2JJaHBpbDlPUHhpR19oaDhPWGhjWFl2U2Q0bU0xR0Qw?oc=5",
+      "published": "2026-09-24T20:16:36Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 90
       }
     ],
-    "headline_count": 143,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
