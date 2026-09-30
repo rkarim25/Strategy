@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-29T23:59:54Z",
+  "generated_at_utc": "2026-09-30T01:01:47Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters. Bearish offsets: World shares mostly advance after global bond sell-off and drop in oil prices - ABC News - Breaking News, Latest News and Videos; S&P 500 ends marginally lower as investors focus on US-Iran war - Yahoo Finance.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters. Bearish offsets: World shares mostly advance after global bond sell-off and drop in oil prices - ABC News - Breaking News, Latest News and Videos; S&P 500 ends marginally lower as investors focus on US-Iran war - Yahoo Finance.",
   "articles": [
     {
       "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters",
@@ -27,17 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "S&P 500 ends marginally lower as investors focus on US-Iran war By Reuters - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPZHFsZGZ5S291TE5Md1dFZTBwRy1UOUl3T19uQ1FpUHNCMWpHRzF6czc2RUdQRlpxMGxqOUEwQl9TV1diRE9BN3RtcUhyTWlVSlhab1N0ZzdrYWZHUmJUOWd6ZFlSclJRZG9zQ0Noa1FNRGJkZWtWclJlRUJaSlFLTVp6QXYtUVh0UjIyRzlqdnVJR2tnYk5zRGI2TWQ4VVhkSV9ER25hTUdOa3ZxQjR5WlliSTc5ZU5tajVYVG1zYjI3UQ?oc=5",
-      "published": "2026-09-24T10:34:03Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Should You Buy The Dip In MongoDB Stock?",
       "source": "Yahoo Finance S&P 500",
       "url": "https://www.trefis.com/articles/616945/should-you-buy-the-dip-in-mongodb-stock/2026-09-29?.tsrc=rss",
       "published": "2026-09-29T21:59:31Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Goldman Drops a Major Warning on the S&P 500 - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQVERnWFBPeEplbjBVUWl3emxDRmpWTS1lYTNOd0FSa3k0LW9iVmZRcGtJbElOVlc4NGI1U0NjZHdoLTEzWUtDOVloQWlIcFM3aUhzQVhrdEdYVXB1Sm5tWlJzSm1yQktGMU5JWXVRZ3VpaEs5UndXZGl2dTlEeTJPUk93Nk0wLUx6cWp0dnI4VHRmWW04akdKc3dR?oc=5",
+      "published": "2026-09-29T16:04:30Z",
       "tone": "bearish"
     }
   ],
