@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-01T01:02:55Z",
+  "generated_at_utc": "2026-10-01T14:05:49Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters; Micron beats on earnings and issues strong guidance as data center revenue jumps 11-fold.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters; Tech Rally Rolls On to Kick Off October.",
   "articles": [
     {
       "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters",
@@ -13,17 +13,24 @@
       "tone": "bullish"
     },
     {
-      "title": "Micron beats on earnings and issues strong guidance as data center revenue jumps 11-fold",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html",
-      "published": "2026-09-30T20:59:05Z",
+      "title": "Tech Rally Rolls On to Kick Off October",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/f5822262-8310-31c0-8bf9-0b1a69d0e8a3/tech-rally-rolls-on-to-kick.html?.tsrc=rss",
+      "published": "2026-10-01T12:20:00Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P, Nasdaq open higher on oil retreat, tech optimism - The Standard (HK)",
-      "source": "The Standard (HK)",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPeGZiUkNQc254dnR6SDl1ZVFvYndvMUxPQlZ4S2pTRE5ESGx5RW5NOHBkZU05UjY4QVdydjA2Y1dtWmw4ZzhqN0hrR05EYkdaUUQtbjNiVDVseTBadVhxTExqbFZjQ2RodmtJenVFUUVjbWlkMGVBakFWWmEwcTVLMFA3VzlSZ0F6aFJLVTBIS245NHpmQ0IwcTBhOU0tTnE5d2Z3eDNtYw?oc=5",
-      "published": "2026-09-29T13:42:16Z",
+      "title": "Micron beats on earnings and issues strong guidance as data center revenue jumps 11-fold",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html",
+      "published": "2026-10-01T13:59:54Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Asian shares mostly rise amid market optimism about AI, despite Iran worries - ABC News - Breaking News, Latest News and Videos",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPQURVSkpXZjYzT2t4SWpXOUpSWmVUS0JqTGFuRmVLZlFOWWl4QjYzY3hDUEI5bEJORjFtc3czRHR0YlpPMnotS19taWt5c2o3RTV1LUJqZG13SGEzRGJEb2ZSeFN3Ml9qaTlzRVJTZDd5anhyR2d0X0F5UzJuOUl0dDhWT25OekdPUm9pdGNjWFFtOXlQa2ZodnRnRW1mZU3SAaQBQVVfeXFMUHpibjI0OE5jQ0lLTHlCSkF6cHlPZWkzZFZxbzN1LWo4X1lTZWJ3ZWNtREo1b3ViSTNFcFFadTluUG9LWmI2Ung0YkY3WExSaVJleldmLWJybFJrQ25QcDFfWW9qb2JsQ3pqMENKd1RrcXZNR0xTWTE0aEhaWGdnQTdMX0h2VlExazlFazl5M1NuVi1MU2NRb1phcjFxMXljcVR0NHE?oc=5",
+      "published": "2026-10-01T08:37:55Z",
       "tone": "bullish"
     },
     {
@@ -31,13 +38,6 @@
       "source": "Benzinga",
       "url": "https://news.google.com/rss/articles/CBMingJBVV95cUxOWTJsZ0xoMGhFLXo0SVNnYkdzYTRaRmRWWnhCV2w3Rzh0eUJSbGdQNUNBTUpGWURwOGh5YWh4cTR4QTktUElWYjJtbnJPTDdfRDZGUk5HTUNUaDZUaEdWcFhVLWVVeVBEYlAwZ0NKa1lWSUVqM29WNFpLRzVUQkxoQmYzWngzMEt1eHoyQTliSHN3MGJOUlVKSm5UUUxXUEdMNUp4VjJJWlBPdlJYd2twSC1nbF8tNE1Lb3A4SGNSeWIzNVlyS0Q3VkVwV0Zqd1RESnpxN1picEt3WUMwWHpZc0FScEFJdk10c2JTQ19Oa25IcHhISk9IRmVjdnhWVXpQNHlUZFVSSC1Ual95dTdKRjRPeFVIc0pIYTZUblNR?oc=5",
       "published": "2026-09-25T10:41:18Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Citi delivers major verdict after Moderna\u2019s remarkable 703% run",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.thestreet.com/investing/stocks/mrna-mordena-stock-citi-downgrades-to-sell-raises-price-target-after-703-run?.tsrc=rss",
-      "published": "2026-09-30T22:17:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 86
       }
     ],
-    "headline_count": 137,
+    "headline_count": 133,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-10-01T01:02:52Z",
+  "generated_at_utc": "2026-10-01T14:05:46Z",
   "data_asof": "2026-10-01",
-  "daily_rows": 6546,
-  "quote_price": 4171.7001953125,
+  "daily_rows": 6547,
+  "quote_price": 4191.39990234375,
   "quote_timestamp": "2026-10-01",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1790902971&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1790949946&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-10-01",
-      "close": 4171.7001953125
+      "close": 4191.39990234375
     },
-    "latestSma": 4363.075,
+    "latestSma": 4352.664990234375,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2156099067552093,
+    "latestDd": -0.2119058402327636,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-10-01",
-      "close": 4171.7001953125
+      "close": 4191.39990234375
     },
-    "latestSma": 4350.930004882813,
+    "latestSma": 4335.239990234375,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2156099067552093,
+    "latestDd": -0.2119058402327636,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-10-01",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-10-01T01:02:52Z",
+    "last_checked_at_utc": "2026-10-01T14:05:46Z",
     "last_email_sent_on": "2026-09-10",
     "last_transition": {
       "id": "2026-09-09:1->2026-09-10:0",
