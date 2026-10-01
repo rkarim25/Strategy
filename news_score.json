@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-30T18:29:56Z",
+  "generated_at_utc": "2026-10-01T00:15:14Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters; S&P, Nasdaq open higher on oil retreat, tech optimism - The Standard (HK). Bearish offsets: Goldman Drops a Major Warning on the S&P 500 - Yahoo Finance; The Bond Market Sell-Off Could Be a Red Flag for Wall Street, and History Says Investors Should Make This 1 Move - The Motley Fool.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters; Micron beats on earnings and issues strong guidance as data center revenue jumps 11-fold.",
   "articles": [
     {
       "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters",
@@ -13,11 +13,11 @@
       "tone": "bullish"
     },
     {
-      "title": "Goldman Drops a Major Warning on the S&P 500 - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQVERnWFBPeEplbjBVUWl3emxDRmpWTS1lYTNOd0FSa3k0LW9iVmZRcGtJbElOVlc4NGI1U0NjZHdoLTEzWUtDOVloQWlIcFM3aUhzQVhrdEdYVXB1Sm5tWlJzSm1yQktGMU5JWXVRZ3VpaEs5UndXZGl2dTlEeTJPUk93Nk0wLUx6cWp0dnI4VHRmWW04akdKc3dR?oc=5",
-      "published": "2026-09-29T16:04:30Z",
-      "tone": "bearish"
+      "title": "Micron beats on earnings and issues strong guidance as data center revenue jumps 11-fold",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html",
+      "published": "2026-09-30T20:59:05Z",
+      "tone": "bullish"
     },
     {
       "title": "S&P, Nasdaq open higher on oil retreat, tech optimism - The Standard (HK)",
@@ -34,11 +34,11 @@
       "tone": "bullish"
     },
     {
-      "title": "The Bond Market Sell-Off Could Be a Red Flag for Wall Street, and History Says Investors Should Make This 1 Move - The Motley Fool",
-      "source": "The Motley Fool",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQM1YzeVBQYkhqMVRWY2ZSdnp0QVhsemIxVG1Sc1pTaDlKUnhZdVp6bEdIdktqRXdSUnMtTHYtMW9GRFVkV09sZHcxWk9yUU1vbXB2dTJMQzV5RUJ6X0tFRVZUVkxlTjg4QjZJbklpWjViNENjQ21YVzY1WXJtYTJISGZFbl9zeG4ybnBJUXBn?oc=5",
-      "published": "2026-09-30T12:00:00Z",
-      "tone": "bearish"
+      "title": "Citi delivers major verdict after Moderna\u2019s remarkable 703% run",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.thestreet.com/investing/stocks/mrna-mordena-stock-citi-downgrades-to-sell-raises-price-target-after-703-run?.tsrc=rss",
+      "published": "2026-09-30T22:17:00Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 91
       }
     ],
-    "headline_count": 136,
+    "headline_count": 138,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
