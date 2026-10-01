@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-01T00:15:14Z",
+  "generated_at_utc": "2026-10-01T01:02:55Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 90
       }
     ],
-    "headline_count": 138,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
