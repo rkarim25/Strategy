@@ -1,22 +1,22 @@
 {
-  "generated_at_utc": "2026-10-01T14:05:49Z",
+  "generated_at_utc": "2026-10-01T19:39:33Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters; Tech Rally Rolls On to Kick Off October.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Accenture rallies more than 20% after earnings beat, heads for best day ever; Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters. Bearish offsets: Stocks Fall as Treasury Selloff Flips.",
   "articles": [
+    {
+      "title": "Accenture rallies more than 20% after earnings beat, heads for best day ever",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/01/accenture-rallies-more-than-20percent-after-earnings-beat-heads-for-best-day-ever.html",
+      "published": "2026-10-01T15:42:04Z",
+      "tone": "bullish"
+    },
     {
       "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOazZwSUsxTDltUG1palRCRG1iQnVRWFQxSGRoVFNKbnVoWExJYk13bVFFMEtkSndpTlh5eVNGYVJlTXpWSmtJZXpTVXRDazdBaUw1eFlUcjdob21NWF9hT2NNWDllOW1fc0lHdjBrQVBmeXY0ZWJLS25xdEJZMFJMUkVsa3NwRS0xSG1LUGVJVkVuSEVOVDlQR2pwWnZjRzliZXNQSTdyREhFVlBuQ185VEYxUWRab01zcThMWUtvOFI?oc=5",
       "published": "2026-09-25T09:48:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Tech Rally Rolls On to Kick Off October",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/f5822262-8310-31c0-8bf9-0b1a69d0e8a3/tech-rally-rolls-on-to-kick.html?.tsrc=rss",
-      "published": "2026-10-01T12:20:00Z",
       "tone": "bullish"
     },
     {
@@ -27,17 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Asian shares mostly rise amid market optimism about AI, despite Iran worries - ABC News - Breaking News, Latest News and Videos",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPQURVSkpXZjYzT2t4SWpXOUpSWmVUS0JqTGFuRmVLZlFOWWl4QjYzY3hDUEI5bEJORjFtc3czRHR0YlpPMnotS19taWt5c2o3RTV1LUJqZG13SGEzRGJEb2ZSeFN3Ml9qaTlzRVJTZDd5anhyR2d0X0F5UzJuOUl0dDhWT25OekdPUm9pdGNjWFFtOXlQa2ZodnRnRW1mZU3SAaQBQVVfeXFMUHpibjI0OE5jQ0lLTHlCSkF6cHlPZWkzZFZxbzN1LWo4X1lTZWJ3ZWNtREo1b3ViSTNFcFFadTluUG9LWmI2Ung0YkY3WExSaVJleldmLWJybFJrQ25QcDFfWW9qb2JsQ3pqMENKd1RrcXZNR0xTWTE0aEhaWGdnQTdMX0h2VlExazlFazl5M1NuVi1MU2NRb1phcjFxMXljcVR0NHE?oc=5",
-      "published": "2026-10-01T08:37:55Z",
-      "tone": "bullish"
+      "title": "Stocks Fall as Treasury Selloff Flips",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.wsj.com/finance/ai-stock-rally-checked-by-relentless-treasury-selloff-c434b12e?.tsrc=rss",
+      "published": "2026-10-01T19:03:00Z",
+      "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Dow, S&P 500, Nasdaq Futures Rise Amid Optimism Following Iran\u2019s Offer To Reopen Stra - Benzinga",
-      "source": "Benzinga",
-      "url": "https://news.google.com/rss/articles/CBMingJBVV95cUxOWTJsZ0xoMGhFLXo0SVNnYkdzYTRaRmRWWnhCV2w3Rzh0eUJSbGdQNUNBTUpGWURwOGh5YWh4cTR4QTktUElWYjJtbnJPTDdfRDZGUk5HTUNUaDZUaEdWcFhVLWVVeVBEYlAwZ0NKa1lWSUVqM29WNFpLRzVUQkxoQmYzWngzMEt1eHoyQTliSHN3MGJOUlVKSm5UUUxXUEdMNUp4VjJJWlBPdlJYd2twSC1nbF8tNE1Lb3A4SGNSeWIzNVlyS0Q3VkVwV0Zqd1RESnpxN1picEt3WUMwWHpZc0FScEFJdk10c2JTQ19Oa25IcHhISk9IRmVjdnhWVXpQNHlUZFVSSC1Ual95dTdKRjRPeFVIc0pIYTZUblNR?oc=5",
-      "published": "2026-09-25T10:41:18Z",
+      "title": "S&P 500 flat as higher bond yields counter tech optimism - finance.yahoo.com",
+      "source": "finance.yahoo.com",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNWVpBNW9UUVRHeWRESGNaVHJXQU5DLXAyT0IzVlczR3FVY0VrUE5iUTg4Rk9nYkRtaWxWQzRhZVAyM3JtZUJ3MWxtbmpMdnRqTVhjTTc0TU52Z2RTNE9tUDVqWjBDSGFMU2RzeFhkMEFWUFQ2QzY1OVBVUi10dDYzSG9ZclkwVVN0eTB4YWRzUWVHdWQ5dDhZRw?oc=5",
+      "published": "2026-09-29T18:55:02Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 17
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 86
+        "articles": 82
       }
     ],
-    "headline_count": 133,
+    "headline_count": 130,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
