@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-10-02T13:26:35Z",
+  "generated_at_utc": "2026-10-02T18:35:10Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Yahoo Finance; Equities rebound to close higher as surging Treasury yields recede - Reuters. Bearish offsets: Citi says rate volatility without Fed repricing is \u201cconcerning\u201d.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Nasdaq Charges Higher After Soft Jobs Report; Two Chip Names Break Out (Live Coverage); S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Yahoo Finance. Bearish offsets: The sector in the cross hairs of the bond sell-off looks poised for a bounce, says Mike Khouw; Traders now see little chance of a Fed rate hike in October after weak jobs report.",
   "articles": [
+    {
+      "title": "Stock Market Today: Nasdaq Charges Higher After Soft Jobs Report; Two Chip Names Break Out (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/94ae67df-681f-315f-b45f-941eaadbc7c6/stock-market-today%3A-nasdaq.html?.tsrc=rss",
+      "published": "2026-10-02T18:16:58Z",
+      "tone": "bullish"
+    },
     {
       "title": "S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Yahoo Finance",
       "source": "Yahoo Finance",
@@ -13,31 +20,24 @@
       "tone": "bullish"
     },
     {
-      "title": "Citi says rate volatility without Fed repricing is \u201cconcerning\u201d",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/economy/policy/articles/citi-says-rate-volatility-without-120626838.html?.tsrc=rss",
-      "published": "2026-10-02T12:06:26Z",
+      "title": "The sector in the cross hairs of the bond sell-off looks poised for a bounce, says Mike Khouw",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/02/the-sector-in-the-cross-hairs-of-the-bond-sell-off-looks-poised-for-a-bounce-says-mike-khouw.html",
+      "published": "2026-10-02T15:34:28Z",
       "tone": "bearish"
     },
     {
-      "title": "Equities rebound to close higher as surging Treasury yields recede - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQT1NWcmpRdnNhV0szWEh4QVRhcF83OVVJSy1jY1BoOFZDb2ZGanhFd3VtQWp5bFJxa2kwRUZJaWExeXF0UmE0NS1vUVpjdWpoc1N4dUUzZ1AtT0ZyNkZBTjU2bmVSSTVjZVRUMmg3YmR2V3FVWXAwWk5lUWlNLVdSSUVRc1NoZEc3R1RrUVpxcnlEOHRmaHRlUjA4ZkVfekc2UGowc2J5T1AxanRxNUNieWw5cS00U3lEaGVN?oc=5",
-      "published": "2026-10-01T23:30:52Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 flat as higher bond yields counter tech optimism - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNWVpBNW9UUVRHeWRESGNaVHJXQU5DLXAyT0IzVlczR3FVY0VrUE5iUTg4Rk9nYkRtaWxWQzRhZVAyM3JtZUJ3MWxtbmpMdnRqTVhjTTc0TU52Z2RTNE9tUDVqWjBDSGFMU2RzeFhkMEFWUFQ2QzY1OVBVUi10dDYzSG9ZclkwVVN0eTB4YWRzUWVHdWQ5dDhZRw?oc=5",
-      "published": "2026-09-29T18:55:02Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "How AI is redefining Wall Street jobs \u2014 and boosting demand for this new 'hottest skill' by 1,721%",
+      "title": "Traders now see little chance of a Fed rate hike in October after weak jobs report",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/02/ai-redefining-wall-street-jobs.html",
-      "published": "2026-10-02T12:24:27Z",
+      "url": "https://www.cnbc.com/2026/10/02/fed-rate-hike-odds-decline-after-september-jobs-report.html",
+      "published": "2026-10-02T13:29:27Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Nvidia just hit a record high. Here\u2019s why the stock still looks cheap to me",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/02/nvidia-is-a-best-in-breed-stock-on-sale-heres-why-im-buying.html",
+      "published": "2026-10-02T16:55:39Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 89
       }
     ],
-    "headline_count": 137,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
