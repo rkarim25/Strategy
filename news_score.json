@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-10-02T01:16:21Z",
+  "generated_at_utc": "2026-10-02T13:26:35Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Investing.com; Accenture stock rallies after earnings beat expectations. Bearish offsets: Update: US Equity Indexes Edge Up as Treasury Yields Fall From Highest in Two Decades After October Fed Rate-Increase Bets Drop; World shares mostly advance after global bond sell-off and drop in oil prices - ABC News - Breaking News, Latest News and Videos.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Yahoo Finance; Equities rebound to close higher as surging Treasury yields recede - Reuters. Bearish offsets: Citi says rate volatility without Fed repricing is \u201cconcerning\u201d.",
   "articles": [
     {
-      "title": "S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPMnpRalRMcE4xcW9XNDg3eXctdG9uOGRKT0ROQ2djaHMwZkJHdEdSd3R2OG1qSGUxZ1ZWYnlrT1M3dGl0WlhUZzZsZ1ZtbmlxTkl3WHNLR0pZd2txcDh2SkQ5ajl2SjdWcDVpMjlDa2N6bDJoQlU1c1RGaHlJdzJvY2F0Q3BDOFQtREZvSGNuMElKZjdMT1JRXy03M2l6M2o2aHo1Smt1MHZRaElOeHZxNg?oc=5",
-      "published": "2026-10-01T00:45:22Z",
+      "title": "S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPOEFnbS1aTGxma2RnM2NpSzdCRi1ZMU44dkNYREhxNko0c092TkFuT1ZsaXZrUEFaM3hMTGE2dzA0VEdqaVFpU2hrd01yaHZXRlF1c3F1d0dLNGdpRy13M0hJZ01UMkNxYjFYYW5oU0F5VjNjb0R6Q0cxU29sZmZ1VmNQS0V0djIzclBjblJSekVmRWdCQVd5VE45UQ?oc=5",
+      "published": "2026-10-01T01:13:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Accenture stock rallies after earnings beat expectations",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/01/accenture-rallies-more-than-20percent-after-earnings-beat-heads-for-best-day-ever.html",
-      "published": "2026-10-01T21:40:30Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street ends higher as investors buy AI stocks; Microsoft rallies - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOazZwSUsxTDltUG1palRCRG1iQnVRWFQxSGRoVFNKbnVoWExJYk13bVFFMEtkSndpTlh5eVNGYVJlTXpWSmtJZXpTVXRDazdBaUw1eFlUcjdob21NWF9hT2NNWDllOW1fc0lHdjBrQVBmeXY0ZWJLS25xdEJZMFJMUkVsa3NwRS0xSG1LUGVJVkVuSEVOVDlQR2pwWnZjRzliZXNQSTdyREhFVlBuQ185VEYxUWRab01zcThMWUtvOFI?oc=5",
-      "published": "2026-09-25T09:48:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Update: US Equity Indexes Edge Up as Treasury Yields Fall From Highest in Two Decades After October Fed Rate-Increase Bets Drop",
+      "title": "Citi says rate volatility without Fed repricing is \u201cconcerning\u201d",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-edge-treasury-212442043.html?.tsrc=rss",
-      "published": "2026-10-01T21:24:42Z",
+      "url": "https://finance.yahoo.com/economy/policy/articles/citi-says-rate-volatility-without-120626838.html?.tsrc=rss",
+      "published": "2026-10-02T12:06:26Z",
       "tone": "bearish"
     },
     {
-      "title": "World shares mostly advance after global bond sell-off and drop in oil prices - ABC News - Breaking News, Latest News and Videos",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNSTFaOGVyZDJMZ2dfYnJsOXo1V0duTi1ET1RVV0FMd3Z3X3ZPUlVJV1dQRTBPS0NOaDM3Vng5aTRURGo0YXN3Tmk0aHJmeWJYQnFOMXB0d3hsWUpPYUx5U0d4YWxtZURGMV9aRHpSOE5VVW9MS0NxcVlTSUhTRzd5X0I5bjZQQWthUUw5dnZlWkE4Y3BQbkVEV3lR0gGfAUFVX3lxTE9XRnMtNGgwOTk1aW1mSXh1UmxXMllkeG4yOFpFakxHOXB3T2NVMkNORk5OUl9lNmZvQndmbFNYcG1VY1NOQ3RvSm1MQmp3eUZZVmRPX2h3MktGc3Z0ZlloN0N2eHNRcGtjMFJPV196bXZWbGU1Tkx4T2Jqa29LS2UydFpTd183eGhwZUdvanVGVEJjME83eGhyNnNSRmF5WQ?oc=5",
-      "published": "2026-09-25T12:16:28Z",
-      "tone": "bearish"
+      "title": "Equities rebound to close higher as surging Treasury yields recede - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQT1NWcmpRdnNhV0szWEh4QVRhcF83OVVJSy1jY1BoOFZDb2ZGanhFd3VtQWp5bFJxa2kwRUZJaWExeXF0UmE0NS1vUVpjdWpoc1N4dUUzZ1AtT0ZyNkZBTjU2bmVSSTVjZVRUMmg3YmR2V3FVWXAwWk5lUWlNLVdSSUVRc1NoZEc3R1RrUVpxcnlEOHRmaHRlUjA4ZkVfekc2UGowc2J5T1AxanRxNUNieWw5cS00U3lEaGVN?oc=5",
+      "published": "2026-10-01T23:30:52Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 flat as higher bond yields counter tech optimism - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNWVpBNW9UUVRHeWRESGNaVHJXQU5DLXAyT0IzVlczR3FVY0VrUE5iUTg4Rk9nYkRtaWxWQzRhZVAyM3JtZUJ3MWxtbmpMdnRqTVhjTTc0TU52Z2RTNE9tUDVqWjBDSGFMU2RzeFhkMEFWUFQ2QzY1OVBVUi10dDYzSG9ZclkwVVN0eTB4YWRzUWVHdWQ5dDhZRw?oc=5",
+      "published": "2026-09-29T18:55:02Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "How AI is redefining Wall Street jobs \u2014 and boosting demand for this new 'hottest skill' by 1,721%",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/02/ai-redefining-wall-street-jobs.html",
+      "published": "2026-10-02T12:24:27Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 87
       }
     ],
-    "headline_count": 138,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
