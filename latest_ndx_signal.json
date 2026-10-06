@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-06T02:02:27Z",
-  "data_asof": "2026-10-05",
-  "daily_rows": 7546,
-  "quote_price": 31076.44140625,
-  "quote_timestamp": "2026-10-05",
+  "generated_at_utc": "2026-10-06T13:50:23Z",
+  "data_asof": "2026-10-06",
+  "daily_rows": 7547,
+  "quote_price": 31254.6796875,
+  "quote_timestamp": "2026-10-06",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,12 +29,12 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-10-05",
-      "close": 31076.44140625
+      "date": "2026-10-06",
+      "close": 31254.6796875
     },
-    "latestSma": 29984.2505859375,
-    "highWater": 31076.44140625,
-    "highWaterDate": "2026-10-05",
+    "latestSma": 30071.59951171875,
+    "highWater": 31254.6796875,
+    "highWaterDate": "2026-10-06",
     "latestDd": 0.0,
     "regime": "tier2",
     "entryClose": 28776.80078125,
@@ -46,17 +46,17 @@
     "activeEntryClose": 28776.80078125,
     "activeEntryDate": "2026-08-03",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.07991300500986775,
+    "activeEntryPnl": 0.08610682351682764,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-10-05",
-      "close": 31076.44140625
+      "date": "2026-10-06",
+      "close": 31254.6796875
     },
-    "latestSma": 30062.6876953125,
-    "highWater": 31076.44140625,
-    "highWaterDate": "2026-10-05",
+    "latestSma": 30163.25595703125,
+    "highWater": 31254.6796875,
+    "highWaterDate": "2026-10-06",
     "latestDd": 0.0,
     "regime": "tier2",
     "entryClose": 28776.80078125,
@@ -68,14 +68,14 @@
     "activeEntryClose": 28776.80078125,
     "activeEntryDate": "2026-08-03",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.07991300500986775,
+    "activeEntryPnl": 0.08610682351682764,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-10-05",
+    "last_observed_asof": "2026-10-06",
     "last_observed_target_leverage": 2,
     "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-10-06T02:02:27Z",
+    "last_checked_at_utc": "2026-10-06T13:50:23Z",
     "last_email_sent_on": "2026-09-17",
     "last_transition": {
       "id": "2026-09-16:0->2026-09-17:2",
