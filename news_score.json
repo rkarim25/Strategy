@@ -1,10 +1,31 @@
 {
-  "generated_at_utc": "2026-10-06T13:50:26Z",
+  "generated_at_utc": "2026-10-06T19:16:18Z",
   "window_days": 7,
-  "score": 9,
+  "score": 10,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Investing.com; S&P 500 rises to record high as oil and yields move lower: Live updates.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US stocks hit record high, shrugging off bond market turmoil; S&P 500 tags record high as markets climb on tech rally - Seeking Alpha.",
   "articles": [
+    {
+      "title": "US stocks hit record high, shrugging off bond market turmoil",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.cnn.com/2026/10/06/investing/us-stocks-bonds?.tsrc=rss",
+      "published": "2026-10-06T17:23:19Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 tags record high as markets climb on tech rally - Seeking Alpha",
+      "source": "Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQaXFYZHVCTmJoaFJNakhVcUJVekJ0Sk5LZEtxb25xSW45Tzdkb3VubmFiN0I0VjdGUy1kWEFDeG0ydmoxT280QnpZRFlRM3RsMF81c1FJNkRISHRIWDcwSUJUelFCWnd0dFZaQ2JEcTdlU0t1dE9xTjl6QWNiMkZKZkU3cXlHN25oeG1DMUk5SmYzNW5mUVhn?oc=5",
+      "published": "2026-10-06T15:10:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street rallies toward an all-time high - WRAL",
+      "source": "WRAL",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNWHJiNmlRY3doeXdtZWgtaTFOTTVQOGlNalFUQkVNRjZmeHV0T3U5TEowR1hnVjJzQ1NKMmszQk91YzFFSjIzRHpwM2ZEZzNtcGpLVklJRG5TUW9QZzNaVnNFS0NJYzdkRGJ0UnhxOVlTaDVFTHd4R2dKUlRFR2s0LTN2QU9BMEwzeVJxSmJzaGtzclVGTlJXVXByZ0JuNF9MR1ln?oc=5",
+      "published": "2026-10-06T06:02:47Z",
+      "tone": "bullish"
+    },
     {
       "title": "S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Investing.com",
       "source": "Investing.com",
@@ -13,31 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 rises to record high as oil and yields move lower: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/05/stock-market-today-live-updates.html",
-      "published": "2026-10-06T13:43:59Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street opens higher, S&P 500 scales first record high since mid-August By Investing.com - Investing.com South Africa",
-      "source": "Investing.com South Africa",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxORVNHN3E5ei1FaVlOcFNEcW9VUjEtRURvdWJSR3ExbVdFUndmLVpOamx3S21GQzVaOFF0WnZxMmhtMDBnb1lKUmZ5TlVrX244ZDlzcVVlTTZHMGZrbjhYUkhxVzJIZ1c0TXhDTkhibFNfWFR2WWpjM0RWMGxoVWE2dU5KU1lGWWhLUHJrUnBlMVo2MlozUExmNV9kOUhqY0d1UEp1MzZ2eWtVbFA3WjRhMVh1VWN0MGJjMFZ0QjE1aERjY1FTbllPTg?oc=5",
-      "published": "2026-10-06T13:18:42Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "U.S. stock futures rise, hinting at a record high open for Wall Street - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOcmc0UzVuZ3pwR0xQTy1oek56blV5eGxKZjNvb3M5YmtOUjB3Z1BWWGxSSUFVakE2c0F0SjJjRFZubGwzdHJRYTlSeUk4QjFwR2wtYm1Qa0NZY280MDJRUDYySDRJbUZKRGVZb21DcC1aTGFoczVpaGFOdDN3SUo2MlNCNG5ZSGtsWHR2REtvNGRDT2ZETVNldjZGMkltX2NyWUo0Z1JiZEtjRlA1ZHRkUHhyQTB3V0RHalZMOHR6TGVSZ1BNd190VE5R?oc=5",
-      "published": "2026-10-06T01:35:50Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "US stocks rise to the edge of an all-time high - Boston Herald",
-      "source": "Boston Herald",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5RbU5XVlk3MTMxaFVqbTEwTWhTMTJKbFljZkc5VVgzak03LTl5UkY4S1phV2pud0hSTHhCdW5TTzNOWXZmNzlTQXUwdWZyYXFnY0dUNnZrc3BtYk1jVlFtWE5aeTQ0MHl3d0dyVFpSV3gzQQ?oc=5",
-      "published": "2026-10-06T01:07:30Z",
+      "title": "The Utilities Sector Goes Nuclear as AI Drives More Than Tech Higher",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/c30056ee-f1d3-3206-80ca-fce0e124eab6/the-utilities-sector-goes.html?.tsrc=rss",
+      "published": "2026-10-06T18:04:35Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 92
       }
     ],
-    "headline_count": 139,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
