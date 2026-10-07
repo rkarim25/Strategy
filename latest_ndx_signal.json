@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-10-06T19:16:14Z",
+  "generated_at_utc": "2026-10-07T00:13:28Z",
   "data_asof": "2026-10-06",
   "daily_rows": 7547,
-  "quote_price": 31279.916015625,
+  "quote_price": 31224.685546875,
   "quote_timestamp": "2026-10-06",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
@@ -30,10 +30,10 @@
   "official_signal": {
     "latest": {
       "date": "2026-10-06",
-      "close": 31279.916015625
+      "close": 31224.685546875
     },
-    "latestSma": 30072.861328125,
-    "highWater": 31279.916015625,
+    "latestSma": 30070.0998046875,
+    "highWater": 31224.685546875,
     "highWaterDate": "2026-10-06",
     "latestDd": 0.0,
     "regime": "tier2",
@@ -46,16 +46,16 @@
     "activeEntryClose": 28776.80078125,
     "activeEntryDate": "2026-08-03",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.08698379133256351,
+    "activeEntryPnl": 0.08506452069612824,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "provisional_signal": {
     "latest": {
       "date": "2026-10-06",
-      "close": 31279.916015625
+      "close": 31224.685546875
     },
-    "latestSma": 30165.77958984375,
-    "highWater": 31279.916015625,
+    "latestSma": 30160.25654296875,
+    "highWater": 31224.685546875,
     "highWaterDate": "2026-10-06",
     "latestDd": 0.0,
     "regime": "tier2",
@@ -68,14 +68,14 @@
     "activeEntryClose": 28776.80078125,
     "activeEntryDate": "2026-08-03",
     "activeEntryLeverage": 2,
-    "activeEntryPnl": 0.08698379133256351,
+    "activeEntryPnl": 0.08506452069612824,
     "explanation": "2x recovery tier is active and price is inside the 0.75% SMA20 lead guard."
   },
   "trade_alert_state": {
     "last_observed_asof": "2026-10-06",
     "last_observed_target_leverage": 2,
     "last_observed_target_label": "2x",
-    "last_checked_at_utc": "2026-10-06T19:16:14Z",
+    "last_checked_at_utc": "2026-10-07T00:13:28Z",
     "last_email_sent_on": "2026-09-17",
     "last_transition": {
       "id": "2026-09-16:0->2026-09-17:2",
