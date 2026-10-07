@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-10-07T14:08:16Z",
+  "generated_at_utc": "2026-10-07T20:02:45Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 hits intraday record high as AI rally continues - Yahoo Finance; S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; Wall Street rallies toward an all-time high - WPLG Local 10.",
   "articles": [
-    {
-      "title": "S&P 500 hits intraday record high as AI rally continues - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNVUFFczBFekk5UGJCVnREbkVlUWtXMjNvWGFfWnpqYWNhOU8zLVVLeGFiMVYxVHdFcmtQaGV0LS0wOEh5NjlZRWdCMHdJTDZzbXhNNjl5Y3BVcGk5UUZ0cldrYkkxcEd6eVNaRXN1Nllfb0hYX21SRWQycmVDWjZXcm9zdTFrbmd6NWY1SnplSmNEX3pQUmc?oc=5",
-      "published": "2026-10-06T13:39:00Z",
-      "tone": "bullish"
-    },
     {
       "title": "S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian",
       "source": "The Guardian",
@@ -38,6 +31,13 @@
       "source": "Yahoo Finance Singapore",
       "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE84TmVKaVBQUFItTHVZWjlUVWVfVG9BX3Rjb0FmTENmVmtMclB3NUdMREpyWlgzUW9WY3JCOUpOZXVmdDQtaGZ2U3U1OFlpZjdtN0hNajVvTHNiblJwX09Fd3RaUUVNNnVwVGEwd2NWRmdvMGlNRUs5NkJJNWNxUQ?oc=5",
       "published": "2026-10-06T14:08:13Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street opens higher, S&P 500 scales first record high since mid-August - Investing.com Nigeria",
+      "source": "Investing.com Nigeria",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNMlE4dVJ0VmxYbHNrWTFsSzMxZ0s1NWk4ejU3Nld0WVBWWEZnbVJycGdiSFFNam4yRFdzX0c5Rm9kUnNxdS1sd2NkcEJ2QTVKWkhvcExnUWFoQS11QjRYZi12cWRwQU8taUhQSkdMVW9rbGxQQTEyZWx5LTgyNzF5M1ZRa3g5SXdsZkVlVkZocGJTMzVCenhVWV9CWG41bUxJNFdyRVJxcVlEQ2lMZkxWcFpKeU9CS1ZVNm1WZE40b0FCU0I3TXN5cw?oc=5",
+      "published": "2026-10-06T12:51:15Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 96
+        "articles": 94
       }
     ],
-    "headline_count": 144,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
