@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-08T00:33:58Z",
+  "generated_at_utc": "2026-10-08T01:32:23Z",
   "window_days": 7,
-  "score": 10,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; Wall Street rallies toward an all-time high - WPLG Local 10.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; Wall Street rallies toward an all-time high - WPLG Local 10.",
   "articles": [
     {
       "title": "S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian",
@@ -20,13 +20,6 @@
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 ends higher, Dow and Nasdaq mostly flat as bond rally offsets rise in oil - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPMnpRalRMcE4xcW9XNDg3eXctdG9uOGRKT0ROQ2djaHMwZkJHdEdSd3R2OG1qSGUxZ1ZWYnlrT1M3dGl0WlhUZzZsZ1ZtbmlxTkl3WHNLR0pZd2txcDh2SkQ5ajl2SjdWcDVpMjlDa2N6bDJoQlU1c1RGaHlJdzJvY2F0Q3BDOFQtREZvSGNuMElKZjdMT1JRXy03M2l6M2o2aHo1Smt1MHZRaElOeHZxNg?oc=5",
-      "published": "2026-10-01T00:45:22Z",
-      "tone": "bullish"
-    },
-    {
       "title": "S&P 500 climbs to record high on earnings optimism - Yahoo Finance Singapore",
       "source": "Yahoo Finance Singapore",
       "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE84TmVKaVBQUFItTHVZWjlUVWVfVG9BX3Rjb0FmTENmVmtMclB3NUdMREpyWlgzUW9WY3JCOUpOZXVmdDQtaGZ2U3U1OFlpZjdtN0hNajVvTHNiblJwX09Fd3RaUUVNNnVwVGEwd2NWRmdvMGlNRUs5NkJJNWNxUQ?oc=5",
@@ -39,6 +32,13 @@
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWGVpQWRLR19SM1hhdGdPN2RwTXl0LWhrVU5TRUpvc0ltbEhjazZObHpMRGx0NVBydTZldHlTYTNCV0RKUUY2R1YwUEFqWXdTNkxtS0FJbUkwLXh4NGRpeUhmZlNNVU52TzM0OW1vUFRpZUJmLVFCSU1ySlpLVHBPWGRyT2FLWENwNXg5cEN2c2JRVFJRMDF3akJuUVVENHpHczhzX3B0dm_SAa4BQVVfeXFMUHZJa1dVeDE2cGhpZXlYUGRGbjZzbWdZMjl0VzdWSmZFbzFKYjVvWmd3b0pZVEdEU3J5ckpyQ0ZDQTR3ODJybFB0S2VjMmg4QlpqWmFQNW9Pc0t5eDF0NlNFMkl6UDdGbUV4aDhNVm1Rd3B1cEhBNFpLMWx2VE1nZlVUejRZVjFkV3gtbFRrV1ZoUjZNSmxYcjdmZHZ5VGZyWFYyeWdvWFJBem5mTjl3?oc=5",
       "published": "2026-10-07T06:34:37Z",
       "tone": "bullish"
+    },
+    {
+      "title": "SPX: S&P 500 Marks First Close Above 7,800 as AI Rally Expands Beyond Tech - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPcU1iZndraXNFX0ZGVlVPYXZWdjFSSWs2Yjc0QW0wUUNlTGp6MzBjVTZRRmd6aDJCNmFyRVJDZ1hjRDdNVlRKcDJKNTdwcFd0Sjl0eTBJOHl4Rm9Na05GZzNEN3JNcWItbks5cEwyNjRyYVFLaHRZWU04d3BtWTNzVHRnZFZoTEJGaG14ZWxPQUZJcGdZMjJMYjZPbk1PVE5PWEZFMFJjNGlUdV8wdGppUG0wRjZwa2dCVUhrWUJHN0pJdjgwbi1MQUcyMDVseHZu?oc=5",
+      "published": "2026-10-07T06:11:00Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,7 +69,7 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 95
       }
     ],
     "headline_count": 143,
