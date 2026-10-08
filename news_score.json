@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-08T01:32:23Z",
+  "generated_at_utc": "2026-10-08T14:18:29Z",
   "window_days": 7,
-  "score": 9,
+  "score": 10,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; Wall Street rallies toward an all-time high - WPLG Local 10.",
+  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; Wall Street rallies toward an all-time high - WPLG Local 10.",
   "articles": [
     {
       "title": "S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian",
@@ -20,13 +20,6 @@
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 climbs to record high on earnings optimism - Yahoo Finance Singapore",
-      "source": "Yahoo Finance Singapore",
-      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE84TmVKaVBQUFItTHVZWjlUVWVfVG9BX3Rjb0FmTENmVmtMclB3NUdMREpyWlgzUW9WY3JCOUpOZXVmdDQtaGZ2U3U1OFlpZjdtN0hNajVvTHNiblJwX09Fd3RaUUVNNnVwVGEwd2NWRmdvMGlNRUs5NkJJNWNxUQ?oc=5",
-      "published": "2026-10-06T14:08:13Z",
-      "tone": "bullish"
-    },
-    {
       "title": "US stock market hits all-time high as investors continue to bet on AI - Al Jazeera",
       "source": "Al Jazeera",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWGVpQWRLR19SM1hhdGdPN2RwTXl0LWhrVU5TRUpvc0ltbEhjazZObHpMRGx0NVBydTZldHlTYTNCV0RKUUY2R1YwUEFqWXdTNkxtS0FJbUkwLXh4NGRpeUhmZlNNVU52TzM0OW1vUFRpZUJmLVFCSU1ySlpLVHBPWGRyT2FLWENwNXg5cEN2c2JRVFJRMDF3akJuUVVENHpHczhzX3B0dm_SAa4BQVVfeXFMUHZJa1dVeDE2cGhpZXlYUGRGbjZzbWdZMjl0VzdWSmZFbzFKYjVvWmd3b0pZVEdEU3J5ckpyQ0ZDQTR3ODJybFB0S2VjMmg4QlpqWmFQNW9Pc0t5eDF0NlNFMkl6UDdGbUV4aDhNVm1Rd3B1cEhBNFpLMWx2VE1nZlVUejRZVjFkV3gtbFRrV1ZoUjZNSmxYcjdmZHZ5VGZyWFYyeWdvWFJBem5mTjl3?oc=5",
@@ -39,6 +32,13 @@
       "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPcU1iZndraXNFX0ZGVlVPYXZWdjFSSWs2Yjc0QW0wUUNlTGp6MzBjVTZRRmd6aDJCNmFyRVJDZ1hjRDdNVlRKcDJKNTdwcFd0Sjl0eTBJOHl4Rm9Na05GZzNEN3JNcWItbks5cEwyNjRyYVFLaHRZWU04d3BtWTNzVHRnZFZoTEJGaG14ZWxPQUZJcGdZMjJMYjZPbk1PVE5PWEZFMFJjNGlUdV8wdGppUG0wRjZwa2dCVUhrWUJHN0pJdjgwbi1MQUcyMDVseHZu?oc=5",
       "published": "2026-10-07T06:11:00Z",
       "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 hits record high as AI stocks shrug off bond market slump - Financial Times",
+      "source": "Financial Times",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPd25OOGtLZGFQYm9wMjExWWRaWlhUTUdFQjJFTG5oLThEaFFWcUh2QThaeXd5NWVNeVhOQWZ1U1VGRGprN2xueDFqSVRHRWNMMTVLNjlrRHBGbV8wV0dScERTOXh1VzRaTlh4RkZBQTFPVGFGMnJvSkdmLUZLamllRmVHTWg?oc=5",
+      "published": "2026-10-06T13:30:05Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 94
       }
     ],
-    "headline_count": 143,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
