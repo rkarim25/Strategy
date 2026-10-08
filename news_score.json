@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-07T20:02:45Z",
+  "generated_at_utc": "2026-10-08T00:33:58Z",
   "window_days": 7,
   "score": 10,
   "label": "Bullish",
@@ -34,10 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street opens higher, S&P 500 scales first record high since mid-August - Investing.com Nigeria",
-      "source": "Investing.com Nigeria",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNMlE4dVJ0VmxYbHNrWTFsSzMxZ0s1NWk4ejU3Nld0WVBWWEZnbVJycGdiSFFNam4yRFdzX0c5Rm9kUnNxdS1sd2NkcEJ2QTVKWkhvcExnUWFoQS11QjRYZi12cWRwQU8taUhQSkdMVW9rbGxQQTEyZWx5LTgyNzF5M1ZRa3g5SXdsZkVlVkZocGJTMzVCenhVWV9CWG41bUxJNFdyRVJxcVlEQ2lMZkxWcFpKeU9CS1ZVNm1WZE40b0FCU0I3TXN5cw?oc=5",
-      "published": "2026-10-06T12:51:15Z",
+      "title": "US stock market hits all-time high as investors continue to bet on AI - Al Jazeera",
+      "source": "Al Jazeera",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWGVpQWRLR19SM1hhdGdPN2RwTXl0LWhrVU5TRUpvc0ltbEhjazZObHpMRGx0NVBydTZldHlTYTNCV0RKUUY2R1YwUEFqWXdTNkxtS0FJbUkwLXh4NGRpeUhmZlNNVU52TzM0OW1vUFRpZUJmLVFCSU1ySlpLVHBPWGRyT2FLWENwNXg5cEN2c2JRVFJRMDF3akJuUVVENHpHczhzX3B0dm_SAa4BQVVfeXFMUHZJa1dVeDE2cGhpZXlYUGRGbjZzbWdZMjl0VzdWSmZFbzFKYjVvWmd3b0pZVEdEU3J5ckpyQ0ZDQTR3ODJybFB0S2VjMmg4QlpqWmFQNW9Pc0t5eDF0NlNFMkl6UDdGbUV4aDhNVm1Rd3B1cEhBNFpLMWx2VE1nZlVUejRZVjFkV3gtbFRrV1ZoUjZNSmxYcjdmZHZ5VGZyWFYyeWdvWFJBem5mTjl3?oc=5",
+      "published": "2026-10-07T06:34:37Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -72,7 +72,7 @@
         "articles": 94
       }
     ],
-    "headline_count": 142,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
