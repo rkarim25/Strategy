@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-10-08T20:00:59Z",
+  "generated_at_utc": "2026-10-09T00:49:12Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian. Bearish offsets: Update: US Equity Indexes Drop as Sharp Sell-Off in Semiconductor Heavyweights Sinks Technology While Crude Oil Surges; Update: Equity Indexes Fall Intraday as Fed's Waller Says More Rate Hikes Needed.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; S&P 500 climbs to record high on earnings optimism - Yahoo Finance Singapore. Bearish offsets: U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com.",
   "articles": [
-    {
-      "title": "Update: US Equity Indexes Drop as Sharp Sell-Off in Semiconductor Heavyweights Sinks Technology While Crude Oil Surges",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-drop-sharp-193942601.html?.tsrc=rss",
-      "published": "2026-10-08T19:39:42Z",
-      "tone": "bearish"
-    },
     {
       "title": "S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian",
       "source": "The Guardian",
@@ -20,25 +13,32 @@
       "tone": "bullish"
     },
     {
-      "title": "Update: Equity Indexes Fall Intraday as Fed's Waller Says More Rate Hikes Needed",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/equity-indexes-fall-intraday-fed-180744942.html?.tsrc=rss",
-      "published": "2026-10-08T18:07:44Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Nasdaq drops, weighed down by AI stock sell-off after OpenAI revenue disappoints: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/07/stock-market-today-live-updates-.html",
-      "published": "2026-10-08T19:54:20Z",
-      "tone": "bearish"
-    },
-    {
       "title": "U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com",
       "source": "Clarin.com",
       "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxNSVRIeHUzemdGQTBmbVU5YjNTTmsta0ZxbmUyMlhYRFJQRkJIazBvUE9MSHZHUGFySzFwdndKUEZrT044ZnZUTkxtZHMwWmlWMDZXejlKZl9Ra2JIa3RKM3plUUhCQVJoMU5HS28wUkR0Q28yOEg2RGtOakh4NThqb3lRcGk5ZTlWd2U0aFhrczRJUURfRFZsVVlUWV83NmhjMGlNM0lqdEZ3U0M0dnlSMVFlaDkzX3hydGMxeVNVZUwwNEpLajFDWWFpVGJjb19jR3RrM0RpZVVKVnPSAeABQVVfeXFMUEhSYlpoVEVzVTU5bzRjd21NMUw1OGxZZE9kQ05VT1ZvUGJxY1g4OVVpcXFENWYxX3FmZVVlOWw1dDE5NFNubWRKY3o3bF8tSzZXTVdyR29pUFVBZ2UtS0hKbE81bU82VGRvR0hHZDZ3Rnl6c2lxT0hOVGx4VGJLazZXN1cxVHMxbG8yaUZLR05MN0c2dEM4WjZZYno3WFhwZXh2VERRLXN0UVpaaFB6WVN3SXlpWXNIcjMxR1ZaMlptX1h1czE3Uzg5WEtsMGI5M216Qkp2SWRVWGdpLUZYd2E?oc=5",
       "published": "2026-10-08T15:04:08Z",
       "tone": "bearish"
+    },
+    {
+      "title": "S&P 500 climbs to record high on earnings optimism - Yahoo Finance Singapore",
+      "source": "Yahoo Finance Singapore",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE84TmVKaVBQUFItTHVZWjlUVWVfVG9BX3Rjb0FmTENmVmtMclB3NUdMREpyWlgzUW9WY3JCOUpOZXVmdDQtaGZ2U3U1OFlpZjdtN0hNajVvTHNiblJwX09Fd3RaUUVNNnVwVGEwd2NWRmdvMGlNRUs5NkJJNWNxUQ?oc=5",
+      "published": "2026-10-06T14:08:13Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "These stocks reporting next week have a track record of earnings beats and share gains",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/08/stocks-reporting-next-week-with-track-record-of-earnings-beats-share-gains.html",
+      "published": "2026-10-08T19:34:21Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "What Sent Cloudflare Stock Higher?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.trefis.com/articles/617945/what-sent-cloudflare-stock-higher/2026-10-08?.tsrc=rss",
+      "published": "2026-10-09T00:12:13Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 16
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 94
+        "articles": 95
       }
     ],
-    "headline_count": 144,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
