@@ -1,22 +1,22 @@
 {
-  "generated_at_utc": "2026-10-09T14:03:08Z",
+  "generated_at_utc": "2026-10-09T19:36:05Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; S&P 500 tags record high as markets climb on tech rally - Seeking Alpha. Bearish offsets: U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Zscaler Jumps 6% on Reaffirmed Revenue Outlook and IBM Security Pact; Palo Alto and CrowdStrike Gain 4%; S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian. Bearish offsets: U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com; Americans' debt problems are flashing a warning not seen since the Great Recession.",
   "articles": [
+    {
+      "title": "Zscaler Jumps 6% on Reaffirmed Revenue Outlook and IBM Security Pact; Palo Alto and CrowdStrike Gain 4%",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://247wallst.com/investing/2026/10/09/zscaler-jumps-6-on-reaffirmed-revenue-outlook-and-ibm-security-pact-palo-alto-and-crowdstrike-gain-4/?.tsrc=rss",
+      "published": "2026-10-09T18:02:32Z",
+      "tone": "bullish"
+    },
     {
       "title": "S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian",
       "source": "The Guardian",
       "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOMmNydTJJRjhlaHZkMm1FYXBxeTNkcXRnLTA1S2YtNWhicmVhc2txU3pfb0p4NmFfVzRRQUdaRVhaUXROMy15a2VSOWZVV3oyTTF3TWZ4MEg3dkJOcTRBUzBIdEJJcXZMeWdBR0FsMHY1UldtTnV5bVRuWDBhQU16WXlkbmtpVzdCWDl3?oc=5",
       "published": "2026-10-06T20:38:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 tags record high as markets climb on tech rally - Seeking Alpha",
-      "source": "Seeking Alpha",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQaXFYZHVCTmJoaFJNakhVcUJVekJ0Sk5LZEtxb25xSW45Tzdkb3VubmFiN0I0VjdGUy1kWEFDeG0ydmoxT280QnpZRFlRM3RsMF81c1FJNkRISHRIWDcwSUJUelFCWnd0dFZaQ2JEcTdlU0t1dE9xTjl6QWNiMkZKZkU3cXlHN25oeG1DMUk5SmYzNW5mUVhn?oc=5",
-      "published": "2026-10-06T15:10:00Z",
       "tone": "bullish"
     },
     {
@@ -27,18 +27,18 @@
       "tone": "bearish"
     },
     {
-      "title": "US stock market hits all-time high as investors continue to bet on AI - Al Jazeera",
-      "source": "Al Jazeera",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWGVpQWRLR19SM1hhdGdPN2RwTXl0LWhrVU5TRUpvc0ltbEhjazZObHpMRGx0NVBydTZldHlTYTNCV0RKUUY2R1YwUEFqWXdTNkxtS0FJbUkwLXh4NGRpeUhmZlNNVU52TzM0OW1vUFRpZUJmLVFCSU1ySlpLVHBPWGRyT2FLWENwNXg5cEN2c2JRVFJRMDF3akJuUVVENHpHczhzX3B0dm_SAa4BQVVfeXFMUHZJa1dVeDE2cGhpZXlYUGRGbjZzbWdZMjl0VzdWSmZFbzFKYjVvWmd3b0pZVEdEU3J5ckpyQ0ZDQTR3ODJybFB0S2VjMmg4QlpqWmFQNW9Pc0t5eDF0NlNFMkl6UDdGbUV4aDhNVm1Rd3B1cEhBNFpLMWx2VE1nZlVUejRZVjFkV3gtbFRrV1ZoUjZNSmxYcjdmZHZ5VGZyWFYyeWdvWFJBem5mTjl3?oc=5",
-      "published": "2026-10-07T06:34:37Z",
-      "tone": "bullish"
+      "title": "Americans' debt problems are flashing a warning not seen since the Great Recession",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/09/american-debt-delinquency.html",
+      "published": "2026-10-09T19:18:24Z",
+      "tone": "bearish"
     },
     {
-      "title": "SPX: S&P 500 Marks First Close Above 7,800 as AI Rally Expands Beyond Tech - TradingView",
-      "source": "TradingView",
-      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPcU1iZndraXNFX0ZGVlVPYXZWdjFSSWs2Yjc0QW0wUUNlTGp6MzBjVTZRRmd6aDJCNmFyRVJDZ1hjRDdNVlRKcDJKNTdwcFd0Sjl0eTBJOHl4Rm9Na05GZzNEN3JNcWItbks5cEwyNjRyYVFLaHRZWU04d3BtWTNzVHRnZFZoTEJGaG14ZWxPQUZJcGdZMjJMYjZPbk1PVE5PWEZFMFJjNGlUdV8wdGppUG0wRjZwa2dCVUhrWUJHN0pJdjgwbi1MQUcyMDVseHZu?oc=5",
-      "published": "2026-10-07T06:11:00Z",
-      "tone": "bullish"
+      "title": "Wall Street sees buying opportunity in banks as shares tank ahead of earnings",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/09/bank-stocks-selloff-q3-earnings.html",
+      "published": "2026-10-09T17:32:38Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,7 +69,7 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 95
+        "articles": 94
       }
     ],
     "headline_count": 144,
