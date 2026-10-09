@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-10-09T01:43:19Z",
+  "generated_at_utc": "2026-10-09T14:03:08Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; S&P 500 climbs to record high on earnings optimism - Yahoo Finance Singapore. Bearish offsets: U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian; S&P 500 tags record high as markets climb on tech rally - Seeking Alpha. Bearish offsets: U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com.",
   "articles": [
     {
       "title": "S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian",
       "source": "The Guardian",
       "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOMmNydTJJRjhlaHZkMm1FYXBxeTNkcXRnLTA1S2YtNWhicmVhc2txU3pfb0p4NmFfVzRRQUdaRVhaUXROMy15a2VSOWZVV3oyTTF3TWZ4MEg3dkJOcTRBUzBIdEJJcXZMeWdBR0FsMHY1UldtTnV5bVRuWDBhQU16WXlkbmtpVzdCWDl3?oc=5",
       "published": "2026-10-06T20:38:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 tags record high as markets climb on tech rally - Seeking Alpha",
+      "source": "Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQaXFYZHVCTmJoaFJNakhVcUJVekJ0Sk5LZEtxb25xSW45Tzdkb3VubmFiN0I0VjdGUy1kWEFDeG0ydmoxT280QnpZRFlRM3RsMF81c1FJNkRISHRIWDcwSUJUelFCWnd0dFZaQ2JEcTdlU0t1dE9xTjl6QWNiMkZKZkU3cXlHN25oeG1DMUk5SmYzNW5mUVhn?oc=5",
+      "published": "2026-10-06T15:10:00Z",
       "tone": "bullish"
     },
     {
@@ -20,24 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "S&P 500 climbs to record high on earnings optimism - Yahoo Finance Singapore",
-      "source": "Yahoo Finance Singapore",
-      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE84TmVKaVBQUFItTHVZWjlUVWVfVG9BX3Rjb0FmTENmVmtMclB3NUdMREpyWlgzUW9WY3JCOUpOZXVmdDQtaGZ2U3U1OFlpZjdtN0hNajVvTHNiblJwX09Fd3RaUUVNNnVwVGEwd2NWRmdvMGlNRUs5NkJJNWNxUQ?oc=5",
-      "published": "2026-10-06T14:08:13Z",
+      "title": "US stock market hits all-time high as investors continue to bet on AI - Al Jazeera",
+      "source": "Al Jazeera",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWGVpQWRLR19SM1hhdGdPN2RwTXl0LWhrVU5TRUpvc0ltbEhjazZObHpMRGx0NVBydTZldHlTYTNCV0RKUUY2R1YwUEFqWXdTNkxtS0FJbUkwLXh4NGRpeUhmZlNNVU52TzM0OW1vUFRpZUJmLVFCSU1ySlpLVHBPWGRyT2FLWENwNXg5cEN2c2JRVFJRMDF3akJuUVVENHpHczhzX3B0dm_SAa4BQVVfeXFMUHZJa1dVeDE2cGhpZXlYUGRGbjZzbWdZMjl0VzdWSmZFbzFKYjVvWmd3b0pZVEdEU3J5ckpyQ0ZDQTR3ODJybFB0S2VjMmg4QlpqWmFQNW9Pc0t5eDF0NlNFMkl6UDdGbUV4aDhNVm1Rd3B1cEhBNFpLMWx2VE1nZlVUejRZVjFkV3gtbFRrV1ZoUjZNSmxYcjdmZHZ5VGZyWFYyeWdvWFJBem5mTjl3?oc=5",
+      "published": "2026-10-07T06:34:37Z",
       "tone": "bullish"
     },
     {
-      "title": "These stocks reporting next week have a track record of earnings beats and share gains",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/08/stocks-reporting-next-week-with-track-record-of-earnings-beats-share-gains.html",
-      "published": "2026-10-08T19:34:21Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "What Sent Cloudflare Stock Higher?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.trefis.com/articles/617945/what-sent-cloudflare-stock-higher/2026-10-08?.tsrc=rss",
-      "published": "2026-10-09T00:12:13Z",
+      "title": "SPX: S&P 500 Marks First Close Above 7,800 as AI Rally Expands Beyond Tech - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPcU1iZndraXNFX0ZGVlVPYXZWdjFSSWs2Yjc0QW0wUUNlTGp6MzBjVTZRRmd6aDJCNmFyRVJDZ1hjRDdNVlRKcDJKNTdwcFd0Sjl0eTBJOHl4Rm9Na05GZzNEN3JNcWItbks5cEwyNjRyYVFLaHRZWU04d3BtWTNzVHRnZFZoTEJGaG14ZWxPQUZJcGdZMjJMYjZPbk1PVE5PWEZFMFJjNGlUdV8wdGppUG0wRjZwa2dCVUhrWUJHN0pJdjgwbi1MQUcyMDVseHZu?oc=5",
+      "published": "2026-10-07T06:11:00Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 17
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -72,7 +72,7 @@
         "articles": 95
       }
     ],
-    "headline_count": 142,
+    "headline_count": 144,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
