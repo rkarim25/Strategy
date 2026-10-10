@@ -1,24 +1,10 @@
 {
-  "generated_at_utc": "2026-10-09T19:36:05Z",
+  "generated_at_utc": "2026-10-10T00:22:57Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Zscaler Jumps 6% on Reaffirmed Revenue Outlook and IBM Security Pact; Palo Alto and CrowdStrike Gain 4%; S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian. Bearish offsets: U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com; Americans' debt problems are flashing a warning not seen since the Great Recession.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Rate Shock Spreads Beneath AI-Fueled Market Rally - Bloomberg.com; US stock market hits all-time high as investors continue to bet on AI - Al Jazeera. Bearish offsets: U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com; Americans' debt problems are flashing a warning not seen since the Great Recession.",
   "articles": [
-    {
-      "title": "Zscaler Jumps 6% on Reaffirmed Revenue Outlook and IBM Security Pact; Palo Alto and CrowdStrike Gain 4%",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/10/09/zscaler-jumps-6-on-reaffirmed-revenue-outlook-and-ibm-security-pact-palo-alto-and-crowdstrike-gain-4/?.tsrc=rss",
-      "published": "2026-10-09T18:02:32Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500 and Nasdaq surge to record highs after AI chipmaker rally - The Guardian",
-      "source": "The Guardian",
-      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOMmNydTJJRjhlaHZkMm1FYXBxeTNkcXRnLTA1S2YtNWhicmVhc2txU3pfb0p4NmFfVzRRQUdaRVhaUXROMy15a2VSOWZVV3oyTTF3TWZ4MEg3dkJOcTRBUzBIdEJJcXZMeWdBR0FsMHY1UldtTnV5bVRuWDBhQU16WXlkbmtpVzdCWDl3?oc=5",
-      "published": "2026-10-06T20:38:00Z",
-      "tone": "bullish"
-    },
     {
       "title": "U.S. stock market drops: S&P 500 and Nasdaq fall as oil surges past $104 and inflation fears return - Clarin.com",
       "source": "Clarin.com",
@@ -34,10 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street sees buying opportunity in banks as shares tank ahead of earnings",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/09/bank-stocks-selloff-q3-earnings.html",
-      "published": "2026-10-09T17:32:38Z",
+      "title": "Wall Street\u2019s Rate Shock Spreads Beneath AI-Fueled Market Rally - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxORnFaNG93ZHlzb0F2b3F5MXNoQzEtLXhZOVVjV2xRSUJ6NmF6ZE81UGFqd2dmRnJNZUhncS04RTdsY042TVpabE1Va0lLMjc3aU9GVXV3cXZKdlpiZ1J3SHBqc0dfNmpCOFRCSWYxR05lWHBYcm01T21aRldaZl9tY1B0NFVxVU01VEN0aXF5dEFQMDFBRnp1X2hkSjRjZ3RQVE5QN0w4VmdmZzMtY1BwMjJJbVk?oc=5",
+      "published": "2026-10-09T20:34:41Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "US stock market hits all-time high as investors continue to bet on AI - Al Jazeera",
+      "source": "Al Jazeera",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWGVpQWRLR19SM1hhdGdPN2RwTXl0LWhrVU5TRUpvc0ltbEhjazZObHpMRGx0NVBydTZldHlTYTNCV0RKUUY2R1YwUEFqWXdTNkxtS0FJbUkwLXh4NGRpeUhmZlNNVU52TzM0OW1vUFRpZUJmLVFCSU1ySlpLVHBPWGRyT2FLWENwNXg5cEN2c2JRVFJRMDF3akJuUVVENHpHczhzX3B0dm_SAa4BQVVfeXFMUHZJa1dVeDE2cGhpZXlYUGRGbjZzbWdZMjl0VzdWSmZFbzFKYjVvWmd3b0pZVEdEU3J5ckpyQ0ZDQTR3ODJybFB0S2VjMmg4QlpqWmFQNW9Pc0t5eDF0NlNFMkl6UDdGbUV4aDhNVm1Rd3B1cEhBNFpLMWx2VE1nZlVUejRZVjFkV3gtbFRrV1ZoUjZNSmxYcjdmZHZ5VGZyWFYyeWdvWFJBem5mTjl3?oc=5",
+      "published": "2026-10-07T06:34:37Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "JFrog, Bandwidth, Qualys, Asure Software, and DigitalOcean Stocks Trade Up, What You Need To Know",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jfrog-bandwidth-qualys-asure-software-001110921.html?.tsrc=rss",
+      "published": "2026-10-10T00:11:10Z",
       "tone": "bearish"
     }
   ],
