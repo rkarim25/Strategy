@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-10-12T16:23:29Z",
+  "generated_at_utc": "2026-10-12T23:06:45Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - The Motley Fool; Wall Street\u2019s Rate Shock Spreads Beneath AI-Fueled Market Rally - Bloomberg.com. Bearish offsets: Inflation likely peaked for 2026 but will remain sticky, according to prediction markets; SCHD Is Down 6% From Its Peak. Here's Why History Says It's Still a Buy..",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Earnings beats are now the norm. What the stock market needs to keep rallying; The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance. Bearish offsets: Inflation likely peaked for 2026 but will remain sticky, according to prediction markets.",
   "articles": [
     {
-      "title": "The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - The Motley Fool",
-      "source": "The Motley Fool",
-      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQUUhvWUswX21wSTdyT19YUUdIRnhDdUtqSDQxX2xKQWJ0ZFpIYlNuQkJFQWFTTWRpQTRmSHBVZFlQYjlDbE5xRWl6SjcybkFhdHllX08ydjRBUWNXdXJFc0d0MU04blNaajlzenB4eWx3MUtFT3R2ZVVkdGFJVGQzMVhaRldCZw?oc=5",
-      "published": "2026-10-11T17:44:00Z",
+      "title": "Earnings beats are now the norm. What the stock market needs to keep rallying",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/07/here-comes-third-quarter-earnings-season-booming-profits-could-propel-the-sp-500-to-new-heights.html",
+      "published": "2026-10-12T20:35:51Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSm90RWIzdkZpQWRDMDJmbzc1QU9kSzV2ZkI0b0otQmg5SzZyRDBleGZZTmtBelB6OW1ReG9iR3hnc2p3SXh0cXM5MzJQNFFwYnZYY1JHVHBMLVRNNG1fSElZb2VxeEtzalljYzJhczJTalNiUHJ5dGE5R2lCc0UweUFma0loTmJvYzRZZnVaNA?oc=5",
+      "published": "2026-10-11T17:04:00Z",
       "tone": "bullish"
     },
     {
@@ -20,13 +27,6 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today: Dow Outperforms In Mixed Trade; Tanker Firm Navios Glides Into Buy Zone (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/f6194faa-ca8b-383a-a9ab-a53b13d91fd1/stock-market-today%3A-dow.html?.tsrc=rss",
-      "published": "2026-10-12T15:56:02Z",
-      "tone": "bullish"
-    },
-    {
       "title": "Inflation likely peaked for 2026 but will remain sticky, according to prediction markets",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/10/12/inflation-will-remain-sticky-in-2026-according-to-prediction-markets.html",
@@ -34,11 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "SCHD Is Down 6% From Its Peak. Here's Why History Says It's Still a Buy.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/investing/2026/10/12/schd-is-down-6-from-its-peak-heres-why-history-say/?.tsrc=rss",
-      "published": "2026-10-12T16:05:00Z",
-      "tone": "bearish"
+      "title": "Katie Stockton says retail stocks could be primed for a counter-trend rally. These stocks may lead the bounce",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/12/katie-stockton-says-retail-stocks-could-be-primed-for-a-counter-trend-rally-these-stocks-may-lead-the-bounce.html",
+      "published": "2026-10-12T19:09:50Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 89
       }
     ],
-    "headline_count": 139,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
