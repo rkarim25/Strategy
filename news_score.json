@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-13T02:18:32Z",
+  "generated_at_utc": "2026-10-13T02:49:25Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
@@ -9,7 +9,7 @@
       "title": "SK Hynix, SoftBank shares plunge as tech stocks in Asia track Wall Street chip sell-off",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/10/13/sk-hynix-softbank-samsung-electronics-shares-tech-stocks-fall.html",
-      "published": "2026-10-13T02:11:41Z",
+      "published": "2026-10-13T02:46:41Z",
       "tone": "bearish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 87
       }
     ],
-    "headline_count": 137,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
