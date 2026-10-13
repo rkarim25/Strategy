@@ -1,10 +1,24 @@
 {
-  "generated_at_utc": "2026-10-12T23:06:45Z",
+  "generated_at_utc": "2026-10-13T02:18:32Z",
   "window_days": 7,
   "score": 8,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Earnings beats are now the norm. What the stock market needs to keep rallying; The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance. Bearish offsets: Inflation likely peaked for 2026 but will remain sticky, according to prediction markets.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Did The Market Read Super Micro Computer Stock Right?; Earnings beats are now the norm. What the stock market needs to keep rallying. Bearish offsets: SK Hynix, SoftBank shares plunge as tech stocks in Asia track Wall Street chip sell-off.",
   "articles": [
+    {
+      "title": "SK Hynix, SoftBank shares plunge as tech stocks in Asia track Wall Street chip sell-off",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/13/sk-hynix-softbank-samsung-electronics-shares-tech-stocks-fall.html",
+      "published": "2026-10-13T02:11:41Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Did The Market Read Super Micro Computer Stock Right?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.trefis.com/articles/618322/did-the-market-read-super-micro-computer-stock-right/2026-10-12?.tsrc=rss",
+      "published": "2026-10-12T23:09:49Z",
+      "tone": "bullish"
+    },
     {
       "title": "Earnings beats are now the norm. What the stock market needs to keep rallying",
       "source": "CNBC Markets",
@@ -25,20 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxORnFaNG93ZHlzb0F2b3F5MXNoQzEtLXhZOVVjV2xRSUJ6NmF6ZE81UGFqd2dmRnJNZUhncS04RTdsY042TVpabE1Va0lLMjc3aU9GVXV3cXZKdlpiZ1J3SHBqc0dfNmpCOFRCSWYxR05lWHBYcm01T21aRldaZl9tY1B0NFVxVU01VEN0aXF5dEFQMDFBRnp1X2hkSjRjZ3RQVE5QN0w4VmdmZzMtY1BwMjJJbVk?oc=5",
       "published": "2026-10-09T20:34:41Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Inflation likely peaked for 2026 but will remain sticky, according to prediction markets",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/12/inflation-will-remain-sticky-in-2026-according-to-prediction-markets.html",
-      "published": "2026-10-12T15:37:26Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Katie Stockton says retail stocks could be primed for a counter-trend rally. These stocks may lead the bounce",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/12/katie-stockton-says-retail-stocks-could-be-primed-for-a-counter-trend-rally-these-stocks-may-lead-the-bounce.html",
-      "published": "2026-10-12T19:09:50Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,7 +69,7 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 88
       }
     ],
     "headline_count": 137,
