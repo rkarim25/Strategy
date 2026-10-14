@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-10-14T00:50:20Z",
+  "generated_at_utc": "2026-10-14T12:35:45Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance; Can This Number Push Avis Budget Stock Higher?. Bearish offsets: Williams says Fed may not have to hike rates in 2027, at odds with traders; How Much Could You Lose In T-Mobile Stock?.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Premarket movers: Alibaba gains on new AI glasses; Liquidia rallies as legal eases; The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance. Bearish offsets: How Trump\u2019s tariffs and Iran war are becoming liabilities in Michigan\u2019s Senate race; Williams says Fed may not have to hike rates in 2027, at odds with traders.",
   "articles": [
+    {
+      "title": "Premarket movers: Alibaba gains on new AI glasses; Liquidia rallies as legal eases",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/premarket-movers-alibaba-gains-ai-111122644.html?.tsrc=rss",
+      "published": "2026-10-14T11:11:22Z",
+      "tone": "bullish"
+    },
     {
       "title": "The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance",
       "source": "Yahoo Finance",
@@ -13,32 +20,25 @@
       "tone": "bullish"
     },
     {
+      "title": "BlackRock Jumps On Across The Board Earnings Beat; State Street Plummets",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/2003bc10-08fb-37ce-a232-c9fea7712372/blackrock-jumps-on-across-the.html?.tsrc=rss",
+      "published": "2026-10-14T12:26:26Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "How Trump\u2019s tariffs and Iran war are becoming liabilities in Michigan\u2019s Senate race",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/14/mike-rogers-trump-tariffs-michigan-senate-election.html",
+      "published": "2026-10-14T10:30:01Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Williams says Fed may not have to hike rates in 2027, at odds with traders",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/10/13/john-williams-fed-rate-hikes-2027.html",
       "published": "2026-10-13T19:46:12Z",
       "tone": "bearish"
-    },
-    {
-      "title": "How Much Could You Lose In T-Mobile Stock?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.trefis.com/articles/618472/how-much-could-you-lose-in-t-mobile-stock/2026-10-13?.tsrc=rss",
-      "published": "2026-10-13T23:56:48Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Down 12.5% in 2 Months, Is the Sell-Off in Realty Income a Buying Opportunity for Income Investors?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/investing/2026/10/13/down-125-in-2-months-is-the-sell-off-in-realty-inc/?.tsrc=rss",
-      "published": "2026-10-14T00:20:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Can This Number Push Avis Budget Stock Higher?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.trefis.com/articles/618465/can-this-number-push-avis-budget-stock-higher/2026-10-13?.tsrc=rss",
-      "published": "2026-10-14T00:09:33Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,7 +69,7 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 86
       }
     ],
     "headline_count": 136,
