@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-14T17:43:46Z",
+  "generated_at_utc": "2026-10-14T23:32:23Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance. Bearish offsets: Stock Market Today: Stocks Head Lower as Hot Inflation Puts Another Fed Rate Hike Back in Play - 24/7 Wall St.; Stock Market Midday, Oct. 14: Hot Inflation Weighs on Markets, CoreWeave Plummets 15%.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Berkshire Hathaway heads for 10th consecutive winning day. What's driving the stock. Bearish offsets: Stock Market Today: Stocks Head Lower as Hot Inflation Puts Another Fed Rate Hike Back in Play - 24/7 Wall St.; U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ.",
   "articles": [
     {
       "title": "Stock Market Today: Stocks Head Lower as Hot Inflation Puts Another Fed Rate Hike Back in Play - 24/7 Wall St.",
@@ -13,18 +13,25 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Midday, Oct. 14: Hot Inflation Weighs on Markets, CoreWeave Plummets 15%",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/10/14/stock-market-midday-oct-14-hot-inflation-weighs-on-markets-coreweave-plummets-15/?.tsrc=rss",
-      "published": "2026-10-14T16:47:53Z",
+      "title": "U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOanVqOHEyMkpxVE84VV9QV1hDdUp2bDVQTDd6elh1TmswZVY1NFhXYTlHMlJGWDh3QjR6R0VjZ29KZndKWm1PbDFUX1RZWXUwR0JkcVUxaWdHVUNZVmphTnBpV2VJQ0Y5emJfS3ppUXh6WVIydHB4MGpSZ2VKNUExVUNKdm85bWthUzNSSGgzZm5DRG9TYjZ5THdxYw?oc=5",
+      "published": "2026-10-14T21:32:00Z",
       "tone": "bearish"
     },
     {
-      "title": "Wall St set for lower open as hot inflation data fuels rate-hike bets - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOaDBmaW4tZmgyRnVGRWhpV0tQYlpic3Y2a1gyRm53Z1hFTXhRRWN5ZGNyb0laZjZHZ0hGd2piUkxiOUg1aWJoODB2X3N6d0Rwb3NkSjV6cGR0eDZ5dkJLOW9qanEtY0JINksxdnVBdDliZTlvU2R2WWwza0NQclNTWTFUSGtjQUE3a1NKTUFpYWs?oc=5",
-      "published": "2026-10-14T13:17:06Z",
+      "title": "Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPMDkzb0Zhb0ExSzhlSnR6c25HbzdpY2g1djVFZ1R4eVktaWtCZ2gya1lEdHpzcHlEM1VITE1Pdlc1MmlDclhQQmxOWC13NXdXZjhPOEYtUnc3bm80eThIZ0lEam8tN0hXV3kxNnhob3g5OHFxNHd5VzJsTks4SzlJR0JRVE5LZ2JMbXhYNFhvOC1yTUJ5bWFEN0JWTFdpaFkxN2c?oc=5",
+      "published": "2026-10-14T20:43:04Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Berkshire Hathaway heads for 10th consecutive winning day. What's driving the stock",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/14/berkshire-hathaway-stock-winning-streak.html",
+      "published": "2026-10-14T18:56:55Z",
+      "tone": "bullish"
     },
     {
       "title": "BlackRock's Larry Fink warns a data center moratorium could trigger a recession",
@@ -32,13 +39,6 @@
       "url": "https://www.cnbc.com/2026/10/14/blackrocks-fink-warns-data-center-moratorium-could-spark-a-recession.html",
       "published": "2026-10-14T16:27:12Z",
       "tone": "bearish"
-    },
-    {
-      "title": "The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSm90RWIzdkZpQWRDMDJmbzc1QU9kSzV2ZkI0b0otQmg5SzZyRDBleGZZTmtBelB6OW1ReG9iR3hnc2p3SXh0cXM5MzJQNFFwYnZYY1JHVHBMLVRNNG1fSElZb2VxeEtzalljYzJhczJTalNiUHJ5dGE5R2lCc0UweUFma0loTmJvYzRZZnVaNA?oc=5",
-      "published": "2026-10-11T17:04:00Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 85
       }
     ],
-    "headline_count": 135,
+    "headline_count": 133,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
