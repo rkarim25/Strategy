@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-14T00:01:21Z",
+  "generated_at_utc": "2026-10-14T00:50:20Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance; Mastercard is up 8 days in a row. The charts indicate the run isn't over. Bearish offsets: Williams says Fed may not have to hike rates in 2027, at odds with traders; Micron sinks, other memory-linked names dip for a second day.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance; Can This Number Push Avis Budget Stock Higher?. Bearish offsets: Williams says Fed may not have to hike rates in 2027, at odds with traders; How Much Could You Lose In T-Mobile Stock?.",
   "articles": [
     {
       "title": "The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance",
@@ -20,24 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "Micron sinks, other memory-linked names dip for a second day",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/13/sk-hynix-softbank-samsung-electronics-shares-tech-stocks-fall.html",
-      "published": "2026-10-13T20:12:36Z",
+      "title": "How Much Could You Lose In T-Mobile Stock?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.trefis.com/articles/618472/how-much-could-you-lose-in-t-mobile-stock/2026-10-13?.tsrc=rss",
+      "published": "2026-10-13T23:56:48Z",
       "tone": "bearish"
     },
     {
-      "title": "Mastercard is up 8 days in a row. The charts indicate the run isn't over",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/13/mastercard-is-up-8-days-in-a-row-the-charts-indicate-the-run-isnt-over.html",
-      "published": "2026-10-13T20:09:23Z",
-      "tone": "bullish"
+      "title": "Down 12.5% in 2 Months, Is the Sell-Off in Realty Income a Buying Opportunity for Income Investors?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/investing/2026/10/13/down-125-in-2-months-is-the-sell-off-in-realty-inc/?.tsrc=rss",
+      "published": "2026-10-14T00:20:00Z",
+      "tone": "bearish"
     },
     {
-      "title": "S&P 500 Record Rally Meets Risk of Peaking Earnings Growth - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNOEdrZmZnamdETXpvT3d0Q29fTHBOMy1aRWNmR2oxQUtGVGtXc0RGMHg0MGgtaWNEUkFiQlFCUGg0VXhzak9tUDBYT3BNTHZ6bG1vTlFBekZFWG5DcnhMYjd1eU4zb2RaSGNYeExvMWNyaHBQcVBTVGlET0w3YWdfWVlLQmRYUjhtYkphS3A0VWVfbWxHajRhZnNGLWhpcmx2dnpHaVJrenBfREZMZXc?oc=5",
-      "published": "2026-10-13T14:39:02Z",
+      "title": "Can This Number Push Avis Budget Stock Higher?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.trefis.com/articles/618465/can-this-number-push-avis-budget-stock-higher/2026-10-13?.tsrc=rss",
+      "published": "2026-10-14T00:09:33Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 88
+        "articles": 87
       }
     ],
-    "headline_count": 137,
+    "headline_count": 136,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
