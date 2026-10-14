@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-13T20:27:54Z",
+  "generated_at_utc": "2026-10-14T00:01:21Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance; Wall Street\u2019s Rate Shock Spreads Beneath AI-Fueled Market Rally - Bloomberg.com. Bearish offsets: Williams says Fed may not have to hike rates in 2027, at odds with traders; Wall St edges lower as chips fall; markets assess big bank earnings - Yahoo Finance.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance; Mastercard is up 8 days in a row. The charts indicate the run isn't over. Bearish offsets: Williams says Fed may not have to hike rates in 2027, at odds with traders; Micron sinks, other memory-linked names dip for a second day.",
   "articles": [
     {
       "title": "The S&P 500 Just Hit a Record High -- Here's How Much Higher It Can Climb, According to the Wall Street Consensus - Yahoo Finance",
@@ -20,25 +20,25 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street\u2019s Rate Shock Spreads Beneath AI-Fueled Market Rally - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxORnFaNG93ZHlzb0F2b3F5MXNoQzEtLXhZOVVjV2xRSUJ6NmF6ZE81UGFqd2dmRnJNZUhncS04RTdsY042TVpabE1Va0lLMjc3aU9GVXV3cXZKdlpiZ1J3SHBqc0dfNmpCOFRCSWYxR05lWHBYcm01T21aRldaZl9tY1B0NFVxVU01VEN0aXF5dEFQMDFBRnp1X2hkSjRjZ3RQVE5QN0w4VmdmZzMtY1BwMjJJbVk?oc=5",
-      "published": "2026-10-09T20:34:41Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall St edges lower as chips fall; markets assess big bank earnings - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNOG1ELVQ4ZWozLWxtUXViQ1FxSTYxYzdLOUVBZC1QdVhNRlJ4ck1xWmlLNHY4R1I4Qmt0SHlfMGwybzAtN2MzSVllZkxkYVZLQVkxdXFaZ3d3YjRpZU03U0liUS0zWmhTQXUzTElsRWs1M1MwekNqSzc5djNLZWJ1V01UMDUwWEFCQWlFQzBYbGRHUQ?oc=5",
-      "published": "2026-10-13T17:18:58Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Micron sinks, other memory-linked names dip for a second day",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/10/13/sk-hynix-softbank-samsung-electronics-shares-tech-stocks-fall.html",
       "published": "2026-10-13T20:12:36Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Mastercard is up 8 days in a row. The charts indicate the run isn't over",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/13/mastercard-is-up-8-days-in-a-row-the-charts-indicate-the-run-isnt-over.html",
+      "published": "2026-10-13T20:09:23Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500 Record Rally Meets Risk of Peaking Earnings Growth - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNOEdrZmZnamdETXpvT3d0Q29fTHBOMy1aRWNmR2oxQUtGVGtXc0RGMHg0MGgtaWNEUkFiQlFCUGg0VXhzak9tUDBYT3BNTHZ6bG1vTlFBekZFWG5DcnhMYjd1eU4zb2RaSGNYeExvMWNyaHBQcVBTVGlET0w3YWdfWVlLQmRYUjhtYkphS3A0VWVfbWxHajRhZnNGLWhpcmx2dnpHaVJrenBfREZMZXc?oc=5",
+      "published": "2026-10-13T14:39:02Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 17
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 87
+        "articles": 88
       }
     ],
-    "headline_count": 134,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
