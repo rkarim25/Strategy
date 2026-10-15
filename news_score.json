@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-14T23:32:23Z",
+  "generated_at_utc": "2026-10-15T00:16:22Z",
   "window_days": 7,
   "score": 4,
   "label": "Neutral",
@@ -23,7 +23,14 @@
       "title": "Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPMDkzb0Zhb0ExSzhlSnR6c25HbzdpY2g1djVFZ1R4eVktaWtCZ2gya1lEdHpzcHlEM1VITE1Pdlc1MmlDclhQQmxOWC13NXdXZjhPOEYtUnc3bm80eThIZ0lEam8tN0hXV3kxNnhob3g5OHFxNHd5VzJsTks4SzlJR0JRVE5LZ2JMbXhYNFhvOC1yTUJ5bWFEN0JWTFdpaFkxN2c?oc=5",
-      "published": "2026-10-14T20:43:04Z",
+      "published": "2026-10-14T23:33:39Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Asian Stocks to Fall as Hot CPI Sparks US Selloff: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQYVhucmhFR3lJaktOV202ZDNObUVrTmJpZzcxVi1zYjVFckhBNUtkeHdzb2p5cHZGRi10cDVCYUpJT1l3QmpkTmRGeWlLV3ExSzBnRllBQThjN1cxenVQWVg5MnN1WHdNbHBpZG1rQmg3bjhwUWI4c3lPV21hUzRWZkRWcXR2QnpkTWZKTFZEemFmVTh5?oc=5",
+      "published": "2026-10-14T22:04:59Z",
       "tone": "bearish"
     },
     {
@@ -32,13 +39,6 @@
       "url": "https://www.cnbc.com/2026/10/14/berkshire-hathaway-stock-winning-streak.html",
       "published": "2026-10-14T18:56:55Z",
       "tone": "bullish"
-    },
-    {
-      "title": "BlackRock's Larry Fink warns a data center moratorium could trigger a recession",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/14/blackrocks-fink-warns-data-center-moratorium-could-spark-a-recession.html",
-      "published": "2026-10-14T16:27:12Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 85
+        "articles": 86
       }
     ],
-    "headline_count": 133,
+    "headline_count": 134,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
