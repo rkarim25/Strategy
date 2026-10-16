@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-10-16T16:49:56Z",
+  "generated_at_utc": "2026-10-16T23:07:21Z",
   "data_asof": "2026-10-16",
   "daily_rows": 5916,
-  "quote_price": 63.099998474121094,
+  "quote_price": 62.849998474121094,
   "quote_timestamp": "2026-10-16",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1792255795&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1792278441&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-10-16",
-      "close": 63.099998474121094
+      "close": 62.849998474121094
     },
-    "latestSma": 66.86749992370605,
+    "latestSma": 66.85499992370606,
     "highWater": 71.20999908447266,
     "highWaterDate": "2026-06-22",
-    "latestDd": -0.11388850884173018,
+    "latestDd": -0.11739925176005883,
     "regime": "tier2",
     "entryClose": 67.56999969482422,
     "entryDate": "2026-07-06",
@@ -48,12 +48,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-10-16",
-      "close": 63.099998474121094
+      "close": 62.849998474121094
     },
-    "latestSma": 66.58099975585938,
+    "latestSma": 66.55599975585938,
     "highWater": 71.20999908447266,
     "highWaterDate": "2026-06-22",
-    "latestDd": -0.11388850884173018,
+    "latestDd": -0.11739925176005883,
     "regime": "tier2",
     "entryClose": 67.56999969482422,
     "entryDate": "2026-07-06",
@@ -71,7 +71,7 @@
     "last_observed_asof": "2026-10-16",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-10-16T16:49:56Z",
+    "last_checked_at_utc": "2026-10-16T23:07:21Z",
     "last_email_sent_on": "2026-10-09",
     "last_transition": {
       "id": "2026-10-07:1->2026-10-08:0",
