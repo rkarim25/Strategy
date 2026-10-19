@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-10-19T14:14:29Z",
+  "generated_at_utc": "2026-10-19T20:01:34Z",
   "data_asof": "2026-10-19",
   "daily_rows": 6559,
-  "quote_price": 4167.39990234375,
+  "quote_price": 4162.2001953125,
   "quote_timestamp": "2026-10-19",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1792505669&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1792526493&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-10-19",
-      "close": 4167.39990234375
+      "close": 4162.2001953125
     },
-    "latestSma": 4203.284985351563,
+    "latestSma": 4203.025,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.21641847569468575,
+    "latestDd": -0.21739615829222014,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-10-19",
-      "close": 4167.39990234375
+      "close": 4162.2001953125
     },
-    "latestSma": 4192.834985351563,
+    "latestSma": 4192.315014648438,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.21641847569468575,
+    "latestDd": -0.21739615829222014,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -66,7 +66,7 @@
     "aboveSma": false,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 4167.39990234375,
+    "activeEntryClose": 4162.2001953125,
     "activeEntryDate": "2026-10-19",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
@@ -76,9 +76,8 @@
     "last_observed_asof": "2026-10-19",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-10-19T14:14:29Z",
+    "last_checked_at_utc": "2026-10-19T20:01:34Z",
     "last_email_sent_on": "2026-10-19",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
       "id": "2026-10-16:1->2026-10-19:0",
       "detected_at_utc": "2026-10-19T14:14:29Z",
