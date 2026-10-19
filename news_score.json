@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-17T00:08:22Z",
+  "generated_at_utc": "2026-10-19T14:14:35Z",
   "window_days": 7,
-  "score": 5,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters; Stock Market Today, Oct. 16: Apple Edges Higher on iPhone Duo Preorder Surge. Bearish offsets: U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ; Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Reuters.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Tech Rebounds As AI Names Bounce; AMD, Nvidia Rally (Live Coverage); S&P 500, Nasdaq set to open higher as AI stocks rebound ahead of earnings rush - Reuters. Bearish offsets: U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ; Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Yahoo Finance.",
   "articles": [
     {
       "title": "U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ",
@@ -13,31 +13,31 @@
       "tone": "bearish"
     },
     {
-      "title": "Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPMDkzb0Zhb0ExSzhlSnR6c25HbzdpY2g1djVFZ1R4eVktaWtCZ2gya1lEdHpzcHlEM1VITE1Pdlc1MmlDclhQQmxOWC13NXdXZjhPOEYtUnc3bm80eThIZ0lEam8tN0hXV3kxNnhob3g5OHFxNHd5VzJsTks4SzlJR0JRVE5LZ2JMbXhYNFhvOC1yTUJ5bWFEN0JWTFdpaFkxN2c?oc=5",
-      "published": "2026-10-14T23:33:39Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNR0cyVkR4czJqcmtMVHU0c21pVnRHR1h1Q3VFRUdyX1FtSzg1alVJSFRqSmI0al95bGpvRkJpRG1EUy14djN1Y2xWXzlfVC04X2xIcUt4QkROSTR6V01la3plVWVhX202alJTYmhJSXIxQTJrM3VyTVZOVXhmWExqYVFWMVJQWUt3X3VUb0loWEp1SmphZ3E4MDVXS0ZZX3dkSThsTFAtMmEzRHpHMzFxTWhrblZQZFRoT1lFdXN5X3M5Y0dUQ0I5bzBR?oc=5",
-      "published": "2026-10-16T21:23:05Z",
+      "title": "Stock Market Today: Tech Rebounds As AI Names Bounce; AMD, Nvidia Rally (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/ee2fc04a-d21b-3b33-b9d2-0baa749bd849/stock-market-today%3A-tech.html?.tsrc=rss",
+      "published": "2026-10-19T13:51:53Z",
       "tone": "bullish"
     },
     {
-      "title": "Fed's Warsh withholds rate signal, praises recent global tightening",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/16/feds-warsh-says-ai-development-path-will-be-very-bumpy-.html",
-      "published": "2026-10-16T12:36:00Z",
+      "title": "Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOaDBmaW4tZmgyRnVGRWhpV0tQYlpic3Y2a1gyRm53Z1hFTXhRRWN5ZGNyb0laZjZHZ0hGd2piUkxiOUg1aWJoODB2X3N6d0Rwb3NkSjV6cGR0eDZ5dkJLOW9qanEtY0JINksxdnVBdDliZTlvU2R2WWwza0NQclNTWTFUSGtjQUE3a1NKTUFpYWs?oc=5",
+      "published": "2026-10-14T20:41:25Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today, Oct. 16: Apple Edges Higher on iPhone Duo Preorder Surge",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/10/16/stock-market-today-oct-16-apple-edges-higher-on-iphone-duo-preorder-surge/?.tsrc=rss",
-      "published": "2026-10-16T21:49:34Z",
+      "title": "Wall Street stocks fall as tech selloff weighs on S&P 500, Nasdaq - The Times of India",
+      "source": "The Times of India",
+      "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPME9fQVJjTTFGcV9kWXMwTDNwM2Jmb2dNWmtIcGJtT1Z1TzVpNmNTWjFYTl8zR0o0QlVUd2dUMkRWbEZlcGlGUGl2NXZTdXdGSlRST0hxQTgzS200MEFVN1FFaGNwV0dvMVVsaWI1QTI3WHowS2NqR1ZKcm1hVlZWTFRwT3ZVbmJzZHhVbVBDQlhVMlNUNUpYN0Zpa0xqT0RiYjNhNWZKdmQwUUxiV2RrN25HeVF2M3NjSkQ0VzJNUXU1QzFkWl91TXlpVXJieGtpLUdRZFlic2pldGpmX3RtbFkxdEZmVVdvdHREX0ZB0gHzAUFVX3lxTE5mSVo0bURYd1pFWFpCckplMHZrTHAtRUlZWmc4MlVmd0h0UU9XUXBpdkxLM0NxSFM0aDQ2dUZ3Zks3bXUwTllCVGVsRC1DX1dfMkZZNUNZNWFQSl9sSDVybVRDdFNOdWRrcWhUZ2FfZ0VWY3VtSllXaXRKbXVkZkljeENqa0RSTndrckVqUldYVFN3VUNtbEh2MlJfSFdXTk5GMXZZeVB1V25HdnRUazd4eHhpR1ZHd2N5WTAyN2JTNnlaM0t2dXBnRk5oNjQxQnNoS3p2a0N0Q3pFeVREdnpncmNnNzQ4ZzRhRVViWkZuSk55SQ?oc=5",
+      "published": "2026-10-16T18:00:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "S&P 500, Nasdaq set to open higher as AI stocks rebound ahead of earnings rush - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPX21SVVhfUjZRQ255YlFzVWVEZ3BFMmt3aWlDdkVPVENFOExuRE9KOXZ6WjNqbzdHelUwdzZudy02TjlyNkxVZWcxQmFzZF9NaUE0SFZYaWI3dmxlYTBVdjdULWhLMkNQNnlMUXFaM1J5T1dPMEo3ajhkb0RQLUM3M0pkYlFqbHNKQ1U1c3k5WlUtdjR1UkNCV0JkdjJZTzdIa2c?oc=5",
+      "published": "2026-10-19T13:04:21Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 88
       }
     ],
-    "headline_count": 138,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
