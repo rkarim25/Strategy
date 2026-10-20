@@ -1,22 +1,15 @@
 {
-  "generated_at_utc": "2026-10-20T00:01:52Z",
+  "generated_at_utc": "2026-10-20T00:53:32Z",
   "window_days": 7,
-  "score": 5,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq futures rise as AI stocks rebound ahead of key earnings - The Mighty 790 KFGO; Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters. Bearish offsets: U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ; Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Yahoo Finance.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500, Nasdaq futures rise as AI stocks rebound ahead of key earnings - The Mighty 790 KFGO; Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters. Bearish offsets: U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ; Wall Street stocks fall as tech selloff weighs on S&P 500, Nasdaq - The Times of India.",
   "articles": [
     {
       "title": "U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ",
       "source": "WSJ",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOanVqOHEyMkpxVE84VV9QV1hDdUp2bDVQTDd6elh1TmswZVY1NFhXYTlHMlJGWDh3QjR6R0VjZ29KZndKWm1PbDFUX1RZWXUwR0JkcVUxaWdHVUNZVmphTnBpV2VJQ0Y5emJfS3ppUXh6WVIydHB4MGpSZ2VKNUExVUNKdm85bWthUzNSSGgzZm5DRG9TYjZ5THdxYw?oc=5",
       "published": "2026-10-14T21:32:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOaDBmaW4tZmgyRnVGRWhpV0tQYlpic3Y2a1gyRm53Z1hFTXhRRWN5ZGNyb0laZjZHZ0hGd2piUkxiOUg1aWJoODB2X3N6d0Rwb3NkSjV6cGR0eDZ5dkJLOW9qanEtY0JINksxdnVBdDliZTlvU2R2WWwza0NQclNTWTFUSGtjQUE3a1NKTUFpYWs?oc=5",
-      "published": "2026-10-14T20:41:25Z",
       "tone": "bearish"
     },
     {
@@ -38,6 +31,13 @@
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNR0cyVkR4czJqcmtMVHU0c21pVnRHR1h1Q3VFRUdyX1FtSzg1alVJSFRqSmI0al95bGpvRkJpRG1EUy14djN1Y2xWXzlfVC04X2xIcUt4QkROSTR6V01la3plVWVhX202alJTYmhJSXIxQTJrM3VyTVZOVXhmWExqYVFWMVJQWUt3X3VUb0loWEp1SmphZ3E4MDVXS0ZZX3dkSThsTFAtMmEzRHpHMzFxTWhrblZQZFRoT1lFdXN5X3M5Y0dUQ0I5bzBR?oc=5",
       "published": "2026-10-16T10:03:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Nasdaq Jumps Past 1 Percent as VIX Swings While Dow Dips Below Its 50-Day Line",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nasdaq-jumps-past-1-percent-221100911.html?.tsrc=rss",
+      "published": "2026-10-19T22:11:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 88
       }
     ],
-    "headline_count": 120,
+    "headline_count": 119,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
