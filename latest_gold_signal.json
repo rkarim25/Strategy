@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-10-21T12:37:55Z",
+  "generated_at_utc": "2026-10-21T17:48:41Z",
   "data_asof": "2026-10-21",
   "daily_rows": 6561,
-  "quote_price": 4150.10009765625,
+  "quote_price": 4152.2001953125,
   "quote_timestamp": "2026-10-21",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1792672674&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1792691320&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,34 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-10-21",
-      "close": 4150.10009765625
+      "close": 4152.2998046875
     },
-    "latestSma": 4182.815014648438,
+    "latestSma": 4182.925,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2196712970329,
-    "regime": "tier2",
-    "entryClose": 4109.10009765625,
-    "entryDate": "2025-10-21",
-    "recoveryTarget": 5752.740136718749,
-    "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
-  },
-  "provisional_signal": {
-    "latest": {
-      "date": "2026-10-21",
-      "close": 4150.10009765625
-    },
-    "latestSma": 4175.42001953125,
-    "highWater": 5318.39990234375,
-    "highWaterDate": "2026-01-29",
-    "latestDd": -0.2196712970329,
+    "latestDd": -0.2192576938681059,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -66,27 +44,50 @@
     "aboveSma": false,
     "recoveryOk": true,
     "targetLeverage": 1,
-    "activeEntryClose": 4150.10009765625,
+    "activeEntryClose": 4152.2998046875,
     "activeEntryDate": "2026-10-21",
     "activeEntryLeverage": 1,
     "activeEntryPnl": 0.0,
     "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
   },
+  "provisional_signal": {
+    "latest": {
+      "date": "2026-10-21",
+      "close": 4152.2001953125
+    },
+    "latestSma": 4175.635009765625,
+    "highWater": 5318.39990234375,
+    "highWaterDate": "2026-01-29",
+    "latestDd": -0.2192764230680211,
+    "regime": "tier2",
+    "entryClose": 4109.10009765625,
+    "entryDate": "2025-10-21",
+    "recoveryTarget": 5752.740136718749,
+    "aboveSma": false,
+    "recoveryOk": true,
+    "targetLeverage": 1,
+    "activeEntryClose": 4152.2998046875,
+    "activeEntryDate": "2026-10-21",
+    "activeEntryLeverage": 1,
+    "activeEntryPnl": -2.3988965076049418e-05,
+    "explanation": "Recovery tier2 armed at 1x max (lead guard passed)."
+  },
   "trade_alert_state": {
     "last_observed_asof": "2026-10-21",
-    "last_observed_target_leverage": 0,
-    "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-10-21T12:37:55Z",
-    "last_email_sent_on": "2026-10-19",
+    "last_observed_target_leverage": 1,
+    "last_observed_target_label": "1x",
+    "last_checked_at_utc": "2026-10-21T17:48:41Z",
+    "last_email_sent_on": "2026-10-21",
+    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
-      "id": "2026-10-16:1->2026-10-19:0",
-      "detected_at_utc": "2026-10-19T14:14:29Z",
-      "previous_asof": "2026-10-16",
-      "current_asof": "2026-10-19",
-      "old_target_leverage": 1,
-      "new_target_leverage": 0,
-      "old_target_label": "1x",
-      "new_target_label": "cash",
+      "id": "2026-10-21:0->2026-10-21:1",
+      "detected_at_utc": "2026-10-21T17:48:41Z",
+      "previous_asof": "2026-10-21",
+      "current_asof": "2026-10-21",
+      "old_target_leverage": 0,
+      "new_target_leverage": 1,
+      "old_target_label": "cash",
+      "new_target_label": "1x",
       "email_sent": true,
       "email_error": null,
       "email_skipped_reason": null
