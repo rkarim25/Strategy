@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-21T00:21:56Z",
+  "generated_at_utc": "2026-10-21T12:38:02Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Pinterest Just Gained 20% in a Month: Take Profits, or Buy More?; S&P 500, Nasdaq futures rise as AI stocks rebound ahead of key earnings - The Mighty 790 KFGO. Bearish offsets: U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ; Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Yahoo Finance.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Tech Futures Rise With SpaceX Earnings; Meta, Tesla Set To Report Later (Live Coverage). Bearish offsets: U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ; Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries - Yahoo Finance.",
   "articles": [
     {
       "title": "U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off - WSJ",
@@ -27,18 +27,18 @@
       "tone": "bearish"
     },
     {
-      "title": "Pinterest Just Gained 20% in a Month: Take Profits, or Buy More?",
+      "title": "Stock Market Today: Tech Futures Rise With SpaceX Earnings; Meta, Tesla Set To Report Later (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.tikr.com/blog/pinterest-just-gained-20-in-a-month-take-profits-or-buy-more?ref=yahoofinance&.tsrc=rss",
-      "published": "2026-10-20T22:01:19Z",
+      "url": "https://finance.yahoo.com/m/3cb9e8ae-4da0-30bd-9cec-6a0531abd9df/stock-market-today%3A-tech.html?.tsrc=rss",
+      "published": "2026-10-21T12:18:33Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500, Nasdaq futures rise as AI stocks rebound ahead of key earnings - The Mighty 790 KFGO",
-      "source": "The Mighty 790 KFGO",
-      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOaWpkMkE5bzcwc3hpOVNDZmhIa2pPMDNvcWI0d2NKUE9KcV9jUXZoLXc4VURwYnhGYzRvRUlZRlF3bGg0Mkx5SUl1RDJLd0JRcWUySmJMMlFrMno4OS02OE9GNXJ4ZHRhNmt0MG5TVmlKVnhpN25sdF9kQXk2U3dCWWtEY09meFRTa1hrZWdmdlM?oc=5",
-      "published": "2026-10-19T14:07:42Z",
-      "tone": "bullish"
+      "title": "French supermarket giant's shares plunge 14% after warning \u2018unprecedented\u2019 unrest will hit business",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/21/carrefour-french-protests-guidance-cut.html",
+      "published": "2026-10-21T08:12:51Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
