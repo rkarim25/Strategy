@@ -1,10 +1,31 @@
 {
-  "generated_at_utc": "2026-10-21T23:47:50Z",
+  "generated_at_utc": "2026-10-22T00:25:09Z",
   "window_days": 7,
-  "score": 7,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: SpaceX stock jumps 10% after earnings beat and Musk hints at Tesla tie-up; Stock Market Today, Oct. 21: Space Exploration Technologies Surges on Q3 Earnings Beat. Bearish offsets: Housing is flashing warning signs just as the Fed weighs more interest rate hikes; Mortgage rates drop for the first time in 2 months, but demand still falls further.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dow Rallies 530, Nasdaq Slips 6, S&P 500 Gains 22 - TV News Check; DJIA and S&P 500 Rise as MMM, UNH, TSLA and Other Big Caps Rally: Wall Street Today - Moomoo. Bearish offsets: Wall Street stocks fall as tech selloff weighs on S&P 500, Nasdaq - The Times of India; Housing is flashing warning signs just as the Fed weighs more interest rate hikes.",
   "articles": [
+    {
+      "title": "Wall Street stocks fall as tech selloff weighs on S&P 500, Nasdaq - The Times of India",
+      "source": "The Times of India",
+      "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPME9fQVJjTTFGcV9kWXMwTDNwM2Jmb2dNWmtIcGJtT1Z1TzVpNmNTWjFYTl8zR0o0QlVUd2dUMkRWbEZlcGlGUGl2NXZTdXdGSlRST0hxQTgzS200MEFVN1FFaGNwV0dvMVVsaWI1QTI3WHowS2NqR1ZKcm1hVlZWTFRwT3ZVbmJzZHhVbVBDQlhVMlNUNUpYN0Zpa0xqT0RiYjNhNWZKdmQwUUxiV2RrN25HeVF2M3NjSkQ0VzJNUXU1QzFkWl91TXlpVXJieGtpLUdRZFlic2pldGpmX3RtbFkxdEZmVVdvdHREX0ZB0gHzAUFVX3lxTE5mSVo0bURYd1pFWFpCckplMHZrTHAtRUlZWmc4MlVmd0h0UU9XUXBpdkxLM0NxSFM0aDQ2dUZ3Zks3bXUwTllCVGVsRC1DX1dfMkZZNUNZNWFQSl9sSDVybVRDdFNOdWRrcWhUZ2FfZ0VWY3VtSllXaXRKbXVkZkljeENqa0RSTndrckVqUldYVFN3VUNtbEh2MlJfSFdXTk5GMXZZeVB1V25HdnRUazd4eHhpR1ZHd2N5WTAyN2JTNnlaM0t2dXBnRk5oNjQxQnNoS3p2a0N0Q3pFeVREdnpncmNnNzQ4ZzRhRVViWkZuSk55SQ?oc=5",
+      "published": "2026-10-16T18:00:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Dow Rallies 530, Nasdaq Slips 6, S&P 500 Gains 22 - TV News Check",
+      "source": "TV News Check",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQYU9FVlQwa1N6ZTJwQ21NMXFLRkhKUDFEdE92dnhmNG9FTy1keDh2elplOGo2bmJ4UElSQ3A3UnFCalFWLW1DcWxLaldRR2VUeFo0LWlYVGlGbVB1RW1QQkNhUXRoNlBhRlMzeUIyV3o4dDB1UnZJb2dkLVFyS183S3RMeDY1bEFPVGZjWW9Dc1Bldw?oc=5",
+      "published": "2026-10-20T20:38:04Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "DJIA and S&P 500 Rise as MMM, UNH, TSLA and Other Big Caps Rally: Wall Street Today - Moomoo",
+      "source": "Moomoo",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPQV9XbkRmZjhGTGxBdmZTZjA0SDhaTllpSzlRR1BwOVFKRklOdklGNFY1dHgxT2R2Y0I1aTBIVkN2OG5IbnFQYzJXMFE5X3NJN3Yxek50Ml95bzdmRXBNVmkyYjFWdFRGd1ViUHNYd2VPWDh2VkZqQ0pBUDQxTk1qUzdHZTlodlpUU2FkMFlRMXBHQQ?oc=5",
+      "published": "2026-10-19T19:53:00Z",
+      "tone": "bullish"
+    },
     {
       "title": "SpaceX stock jumps 10% after earnings beat and Musk hints at Tesla tie-up",
       "source": "CNBC Markets",
@@ -18,27 +39,6 @@
       "url": "https://www.cnbc.com/2026/10/20/housing-mortgage-rates-real-estate-federal-reserve.html",
       "published": "2026-10-21T11:20:58Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Stock Market Today, Oct. 21: Space Exploration Technologies Surges on Q3 Earnings Beat",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/10/21/stock-market-today-oct-21-space-exploration-technologies-surges-on-q3-earnings-beat/?.tsrc=rss",
-      "published": "2026-10-21T21:40:01Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Mortgage rates drop for the first time in 2 months, but demand still falls further",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/21/mortgage-rates-drop-for-the-first-time-in-2-months-but-demand-falls.html",
-      "published": "2026-10-21T13:13:48Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Meta and Tesla bulls get confidence boost after SpaceX earnings",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/21/meta-tesla-options-earnings.html",
-      "published": "2026-10-21T16:35:48Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -66,12 +66,13 @@
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
-        "ok": false,
-        "error": "HTTP Error 503: Service Unavailable",
-        "name": "Google News market query"
+        "ok": true,
+        "status": 200,
+        "name": "Google News market query",
+        "articles": 90
       }
     ],
-    "headline_count": 48,
+    "headline_count": 138,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
