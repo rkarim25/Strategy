@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-10-22T17:48:32Z",
+  "generated_at_utc": "2026-10-22T23:46:07Z",
   "window_days": 7,
-  "score": 8,
-  "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dow Rallies 530, Nasdaq Slips 6, S&P 500 Gains 22 - TV News Check; DJIA and S&P 500 Rise as MMM, UNH, TSLA and Other Big Caps Rally: Wall Street Today - Moomoo. Bearish offsets: S&P 500 Drops 1.2% at Midday as Nasdaq Leads the Selloff - 24/7 Wall St.; Wall Street stocks fall as tech selloff weighs on S&P 500, Nasdaq - The Times of India.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street ticks higher after SpaceX jumps and AI stocks steady - The Daily News - Jacksonville, NC; Stock Market Today, Oct. 22: SpaceX Earnings Beat Sparks Profit-Taking. Bearish offsets: S&P 500 Drops 1.5% as Tech Selloff Widens the Gap With the Dow - 24/7 Wall St.; U.S. Stocks Fall as Tech Selloff Deepens - WSJ.",
   "articles": [
     {
-      "title": "S&P 500 Drops 1.2% at Midday as Nasdaq Leads the Selloff - 24/7 Wall St.",
+      "title": "S&P 500 Drops 1.5% as Tech Selloff Widens the Gap With the Dow - 24/7 Wall St.",
       "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOQlRUU3pZdjJmcXhwWWp1YWE1TEtBQVJvOUdmRHUyWWgxX1VrdzY4NDhFODRlRjQ5aWFta0pnX0U1WnBTRExZLXFBY2xvSzJTR3p2M2dxNW9Va2JUVlgyMXJ3eWljZnNJLWxEZVBiQ3dRYUozZVhZV1VZT2JsSXk3Znd2NThKZ2FBSEp4ODJSM012NUtmck51VlBtV1hyOUhOMG5iaGVoUi0zeDFORzk3ajIzZ3Z0QTRUVHl6eHdxaGQ4cmxRTTJ5em0ySQ?oc=5",
-      "published": "2026-10-22T16:00:00Z",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNSG9zeXE3UGZhQ2wtRHF0SEN0YWs3SUdBcUpoWldKLVlOSUR5OG5mNGNIMXpLQk1xN1lOQVBXY0hwMHc3R240bUZ6WS04T3dZc3ViRzJraVBaOTc5RjhHRDh2R3BuemNPY01jWkxtY2dXN3YtQmdGbWgySk9OY0pXMXlmOVU4a0c1WU56RnNvR1JDQXpXT0NKTDlSemw4ZzBBU051QUU5VVJpNFBxU3JrTnJiazlId3dCaUQycnYyeDZsNmRqdFVKcg?oc=5",
+      "published": "2026-10-22T20:06:48Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "U.S. Stocks Fall as Tech Selloff Deepens - WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPdDB3cDByVmVJQWQ4bzhobm83ZDVVN3MtYXh0VjlYT0xtakhpVkNrUFFHbVpWZEp2UHdpeWIwX0h2eVJqSzdod0t1Y3JxcVBaTzZlUFRKTFNkMDE4LVYxMHNjRGlYb0FsOVdqMnJuVzdHMk0xNVVxWXh4Y0tidlFtbXBUa1lXTVJGOXc1c0VvbjJ6eGVINVY0cEpFZHEtakM1UkFwdVZLVW4ySWlxV0RwNHpnNkpKcUsyRXU4RXN2Zm03QTQ?oc=5",
+      "published": "2026-10-22T18:42:00Z",
       "tone": "bearish"
     },
     {
@@ -20,24 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "Dow Rallies 530, Nasdaq Slips 6, S&P 500 Gains 22 - TV News Check",
-      "source": "TV News Check",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQYU9FVlQwa1N6ZTJwQ21NMXFLRkhKUDFEdE92dnhmNG9FTy1keDh2elplOGo2bmJ4UElSQ3A3UnFCalFWLW1DcWxLaldRR2VUeFo0LWlYVGlGbVB1RW1QQkNhUXRoNlBhRlMzeUIyV3o4dDB1UnZJb2dkLVFyS183S3RMeDY1bEFPVGZjWW9Dc1Bldw?oc=5",
-      "published": "2026-10-20T20:38:04Z",
+      "title": "Wall Street ticks higher after SpaceX jumps and AI stocks steady - The Daily News - Jacksonville, NC",
+      "source": "The Daily News - Jacksonville, NC",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOOEg2bmoxZWpkRkFoU0loRFphSVlPNzlfSzVCMnRZQmQ3OHlFQ1VJWGhkVEFXVTRONUJJNEpvdkpXYzVzcHlQel95dzEtNEpVOEpXckktRDlkQkEwc3RMNWljZlVlN01OUEpydmRGWTJKQkNSdjBBaGJDb2lkc181b2s1MzVfencyV3F2c2ZIQ3VPSE82TGplNzNWUTdpMnVTLTlXX0ZWTEpvR2hCRlduMjBhRGtQYUpFRC1wQlVhQldPT3dhWkQySkMyTU5lZjZiWGFn?oc=5",
+      "published": "2026-10-21T13:48:00Z",
       "tone": "bullish"
     },
     {
-      "title": "DJIA and S&P 500 Rise as MMM, UNH, TSLA and Other Big Caps Rally: Wall Street Today - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPQV9XbkRmZjhGTGxBdmZTZjA0SDhaTllpSzlRR1BwOVFKRklOdklGNFY1dHgxT2R2Y0I1aTBIVkN2OG5IbnFQYzJXMFE5X3NJN3Yxek50Ml95bzdmRXBNVmkyYjFWdFRGd1ViUHNYd2VPWDh2VkZqQ0pBUDQxTk1qUzdHZTlodlpUU2FkMFlRMXBHQQ?oc=5",
-      "published": "2026-10-19T19:53:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNR0cyVkR4czJqcmtMVHU0c21pVnRHR1h1Q3VFRUdyX1FtSzg1alVJSFRqSmI0al95bGpvRkJpRG1EUy14djN1Y2xWXzlfVC04X2xIcUt4QkROSTR6V01la3plVWVhX202alJTYmhJSXIxQTJrM3VyTVZOVXhmWExqYVFWMVJQWUt3X3VUb0loWEp1SmphZ3E4MDVXS0ZZX3dkSThsTFAtMmEzRHpHMzFxTWhrblZQZFRoT1lFdXN5X3M5Y0dUQ0I5bzBR?oc=5",
-      "published": "2026-10-18T07:00:00Z",
+      "title": "Stock Market Today, Oct. 22: SpaceX Earnings Beat Sparks Profit-Taking",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/10/22/stock-market-today-oct-22-spacex-earnings-beat-sparks-profit-taking/?.tsrc=rss",
+      "published": "2026-10-22T21:25:52Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 84
+        "articles": 82
       }
     ],
-    "headline_count": 134,
+    "headline_count": 132,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
