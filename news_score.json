@@ -1,16 +1,16 @@
 {
-  "generated_at_utc": "2026-10-23T00:22:21Z",
+  "generated_at_utc": "2026-10-23T12:20:06Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street ticks higher after SpaceX jumps and AI stocks steady - The Daily News - Jacksonville, NC; Stock Market Today, Oct. 22: SpaceX Earnings Beat Sparks Profit-Taking. Bearish offsets: S&P 500 Drops 1.5% as Tech Selloff Widens the Gap With the Dow - 24/7 Wall St.; U.S. Stocks Fall as Tech Selloff Deepens - WSJ.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: DJIA, S&P 500, Nasdaq Comp Rise as SPCX, SMCI, BE, TSLA, DELL and Other AI Stocks Rally: Wall Street Today - Moomoo; Wall Street ticks higher after SpaceX jumps and AI stocks steady - The Daily News - Jacksonville, NC. Bearish offsets: U.S. Stocks Fall as Tech Selloff Deepens - WSJ; Wall Street stocks fall as tech selloff weighs on S&P 500, Nasdaq - The Times of India.",
   "articles": [
     {
-      "title": "S&P 500 Drops 1.5% as Tech Selloff Widens the Gap With the Dow - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNSG9zeXE3UGZhQ2wtRHF0SEN0YWs3SUdBcUpoWldKLVlOSUR5OG5mNGNIMXpLQk1xN1lOQVBXY0hwMHc3R240bUZ6WS04T3dZc3ViRzJraVBaOTc5RjhHRDh2R3BuemNPY01jWkxtY2dXN3YtQmdGbWgySk9OY0pXMXlmOVU4a0c1WU56RnNvR1JDQXpXT0NKTDlSemw4ZzBBU051QUU5VVJpNFBxU3JrTnJiazlId3dCaUQycnYyeDZsNmRqdFVKcg?oc=5",
-      "published": "2026-10-22T20:06:48Z",
-      "tone": "bearish"
+      "title": "DJIA, S&P 500, Nasdaq Comp Rise as SPCX, SMCI, BE, TSLA, DELL and Other AI Stocks Rally: Wall Street Today - Moomoo",
+      "source": "Moomoo",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOMTFmaVZrZTFzT3pySWNRNzBsUTBYUHp5ak45c0doWGZlc0t3X21rRmpPeDFTbjhJdkItTEJ2NDZyQ2wyMHAtZmtqMUZtMzQtRExHR2M0S0J1cVdRV0VMXzl6MkQwUjlZN3FVWmlrWW1NSG5SeDBLaWJwVUZtMnFQQ3d1T2VyR3pOS2ZsbmJ6VVZZN1U2QWQ3NXdySWM?oc=5",
+      "published": "2026-10-21T07:00:00Z",
+      "tone": "bullish"
     },
     {
       "title": "U.S. Stocks Fall as Tech Selloff Deepens - WSJ",
@@ -27,17 +27,17 @@
       "tone": "bearish"
     },
     {
+      "title": "Stocks Down Pre-Bell Amid Tech Selloff",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-down-pre-bell-amid-121035032.html?.tsrc=rss",
+      "published": "2026-10-23T12:10:35Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Wall Street ticks higher after SpaceX jumps and AI stocks steady - The Daily News - Jacksonville, NC",
       "source": "The Daily News - Jacksonville, NC",
       "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOOEg2bmoxZWpkRkFoU0loRFphSVlPNzlfSzVCMnRZQmQ3OHlFQ1VJWGhkVEFXVTRONUJJNEpvdkpXYzVzcHlQel95dzEtNEpVOEpXckktRDlkQkEwc3RMNWljZlVlN01OUEpydmRGWTJKQkNSdjBBaGJDb2lkc181b2s1MzVfencyV3F2c2ZIQ3VPSE82TGplNzNWUTdpMnVTLTlXX0ZWTEpvR2hCRlduMjBhRGtQYUpFRC1wQlVhQldPT3dhWkQySkMyTU5lZjZiWGFn?oc=5",
       "published": "2026-10-21T13:48:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today, Oct. 22: SpaceX Earnings Beat Sparks Profit-Taking",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/10/22/stock-market-today-oct-22-spacex-earnings-beat-sparks-profit-taking/?.tsrc=rss",
-      "published": "2026-10-22T21:25:52Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 16
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 80
+        "articles": 83
       }
     ],
-    "headline_count": 130,
+    "headline_count": 129,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
