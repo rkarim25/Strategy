@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-23T12:20:06Z",
+  "generated_at_utc": "2026-10-23T17:20:01Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: DJIA, S&P 500, Nasdaq Comp Rise as SPCX, SMCI, BE, TSLA, DELL and Other AI Stocks Rally: Wall Street Today - Moomoo; Wall Street ticks higher after SpaceX jumps and AI stocks steady - The Daily News - Jacksonville, NC. Bearish offsets: U.S. Stocks Fall as Tech Selloff Deepens - WSJ; Wall Street stocks fall as tech selloff weighs on S&P 500, Nasdaq - The Times of India.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: DJIA, S&P 500, Nasdaq Comp Rise as SPCX, SMCI, BE, TSLA, DELL and Other AI Stocks Rally: Wall Street Today - Moomoo; Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters. Bearish offsets: U.S. Stocks Fall as Tech Selloff Deepens - WSJ; Wall Street stocks fall as tech selloff weighs on S&P 500, Nasdaq - The Times of India.",
   "articles": [
     {
       "title": "DJIA, S&P 500, Nasdaq Comp Rise as SPCX, SMCI, BE, TSLA, DELL and Other AI Stocks Rally: Wall Street Today - Moomoo",
@@ -27,17 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "Stocks Down Pre-Bell Amid Tech Selloff",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-down-pre-bell-amid-121035032.html?.tsrc=rss",
-      "published": "2026-10-23T12:10:35Z",
-      "tone": "bearish"
+      "title": "Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNR0cyVkR4czJqcmtMVHU0c21pVnRHR1h1Q3VFRUdyX1FtSzg1alVJSFRqSmI0al95bGpvRkJpRG1EUy14djN1Y2xWXzlfVC04X2xIcUt4QkROSTR6V01la3plVWVhX202alJTYmhJSXIxQTJrM3VyTVZOVXhmWExqYVFWMVJQWUt3X3VUb0loWEp1SmphZ3E4MDVXS0ZZX3dkSThsTFAtMmEzRHpHMzFxTWhrblZQZFRoT1lFdXN5X3M5Y0dUQ0I5bzBR?oc=5",
+      "published": "2026-10-18T07:00:00Z",
+      "tone": "bullish"
     },
     {
-      "title": "Wall Street ticks higher after SpaceX jumps and AI stocks steady - The Daily News - Jacksonville, NC",
-      "source": "The Daily News - Jacksonville, NC",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOOEg2bmoxZWpkRkFoU0loRFphSVlPNzlfSzVCMnRZQmQ3OHlFQ1VJWGhkVEFXVTRONUJJNEpvdkpXYzVzcHlQel95dzEtNEpVOEpXckktRDlkQkEwc3RMNWljZlVlN01OUEpydmRGWTJKQkNSdjBBaGJDb2lkc181b2s1MzVfencyV3F2c2ZIQ3VPSE82TGplNzNWUTdpMnVTLTlXX0ZWTEpvR2hCRlduMjBhRGtQYUpFRC1wQlVhQldPT3dhWkQySkMyTU5lZjZiWGFn?oc=5",
-      "published": "2026-10-21T13:48:00Z",
+      "title": "Wall Street ends higher on surge in health care stocks, solid earnings - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOc3RONS1WcUhUam1hQkFZbWlZX0VoUWdRSTNtYXI5UVAwZHpGOXZ5dW1kOTJQLS1iMGVXMjgwcUh5Q2ozeklSRkFmT2pWRXlJVDRjWDU3SlpVblBITlhyUXlTVVBtMDBSQldnSVltaXRZNXdvNW1rdWZRaDNXd1ZVbjVNS3ZjdWNjMVV5YXF5SHJJd09pUmpNOGhXSmF3NmlOdGVrX2Nza2pkRlcxVkRQZ1o3c19sVVgyMUs2QzVfRTNGUQ?oc=5",
+      "published": "2026-10-20T00:53:27Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 16
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 83
+        "articles": 85
       }
     ],
-    "headline_count": 129,
+    "headline_count": 132,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
