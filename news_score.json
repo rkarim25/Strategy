@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-10-23T23:39:39Z",
+  "generated_at_utc": "2026-10-24T00:14:22Z",
   "window_days": 7,
   "score": 5,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: DJIA, S&P 500, Nasdaq Comp Rise as SPCX, SMCI, BE, TSLA, DELL and Other AI Stocks Rally: Wall Street Today - Moomoo; Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters. Bearish offsets: U.S. Stocks Fall as Tech Selloff Deepens - WSJ; Stock Market Today: S&P 500, Dow Jones, Nasdaq 100 Futures Drop Following Asian Market Sell-off, Middle E - Benzinga.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall St Week Ahead As AI rally wobbles, stock market's spotlight turns to earnings - Reuters; Wall Street ends higher on surge in health care stocks, solid earnings - Investing.com. Bearish offsets: U.S. Stocks Fall as Tech Selloff Deepens - WSJ; Stock Market Today: S&P 500, Dow Jones, Nasdaq 100 Futures Drop Following Asian Market Sell-off, Middle E - Benzinga.",
   "articles": [
-    {
-      "title": "DJIA, S&P 500, Nasdaq Comp Rise as SPCX, SMCI, BE, TSLA, DELL and Other AI Stocks Rally: Wall Street Today - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOMTFmaVZrZTFzT3pySWNRNzBsUTBYUHp5ak45c0doWGZlc0t3X21rRmpPeDFTbjhJdkItTEJ2NDZyQ2wyMHAtZmtqMUZtMzQtRExHR2M0S0J1cVdRV0VMXzl6MkQwUjlZN3FVWmlrWW1NSG5SeDBLaWJwVUZtMnFQQ3d1T2VyR3pOS2ZsbmJ6VVZZN1U2QWQ3NXdySWM?oc=5",
-      "published": "2026-10-21T07:00:00Z",
-      "tone": "bullish"
-    },
     {
       "title": "U.S. Stocks Fall as Tech Selloff Deepens - WSJ",
       "source": "WSJ",
@@ -38,6 +31,13 @@
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNR0cyVkR4czJqcmtMVHU0c21pVnRHR1h1Q3VFRUdyX1FtSzg1alVJSFRqSmI0al95bGpvRkJpRG1EUy14djN1Y2xWXzlfVC04X2xIcUt4QkROSTR6V01la3plVWVhX202alJTYmhJSXIxQTJrM3VyTVZOVXhmWExqYVFWMVJQWUt3X3VUb0loWEp1SmphZ3E4MDVXS0ZZX3dkSThsTFAtMmEzRHpHMzFxTWhrblZQZFRoT1lFdXN5X3M5Y0dUQ0I5bzBR?oc=5",
       "published": "2026-10-18T07:00:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall Street ends higher on surge in health care stocks, solid earnings - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOc3RONS1WcUhUam1hQkFZbWlZX0VoUWdRSTNtYXI5UVAwZHpGOXZ5dW1kOTJQLS1iMGVXMjgwcUh5Q2ozeklSRkFmT2pWRXlJVDRjWDU3SlpVblBITlhyUXlTVVBtMDBSQldnSVltaXRZNXdvNW1rdWZRaDNXd1ZVbjVNS3ZjdWNjMVV5YXF5SHJJd09pUmpNOGhXSmF3NmlOdGVrX2Nza2pkRlcxVkRQZ1o3c19sVVgyMUs2QzVfRTNGUQ?oc=5",
+      "published": "2026-10-20T00:53:27Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 85
+        "articles": 86
       }
     ],
-    "headline_count": 134,
+    "headline_count": 135,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
