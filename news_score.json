@@ -1,29 +1,29 @@
 {
-  "generated_at_utc": "2026-10-26T13:46:55Z",
+  "generated_at_utc": "2026-10-26T19:40:53Z",
   "window_days": 7,
   "score": 7,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Rises As Oil Prices Fall; Tesla Shares Rally On This Brokerage's Upgrade (Live Coverage); Wall Street ends higher on surge in health care stocks, solid earnings - Investing.com. Bearish offsets: New survey reveals Wall Street\u2019s consensus S&P 500 targets for end of 2026; S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stocks rally to start the week, Nasdaq jumps 1% on Anthropic IPO enthusiasm: Live updates; Stock Market Today: S&P 500, DJI Rise as Nvidia Rebounds, AI Debt Fears Persist Ahead of Fed Decision - Coinpaper. Bearish offsets: S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance; US Stock Market Today: S&P 500 Futures Fall On Hot UK Inflation Surprise - Yahoo Finance.",
   "articles": [
     {
-      "title": "Stock Market Today: Dow Rises As Oil Prices Fall; Tesla Shares Rally On This Brokerage's Upgrade (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/d7847db0-e9ef-3aa4-a4a6-f002895df0d3/stock-market-today%3A-dow-rises.html?.tsrc=rss",
-      "published": "2026-10-26T13:06:46Z",
+      "title": "Stocks rally to start the week, Nasdaq jumps 1% on Anthropic IPO enthusiasm: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/25/stock-market-today-live-updates.html",
+      "published": "2026-10-26T18:10:50Z",
       "tone": "bullish"
     },
     {
-      "title": "New survey reveals Wall Street\u2019s consensus S&P 500 targets for end of 2026",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/survey-reveals-wall-street-consensus-123346540.html?.tsrc=rss",
-      "published": "2026-10-26T12:33:46Z",
-      "tone": "bearish"
+      "title": "Stock Market Today: S&P 500, DJI Rise as Nvidia Rebounds, AI Debt Fears Persist Ahead of Fed Decision - Coinpaper",
+      "source": "Coinpaper",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxORC1IcWtKMXFVTmxKWUJ4WW9uYjN6WU52WjZWeFQ3aGhHeG1qbTJyUTdfanN6ZFZwZzd4NGlWWFp0dGtjNDNJWm14ZVJxc1NQaVhqSkpYS3cxejk5RWx5VHh1Q01sZ3N0VHVZSkVXRHBmY1BpT2YyZkkyTTczRnpKTldJRzd2RThSNUg4SEY1TVBaeFRNWUxQa0NZa3JNRi1ZWExKN3JKZHAzY2RSZWJybkx5emNWUDdHWHRfeVpab0pxd09qZFFXakFR?oc=5",
+      "published": "2026-10-26T14:42:07Z",
+      "tone": "bullish"
     },
     {
-      "title": "Wall Street ends higher on surge in health care stocks, solid earnings - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOc3RONS1WcUhUam1hQkFZbWlZX0VoUWdRSTNtYXI5UVAwZHpGOXZ5dW1kOTJQLS1iMGVXMjgwcUh5Q2ozeklSRkFmT2pWRXlJVDRjWDU3SlpVblBITlhyUXlTVVBtMDBSQldnSVltaXRZNXdvNW1rdWZRaDNXd1ZVbjVNS3ZjdWNjMVV5YXF5SHJJd09pUmpNOGhXSmF3NmlOdGVrX2Nza2pkRlcxVkRQZ1o3c19sVVgyMUs2QzVfRTNGUQ?oc=5",
-      "published": "2026-10-20T00:53:27Z",
+      "title": "AI stocks rebound as S&P 500 and Nasdaq rise - The Business Journal",
+      "source": "The Business Journal",
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE03ZHhRNFctbEMzSVdSdVNSVTNHYnNXRWZ6ak52M3NOZGlHcVdqeTlaNDF4REhsVXRfLUw2U3c3al9VUDdPSXkzc3U1NXRfLTh4cnNlX2pNT3RGWXMtTFpPY0dJT0ZGdnFZbnBuZ1R4NkxIc25HaFMtaA?oc=5",
+      "published": "2026-10-19T21:57:46Z",
       "tone": "bullish"
     },
     {
@@ -34,11 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock index futures rise as Wall Street looks to rebound after difficult week (SPX:) - Seeking Alpha",
-      "source": "Seeking Alpha",
-      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMGpmRDlYZ3Z6dVN3UDVvZTJVNmI2REZUMkZiSHQzMzJ5RWVRcXFBT1poZzlwQmV5RTQwUlBwdThVMHhZWGRseVQ1UUVkTWxvUjNZYjJaLTY1WGh2SUVFdHV5MnpmRHgxZ1FlOUN4MzhEWTVCX2pzX2xlLW0yQUpoUmVNTEhxZ05h?oc=5",
-      "published": "2026-10-26T08:38:36Z",
-      "tone": "bullish"
+      "title": "US Stock Market Today: S&P 500 Futures Fall On Hot UK Inflation Surprise - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOTkZXbThyZm5IalZxc2oza0tVRWxnYk5sT3BZdVdzSHUyRTQyYVVTaXptUjdpZC00NmJpRHE1N1FLY2JZc3U0T1g4QVR6VnptQUJKTjdUQ1VjelgzM0JXcXN6NkVvUWVHSnFlanBHaUVTUmxPSU9mU2dtWUt0aGdrTlB6NEpqbjFJMGdrOTFId2pFUQ?oc=5",
+      "published": "2026-10-22T12:18:44Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 83
+        "articles": 49
       }
     ],
-    "headline_count": 131,
+    "headline_count": 96,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
