@@ -1,30 +1,23 @@
 {
-  "generated_at_utc": "2026-10-27T01:05:16Z",
+  "generated_at_utc": "2026-10-27T12:54:21Z",
   "window_days": 7,
-  "score": 9,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, Oct. 26: AI Optimism Lifts Nasdaq as Tech Stocks Rebound; Wall St Week Ahead Earnings flood, Fed meeting will test rickety AI market rally - Reuters. Bearish offsets: S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Rises Ahead Of Fed Meet; Boeing Rallies On Earnings (Live Coverage); Nasdaq, S&P 500 Futures Gain Premarket While Oil Rebounds: CLS, NVDA, SKHY, CRWV, SOFI In Focus - TradingView. Bearish offsets: Oil prices edge lower amid renewed diplomatic efforts to end Mideast conflict; S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance.",
   "articles": [
     {
-      "title": "Stock Market Today, Oct. 26: AI Optimism Lifts Nasdaq as Tech Stocks Rebound",
+      "title": "Stock Market Today: Dow Rises Ahead Of Fed Meet; Boeing Rallies On Earnings (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/10/26/stock-market-today-oct-26-ai-optimism-lifts-nasdaq-as-tech-stocks-rebound/?.tsrc=rss",
-      "published": "2026-10-26T21:50:00Z",
+      "url": "https://finance.yahoo.com/m/6294d29d-51d6-3bfe-87d4-877203694b78/stock-market-today%3A-dow-rises.html?.tsrc=rss",
+      "published": "2026-10-27T12:13:25Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall St Week Ahead Earnings flood, Fed meeting will test rickety AI market rally - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPR3FjeUJFd2Z6ZFBxOEFlLUx4anZlN1BqeFkxQ1pFcTdXTENYc0tMdW9RbjJ1Vk91Y2tmSXVoRDFCTmZoQ2cxN3BaSlFfTXplZUNZTFIzVmR3OTVmUVYzWnBXVkxRNXAtOEpBSUpIVjlBMnJ6cVViYnFSSHZoaC1CbkR5TnBzZndWNEo5aFlkWTVKY0hSYzRuOTlzUjYwcGlrcFJKQXhlbmFOMHNWLTRiRHZaM21fWEF1SDl1Mg?oc=5",
-      "published": "2026-10-23T10:06:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street ends higher on surge in health care stocks, solid earnings - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNYnBFbW9YcHNIbnM0c3BIb00tWWdkTEhZLUJQX0FUeDZMQnBjVjUwOF9DSEVMVkZqSzBLSTZva0h5dWw3S1h5eFZlU0diVmpxM2ZycngwMEVFQ3JpZVBfa0FqNzNaaHNtdDhqMkFQWEk5eE1fVkhiMkFQRUQ3UDFRWEJZQ2ZoZ2h1V3N5cWlETEFRaUpZTlh3?oc=5",
-      "published": "2026-10-20T01:21:00Z",
-      "tone": "bullish"
+      "title": "Oil prices edge lower amid renewed diplomatic efforts to end Mideast conflict",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/27/oil-today-iran-us-crude-wti-brent-trump.html",
+      "published": "2026-10-27T12:46:26Z",
+      "tone": "bearish"
     },
     {
       "title": "S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance",
@@ -34,11 +27,18 @@
       "tone": "bearish"
     },
     {
-      "title": "Vanguard's Growth ETF Usually Beats the Market After a Lagging Year. I'd Own It, but Not for a 2027 Rebound.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/investing/2026/10/26/vanguard-s-growth-etf-usually-beats-the-market-after-a-lagging-year-i-d-own-it-but-not-for-a-2027-rebound/?.tsrc=rss",
-      "published": "2026-10-26T21:51:02Z",
+      "title": "Nasdaq, S&P 500 Futures Gain Premarket While Oil Rebounds: CLS, NVDA, SKHY, CRWV, SOFI In Focus - TradingView",
+      "source": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPQ2hLV25ZUUVTa2RIdjlLcE9XN1Rfa2dXdURCS2ZvYUxodVJhMjMwLXNObFFqMkpjMi0yakFpTmxRaDhFeHE2ellDQlBRUmZPYXFnWHkzZ040bUxiREczUHdDOGpTSmFUUzV3b0tiR0FVWDZQRGhST1hGbVV0eWYtc0Rpa2NZR2FYS2NrOVdGUklybzlGUllQQmpzRDkwVHlMTmF1NTNXdVBlS3VjVDdCLUZyMmhPT0pKbUdCSlItV2pjZXZEdk1hNEloek5tWU9xYU5aZ1pqd1ZUTkc4U2lZRmZaS0o?oc=5",
+      "published": "2026-10-27T10:19:25Z",
       "tone": "bullish"
+    },
+    {
+      "title": "US Stock Market Today: S&P 500 Futures Fall On Hot UK Inflation Surprise - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOTkZXbThyZm5IalZxc2oza0tVRWxnYk5sT3BZdVdzSHUyRTQyYVVTaXptUjdpZC00NmJpRHE1N1FLY2JZc3U0T1g4QVR6VnptQUJKTjdUQ1VjelgzM0JXcXN6NkVvUWVHSnFlanBHaUVTUmxPSU9mU2dtWUt0aGdrTlB6NEpqbjFJMGdrOTFId2pFUQ?oc=5",
+      "published": "2026-10-22T12:18:44Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 85
+        "articles": 46
       }
     ],
-    "headline_count": 134,
+    "headline_count": 95,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
