@@ -1,22 +1,36 @@
 {
-  "generated_at_utc": "2026-10-27T12:54:21Z",
+  "generated_at_utc": "2026-10-27T18:29:59Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow Rises Ahead Of Fed Meet; Boeing Rallies On Earnings (Live Coverage); Nasdaq, S&P 500 Futures Gain Premarket While Oil Rebounds: CLS, NVDA, SKHY, CRWV, SOFI In Focus - TradingView. Bearish offsets: Oil prices edge lower amid renewed diplomatic efforts to end Mideast conflict; S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Will Stocks Rise Before Midterm Elections? Here's What The Data Shows.; S&P 500 rises as chip stocks gain for a second day, oil prices ease: Live updates. Bearish offsets: Honda warns 50% Canada auto tariffs would be catastrophic for industry; S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance.",
   "articles": [
     {
-      "title": "Stock Market Today: Dow Rises Ahead Of Fed Meet; Boeing Rallies On Earnings (Live Coverage)",
+      "title": "Will Stocks Rise Before Midterm Elections? Here's What The Data Shows.",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/6294d29d-51d6-3bfe-87d4-877203694b78/stock-market-today%3A-dow-rises.html?.tsrc=rss",
-      "published": "2026-10-27T12:13:25Z",
+      "url": "https://finance.yahoo.com/m/484f1ab1-1b38-3dc2-ac43-e1ad367da65f/will-stocks-rise-before.html?.tsrc=rss",
+      "published": "2026-10-27T18:11:30Z",
       "tone": "bullish"
     },
     {
-      "title": "Oil prices edge lower amid renewed diplomatic efforts to end Mideast conflict",
+      "title": "S&P 500 rises as chip stocks gain for a second day, oil prices ease: Live updates",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/27/oil-today-iran-us-crude-wti-brent-trump.html",
-      "published": "2026-10-27T12:46:26Z",
+      "url": "https://www.cnbc.com/2026/10/26/stock-market-today-live-updates.html",
+      "published": "2026-10-27T18:27:22Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Market Today: S&P 500, Dow and Nasdaq Face Fed Decision as AI Stocks Rally - Coinpaper",
+      "source": "Coinpaper",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPVGhJUHFfM0VIS2E0Mzc2dEtqeU52M3R3d2dyY3Z0ZHRmSnpabUNub25yTGNCV0QtNmw2bzg0RllkcjlNQ2ZaMEZCcjJIU1VTOGViaWNDOTlJMGNYVkZkR2l3d2taQnpDWEhnYXFaREplUzFjYTFSUnc4bGkzX2xmQjZiR1dTTVdMQWxPemltcnpKQUZ5VV96eTF1LVlUSEZHeE1qS2swRWRYaTRWVVp3?oc=5",
+      "published": "2026-10-27T16:12:47Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Honda warns 50% Canada auto tariffs would be catastrophic for industry",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/27/honda-warns-50percent-canada-auto-tariffs-would-be-catastrophic.html",
+      "published": "2026-10-27T17:53:47Z",
       "tone": "bearish"
     },
     {
@@ -24,20 +38,6 @@
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQYzlYMElEZWpheDcybHdGNUJyelJDb1JNSVlBbHZQWXd5Znp3OGNWSnYyZ2MzRElldkFsblhleUtJZGxTYUVuQ01TZnoyeUxra29SRGZnc2JWRHo2NU5NMmY0YXhoeTBpY0xzd0Z0cWxXUFhIdHJNeHFOdHJiSEdVdXdyeTFfcGJnM2xVdWN0MkdPUVNRVGc?oc=5",
       "published": "2026-10-22T20:47:53Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Nasdaq, S&P 500 Futures Gain Premarket While Oil Rebounds: CLS, NVDA, SKHY, CRWV, SOFI In Focus - TradingView",
-      "source": "TradingView",
-      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPQ2hLV25ZUUVTa2RIdjlLcE9XN1Rfa2dXdURCS2ZvYUxodVJhMjMwLXNObFFqMkpjMi0yakFpTmxRaDhFeHE2ellDQlBRUmZPYXFnWHkzZ040bUxiREczUHdDOGpTSmFUUzV3b0tiR0FVWDZQRGhST1hGbVV0eWYtc0Rpa2NZR2FYS2NrOVdGUklybzlGUllQQmpzRDkwVHlMTmF1NTNXdVBlS3VjVDdCLUZyMmhPT0pKbUdCSlItV2pjZXZEdk1hNEloek5tWU9xYU5aZ1pqd1ZUTkc4U2lZRmZaS0o?oc=5",
-      "published": "2026-10-27T10:19:25Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "US Stock Market Today: S&P 500 Futures Fall On Hot UK Inflation Surprise - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOTkZXbThyZm5IalZxc2oza0tVRWxnYk5sT3BZdVdzSHUyRTQyYVVTaXptUjdpZC00NmJpRHE1N1FLY2JZc3U0T1g4QVR6VnptQUJKTjdUQ1VjelgzM0JXcXN6NkVvUWVHSnFlanBHaUVTUmxPSU9mU2dtWUt0aGdrTlB6NEpqbjFJMGdrOTFId2pFUQ?oc=5",
-      "published": "2026-10-22T12:18:44Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 46
+        "articles": 55
       }
     ],
-    "headline_count": 95,
+    "headline_count": 105,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
