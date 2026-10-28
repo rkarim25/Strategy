@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-28T00:57:23Z",
+  "generated_at_utc": "2026-10-28T13:43:24Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's; Asian Stocks Set to Gain on Resurgent AI Optimism: Markets Wrap - Bloomberg.com. Bearish offsets: Honda warns 50% Canada auto tariffs would be catastrophic for industry; S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's; Stellantis stock rises as automaker's turnaround plan, cost cuts gain traction. Bearish offsets: S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Reuters; US Stock Market Today: S&P 500 Futures Fall On Hot UK Inflation Surprise - Yahoo Finance.",
   "articles": [
     {
       "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
@@ -13,24 +13,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Asian Stocks Set to Gain on Resurgent AI Optimism: Markets Wrap - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQdFZXQ0F0WGVCT3FPRFB5RndJRUYtdHFQNVlfVmxJV1dmd0ZKMklnSl8yYnV6Z0N0bERBbmVhenJGS3dTOF95VERJeC0xektmNXVOSzJzTUVySzRSYWRIWHl6RGNxU1o2eWRmcU5EcEN3OTlzaldJUERqdWloQ1pRa1Q2ZUI4YUZCejlrUzk3NzBRdmdf?oc=5",
-      "published": "2026-10-27T23:36:32Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Honda warns 50% Canada auto tariffs would be catastrophic for industry",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/27/honda-warns-50percent-canada-auto-tariffs-would-be-catastrophic.html",
-      "published": "2026-10-27T17:53:47Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQYzlYMElEZWpheDcybHdGNUJyelJDb1JNSVlBbHZQWXd5Znp3OGNWSnYyZ2MzRElldkFsblhleUtJZGxTYUVuQ01TZnoyeUxra29SRGZnc2JWRHo2NU5NMmY0YXhoeTBpY0xzd0Z0cWxXUFhIdHJNeHFOdHJiSEdVdXdyeTFfcGJnM2xVdWN0MkdPUVNRVGc?oc=5",
-      "published": "2026-10-22T20:47:53Z",
+      "title": "S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNTWxDZDg5X0padGNvb2k2V2ZkX2tEWW9YWkdjeVdMZHNUTlg1MXY4TmUyTDZHdUhNTHFRNWRPRjc2VFlEN3RXTDhNSjhDYmRfTWZGXzdKYXdLejRHNGgwRVdNbmZRUkFhSm9GakxMek56UUZ2OUtqajd6NVkzRkR1VzBNWlo5VWp5NUFkX2phUjlSSFlndUlNNGxvUXlHSm1wMlpTbkRR?oc=5",
+      "published": "2026-10-22T23:54:52Z",
       "tone": "bearish"
     },
     {
@@ -39,6 +25,20 @@
       "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOTkZXbThyZm5IalZxc2oza0tVRWxnYk5sT3BZdVdzSHUyRTQyYVVTaXptUjdpZC00NmJpRHE1N1FLY2JZc3U0T1g4QVR6VnptQUJKTjdUQ1VjelgzM0JXcXN6NkVvUWVHSnFlanBHaUVTUmxPSU9mU2dtWUt0aGdrTlB6NEpqbjFJMGdrOTFId2pFUQ?oc=5",
       "published": "2026-10-22T12:18:44Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Stellantis stock rises as automaker's turnaround plan, cost cuts gain traction",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/28/stellantis-45-billion-cash-drain-turnaround.html",
+      "published": "2026-10-28T13:15:26Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Robinhood to rally on prediction markets and new offerings, Bernstein says",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/28/robinhood-to-rally-on-prediction-markets-bernstein-says.html",
+      "published": "2026-10-28T12:22:23Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 45
+        "articles": 44
       }
     ],
-    "headline_count": 95,
+    "headline_count": 93,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
