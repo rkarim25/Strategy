@@ -1,29 +1,29 @@
 {
-  "generated_at_utc": "2026-10-27T18:29:59Z",
+  "generated_at_utc": "2026-10-28T00:08:44Z",
   "window_days": 7,
-  "score": 8,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Will Stocks Rise Before Midterm Elections? Here's What The Data Shows.; S&P 500 rises as chip stocks gain for a second day, oil prices ease: Live updates. Bearish offsets: Honda warns 50% Canada auto tariffs would be catastrophic for industry; S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Yahoo Finance.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's; Asian Stocks Set to Gain on Resurgent AI Optimism: Markets Wrap - Bloomberg.com. Bearish offsets: U.S. Stocks Fall as Tech Selloff Deepens - WSJ; Honda warns 50% Canada auto tariffs would be catastrophic for industry.",
   "articles": [
     {
-      "title": "Will Stocks Rise Before Midterm Elections? Here's What The Data Shows.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/484f1ab1-1b38-3dc2-ac43-e1ad367da65f/will-stocks-rise-before.html?.tsrc=rss",
-      "published": "2026-10-27T18:11:30Z",
+      "title": "U.S. Stocks Fall as Tech Selloff Deepens - WSJ",
+      "source": "WSJ",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPdDB3cDByVmVJQWQ4bzhobm83ZDVVN3MtYXh0VjlYT0xtakhpVkNrUFFHbVpWZEp2UHdpeWIwX0h2eVJqSzdod0t1Y3JxcVBaTzZlUFRKTFNkMDE4LVYxMHNjRGlYb0FsOVdqMnJuVzdHMk0xNVVxWXh4Y0tidlFtbXBUa1lXTVJGOXc1c0VvbjJ6eGVINVY0cEpFZHEtakM1UkFwdVZLVW4ySWlxV0RwNHpnNkpKcUsyRXU4RXN2Zm03QTQ?oc=5",
+      "published": "2026-10-22T18:42:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
+      "source": "Barron's",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOb3ZsVENTcUFFbUR2REdJSVZhendmcVlNUlZMZmRYWmZUYVNQQzRmV25NU0RDdXZzLWp0aG0yNDFpN1JOYkZHQ2J5MHBmRnV6NE9BbUJtX3VldkNCRzdBSjJrWXpsN2FGLU5feHVvaWpLeExYeUlxUExBeXg5ejdDVFRRbnY4SW1oQ1RYZ1lUOTNkeE9HLVMtbzVKUHlHU00?oc=5",
+      "published": "2026-10-27T16:29:00Z",
       "tone": "bullish"
     },
     {
-      "title": "S&P 500 rises as chip stocks gain for a second day, oil prices ease: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/26/stock-market-today-live-updates.html",
-      "published": "2026-10-27T18:27:22Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today: S&P 500, Dow and Nasdaq Face Fed Decision as AI Stocks Rally - Coinpaper",
-      "source": "Coinpaper",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPVGhJUHFfM0VIS2E0Mzc2dEtqeU52M3R3d2dyY3Z0ZHRmSnpabUNub25yTGNCV0QtNmw2bzg0RllkcjlNQ2ZaMEZCcjJIU1VTOGViaWNDOTlJMGNYVkZkR2l3d2taQnpDWEhnYXFaREplUzFjYTFSUnc4bGkzX2xmQjZiR1dTTVdMQWxPemltcnpKQUZ5VV96eTF1LVlUSEZHeE1qS2swRWRYaTRWVVp3?oc=5",
-      "published": "2026-10-27T16:12:47Z",
+      "title": "Asian Stocks Set to Gain on Resurgent AI Optimism: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQdFZXQ0F0WGVCT3FPRFB5RndJRUYtdHFQNVlfVmxJV1dmd0ZKMklnSl8yYnV6Z0N0bERBbmVhenJGS3dTOF95VERJeC0xektmNXVOSzJzTUVySzRSYWRIWHl6RGNxU1o2eWRmcU5EcEN3OTlzaldJUERqdWloQ1pRa1Q2ZUI4YUZCejlrUzk3NzBRdmdf?oc=5",
+      "published": "2026-10-27T23:36:32Z",
       "tone": "bullish"
     },
     {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 55
+        "articles": 88
       }
     ],
-    "headline_count": 105,
+    "headline_count": 138,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
