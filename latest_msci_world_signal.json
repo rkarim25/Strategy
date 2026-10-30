@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-10-30T13:44:54Z",
+  "generated_at_utc": "2026-10-30T18:56:22Z",
   "data_asof": "2026-10-30",
   "daily_rows": 4272,
-  "quote_price": 10856.400390625,
+  "quote_price": 10800.0,
   "quote_timestamp": "2026-10-30",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L?period1=0&period2=1793454294&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SWDA.L?period1=0&period2=1793472982&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-10-30",
-      "close": 10856.400390625
+      "close": 10800.0
     },
-    "latestSma": 11035.42001953125,
+    "latestSma": 11032.6,
     "highWater": 11183.0,
     "highWaterDate": "2026-10-06",
-    "latestDd": -0.02920500843914875,
+    "latestDd": -0.034248412769382064,
     "regime": "tier2",
     "entryClose": 8420.0,
     "entryDate": "2025-03-24",
@@ -48,12 +48,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-10-30",
-      "close": 10856.400390625
+      "close": 10800.0
     },
-    "latestSma": 11021.8400390625,
+    "latestSma": 11016.2,
     "highWater": 11183.0,
     "highWaterDate": "2026-10-06",
-    "latestDd": -0.02920500843914875,
+    "latestDd": -0.034248412769382064,
     "regime": "tier2",
     "entryClose": 8420.0,
     "entryDate": "2025-03-24",
@@ -71,9 +71,8 @@
     "last_observed_asof": "2026-10-30",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-10-30T13:44:54Z",
+    "last_checked_at_utc": "2026-10-30T18:56:22Z",
     "last_email_sent_on": "2026-10-30",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
       "id": "2026-10-28:1->2026-10-30:0",
       "detected_at_utc": "2026-10-30T13:44:54Z",
