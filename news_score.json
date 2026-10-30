@@ -1,16 +1,23 @@
 {
-  "generated_at_utc": "2026-10-29T19:22:08Z",
+  "generated_at_utc": "2026-10-30T00:29:34Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Norwegian shares surge 13% on earnings beat, guidance raise; Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: Stock Market Today (Oct. 29, 2026): S&P 500 falls on Alphabet earnings miss - Yahoo Finance Australia; S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Reuters.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Norwegian shares surge 13% on earnings beat, guidance raise; Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: Alphabet plunge drags Wall Street lower - CommBank; Stock Market Today (Oct. 29, 2026): S&P 500 falls on Alphabet earnings miss - Yahoo Finance Australia.",
   "articles": [
     {
       "title": "Norwegian shares surge 13% on earnings beat, guidance raise",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/10/29/norwegian-earnings-guidance-shares.html",
-      "published": "2026-10-29T16:23:37Z",
+      "published": "2026-10-29T20:14:15Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Alphabet plunge drags Wall Street lower - CommBank",
+      "source": "CommBank",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQUVd5bTRfeDVYdFpjSEZRSkdCbnpZQ0N5WFBiRGhSd2tFN0Jyc2VzNEZ3WnlHRmFBMHI0R0JTRFAxMDM5VmVFZW4xcWxRNkhpdFZOMzhTb2I0dFVSU0hPMXdwc05CVW81S0V6RjNKMHJtdkdpc0l6TUxzblBQQldnNVJzNm9INXlvNnI0VDY3TktRTWJ1V3M4NHJIMGpkUzQ?oc=5",
+      "published": "2026-10-29T21:34:03Z",
+      "tone": "bearish"
     },
     {
       "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
@@ -27,18 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNTWxDZDg5X0padGNvb2k2V2ZkX2tEWW9YWkdjeVdMZHNUTlg1MXY4TmUyTDZHdUhNTHFRNWRPRjc2VFlEN3RXTDhNSjhDYmRfTWZGXzdKYXdLejRHNGgwRVdNbmZRUkFhSm9GakxMek56UUZ2OUtqajd6NVkzRkR1VzBNWlo5VWp5NUFkX2phUjlSSFlndUlNNGxvUXlHSm1wMlpTbkRR?oc=5",
-      "published": "2026-10-22T23:54:52Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Update: Equities Fall Intraday Amid Post-Earnings Sell-Offs in Alphabet, Caterpillar",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-fall-intraday-amid-post-172737053.html?.tsrc=rss",
-      "published": "2026-10-29T17:27:37Z",
-      "tone": "bearish"
+      "title": "Rivian third-quarter earnings beat estimates as software revenue, R2 deliveries rise",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/29/rivian-rivn-earnings-q3-2026.html",
+      "published": "2026-10-29T21:52:27Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -72,7 +72,7 @@
         "articles": 38
       }
     ],
-    "headline_count": 87,
+    "headline_count": 88,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
