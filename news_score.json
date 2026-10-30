@@ -1,30 +1,16 @@
 {
-  "generated_at_utc": "2026-10-30T01:31:15Z",
+  "generated_at_utc": "2026-10-30T13:44:57Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Asian stocks rise after a rally on Wall Street, while oil prices edge higher - myMotherLode.com; Dow, S&P 500, Nasdaq Comp Rise as AVGO and META Financing Deals Help AI Stocks Rally: Wall Street Today - Moomoo. Bearish offsets: Stock Market Today (Oct. 29, 2026): S&P 500 falls on Alphabet earnings miss - Yahoo Finance Australia.",
+  "score": 5,
+  "label": "Neutral",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's; Rivian third-quarter earnings beat estimates as software revenue, R2 deliveries rise. Bearish offsets: Russian strikes plunge Ukrainian city into blackout as Zelenskyy warns of more missile attacks; Stock Market Today (Oct. 30, 2026): Nasdaq futures fall as Amazon, Intel losses shake Wall Street - TheStreet.",
   "articles": [
     {
-      "title": "Asian stocks rise after a rally on Wall Street, while oil prices edge higher - myMotherLode.com",
-      "source": "myMotherLode.com",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQNmI3NnRUX2N3UFloS2c4cGV3ME5Xb0lKaXotcTFhTWVQRGFId2NKeTlpaVkzUFZOMTVFR0tJOHlFR0NzcnZ5TmhDeURfbE5vTF8zaFIyTzhtdDRraDRfMjE1d0tMTl9MMks2VENJdmUtMXF1Y2o1N01rRURvcmxsUDVlQ0xOWDNZQW56a2taemJiVHVFdm02cUVkZ2M4X0xLanQ4WHRCUU9ldi1fZnMxQzFrUjllWmdFbFJVbVRMSHhLV3VSLW5VNFRDRE_SAcwBQVVfeXFMUDZiNzZ0VF9jd1BZaEtnOHBldzBOV29JSml6LXExYU1lUERhSHdjSnk5aWlZM1BWTjE1RUdLSTh5RUdDc3J2eU5oQ3lEX2xOb0xfM2hSMk84bXQ0a2g0XzIxNXdLTE5fTDJLNlRDSXZlLTFxdWNqNTdNa0VEb3JsbFA1ZUNMTlgzWUFuemtrWnpiYlR1RXZtNnFFZGdjOF9MS2p0OFh0QlFPZXYtX2ZzMUMxa1I5ZVpnRWxSVW1UTEh4S1d1Ui1uVTRUQ0RP?oc=5",
-      "published": "2026-10-28T05:20:11Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Dow, S&P 500, Nasdaq Comp Rise as AVGO and META Financing Deals Help AI Stocks Rally: Wall Street Today - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxORjhzdGhFUmlQTjJSNmxIYkNpYUFCSTd6T1h6RDRHVy0zRVdCc2hPSVZYWll6NjJSMGdFam1sOGpENndTRmZ1a0hxZlRqTDl0M09EZnNhNWdaX1JCdGVDMEI5NHYzWl9zVUR2QXgwOU1UU1hzbU5ScnZwbkMzRTU1SkE2anNnQ3FjQVZaWU16UW5RdVg3VFA4c25B?oc=5",
-      "published": "2026-10-27T07:00:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Dow, S&P 500, Nasdaq Comp Rise on Tame Fed News and SKHY, ORCL, MU and VRT Rallies: Wall Street Today - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPWjVBamhzV01XdWNGQkNMd3NtWm5sT3hvOUVscnFTRFR4WTNyaFhfWEVaSUEtaklOYUZDUUZ4NGVKQVZEVmRsQ1VaVFUtcGZ6cERtYV9UeE5wRWR4cXhIVTNxT0Z3T1BVTnpzU05ULXVQa2RycVZ2ZnRRYmppaTExUUZwOHZhZzcxRFB5VmpyaXA0aE9EY2wyYkZB?oc=5",
-      "published": "2026-10-27T17:13:00Z",
-      "tone": "bullish"
+      "title": "Russian strikes plunge Ukrainian city into blackout as Zelenskyy warns of more missile attacks",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/30/russia-ukraine-putin-zelenskyy-energy-strikes.html",
+      "published": "2026-10-30T11:29:59Z",
+      "tone": "bearish"
     },
     {
       "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
@@ -34,10 +20,24 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today (Oct. 29, 2026): S&P 500 falls on Alphabet earnings miss - Yahoo Finance Australia",
-      "source": "Yahoo Finance Australia",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFA0S3ZuNHNrUUxWQmtXOGNFTWJKS3pWNkw5d094SW5Fb21RMnh1RW1IQ090bjhxSFNKdGJ4QkxuOXhmQS1qZHUzaW9TaWJHRHJXWk9UeG1EcjEyYnRhdGFLaWFoWm5pWl8tUTBiMXRrYS1hZkxoN0llQVdzS2xHd28?oc=5",
-      "published": "2026-10-29T13:46:23Z",
+      "title": "Rivian third-quarter earnings beat estimates as software revenue, R2 deliveries rise",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/10/29/rivian-rivn-earnings-q3-2026.html",
+      "published": "2026-10-29T21:52:27Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Stock Market Today (Oct. 30, 2026): Nasdaq futures fall as Amazon, Intel losses shake Wall Street - TheStreet",
+      "source": "TheStreet",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNQ09GdTRnN3VRUWRZTjZoSWl4OUdZelp4LU9jM0dkNnVBck1YSlAwLXROdExwRDRvT0REU1RRbW0wRlUtcUE2ZW1zb0ZmelNvZjAzT0dQMWotbDA0VDRwakRuRXFDZVBweW9XOUJ1X1pIa3BSMXdyTHdzbS1mVXNqcFNtWmJUMk5SUE1Da2RSNmk4TzRLTnowdTJDVzBYRW5SM1ZkZkVpbnFRcUU?oc=5",
+      "published": "2026-10-30T11:11:42Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "A historic drop for Alphabet's stock drags the US market lower - WRAL",
+      "source": "WRAL",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQWVNaWXN4dW5pNWpSYXVDM29SdUhGbnptZVgwX2E1d3g0VndjcDFBQko2Y2x5UExKUUlhZUlZM242LVROZXNHb0FkOTZIVksyLWNoOG1XVHlyUGsyci00TUE0cmROYkxpbUtHa3RSQ1pRX2w5elB1aEVIR3BTTzBUMV9nd1pMVHpBY1hIZml4VGVQNjlZTlMwZTJSZktCTk4xWkdHd3REbUpiblg3NkFqU2h4dlRxelZoX1N2ZnJxRWN6QQ?oc=5",
+      "published": "2026-10-29T05:12:03Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 37
       }
     ],
-    "headline_count": 141,
+    "headline_count": 87,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
