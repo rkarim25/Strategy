@@ -1,23 +1,30 @@
 {
-  "generated_at_utc": "2026-10-30T00:29:34Z",
+  "generated_at_utc": "2026-10-30T01:31:15Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Norwegian shares surge 13% on earnings beat, guidance raise; Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: Alphabet plunge drags Wall Street lower - CommBank; Stock Market Today (Oct. 29, 2026): S&P 500 falls on Alphabet earnings miss - Yahoo Finance Australia.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Asian stocks rise after a rally on Wall Street, while oil prices edge higher - myMotherLode.com; Dow, S&P 500, Nasdaq Comp Rise as AVGO and META Financing Deals Help AI Stocks Rally: Wall Street Today - Moomoo. Bearish offsets: Stock Market Today (Oct. 29, 2026): S&P 500 falls on Alphabet earnings miss - Yahoo Finance Australia.",
   "articles": [
     {
-      "title": "Norwegian shares surge 13% on earnings beat, guidance raise",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/29/norwegian-earnings-guidance-shares.html",
-      "published": "2026-10-29T20:14:15Z",
+      "title": "Asian stocks rise after a rally on Wall Street, while oil prices edge higher - myMotherLode.com",
+      "source": "myMotherLode.com",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQNmI3NnRUX2N3UFloS2c4cGV3ME5Xb0lKaXotcTFhTWVQRGFId2NKeTlpaVkzUFZOMTVFR0tJOHlFR0NzcnZ5TmhDeURfbE5vTF8zaFIyTzhtdDRraDRfMjE1d0tMTl9MMks2VENJdmUtMXF1Y2o1N01rRURvcmxsUDVlQ0xOWDNZQW56a2taemJiVHVFdm02cUVkZ2M4X0xLanQ4WHRCUU9ldi1fZnMxQzFrUjllWmdFbFJVbVRMSHhLV3VSLW5VNFRDRE_SAcwBQVVfeXFMUDZiNzZ0VF9jd1BZaEtnOHBldzBOV29JSml6LXExYU1lUERhSHdjSnk5aWlZM1BWTjE1RUdLSTh5RUdDc3J2eU5oQ3lEX2xOb0xfM2hSMk84bXQ0a2g0XzIxNXdLTE5fTDJLNlRDSXZlLTFxdWNqNTdNa0VEb3JsbFA1ZUNMTlgzWUFuemtrWnpiYlR1RXZtNnFFZGdjOF9MS2p0OFh0QlFPZXYtX2ZzMUMxa1I5ZVpnRWxSVW1UTEh4S1d1Ui1uVTRUQ0RP?oc=5",
+      "published": "2026-10-28T05:20:11Z",
       "tone": "bullish"
     },
     {
-      "title": "Alphabet plunge drags Wall Street lower - CommBank",
-      "source": "CommBank",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQUVd5bTRfeDVYdFpjSEZRSkdCbnpZQ0N5WFBiRGhSd2tFN0Jyc2VzNEZ3WnlHRmFBMHI0R0JTRFAxMDM5VmVFZW4xcWxRNkhpdFZOMzhTb2I0dFVSU0hPMXdwc05CVW81S0V6RjNKMHJtdkdpc0l6TUxzblBQQldnNVJzNm9INXlvNnI0VDY3TktRTWJ1V3M4NHJIMGpkUzQ?oc=5",
-      "published": "2026-10-29T21:34:03Z",
-      "tone": "bearish"
+      "title": "Dow, S&P 500, Nasdaq Comp Rise as AVGO and META Financing Deals Help AI Stocks Rally: Wall Street Today - Moomoo",
+      "source": "Moomoo",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxORjhzdGhFUmlQTjJSNmxIYkNpYUFCSTd6T1h6RDRHVy0zRVdCc2hPSVZYWll6NjJSMGdFam1sOGpENndTRmZ1a0hxZlRqTDl0M09EZnNhNWdaX1JCdGVDMEI5NHYzWl9zVUR2QXgwOU1UU1hzbU5ScnZwbkMzRTU1SkE2anNnQ3FjQVZaWU16UW5RdVg3VFA4c25B?oc=5",
+      "published": "2026-10-27T07:00:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Dow, S&P 500, Nasdaq Comp Rise on Tame Fed News and SKHY, ORCL, MU and VRT Rallies: Wall Street Today - Moomoo",
+      "source": "Moomoo",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPWjVBamhzV01XdWNGQkNMd3NtWm5sT3hvOUVscnFTRFR4WTNyaFhfWEVaSUEtaklOYUZDUUZ4NGVKQVZEVmRsQ1VaVFUtcGZ6cERtYV9UeE5wRWR4cXhIVTNxT0Z3T1BVTnpzU05ULXVQa2RycVZ2ZnRRYmppaTExUUZwOHZhZzcxRFB5VmpyaXA0aE9EY2wyYkZB?oc=5",
+      "published": "2026-10-27T17:13:00Z",
+      "tone": "bullish"
     },
     {
       "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFA0S3ZuNHNrUUxWQmtXOGNFTWJKS3pWNkw5d094SW5Fb21RMnh1RW1IQ090bjhxSFNKdGJ4QkxuOXhmQS1qZHUzaW9TaWJHRHJXWk9UeG1EcjEyYnRhdGFLaWFoWm5pWl8tUTBiMXRrYS1hZkxoN0llQVdzS2xHd28?oc=5",
       "published": "2026-10-29T13:46:23Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Rivian third-quarter earnings beat estimates as software revenue, R2 deliveries rise",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/29/rivian-rivn-earnings-q3-2026.html",
-      "published": "2026-10-29T21:52:27Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 38
+        "articles": 91
       }
     ],
-    "headline_count": 88,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
