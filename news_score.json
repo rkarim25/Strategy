@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-10-30T18:56:23Z",
+  "generated_at_utc": "2026-10-31T00:14:31Z",
   "window_days": 7,
-  "score": 5,
-  "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Here are the stocks reporting next week that have a history of earnings beats and big share gains; Dow, S&P 500, Nasdaq Comp Rise on Tame Fed News and SKHY, ORCL, MU and VRT Rallies: Wall Street Today - Moomoo. Bearish offsets: Stock Market Today: Nasdaq Slumps On Weak Intel Report; CBOE, Vertex Pharma Jump (Live Coverage).",
+  "score": 3,
+  "label": "Bearish",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Wall Street drops to its worst day since June after tech sell-off deepens - South China Morning Post; Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Charleston Gazette-Mail.",
   "articles": [
     {
-      "title": "Here are the stocks reporting next week that have a history of earnings beats and big share gains",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/10/30/here-are-stocks-reporting-next-week-that-usually-beats-and-see-big-share-gains.html",
-      "published": "2026-10-30T15:04:26Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today: Nasdaq Slumps On Weak Intel Report; CBOE, Vertex Pharma Jump (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/3cdf61c3-8737-3183-b5ff-f3bf8fc03ece/stock-market-today%3A-nasdaq.html?.tsrc=rss",
-      "published": "2026-10-30T18:39:21Z",
+      "title": "Wall Street drops to its worst day since June after tech sell-off deepens - South China Morning Post",
+      "source": "South China Morning Post",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNVVFtZ2tBLWFMWnczT0FpbmNOMG5SMUtFTFFaQ0dOVllja3h1M2F5RHh1VTdCMmljVUdiNlI3NXVVaTZRWl9VUWttaVZjSjAxR0cwQnpXR0R0WTRWYk52QjM3Y2dKMm5HVl9TSkJkMzM5THJERDJCQ2dZZ2R0WUdPV2R4MHFuMTlBQlZoZVdMRUdzcXpKWERpLUlQZWVFaDBvYTN6YWItZzNMNDVPZTJEdU1tY2lHOGpBSmlZR3NVMkNwazNtNGVacNIByAFBVV95cUxNVVFtZ2tBLWFMWnczT0FpbmNOMG5SMUtFTFFaQ0dOVllja3h1M2F5RHh1VTdCMmljVUdiNlI3NXVVaTZRWl9VUWttaVZjSjAxR0cwQnpXR0R0WTRWYk52QjM3Y2dKMm5HVl9TSkJkMzM5THJERDJCQ2dZZ2R0WUdPV2R4MHFuMTlBQlZoZVdMRUdzcXpKWERpLUlQZWVFaDBvYTN6YWItZzNMNDVPZTJEdU1tY2lHOGpBSmlZR3NVMkNwazNtNGVacA?oc=5",
+      "published": "2026-10-30T22:01:13Z",
       "tone": "bearish"
     },
     {
-      "title": "Dow, S&P 500, Nasdaq Comp Rise on Tame Fed News and SKHY, ORCL, MU and VRT Rallies: Wall Street Today - Moomoo",
-      "source": "Moomoo",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPWjVBamhzV01XdWNGQkNMd3NtWm5sT3hvOUVscnFTRFR4WTNyaFhfWEVaSUEtaklOYUZDUUZ4NGVKQVZEVmRsQ1VaVFUtcGZ6cERtYV9UeE5wRWR4cXhIVTNxT0Z3T1BVTnpzU05ULXVQa2RycVZ2ZnRRYmppaTExUUZwOHZhZzcxRFB5VmpyaXA0aE9EY2wyYkZB?oc=5",
-      "published": "2026-10-27T17:13:00Z",
-      "tone": "bullish"
+      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Charleston Gazette-Mail",
+      "source": "Charleston Gazette-Mail",
+      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNNng4YmpzYTVyRkMzRGk3bTVLNzZaWEsxQlQ2RUNDUEt0a1BaX2VXQ3lmcXgzc3p2T0xKNkUzd0tnZlltU2R5VzE0VW50dEt2Z1p0cXNCN1llUGxnRnZrSkRtRDk3OWdlZ0VQckRUb3pxdFF2NGZoai11SnZUV3gzVVRTU0JFZDYtRTViV2dCQnRmbUp6VTdsMDkxZTh0OXBvZjVkWFIxcjBGU2VtRFNzZUlhQzlJeEV1MGU5Z0l5aVl4ak5PaXZZaV9nbU9BbURoLXlveEF1UVAzZGFscEFSMDNuQXByMnRwLW5MRnpma1gtTl81aDluTw?oc=5",
+      "published": "2026-10-30T20:19:00Z",
+      "tone": "bearish"
     },
     {
-      "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
-      "source": "Barron's",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOb3ZsVENTcUFFbUR2REdJSVZhendmcVlNUlZMZmRYWmZUYVNQQzRmV25NU0RDdXZzLWp0aG0yNDFpN1JOYkZHQ2J5MHBmRnV6NE9BbUJtX3VldkNCRzdBSjJrWXpsN2FGLU5feHVvaWpLeExYeUlxUExBeXg5ejdDVFRRbnY4SW1oQ1RYZ1lUOTNkeE9HLVMtbzVKUHlHU00?oc=5",
-      "published": "2026-10-27T16:29:00Z",
-      "tone": "bullish"
+      "title": "S&P 500 Drops 1.6% at Midday While Nasdaq Leads the Selloff - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQbHJuNk9NNTdJX25yOVVuc2kwdzhGX1dQdUZCVE9ZdnBJb1F2QlJGMGQyS0IyZkVnMjUwNVBXR3EzMWZEaHV4dzdpVXJIem8tX205NTQ3QWUtZ0MydnVBczk4aXIyLVlpQWhHTGVRU0RWSW1fUFZhU0h4WVhuUmhQQ2tOQ3F1MVNtYV84SFJwOXJEc2psTlprRURkcHNPVWhlQ0tsRmEwMHdNQXctZzZKVDhhcmlfUDZtV2FCajY3eEhHMzNWTVZSTnpn?oc=5",
+      "published": "2026-10-30T18:10:34Z",
+      "tone": "bearish"
     },
     {
-      "title": "Wall St Week Ahead Earnings flood, Fed meeting will test rickety AI market rally - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPR3FjeUJFd2Z6ZFBxOEFlLUx4anZlN1BqeFkxQ1pFcTdXTENYc0tMdW9RbjJ1Vk91Y2tmSXVoRDFCTmZoQ2cxN3BaSlFfTXplZUNZTFIzVmR3OTVmUVYzWnBXVkxRNXAtOEpBSUpIVjlBMnJ6cVViYnFSSHZoaC1CbkR5TnBzZndWNEo5aFlkWTVKY0hSYzRuOTlzUjYwcGlrcFJKQXhlbmFOMHNWLTRiRHZaM21fWEF1SDl1Mg?oc=5",
-      "published": "2026-10-25T07:00:00Z",
-      "tone": "bullish"
+      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Boston Herald",
+      "source": "Boston Herald",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5WYWVQaU5yR1dFOTJUTUpXWFBfbTdwYW9fSF9kTmJybDlaUFhNdEFnRWFGd29uUHlDODRTRi11c0UtbnhPRlMxcGE2SzVkdnpQdDUyaE5XWWJGM2lhbGtQSFRqaS1IOVRDU3dWOU0teFU5VFFjTHc?oc=5",
+      "published": "2026-10-30T16:57:39Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "S&P 500 drops 1.8% for its worst day since June after the sell-off for tech stocks worsens - The Denver Post",
+      "source": "The Denver Post",
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1GXzFGQmRYTXN3UGxiTXExN0ZzWEhQNDFfRi1EaFo2ZVZxemZIc2FyQzVsZ0FWOXJ5a0dxTXBuNUtBMXRGWGxCZ19SMTlkLWhKX0k1QnF2ZWNidncydVVjSVNyam9oZDB2d2NMbEZPazBqQ28?oc=5",
+      "published": "2026-10-30T12:38:46Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -72,7 +72,7 @@
         "articles": 89
       }
     ],
-    "headline_count": 139,
+    "headline_count": 137,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
