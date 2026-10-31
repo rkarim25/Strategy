@@ -1,31 +1,10 @@
 {
-  "generated_at_utc": "2026-10-31T00:14:31Z",
+  "generated_at_utc": "2026-10-31T01:24:38Z",
   "window_days": 7,
   "score": 3,
   "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Wall Street drops to its worst day since June after tech sell-off deepens - South China Morning Post; Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Charleston Gazette-Mail.",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Boston Herald; S&P 500 Drops 1.6% at Midday While Nasdaq Leads the Selloff - 24/7 Wall St..",
   "articles": [
-    {
-      "title": "Wall Street drops to its worst day since June after tech sell-off deepens - South China Morning Post",
-      "source": "South China Morning Post",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNVVFtZ2tBLWFMWnczT0FpbmNOMG5SMUtFTFFaQ0dOVllja3h1M2F5RHh1VTdCMmljVUdiNlI3NXVVaTZRWl9VUWttaVZjSjAxR0cwQnpXR0R0WTRWYk52QjM3Y2dKMm5HVl9TSkJkMzM5THJERDJCQ2dZZ2R0WUdPV2R4MHFuMTlBQlZoZVdMRUdzcXpKWERpLUlQZWVFaDBvYTN6YWItZzNMNDVPZTJEdU1tY2lHOGpBSmlZR3NVMkNwazNtNGVacNIByAFBVV95cUxNVVFtZ2tBLWFMWnczT0FpbmNOMG5SMUtFTFFaQ0dOVllja3h1M2F5RHh1VTdCMmljVUdiNlI3NXVVaTZRWl9VUWttaVZjSjAxR0cwQnpXR0R0WTRWYk52QjM3Y2dKMm5HVl9TSkJkMzM5THJERDJCQ2dZZ2R0WUdPV2R4MHFuMTlBQlZoZVdMRUdzcXpKWERpLUlQZWVFaDBvYTN6YWItZzNMNDVPZTJEdU1tY2lHOGpBSmlZR3NVMkNwazNtNGVacA?oc=5",
-      "published": "2026-10-30T22:01:13Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Charleston Gazette-Mail",
-      "source": "Charleston Gazette-Mail",
-      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNNng4YmpzYTVyRkMzRGk3bTVLNzZaWEsxQlQ2RUNDUEt0a1BaX2VXQ3lmcXgzc3p2T0xKNkUzd0tnZlltU2R5VzE0VW50dEt2Z1p0cXNCN1llUGxnRnZrSkRtRDk3OWdlZ0VQckRUb3pxdFF2NGZoai11SnZUV3gzVVRTU0JFZDYtRTViV2dCQnRmbUp6VTdsMDkxZTh0OXBvZjVkWFIxcjBGU2VtRFNzZUlhQzlJeEV1MGU5Z0l5aVl4ak5PaXZZaV9nbU9BbURoLXlveEF1UVAzZGFscEFSMDNuQXByMnRwLW5MRnpma1gtTl81aDluTw?oc=5",
-      "published": "2026-10-30T20:19:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "S&P 500 Drops 1.6% at Midday While Nasdaq Leads the Selloff - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQbHJuNk9NNTdJX25yOVVuc2kwdzhGX1dQdUZCVE9ZdnBJb1F2QlJGMGQyS0IyZkVnMjUwNVBXR3EzMWZEaHV4dzdpVXJIem8tX205NTQ3QWUtZ0MydnVBczk4aXIyLVlpQWhHTGVRU0RWSW1fUFZhU0h4WVhuUmhQQ2tOQ3F1MVNtYV84SFJwOXJEc2psTlprRURkcHNPVWhlQ0tsRmEwMHdNQXctZzZKVDhhcmlfUDZtV2FCajY3eEhHMzNWTVZSTnpn?oc=5",
-      "published": "2026-10-30T18:10:34Z",
-      "tone": "bearish"
-    },
     {
       "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Boston Herald",
       "source": "Boston Herald",
@@ -34,10 +13,31 @@
       "tone": "bearish"
     },
     {
-      "title": "S&P 500 drops 1.8% for its worst day since June after the sell-off for tech stocks worsens - The Denver Post",
-      "source": "The Denver Post",
-      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1GXzFGQmRYTXN3UGxiTXExN0ZzWEhQNDFfRi1EaFo2ZVZxemZIc2FyQzVsZ0FWOXJ5a0dxTXBuNUtBMXRGWGxCZ19SMTlkLWhKX0k1QnF2ZWNidncydVVjSVNyam9oZDB2d2NMbEZPazBqQ28?oc=5",
-      "published": "2026-10-30T12:38:46Z",
+      "title": "S&P 500 Drops 1.6% at Midday While Nasdaq Leads the Selloff - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQbHJuNk9NNTdJX25yOVVuc2kwdzhGX1dQdUZCVE9ZdnBJb1F2QlJGMGQyS0IyZkVnMjUwNVBXR3EzMWZEaHV4dzdpVXJIem8tX205NTQ3QWUtZ0MydnVBczk4aXIyLVlpQWhHTGVRU0RWSW1fUFZhU0h4WVhuUmhQQ2tOQ3F1MVNtYV84SFJwOXJEc2psTlprRURkcHNPVWhlQ0tsRmEwMHdNQXctZzZKVDhhcmlfUDZtV2FCajY3eEhHMzNWTVZSTnpn?oc=5",
+      "published": "2026-10-30T16:00:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
+      "source": "Barron's",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOb3ZsVENTcUFFbUR2REdJSVZhendmcVlNUlZMZmRYWmZUYVNQQzRmV25NU0RDdXZzLWp0aG0yNDFpN1JOYkZHQ2J5MHBmRnV6NE9BbUJtX3VldkNCRzdBSjJrWXpsN2FGLU5feHVvaWpLeExYeUlxUExBeXg5ejdDVFRRbnY4SW1oQ1RYZ1lUOTNkeE9HLVMtbzVKUHlHU00?oc=5",
+      "published": "2026-10-27T16:29:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "US: Wall Street closes sharply lower as AI cash burn fears spark tech sell-off - The Business Times",
+      "source": "The Business Times",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOelQ2NWczd2VwMzA4eFFheURrWm1ZUnEtTDhjTzhFeFUzY2tJbUhvYmtRN1ZQWnZrWnE2c0dkSmRCVVZzbUg0X2FLVWdYQnlmb3NfVWNxbmlpTzVqajhxMTVreTVTUHV4dVpDaUVnaGhxNDVBRmxNcUVLcW5GOWRkRUZSUDRrdTRoSEg3bUZkMmlKSWNzMXBoVFVQX2gwS05IWm1yOVJ3bEJ4T2tkQkFXQTAyVlNHWVB0dmhoU2Z3?oc=5",
+      "published": "2026-10-31T00:14:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street closes sharply lower as AI cash burn fears spark tech selloff - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPblVtZktXRjdPbHJBWDM4WWJsV2RyMlhnOVFYRTZPc01udjZNZTVjeHdIN1dVY0w1M1NHbHpxNjV6Vm9jQ3FOUjBIaElyZEdSWWxycmNZdnJwNnBfdTJDc1FBMWVJZ19vR0s3Y1h2Uml2LThWc2NzQ2sxN3NnVzFEeGhvNnpPSElHSFRIQnJreHpCR2c3dnRQbEVYTDlJVjhzVVk3b1gxaFczMFhkb2NDSw?oc=5",
+      "published": "2026-10-30T20:38:32Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 45
       }
     ],
-    "headline_count": 137,
+    "headline_count": 93,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
