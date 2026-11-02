@@ -1,23 +1,16 @@
 {
-  "generated_at_utc": "2026-10-31T01:24:38Z",
+  "generated_at_utc": "2026-11-02T16:44:12Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Boston Herald; S&P 500 Drops 1.6% at Midday While Nasdaq Leads the Selloff - 24/7 Wall St..",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Applied Materials (AMAT) Slides Despite EPS Surge and Higher Analyst Estimates; Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: Wall Street closes sharply lower as AI cash burn fears spark tech selloff - Reuters; US Stock Market Today: S&P 500 Futures Drop On Energy Inflation And Wage Risks - Yahoo Finance.",
   "articles": [
     {
-      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Boston Herald",
-      "source": "Boston Herald",
-      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5WYWVQaU5yR1dFOTJUTUpXWFBfbTdwYW9fSF9kTmJybDlaUFhNdEFnRWFGd29uUHlDODRTRi11c0UtbnhPRlMxcGE2SzVkdnpQdDUyaE5XWWJGM2lhbGtQSFRqaS1IOVRDU3dWOU0teFU5VFFjTHc?oc=5",
-      "published": "2026-10-30T16:57:39Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "S&P 500 Drops 1.6% at Midday While Nasdaq Leads the Selloff - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQbHJuNk9NNTdJX25yOVVuc2kwdzhGX1dQdUZCVE9ZdnBJb1F2QlJGMGQyS0IyZkVnMjUwNVBXR3EzMWZEaHV4dzdpVXJIem8tX205NTQ3QWUtZ0MydnVBczk4aXIyLVlpQWhHTGVRU0RWSW1fUFZhU0h4WVhuUmhQQ2tOQ3F1MVNtYV84SFJwOXJEc2psTlprRURkcHNPVWhlQ0tsRmEwMHdNQXctZzZKVDhhcmlfUDZtV2FCajY3eEhHMzNWTVZSTnpn?oc=5",
-      "published": "2026-10-30T16:00:00Z",
-      "tone": "bearish"
+      "title": "Applied Materials (AMAT) Slides Despite EPS Surge and Higher Analyst Estimates",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/applied-materials-amat-slides-despite-143659400.html?.tsrc=rss",
+      "published": "2026-11-02T14:36:59Z",
+      "tone": "bullish"
     },
     {
       "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
@@ -27,18 +20,25 @@
       "tone": "bullish"
     },
     {
-      "title": "US: Wall Street closes sharply lower as AI cash burn fears spark tech sell-off - The Business Times",
-      "source": "The Business Times",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOelQ2NWczd2VwMzA4eFFheURrWm1ZUnEtTDhjTzhFeFUzY2tJbUhvYmtRN1ZQWnZrWnE2c0dkSmRCVVZzbUg0X2FLVWdYQnlmb3NfVWNxbmlpTzVqajhxMTVreTVTUHV4dVpDaUVnaGhxNDVBRmxNcUVLcW5GOWRkRUZSUDRrdTRoSEg3bUZkMmlKSWNzMXBoVFVQX2gwS05IWm1yOVJ3bEJ4T2tkQkFXQTAyVlNHWVB0dmhoU2Z3?oc=5",
-      "published": "2026-10-31T00:14:00Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Wall Street closes sharply lower as AI cash burn fears spark tech selloff - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPblVtZktXRjdPbHJBWDM4WWJsV2RyMlhnOVFYRTZPc01udjZNZTVjeHdIN1dVY0w1M1NHbHpxNjV6Vm9jQ3FOUjBIaElyZEdSWWxycmNZdnJwNnBfdTJDc1FBMWVJZ19vR0s3Y1h2Uml2LThWc2NzQ2sxN3NnVzFEeGhvNnpPSElHSFRIQnJreHpCR2c3dnRQbEVYTDlJVjhzVVk3b1gxaFczMFhkb2NDSw?oc=5",
-      "published": "2026-10-30T20:38:32Z",
+      "published": "2026-10-30T08:46:00Z",
       "tone": "bearish"
+    },
+    {
+      "title": "US Stock Market Today: S&P 500 Futures Drop On Energy Inflation And Wage Risks - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQaGJScHBhVmdWUFBoblhIYUFKMFZkWHFJSS1IalFfekpOb3p0MHBtemVtTWFTR1U4Zk9nWEZ3TGEzZThDR3h2MTZ1bUd4d3pja1hzcFFEZUsxenZCZGpPSDZ6bW9semNldDI3Z3VTMW1GTVZqdmtFUE5yWnNmT2tBU0FVM1p2cG9ONGhXNm1pR04wUQ?oc=5",
+      "published": "2026-10-30T12:10:18Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "If Moderna's CEO Is Right, the Stock's Rally Could Just Be Getting Started",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/investing/2026/11/02/if-moderna-s-ceo-is-right-the-stock-s-rally-could-just-be-getting-started/?.tsrc=rss",
+      "published": "2026-11-02T14:39:01Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 16
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 45
+        "articles": 48
       }
     ],
-    "headline_count": 93,
+    "headline_count": 94,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
