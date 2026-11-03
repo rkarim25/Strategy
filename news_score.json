@@ -1,16 +1,23 @@
 {
-  "generated_at_utc": "2026-11-02T16:44:12Z",
+  "generated_at_utc": "2026-11-03T02:42:32Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Applied Materials (AMAT) Slides Despite EPS Surge and Higher Analyst Estimates; Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: Wall Street closes sharply lower as AI cash burn fears spark tech selloff - Reuters; US Stock Market Today: S&P 500 Futures Drop On Energy Inflation And Wage Risks - Yahoo Finance.",
+  "score": 5,
+  "label": "Neutral",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's; Review & Preview: Whiplash. Bearish offsets: COMMENTARY: Brutal AI selloff stirs recession fears: McGeever - Reuters; Update: US Equity Indexes Mixed as Sell-Off in Technology Continues, Crude Oil Sinks Ahead of Midterm Elections.",
   "articles": [
     {
-      "title": "Applied Materials (AMAT) Slides Despite EPS Surge and Higher Analyst Estimates",
+      "title": "COMMENTARY: Brutal AI selloff stirs recession fears: McGeever - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPWE8zaUFuYVVHZHM4aDVEdEN1TzVfbjVQa0xXWG1UNXpHcTlja19HTUtZbDUyTno2bXVwWDBvUm43eUVNbmZVblhrX1dTS2FGSTNLaU1zcDhSWWczS2dGUks5NFFYYTljcW43REtWYWZSRnBzV2ZFeTFNdmlzMno2WXFiTWY0RDBwTmtBdFRZWWMta1NUSktYdnVfTUF1c2NqTkhfaUJfNTVwaXI1QUhPV01SZnZxbzZW?oc=5",
+      "published": "2026-11-02T23:30:28Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Update: US Equity Indexes Mixed as Sell-Off in Technology Continues, Crude Oil Sinks Ahead of Midterm Elections",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/applied-materials-amat-slides-despite-143659400.html?.tsrc=rss",
-      "published": "2026-11-02T14:36:59Z",
-      "tone": "bullish"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-mixed-sell-223541461.html?.tsrc=rss",
+      "published": "2026-11-02T22:35:41Z",
+      "tone": "bearish"
     },
     {
       "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
@@ -20,25 +27,18 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street closes sharply lower as AI cash burn fears spark tech selloff - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPblVtZktXRjdPbHJBWDM4WWJsV2RyMlhnOVFYRTZPc01udjZNZTVjeHdIN1dVY0w1M1NHbHpxNjV6Vm9jQ3FOUjBIaElyZEdSWWxycmNZdnJwNnBfdTJDc1FBMWVJZ19vR0s3Y1h2Uml2LThWc2NzQ2sxN3NnVzFEeGhvNnpPSElHSFRIQnJreHpCR2c3dnRQbEVYTDlJVjhzVVk3b1gxaFczMFhkb2NDSw?oc=5",
-      "published": "2026-10-30T08:46:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "US Stock Market Today: S&P 500 Futures Drop On Energy Inflation And Wage Risks - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQaGJScHBhVmdWUFBoblhIYUFKMFZkWHFJSS1IalFfekpOb3p0MHBtemVtTWFTR1U4Zk9nWEZ3TGEzZThDR3h2MTZ1bUd4d3pja1hzcFFEZUsxenZCZGpPSDZ6bW9semNldDI3Z3VTMW1GTVZqdmtFUE5yWnNmT2tBU0FVM1p2cG9ONGhXNm1pR04wUQ?oc=5",
-      "published": "2026-10-30T12:10:18Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "If Moderna's CEO Is Right, the Stock's Rally Could Just Be Getting Started",
+      "title": "Review & Preview: Whiplash",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/investing/2026/11/02/if-moderna-s-ceo-is-right-the-stock-s-rally-could-just-be-getting-started/?.tsrc=rss",
-      "published": "2026-11-02T14:39:01Z",
+      "url": "https://finance.yahoo.com/m/e381f6ca-67d7-350c-915c-c9e1b1779ca6/review-%26-preview%3A-whiplash.html?.tsrc=rss",
+      "published": "2026-11-03T00:55:00Z",
       "tone": "bullish"
+    },
+    {
+      "title": "AI investors hedge against losses amid tech stock selloff - The Jerusalem Post",
+      "source": "The Jerusalem Post",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQUHV1YV9iTlhJU1IzNmJPU1JOb2hiZUVlWWxWa3QtMGVLUDJORS11eUlkZ2VYSkg4dnB0dDdPYXpsNUJTRkZCS0o3SkZhOGM4NkdBek1QcFUwNFBwZlVPZUpTaUg0azI1TjdSUG9TNzdnTFRsZkRkVVgxSEFwdUl6RFY4Z1Y2Zms?oc=5",
+      "published": "2026-11-01T20:38:11Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 16
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 48
+        "articles": 93
       }
     ],
-    "headline_count": 94,
+    "headline_count": 141,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
