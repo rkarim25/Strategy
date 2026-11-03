@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-03T02:42:32Z",
+  "generated_at_utc": "2026-11-03T03:17:13Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's; Review & Preview: Whiplash. Bearish offsets: COMMENTARY: Brutal AI selloff stirs recession fears: McGeever - Reuters; Update: US Equity Indexes Mixed as Sell-Off in Technology Continues, Crude Oil Sinks Ahead of Midterm Elections.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: COMMENTARY: Brutal AI selloff stirs recession fears: McGeever - Reuters; Update: US Equity Indexes Mixed as Sell-Off in Technology Continues, Crude Oil Sinks Ahead of Midterm Elections.",
   "articles": [
     {
       "title": "COMMENTARY: Brutal AI selloff stirs recession fears: McGeever - Reuters",
@@ -20,25 +20,25 @@
       "tone": "bearish"
     },
     {
+      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Union-Bulletin",
+      "source": "Union-Bulletin",
+      "url": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxQSkdDREk3eGZvWEw4Q0JmcDhJYWc4TUJkZUlpMUhaUUR0N0YtbjM5RU1PQ1hZWmpfaml1TUtHWlpWOWhzVjU4WTJZQzNnaFlnQ0t5UU5vX2VKcmgzanRiYko5REc3X1k4V2gwb216a0VrczZjdEs0Qlptb1hUMjFFNkVlQ0pFNVg2VkZVMlRhZFBsTVFSZW8yMDZTN3FhdkQtN1ozS3l5RUt0MUs1TTF4SW5KemxTR2ktMHhEaWVZSWR2Vl9kRl96TEc3ZW1zbEpCbGVhVFBsNmVUSkF2Y0p1MW1Pa3pVa2VXdFFTSU5UeWh0R2VLaWx3bFQ4eWxtUQ?oc=5",
+      "published": "2026-10-30T20:50:10Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Charleston Gazette-Mail",
+      "source": "Charleston Gazette-Mail",
+      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxObzZuWVVOZGk0OVM4WS1HN2hDcFRkVHRDWlNtX21tSHJXWUFVUjgyd0h1YWJBZUlqbkRIVjMxYUg1eTJsQzZWZUlWaW1kejN1elRrVnllY0xmNlZCOF9ocUhDUHVvWWdOMDdSWVNLcTVCa1RMRlVJRUh4S3I2Tm5Qb1VlYlpJandpMFZaa01BbUpLRHRkb1N0X3RLNEhXZElsY2NtNU5nYnI1VGhNQnAyR2tYMGVCWmlycjhhVUl2bDBadWdONFRzSkZPSGlpVWZvTHA4VEtkUjd2dw?oc=5",
+      "published": "2026-10-30T07:30:00Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
       "source": "Barron's",
       "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOb3ZsVENTcUFFbUR2REdJSVZhendmcVlNUlZMZmRYWmZUYVNQQzRmV25NU0RDdXZzLWp0aG0yNDFpN1JOYkZHQ2J5MHBmRnV6NE9BbUJtX3VldkNCRzdBSjJrWXpsN2FGLU5feHVvaWpLeExYeUlxUExBeXg5ejdDVFRRbnY4SW1oQ1RYZ1lUOTNkeE9HLVMtbzVKUHlHU00?oc=5",
       "published": "2026-10-27T16:29:00Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Review & Preview: Whiplash",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/e381f6ca-67d7-350c-915c-c9e1b1779ca6/review-%26-preview%3A-whiplash.html?.tsrc=rss",
-      "published": "2026-11-03T00:55:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "AI investors hedge against losses amid tech stock selloff - The Jerusalem Post",
-      "source": "The Jerusalem Post",
-      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQUHV1YV9iTlhJU1IzNmJPU1JOb2hiZUVlWWxWa3QtMGVLUDJORS11eUlkZ2VYSkg4dnB0dDdPYXpsNUJTRkZCS0o3SkZhOGM4NkdBek1QcFUwNFBwZlVPZUpTaUg0azI1TjdSUG9TNzdnTFRsZkRkVVgxSEFwdUl6RFY4Z1Y2Zms?oc=5",
-      "published": "2026-11-01T20:38:11Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 93
+        "articles": 95
       }
     ],
-    "headline_count": 141,
+    "headline_count": 143,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
