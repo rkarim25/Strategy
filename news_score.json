@@ -1,29 +1,29 @@
 {
-  "generated_at_utc": "2026-11-03T14:47:44Z",
+  "generated_at_utc": "2026-11-03T20:43:40Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Perrigo (PRGO) Rebounds as Bad News Turns Less Bad; Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Charleston Gazette-Mail; Morgan Stanley warns the S&P 500 could drop 9% - Yahoo Finance.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Uber, DoorDash Partner Weathers Volatile Market; Stock Offers Entry; Fannie Mae, Freddie Mac rally as Ackman presses for conservatorship exit. Bearish offsets: Morgan Stanley Warns of Stock Market Drop Amid 3 \u2018Clearing Events\u2019: \u2018Much of the Damage Already Done\u2019; Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - WRAL.",
   "articles": [
     {
-      "title": "Perrigo (PRGO) Rebounds as Bad News Turns Less Bad",
+      "title": "Morgan Stanley Warns of Stock Market Drop Amid 3 \u2018Clearing Events\u2019: \u2018Much of the Damage Already Done\u2019",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/perrigo-prgo-rebounds-bad-news-143629618.html?.tsrc=rss",
-      "published": "2026-11-03T14:36:29Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - Charleston Gazette-Mail",
-      "source": "Charleston Gazette-Mail",
-      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxObzZuWVVOZGk0OVM4WS1HN2hDcFRkVHRDWlNtX21tSHJXWUFVUjgyd0h1YWJBZUlqbkRIVjMxYUg1eTJsQzZWZUlWaW1kejN1elRrVnllY0xmNlZCOF9ocUhDUHVvWWdOMDdSWVNLcTVCa1RMRlVJRUh4S3I2Tm5Qb1VlYlpJandpMFZaa01BbUpLRHRkb1N0X3RLNEhXZElsY2NtNU5nYnI1VGhNQnAyR2tYMGVCWmlycjhhVUl2bDBadWdONFRzSkZPSGlpVWZvTHA4VEtkUjd2dw?oc=5",
-      "published": "2026-10-30T07:30:00Z",
+      "url": "https://firstformoney.com/morgan-stanley-warns-of-stock-market-drop-amid-3-clearing-events-much-of-the-damage-already-done/?.tsrc=rss",
+      "published": "2026-11-03T19:24:00Z",
       "tone": "bearish"
     },
     {
-      "title": "Wall Street\u2019s Year-End Rally Starts Oct. 27: History Points to S&P 500 Gains - Barron's",
-      "source": "Barron's",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOb3ZsVENTcUFFbUR2REdJSVZhendmcVlNUlZMZmRYWmZUYVNQQzRmV25NU0RDdXZzLWp0aG0yNDFpN1JOYkZHQ2J5MHBmRnV6NE9BbUJtX3VldkNCRzdBSjJrWXpsN2FGLU5feHVvaWpLeExYeUlxUExBeXg5ejdDVFRRbnY4SW1oQ1RYZ1lUOTNkeE9HLVMtbzVKUHlHU00?oc=5",
-      "published": "2026-10-27T16:29:00Z",
+      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - WRAL",
+      "source": "WRAL",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPZGhYVGk1ME5LOG9ORDVSZnBkNVRKQ2x3M19fLVpZOW9Wenl1MDBXR0pRY2YwV2VrNVVtNE81S25ud2RycndmaXQtVTU1enYyNDZ1SVQ1cGZFOWF4bjR4cEZXcWRqTHBtMVBud1lCWnl2STdKbmFEZmNfQS1KVGVBUVdUQmYxcDJDYnNaWGR5T1RVLXZUMko3dFNDWENMMUE?oc=5",
+      "published": "2026-10-30T02:44:12Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Uber, DoorDash Partner Weathers Volatile Market; Stock Offers Entry",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/0799082c-3037-3cb4-b078-763fef1edd7c/uber%2C-doordash-partner.html?.tsrc=rss",
+      "published": "2026-11-03T19:14:57Z",
       "tone": "bullish"
     },
     {
@@ -34,11 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "A historic drop for Alphabet\u2019s stock drags the US market lower - Boston Herald",
-      "source": "Boston Herald",
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBmeFNtc2dGM2RLSUptckx3Ull6NDdnYkJleGctcldBcWxybmpvMlJpMC1lYXJ5Q0FSTDhJaURQdTZELU5BMVNFa3JtRExuZkRZWElacXRCM1FvTXVJaXpFN2t6S1RiYzR4bjVB?oc=5",
-      "published": "2026-10-29T16:48:57Z",
-      "tone": "bearish"
+      "title": "Fannie Mae, Freddie Mac rally as Ackman presses for conservatorship exit",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/03/ackman-fannie-mae-freddie-mac-conservatorship.html",
+      "published": "2026-11-03T20:10:14Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 17
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 54
       }
     ],
-    "headline_count": 137,
+    "headline_count": 102,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
