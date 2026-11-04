@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-04T14:59:40Z",
+  "generated_at_utc": "2026-11-04T21:10:51Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com; US Stock Futures Rise as Democrats Win Congress and AMD Shares Surge on AI Growth Outlook: Dow Jones, S&P, Nasdaq, Wall Street - Yahoo Finance. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News.",
+  "score": 8,
+  "label": "Bullish",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com; US Stock Futures Rise as Democrats Win Congress and AMD Shares Surge on AI Growth Outlook: Dow Jones, S&P, Nasdaq, Wall Street - Yahoo Finance. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News; What Republicans' huge loss means for Trump.",
   "articles": [
     {
       "title": "Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com",
@@ -27,18 +27,18 @@
       "tone": "bullish"
     },
     {
-      "title": "Dow rallies 1,100 points as political risk eases after resounding Democratic victory in U.S. midterms: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/03/stock-market-today-live-updates.html",
-      "published": "2026-11-04T14:58:17Z",
+      "title": "The Dow Rallies Back Above a Key Average, but Five Charts Made Even Bigger Moves Today",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/dow-rallies-back-above-key-204900062.html?.tsrc=rss",
+      "published": "2026-11-04T20:49:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Nasdaq ends higher as AI heavyweights rebound ahead of midterm results - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNWVp0N2w0REZqOUJ3YkRxcmliYkhtX25yTkFtdmJDUFdSVm5CcXRQYjdMeFFLU0gxcHk1STM2R0xXaGJ6TW9ZN2ZQS2RReVRiXzNtY1B3Qm5fZ1lfTUFaMVpRM2d2ZVZodnZtbUFFLUtkcURfUEtENElyNG5YcFRGcncteEFaZFUwOGxVUmpTMWFkMEtvb09VTG50a2NSbjhLUm5Zc3EtZS1XUU5lWm9B?oc=5",
-      "published": "2026-11-03T10:50:00Z",
-      "tone": "bullish"
+      "title": "What Republicans' huge loss means for Trump",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/04/trump-midterm-election-results-congress.html",
+      "published": "2026-11-04T20:23:18Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 15
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 57
+        "articles": 68
       }
     ],
-    "headline_count": 102,
+    "headline_count": 115,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
