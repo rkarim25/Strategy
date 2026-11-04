@@ -1,15 +1,36 @@
 {
-  "generated_at_utc": "2026-11-04T00:58:03Z",
+  "generated_at_utc": "2026-11-04T01:52:14Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, Nov. 3: Markets Edge Higher as Semiconductor Stocks Rebound; Stock Futures Rise as First Polls Close. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - WRAL; Morgan Stanley warns the S&P 500 could drop 9% - Yahoo Finance.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street rally fades as tech and AI stocks slip again - CommBank; Stock Market Today, Nov. 3: Markets Edge Higher as Semiconductor Stocks Rebound. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News; AI investors hedge against losses amid tech stock selloff - The Jerusalem Post.",
   "articles": [
     {
-      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - WRAL",
-      "source": "WRAL",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPZGhYVGk1ME5LOG9ORDVSZnBkNVRKQ2x3M19fLVpZOW9Wenl1MDBXR0pRY2YwV2VrNVVtNE81S25ud2RycndmaXQtVTU1enYyNDZ1SVQ1cGZFOWF4bjR4cEZXcWRqTHBtMVBud1lCWnl2STdKbmFEZmNfQS1KVGVBUVdUQmYxcDJDYnNaWGR5T1RVLXZUMko3dFNDWENMMUE?oc=5",
-      "published": "2026-10-30T02:44:12Z",
+      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News",
+      "source": "AP News",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOd0NzZS1PMzlOVF9Hc0hrbW5sOGZ0bWhjTzNiTC1LWkZ5R1FFNDNBMGNxblJfWTBxaklaSjhwM1FXX1JSVFFGd0I4TXYta3RvczdQeTlUUjJMLXZ1bmY3TW15NU14UVAyMlRhcHlsTTZkUFdVM21yQXZpWThuN3Z5cVd4UEU4VTNnNDRvT1Jwc2E5QXM?oc=5",
+      "published": "2026-10-30T21:50:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street rally fades as tech and AI stocks slip again - CommBank",
+      "source": "CommBank",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQSWZySGRSaDFVM3RpeWlGWnFBZVd1VnZSTldqMlhWbi04RHZZdjU5cVJNV0hQRVgyS3l1UXFPYThIcU5RcjN6WlZMejV5cm03ZzBmd3N0RDczR3dMcW5zNnhhQU80bmJZTFpPazE1cUFHZnFYblRLWFc2N2V3TzAtamFYZmVRNUxGZnRldnFIbGtyQ2FpTXlreUJnNXRtMl9kTmc?oc=5",
+      "published": "2026-11-02T22:28:35Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "AI investors hedge against losses amid tech stock selloff - The Jerusalem Post",
+      "source": "The Jerusalem Post",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQUHV1YV9iTlhJU1IzNmJPU1JOb2hiZUVlWWxWa3QtMGVLUDJORS11eUlkZ2VYSkg4dnB0dDdPYXpsNUJTRkZCS0o3SkZhOGM4NkdBek1QcFUwNFBwZlVPZUpTaUg0azI1TjdSUG9TNzdnTFRsZkRkVVgxSEFwdUl6RFY4Z1Y2Zms?oc=5",
+      "published": "2026-11-01T20:38:11Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street closes sharply lower as AI cash burn fears spark tech selloff - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPUTZNOWZiRzFmQUxta25VWEhIT0dYTFVnZ2VLUWlNTDlleE9hTmF6ODNaeXRCSnRXMEdOVENiTVQtNndFUUNWZDdmY0M0UUVaUVR6c0tMdktWcmxJMDItT3dPbl8tcGhSSm0wZ2lRa0RjLW81Ri1RTUlRX0tOUDRHakNwUDdIVFZIc1hMUVBrVi1CY0RRNU9xZmZVU202QQ?oc=5",
+      "published": "2026-10-30T20:23:45Z",
       "tone": "bearish"
     },
     {
@@ -17,27 +38,6 @@
       "source": "Yahoo Finance S&P 500",
       "url": "https://www.fool.com/coverage/stock-market-today/2026/11/03/stock-market-today-nov-3-markets-edge-higher-as-semiconductor-stocks-rebound/?.tsrc=rss",
       "published": "2026-11-03T23:03:59Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Morgan Stanley warns the S&P 500 could drop 9% - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOWlJCZzVPUzVzTy1Fcl8xV19sMUhySUJFb1dNV0t3eW1LUFJUcUNtcUtjeEJ1NGtfdU1WSWV4TXZNdTdwTDRBQkhOZWFCekpDYzR0ZEY0cF9YVWYzV1ZhbmJSZDdLSGZ5amszY3VKc2EtM01sQTdiWXBCMVdrRWh1WHMwOU5jMHo4VG96S2I1RThlbDNBU1E?oc=5",
-      "published": "2026-11-02T11:12:19Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Stock Futures Rise as First Polls Close",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/68020c28-968a-36da-baf3-709a6cf948ee/stock-futures-rise-as-first.html?.tsrc=rss",
-      "published": "2026-11-03T23:22:53Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Fannie Mae, Freddie Mac rally as Ackman presses for conservatorship exit",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/03/ackman-fannie-mae-freddie-mac-conservatorship.html",
-      "published": "2026-11-03T20:52:14Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 17
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 49
+        "articles": 91
       }
     ],
-    "headline_count": 96,
+    "headline_count": 139,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

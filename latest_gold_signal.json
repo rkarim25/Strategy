@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-04T00:58:00Z",
+  "generated_at_utc": "2026-11-04T01:52:12Z",
   "data_asof": "2026-11-04",
   "daily_rows": 6570,
-  "quote_price": 3933.300048828125,
+  "quote_price": 3972.699951171875,
   "quote_timestamp": "2026-11-04",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1793840280&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1793843532&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-04",
-      "close": 3933.300048828125
+      "close": 3972.699951171875
     },
-    "latestSma": 4092.9900024414064,
+    "latestSma": 4094.959997558594,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.26043544655324424,
+    "latestDd": -0.2530272216985493,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-04",
-      "close": 3933.300048828125
+      "close": 3972.699951171875
     },
-    "latestSma": 4082.6199951171875,
+    "latestSma": 4086.5599853515623,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.26043544655324424,
+    "latestDd": -0.2530272216985493,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-11-04",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-04T00:58:00Z",
+    "last_checked_at_utc": "2026-11-04T01:52:12Z",
     "last_email_sent_on": "2026-10-22",
     "last_transition": {
       "id": "2026-10-21:1->2026-10-21:0",
