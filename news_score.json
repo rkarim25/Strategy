@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-11-04T01:52:14Z",
+  "generated_at_utc": "2026-11-04T14:59:40Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street rally fades as tech and AI stocks slip again - CommBank; Stock Market Today, Nov. 3: Markets Edge Higher as Semiconductor Stocks Rebound. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News; AI investors hedge against losses amid tech stock selloff - The Jerusalem Post.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com; US Stock Futures Rise as Democrats Win Congress and AMD Shares Surge on AI Growth Outlook: Dow Jones, S&P, Nasdaq, Wall Street - Yahoo Finance. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News.",
   "articles": [
+    {
+      "title": "Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com",
+      "source": "XTB.com",
+      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOMUx2VXRfTWlzTEdZNXRDVTY2WG82bFlNajZVNzNBUnAxWkhuNUozMlNFRDhtb0hPWXBsanlpWGI4VzVnR0FSMFNoWG0tRzlIc2hja1liWnYxUTNsSTBUWURRSXMtZVV4LUMzNDF6aDNCNEhCRlNqOE9wZ3BQWXpIRW9TZmRoOWNiWWF6clZqZ1VzWWFaRTVqYnM5R2JkWTZZVG5KbFV4UjF3R1dDelVNY0dzczcxeU5jUnpZc1VYdWZGaGpjclExTUhKVTIwUUZPUmtZU0l3?oc=5",
+      "published": "2026-11-04T11:24:13Z",
+      "tone": "bullish"
+    },
     {
       "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News",
       "source": "AP News",
@@ -13,31 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "Wall Street rally fades as tech and AI stocks slip again - CommBank",
-      "source": "CommBank",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQSWZySGRSaDFVM3RpeWlGWnFBZVd1VnZSTldqMlhWbi04RHZZdjU5cVJNV0hQRVgyS3l1UXFPYThIcU5RcjN6WlZMejV5cm03ZzBmd3N0RDczR3dMcW5zNnhhQU80bmJZTFpPazE1cUFHZnFYblRLWFc2N2V3TzAtamFYZmVRNUxGZnRldnFIbGtyQ2FpTXlreUJnNXRtMl9kTmc?oc=5",
-      "published": "2026-11-02T22:28:35Z",
+      "title": "US Stock Futures Rise as Democrats Win Congress and AMD Shares Surge on AI Growth Outlook: Dow Jones, S&P, Nasdaq, Wall Street - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNTFp4aTJNa00wNmxyZFp2d3BGUVI4b193SU9IVF9lQkIxSk96c0k4X2tHNWlRZEU3UHhLa1A2aW1XQlcyZ2l3cy14YTFZYmQzR0E1aThUdVBTQkd2UG5WQkQ2eUpVbS1HOGtOLXR4WFQzMm9RS3I2cG1HNy1WLUVLckdLaWY5UERWcGpyUTVGV0ZvN2VCcUd0QzJhWGk?oc=5",
+      "published": "2026-11-04T10:52:59Z",
       "tone": "bullish"
     },
     {
-      "title": "AI investors hedge against losses amid tech stock selloff - The Jerusalem Post",
-      "source": "The Jerusalem Post",
-      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQUHV1YV9iTlhJU1IzNmJPU1JOb2hiZUVlWWxWa3QtMGVLUDJORS11eUlkZ2VYSkg4dnB0dDdPYXpsNUJTRkZCS0o3SkZhOGM4NkdBek1QcFUwNFBwZlVPZUpTaUg0azI1TjdSUG9TNzdnTFRsZkRkVVgxSEFwdUl6RFY4Z1Y2Zms?oc=5",
-      "published": "2026-11-01T20:38:11Z",
-      "tone": "bearish"
+      "title": "Dow rallies 1,100 points as political risk eases after resounding Democratic victory in U.S. midterms: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/03/stock-market-today-live-updates.html",
+      "published": "2026-11-04T14:58:17Z",
+      "tone": "bullish"
     },
     {
-      "title": "Wall Street closes sharply lower as AI cash burn fears spark tech selloff - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPUTZNOWZiRzFmQUxta25VWEhIT0dYTFVnZ2VLUWlNTDlleE9hTmF6ODNaeXRCSnRXMEdOVENiTVQtNndFUUNWZDdmY0M0UUVaUVR6c0tMdktWcmxJMDItT3dPbl8tcGhSSm0wZ2lRa0RjLW81Ri1RTUlRX0tOUDRHakNwUDdIVFZIc1hMUVBrVi1CY0RRNU9xZmZVU202QQ?oc=5",
-      "published": "2026-10-30T20:23:45Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Stock Market Today, Nov. 3: Markets Edge Higher as Semiconductor Stocks Rebound",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/03/stock-market-today-nov-3-markets-edge-higher-as-semiconductor-stocks-rebound/?.tsrc=rss",
-      "published": "2026-11-03T23:03:59Z",
+      "title": "Nasdaq ends higher as AI heavyweights rebound ahead of midterm results - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNWVp0N2w0REZqOUJ3YkRxcmliYkhtX25yTkFtdmJDUFdSVm5CcXRQYjdMeFFLU0gxcHk1STM2R0xXaGJ6TW9ZN2ZQS2RReVRiXzNtY1B3Qm5fZ1lfTUFaMVpRM2d2ZVZodnZtbUFFLUtkcURfUEtENElyNG5YcFRGcncteEFaZFUwOGxVUmpTMWFkMEtvb09VTG50a2NSbjhLUm5Zc3EtZS1XUU5lWm9B?oc=5",
+      "published": "2026-11-03T10:50:00Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 15
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 91
+        "articles": 57
       }
     ],
-    "headline_count": 139,
+    "headline_count": 102,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

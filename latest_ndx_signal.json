@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-04T01:52:12Z",
-  "data_asof": "2026-11-03",
-  "daily_rows": 7547,
-  "quote_price": 28180.263671875,
-  "quote_timestamp": "2026-11-03",
+  "generated_at_utc": "2026-11-04T14:59:36Z",
+  "data_asof": "2026-11-04",
+  "daily_rows": 7548,
+  "quote_price": 28670.123046875,
+  "quote_timestamp": "2026-11-04",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_worker": {
@@ -29,13 +29,13 @@
   },
   "official_signal": {
     "latest": {
-      "date": "2026-11-03",
-      "close": 28180.263671875
+      "date": "2026-11-04",
+      "close": 28670.123046875
     },
-    "latestSma": 29626.55009765625,
+    "latestSma": 29502.05205078125,
     "highWater": 31224.470703125,
     "highWaterDate": "2026-10-06",
-    "latestDd": -0.09749427172660863,
+    "latestDd": -0.0818059553526509,
     "regime": "tier2",
     "entryClose": 28776.80078125,
     "entryDate": "2026-08-03",
@@ -51,13 +51,13 @@
   },
   "provisional_signal": {
     "latest": {
-      "date": "2026-11-03",
-      "close": 28180.263671875
+      "date": "2026-11-04",
+      "close": 28670.123046875
     },
-    "latestSma": 29477.55927734375,
+    "latestSma": 29399.26767578125,
     "highWater": 31224.470703125,
     "highWaterDate": "2026-10-06",
-    "latestDd": -0.09749427172660863,
+    "latestDd": -0.0818059553526509,
     "regime": "tier2",
     "entryClose": 28776.80078125,
     "entryDate": "2026-08-03",
@@ -72,10 +72,10 @@
     "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
   "trade_alert_state": {
-    "last_observed_asof": "2026-11-03",
+    "last_observed_asof": "2026-11-04",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-04T01:52:12Z",
+    "last_checked_at_utc": "2026-11-04T14:59:36Z",
     "last_email_sent_on": "2026-10-14",
     "last_transition": {
       "id": "2026-10-13:2->2026-10-14:0",
