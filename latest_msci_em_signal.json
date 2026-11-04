@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-03T20:43:38Z",
+  "generated_at_utc": "2026-11-04T00:58:01Z",
   "data_asof": "2026-11-03",
   "daily_rows": 5928,
-  "quote_price": 61.064998626708984,
+  "quote_price": 61.099998474121094,
   "quote_timestamp": "2026-11-03",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1793825018&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1793840281&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-03",
-      "close": 61.064998626708984
+      "close": 61.099998474121094
     },
-    "latestSma": 63.554250144958495,
+    "latestSma": 63.5560001373291,
     "highWater": 71.20999908447266,
     "highWaterDate": "2026-06-22",
-    "latestDd": -0.14246595405413776,
+    "latestDd": -0.14197445218835913,
     "regime": "tier2",
     "entryClose": 67.56999969482422,
     "entryDate": "2026-07-06",
@@ -48,12 +48,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-03",
-      "close": 61.064998626708984
+      "close": 61.099998474121094
     },
-    "latestSma": 63.238999938964845,
+    "latestSma": 63.242499923706056,
     "highWater": 71.20999908447266,
     "highWaterDate": "2026-06-22",
-    "latestDd": -0.14246595405413776,
+    "latestDd": -0.14197445218835913,
     "regime": "tier2",
     "entryClose": 67.56999969482422,
     "entryDate": "2026-07-06",
@@ -71,7 +71,7 @@
     "last_observed_asof": "2026-11-03",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-03T20:43:38Z",
+    "last_checked_at_utc": "2026-11-04T00:58:01Z",
     "last_email_sent_on": "2026-10-09",
     "last_transition": {
       "id": "2026-10-07:1->2026-10-08:0",

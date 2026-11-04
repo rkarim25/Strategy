@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-11-03T20:43:40Z",
+  "generated_at_utc": "2026-11-04T00:58:03Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Uber, DoorDash Partner Weathers Volatile Market; Stock Offers Entry; Fannie Mae, Freddie Mac rally as Ackman presses for conservatorship exit. Bearish offsets: Morgan Stanley Warns of Stock Market Drop Amid 3 \u2018Clearing Events\u2019: \u2018Much of the Damage Already Done\u2019; Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - WRAL.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, Nov. 3: Markets Edge Higher as Semiconductor Stocks Rebound; Stock Futures Rise as First Polls Close. Bearish offsets: Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - WRAL; Morgan Stanley warns the S&P 500 could drop 9% - Yahoo Finance.",
   "articles": [
-    {
-      "title": "Morgan Stanley Warns of Stock Market Drop Amid 3 \u2018Clearing Events\u2019: \u2018Much of the Damage Already Done\u2019",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://firstformoney.com/morgan-stanley-warns-of-stock-market-drop-amid-3-clearing-events-much-of-the-damage-already-done/?.tsrc=rss",
-      "published": "2026-11-03T19:24:00Z",
-      "tone": "bearish"
-    },
     {
       "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - WRAL",
       "source": "WRAL",
@@ -20,10 +13,10 @@
       "tone": "bearish"
     },
     {
-      "title": "Uber, DoorDash Partner Weathers Volatile Market; Stock Offers Entry",
+      "title": "Stock Market Today, Nov. 3: Markets Edge Higher as Semiconductor Stocks Rebound",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/0799082c-3037-3cb4-b078-763fef1edd7c/uber%2C-doordash-partner.html?.tsrc=rss",
-      "published": "2026-11-03T19:14:57Z",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/03/stock-market-today-nov-3-markets-edge-higher-as-semiconductor-stocks-rebound/?.tsrc=rss",
+      "published": "2026-11-03T23:03:59Z",
       "tone": "bullish"
     },
     {
@@ -34,10 +27,17 @@
       "tone": "bearish"
     },
     {
+      "title": "Stock Futures Rise as First Polls Close",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/68020c28-968a-36da-baf3-709a6cf948ee/stock-futures-rise-as-first.html?.tsrc=rss",
+      "published": "2026-11-03T23:22:53Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Fannie Mae, Freddie Mac rally as Ackman presses for conservatorship exit",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/11/03/ackman-fannie-mae-freddie-mac-conservatorship.html",
-      "published": "2026-11-03T20:10:14Z",
+      "published": "2026-11-03T20:52:14Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 54
+        "articles": 49
       }
     ],
-    "headline_count": 102,
+    "headline_count": 96,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
