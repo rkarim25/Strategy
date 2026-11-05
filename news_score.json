@@ -1,22 +1,29 @@
 {
-  "generated_at_utc": "2026-11-05T15:05:41Z",
+  "generated_at_utc": "2026-11-05T21:30:07Z",
   "window_days": 7,
-  "score": 8,
-  "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Berkshire Has Gained 16% in About 5 Weeks; Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com. Bearish offsets: Bank of England hikes interest rate for the first time since Iran war, warns inflation will near 5%; Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News.",
+  "score": 5,
+  "label": "Neutral",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com; Dow closes down 1,800 points, Nasdaq into correction territory, wiping out gains from midterm results rally - ABC7 New York. Bearish offsets: Billionaire Bill Ackman's market warning resurfaces as stocks plunge; How major US stock indexes fared Thursday 11/5/2026.",
   "articles": [
     {
-      "title": "Berkshire Has Gained 16% in About 5 Weeks",
+      "title": "Billionaire Bill Ackman's market warning resurfaces as stocks plunge",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/11/05/berkshire-has-gained-16-in-about-5-weeks/?.tsrc=rss",
-      "published": "2026-11-05T14:47:19Z",
-      "tone": "bullish"
+      "url": "https://www.thestreet.com/investing/billionaire-bill-ackmans-market-warning-resurfaces-as-stocks-plunge?.tsrc=rss",
+      "published": "2026-11-05T20:09:21Z",
+      "tone": "bearish"
     },
     {
-      "title": "Bank of England hikes interest rate for the first time since Iran war, warns inflation will near 5%",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/05/interest-rates-inflation-uk.html",
-      "published": "2026-11-05T12:37:57Z",
+      "title": "How major US stock indexes fared Thursday 11/5/2026",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/world-indices/articles/major-us-stock-indexes-fared-212218583.html?.tsrc=rss",
+      "published": "2026-11-05T21:22:18Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Coinbase Sinks 9% as Bitcoin Falls Below $76,000",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.tikr.com/blog/coinbase-sinks-9-as-bitcoin-falls-below-76000?ref=yahoofinance&tlnk=yf-261105-hg64qgxm&.tsrc=rss",
+      "published": "2026-11-05T20:14:48Z",
       "tone": "bearish"
     },
     {
@@ -27,17 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News",
-      "source": "AP News",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOd0NzZS1PMzlOVF9Hc0hrbW5sOGZ0bWhjTzNiTC1LWkZ5R1FFNDNBMGNxblJfWTBxaklaSjhwM1FXX1JSVFFGd0I4TXYta3RvczdQeTlUUjJMLXZ1bmY3TW15NU14UVAyMlRhcHlsTTZkUFdVM21yQXZpWThuN3Z5cVd4UEU4VTNnNDRvT1Jwc2E5QXM?oc=5",
-      "published": "2026-10-30T21:50:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "US Stock Futures Rise as Democrats Win Congress and AMD Shares Surge on AI Growth Outlook: Dow Jones, S&P, Nasdaq, Wall Street - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNTFp4aTJNa00wNmxyZFp2d3BGUVI4b193SU9IVF9lQkIxSk96c0k4X2tHNWlRZEU3UHhLa1A2aW1XQlcyZ2l3cy14YTFZYmQzR0E1aThUdVBTQkd2UG5WQkQ2eUpVbS1HOGtOLXR4WFQzMm9RS3I2cG1HNy1WLUVLckdLaWY5UERWcGpyUTVGV0ZvN2VCcUd0QzJhWGk?oc=5",
-      "published": "2026-11-04T10:52:59Z",
+      "title": "Dow closes down 1,800 points, Nasdaq into correction territory, wiping out gains from midterm results rally - ABC7 New York",
+      "source": "ABC7 New York",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOUlF2TlFXUHJHY3BXSjRCdk1ZTzNadzByRFZFY20xMkpXVHhZUVMyYXd3bHNGTk5vN2NJZDVWTlU5dzBPVTRhN1R1RDZXeGdLOWdZQ1l3WUdNLU83U1JYNXlJLU1VOW94WWNUc2x2UGZDUzBjbXpNN19TdTVsX0VlVmRSMEJvNzE5OEtTU05ZYkNNV2RfSmdmTjZScWRISUI5WW92SHNPVzFkcFJ0WFVjNnNRRmY?oc=5",
+      "published": "2026-11-05T21:11:15Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 16
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 63
+        "articles": 42
       }
     ],
-    "headline_count": 112,
+    "headline_count": 88,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
