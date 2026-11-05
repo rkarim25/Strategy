@@ -1,22 +1,22 @@
 {
-  "generated_at_utc": "2026-11-05T01:58:29Z",
+  "generated_at_utc": "2026-11-05T15:05:41Z",
   "window_days": 7,
-  "score": 9,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures Rise, But Techs Tumble; Apple, Microsoft, Amazon Flash Buy Signals In Postelection Rally; Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com. Bearish offsets: Crude oil prices fall below $90 a barrel as Vance blames GOP election defeat on Iran war; Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Berkshire Has Gained 16% in About 5 Weeks; Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com. Bearish offsets: Bank of England hikes interest rate for the first time since Iran war, warns inflation will near 5%; Wall Street drops to its worst day since June after the sell-off for tech stocks deepens - AP News.",
   "articles": [
     {
-      "title": "Dow Jones Futures Rise, But Techs Tumble; Apple, Microsoft, Amazon Flash Buy Signals In Postelection Rally",
+      "title": "Berkshire Has Gained 16% in About 5 Weeks",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/a147bf9a-4218-3171-97a4-fb80fda211eb/dow-jones-futures-rise%2C-but.html?.tsrc=rss",
-      "published": "2026-11-05T01:47:46Z",
+      "url": "https://247wallst.com/investing/2026/11/05/berkshire-has-gained-16-in-about-5-weeks/?.tsrc=rss",
+      "published": "2026-11-05T14:47:19Z",
       "tone": "bullish"
     },
     {
-      "title": "Crude oil prices fall below $90 a barrel as Vance blames GOP election defeat on Iran war",
+      "title": "Bank of England hikes interest rate for the first time since Iran war, warns inflation will near 5%",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/04/oil-price-iran-war-us-election-strait-hormuz.html",
-      "published": "2026-11-04T20:14:52Z",
+      "url": "https://www.cnbc.com/2026/11/05/interest-rates-inflation-uk.html",
+      "published": "2026-11-05T12:37:57Z",
       "tone": "bearish"
     },
     {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 79
+        "articles": 63
       }
     ],
-    "headline_count": 127,
+    "headline_count": 112,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
