@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-11-06T14:43:58Z",
+  "generated_at_utc": "2026-11-06T20:40:04Z",
   "window_days": 7,
   "score": 5,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance; Exchange-Traded Funds Higher, Equity Futures Mixed as US October Jobs Rise More than Expected. Bearish offsets: Dan Ives says tech rout is 'golden buying opportunity' just like during Covid, tariff sell-off; Democratic sweep gives markets a reason to rethink path of interest rates.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: The AI Crash Broke the Market. Here Are 3 Things That Decide What\u2019s Next.; Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance. Bearish offsets: Democratic sweep gives markets a reason to rethink path of interest rates; Americans are on a 'treadmill of high inflation' and more rate hikes are likely, Fed's Daly says.",
   "articles": [
-    {
-      "title": "Dan Ives says tech rout is 'golden buying opportunity' just like during Covid, tariff sell-off",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/06/dan-ives-says-tech-rout-is-golden-buying-opportunity-.html",
-      "published": "2026-11-06T13:46:09Z",
-      "tone": "bearish"
-    },
     {
       "title": "Democratic sweep gives markets a reason to rethink path of interest rates",
       "source": "CNBC Markets",
@@ -20,24 +13,31 @@
       "tone": "bearish"
     },
     {
+      "title": "The AI Crash Broke the Market. Here Are 3 Things That Decide What\u2019s Next.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/ca4c3ede-280b-3770-8c3a-3472b5489769/the-ai-crash-broke-the.html?.tsrc=rss",
+      "published": "2026-11-06T19:57:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Americans are on a 'treadmill of high inflation' and more rate hikes are likely, Fed's Daly says",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/06/fed-daly-interest-rates-inflation.html",
+      "published": "2026-11-06T19:05:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Anthropic IPO announcement odds drop on Kalshi following midterms and AI sell-off",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/06/anthropic-ipo-kalshi-post-midterms-ai-sell-off.html",
+      "published": "2026-11-06T15:55:32Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance",
       "source": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNaFVFOS1LLXZIZ1UtQmh5UFFRODg3R1NIWDVxNkx3UTIzZUp5SWJRU2ZySlRZS0NXS09pVkx0S3Bhbk9FbE5QWGVxSjJta0h0SHBJZ2w4VVNfZnJVRGMzZjE0aHYyMkJXSUVJN1BZN3BIZUtURkhGVjdDUUx2QjVSUVp2c1ZLU01rdkNHZUk4b3RmNmRnVW5GNDlzY01HMWUzbjFpTWxmU2JfNU1HUC1PNW9pT3AwX3QxTkZBUEhsZ2duWFhjeG9keQ?oc=5",
       "published": "2026-11-05T15:43:28Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Big Jobs Report Keeps Fed Rate-Hike Door Wide Open Despite Sell-Off (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/8ddf7d69-e608-3186-9af9-a97a8e5946b1/big-jobs-report-keeps-fed.html?.tsrc=rss",
-      "published": "2026-11-06T14:38:54Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Exchange-Traded Funds Higher, Equity Futures Mixed as US October Jobs Rise More than Expected",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-higher-equity-142316139.html?.tsrc=rss",
-      "published": "2026-11-06T14:23:16Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -62,17 +62,17 @@
         "ok": true,
         "status": 200,
         "name": "CNBC Markets",
-        "articles": 29
+        "articles": 30
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 48
+        "articles": 59
       }
     ],
-    "headline_count": 97,
+    "headline_count": 106,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
