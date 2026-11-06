@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-11-05T21:30:07Z",
+  "generated_at_utc": "2026-11-06T01:16:06Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com; Dow closes down 1,800 points, Nasdaq into correction territory, wiping out gains from midterm results rally - ABC7 New York. Bearish offsets: Billionaire Bill Ackman's market warning resurfaces as stocks plunge; How major US stock indexes fared Thursday 11/5/2026.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance. Bearish offsets: Dow Jones Futures Fall, Techs Bounce After Nasdaq Dives 5.5%; Nvidia, Sandisk, CoreWeave, SpaceX Plunge; Magnificent 7 loses $1 trillion. The most eye-popping stats from Thursday's tech stock plunge.",
   "articles": [
     {
-      "title": "Billionaire Bill Ackman's market warning resurfaces as stocks plunge",
+      "title": "Dow Jones Futures Fall, Techs Bounce After Nasdaq Dives 5.5%; Nvidia, Sandisk, CoreWeave, SpaceX Plunge",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.thestreet.com/investing/billionaire-bill-ackmans-market-warning-resurfaces-as-stocks-plunge?.tsrc=rss",
-      "published": "2026-11-05T20:09:21Z",
+      "url": "https://finance.yahoo.com/m/0cd2227b-7753-3d54-a8c5-286efe82ac39/dow-jones-futures-fall%2C-techs.html?.tsrc=rss",
+      "published": "2026-11-06T01:08:55Z",
       "tone": "bearish"
     },
     {
-      "title": "How major US stock indexes fared Thursday 11/5/2026",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/world-indices/articles/major-us-stock-indexes-fared-212218583.html?.tsrc=rss",
-      "published": "2026-11-05T21:22:18Z",
+      "title": "Magnificent 7 loses $1 trillion. The most eye-popping stats from Thursday's tech stock plunge",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/05/stock-market-selloff-ai-fears.html",
+      "published": "2026-11-05T23:39:32Z",
       "tone": "bearish"
     },
     {
-      "title": "Coinbase Sinks 9% as Bitcoin Falls Below $76,000",
+      "title": "Trump blames Democrats for Wall Street selloff after historic midterm election win",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.tikr.com/blog/coinbase-sinks-9-as-bitcoin-falls-below-76000?ref=yahoofinance&tlnk=yf-261105-hg64qgxm&.tsrc=rss",
-      "published": "2026-11-05T20:14:48Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/trump-blames-democrats-wall-street-010352357.html?.tsrc=rss",
+      "published": "2026-11-06T01:03:52Z",
       "tone": "bearish"
     },
     {
-      "title": "Wall Street rebounds \ud83d\udd3c S&P 500 and Nasdaq 100 futures rally ahead of the US session - XTB.com",
-      "source": "XTB.com",
-      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOMUx2VXRfTWlzTEdZNXRDVTY2WG82bFlNajZVNzNBUnAxWkhuNUozMlNFRDhtb0hPWXBsanlpWGI4VzVnR0FSMFNoWG0tRzlIc2hja1liWnYxUTNsSTBUWURRSXMtZVV4LUMzNDF6aDNCNEhCRlNqOE9wZ3BQWXpIRW9TZmRoOWNiWWF6clZqZ1VzWWFaRTVqYnM5R2JkWTZZVG5KbFV4UjF3R1dDelVNY0dzczcxeU5jUnpZc1VYdWZGaGpjclExTUhKVTIwUUZPUmtZU0l3?oc=5",
-      "published": "2026-11-04T11:24:13Z",
-      "tone": "bullish"
+      "title": "Toronto Stock Exchange: S&P/TSX Composite Drops to 35,640.99 as Wall Street's AI Selloff Spreads - BBN Times",
+      "source": "BBN Times",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxORmtwVngzVjl1eXptN05wVDhXZFpid2lWMjdBUkxtZngwSktmdTczNks5RDZCQXBoMVd0ZXVGclFhTW0wWWUxUjZJS3hqTHZwbG9PWkFKV0ItODNwczZCaEJQNzJzMkN3clRRdUZieFVTVjZyeGY1SDRqRlVlMlZPSzVFUktoTWphcXRfMDRMMnE5WWJfM29YemI0US1feWVUOF9CSzQ1RHlsTXI4MVcycDdGekQzRlN4LS1GdU00WG5RY2F3VlRBZVlCSVJ3UTlk?oc=5",
+      "published": "2026-11-05T23:19:52Z",
+      "tone": "bearish"
     },
     {
-      "title": "Dow closes down 1,800 points, Nasdaq into correction territory, wiping out gains from midterm results rally - ABC7 New York",
-      "source": "ABC7 New York",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOUlF2TlFXUHJHY3BXSjRCdk1ZTzNadzByRFZFY20xMkpXVHhZUVMyYXd3bHNGTk5vN2NJZDVWTlU5dzBPVTRhN1R1RDZXeGdLOWdZQ1l3WUdNLU83U1JYNXlJLU1VOW94WWNUc2x2UGZDUzBjbXpNN19TdTVsX0VlVmRSMEJvNzE5OEtTU05ZYkNNV2RfSmdmTjZScWRISUI5WW92SHNPVzFkcFJ0WFVjNnNRRmY?oc=5",
-      "published": "2026-11-05T21:11:15Z",
+      "title": "Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNaFVFOS1LLXZIZ1UtQmh5UFFRODg3R1NIWDVxNkx3UTIzZUp5SWJRU2ZySlRZS0NXS09pVkx0S3Bhbk9FbE5QWGVxSjJta0h0SHBJZ2w4VVNfZnJVRGMzZjE0aHYyMkJXSUVJN1BZN3BIZUtURkhGVjdDUUx2QjVSUVp2c1ZLU01rdkNHZUk4b3RmNmRnVW5GNDlzY01HMWUzbjFpTWxmU2JfNU1HUC1PNW9pT3AwX3QxTkZBUEhsZ2duWFhjeG9keQ?oc=5",
+      "published": "2026-11-05T15:43:28Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 16
+        "articles": 14
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 42
+        "articles": 32
       }
     ],
-    "headline_count": 88,
+    "headline_count": 76,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
