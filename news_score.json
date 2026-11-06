@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-11-06T01:58:08Z",
+  "generated_at_utc": "2026-11-06T14:43:58Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Dow Jones Futures Fall, Techs Bounce After Nasdaq Dives 5.5%; Nvidia, Sandisk, CoreWeave, SpaceX Plunge; Japan's Nikkei falls more than 6% as Asian benchmarks tumble after Wall Street drop.",
+  "score": 5,
+  "label": "Neutral",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance; Exchange-Traded Funds Higher, Equity Futures Mixed as US October Jobs Rise More than Expected. Bearish offsets: Dan Ives says tech rout is 'golden buying opportunity' just like during Covid, tariff sell-off; Democratic sweep gives markets a reason to rethink path of interest rates.",
   "articles": [
     {
-      "title": "Dow Jones Futures Fall, Techs Bounce After Nasdaq Dives 5.5%; Nvidia, Sandisk, CoreWeave, SpaceX Plunge",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/0cd2227b-7753-3d54-a8c5-286efe82ac39/dow-jones-futures-fall%2C-techs.html?.tsrc=rss",
-      "published": "2026-11-06T01:26:25Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Japan's Nikkei falls more than 6% as Asian benchmarks tumble after Wall Street drop",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/world-indices/articles/japans-stock-benchmark-nikkei-tumbles-004324375.html?.tsrc=rss",
-      "published": "2026-11-06T00:43:24Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Magnificent 7 loses $1 trillion. The most eye-popping stats from Thursday's tech stock plunge",
+      "title": "Dan Ives says tech rout is 'golden buying opportunity' just like during Covid, tariff sell-off",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/05/stock-market-selloff-ai-fears.html",
-      "published": "2026-11-05T23:39:32Z",
+      "url": "https://www.cnbc.com/2026/11/06/dan-ives-says-tech-rout-is-golden-buying-opportunity-.html",
+      "published": "2026-11-06T13:46:09Z",
       "tone": "bearish"
     },
     {
-      "title": "Trump blames Democrats for Wall Street selloff after historic midterm election win",
+      "title": "Democratic sweep gives markets a reason to rethink path of interest rates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/06/oil-prices-interest-rates-midterms.html",
+      "published": "2026-11-06T12:30:40Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNaFVFOS1LLXZIZ1UtQmh5UFFRODg3R1NIWDVxNkx3UTIzZUp5SWJRU2ZySlRZS0NXS09pVkx0S3Bhbk9FbE5QWGVxSjJta0h0SHBJZ2w4VVNfZnJVRGMzZjE0aHYyMkJXSUVJN1BZN3BIZUtURkhGVjdDUUx2QjVSUVp2c1ZLU01rdkNHZUk4b3RmNmRnVW5GNDlzY01HMWUzbjFpTWxmU2JfNU1HUC1PNW9pT3AwX3QxTkZBUEhsZ2duWFhjeG9keQ?oc=5",
+      "published": "2026-11-05T15:43:28Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Big Jobs Report Keeps Fed Rate-Hike Door Wide Open Despite Sell-Off (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/trump-blames-democrats-wall-street-010352357.html?.tsrc=rss",
-      "published": "2026-11-06T01:03:52Z",
+      "url": "https://finance.yahoo.com/m/8ddf7d69-e608-3186-9af9-a97a8e5946b1/big-jobs-report-keeps-fed.html?.tsrc=rss",
+      "published": "2026-11-06T14:38:54Z",
       "tone": "bearish"
     },
     {
-      "title": "Toronto Stock Exchange: S&P/TSX Composite Drops to 35,640.99 as Wall Street's AI Selloff Spreads - BBN Times",
-      "source": "BBN Times",
-      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxORmtwVngzVjl1eXptN05wVDhXZFpid2lWMjdBUkxtZngwSktmdTczNks5RDZCQXBoMVd0ZXVGclFhTW0wWWUxUjZJS3hqTHZwbG9PWkFKV0ItODNwczZCaEJQNzJzMkN3clRRdUZieFVTVjZyeGY1SDRqRlVlMlZPSzVFUktoTWphcXRfMDRMMnE5WWJfM29YemI0US1feWVUOF9CSzQ1RHlsTXI4MVcycDdGekQzRlN4LS1GdU00WG5RY2F3VlRBZVlCSVJ3UTlk?oc=5",
-      "published": "2026-11-05T23:19:52Z",
-      "tone": "bearish"
+      "title": "Exchange-Traded Funds Higher, Equity Futures Mixed as US October Jobs Rise More than Expected",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-higher-equity-142316139.html?.tsrc=rss",
+      "published": "2026-11-06T14:23:16Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 15
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -62,17 +62,17 @@
         "ok": true,
         "status": 200,
         "name": "CNBC Markets",
-        "articles": 30
+        "articles": 29
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 33
+        "articles": 48
       }
     ],
-    "headline_count": 78,
+    "headline_count": 97,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
