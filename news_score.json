@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-07T00:30:04Z",
+  "generated_at_utc": "2026-11-07T01:35:05Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance; Chip rally may be time for investors to 'harvest cash and wait'. Bearish offsets: Democratic sweep gives markets a reason to rethink path of interest rates; Anthropic IPO announcement odds drop on Kalshi following midterms and AI sell-off.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance. Bearish offsets: Democratic sweep gives markets a reason to rethink path of interest rates; Anthropic IPO announcement odds drop on Kalshi following midterms and AI sell-off.",
   "articles": [
     {
       "title": "Democratic sweep gives markets a reason to rethink path of interest rates",
@@ -27,11 +27,11 @@
       "tone": "bullish"
     },
     {
-      "title": "Chip rally may be time for investors to 'harvest cash and wait'",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/chip-rally-may-be-time-for-investors-to-harvest-cash-and-wait-221657650.html?.tsrc=rss",
-      "published": "2026-11-06T22:16:57Z",
-      "tone": "bullish"
+      "title": "U.S. stock market trims losses for week after AI sell-off - OregonLive.com",
+      "source": "OregonLive.com",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQRGJwVWFvMVFnOE9nWmFvVXVKNTZma1lESTlDbVpmb3FTbkM3cjgyREVLdGdmcVFPeEhBMFdnME81QjBUSlBBenpONGZRY2tIZXlsWlUteWoxaks3MkdiSWdzem9ReFFBWklTeF9nbVVfMHR3bm4xUGlpNHpRWTFWUlFIWTZtTXI4djh0Zm9nc3ZmTV9FNWYzSnpqVlVXbWRqemdDTWwtQdIBuwFBVV95cUxQandTVk9DOWZhX1lDbjV4NHFCZVA0X211eEVvUWk4M2g5ckVDeDNoS2xDRkluQjVlLXBBY0c5UXZ6ck13TFhRd3BxRGl5dGFab3dXemF5cTJEX1ZUT3VmR1l1NUpDNUN2VXhpSDFmMzI3eElmVmhVZWt2ejhFM1RqVmlWYWI1Und1YjAwb2tXTXcwLTJDT2hiOVVsaE1ZRDdPeURGSS1MTmJfN203Zkx2Z3VhOHRlT3hhZFFN?oc=5",
+      "published": "2026-11-06T22:59:00Z",
+      "tone": "bearish"
     },
     {
       "title": "Anatomy of a Selloff: Sudden Chain Reaction Rattles Wall Street - Bloomberg.com",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 63
+        "articles": 62
       }
     ],
-    "headline_count": 111,
+    "headline_count": 110,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
