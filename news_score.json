@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-11-07T01:35:05Z",
+  "generated_at_utc": "2026-11-09T17:02:16Z",
   "window_days": 7,
-  "score": 4,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance. Bearish offsets: Democratic sweep gives markets a reason to rethink path of interest rates; Anthropic IPO announcement odds drop on Kalshi following midterms and AI sell-off.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow rallies 900 points, Nasdaq jumps 2% as stocks climb out of postelection slump: Live updates; Stock Market Today: Dow Jumps 540 Points, S&P 500 Rallies as Oil Crashes 5% - Coinpaper. Bearish offsets: These stocks on Josh Brown's list got washed out in last week's sell-off. Where to go from here.",
   "articles": [
     {
-      "title": "Democratic sweep gives markets a reason to rethink path of interest rates",
+      "title": "Dow rallies 900 points, Nasdaq jumps 2% as stocks climb out of postelection slump: Live updates",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/06/oil-prices-interest-rates-midterms.html",
-      "published": "2026-11-06T12:30:40Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Anthropic IPO announcement odds drop on Kalshi following midterms and AI sell-off",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/06/anthropic-ipo-kalshi-post-midterms-ai-sell-off.html",
-      "published": "2026-11-06T15:55:32Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street\u2019s \u201ceverything but AI\u201d rally just got a second wind from Washington - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNaFVFOS1LLXZIZ1UtQmh5UFFRODg3R1NIWDVxNkx3UTIzZUp5SWJRU2ZySlRZS0NXS09pVkx0S3Bhbk9FbE5QWGVxSjJta0h0SHBJZ2w4VVNfZnJVRGMzZjE0aHYyMkJXSUVJN1BZN3BIZUtURkhGVjdDUUx2QjVSUVp2c1ZLU01rdkNHZUk4b3RmNmRnVW5GNDlzY01HMWUzbjFpTWxmU2JfNU1HUC1PNW9pT3AwX3QxTkZBUEhsZ2duWFhjeG9keQ?oc=5",
-      "published": "2026-11-05T15:43:28Z",
+      "url": "https://www.cnbc.com/2026/11/08/stock-market-today-live-updates.html",
+      "published": "2026-11-09T16:59:07Z",
       "tone": "bullish"
     },
     {
-      "title": "U.S. stock market trims losses for week after AI sell-off - OregonLive.com",
-      "source": "OregonLive.com",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQRGJwVWFvMVFnOE9nWmFvVXVKNTZma1lESTlDbVpmb3FTbkM3cjgyREVLdGdmcVFPeEhBMFdnME81QjBUSlBBenpONGZRY2tIZXlsWlUteWoxaks3MkdiSWdzem9ReFFBWklTeF9nbVVfMHR3bm4xUGlpNHpRWTFWUlFIWTZtTXI4djh0Zm9nc3ZmTV9FNWYzSnpqVlVXbWRqemdDTWwtQdIBuwFBVV95cUxQandTVk9DOWZhX1lDbjV4NHFCZVA0X211eEVvUWk4M2g5ckVDeDNoS2xDRkluQjVlLXBBY0c5UXZ6ck13TFhRd3BxRGl5dGFab3dXemF5cTJEX1ZUT3VmR1l1NUpDNUN2VXhpSDFmMzI3eElmVmhVZWt2ejhFM1RqVmlWYWI1Und1YjAwb2tXTXcwLTJDT2hiOVVsaE1ZRDdPeURGSS1MTmJfN203Zkx2Z3VhOHRlT3hhZFFN?oc=5",
-      "published": "2026-11-06T22:59:00Z",
-      "tone": "bearish"
+      "title": "Stock Market Today: Dow Jumps 540 Points, S&P 500 Rallies as Oil Crashes 5% - Coinpaper",
+      "source": "Coinpaper",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPVXR0ck53U3lHQ1lzazNpdy1FcWVuSFhaOWFtbWtPTk9RcDMyRFlTb25KcFFiaWg3Z2dTSWlSNGJsNjRCQzhxbm1nYTZtaVp1WVZFdkxPd05TazBZX21MaUdzY3lVTmhRYUNCUk5aT1pTSGg2bjNmZHk0T2RORENFWmNoSVVoRXpjOTJWWHFCT3pPMmNYZzk0dXV5TVJ4eWdRQ1VvWl95Zw?oc=5",
+      "published": "2026-11-09T14:56:35Z",
+      "tone": "bullish"
     },
     {
-      "title": "Anatomy of a Selloff: Sudden Chain Reaction Rattles Wall Street - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQRG02RXdnOUdVdG5heW1rdll4NGtPY2gzam5SbFNoY1RZZ0pQclREUjYtNFBPX3BnQlVsRU5leHVPcjJpN0JBcWFJck8wREhyczE1NGRIa1V3ei0tQVJjcVYtN0d3SHdwSVVMMS1jMVF0Vl91eXBSeXRCTHNXWFZOTmZkaEh2eGFNRjlnbl9UWUZBazlSeHNZb1RwTnppdGZRUTZNN1huYUNtSDUxSWY4LUxjaw?oc=5",
-      "published": "2026-11-06T19:00:20Z",
+      "title": "Risk-On: S&P 500 Surges Out of the Gate, Adds $1 Trillion in Market Value",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://247wallst.com/investing/2026/11/09/risk-on-sp-500-surges-out-of-the-gate-adds-1-trillion-in-market-value/?.tsrc=rss",
+      "published": "2026-11-09T15:09:09Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Berkshire shares surge as Wall Street swoons amid AI fears - CNBC",
+      "source": "CNBC",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPQXgyQmpJT1lzSWhTZ01uZWJoRngzWm44N2hQT2lRcUNLWVZONlZQa3lHOTN0VE1zNEZvSjNzUEk4aThrNk1DbTZpazdtTm43TmJUYWNwYWlnTDJocHM3T3BybUpWSlM1ZElKTExkRTBoQy1NVy1zZDRCWHNPZDJFcXJReDR2OF81MkxPS282anN1UzRlUzNBb0tWTQ?oc=5",
+      "published": "2026-11-07T12:49:19Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "These stocks on Josh Brown's list got washed out in last week's sell-off. Where to go from here",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/09/these-stocks-on-josh-browns-list-got-washed-out-in-last-weeks-sell-off-where-to-go-from-here.html",
+      "published": "2026-11-09T16:38:36Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 62
+        "articles": 48
       }
     ],
-    "headline_count": 110,
+    "headline_count": 96,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
