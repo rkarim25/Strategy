@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-11-10T15:21:18Z",
+  "generated_at_utc": "2026-11-10T21:21:56Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: CPI Inflation Stays Hot, Sealing Fed Rate Hike After Hawkish Waller; S&P 500 Falls (Live Coverage); Wall St opens lower after October's hot inflation print - Reuters.",
+  "score": 2,
+  "label": "Bearish",
+  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: S&P 500 Drops After Inflation Hits 0.4% and Fed Official Warns of Bigger Rate Hike - Coinpaper; Stock Market Today: Dow Dips As Nvidia Dives; Microsoft Skids On Anthropic Tools Move (Live Coverage).",
   "articles": [
     {
-      "title": "CPI Inflation Stays Hot, Sealing Fed Rate Hike After Hawkish Waller; S&P 500 Falls (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/20ab46a8-ab2b-38f5-a50d-668e8f50759e/cpi-inflation-stays-hot%2C.html?.tsrc=rss",
-      "published": "2026-11-10T13:57:04Z",
+      "title": "Stock Market Today: S&P 500 Drops After Inflation Hits 0.4% and Fed Official Warns of Bigger Rate Hike - Coinpaper",
+      "source": "Coinpaper",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNcTlVV2pTaFZ1MGxaXzBwV2pxemttbXZpLWdvNDBoLTVVNFVpUFJhZ1RaYm1qRUlEbnk5SzRsZ1NaUTMwSEFMOWJPX1pFNnZaUS00djcwaEpJZU9fU3VnSkxNbWEyclZ6Ri1GbDlDN3RreXl5MVRKdU1INkwzX2JzN2FjRkM2aWsweG11NS10THFiR2VxLTcyOGR3N1VLX0ZIeVVjYUlUNms0UGhueUx2YThFSUs2VXBKMFlVM3VwWkRNSmQ4eXpsS2hUZnY?oc=5",
+      "published": "2026-11-10T15:34:29Z",
       "tone": "bearish"
     },
     {
-      "title": "Wall St opens lower after October's hot inflation print - Reuters",
+      "title": "Stock Market Today: Dow Dips As Nvidia Dives; Microsoft Skids On Anthropic Tools Move (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/c7fbd2af-5702-3c77-9aa6-7c6578bb8abb/stock-market-today%3A-dow-dips.html?.tsrc=rss",
+      "published": "2026-11-10T19:51:50Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "S&P 500 Drops Nearly 1% as Hot Inflation Pushes Yields Toward 5% - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOU2tGdDd4ZjR3MzZIclFHMl9Db2R2d21qUTEzc1dxemwtR0xSMlZXcG80c1c1bmpZZi10LXRZNjlUNk5jaHoxVkRDcFlWSkEwaGRzUm4zeEw1Ylcya21jc3V0aXBBR1ZMdWhRR240RHlsN29xVzQ5WHN6cEZCbjdpcjJsZ0Jfd01pTmRNNWxpQ2FfdzU0WEZGRUdPM2VteU9ZMVNDeHZhWVNaeE9DdTRHQ3A4T2xSd1ZWd3h6a1JibV9sMTBsRVBEbnpKZlc?oc=5",
+      "published": "2026-11-10T17:07:39Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall St falls as hot inflation data fuels rate-hike jitters - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNcDdSR2JEV3JnaGdSRDlzeEdYQVpFODhCUE4xZWhwX0p4V2NjWXhlOWNhVGY2NW1jMTRHRjFjdjVEc0ZKeVBXTWR3aFlzbUE2VHJ4NXpvQS1GRWtxZ1lUZjhIXzF2ZzlWd1BoOEo0MUpXRzZudFExR2tnMlhRUzBOOGE5M2MzZ0xLSTFSZjF6SFBkUQ?oc=5",
+      "published": "2026-11-10T15:20:52Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
-      "published": "2026-11-10T14:35:04Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Update: US Equity Futures Lower Pre-Bell as Fed Governor Christopher Waller Leans Towards Rate Hike in December",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/economy/policy/articles/us-equity-futures-lower-pre-135604672.html?.tsrc=rss",
-      "published": "2026-11-10T13:56:04Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall St set for feeble open after October\u2019s hot inflation print By Reuters - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMFFlZWFUdzRIZzJpczFkY1FLUzBBNE1XMmgyRlRabGRoekotT09TZ3djOE81M29jVjEwdTB0a3hXSkxkWjB0ci12UjZ1eklXOU9zcVAzdWpsWFJSVDJXMWhucThBaFF0eS1UemFrVnlBaTIxVHNETmhCSzVCLUloLVAzYWd3QVZnel9FWlpxemVJWHpkVy10UkZvVzNqMlBXNnFPUmxQWUc3ZE93ZV93?oc=5",
-      "published": "2026-11-10T14:55:22Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Trump says Iran war to end 'fairly soon,' plays down prospects of new strikes",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/10/trump-iran-war-hormuz-.html",
-      "published": "2026-11-10T07:00:02Z",
+      "published": "2026-11-10T21:01:07Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 17
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 43
+        "articles": 50
       }
     ],
-    "headline_count": 90,
+    "headline_count": 100,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
