@@ -1,15 +1,22 @@
 {
-  "generated_at_utc": "2026-11-09T17:02:16Z",
+  "generated_at_utc": "2026-11-10T03:03:05Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow rallies 900 points, Nasdaq jumps 2% as stocks climb out of postelection slump: Live updates; Stock Market Today: Dow Jumps 540 Points, S&P 500 Rallies as Oil Crashes 5% - Coinpaper. Bearish offsets: These stocks on Josh Brown's list got washed out in last week's sell-off. Where to go from here.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, Nov. 9: Markets Rally as Semiconductor Gains Lift Nasdaq; Asian Stocks to Rally on US Tech Surge, Oil Slump: Markets Wrap - Bloomberg.com. Bearish offsets: Why Micron Technology Stock Gained On Monday.",
   "articles": [
     {
-      "title": "Dow rallies 900 points, Nasdaq jumps 2% as stocks climb out of postelection slump: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/08/stock-market-today-live-updates.html",
-      "published": "2026-11-09T16:59:07Z",
+      "title": "Stock Market Today, Nov. 9: Markets Rally as Semiconductor Gains Lift Nasdaq",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/09/stock-market-today-nov-9-markets-rally-as-semiconductor-gains-lift-nasdaq/?.tsrc=rss",
+      "published": "2026-11-09T22:23:39Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Asian Stocks to Rally on US Tech Surge, Oil Slump: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPNXVKNll2bkFUUU5EVDg4eTF6a3YwZ0pIS0d4bGFTdkItMkl3SkFCbGRiZFdzSmlidHZZN3I1YzF1VkVXYlM0dDJrRlRPeDRGYXp6cVBuRGVjbl9vNWxrdlRYLTl4NTRxMnRFcGtuOUROekFvUUsxdTE1R3IwWmRKRVlUVFpFTlY0WXNlWTZTa1hIdmV1?oc=5",
+      "published": "2026-11-10T01:59:00Z",
       "tone": "bullish"
     },
     {
@@ -20,24 +27,17 @@
       "tone": "bullish"
     },
     {
-      "title": "Risk-On: S&P 500 Surges Out of the Gate, Adds $1 Trillion in Market Value",
+      "title": "Review & Preview: Dip Buyers Unite",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/investing/2026/11/09/risk-on-sp-500-surges-out-of-the-gate-adds-1-trillion-in-market-value/?.tsrc=rss",
-      "published": "2026-11-09T15:09:09Z",
+      "url": "https://finance.yahoo.com/m/7e3b2b5c-9d1b-3605-b9e3-670584095571/review-%26-preview%3A-dip-buyers.html?.tsrc=rss",
+      "published": "2026-11-10T00:55:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Berkshire shares surge as Wall Street swoons amid AI fears - CNBC",
-      "source": "CNBC",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPQXgyQmpJT1lzSWhTZ01uZWJoRngzWm44N2hQT2lRcUNLWVZONlZQa3lHOTN0VE1zNEZvSjNzUEk4aThrNk1DbTZpazdtTm43TmJUYWNwYWlnTDJocHM3T3BybUpWSlM1ZElKTExkRTBoQy1NVy1zZDRCWHNPZDJFcXJReDR2OF81MkxPS282anN1UzRlUzNBb0tWTQ?oc=5",
-      "published": "2026-11-07T12:49:19Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "These stocks on Josh Brown's list got washed out in last week's sell-off. Where to go from here",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/09/these-stocks-on-josh-browns-list-got-washed-out-in-last-weeks-sell-off-where-to-go-from-here.html",
-      "published": "2026-11-09T16:38:36Z",
+      "title": "Why Micron Technology Stock Gained On Monday",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/investing/2026/11/09/why-micron-technology-stock-gained-on-monday/?.tsrc=rss",
+      "published": "2026-11-09T23:07:02Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 16
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 48
+        "articles": 55
       }
     ],
-    "headline_count": 96,
+    "headline_count": 101,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
