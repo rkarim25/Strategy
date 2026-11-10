@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-11-10T03:56:51Z",
+  "generated_at_utc": "2026-11-10T15:21:18Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Stock Market Today, Nov. 9: Markets Rally as Semiconductor Gains Lift Nasdaq; Asian Stocks to Rally on US Tech Surge, Oil Slump: Markets Wrap - Bloomberg.com. Bearish offsets: Why Micron Technology Stock Gained On Monday.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: CPI Inflation Stays Hot, Sealing Fed Rate Hike After Hawkish Waller; S&P 500 Falls (Live Coverage); Wall St opens lower after October's hot inflation print - Reuters.",
   "articles": [
     {
-      "title": "Stock Market Today, Nov. 9: Markets Rally as Semiconductor Gains Lift Nasdaq",
+      "title": "CPI Inflation Stays Hot, Sealing Fed Rate Hike After Hawkish Waller; S&P 500 Falls (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/09/stock-market-today-nov-9-markets-rally-as-semiconductor-gains-lift-nasdaq/?.tsrc=rss",
-      "published": "2026-11-09T22:23:39Z",
-      "tone": "bullish"
+      "url": "https://finance.yahoo.com/m/20ab46a8-ab2b-38f5-a50d-668e8f50759e/cpi-inflation-stays-hot%2C.html?.tsrc=rss",
+      "published": "2026-11-10T13:57:04Z",
+      "tone": "bearish"
     },
     {
-      "title": "Asian Stocks to Rally on US Tech Surge, Oil Slump: Markets Wrap - Bloomberg.com",
-      "source": "Bloomberg.com",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPNXVKNll2bkFUUU5EVDg4eTF6a3YwZ0pIS0d4bGFTdkItMkl3SkFCbGRiZFdzSmlidHZZN3I1YzF1VkVXYlM0dDJrRlRPeDRGYXp6cVBuRGVjbl9vNWxrdlRYLTl4NTRxMnRFcGtuOUROekFvUUsxdTE1R3IwWmRKRVlUVFpFTlY0WXNlWTZTa1hIdmV1?oc=5",
-      "published": "2026-11-10T01:59:00Z",
-      "tone": "bullish"
+      "title": "Wall St opens lower after October's hot inflation print - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
+      "published": "2026-11-10T14:35:04Z",
+      "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Dow Jumps 540 Points, S&P 500 Rallies as Oil Crashes 5% - Coinpaper",
-      "source": "Coinpaper",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPVXR0ck53U3lHQ1lzazNpdy1FcWVuSFhaOWFtbWtPTk9RcDMyRFlTb25KcFFiaWg3Z2dTSWlSNGJsNjRCQzhxbm1nYTZtaVp1WVZFdkxPd05TazBZX21MaUdzY3lVTmhRYUNCUk5aT1pTSGg2bjNmZHk0T2RORENFWmNoSVVoRXpjOTJWWHFCT3pPMmNYZzk0dXV5TVJ4eWdRQ1VvWl95Zw?oc=5",
-      "published": "2026-11-09T14:56:35Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Review & Preview: Dip Buyers Unite",
+      "title": "Update: US Equity Futures Lower Pre-Bell as Fed Governor Christopher Waller Leans Towards Rate Hike in December",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/7e3b2b5c-9d1b-3605-b9e3-670584095571/review-%26-preview%3A-dip-buyers.html?.tsrc=rss",
-      "published": "2026-11-10T00:55:00Z",
-      "tone": "bullish"
+      "url": "https://finance.yahoo.com/economy/policy/articles/us-equity-futures-lower-pre-135604672.html?.tsrc=rss",
+      "published": "2026-11-10T13:56:04Z",
+      "tone": "bearish"
     },
     {
-      "title": "Why Micron Technology Stock Gained On Monday",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/investing/2026/11/09/why-micron-technology-stock-gained-on-monday/?.tsrc=rss",
-      "published": "2026-11-09T23:07:02Z",
+      "title": "Wall St set for feeble open after October\u2019s hot inflation print By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMFFlZWFUdzRIZzJpczFkY1FLUzBBNE1XMmgyRlRabGRoekotT09TZ3djOE81M29jVjEwdTB0a3hXSkxkWjB0ci12UjZ1eklXOU9zcVAzdWpsWFJSVDJXMWhucThBaFF0eS1UemFrVnlBaTIxVHNETmhCSzVCLUloLVAzYWd3QVZnel9FWlpxemVJWHpkVy10UkZvVzNqMlBXNnFPUmxQWUc3ZE93ZV93?oc=5",
+      "published": "2026-11-10T14:55:22Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Trump says Iran war to end 'fairly soon,' plays down prospects of new strikes",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/10/trump-iran-war-hormuz-.html",
+      "published": "2026-11-10T07:00:02Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 16
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 51
+        "articles": 43
       }
     ],
-    "headline_count": 97,
+    "headline_count": 90,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
