@@ -1,24 +1,10 @@
 {
-  "generated_at_utc": "2026-11-11T14:52:10Z",
+  "generated_at_utc": "2026-11-11T21:41:09Z",
   "window_days": 7,
-  "score": 8,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq Futures Rally as AI Optimism Returns; Premarket movers: CoreWeave, Nvidia rally; Fossil, Tandy Leather jump. Bearish offsets: Wall Street slips as hot inflation revives rate hike fears - CommBank; Wall St ends lower as hot inflation data, Fed comments heighten rate worries By Reuters - Investing.com.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures: CoreWeave, Sandisk, Nvidia, AMD, Nebius Lead Bullish Market Move. Bearish offsets: Wall Street slips as hot inflation revives rate hike fears - CommBank; 5 Stocks Analysts Are Upgrading Right Now.",
   "articles": [
-    {
-      "title": "Nasdaq Futures Rally as AI Optimism Returns",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.wsj.com/finance/commodities-futures/nasdaq-futures-rally-as-ai-optimism-returns-af100e62?.tsrc=rss",
-      "published": "2026-11-11T13:14:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Premarket movers: CoreWeave, Nvidia rally; Fossil, Tandy Leather jump",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/premarket-movers-coreweave-nvidia-rally-130814151.html?.tsrc=rss",
-      "published": "2026-11-11T13:08:14Z",
-      "tone": "bullish"
-    },
     {
       "title": "Wall Street slips as hot inflation revives rate hike fears - CommBank",
       "source": "CommBank",
@@ -27,17 +13,31 @@
       "tone": "bearish"
     },
     {
+      "title": "5 Stocks Analysts Are Upgrading Right Now",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/5-stocks-analysts-upgrading-now-203854359.html?.tsrc=rss",
+      "published": "2026-11-11T20:38:54Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "He Thinks His $500,000 S&P 500 401(k) Protects Him From Big Losses. Just 10 Holdings Make Up Nearly 40% of the Fund. A 25% Drop Could Cost Him Almost $49,000",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://247wallst.com/personal-finance/2026/11/11/he-thinks-his-500000-sp-500-401k-protects-him-from-big-losses-just-10-holdings-make-up-nearly-40-of-the-fund-a-25-drop-could-cost-him-almost-49000/?.tsrc=rss",
+      "published": "2026-11-11T21:27:39Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Dow Jones Futures: CoreWeave, Sandisk, Nvidia, AMD, Nebius Lead Bullish Market Move",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/672e6ef4-2ba3-319b-b948-a356a7f1fcbe/dow-jones-futures%3A-coreweave%2C.html?.tsrc=rss",
+      "published": "2026-11-11T21:22:08Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries By Reuters - Investing.com",
       "source": "Investing.com",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMFFlZWFUdzRIZzJpczFkY1FLUzBBNE1XMmgyRlRabGRoekotT09TZ3djOE81M29jVjEwdTB0a3hXSkxkWjB0ci12UjZ1eklXOU9zcVAzdWpsWFJSVDJXMWhucThBaFF0eS1UemFrVnlBaTIxVHNETmhCSzVCLUloLVAzYWd3QVZnel9FWlpxemVJWHpkVy10UkZvVzNqMlBXNnFPUmxQWUc3ZE93ZV93?oc=5",
       "published": "2026-11-10T20:27:55Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
-      "published": "2026-11-10T10:26:00Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 52
+        "articles": 58
       }
     ],
-    "headline_count": 100,
+    "headline_count": 107,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
