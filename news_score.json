@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-10T21:21:56Z",
+  "generated_at_utc": "2026-11-11T00:56:49Z",
   "window_days": 7,
-  "score": 2,
+  "score": 3,
   "label": "Bearish",
-  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: S&P 500 Drops After Inflation Hits 0.4% and Fed Official Warns of Bigger Rate Hike - Coinpaper; Stock Market Today: Dow Dips As Nvidia Dives; Microsoft Skids On Anthropic Tools Move (Live Coverage).",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: S&P 500 Drops After Inflation Hits 0.4% and Fed Official Warns of Bigger Rate Hike - Coinpaper; Wall Street slips as hot inflation revives rate hike fears - CommBank.",
   "articles": [
     {
       "title": "Stock Market Today: S&P 500 Drops After Inflation Hits 0.4% and Fed Official Warns of Bigger Rate Hike - Coinpaper",
@@ -13,31 +13,31 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Dow Dips As Nvidia Dives; Microsoft Skids On Anthropic Tools Move (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/c7fbd2af-5702-3c77-9aa6-7c6578bb8abb/stock-market-today%3A-dow-dips.html?.tsrc=rss",
-      "published": "2026-11-10T19:51:50Z",
+      "title": "Wall Street slips as hot inflation revives rate hike fears - CommBank",
+      "source": "CommBank",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxONDMwMWZIa21ablZISHRVdldDeEZyUVhNWkoxS3JMLV9qeDV2NXU2RjRZVDNsVVdzR1VXOWZJV1Bwd0w0ZWdDWkQ0emxIaldEVVVXb1lKMlNzYU1jSnBFcmZoTk9zUXhRRXcyNnhleDIxU1JRVVYzeVZPSHh4bEVRX1JKSWtyRmpUcWl0cHg1akt3NF9qRE9MVkxiNkNuZHNkM1hCRWR6Q3RVV0l2TzdsZTJOU2JaUHJl?oc=5",
+      "published": "2026-11-10T22:24:29Z",
       "tone": "bearish"
     },
     {
       "title": "S&P 500 Drops Nearly 1% as Hot Inflation Pushes Yields Toward 5% - 24/7 Wall St.",
       "source": "24/7 Wall St.",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOU2tGdDd4ZjR3MzZIclFHMl9Db2R2d21qUTEzc1dxemwtR0xSMlZXcG80c1c1bmpZZi10LXRZNjlUNk5jaHoxVkRDcFlWSkEwaGRzUm4zeEw1Ylcya21jc3V0aXBBR1ZMdWhRR240RHlsN29xVzQ5WHN6cEZCbjdpcjJsZ0Jfd01pTmRNNWxpQ2FfdzU0WEZGRUdPM2VteU9ZMVNDeHZhWVNaeE9DdTRHQ3A4T2xSd1ZWd3h6a1JibV9sMTBsRVBEbnpKZlc?oc=5",
-      "published": "2026-11-10T17:07:39Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall St falls as hot inflation data fuels rate-hike jitters - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNcDdSR2JEV3JnaGdSRDlzeEdYQVpFODhCUE4xZWhwX0p4V2NjWXhlOWNhVGY2NW1jMTRHRjFjdjVEc0ZKeVBXTWR3aFlzbUE2VHJ4NXpvQS1GRWtxZ1lUZjhIXzF2ZzlWd1BoOEo0MUpXRzZudFExR2tnMlhRUzBOOGE5M2MzZ0xLSTFSZjF6SFBkUQ?oc=5",
-      "published": "2026-11-10T15:20:52Z",
+      "published": "2026-11-10T21:16:35Z",
       "tone": "bearish"
     },
     {
       "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
-      "published": "2026-11-10T21:01:07Z",
+      "published": "2026-11-10T21:27:01Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMFFlZWFUdzRIZzJpczFkY1FLUzBBNE1XMmgyRlRabGRoekotT09TZ3djOE81M29jVjEwdTB0a3hXSkxkWjB0ci12UjZ1eklXOU9zcVAzdWpsWFJSVDJXMWhucThBaFF0eS1UemFrVnlBaTIxVHNETmhCSzVCLUloLVAzYWd3QVZnel9FWlpxemVJWHpkVy10UkZvVzNqMlBXNnFPUmxQWUc3ZE93ZV93?oc=5",
+      "published": "2026-11-10T20:27:55Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 50
+        "articles": 49
       }
     ],
-    "headline_count": 100,
+    "headline_count": 98,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
