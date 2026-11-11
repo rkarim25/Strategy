@@ -1,16 +1,23 @@
 {
-  "generated_at_utc": "2026-11-11T01:41:29Z",
+  "generated_at_utc": "2026-11-11T14:52:10Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: S&P 500 Drops After Inflation Hits 0.4% and Fed Official Warns of Bigger Rate Hike - Coinpaper; Wall Street slips as hot inflation revives rate hike fears - CommBank.",
+  "score": 8,
+  "label": "Bullish",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq Futures Rally as AI Optimism Returns; Premarket movers: CoreWeave, Nvidia rally; Fossil, Tandy Leather jump. Bearish offsets: Wall Street slips as hot inflation revives rate hike fears - CommBank; Wall St ends lower as hot inflation data, Fed comments heighten rate worries By Reuters - Investing.com.",
   "articles": [
     {
-      "title": "Stock Market Today: S&P 500 Drops After Inflation Hits 0.4% and Fed Official Warns of Bigger Rate Hike - Coinpaper",
-      "source": "Coinpaper",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNcTlVV2pTaFZ1MGxaXzBwV2pxemttbXZpLWdvNDBoLTVVNFVpUFJhZ1RaYm1qRUlEbnk5SzRsZ1NaUTMwSEFMOWJPX1pFNnZaUS00djcwaEpJZU9fU3VnSkxNbWEyclZ6Ri1GbDlDN3RreXl5MVRKdU1INkwzX2JzN2FjRkM2aWsweG11NS10THFiR2VxLTcyOGR3N1VLX0ZIeVVjYUlUNms0UGhueUx2YThFSUs2VXBKMFlVM3VwWkRNSmQ4eXpsS2hUZnY?oc=5",
-      "published": "2026-11-10T15:34:29Z",
-      "tone": "bearish"
+      "title": "Nasdaq Futures Rally as AI Optimism Returns",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.wsj.com/finance/commodities-futures/nasdaq-futures-rally-as-ai-optimism-returns-af100e62?.tsrc=rss",
+      "published": "2026-11-11T13:14:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Premarket movers: CoreWeave, Nvidia rally; Fossil, Tandy Leather jump",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/premarket-movers-coreweave-nvidia-rally-130814151.html?.tsrc=rss",
+      "published": "2026-11-11T13:08:14Z",
+      "tone": "bullish"
     },
     {
       "title": "Wall Street slips as hot inflation revives rate hike fears - CommBank",
@@ -20,24 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "S&P 500 Drops Nearly 1% as Hot Inflation Pushes Yields Toward 5% - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOU2tGdDd4ZjR3MzZIclFHMl9Db2R2d21qUTEzc1dxemwtR0xSMlZXcG80c1c1bmpZZi10LXRZNjlUNk5jaHoxVkRDcFlWSkEwaGRzUm4zeEw1Ylcya21jc3V0aXBBR1ZMdWhRR240RHlsN29xVzQ5WHN6cEZCbjdpcjJsZ0Jfd01pTmRNNWxpQ2FfdzU0WEZGRUdPM2VteU9ZMVNDeHZhWVNaeE9DdTRHQ3A4T2xSd1ZWd3h6a1JibV9sMTBsRVBEbnpKZlc?oc=5",
-      "published": "2026-11-10T21:16:35Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "U.S. stock futures tick higher after Wall St slips on hot CPI, Nvidia losses",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/u-stock-futures-tick-higher-011241932.html?.tsrc=rss",
-      "published": "2026-11-11T01:12:41Z",
+      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries By Reuters - Investing.com",
+      "source": "Investing.com",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMFFlZWFUdzRIZzJpczFkY1FLUzBBNE1XMmgyRlRabGRoekotT09TZ3djOE81M29jVjEwdTB0a3hXSkxkWjB0ci12UjZ1eklXOU9zcVAzdWpsWFJSVDJXMWhucThBaFF0eS1UemFrVnlBaTIxVHNETmhCSzVCLUloLVAzYWd3QVZnel9FWlpxemVJWHpkVy10UkZvVzNqMlBXNnFPUmxQWUc3ZE93ZV93?oc=5",
+      "published": "2026-11-10T20:27:55Z",
       "tone": "bearish"
     },
     {
       "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
-      "published": "2026-11-10T21:27:01Z",
+      "published": "2026-11-10T10:26:00Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 50
+        "articles": 52
       }
     ],
-    "headline_count": 99,
+    "headline_count": 100,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
