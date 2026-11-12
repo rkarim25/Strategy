@@ -1,22 +1,15 @@
 {
-  "generated_at_utc": "2026-11-12T02:40:14Z",
+  "generated_at_utc": "2026-11-12T15:42:38Z",
   "window_days": 7,
-  "score": 8,
-  "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: AI stocks rebound as Wall Street rallies, Nasdaq gains 1.6% - The Business Journal; What Propelled AXT Inc.\u2019s (AXTI) 19.5% Rally?. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters.",
+  "score": 5,
+  "label": "Neutral",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: AI stocks rebound as Wall Street rallies, Nasdaq gains 1.6% - The Business Journal; Stock Market Today, Nov. 11: Stock Market Today, Nov. 11: Nasdaq Surges as CoreWeave's 25% Rally Reignites the AI Trade - The Motley Fool. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters; A plunge for Nvidia's stock drags Wall Street lower - KSAT.",
   "articles": [
     {
       "title": "AI stocks rebound as Wall Street rallies, Nasdaq gains 1.6% - The Business Journal",
       "source": "The Business Journal",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOU1hOelVKSXc1SE85ZERpQXJ0NUZmd2hkZ1pSUDg2UVNjSWsxMExkY0tRendOSkh2aTJBMGJ4YjAwaHlQdi1JLXZudDdIb19zblJvaENqSEU2RGVUdGZzZFFhTUx2RXBLbnF5SmZOMzdzMUNLc1NJT3N0QUpqQmQwang5M095aDM0S0lTVHhSSDZUUVFEOThsRjFCRUpCbHlaLWVtcHNBVlVXMUpYTTlvNEV1N29UbFowNG41eFlNQnQ?oc=5",
-      "published": "2026-11-11T22:39:29Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "What Propelled AXT Inc.\u2019s (AXTI) 19.5% Rally?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/propelled-axt-inc-axti-19-234754017.html?.tsrc=rss",
-      "published": "2026-11-11T23:47:54Z",
+      "published": "2026-11-12T04:22:48Z",
       "tone": "bullish"
     },
     {
@@ -27,18 +20,25 @@
       "tone": "bearish"
     },
     {
-      "title": "Dow Jones Futures Rise, Techs Fall As Nvidia May Oust CEO Huang After CoreWave Leads Rally",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/672e6ef4-2ba3-319b-b948-a356a7f1fcbe/dow-jones-futures-rise%2C-techs.html?.tsrc=rss",
-      "published": "2026-11-12T02:31:16Z",
+      "title": "A plunge for Nvidia's stock drags Wall Street lower - KSAT",
+      "source": "KSAT",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNTGFRZV9kTzVUUnZWbno0aVBPUUZuMWpJemdhSml3UFVqUkhtT3EzcU52M2E4RGJWQi1ndGxueTVpT1BQMGJ2MnQxNWptWGRFT1ZDNkNreWpQaUZNb3FVemdZYTZxSDh1UTUzYXZiWkdQcXljWkhrTEpVeFduZHVueHRXT0gzXzljcnExTUNOVEdWMi1pdTlZYlJ0ZHQ2c0tIbFRkTEJDTEhOTU9obHE1bGF1cVFIay1LN1Q0ODN1VW84Q0E4YTRZWTg5THg?oc=5",
+      "published": "2026-11-12T07:16:45Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock Market Today, Nov. 11: Stock Market Today, Nov. 11: Nasdaq Surges as CoreWeave's 25% Rally Reignites the AI Trade - The Motley Fool",
+      "source": "The Motley Fool",
+      "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPeHlmYTlrbUh4LV9BWkdFU0NOZnRhTVZHWUxrQXlnN1ZMNGlvd0VxZWlxblBuQ2N0YmxMTkhNS3BWYTFxQ0tSeVdMOG50NVpQa2lmeEhZc0lwcUJIX2NuMVdIT2FIeHRWRUx0ajVqT285QUFrM3ZaSC1jdFFkMThQaUM1b0hXVEl0eFZCc2tsWjdSdmw0ckttWmVVOW00YUJNaHBuTElxWlJhRVFnLW5QYk9SUUJNYUt1eEtTNUVRQ3I4aXRKLURsYng5N1hJOGxNU2wwVjk0TFJaWV9jTmE5WDZHa08zRVllc1F6TGQ3RVZYQXpyeWl2MHpPbk1nU2Y0Wk00?oc=5",
+      "published": "2026-11-11T22:25:00Z",
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today, Nov. 11: Intel Climbs on Broader Chip Rally as AI Infrastructure Demand Lifts Semiconductor Stocks",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/11/stock-market-today-nov-11-intel-climbs-on-broader-chip-rally-as-ai-infrastructure-demand-lifts-semiconductor-stocks/?.tsrc=rss",
-      "published": "2026-11-11T23:04:34Z",
-      "tone": "bullish"
+      "title": "How far could Nvidia's stock fall on Huang's resignation? What investors need to know",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/11/wall-street-braces-for-nvidia-rout-following-huang-scandal.html",
+      "published": "2026-11-12T14:39:29Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 73
+        "articles": 47
       }
     ],
-    "headline_count": 122,
+    "headline_count": 96,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
