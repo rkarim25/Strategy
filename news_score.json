@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-11-12T15:42:38Z",
+  "generated_at_utc": "2026-11-12T21:59:34Z",
   "window_days": 7,
   "score": 5,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: AI stocks rebound as Wall Street rallies, Nasdaq gains 1.6% - The Business Journal; Stock Market Today, Nov. 11: Stock Market Today, Nov. 11: Nasdaq Surges as CoreWeave's 25% Rally Reignites the AI Trade - The Motley Fool. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters; A plunge for Nvidia's stock drags Wall Street lower - KSAT.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 Sits 2.5% From a Record High Despite the Stock Market Crash - Yahoo Finance. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters; Stock Market Today: Nasdaq Drops; Nvidia Slumps After CEO's Exit With Earnings Report On Tap.",
   "articles": [
-    {
-      "title": "AI stocks rebound as Wall Street rallies, Nasdaq gains 1.6% - The Business Journal",
-      "source": "The Business Journal",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOU1hOelVKSXc1SE85ZERpQXJ0NUZmd2hkZ1pSUDg2UVNjSWsxMExkY0tRendOSkh2aTJBMGJ4YjAwaHlQdi1JLXZudDdIb19zblJvaENqSEU2RGVUdGZzZFFhTUx2RXBLbnF5SmZOMzdzMUNLc1NJT3N0QUpqQmQwang5M095aDM0S0lTVHhSSDZUUVFEOThsRjFCRUpCbHlaLWVtcHNBVlVXMUpYTTlvNEV1N29UbFowNG41eFlNQnQ?oc=5",
-      "published": "2026-11-12T04:22:48Z",
-      "tone": "bullish"
-    },
     {
       "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "source": "Reuters",
@@ -20,25 +13,32 @@
       "tone": "bearish"
     },
     {
-      "title": "A plunge for Nvidia's stock drags Wall Street lower - KSAT",
-      "source": "KSAT",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNTGFRZV9kTzVUUnZWbno0aVBPUUZuMWpJemdhSml3UFVqUkhtT3EzcU52M2E4RGJWQi1ndGxueTVpT1BQMGJ2MnQxNWptWGRFT1ZDNkNreWpQaUZNb3FVemdZYTZxSDh1UTUzYXZiWkdQcXljWkhrTEpVeFduZHVueHRXT0gzXzljcnExTUNOVEdWMi1pdTlZYlJ0ZHQ2c0tIbFRkTEJDTEhOTU9obHE1bGF1cVFIay1LN1Q0ODN1VW84Q0E4YTRZWTg5THg?oc=5",
-      "published": "2026-11-12T07:16:45Z",
+      "title": "Stock Market Today: Nasdaq Drops; Nvidia Slumps After CEO's Exit With Earnings Report On Tap",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/b961f164-91b1-38c0-a2e1-5ab20b01108e/stock-market-today%3A-nasdaq.html?.tsrc=rss",
+      "published": "2026-11-12T21:34:42Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today, Nov. 11: Stock Market Today, Nov. 11: Nasdaq Surges as CoreWeave's 25% Rally Reignites the AI Trade - The Motley Fool",
-      "source": "The Motley Fool",
-      "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxPeHlmYTlrbUh4LV9BWkdFU0NOZnRhTVZHWUxrQXlnN1ZMNGlvd0VxZWlxblBuQ2N0YmxMTkhNS3BWYTFxQ0tSeVdMOG50NVpQa2lmeEhZc0lwcUJIX2NuMVdIT2FIeHRWRUx0ajVqT285QUFrM3ZaSC1jdFFkMThQaUM1b0hXVEl0eFZCc2tsWjdSdmw0ckttWmVVOW00YUJNaHBuTElxWlJhRVFnLW5QYk9SUUJNYUt1eEtTNUVRQ3I4aXRKLURsYng5N1hJOGxNU2wwVjk0TFJaWV9jTmE5WDZHa08zRVllc1F6TGQ3RVZYQXpyeWl2MHpPbk1nU2Y0Wk00?oc=5",
-      "published": "2026-11-11T22:25:00Z",
+      "title": "He Thinks His $500,000 S&P 500 401(k) Protects Him From Big Losses. Just 10 Holdings Make Up Nearly 40% of the Fund. A 25% Drop Could Cost Him Almost $49,000 - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNdUNvZW9famlMdFBtZDBIX1ljbXE5WUg1RkF4b045dmw0Zk9BNjFSbWlCUXRCaXV2cDUyZ014S2ZaX3ZRWUl4a1Z6VVBfaXRGWG0yaUZnbGRzbGRqY2xlRnZsc1FsRU00NGNsbWJrVmxBZlRTOHIydno4Ym9MNFg3T1hkOFdmUExuRm1wUVFB?oc=5",
+      "published": "2026-11-11T21:27:39Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "The S&P 500 is shrugging off Nvidia\u2019s selloff. Here\u2019s what\u2019s keeping the rest of the market afloat. - MarketWatch",
+      "source": "MarketWatch",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOMXVQX3FvZ2FRU3g0WmkxWUFiWnV2czBMVVV1elRwUlNUbDdmVUhCRXBWMmMtcUVfYmNRcnNvN2NMUXdKbWwyZEFsSS1zOE54RjlWX1hSS3ZVZTYzeURGaGsxdEFvQ1BUa0ZOZW9UX1prOTRvV1U2eGRlU3dEVHpBR2luR2haMmVrcklrSE05ZVk0NkRkMFdvaGJNSjNQMWs5NjlXVnZpbXpISDdUYjFkRGRPTFRXMkhOUldWeDVqUGMxSGdkVHVvRmVyMWdwUlQ5MVJN?oc=5",
+      "published": "2026-11-12T19:52:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "S&P 500 Sits 2.5% From a Record High Despite the Stock Market Crash - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQN2RWelRrc3hRSjVvV09IZ1FHYXQ2bEo1d05iMVpVMVRRRGFvbEQ5VUpLTzIxdkRwWjh1NWhyblRNeTR6Q1E1SHJrY29kdkZyMHBocWNKaFZhZVJyNGx6cHJZUlFVWXpPbkVaWmh6LTRTSjE4dHJsb0l4cktYSEM2eTc5U0pLdw?oc=5",
+      "published": "2026-11-11T20:50:11Z",
       "tone": "bullish"
-    },
-    {
-      "title": "How far could Nvidia's stock fall on Huang's resignation? What investors need to know",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/11/wall-street-braces-for-nvidia-rout-following-huang-scandal.html",
-      "published": "2026-11-12T14:39:29Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 47
+        "articles": 44
       }
     ],
-    "headline_count": 96,
+    "headline_count": 93,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
