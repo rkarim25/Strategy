@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-11-11T21:41:09Z",
+  "generated_at_utc": "2026-11-12T02:03:19Z",
   "window_days": 7,
-  "score": 7,
+  "score": 8,
   "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures: CoreWeave, Sandisk, Nvidia, AMD, Nebius Lead Bullish Market Move. Bearish offsets: Wall Street slips as hot inflation revives rate hike fears - CommBank; 5 Stocks Analysts Are Upgrading Right Now.",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: AI stocks rebound as Wall Street rallies, Nasdaq gains 1.6% - The Business Journal; What Propelled AXT Inc.\u2019s (AXTI) 19.5% Rally?. Bearish offsets: Wall Street slips as hot inflation revives rate hike fears - CommBank; Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters.",
   "articles": [
+    {
+      "title": "AI stocks rebound as Wall Street rallies, Nasdaq gains 1.6% - The Business Journal",
+      "source": "The Business Journal",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOU1hOelVKSXc1SE85ZERpQXJ0NUZmd2hkZ1pSUDg2UVNjSWsxMExkY0tRendOSkh2aTJBMGJ4YjAwaHlQdi1JLXZudDdIb19zblJvaENqSEU2RGVUdGZzZFFhTUx2RXBLbnF5SmZOMzdzMUNLc1NJT3N0QUpqQmQwang5M095aDM0S0lTVHhSSDZUUVFEOThsRjFCRUpCbHlaLWVtcHNBVlVXMUpYTTlvNEV1N29UbFowNG41eFlNQnQ?oc=5",
+      "published": "2026-11-11T22:39:29Z",
+      "tone": "bullish"
+    },
     {
       "title": "Wall Street slips as hot inflation revives rate hike fears - CommBank",
       "source": "CommBank",
@@ -13,31 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "5 Stocks Analysts Are Upgrading Right Now",
+      "title": "What Propelled AXT Inc.\u2019s (AXTI) 19.5% Rally?",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/5-stocks-analysts-upgrading-now-203854359.html?.tsrc=rss",
-      "published": "2026-11-11T20:38:54Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "He Thinks His $500,000 S&P 500 401(k) Protects Him From Big Losses. Just 10 Holdings Make Up Nearly 40% of the Fund. A 25% Drop Could Cost Him Almost $49,000",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://247wallst.com/personal-finance/2026/11/11/he-thinks-his-500000-sp-500-401k-protects-him-from-big-losses-just-10-holdings-make-up-nearly-40-of-the-fund-a-25-drop-could-cost-him-almost-49000/?.tsrc=rss",
-      "published": "2026-11-11T21:27:39Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Dow Jones Futures: CoreWeave, Sandisk, Nvidia, AMD, Nebius Lead Bullish Market Move",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/672e6ef4-2ba3-319b-b948-a356a7f1fcbe/dow-jones-futures%3A-coreweave%2C.html?.tsrc=rss",
-      "published": "2026-11-11T21:22:08Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/propelled-axt-inc-axti-19-234754017.html?.tsrc=rss",
+      "published": "2026-11-11T23:47:54Z",
       "tone": "bullish"
     },
     {
-      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries By Reuters - Investing.com",
-      "source": "Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMFFlZWFUdzRIZzJpczFkY1FLUzBBNE1XMmgyRlRabGRoekotT09TZ3djOE81M29jVjEwdTB0a3hXSkxkWjB0ci12UjZ1eklXOU9zcVAzdWpsWFJSVDJXMWhucThBaFF0eS1UemFrVnlBaTIxVHNETmhCSzVCLUloLVAzYWd3QVZnel9FWlpxemVJWHpkVy10UkZvVzNqMlBXNnFPUmxQWUc3ZE93ZV93?oc=5",
-      "published": "2026-11-10T20:27:55Z",
+      "title": "Dow Jones Futures: Techs Tumble As Nvidia May Oust CEO Huang; AI Stocks Slide, But Not AMD",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/672e6ef4-2ba3-319b-b948-a356a7f1fcbe/dow-jones-futures%3A-techs.html?.tsrc=rss",
+      "published": "2026-11-12T01:45:44Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
+      "published": "2026-11-10T10:26:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 58
+        "articles": 59
       }
     ],
-    "headline_count": 107,
+    "headline_count": 108,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
