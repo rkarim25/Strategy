@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-13T01:33:40Z",
+  "generated_at_utc": "2026-11-13T02:21:17Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
@@ -62,7 +62,7 @@
         "ok": true,
         "status": 200,
         "name": "CNBC Markets",
-        "articles": 30
+        "articles": 29
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
@@ -72,7 +72,7 @@
         "articles": 58
       }
     ],
-    "headline_count": 108,
+    "headline_count": 107,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

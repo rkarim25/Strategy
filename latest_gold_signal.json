@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-13T01:33:35Z",
+  "generated_at_utc": "2026-11-13T02:21:14Z",
   "data_asof": "2026-11-13",
-  "daily_rows": 6577,
-  "quote_price": 3916.699951171875,
+  "daily_rows": 6578,
+  "quote_price": 3912.89990234375,
   "quote_timestamp": "2026-11-13",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1794620014&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1794622873&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-13",
-      "close": 3916.699951171875
+      "close": 3912.89990234375
     },
-    "latestSma": 4051.514990234375,
+    "latestSma": 4036.5349853515627,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2635567044430345,
+    "latestDd": -0.26427121423881916,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-13",
-      "close": 3916.699951171875
+      "close": 3912.89990234375
     },
-    "latestSma": 4038.2949829101562,
+    "latestSma": 4024.1749755859373,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2635567044430345,
+    "latestDd": -0.26427121423881916,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-11-13",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-13T01:33:35Z",
+    "last_checked_at_utc": "2026-11-13T02:21:14Z",
     "last_email_sent_on": "2026-11-11",
     "last_transition": {
       "id": "2026-11-11:1->2026-11-11:0",
