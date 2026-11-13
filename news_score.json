@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-11-13T02:21:17Z",
+  "generated_at_utc": "2026-11-13T15:01:10Z",
   "window_days": 7,
-  "score": 6,
+  "score": 5,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: S&P 500 Sits 2.5% From a Record High Despite the Stock Market Crash - Yahoo Finance. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters; 5 Best Growth Stocks for the Next 5 Years.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Futures Tick Higher as Nvidia Shares Rise; Major Indexes on Track for Big Weekly Gains. Bearish offsets: \u2018We will sue them\u2019: Canada threatens Stellantis as Trump trade war reshapes Jeep production plans; Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters.",
   "articles": [
+    {
+      "title": "\u2018We will sue them\u2019: Canada threatens Stellantis as Trump trade war reshapes Jeep production plans",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/13/canada-stellantis-auto-trump-tariffs-jeep.html",
+      "published": "2026-11-13T14:24:57Z",
+      "tone": "bearish"
+    },
     {
       "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "source": "Reuters",
@@ -13,18 +20,18 @@
       "tone": "bearish"
     },
     {
-      "title": "5 Best Growth Stocks for the Next 5 Years",
+      "title": "5 High P/E Stocks Under the 200-Day SMA",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/5-best-growth-stocks-next-231119066.html?.tsrc=rss",
-      "published": "2026-11-12T23:11:19Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/5-high-p-e-stocks-143958502.html?.tsrc=rss",
+      "published": "2026-11-13T14:39:58Z",
       "tone": "bearish"
     },
     {
-      "title": "He Thinks His $500,000 S&P 500 401(k) Protects Him From Big Losses. Just 10 Holdings Make Up Nearly 40% of the Fund. A 25% Drop Could Cost Him Almost $49,000 - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNdUNvZW9famlMdFBtZDBIX1ljbXE5WUg1RkF4b045dmw0Zk9BNjFSbWlCUXRCaXV2cDUyZ014S2ZaX3ZRWUl4a1Z6VVBfaXRGWG0yaUZnbGRzbGRqY2xlRnZsc1FsRU00NGNsbWJrVmxBZlRTOHIydno4Ym9MNFg3T1hkOFdmUExuRm1wUVFB?oc=5",
-      "published": "2026-11-11T21:27:39Z",
-      "tone": "bearish"
+      "title": "Stock Market Today: Futures Tick Higher as Nvidia Shares Rise; Major Indexes on Track for Big Weekly Gains",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.investopedia.com/stock-market-today-dow-jones-today-s-and-p-500-nasdaq-11132026-12252143?.tsrc=rss",
+      "published": "2026-11-13T13:37:34Z",
+      "tone": "bullish"
     },
     {
       "title": "The S&P 500 is shrugging off Nvidia\u2019s selloff this week. Here\u2019s what\u2019s keeping the rest of the market afloat. - MarketWatch",
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOMXVQX3FvZ2FRU3g0WmkxWUFiWnV2czBMVVV1elRwUlNUbDdmVUhCRXBWMmMtcUVfYmNRcnNvN2NMUXdKbWwyZEFsSS1zOE54RjlWX1hSS3ZVZTYzeURGaGsxdEFvQ1BUa0ZOZW9UX1prOTRvV1U2eGRlU3dEVHpBR2luR2haMmVrcklrSE05ZVk0NkRkMFdvaGJNSjNQMWs5NjlXVnZpbXpISDdUYjFkRGRPTFRXMkhOUldWeDVqUGMxSGdkVHVvRmVyMWdwUlQ5MVJN?oc=5",
       "published": "2026-11-12T21:08:00Z",
       "tone": "bearish"
-    },
-    {
-      "title": "S&P 500 Sits 2.5% From a Record High Despite the Stock Market Crash - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQN2RWelRrc3hRSjVvV09IZ1FHYXQ2bEo1d05iMVpVMVRRRGFvbEQ5VUpLTzIxdkRwWjh1NWhyblRNeTR6Q1E1SHJrY29kdkZyMHBocWNKaFZhZVJyNGx6cHJZUlFVWXpPbkVaWmh6LTRTSjE4dHJsb0l4cktYSEM2eTc5U0pLdw?oc=5",
-      "published": "2026-11-11T20:50:11Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -62,17 +62,17 @@
         "ok": true,
         "status": 200,
         "name": "CNBC Markets",
-        "articles": 29
+        "articles": 30
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 58
+        "articles": 60
       }
     ],
-    "headline_count": 107,
+    "headline_count": 108,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
