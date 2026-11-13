@@ -1,15 +1,15 @@
 {
-  "generated_at_utc": "2026-11-13T15:01:10Z",
+  "generated_at_utc": "2026-11-13T21:28:34Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Futures Tick Higher as Nvidia Shares Rise; Major Indexes on Track for Big Weekly Gains. Bearish offsets: \u2018We will sue them\u2019: Canada threatens Stellantis as Trump trade war reshapes Jeep production plans; Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: The Chances of a Federal Reserve December Rate Hike Are Climbing. Here\u2019s What History Says About Stocks After the Fed Starts Raising Again.; Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters.",
   "articles": [
     {
-      "title": "\u2018We will sue them\u2019: Canada threatens Stellantis as Trump trade war reshapes Jeep production plans",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/13/canada-stellantis-auto-trump-tariffs-jeep.html",
-      "published": "2026-11-13T14:24:57Z",
+      "title": "The Chances of a Federal Reserve December Rate Hike Are Climbing. Here\u2019s What History Says About Stocks After the Fed Starts Raising Again.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/investing/2026/11/13/the-chances-of-a-december-rate-hike-are-climbing-heres-what-history-says/?.tsrc=rss",
+      "published": "2026-11-13T20:20:02Z",
       "tone": "bearish"
     },
     {
@@ -20,24 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "5 High P/E Stocks Under the 200-Day SMA",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/5-high-p-e-stocks-143958502.html?.tsrc=rss",
-      "published": "2026-11-13T14:39:58Z",
+      "title": "S&P 500 Opens Lower as Tech Selloff Splits the Market - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOSXNJZFNVZzNJNEhHTVQ3RlVVV3BXZjc0STB1eEIzYlUyZUxZU1ZwckR2TTR2NjNpanNRZ1BkWWxQajhMaHVQUUpsdWg3b0JVOUs0eGh4NnFOaDRsTXlfQVlSbXpvRzVTQUZpa0ZaelhlN1JmSDFZSTc3Ql93OVhSYThIT0daRmxudmFTTHBPcHgxVUVtZ2J3RGpTbmJXaDJSYnFyR2ZJTHF2Y1pWNXNwZ0NEVnNVMnlJTkZqYU5RTFBlTERRWVZoSE9HNA?oc=5",
+      "published": "2026-11-13T19:25:05Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Futures Tick Higher as Nvidia Shares Rise; Major Indexes on Track for Big Weekly Gains",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.investopedia.com/stock-market-today-dow-jones-today-s-and-p-500-nasdaq-11132026-12252143?.tsrc=rss",
-      "published": "2026-11-13T13:37:34Z",
-      "tone": "bullish"
+      "title": "Stock Market Today: Nasdaq Falls 0.91% and S&P 500 Slips 0.41% at the Close as Marvell Sinks and Bitcoin Drops - JournalArta",
+      "source": "JournalArta",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPcUlKZm9remJncnRDVnBYczZCTktUUlJGUVpBUjRteUt4eVdOc3FUZDBDRzctMzRMelZJM1d0NVRqeDJueFZmWTBzS3psaUR0WE44ZUlDMFNvdTdVcU1zRnRPeG5IT2JiTDBFRFMwc3lWWlBYRThDc3VFZjdoZzNoenc2UnVCNlBQNHpVeENFZFh0Sy1BdlRlVno3Z1BCZEd5X3lyS0s3M1J6XzlJeDR2ei1iWmZjNk53V1NzNXdDaFVxQmg1RVUyeUdFTFZRSHZBQ2UyNVJiMk4xWE5GaFE?oc=5",
+      "published": "2026-11-13T21:25:47Z",
+      "tone": "bearish"
     },
     {
-      "title": "The S&P 500 is shrugging off Nvidia\u2019s selloff this week. Here\u2019s what\u2019s keeping the rest of the market afloat. - MarketWatch",
-      "source": "MarketWatch",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOMXVQX3FvZ2FRU3g0WmkxWUFiWnV2czBMVVV1elRwUlNUbDdmVUhCRXBWMmMtcUVfYmNRcnNvN2NMUXdKbWwyZEFsSS1zOE54RjlWX1hSS3ZVZTYzeURGaGsxdEFvQ1BUa0ZOZW9UX1prOTRvV1U2eGRlU3dEVHpBR2luR2haMmVrcklrSE05ZVk0NkRkMFdvaGJNSjNQMWs5NjlXVnZpbXpISDdUYjFkRGRPTFRXMkhOUldWeDVqUGMxSGdkVHVvRmVyMWdwUlQ5MVJN?oc=5",
-      "published": "2026-11-12T21:08:00Z",
+      "title": "Nasdaq falls on Friday as Nvidia sells off, but index notches best week since August: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/12/stock-market-today-live-updates.html",
+      "published": "2026-11-13T21:22:59Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 60
+        "articles": 63
       }
     ],
-    "headline_count": 108,
+    "headline_count": 113,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

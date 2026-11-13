@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-13T15:01:08Z",
+  "generated_at_utc": "2026-11-13T21:28:33Z",
   "data_asof": "2026-11-13",
   "daily_rows": 3496,
-  "quote_price": 25833.0,
+  "quote_price": 24831.0,
   "quote_timestamp": "2026-11-13",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L?period1=0&period2=1794668468&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/LQQ3.L?period1=0&period2=1794691712&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-13",
-      "close": 25833.0
+      "close": 24831.0
     },
-    "latestSma": 27871.15,
+    "latestSma": 27821.05,
     "highWater": 37632.0,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.3135363520408163,
+    "latestDd": -0.34016262755102045,
     "regime": "tier2",
     "entryClose": 31980.5,
     "entryDate": "2026-05-18",
@@ -48,12 +48,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-13",
-      "close": 25833.0
+      "close": 24831.0
     },
-    "latestSma": 27582.65,
+    "latestSma": 27482.45,
     "highWater": 37632.0,
     "highWaterDate": "2026-06-02",
-    "latestDd": -0.3135363520408163,
+    "latestDd": -0.34016262755102045,
     "regime": "tier2",
     "entryClose": 31980.5,
     "entryDate": "2026-05-18",
@@ -71,7 +71,7 @@
     "last_observed_asof": "2026-11-13",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-13T15:01:08Z",
+    "last_checked_at_utc": "2026-11-13T21:28:33Z",
     "last_email_sent_on": "2026-10-15",
     "last_transition": {
       "id": "2026-10-13:1->2026-10-15:0",
