@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-11-13T21:28:34Z",
+  "generated_at_utc": "2026-11-14T01:07:12Z",
   "window_days": 7,
   "score": 4,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: The Chances of a Federal Reserve December Rate Hike Are Climbing. Here\u2019s What History Says About Stocks After the Fed Starts Raising Again.; Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters; Wall Street Slides As Chip Stocks Extend Selloff. Nasdaq Takes Biggest Hit Despite Cooler Inflation. - inkl.",
   "articles": [
-    {
-      "title": "The Chances of a Federal Reserve December Rate Hike Are Climbing. Here\u2019s What History Says About Stocks After the Fed Starts Raising Again.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/investing/2026/11/13/the-chances-of-a-december-rate-hike-are-climbing-heres-what-history-says/?.tsrc=rss",
-      "published": "2026-11-13T20:20:02Z",
-      "tone": "bearish"
-    },
     {
       "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "source": "Reuters",
@@ -20,24 +13,31 @@
       "tone": "bearish"
     },
     {
-      "title": "S&P 500 Opens Lower as Tech Selloff Splits the Market - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOSXNJZFNVZzNJNEhHTVQ3RlVVV3BXZjc0STB1eEIzYlUyZUxZU1ZwckR2TTR2NjNpanNRZ1BkWWxQajhMaHVQUUpsdWg3b0JVOUs0eGh4NnFOaDRsTXlfQVlSbXpvRzVTQUZpa0ZaelhlN1JmSDFZSTc3Ql93OVhSYThIT0daRmxudmFTTHBPcHgxVUVtZ2J3RGpTbmJXaDJSYnFyR2ZJTHF2Y1pWNXNwZ0NEVnNVMnlJTkZqYU5RTFBlTERRWVZoSE9HNA?oc=5",
-      "published": "2026-11-13T19:25:05Z",
+      "title": "Wall Street Slides As Chip Stocks Extend Selloff. Nasdaq Takes Biggest Hit Despite Cooler Inflation. - inkl",
+      "source": "inkl",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNNnFSM3ZVaVM4S0lOcFlVY1pqZDFleC15UV95TDhzYTV2RjVzTEFIYU50ZXQ3VU56ajNDczVUYU5wUTFBNnRmV3pYa29pakl0bTdZbjRLcGkxVVRCMmY5aF9Qa0t1NmJqVGxVWV9yRjhDdFkxNkEwaC1Bc1dkaVRQUmtLdTlRLW1SOGxVYngtcFhCOVlIS19MUXdROU8xOW95WHh5c2hBbEVDd2dSZVdvWEFmSlNYVXlOTkN1Sllmcm4wdw?oc=5",
+      "published": "2026-11-13T21:18:35Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Nasdaq Falls 0.91% and S&P 500 Slips 0.41% at the Close as Marvell Sinks and Bitcoin Drops - JournalArta",
-      "source": "JournalArta",
-      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPcUlKZm9remJncnRDVnBYczZCTktUUlJGUVpBUjRteUt4eVdOc3FUZDBDRzctMzRMelZJM1d0NVRqeDJueFZmWTBzS3psaUR0WE44ZUlDMFNvdTdVcU1zRnRPeG5IT2JiTDBFRFMwc3lWWlBYRThDc3VFZjdoZzNoenc2UnVCNlBQNHpVeENFZFh0Sy1BdlRlVno3Z1BCZEd5X3lyS0s3M1J6XzlJeDR2ei1iWmZjNk53V1NzNXdDaFVxQmg1RVUyeUdFTFZRSHZBQ2UyNVJiMk4xWE5GaFE?oc=5",
-      "published": "2026-11-13T21:25:47Z",
+      "title": "He Thinks His $500,000 S&P 500 401(k) Protects Him From Big Losses. Just 10 Holdings Make Up Nearly 40% of the Fund. A 25% Drop Could Cost Him Almost $49,000 - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNdUNvZW9famlMdFBtZDBIX1ljbXE5WUg1RkF4b045dmw0Zk9BNjFSbWlCUXRCaXV2cDUyZ014S2ZaX3ZRWUl4a1Z6VVBfaXRGWG0yaUZnbGRzbGRqY2xlRnZsc1FsRU00NGNsbWJrVmxBZlRTOHIydno4Ym9MNFg3T1hkOFdmUExuRm1wUVFB?oc=5",
+      "published": "2026-11-11T21:27:39Z",
       "tone": "bearish"
     },
     {
       "title": "Nasdaq falls on Friday as Nvidia sells off, but index notches best week since August: Live updates",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/11/12/stock-market-today-live-updates.html",
-      "published": "2026-11-13T21:22:59Z",
+      "published": "2026-11-13T21:34:28Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "US Stock Futures Mixed Ahead of Inflation Data as Oil Falls and Nvidia Faces Scrutiny Over CEO Investigation: Dow Jones, S&P, Nasdaq, Wall Street - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQSWVDV1U1NGJSVHVBVktkNmxiSFQwZjVTN19PVnI0REF2R3REMjFzd2lmMjlKVlBOdjVvakh3SXBkZWxoS2VUb1VnaTcyWUFYOXFWUTBLVDNmVTU4cElvOEZnZnNRNGo1cjlhVUd4MGpFOFpLZ2VHb0dST1ZUSGxES3RCd2QwamsyOHV3U1FEU1N3Y3pjWi1rQQ?oc=5",
+      "published": "2026-11-10T10:08:56Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 63
+        "articles": 62
       }
     ],
-    "headline_count": 113,
+    "headline_count": 111,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
