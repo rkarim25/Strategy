@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-14T01:07:12Z",
+  "generated_at_utc": "2026-11-14T01:57:33Z",
   "window_days": 7,
-  "score": 4,
+  "score": 5,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters; Wall Street Slides As Chip Stocks Extend Selloff. Nasdaq Takes Biggest Hit Despite Cooler Inflation. - inkl.",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures: Market Rally Shaky As Nvidia Earnings, Anthropic IPO Loom; SpaceX Starship Flight 15 Booster Diverts.. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters; Wall Street Slides As Chip Stocks Extend Selloff. Nasdaq Takes Biggest Hit Despite Cooler Inflation. - inkl.",
   "articles": [
     {
       "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
@@ -20,13 +20,6 @@
       "tone": "bearish"
     },
     {
-      "title": "He Thinks His $500,000 S&P 500 401(k) Protects Him From Big Losses. Just 10 Holdings Make Up Nearly 40% of the Fund. A 25% Drop Could Cost Him Almost $49,000 - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNdUNvZW9famlMdFBtZDBIX1ljbXE5WUg1RkF4b045dmw0Zk9BNjFSbWlCUXRCaXV2cDUyZ014S2ZaX3ZRWUl4a1Z6VVBfaXRGWG0yaUZnbGRzbGRqY2xlRnZsc1FsRU00NGNsbWJrVmxBZlRTOHIydno4Ym9MNFg3T1hkOFdmUExuRm1wUVFB?oc=5",
-      "published": "2026-11-11T21:27:39Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Nasdaq falls on Friday as Nvidia sells off, but index notches best week since August: Live updates",
       "source": "CNBC Markets",
       "url": "https://www.cnbc.com/2026/11/12/stock-market-today-live-updates.html",
@@ -34,11 +27,18 @@
       "tone": "bearish"
     },
     {
-      "title": "US Stock Futures Mixed Ahead of Inflation Data as Oil Falls and Nvidia Faces Scrutiny Over CEO Investigation: Dow Jones, S&P, Nasdaq, Wall Street - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQSWVDV1U1NGJSVHVBVktkNmxiSFQwZjVTN19PVnI0REF2R3REMjFzd2lmMjlKVlBOdjVvakh3SXBkZWxoS2VUb1VnaTcyWUFYOXFWUTBLVDNmVTU4cElvOEZnZnNRNGo1cjlhVUd4MGpFOFpLZ2VHb0dST1ZUSGxES3RCd2QwamsyOHV3U1FEU1N3Y3pjWi1rQQ?oc=5",
-      "published": "2026-11-10T10:08:56Z",
+      "title": "Wall Street Ends Mixed As Nvidia-Led Tech Selloff Weighs On S&P 500, Nasdaq - BusinessToday Malaysia",
+      "source": "BusinessToday Malaysia",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNS1d4VkJuZ1VfS2tJTFB2SlRYY1Y5Mnd2al8yeUZoUG1mRDFxaDVYeTIzVnU1VXZJRXp1TjV2U3I2aVcxWm5Sd3V3OFVGdmY3eW4tUEVKVzFoSmMwMllneUlGZXdRemREb2RWTDkxM1ByQ1Q2UVJwV3pBR2lKM2U4Q1YzZ1AzTkdKNkE4MW1jRzN2ODdRSUw2TFpNYTM1R0c4bGhydksxczNzUTR3Mnh3VTY2VWtZdTkzSVE?oc=5",
+      "published": "2026-11-14T01:05:05Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Dow Jones Futures: Market Rally Shaky As Nvidia Earnings, Anthropic IPO Loom; SpaceX Starship Flight 15 Booster Diverts.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/53e50dc8-f137-3f6c-bfd6-912334fef9f1/dow-jones-futures%3A-market.html?.tsrc=rss",
+      "published": "2026-11-14T00:41:41Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 62
+        "articles": 70
       }
     ],
-    "headline_count": 111,
+    "headline_count": 119,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
