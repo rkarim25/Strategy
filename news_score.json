@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-11-17T04:17:53Z",
+  "generated_at_utc": "2026-11-17T16:37:22Z",
   "window_days": 7,
-  "score": 7,
-  "label": "Bullish",
-  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: If the AI bubble is popping, history shows these stocks could boom; Stocks Carry Weekly Gains Into a Wall of Chart Resistance as Volatility Cools. Bearish offsets: S&P 500, Dow, Nasdaq End Lower As Investors Hold Back Ahead Of Nvidia Earnings, Anthropic IPO This Week \u2014 NVDA, TSLA, ANT In Focus.",
+  "score": 5,
+  "label": "Neutral",
+  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today (Nov. 11, 2026): Nasdaq, S&P 500 gain after CoreWeave earnings beat; Apple hits new record - Yahoo Finance. Bearish offsets: Nasdaq 100 falls 1% as S&P 500 drops 0.8% amid growing Wall Street selloff - Business Upturn; Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Yahoo Finance.",
   "articles": [
     {
-      "title": "If the AI bubble is popping, history shows these stocks could boom",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/16/if-the-ai-bubble-is-popping-history-shows-these-stocks-could-boom.html",
-      "published": "2026-11-16T19:53:33Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stocks Carry Weekly Gains Into a Wall of Chart Resistance as Volatility Cools",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-carry-weekly-gains-wall-002300085.html?.tsrc=rss",
-      "published": "2026-11-17T00:23:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "This food giant has gone nowhere for a year. Jay Woods sees a breakout ahead",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/16/kraft-stock-jay-woods.html",
-      "published": "2026-11-16T17:03:52Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "S&P 500, Dow, Nasdaq End Lower As Investors Hold Back Ahead Of Nvidia Earnings, Anthropic IPO This Week \u2014 NVDA, TSLA, ANT In Focus",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-dow-nasdaq-end-lower-as-investors-hold-back-ahead-of-nvidia-earnings-anthropic-ipo/cNbaf4PR9gk?.tsrc=rss",
-      "published": "2026-11-17T00:09:28Z",
+      "title": "Nasdaq 100 falls 1% as S&P 500 drops 0.8% amid growing Wall Street selloff - Business Upturn",
+      "source": "Business Upturn",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOQVlUdldxZDRkWjUycS1zUTlhcnlENHBUQjM4bTNtXzFrMV84SEhiRWlZX2RRSU1USExSME1SQ3BZa2xnR1Jwd3FySno2cWM3dVZIQThWTVdSd1lLYUtwdXJ2VXZNR0kwSkRqakZvN2twSFBsX1NxOFhqcWZydm5LUTlRQ0M5Mjlvd3FBY0dxWklTZ0p5SmdzcUFFM0tYVjI5X0VvSXp1cHk5dE0zSk1oekpxOWdJbkhQZTJuUkdNVEgzOVU?oc=5",
+      "published": "2026-11-17T15:54:00Z",
       "tone": "bearish"
     },
     {
-      "title": "CNBC's The China Connection newsletter: As Nike and Lululemon struggle in China, Xiaohongshu is helping local brands take off",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/16/as-nike-lululemon-struggle-in-china-xiaohongshu-helps-local-brands.html",
-      "published": "2026-11-16T23:00:01Z",
+      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNcDdSR2JEV3JnaGdSRDlzeEdYQVpFODhCUE4xZWhwX0p4V2NjWXhlOWNhVGY2NW1jMTRHRjFjdjVEc0ZKeVBXTWR3aFlzbUE2VHJ4NXpvQS1GRWtxZ1lUZjhIXzF2ZzlWd1BoOEo0MUpXRzZudFExR2tnMlhRUzBOOGE5M2MzZ0xLSTFSZjF6SFBkUQ?oc=5",
+      "published": "2026-11-10T21:26:31Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall Street Slides As Chip Stocks Extend Selloff. Nasdaq Takes Biggest Hit Despite Cooler Inflation. - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOODRNQUpXZ0ktSE1ZQ05YT3dzTFBRcnZKLVdtN3Y4dXVnTGJ4LW9HWXN5QTlXcGc4WHoxdzV2UUhkdUtRYWUyajdmYXlwZy1zOEpFd05mTjJ0Unp0SWZPT0k3SEZsdnoxb0s0SjdzNnR2WFhqLTBaZjd6M0JSWExTdXlOdUU0a1l6ZTRyNXBETDZPX1FLeXhnei1Ecw?oc=5",
+      "published": "2026-11-13T21:18:35Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock Market Today (Nov. 11, 2026): Nasdaq, S&P 500 gain after CoreWeave earnings beat; Apple hits new record - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQNjNmZXN6VWRsR2RsR2V3a2tmMXdBMzNLQi1nSUtHY051RFhuMGlZaUtlN2wzbkE0aEZia3RlRTA0TEExS1VlMGltV3VweDZMSDNHUm40eGhMMVJvYzl5ai1HekRFaVVwbU1wSzloNTV0d2RIQmN1UHVocDBmc2h0amp1RlV1eHE3QWh2NF85elpKWk81?oc=5",
+      "published": "2026-11-11T14:52:36Z",
       "tone": "bullish"
+    },
+    {
+      "title": "What Triggered Venture Global Stock's 5% Drop?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.trefis.com/stock/vg/articles/625834/what-triggered-venture-global-stocks-5-drop/2026-11-17?.tsrc=rss",
+      "published": "2026-11-17T16:09:53Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -66,12 +66,13 @@
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
-        "ok": false,
-        "error": "HTTP Error 429: Too Many Requests",
-        "name": "Google News market query"
+        "ok": true,
+        "status": 200,
+        "name": "Google News market query",
+        "articles": 57
       }
     ],
-    "headline_count": 50,
+    "headline_count": 106,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
