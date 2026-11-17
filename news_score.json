@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-17T03:17:49Z",
+  "generated_at_utc": "2026-11-17T04:17:53Z",
   "window_days": 7,
-  "score": 5,
-  "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: If the AI bubble is popping, history shows these stocks could boom; Stocks Carry Weekly Gains Into a Wall of Chart Resistance as Volatility Cools. Bearish offsets: Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters; Nasdaq, S&P 500 Fall For Third Day as Nvidia Sell-Off Continues - marketscreener.com.",
+  "score": 7,
+  "label": "Bullish",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: If the AI bubble is popping, history shows these stocks could boom; Stocks Carry Weekly Gains Into a Wall of Chart Resistance as Volatility Cools. Bearish offsets: S&P 500, Dow, Nasdaq End Lower As Investors Hold Back Ahead Of Nvidia Earnings, Anthropic IPO This Week \u2014 NVDA, TSLA, ANT In Focus.",
   "articles": [
     {
       "title": "If the AI bubble is popping, history shows these stocks could boom",
@@ -13,20 +13,6 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
-      "published": "2026-11-10T10:26:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Nasdaq, S&P 500 Fall For Third Day as Nvidia Sell-Off Continues - marketscreener.com",
-      "source": "marketscreener.com",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOMm9TY3ZhODQzejNJdHByRnk3cHZ3UmJRUWJxcVN0WUxkRVdiTEpDUkU2R05XRFUtX1RJSFlISFFHS2dsM2VLcXFNVnZBeFY2LUpXbmhRTXZoaEFVbEtNSUduOHFCei16VllCRFRjd0RNVTJ2dTExVlI2SVBfdVRiVmRhZ0ZjTE8wZFRobm9uRVk1OW14dHRBZEQxZzkyazhtSlJ6TlhrOFJSYmNtU09qX2tpLWRrUQ?oc=5",
-      "published": "2026-11-16T21:53:15Z",
-      "tone": "bearish"
-    },
-    {
       "title": "Stocks Carry Weekly Gains Into a Wall of Chart Resistance as Volatility Cools",
       "source": "Yahoo Finance S&P 500",
       "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-carry-weekly-gains-wall-002300085.html?.tsrc=rss",
@@ -34,11 +20,25 @@
       "tone": "bullish"
     },
     {
-      "title": "5 Consumer Staples Stocks Reaching New Highs as Markets Retreat",
+      "title": "This food giant has gone nowhere for a year. Jay Woods sees a breakout ahead",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/16/kraft-stock-jay-woods.html",
+      "published": "2026-11-16T17:03:52Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "S&P 500, Dow, Nasdaq End Lower As Investors Hold Back Ahead Of Nvidia Earnings, Anthropic IPO This Week \u2014 NVDA, TSLA, ANT In Focus",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/5-consumer-staples-stocks-reaching-231000495.html?.tsrc=rss",
-      "published": "2026-11-16T23:10:00Z",
+      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-dow-nasdaq-end-lower-as-investors-hold-back-ahead-of-nvidia-earnings-anthropic-ipo/cNbaf4PR9gk?.tsrc=rss",
+      "published": "2026-11-17T00:09:28Z",
       "tone": "bearish"
+    },
+    {
+      "title": "CNBC's The China Connection newsletter: As Nike and Lululemon struggle in China, Xiaohongshu is helping local brands take off",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/16/as-nike-lululemon-struggle-in-china-xiaohongshu-helps-local-brands.html",
+      "published": "2026-11-16T23:00:01Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -66,13 +66,12 @@
       },
       {
         "url": "https://news.google.com/rss/search?q=%28S%26P%20500%20OR%20stock%20market%20OR%20Wall%20Street%29%20when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
-        "ok": true,
-        "status": 200,
-        "name": "Google News market query",
-        "articles": 51
+        "ok": false,
+        "error": "HTTP Error 429: Too Many Requests",
+        "name": "Google News market query"
       }
     ],
-    "headline_count": 101,
+    "headline_count": 50,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
