@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-11-18T03:17:28Z",
+  "generated_at_utc": "2026-11-18T16:05:54Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures: Techs Rise After Nvidia Beats, Says This On Jensen Huang; Target, Anthropic IPO Ahead; Stock futures rise as Nvidia gains on earnings beat and solid outlook: Live updates. Bearish offsets: Review & Preview: Bad Time for a Selloff.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Altria Stock Rises 34.2% Year to Date: Is There More Upside Ahead?. Bearish offsets: Dow Drops Nearly 860 Points as Stock Market Selloff Deepens Ahead of Nvidia Earnings - Yahoo Finance; Stock Market Today: Dow Drops On Hawkish Fed Stance; SEC Probe Hits Nvidia (Live Coverage).",
   "articles": [
     {
-      "title": "Dow Jones Futures: Techs Rise After Nvidia Beats, Says This On Jensen Huang; Target, Anthropic IPO Ahead",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/3b22ed8c-00c3-32f8-89f5-91bc21ccb366/dow-jones-futures%3A-techs-rise.html?.tsrc=rss",
-      "published": "2026-11-18T03:07:03Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock futures rise as Nvidia gains on earnings beat and solid outlook: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/17/stock-market-today-live-updates.html",
-      "published": "2026-11-18T01:50:12Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Nasdaq, S&P 500 Undercut Rally Lows; Nvidia Stock Climbs On Earnings Beat Late - Investor's Business Daily",
-      "source": "Investor's Business Daily",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQVWpRX2pMU0xzWGZtSDVYdW12ZU5rd01YUFVIZmN3cmRjYzJ6dDlnVUlDSjJ5RHJJTklGc1Atd2FpQkNqQTBqUUFvOU1HQjFGV0xaZUFZc051Q1VEZTF6SjV4U1FVdE8ybmRLRFNvZEZGNEx6LVpkU0ZKaFdaMWpna2tWc3E1QnprMmRsQ1VfX1hzN3YwRFpIaXhtWTlOTzg?oc=5",
-      "published": "2026-11-17T23:09:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Review & Preview: Bad Time for a Selloff",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/09235625-48aa-3cd5-9f49-db1550a67866/review-%26-preview%3A-bad-time.html?.tsrc=rss",
-      "published": "2026-11-18T00:55:00Z",
+      "title": "Dow Drops Nearly 860 Points as Stock Market Selloff Deepens Ahead of Nvidia Earnings - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOSWxuNVljeVdmZFRJbXl1eS1meXhwNWNUbHRldmIxRW4wVGN0UE5fb0YzdWNnbUFodzc3TXB0LUlxeXEwdHFaQ0VlX3VBd2hoMkZsVU9mSTktb3RDbEpFMWJsUjJWaXE0ai1fcFY5T1N4RWIxVHVIVk94X0I4QXQwTGpsQ2xOSFVHaElqTzFQNWhSNzktVzZN?oc=5",
+      "published": "2026-11-17T21:26:41Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today (Nov. 11, 2026): Nasdaq, S&P 500 gain after CoreWeave earnings beat; Apple hits new record - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQNjNmZXN6VWRsR2RsR2V3a2tmMXdBMzNLQi1nSUtHY051RFhuMGlZaUtlN2wzbkE0aEZia3RlRTA0TEExS1VlMGltV3VweDZMSDNHUm40eGhMMVJvYzl5ai1HekRFaVVwbU1wSzloNTV0d2RIQmN1UHVocDBmc2h0amp1RlV1eHE3QWh2NF85elpKWk81?oc=5",
-      "published": "2026-11-11T14:52:36Z",
+      "title": "Stock Market Today: Dow Drops On Hawkish Fed Stance; SEC Probe Hits Nvidia (Live Coverage)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/3b6d51d3-7bfb-3b08-a92e-3b70e9f0655b/stock-market-today%3A-dow-drops.html?.tsrc=rss",
+      "published": "2026-11-18T15:19:42Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Fed\u2019s Waller says central bank may need to \u2018shock people\u2019 with half-point rate hike",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/18/federal-reserve-governor-christopher-waller.html",
+      "published": "2026-11-18T15:13:39Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Altria Stock Rises 34.2% Year to Date: Is There More Upside Ahead?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/altria-stock-rises-34-2-144800982.html?.tsrc=rss",
+      "published": "2026-11-18T14:48:00Z",
       "tone": "bullish"
+    },
+    {
+      "title": "Stocks tumble on Wall Street as Nvidia leads another sell-off in technology companies - AP News",
+      "source": "AP News",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOYXdFLTA2eFh1c1k5N2ZnWnBXdkpYX3ZzMkNaUC03SjBXeDlVcHplSm1fUnRnVzJsaGhFb0I2eHp2Si1uaTNRaEotekFyYlZYRVlxdzNydUhEaXZaa0c5dW1ybEp5T2wyWUN2eVhGaTdpdVV5bkRuRDJxQVd0X2wySmFhQXNiaWROVmRJRXdIRDVtSC1CN3c?oc=5",
+      "published": "2026-11-16T22:14:00Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 47
+        "articles": 53
       }
     ],
-    "headline_count": 95,
+    "headline_count": 102,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
