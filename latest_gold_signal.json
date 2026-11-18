@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-18T02:39:39Z",
+  "generated_at_utc": "2026-11-18T03:17:25Z",
   "data_asof": "2026-11-18",
   "daily_rows": 6581,
-  "quote_price": 3805.39990234375,
+  "quote_price": 3801.300048828125,
   "quote_timestamp": "2026-11-18",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1795055979&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1795058245&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-18",
-      "close": 3805.39990234375
+      "close": 3801.300048828125
     },
-    "latestSma": 3988.6999755859374,
+    "latestSma": 3988.494982910156,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.28448406057867903,
+    "latestDd": -0.28525494159381637,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-18",
-      "close": 3805.39990234375
+      "close": 3801.300048828125
     },
-    "latestSma": 3975.9499755859374,
+    "latestSma": 3975.539990234375,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.28448406057867903,
+    "latestDd": -0.28525494159381637,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-11-18",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-18T02:39:39Z",
+    "last_checked_at_utc": "2026-11-18T03:17:25Z",
     "last_email_sent_on": "2026-11-11",
     "last_transition": {
       "id": "2026-11-11:1->2026-11-11:0",

@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-11-18T02:39:42Z",
+  "generated_at_utc": "2026-11-18T03:17:28Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock futures rise as Nvidia gains on earnings beat and solid outlook: Live updates; Nasdaq, S&P 500 Undercut Rally Lows; Nvidia Stock Climbs On Earnings Beat Late - Investor's Business Daily. Bearish offsets: Review & Preview: Bad Time for a Selloff.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures: Techs Rise After Nvidia Beats, Says This On Jensen Huang; Target, Anthropic IPO Ahead; Stock futures rise as Nvidia gains on earnings beat and solid outlook: Live updates. Bearish offsets: Review & Preview: Bad Time for a Selloff.",
   "articles": [
+    {
+      "title": "Dow Jones Futures: Techs Rise After Nvidia Beats, Says This On Jensen Huang; Target, Anthropic IPO Ahead",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/3b22ed8c-00c3-32f8-89f5-91bc21ccb366/dow-jones-futures%3A-techs-rise.html?.tsrc=rss",
+      "published": "2026-11-18T03:07:03Z",
+      "tone": "bullish"
+    },
     {
       "title": "Stock futures rise as Nvidia gains on earnings beat and solid outlook: Live updates",
       "source": "CNBC Markets",
@@ -25,13 +32,6 @@
       "url": "https://finance.yahoo.com/m/09235625-48aa-3cd5-9f49-db1550a67866/review-%26-preview%3A-bad-time.html?.tsrc=rss",
       "published": "2026-11-18T00:55:00Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Dow Jones Futures Waver After Nvidia Beats, Says This On Jensen Huang; Target, Anthropic IPO Ahead",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/3b22ed8c-00c3-32f8-89f5-91bc21ccb366/dow-jones-futures-waver-after.html?.tsrc=rss",
-      "published": "2026-11-18T02:26:01Z",
-      "tone": "bullish"
     },
     {
       "title": "Stock Market Today (Nov. 11, 2026): Nasdaq, S&P 500 gain after CoreWeave earnings beat; Apple hits new record - Yahoo Finance",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 46
+        "articles": 47
       }
     ],
-    "headline_count": 94,
+    "headline_count": 95,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
