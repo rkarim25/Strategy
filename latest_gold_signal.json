@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-18T16:05:50Z",
+  "generated_at_utc": "2026-11-18T22:59:29Z",
   "data_asof": "2026-11-18",
   "daily_rows": 6581,
-  "quote_price": 3756.800048828125,
+  "quote_price": 3727.800048828125,
   "quote_timestamp": "2026-11-18",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1795104349&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1795129169&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-18",
-      "close": 3756.39990234375
+      "close": 3727.800048828125
     },
-    "latestSma": 3986.2499755859376,
+    "latestSma": 3984.8199829101563,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.29369735798010355,
+    "latestDd": -0.29907488769595314,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-18",
-      "close": 3756.800048828125
+      "close": 3727.800048828125
     },
-    "latestSma": 3971.0699829101563,
+    "latestSma": 3968.189990234375,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2936221198461304,
+    "latestDd": -0.29907488769595314,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-11-18",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-18T16:05:50Z",
+    "last_checked_at_utc": "2026-11-18T22:59:29Z",
     "last_email_sent_on": "2026-11-11",
     "last_transition": {
       "id": "2026-11-11:1->2026-11-11:0",

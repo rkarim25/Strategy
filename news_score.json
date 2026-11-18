@@ -1,22 +1,22 @@
 {
-  "generated_at_utc": "2026-11-18T16:05:54Z",
+  "generated_at_utc": "2026-11-18T22:59:31Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Altria Stock Rises 34.2% Year to Date: Is There More Upside Ahead?. Bearish offsets: Dow Drops Nearly 860 Points as Stock Market Selloff Deepens Ahead of Nvidia Earnings - Yahoo Finance; Stock Market Today: Dow Drops On Hawkish Fed Stance; SEC Probe Hits Nvidia (Live Coverage).",
+  "score": 3,
+  "label": "Bearish",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: Dow Ends In Red On Rate Shock Fears; Nvidia Sinks As Anthropic IPO Looms; Dow drops more than 500 points; S&P 500 falls for fifth day as Nvidia sells off.",
   "articles": [
     {
-      "title": "Dow Drops Nearly 860 Points as Stock Market Selloff Deepens Ahead of Nvidia Earnings - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOSWxuNVljeVdmZFRJbXl1eS1meXhwNWNUbHRldmIxRW4wVGN0UE5fb0YzdWNnbUFodzc3TXB0LUlxeXEwdHFaQ0VlX3VBd2hoMkZsVU9mSTktb3RDbEpFMWJsUjJWaXE0ai1fcFY5T1N4RWIxVHVIVk94X0I4QXQwTGpsQ2xOSFVHaElqTzFQNWhSNzktVzZN?oc=5",
-      "published": "2026-11-17T21:26:41Z",
+      "title": "Stock Market Today: Dow Ends In Red On Rate Shock Fears; Nvidia Sinks As Anthropic IPO Looms",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/3b6d51d3-7bfb-3b08-a92e-3b70e9f0655b/stock-market-today%3A-dow-ends.html?.tsrc=rss",
+      "published": "2026-11-18T21:48:30Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Dow Drops On Hawkish Fed Stance; SEC Probe Hits Nvidia (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/3b6d51d3-7bfb-3b08-a92e-3b70e9f0655b/stock-market-today%3A-dow-drops.html?.tsrc=rss",
-      "published": "2026-11-18T15:19:42Z",
+      "title": "Dow drops more than 500 points; S&P 500 falls for fifth day as Nvidia sells off",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/17/stock-market-today-live-updates.html",
+      "published": "2026-11-18T22:13:36Z",
       "tone": "bearish"
     },
     {
@@ -27,17 +27,17 @@
       "tone": "bearish"
     },
     {
-      "title": "Altria Stock Rises 34.2% Year to Date: Is There More Upside Ahead?",
+      "title": "Why PhillipCapital Stopped Short of a Buy on Airbnb (ABNB)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/altria-stock-rises-34-2-144800982.html?.tsrc=rss",
-      "published": "2026-11-18T14:48:00Z",
-      "tone": "bullish"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-phillipcapital-stopped-short-buy-214715166.html?.tsrc=rss",
+      "published": "2026-11-18T21:50:15Z",
+      "tone": "bearish"
     },
     {
-      "title": "Stocks tumble on Wall Street as Nvidia leads another sell-off in technology companies - AP News",
-      "source": "AP News",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOYXdFLTA2eFh1c1k5N2ZnWnBXdkpYX3ZzMkNaUC03SjBXeDlVcHplSm1fUnRnVzJsaGhFb0I2eHp2Si1uaTNRaEotekFyYlZYRVlxdzNydUhEaXZaa0c5dW1ybEp5T2wyWUN2eVhGaTdpdVV5bkRuRDJxQVd0X2wySmFhQXNiaWROVmRJRXdIRDVtSC1CN3c?oc=5",
-      "published": "2026-11-16T22:14:00Z",
+      "title": "What StoneX Took From Its Boston Roadshow With Stagwell (STGW)",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stonex-took-boston-roadshow-stagwell-214959678.html?.tsrc=rss",
+      "published": "2026-11-18T21:49:59Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 53
+        "articles": 44
       }
     ],
-    "headline_count": 102,
+    "headline_count": 94,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
