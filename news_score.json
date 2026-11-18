@@ -1,30 +1,37 @@
 {
-  "generated_at_utc": "2026-11-17T16:37:22Z",
+  "generated_at_utc": "2026-11-18T02:39:42Z",
   "window_days": 7,
-  "score": 5,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today (Nov. 11, 2026): Nasdaq, S&P 500 gain after CoreWeave earnings beat; Apple hits new record - Yahoo Finance. Bearish offsets: Nasdaq 100 falls 1% as S&P 500 drops 0.8% amid growing Wall Street selloff - Business Upturn; Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Yahoo Finance.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock futures rise as Nvidia gains on earnings beat and solid outlook: Live updates; Nasdaq, S&P 500 Undercut Rally Lows; Nvidia Stock Climbs On Earnings Beat Late - Investor's Business Daily. Bearish offsets: Review & Preview: Bad Time for a Selloff.",
   "articles": [
     {
-      "title": "Nasdaq 100 falls 1% as S&P 500 drops 0.8% amid growing Wall Street selloff - Business Upturn",
-      "source": "Business Upturn",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOQVlUdldxZDRkWjUycS1zUTlhcnlENHBUQjM4bTNtXzFrMV84SEhiRWlZX2RRSU1USExSME1SQ3BZa2xnR1Jwd3FySno2cWM3dVZIQThWTVdSd1lLYUtwdXJ2VXZNR0kwSkRqakZvN2twSFBsX1NxOFhqcWZydm5LUTlRQ0M5Mjlvd3FBY0dxWklTZ0p5SmdzcUFFM0tYVjI5X0VvSXp1cHk5dE0zSk1oekpxOWdJbkhQZTJuUkdNVEgzOVU?oc=5",
-      "published": "2026-11-17T15:54:00Z",
+      "title": "Stock futures rise as Nvidia gains on earnings beat and solid outlook: Live updates",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/17/stock-market-today-live-updates.html",
+      "published": "2026-11-18T01:50:12Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Nasdaq, S&P 500 Undercut Rally Lows; Nvidia Stock Climbs On Earnings Beat Late - Investor's Business Daily",
+      "source": "Investor's Business Daily",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQVWpRX2pMU0xzWGZtSDVYdW12ZU5rd01YUFVIZmN3cmRjYzJ6dDlnVUlDSjJ5RHJJTklGc1Atd2FpQkNqQTBqUUFvOU1HQjFGV0xaZUFZc051Q1VEZTF6SjV4U1FVdE8ybmRLRFNvZEZGNEx6LVpkU0ZKaFdaMWpna2tWc3E1QnprMmRsQ1VfX1hzN3YwRFpIaXhtWTlOTzg?oc=5",
+      "published": "2026-11-17T23:09:00Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Review & Preview: Bad Time for a Selloff",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/09235625-48aa-3cd5-9f49-db1550a67866/review-%26-preview%3A-bad-time.html?.tsrc=rss",
+      "published": "2026-11-18T00:55:00Z",
       "tone": "bearish"
     },
     {
-      "title": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNcDdSR2JEV3JnaGdSRDlzeEdYQVpFODhCUE4xZWhwX0p4V2NjWXhlOWNhVGY2NW1jMTRHRjFjdjVEc0ZKeVBXTWR3aFlzbUE2VHJ4NXpvQS1GRWtxZ1lUZjhIXzF2ZzlWd1BoOEo0MUpXRzZudFExR2tnMlhRUzBOOGE5M2MzZ0xLSTFSZjF6SFBkUQ?oc=5",
-      "published": "2026-11-10T21:26:31Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street Slides As Chip Stocks Extend Selloff. Nasdaq Takes Biggest Hit Despite Cooler Inflation. - Yahoo Finance",
-      "source": "Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOODRNQUpXZ0ktSE1ZQ05YT3dzTFBRcnZKLVdtN3Y4dXVnTGJ4LW9HWXN5QTlXcGc4WHoxdzV2UUhkdUtRYWUyajdmYXlwZy1zOEpFd05mTjJ0Unp0SWZPT0k3SEZsdnoxb0s0SjdzNnR2WFhqLTBaZjd6M0JSWExTdXlOdUU0a1l6ZTRyNXBETDZPX1FLeXhnei1Ecw?oc=5",
-      "published": "2026-11-13T21:18:35Z",
-      "tone": "bearish"
+      "title": "Dow Jones Futures Waver After Nvidia Beats, Says This On Jensen Huang; Target, Anthropic IPO Ahead",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/3b22ed8c-00c3-32f8-89f5-91bc21ccb366/dow-jones-futures-waver-after.html?.tsrc=rss",
+      "published": "2026-11-18T02:26:01Z",
+      "tone": "bullish"
     },
     {
       "title": "Stock Market Today (Nov. 11, 2026): Nasdaq, S&P 500 gain after CoreWeave earnings beat; Apple hits new record - Yahoo Finance",
@@ -32,13 +39,6 @@
       "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQNjNmZXN6VWRsR2RsR2V3a2tmMXdBMzNLQi1nSUtHY051RFhuMGlZaUtlN2wzbkE0aEZia3RlRTA0TEExS1VlMGltV3VweDZMSDNHUm40eGhMMVJvYzl5ai1HekRFaVVwbU1wSzloNTV0d2RIQmN1UHVocDBmc2h0amp1RlV1eHE3QWh2NF85elpKWk81?oc=5",
       "published": "2026-11-11T14:52:36Z",
       "tone": "bullish"
-    },
-    {
-      "title": "What Triggered Venture Global Stock's 5% Drop?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.trefis.com/stock/vg/articles/625834/what-triggered-venture-global-stocks-5-drop/2026-11-17?.tsrc=rss",
-      "published": "2026-11-17T16:09:53Z",
-      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 57
+        "articles": 46
       }
     ],
-    "headline_count": 106,
+    "headline_count": 94,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

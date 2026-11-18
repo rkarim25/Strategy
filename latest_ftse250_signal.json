@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-17T16:37:17Z",
+  "generated_at_utc": "2026-11-18T02:39:39Z",
   "data_asof": "2026-11-17",
   "daily_rows": 10330,
-  "quote_price": 24354.150390625,
+  "quote_price": 24392.80078125,
   "quote_timestamp": "2026-11-17",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EFTMC?period1=0&period2=1795019837&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EFTMC?period1=0&period2=1795055979&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-17",
-      "close": 24354.150390625
+      "close": 24392.80078125
     },
-    "latestSma": 24631.0376953125,
+    "latestSma": 24632.97021484375,
     "highWater": 24938.80078125,
     "highWaterDate": "2026-08-28",
-    "latestDd": -0.023443404346233154,
+    "latestDd": -0.021893594835983632,
     "regime": "tier2",
     "entryClose": 20492.0,
     "entryDate": "2024-05-08",
@@ -48,12 +48,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-17",
-      "close": 24354.150390625
+      "close": 24392.80078125
     },
-    "latestSma": 24626.75517578125,
+    "latestSma": 24630.62021484375,
     "highWater": 24938.80078125,
     "highWaterDate": "2026-08-28",
-    "latestDd": -0.023443404346233154,
+    "latestDd": -0.021893594835983632,
     "regime": "tier2",
     "entryClose": 20492.0,
     "entryDate": "2024-05-08",
@@ -71,9 +71,8 @@
     "last_observed_asof": "2026-11-17",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-17T16:37:17Z",
+    "last_checked_at_utc": "2026-11-18T02:39:39Z",
     "last_email_sent_on": "2026-11-17",
-    "last_email_sent_timezone": "Europe/London",
     "last_transition": {
       "id": "2026-11-16:1->2026-11-17:0",
       "detected_at_utc": "2026-11-17T16:37:17Z",
