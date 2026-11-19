@@ -1,23 +1,16 @@
 {
-  "generated_at_utc": "2026-11-18T22:59:31Z",
+  "generated_at_utc": "2026-11-19T02:07:25Z",
   "window_days": 7,
-  "score": 3,
-  "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Stock Market Today: Dow Ends In Red On Rate Shock Fears; Nvidia Sinks As Anthropic IPO Looms; Dow drops more than 500 points; S&P 500 falls for fifth day as Nvidia sells off.",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures Rise; Anthropic IPO Prices High, Palo Alto And Everpure Rally On Earnings; Stock Market Today, Nov. 18: Opendoor Extends Rally for Second Straight Session as Investors Watch Housing. Bearish offsets: Fed\u2019s Waller says central bank may need to \u2018shock people\u2019 with half-point rate hike; What Explains Natera Stock's Nearly 10% Drop?.",
   "articles": [
     {
-      "title": "Stock Market Today: Dow Ends In Red On Rate Shock Fears; Nvidia Sinks As Anthropic IPO Looms",
+      "title": "Dow Jones Futures Rise; Anthropic IPO Prices High, Palo Alto And Everpure Rally On Earnings",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/3b6d51d3-7bfb-3b08-a92e-3b70e9f0655b/stock-market-today%3A-dow-ends.html?.tsrc=rss",
-      "published": "2026-11-18T21:48:30Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Dow drops more than 500 points; S&P 500 falls for fifth day as Nvidia sells off",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/17/stock-market-today-live-updates.html",
-      "published": "2026-11-18T22:13:36Z",
-      "tone": "bearish"
+      "url": "https://finance.yahoo.com/m/107e5a2c-4fba-3df3-b2fd-5d1160e65516/dow-jones-futures-rise%3B.html?.tsrc=rss",
+      "published": "2026-11-19T01:55:52Z",
+      "tone": "bullish"
     },
     {
       "title": "Fed\u2019s Waller says central bank may need to \u2018shock people\u2019 with half-point rate hike",
@@ -27,18 +20,25 @@
       "tone": "bearish"
     },
     {
-      "title": "Why PhillipCapital Stopped Short of a Buy on Airbnb (ABNB)",
+      "title": "What Explains Natera Stock's Nearly 10% Drop?",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-phillipcapital-stopped-short-buy-214715166.html?.tsrc=rss",
-      "published": "2026-11-18T21:50:15Z",
+      "url": "https://www.trefis.com/stock/ntra/articles/625786/what-explains-natera-stocks-nearly-10-drop/2026-11-18?.tsrc=rss",
+      "published": "2026-11-18T23:48:38Z",
       "tone": "bearish"
     },
     {
-      "title": "What StoneX Took From Its Boston Roadshow With Stagwell (STGW)",
+      "title": "What Moved Coupang Stock Over 5% Lower?",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stonex-took-boston-roadshow-stagwell-214959678.html?.tsrc=rss",
-      "published": "2026-11-18T21:49:59Z",
+      "url": "https://www.trefis.com/stock/cpng/articles/625841/what-moved-coupang-stock-over-5-lower/2026-11-18?.tsrc=rss",
+      "published": "2026-11-18T23:42:56Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Stock Market Today, Nov. 18: Opendoor Extends Rally for Second Straight Session as Investors Watch Housing",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/18/stock-market-today-nov-18-opendoor-extends-rally-for-second-straight-session-as-investors-watch-housing/?.tsrc=rss",
+      "published": "2026-11-18T22:44:46Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 44
+        "articles": 47
       }
     ],
-    "headline_count": 94,
+    "headline_count": 97,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
