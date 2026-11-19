@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-11-19T02:55:15Z",
+  "generated_at_utc": "2026-11-19T16:13:36Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Dow Jones Futures Rise; Anthropic IPO Prices High, Palo Alto And Everpure Rally On Earnings; Stock Market Today, Nov. 18: Opendoor Extends Rally for Second Straight Session as Investors Watch Housing. Bearish offsets: Fed\u2019s Waller says central bank may need to \u2018shock people\u2019 with half-point rate hike; What Explains Natera Stock's Nearly 10% Drop?.",
+  "score": 8,
+  "label": "Bullish",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Goldman Sachs Forecasts 17% S&P 500 Rally in 2027 as AI Investment Supports Earnings Growth; Wall Street rallies toward its first gain in 6 days after Anthropic\u2019s IPO revives AI stocks - Boston Herald.",
   "articles": [
     {
-      "title": "Dow Jones Futures Rise; Anthropic IPO Prices High, Palo Alto And Everpure Rally On Earnings",
+      "title": "Goldman Sachs Forecasts 17% S&P 500 Rally in 2027 as AI Investment Supports Earnings Growth",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/107e5a2c-4fba-3df3-b2fd-5d1160e65516/dow-jones-futures-rise%3B.html?.tsrc=rss",
-      "published": "2026-11-19T02:35:55Z",
+      "url": "https://investorshub.advfn.com/market-news/article/40418/goldman-sachs-forecasts-17-sp-500-rally-in-2027-as-ai-investment-supports-earnings-growth?.tsrc=rss",
+      "published": "2026-11-19T15:50:26Z",
       "tone": "bullish"
     },
     {
-      "title": "Fed\u2019s Waller says central bank may need to \u2018shock people\u2019 with half-point rate hike",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/18/federal-reserve-governor-christopher-waller.html",
-      "published": "2026-11-18T15:13:39Z",
-      "tone": "bearish"
+      "title": "Wall Street rallies toward its first gain in 6 days after Anthropic\u2019s IPO revives AI stocks - Boston Herald",
+      "source": "Boston Herald",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1pNXNmaTlVcGJHclRWSWR5c3NTUlcwa1VGeUFvNHdPVlF0NERYemdUVmpoRmNVU1lzSHNKLXZaX2t0SmpLU0RNRlJNZGZBQUpqcDBPUUpTQ3U4WDcwbnp2aVIwcXZhaERxOEd5M3RQdEZMdw?oc=5",
+      "published": "2026-11-19T15:22:30Z",
+      "tone": "bullish"
     },
     {
-      "title": "What Explains Natera Stock's Nearly 10% Drop?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.trefis.com/stock/ntra/articles/625786/what-explains-natera-stocks-nearly-10-drop/2026-11-18?.tsrc=rss",
-      "published": "2026-11-18T23:48:38Z",
-      "tone": "bearish"
+      "title": "Wall St set for higher open on AI optimism ahead of Anthropic's market debut - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQcElhd1l5ZlEzOXRDeDlqdWhzSEkzWl8zQ0F0em9WbnNkWVBPSEZQQnFxLWNWRkFna0dGbi1zTTh2aW5CQUZENmRNNFM0UjkzQ2k0cm12WVVRbXRDek53UmlCYkxaQXpVYTJ1cHRGN2JyR29aaWM4VnN0Z3V6UElvd3RydDFIRXY2RjhYVUdpU1VMTW9jWnhjU2FCaWlXaFo4WFdDeA?oc=5",
+      "published": "2026-11-19T13:42:51Z",
+      "tone": "bullish"
     },
     {
-      "title": "What Moved Coupang Stock Over 5% Lower?",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.trefis.com/stock/cpng/articles/625841/what-moved-coupang-stock-over-5-lower/2026-11-18?.tsrc=rss",
-      "published": "2026-11-18T23:42:56Z",
-      "tone": "bearish"
+      "title": "US Futures Rally as Anthropic Fuels AI Enthusiasm: Markets Wrap - Bloomberg.com",
+      "source": "Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNMHJMMGxuVjE0QlBiMjdlLVg4Snd2RjdIVmxmMlFGX3E1cEpBS3BHaEQ0YnpUb19jc2lXMG9RQk9nSk8xSVFmN2d4VFRoSC1nQkJUdk5DTF9MWlVqRklPelgyUGpNREtJQUpEd3BTZ3A0VmVZdGRZZ21mT0x5bEdhUkd1OVVKZHNLUkRqdWY3M3VxOHBu?oc=5",
+      "published": "2026-11-18T08:00:00Z",
+      "tone": "bullish"
     },
     {
-      "title": "Stock Market Today, Nov. 18: Opendoor Extends Rally for Second Straight Session as Investors Watch Housing",
+      "title": "Bireme Capital Sold Moderna (MRNA) Following Record Rally",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/18/stock-market-today-nov-18-opendoor-extends-rally-for-second-straight-session-as-investors-watch-housing/?.tsrc=rss",
-      "published": "2026-11-18T22:44:46Z",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/bireme-capital-sold-moderna-mrna-155653550.html?.tsrc=rss",
+      "published": "2026-11-19T15:56:53Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 45
+        "articles": 44
       }
     ],
-    "headline_count": 95,
+    "headline_count": 94,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [

@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-19T02:55:13Z",
+  "generated_at_utc": "2026-11-19T16:13:33Z",
   "data_asof": "2026-11-19",
   "daily_rows": 6582,
-  "quote_price": 3733.199951171875,
+  "quote_price": 3674.60009765625,
   "quote_timestamp": "2026-11-19",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1795143313&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1795191213&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-19",
-      "close": 3733.199951171875
+      "close": 3674.60009765625
     },
-    "latestSma": 3969.1649780273438,
+    "latestSma": 3966.2349853515625,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2980595630789813,
+    "latestDd": -0.3090778871222336,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -53,12 +53,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-19",
-      "close": 3733.199951171875
+      "close": 3674.60009765625
     },
-    "latestSma": 3955.42998046875,
+    "latestSma": 3949.5699951171873,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.2980595630789813,
+    "latestDd": -0.3090778871222336,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -76,7 +76,7 @@
     "last_observed_asof": "2026-11-19",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-19T02:55:13Z",
+    "last_checked_at_utc": "2026-11-19T16:13:33Z",
     "last_email_sent_on": "2026-11-11",
     "last_transition": {
       "id": "2026-11-11:1->2026-11-11:0",
