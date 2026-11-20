@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-19T23:07:36Z",
+  "generated_at_utc": "2026-11-20T01:56:35Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Palo Alto stock jumps on earnings beat and company's big bet on securing open-weight models; An early rally for Wall Street evaporates as the market waits for Anthropic\u2019s stock to begin trading - WTOP News. Bearish offsets: Update: US Equity Indexes Sink as Widespread Sell-Off, Volatility Spike Mar Anthropic's Historic Debut on Nasdaq; S&P 500 Drops Nearly 2% at the Close as Rate Hike Talk Hits Markets - 24/7 Wall St..",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Palo Alto stock jumps on earnings beat and company's big bet on securing open-weight models. Bearish offsets: Update: US Equity Indexes Sink as Widespread Sell-Off, Volatility Spike Mar Anthropic's Historic Debut on Nasdaq; Is Your VOO Fund Secretly An AI Bet?.",
   "articles": [
     {
       "title": "Palo Alto stock jumps on earnings beat and company's big bet on securing open-weight models",
@@ -20,6 +20,13 @@
       "tone": "bearish"
     },
     {
+      "title": "Is Your VOO Fund Secretly An AI Bet?",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.trefis.com/stock/voo/articles/626646/is-your-voo-fund-secretly-an-ai-bet/2026-11-19?.tsrc=rss",
+      "published": "2026-11-20T00:58:20Z",
+      "tone": "bearish"
+    },
+    {
       "title": "S&P 500 Drops Nearly 2% at the Close as Rate Hike Talk Hits Markets - 24/7 Wall St.",
       "source": "24/7 Wall St.",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOa2d5VXpvUVRzaHJncEszOThGZkh1UXlLX29DVUFVbUVVdHNGckVvUUpHMGhuSkRpc05BUGRHMWtDQkNxdTlwakxad3FDbVNOVTZ5VGl3dzJCcVEtYndBb28xQnEwRFg1My1Cc3hUYzh1TTJWWmRvUl9PVVIyb01LRm4yd3F1QlF6cHFCNnBOZ1VYa1dIU2piVnFERjBxaUVnVDJrbGlWU2JKdTlPeGdHbDBURHFjVVR6MWpiR2RHS1R6ZFdhb01FMUlMaFU?oc=5",
@@ -27,18 +34,11 @@
       "tone": "bearish"
     },
     {
-      "title": "Stocks plunge as investors take cover amid growing uncertainty - CBS News",
-      "source": "CBS News",
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBVZjFqa0hNX2pnT1d4RGRQWEhNTDl6djZzd2sxOFZhOWE3UnUyZFpxWk1NVzJrNnpGbS02bDctT2FLMUNNdzV2ZW9lMjVrM01ZRHpBNmpycjBJSVRVaWVPdGlyazkxQWJLal9BSHo1Zw?oc=5",
-      "published": "2026-11-19T22:50:05Z",
+      "title": "Wall Street futures fall as Anthropic debut fails to revive AI trade",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-futures-fall-anthropic-014153113.html?.tsrc=rss",
+      "published": "2026-11-20T01:41:53Z",
       "tone": "bearish"
-    },
-    {
-      "title": "An early rally for Wall Street evaporates as the market waits for Anthropic\u2019s stock to begin trading - WTOP News",
-      "source": "WTOP News",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPbEUxVHM0SkFXazdYZGpfcjhIZVVQX1dvX1BnMTY2Q1BBRkJpbXAxeU9Qc3lvYldVYmNoYlZmdUtMVmhQdDdKSkdSeC1nVHlvdjYteHk1R0RCa2l2U0NlaWdMNm5oOGdHRGNoN2RmRHBBanhoc0lwaUtxcUZoMFVRaGctSlVxejZqbkpfcXRxdlRBS3ducmVmTHVlR0pIalAteHBJSTdjWDJRTjFQWFNMNA?oc=5",
-      "published": "2026-11-19T16:04:57Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 48
+        "articles": 50
       }
     ],
-    "headline_count": 97,
+    "headline_count": 99,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
