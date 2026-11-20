@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-11-20T02:49:04Z",
+  "generated_at_utc": "2026-11-20T15:52:10Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Palo Alto stock jumps on earnings beat and company's big bet on securing open-weight models; The S&P 500 Just Fell 4 Straight Weeks From a Record High. Here\u2019s Why I\u2019m Buying the Dip.. Bearish offsets: Update: US Equity Indexes Sink as Widespread Sell-Off, Volatility Spike Mar Anthropic's Historic Debut on Nasdaq; Is Your VOO Fund Secretly An AI Bet?.",
+  "score": 3,
+  "label": "Bearish",
+  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: AMD Stock Drops Another 7% Before the Bell and Taiwan Semiconductor Slides 4.2% as Nasdaq Futures Fall 1.6% After Asia's Chip Selloff - 24/7 Wall St.; US stocks waver as tech sell-off continues and Anthropic falls - WRAL.",
   "articles": [
     {
-      "title": "Palo Alto stock jumps on earnings beat and company's big bet on securing open-weight models",
+      "title": "AMD Stock Drops Another 7% Before the Bell and Taiwan Semiconductor Slides 4.2% as Nasdaq Futures Fall 1.6% After Asia's Chip Selloff - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxPWHNvMF9Dd0hVZ19jbHZ3T1NBcjFXYVBNMlYtWlNWRDZGQ0ZEcVd0UmduSU01UHY2V0s4V2tfMWZRVlNPUFJrbl9hM0FyMHFJaXpiQm9yb3NiLU9GbnAtdG84M3FZblYyMWFUNVBtSk45Vnc4UzR4YmRiRHRxVG1JNnhONFhKa2xDQVRIeDBBaTFJeURhRzRSZFZKdXF4N1lnbGZHTHhWek94UXgzVjVqMDdKNXlpbkdNZ1pBajQ1UTJpUWNTVVFrdHVRczRmdFJ1cWNkVm9iZ0owNnk4SjBqajRxa0FSY3djOTlYVVZ5NGxGNUpYYjhtNEtzZy03RUpzZF9PdTB3?oc=5",
+      "published": "2026-11-20T12:13:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "US stocks waver as tech sell-off continues and Anthropic falls - WRAL",
+      "source": "WRAL",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNZUJtVTNSWGFEcFloVlE0R3VieTlPNmFhc1laUGx2QnBSZjRRNkZrZEdTVjJadkFDdzlUS21KZm5Rd1o4RXlXeHdRMnBtRjk3UjJDb25xNUtoRzlqSzljeHh3ZmUwa3FJNmdSOFdFN2k2aUlmV09PemhVQjhYMHFTaHdoSlFjaVNXdENFQmQ5N3Q1OGV4XzJoRUtLY0czaFlxT0E2QlpXQ0tMYy1zdHlUbDNSckRHSkY1c0U0V0w5MzNDT3VqdHZOaTRR?oc=5",
+      "published": "2026-11-20T13:46:42Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Nikkei 225 Falls 4.5% and SoftBank Plunges 15% as Wall Street's AI Selloff Puts Asian Stocks on Track for Their Worst Week Since 2020 - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPNG95QlFDejVBd1U3OVY0UWNhSGhMNWN6STNQVWFlZ1p1YXJuXzIteFZBNGFrY3JsaUlfaWdtaTdLSThqOFZadVk1S3p6VUJGVXd0MDRURER1dnJtblBFZWE1M1JsUC1NNmR3OU9Vd3JOTVZoc1UxTzNDYWpKclZ0MnU4cUlNZWF6Qi1vNDVSdXpSNDlwRzgwWXREc1BneVU0Y21US20wNkhaczRUaHFOVDlSMGItNGlnZFJmSFYwN3loamhfenFYSjFxVFdIYVdBWFdvNEgwT245aGNDMFRKYU5LZE1wWWg5djlLbG5NbFRPekJIYi1HMVk1OUpsekNTZTJhbQ?oc=5",
+      "published": "2026-11-20T03:41:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Nasdaq drops as Anthropic falls, Dow bounces after nearing correction territory: Live updates",
       "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/19/palo-alto-networks-earnings-applied-compute.html",
-      "published": "2026-11-19T21:00:57Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Update: US Equity Indexes Sink as Widespread Sell-Off, Volatility Spike Mar Anthropic's Historic Debut on Nasdaq",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-sink-widespread-223941525.html?.tsrc=rss",
-      "published": "2026-11-19T22:39:41Z",
+      "url": "https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html",
+      "published": "2026-11-20T15:41:36Z",
       "tone": "bearish"
     },
     {
-      "title": "Is Your VOO Fund Secretly An AI Bet?",
+      "title": "Why the markets are being hit with a 'perfect storm' for AI",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://www.trefis.com/stock/voo/articles/626646/is-your-voo-fund-secretly-an-ai-bet/2026-11-19?.tsrc=rss",
-      "published": "2026-11-20T00:58:20Z",
+      "url": "https://finance.yahoo.com/video/why-the-markets-are-being-hit-with-a-perfect-storm-for-ai-154128015.html?.tsrc=rss",
+      "published": "2026-11-20T15:41:28Z",
       "tone": "bearish"
-    },
-    {
-      "title": "Wall Street futures fall as Anthropic debut fails to revive AI trade",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-futures-fall-anthropic-014153113.html?.tsrc=rss",
-      "published": "2026-11-20T01:41:53Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "The S&P 500 Just Fell 4 Straight Weeks From a Record High. Here\u2019s Why I\u2019m Buying the Dip.",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/investing/2026/11/19/the-s-and-p-500-just-fell-4-straight-weeks-from-a-record-high-here-s-why-i-m-buying-the-dip/?.tsrc=rss",
-      "published": "2026-11-20T01:10:37Z",
-      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 83
+        "articles": 55
       }
     ],
-    "headline_count": 131,
+    "headline_count": 103,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
