@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-11-20T15:52:10Z",
+  "generated_at_utc": "2026-11-20T22:27:57Z",
   "window_days": 7,
-  "score": 3,
+  "score": 2,
   "label": "Bearish",
-  "explanation": "3/10 is bearish from a 7-day headline keyword scan. Bearish offsets: AMD Stock Drops Another 7% Before the Bell and Taiwan Semiconductor Slides 4.2% as Nasdaq Futures Fall 1.6% After Asia's Chip Selloff - 24/7 Wall St.; US stocks waver as tech sell-off continues and Anthropic falls - WRAL.",
+  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Does Friday's AI sell-off point to a bigger financial crisis? Dan Niles weighs in; AMD Stock Drops Another 7% Before the Bell and Taiwan Semiconductor Slides 4.2% as Nasdaq Futures Fall 1.6% After Asia's Chip Selloff - 24/7 Wall St..",
   "articles": [
+    {
+      "title": "Does Friday's AI sell-off point to a bigger financial crisis? Dan Niles weighs in",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/does-fridays-ai-sell-off-point-to-a-bigger-financial-crisis-dan-niles-weighs-in-214730628.html?.tsrc=rss",
+      "published": "2026-11-20T21:47:30Z",
+      "tone": "bearish"
+    },
     {
       "title": "AMD Stock Drops Another 7% Before the Bell and Taiwan Semiconductor Slides 4.2% as Nasdaq Futures Fall 1.6% After Asia's Chip Selloff - 24/7 Wall St.",
       "source": "24/7 Wall St.",
@@ -13,31 +20,24 @@
       "tone": "bearish"
     },
     {
-      "title": "US stocks waver as tech sell-off continues and Anthropic falls - WRAL",
-      "source": "WRAL",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNZUJtVTNSWGFEcFloVlE0R3VieTlPNmFhc1laUGx2QnBSZjRRNkZrZEdTVjJadkFDdzlUS21KZm5Rd1o4RXlXeHdRMnBtRjk3UjJDb25xNUtoRzlqSzljeHh3ZmUwa3FJNmdSOFdFN2k2aUlmV09PemhVQjhYMHFTaHdoSlFjaVNXdENFQmQ5N3Q1OGV4XzJoRUtLY0czaFlxT0E2QlpXQ0tMYy1zdHlUbDNSckRHSkY1c0U0V0w5MzNDT3VqdHZOaTRR?oc=5",
-      "published": "2026-11-20T13:46:42Z",
+      "title": "US stocks tumble, and the S&P 500 drops as the sell-off for AI stocks accelerates - ABC News - Breaking News, Latest News and Videos",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPdnZzQ25ucktqYTRpZVBGZmxRYzV5NkVOdlBvcno0RV9hVW5aRk0xSmQzWWRXV2tjWjN2YUFoWldXTVcydjN4Q0d5UURuQUxhZGhzVVNiWUtKbzJrbWR1TG9tZGsxWUVwRkF3a2pTMVNhenNrRm9kazdWMjNDNlFDWW9tcTN1R1d4b284OGxJLXUxX0ppOVHSAZsBQVVfeXFMTnBNdmtqamoxYWgyVjdrUGVTRTF4bFRnRXE0TU9rNFJLbUt0M05VS0hmQ3NBODVuSEl4NEdaeFc0UW9jbS1xa0t0MXhlWHVnZGgxelZDN2hkcEhpVVdqamU0Uk8yYkZzSEVoQUlUaklydmZKcTh2UjFBSlVILU1EaEtJbnZyNy1aNk44VFRrZTd4eXp0bUpLZUMyNFk?oc=5",
+      "published": "2026-11-20T19:18:45Z",
       "tone": "bearish"
     },
     {
-      "title": "Nikkei 225 Falls 4.5% and SoftBank Plunges 15% as Wall Street's AI Selloff Puts Asian Stocks on Track for Their Worst Week Since 2020 - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPNG95QlFDejVBd1U3OVY0UWNhSGhMNWN6STNQVWFlZ1p1YXJuXzIteFZBNGFrY3JsaUlfaWdtaTdLSThqOFZadVk1S3p6VUJGVXd0MDRURER1dnJtblBFZWE1M1JsUC1NNmR3OU9Vd3JOTVZoc1UxTzNDYWpKclZ0MnU4cUlNZWF6Qi1vNDVSdXpSNDlwRzgwWXREc1BneVU0Y21US20wNkhaczRUaHFOVDlSMGItNGlnZFJmSFYwN3loamhfenFYSjFxVFdIYVdBWFdvNEgwT245aGNDMFRKYU5LZE1wWWg5djlLbG5NbFRPekJIYi1HMVk1OUpsekNTZTJhbQ?oc=5",
-      "published": "2026-11-20T03:41:00Z",
+      "title": "US stocks tumble, and the S&P 500 drops as the sell-off for AI stocks accelerates - AP News",
+      "source": "AP News",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQY09GMmxTYlpRMnQ3YVJ4Q3BUdmg3NEFJWG5lVlh4TC0zZGxxZVcydTkwSkpiZUZfS3BXdlRab05HSW5TS0h5TDY5NFRKajBDSWdFbUdhNFIxMzUxc3pLRnEtMXVNblBwZmgteFlUWVhuS0lRU3diRGpWQnkyeWtDMGJiS3hzd2xCdUtDVHIxc0hOWGkwTHdPZ1FfenUwQQ?oc=5",
+      "published": "2026-11-20T18:53:00Z",
       "tone": "bearish"
     },
     {
-      "title": "Nasdaq drops as Anthropic falls, Dow bounces after nearing correction territory: Live updates",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html",
-      "published": "2026-11-20T15:41:36Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Why the markets are being hit with a 'perfect storm' for AI",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/why-the-markets-are-being-hit-with-a-perfect-storm-for-ai-154128015.html?.tsrc=rss",
-      "published": "2026-11-20T15:41:28Z",
+      "title": "Wall St ends sharply lower on AI selloff, S&P 500, Dow in correction - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOY0VmbDFSZy1pMm1jZlE3SG1PMDdjcHdmZnp3WWFQbTBSSHBndDktSEhpRFB4MkRYZUhTQXFhNm9YY0pwNlczMkxtOF9ZMVA2R1VHN2k1MmE3VkN6d292amFiX1JKUUxVcmN4NmxFTGYwbkhlakpkeTZ4eE5yRkxxTTlubE9PUU1jWmtrZVF6RjhiMWhhYmp2Q29Ucy1aMm13T0F0WTMwSGRBZWdQV3pyRjlZRm9pUEVnV0EzQQ?oc=5",
+      "published": "2026-11-20T21:00:59Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 15
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 55
+        "articles": 60
       }
     ],
-    "headline_count": 103,
+    "headline_count": 105,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
