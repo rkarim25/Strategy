@@ -1,17 +1,10 @@
 {
-  "generated_at_utc": "2026-11-20T22:27:57Z",
+  "generated_at_utc": "2026-11-21T01:52:24Z",
   "window_days": 7,
   "score": 2,
   "label": "Bearish",
-  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bearish offsets: Does Friday's AI sell-off point to a bigger financial crisis? Dan Niles weighs in; AMD Stock Drops Another 7% Before the Bell and Taiwan Semiconductor Slides 4.2% as Nasdaq Futures Fall 1.6% After Asia's Chip Selloff - 24/7 Wall St..",
+  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bearish offsets: AMD Stock Drops Another 7% Before the Bell and Taiwan Semiconductor Slides 4.2% as Nasdaq Futures Fall 1.6% After Asia's Chip Selloff - 24/7 Wall St.; Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business.",
   "articles": [
-    {
-      "title": "Does Friday's AI sell-off point to a bigger financial crisis? Dan Niles weighs in",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/does-fridays-ai-sell-off-point-to-a-bigger-financial-crisis-dan-niles-weighs-in-214730628.html?.tsrc=rss",
-      "published": "2026-11-20T21:47:30Z",
-      "tone": "bearish"
-    },
     {
       "title": "AMD Stock Drops Another 7% Before the Bell and Taiwan Semiconductor Slides 4.2% as Nasdaq Futures Fall 1.6% After Asia's Chip Selloff - 24/7 Wall St.",
       "source": "24/7 Wall St.",
@@ -20,24 +13,31 @@
       "tone": "bearish"
     },
     {
-      "title": "US stocks tumble, and the S&P 500 drops as the sell-off for AI stocks accelerates - ABC News - Breaking News, Latest News and Videos",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPdnZzQ25ucktqYTRpZVBGZmxRYzV5NkVOdlBvcno0RV9hVW5aRk0xSmQzWWRXV2tjWjN2YUFoWldXTVcydjN4Q0d5UURuQUxhZGhzVVNiWUtKbzJrbWR1TG9tZGsxWUVwRkF3a2pTMVNhenNrRm9kazdWMjNDNlFDWW9tcTN1R1d4b284OGxJLXUxX0ppOVHSAZsBQVVfeXFMTnBNdmtqamoxYWgyVjdrUGVTRTF4bFRnRXE0TU9rNFJLbUt0M05VS0hmQ3NBODVuSEl4NEdaeFc0UW9jbS1xa0t0MXhlWHVnZGgxelZDN2hkcEhpVVdqamU0Uk8yYkZzSEVoQUlUaklydmZKcTh2UjFBSlVILU1EaEtJbnZyNy1aNk44VFRrZTd4eXp0bUpLZUMyNFk?oc=5",
-      "published": "2026-11-20T19:18:45Z",
+      "title": "Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business",
+      "source": "Fox Business",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMGo2a2JDeFFQWXZZSUFuc1hYVkctMXBGZzVJWjhCSU4tV21qenB4bVNuLUJFTG1hakVYdGNlQ2tuRXFnOXlnSzFJVjZHWVg3V09EWVVhb1o5NVY3YWJpcHZ4MGFyYm9faWdPOGVsRERlakFST214NC1RZDA4UTBjdUZmYmZtOUdUOWZNNFE1M3dVdGVneWtKeWl4Sll0aFZFcW1qUUtFM2RfVUhkTGNJ0gG0AUFVX3lxTFBlZXlISGdZNkJyblRJX1V4NW9OQTFrYkNHWFZoazJzTDZZUHI4US1sT01jSkhtWVFxeUVqYkdJdzIwYmxjWFFsRTNMYWhUdk9wVWl3aVpUTmhvZi1IQ1ZJcFdKODc1TDdJb2tLZzZ0RzB6d3o4WERicXJ5OGNvcFZpTTl5RmhQRTRkWERGeUFPTmVUeU56dl9ObDNPcTgxeDU2bHlCaDFiSVdQaXlQMlozdzZ1Tw?oc=5",
+      "published": "2026-11-21T00:47:21Z",
       "tone": "bearish"
     },
     {
-      "title": "US stocks tumble, and the S&P 500 drops as the sell-off for AI stocks accelerates - AP News",
-      "source": "AP News",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQY09GMmxTYlpRMnQ3YVJ4Q3BUdmg3NEFJWG5lVlh4TC0zZGxxZVcydTkwSkpiZUZfS3BXdlRab05HSW5TS0h5TDY5NFRKajBDSWdFbUdhNFIxMzUxc3pLRnEtMXVNblBwZmgteFlUWVhuS0lRU3diRGpWQnkyeWtDMGJiS3hzd2xCdUtDVHIxc0hOWGkwTHdPZ1FfenUwQQ?oc=5",
-      "published": "2026-11-20T18:53:00Z",
+      "title": "US stocks: Wall Street ends sharply lower on AI selloff, S&P 500, Dow in correction - The Business Times",
+      "source": "The Business Times",
+      "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxOSGRRc1diWF9PbGlBSzVkZFhYanh5TkVLbmVUb1dpbnBSYlUtRnJCSGtQMXJ5a0lMbzlMR0k3ZDdxeFRrVU1qVjdLSEw3QkdOSks5UjVMbGtOdUtmMmVldkx0dmxsQ3ZVWlRURXZCQ2ZHelktaW0wUTNFWUpteEE0dmdpRGt4blVmdHRvQTNMWlZ6NFg4Wl9MQzZvdWhXVndFU1MtUU5JLUlIb1VJQ2xyTE05WjJtdC1sOWtWcGdOWjVfUU4zRjJMcVR2M2RHNnFiRU1LN3FrVXAtSU5RZkxINWZnUUZRZw?oc=5",
+      "published": "2026-11-20T23:49:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Weekly Wrap: Crypto Falls As Stocks Struggle",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.cryptoprowl.com/releases/weekly-wrap-crypto-falls-as-stocks-struggle-8016?.tsrc=rss",
+      "published": "2026-11-20T22:38:00Z",
       "tone": "bearish"
     },
     {
       "title": "Wall St ends sharply lower on AI selloff, S&P 500, Dow in correction - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOY0VmbDFSZy1pMm1jZlE3SG1PMDdjcHdmZnp3WWFQbTBSSHBndDktSEhpRFB4MkRYZUhTQXFhNm9YY0pwNlczMkxtOF9ZMVA2R1VHN2k1MmE3VkN6d292amFiX1JKUUxVcmN4NmxFTGYwbkhlakpkeTZ4eE5yRkxxTTlubE9PUU1jWmtrZVF6RjhiMWhhYmp2Q29Ucy1aMm13T0F0WTMwSGRBZWdQV3pyRjlZRm9pUEVnV0EzQQ?oc=5",
-      "published": "2026-11-20T21:00:59Z",
+      "published": "2026-11-20T10:37:00Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 60
+        "articles": 65
       }
     ],
-    "headline_count": 105,
+    "headline_count": 110,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
