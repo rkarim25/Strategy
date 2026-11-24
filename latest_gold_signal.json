@@ -1,20 +1,20 @@
 {
-  "generated_at_utc": "2026-11-23T18:54:39Z",
+  "generated_at_utc": "2026-11-24T05:03:16Z",
   "data_asof": "2026-11-23",
   "daily_rows": 6584,
-  "quote_price": 3650.0,
-  "quote_timestamp": "2026-11-23",
-  "quote_source": "Yahoo Finance chart endpoint",
+  "quote_price": null,
+  "quote_timestamp": null,
+  "quote_source": null,
   "sources": {
     "daily_yahoo_gold": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1795546479&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?period1=0&period2=1795582996&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     },
     "quote_worker_gold": {
       "url": "https://spx-quote-proxy.rkarim88.workers.dev/?mode=quote&symbol=gold",
-      "ok": true,
-      "status": 200
+      "ok": false,
+      "error": "HTTP Error 500: Internal Server Error"
     }
   },
   "strategy": {
@@ -31,12 +31,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-23",
-      "close": 3650.0
+      "close": 3651.39990234375
     },
-    "latestSma": 3922.7349853515625,
+    "latestSma": 3922.80498046875,
     "highWater": 5318.39990234375,
     "highWaterDate": "2026-01-29",
-    "latestDd": -0.3137033568326646,
+    "latestDd": -0.3134401381260131,
     "regime": "tier2",
     "entryClose": 4109.10009765625,
     "entryDate": "2025-10-21",
@@ -50,33 +50,12 @@
     "activeEntryPnl": null,
     "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
   },
-  "provisional_signal": {
-    "latest": {
-      "date": "2026-11-23",
-      "close": 3650.0
-    },
-    "latestSma": 3901.50498046875,
-    "highWater": 5318.39990234375,
-    "highWaterDate": "2026-01-29",
-    "latestDd": -0.3137033568326646,
-    "regime": "tier2",
-    "entryClose": 4109.10009765625,
-    "entryDate": "2025-10-21",
-    "recoveryTarget": 5752.740136718749,
-    "aboveSma": false,
-    "recoveryOk": false,
-    "targetLeverage": 0,
-    "activeEntryClose": null,
-    "activeEntryDate": null,
-    "activeEntryLeverage": null,
-    "activeEntryPnl": null,
-    "explanation": "2x tier is armed, but lead guard failed; using base cash/1x rule."
-  },
+  "provisional_signal": null,
   "trade_alert_state": {
     "last_observed_asof": "2026-11-23",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-23T18:54:39Z",
+    "last_checked_at_utc": "2026-11-24T05:03:16Z",
     "last_email_sent_on": "2026-11-11",
     "last_transition": {
       "id": "2026-11-11:1->2026-11-11:0",

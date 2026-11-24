@@ -1,10 +1,24 @@
 {
-  "generated_at_utc": "2026-11-23T18:54:43Z",
+  "generated_at_utc": "2026-11-24T05:03:18Z",
   "window_days": 7,
-  "score": 8,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure; Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.. Bearish offsets: Wall Street isn't pricing in a data center slowdown, strategist warns; Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nvidia\u2019s Asian Suppliers Rally as Jensen Huang Returns as CEO: SK Hynix Jumps 8%, SoftBank Shares Rise in Tokyo; Nasdaq, Dow, S&P 500 Futures Gain As Jensen Huang\u2019s Return To Nvidia Sparks $3T Market Rally: SOXS, IBRX, HPE, TSM In Focus.",
   "articles": [
+    {
+      "title": "Nvidia\u2019s Asian Suppliers Rally as Jensen Huang Returns as CEO: SK Hynix Jumps 8%, SoftBank Shares Rise in Tokyo",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-asian-suppliers-rally-jensen-012213841.html?.tsrc=rss",
+      "published": "2026-11-24T01:22:13Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Nasdaq, Dow, S&P 500 Futures Gain As Jensen Huang\u2019s Return To Nvidia Sparks $3T Market Rally: SOXS, IBRX, HPE, TSM In Focus",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://stocktwits.com/news-articles/markets/equity/stock-market-today-nasdaq-dow-futures-rise-jensen-huang-returns-nvidia/cNbrsSNR9jM?.tsrc=rss",
+      "published": "2026-11-24T02:13:43Z",
+      "tone": "bullish"
+    },
     {
       "title": "Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure",
       "source": "Beinsure",
@@ -20,24 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Wall Street isn't pricing in a data center slowdown, strategist warns",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/video/wall-street-isnt-pricing-in-a-data-center-slowdown-strategist-warns-182752266.html?.tsrc=rss",
-      "published": "2026-11-23T18:27:52Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business",
-      "source": "Fox Business",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMGo2a2JDeFFQWXZZSUFuc1hYVkctMXBGZzVJWjhCSU4tV21qenB4bVNuLUJFTG1hakVYdGNlQ2tuRXFnOXlnSzFJVjZHWVg3V09EWVVhb1o5NVY3YWJpcHZ4MGFyYm9faWdPOGVsRERlakFST214NC1RZDA4UTBjdUZmYmZtOUdUOWZNNFE1M3dVdGVneWtKeWl4Sll0aFZFcW1qUUtFM2RfVUhkTGNJ0gG0AUFVX3lxTFBlZXlISGdZNkJyblRJX1V4NW9OQTFrYkNHWFZoazJzTDZZUHI4US1sT01jSkhtWVFxeUVqYkdJdzIwYmxjWFFsRTNMYWhUdk9wVWl3aVpUTmhvZi1IQ1ZJcFdKODc1TDdJb2tLZzZ0RzB6d3o4WERicXJ5OGNvcFZpTTl5RmhQRTRkWERGeUFPTmVUeU56dl9ObDNPcTgxeDU2bHlCaDFiSVdQaXlQMlozdzZ1Tw?oc=5",
-      "published": "2026-11-21T01:28:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall Street set to rebound as beaten-down AI stocks gain ground - The Detroit News",
-      "source": "The Detroit News",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNbldWSmJJcHk2SkhrcFRIcnU3QllKQ0NmX2R1ekdkZklyR25UaTQ1Qkd2WHhoUE01dUJYeEJieTQ2eFU3a1ZqV3l5OHBaQW5OZUVuN1JzaXRqaUhZc0ZFVUNXczhsUklYWlBHUWN6RFh1Ynpid2xlWHZPLTIzSFQ3Ul8tQzlKeUpLcGJLbGw2NUJWbmZxXzRV?oc=5",
-      "published": "2026-11-23T14:12:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia\u2019s CEO - News4JAX",
+      "source": "News4JAX",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOanFXUnBld0RiMVdmR3NlR3RlLUpmakF4cW1IT2xiTHVyWlE5ajJya1NxRkpqNUpGQWhMZjBLMmNkN2NuZFJhWDNER0dRRzlJaGNSMkV3M1U4M2F0MnN6d0xXYVRkX01UeVJja2toQmV4dmVPUjlPalc0UDRoVjR0OGd3RDNIYjNtMktHSlNjQ0ZrcllaV0JrSHF5XzY4cG5EZ2taRmxzS3RBVDl4a0dCSDdtT3pEOWZNU01QaG1TZDk3WWdUUUdlWA?oc=5",
+      "published": "2026-11-24T03:38:45Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 89
+        "articles": 85
       }
     ],
-    "headline_count": 137,
+    "headline_count": 134,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
