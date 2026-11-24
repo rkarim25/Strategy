@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-24T05:03:18Z",
+  "generated_at_utc": "2026-11-24T05:43:34Z",
   "window_days": 7,
-  "score": 9,
+  "score": 7,
   "label": "Bullish",
-  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nvidia\u2019s Asian Suppliers Rally as Jensen Huang Returns as CEO: SK Hynix Jumps 8%, SoftBank Shares Rise in Tokyo; Nasdaq, Dow, S&P 500 Futures Gain As Jensen Huang\u2019s Return To Nvidia Sparks $3T Market Rally: SOXS, IBRX, HPE, TSM In Focus.",
+  "explanation": "7/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nvidia\u2019s Asian Suppliers Rally as Jensen Huang Returns as CEO: SK Hynix Jumps 8%, SoftBank Shares Rise in Tokyo; Nasdaq, Dow, S&P 500 Futures Gain As Jensen Huang\u2019s Return To Nvidia Sparks $3T Market Rally: SOXS, IBRX, HPE, TSM In Focus. Bearish offsets: Dow and S&P 500 Plunge Into Correction as Tech Sell-Off Deepens - Yahoo Finance.",
   "articles": [
     {
       "title": "Nvidia\u2019s Asian Suppliers Rally as Jensen Huang Returns as CEO: SK Hynix Jumps 8%, SoftBank Shares Rise in Tokyo",
@@ -20,6 +20,13 @@
       "tone": "bullish"
     },
     {
+      "title": "Dow and S&P 500 Plunge Into Correction as Tech Sell-Off Deepens - Yahoo Finance",
+      "source": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQU3FmczBLU1NYMmlmOXd0dXdWNlRZQXozTXROLUNQcjYtU3JJOGxDTFQzLWFMZzFqcWJZa3R2NkxCNXY2aWxTV09BNUVEUTRtTEx2cDA2U2xhdVozNnIwTHNmUDA4Vjlib0ZzaV9jSXcxWnNUb2R6RlhhSms0UmhCcmZMU2lBOHk2VURXTEdSYW5vQ2NqTnlZ?oc=5",
+      "published": "2026-11-20T17:59:51Z",
+      "tone": "bearish"
+    },
+    {
       "title": "Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure",
       "source": "Beinsure",
       "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQbmJ5M2hjWGx2ckZoM3otNlo1OUg4cGpkbWh1SUdPVDRmV1RUekx4LXVEMDd4Rk1sNWdmN19aQ05BMUI1TEdpa2s1SXpMVW5iYWVDeUFYcDBnUDBfN3lmVXRKcWNoUFhrMFY0VXpNb0JBMjBwNU5xUkw5cFRFVlpvUXpNM01UU094NmhYT3FQYWVwaU5CTFQ5LTNOOWo?oc=5",
@@ -31,13 +38,6 @@
       "source": "24/7 Wall St.",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOQ3RqNWFVcFdnMkhKYUp6NWlwR2MzQTZfSG9xb0NKZlhHY2xGVFFpOS1SS2Q0WVM1U0swSkluQmtEakZFRmdwYkV0RnR2VjVpMktWR0MxY1ZxRFY3akhicGRINUdkVzl6Vm5YOU80bW51d3owc0VQazMzX3dNekRWekV6VFJWMGR0RjVSY1hEenhsVXNtZEVfU0V5YXZaaktka1IyenpFbTBabXZqRGtmaWpXbXFmU1VQbGtKYUx0enlXbjQ?oc=5",
       "published": "2026-11-23T14:15:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia\u2019s CEO - News4JAX",
-      "source": "News4JAX",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOanFXUnBld0RiMVdmR3NlR3RlLUpmakF4cW1IT2xiTHVyWlE5ajJya1NxRkpqNUpGQWhMZjBLMmNkN2NuZFJhWDNER0dRRzlJaGNSMkV3M1U4M2F0MnN6d0xXYVRkX01UeVJja2toQmV4dmVPUjlPalc0UDRoVjR0OGd3RDNIYjNtMktHSlNjQ0ZrcllaV0JrSHF5XzY4cG5EZ2taRmxzS3RBVDl4a0dCSDdtT3pEOWZNU01QaG1TZDk3WWdUUUdlWA?oc=5",
-      "published": "2026-11-24T03:38:45Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 85
+        "articles": 93
       }
     ],
-    "headline_count": 134,
+    "headline_count": 142,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
