@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-25T03:52:01Z",
+  "generated_at_utc": "2026-11-25T04:45:43Z",
   "window_days": 7,
   "score": 6,
   "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure; Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.. Bearish offsets: Wall St futures fall after S&P 500, Nasdaq end lower; inflation data eyed.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure; Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times. Bearish offsets: Wall St futures fall after S&P 500, Nasdaq end lower; inflation data eyed.",
   "articles": [
     {
       "title": "Wall St futures fall after S&P 500, Nasdaq end lower; inflation data eyed",
@@ -20,6 +20,13 @@
       "tone": "bullish"
     },
     {
+      "title": "Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times",
+      "source": "The New York Times",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPNXRXMlFUQkJfcnJPMGVlaWZRejZzSnVuRWJiV1E3TUM3c3pkWkxSSGZJaGtCcEc0Uzdja0xzbFFNcWRIZEtZNlFHMHNDclAzVzJqUHU2Z2lFRE51V3AwSWV1cnRoamFsbDVleTdVUFVhSElYMEhXTlhiNkhQNWtSZlRGT1FYQURPeE9RTA?oc=5",
+      "published": "2026-11-24T05:31:15Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.",
       "source": "24/7 Wall St.",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOQ3RqNWFVcFdnMkhKYUp6NWlwR2MzQTZfSG9xb0NKZlhHY2xGVFFpOS1SS2Q0WVM1U0swSkluQmtEakZFRmdwYkV0RnR2VjVpMktWR0MxY1ZxRFY3akhicGRINUdkVzl6Vm5YOU80bW51d3owc0VQazMzX3dNekRWekV6VFJWMGR0RjVSY1hEenhsVXNtZEVfU0V5YXZaaktka1IyenpFbTBabXZqRGtmaWpXbXFmU1VQbGtKYUx0enlXbjQ?oc=5",
@@ -31,13 +38,6 @@
       "source": "Anadolu Ajans\u0131",
       "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQVVhvV3VlUEpKRmljZHp0MjVVOXpaY2VMUHBQYk9QVlA0cWJ5dGxXclRkT0JCTklGalRycndSYkxkV0ltcWRFcEN4NG9qWjFXU2tUd3hpVU95NkcwNHZURkoyMG5hc1Z5T0xnTnlXLXpUWXdGeHdNeDRCY1hPSk1zU1pFV19SN2xGMDg4eVZvSTA4azBMY3dvMTF5Z1IyMkduRlpmaUhIaUlhbjhUM3FWdDZNOGhrcWZldDZwdw?oc=5",
       "published": "2026-11-24T09:37:36Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia\u2019s CEO - Audacy",
-      "source": "Audacy",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPNU1DQk4yUXg4aVRXSlhnRURxOWVjU2xUN1RzMHlJVXhHYk1LN1FhY0pCQ2hVZWtRNklnWE5aN3VfVzlKdGVlQmlsa2IwN1g1LWEzSG9meUdCblVpSzJDX19EMnRsQk05WVpHdDktMjF6Y3ZfV2tZV1BwNXoyZnJQc2tOYXhfRWY4OFpQZFNHZXN4NjRNcElEeGpsdmlFWkt5Ykg2MjNfVTFxVml6bGc?oc=5",
-      "published": "2026-11-24T03:31:00Z",
       "tone": "bullish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 86
+        "articles": 83
       }
     ],
-    "headline_count": 135,
+    "headline_count": 132,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
