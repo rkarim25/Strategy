@@ -1,10 +1,17 @@
 {
-  "generated_at_utc": "2026-11-24T18:32:59Z",
+  "generated_at_utc": "2026-11-25T03:52:01Z",
   "window_days": 7,
-  "score": 8,
-  "label": "Bullish",
-  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure; Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.. Bearish offsets: Nasdaq 100 plunges 3% as Wall Street selloff deepens, S&P 500 falls 1.3% - Business Upturn.",
+  "score": 6,
+  "label": "Neutral",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure; Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.. Bearish offsets: Wall St futures fall after S&P 500, Nasdaq end lower; inflation data eyed.",
   "articles": [
+    {
+      "title": "Wall St futures fall after S&P 500, Nasdaq end lower; inflation data eyed",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-fall-p-014227385.html?.tsrc=rss",
+      "published": "2026-11-25T01:42:27Z",
+      "tone": "bearish"
+    },
     {
       "title": "Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure",
       "source": "Beinsure",
@@ -18,13 +25,6 @@
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOQ3RqNWFVcFdnMkhKYUp6NWlwR2MzQTZfSG9xb0NKZlhHY2xGVFFpOS1SS2Q0WVM1U0swSkluQmtEakZFRmdwYkV0RnR2VjVpMktWR0MxY1ZxRFY3akhicGRINUdkVzl6Vm5YOU80bW51d3owc0VQazMzX3dNekRWekV6VFJWMGR0RjVSY1hEenhsVXNtZEVfU0V5YXZaaktka1IyenpFbTBabXZqRGtmaWpXbXFmU1VQbGtKYUx0enlXbjQ?oc=5",
       "published": "2026-11-23T14:15:00Z",
       "tone": "bullish"
-    },
-    {
-      "title": "Nasdaq 100 plunges 3% as Wall Street selloff deepens, S&P 500 falls 1.3% - Business Upturn",
-      "source": "Business Upturn",
-      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQankyNU5oSnYwSXJnaHNmU2EzalhtTVhOZmpIaUtEU1hBTXZkTHRoQ25zTzM1X3pwWTRiZEY5elJqMUlWekxfdFR1WEp2cGNvT1haUEhJaGU1eF8zbGJmcVl3LWVXSFVvbXc3TmpNUlZJY3huVURmdTV2RG1PVmxlUEhuMmYxN2d1dFluODNVNVJVdkhScGM0RFc5T2xOQnJnN1JqWWRiY3RDd3BiQTQ0YUExM0R3ZHVmemtralRTZw?oc=5",
-      "published": "2026-11-24T16:44:00Z",
-      "tone": "bearish"
     },
     {
       "title": "US tech stocks rebound as Wall Street rallies on Jensen Huang's return to Nvidia - Anadolu Ajans\u0131",
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 84
+        "articles": 86
       }
     ],
-    "headline_count": 134,
+    "headline_count": 135,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
