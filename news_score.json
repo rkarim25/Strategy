@@ -1,15 +1,29 @@
 {
-  "generated_at_utc": "2026-11-25T04:45:43Z",
+  "generated_at_utc": "2026-11-25T17:44:38Z",
   "window_days": 7,
-  "score": 6,
-  "label": "Neutral",
-  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure; Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times. Bearish offsets: Wall St futures fall after S&P 500, Nasdaq end lower; inflation data eyed.",
+  "score": 2,
+  "label": "Bearish",
+  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure. Bearish offsets: Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - Seattle Post-Intelligencer; Stock Market Today: Dow Falls 700 Points, Nasdaq Off 4%; Nutanix Dives On CEO Exit (Live Coverage).",
   "articles": [
     {
-      "title": "Wall St futures fall after S&P 500, Nasdaq end lower; inflation data eyed",
+      "title": "Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - Seattle Post-Intelligencer",
+      "source": "Seattle Post-Intelligencer",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOMm5OV1pUQXNqXzBpVlIwUFlFMEFCOFNCLWNaXzc2VW85VVNLd3B0b0h5dmlaNlVKX2lnTnJzaGpCWk5MYzFUNjhUbUVzcUF2RTk3QzQyYUVqbEtYZE9KRHhTZ1J1SlpHUHp3UV9FNHU5WUtzc2Z6UjlHdXJMY3JZT1BxSEk5cC00c3Z1RXdxQV9rN1poSnZN?oc=5",
+      "published": "2026-11-25T17:05:57Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock Market Today: Dow Falls 700 Points, Nasdaq Off 4%; Nutanix Dives On CEO Exit (Live Coverage)",
       "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-fall-p-014227385.html?.tsrc=rss",
-      "published": "2026-11-25T01:42:27Z",
+      "url": "https://finance.yahoo.com/m/90407e46-3b17-34e8-8c82-527bf00b63e4/stock-market-today%3A-dow-falls.html?.tsrc=rss",
+      "published": "2026-11-25T16:43:58Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Bitcoin Falls Further as Inflation, Trump Tariffs and AI Selloff Rattle Markets",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://decrypt.co/383967/bitcoin-sinks-inflation-trump-tariffs-ai-selloff?.tsrc=rss",
+      "published": "2026-11-25T16:52:50Z",
       "tone": "bearish"
     },
     {
@@ -20,25 +34,11 @@
       "tone": "bullish"
     },
     {
-      "title": "Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times",
-      "source": "The New York Times",
-      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPNXRXMlFUQkJfcnJPMGVlaWZRejZzSnVuRWJiV1E3TUM3c3pkWkxSSGZJaGtCcEc0Uzdja0xzbFFNcWRIZEtZNlFHMHNDclAzVzJqUHU2Z2lFRE51V3AwSWV1cnRoamFsbDVleTdVUFVhSElYMEhXTlhiNkhQNWtSZlRGT1FYQURPeE9RTA?oc=5",
-      "published": "2026-11-24T05:31:15Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOQ3RqNWFVcFdnMkhKYUp6NWlwR2MzQTZfSG9xb0NKZlhHY2xGVFFpOS1SS2Q0WVM1U0swSkluQmtEakZFRmdwYkV0RnR2VjVpMktWR0MxY1ZxRFY3akhicGRINUdkVzl6Vm5YOU80bW51d3owc0VQazMzX3dNekRWekV6VFJWMGR0RjVSY1hEenhsVXNtZEVfU0V5YXZaaktka1IyenpFbTBabXZqRGtmaWpXbXFmU1VQbGtKYUx0enlXbjQ?oc=5",
-      "published": "2026-11-23T14:15:00Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "US tech stocks rebound as Wall Street rallies on Jensen Huang's return to Nvidia - Anadolu Ajans\u0131",
-      "source": "Anadolu Ajans\u0131",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQVVhvV3VlUEpKRmljZHp0MjVVOXpaY2VMUHBQYk9QVlA0cWJ5dGxXclRkT0JCTklGalRycndSYkxkV0ltcWRFcEN4NG9qWjFXU2tUd3hpVU95NkcwNHZURkoyMG5hc1Z5T0xnTnlXLXpUWXdGeHdNeDRCY1hPSk1zU1pFV19SN2xGMDg4eVZvSTA4azBMY3dvMTF5Z1IyMkduRlpmaUhIaUlhbjhUM3FWdDZNOGhrcWZldDZwdw?oc=5",
-      "published": "2026-11-24T09:37:36Z",
-      "tone": "bullish"
+      "title": "Stock Market Midday, Nov. 25: Nasdaq Plunges 4% as AI Sell-Off Deepens and Inflation Remains Stubborn",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/25/stock-market-midday-nov-25-nasdaq-plunges-4-as-ai-sell-off-deepens-and-inflation-remains-stubborn/?.tsrc=rss",
+      "published": "2026-11-25T17:37:05Z",
+      "tone": "bearish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 19
+        "articles": 20
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 83
+        "articles": 90
       }
     ],
-    "headline_count": 132,
+    "headline_count": 140,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
