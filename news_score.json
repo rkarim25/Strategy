@@ -1,16 +1,16 @@
 {
-  "generated_at_utc": "2026-11-26T03:16:49Z",
+  "generated_at_utc": "2026-11-26T03:55:38Z",
   "window_days": 7,
-  "score": 4,
+  "score": 6,
   "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: South Korea's Kospi leads gains as tech rebound lifts Asia markets. Bearish offsets: Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - WPXI; Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business.",
+  "explanation": "6/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.; South Korea's Kospi leads gains as tech rebound lifts Asia markets. Bearish offsets: Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business; Wall St ends sharply lower on AI selloff, S&P 500, Dow in correction - Reuters.",
   "articles": [
     {
-      "title": "Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - WPXI",
-      "source": "WPXI",
-      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQY09HMDVfMG9pTnFCd1RlaXNYRWFHaDlVRndqZkJaQ3p4OTMwU2pRcFRBTnU5TUFuUmplb3ptT2h1b0xXUGpPam1DYzg3NkI3bVd3dmZEZ0w3VDVFU1F2TzU2c1V4SGNBMzJXYk5RelAxblRXZ2d6d2N0WDRtYTlQa3hpM3hOYWhZUnfSAZ4BQVVfeXFMUDRfa1JVazQ0VWtGWFo3aXpDSEFXZEFoT0RqbkdPTS1adjg4NmdjQy1JeU9NcW5KNHdaZ21qVEtIb1dnZDUxekgtTm5iNENzQl9Nd1dscGtlTDVySklieUtqZGh3RENfR19FamJxaEdLdEdZWUNIQWxKeDhkVTNybGJKdU5NOUtLU3JtRkJkRkduR3BkUkp1c01adlhxTFE?oc=5",
-      "published": "2026-11-25T17:34:51Z",
-      "tone": "bearish"
+      "title": "Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.",
+      "source": "24/7 Wall St.",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOQ3RqNWFVcFdnMkhKYUp6NWlwR2MzQTZfSG9xb0NKZlhHY2xGVFFpOS1SS2Q0WVM1U0swSkluQmtEakZFRmdwYkV0RnR2VjVpMktWR0MxY1ZxRFY3akhicGRINUdkVzl6Vm5YOU80bW51d3owc0VQazMzX3dNekRWekV6VFJWMGR0RjVSY1hEenhsVXNtZEVfU0V5YXZaaktka1IyenpFbTBabXZqRGtmaWpXbXFmU1VQbGtKYUx0enlXbjQ?oc=5",
+      "published": "2026-11-23T14:15:00Z",
+      "tone": "bullish"
     },
     {
       "title": "South Korea's Kospi leads gains as tech rebound lifts Asia markets",
@@ -34,10 +34,10 @@
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Midday, Nov. 25: Nasdaq Plunges 4% as AI Sell-Off Deepens and Inflation Remains Stubborn - The Motley Fool",
-      "source": "The Motley Fool",
-      "url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOOFdxSUtyREc5anF2S0ZYVWJ1LXpkRmhQS2dORXVhT3RvWkM0Qnh1V3pnXzBQSlFqZ2xGQVd0QmJiUHptZ0wtOE5IX0RCNTk3NXZzb1VNbXVxT182QlJuV2V5REdwYnlyZkVHUmEzZHR2cy1nQ1dPR3F2NzFRMXNnY2ktOVRFLTVUQ0ZYSUtCMWN3TkxLQWgyZFE2aE5SUFJlLW9QOHhBOXc3VjVlVXB4Z2hlMlgxV0dSODBoa3dRRXRfd1pQM1FtUU4tbDAzbXQzV25xRFl5SXhYakVWYS16ckJ2MGVtV3lXamx3QlZ2aw?oc=5",
-      "published": "2026-11-25T17:17:05Z",
+      "title": "Stocks Slump Again as Investors Fret About A.I., Tariffs and Inflation - The New York Times",
+      "source": "The New York Times",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE02aG9MTzVQV1FPaHZkWUlkbUctTTNOWWxwTHplcDc2akxGWU4xRy1MQndiMUxhU0tEN2Y5WkdRTlIxRU80aUxmbGNJOWVVdE12VjZ1YnM2NU8xN0VoX0ZmNVNrbDlGOEdLV0kzV19fcEJrNDVjUk1KZnhVMA?oc=5",
+      "published": "2026-11-25T21:32:42Z",
       "tone": "bearish"
     }
   ],
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 69
+        "articles": 87
       }
     ],
-    "headline_count": 117,
+    "headline_count": 135,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
