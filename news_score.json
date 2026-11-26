@@ -1,43 +1,43 @@
 {
-  "generated_at_utc": "2026-11-25T17:44:38Z",
+  "generated_at_utc": "2026-11-26T03:16:49Z",
   "window_days": 7,
-  "score": 2,
-  "label": "Bearish",
-  "explanation": "2/10 is bearish from a 7-day headline keyword scan. Bullish drivers: Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure. Bearish offsets: Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - Seattle Post-Intelligencer; Stock Market Today: Dow Falls 700 Points, Nasdaq Off 4%; Nutanix Dives On CEO Exit (Live Coverage).",
+  "score": 4,
+  "label": "Neutral",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: South Korea's Kospi leads gains as tech rebound lifts Asia markets. Bearish offsets: Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - WPXI; Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business.",
   "articles": [
     {
-      "title": "Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - Seattle Post-Intelligencer",
-      "source": "Seattle Post-Intelligencer",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOMm5OV1pUQXNqXzBpVlIwUFlFMEFCOFNCLWNaXzc2VW85VVNLd3B0b0h5dmlaNlVKX2lnTnJzaGpCWk5MYzFUNjhUbUVzcUF2RTk3QzQyYUVqbEtYZE9KRHhTZ1J1SlpHUHp3UV9FNHU5WUtzc2Z6UjlHdXJMY3JZT1BxSEk5cC00c3Z1RXdxQV9rN1poSnZN?oc=5",
-      "published": "2026-11-25T17:05:57Z",
+      "title": "Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - WPXI",
+      "source": "WPXI",
+      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQY09HMDVfMG9pTnFCd1RlaXNYRWFHaDlVRndqZkJaQ3p4OTMwU2pRcFRBTnU5TUFuUmplb3ptT2h1b0xXUGpPam1DYzg3NkI3bVd3dmZEZ0w3VDVFU1F2TzU2c1V4SGNBMzJXYk5RelAxblRXZ2d6d2N0WDRtYTlQa3hpM3hOYWhZUnfSAZ4BQVVfeXFMUDRfa1JVazQ0VWtGWFo3aXpDSEFXZEFoT0RqbkdPTS1adjg4NmdjQy1JeU9NcW5KNHdaZ21qVEtIb1dnZDUxekgtTm5iNENzQl9Nd1dscGtlTDVySklieUtqZGh3RENfR19FamJxaEdLdEdZWUNIQWxKeDhkVTNybGJKdU5NOUtLU3JtRkJkRkduR3BkUkp1c01adlhxTFE?oc=5",
+      "published": "2026-11-25T17:34:51Z",
       "tone": "bearish"
     },
     {
-      "title": "Stock Market Today: Dow Falls 700 Points, Nasdaq Off 4%; Nutanix Dives On CEO Exit (Live Coverage)",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/m/90407e46-3b17-34e8-8c82-527bf00b63e4/stock-market-today%3A-dow-falls.html?.tsrc=rss",
-      "published": "2026-11-25T16:43:58Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Bitcoin Falls Further as Inflation, Trump Tariffs and AI Selloff Rattle Markets",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://decrypt.co/383967/bitcoin-sinks-inflation-trump-tariffs-ai-selloff?.tsrc=rss",
-      "published": "2026-11-25T16:52:50Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Nasdaq-100 futures surge 7%, S&P 500 gain 4.3%, Dow up 2.6% in Wall Street rebound - Beinsure",
-      "source": "Beinsure",
-      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQbmJ5M2hjWGx2ckZoM3otNlo1OUg4cGpkbWh1SUdPVDRmV1RUekx4LXVEMDd4Rk1sNWdmN19aQ05BMUI1TEdpa2s1SXpMVW5iYWVDeUFYcDBnUDBfN3lmVXRKcWNoUFhrMFY0VXpNb0JBMjBwNU5xUkw5cFRFVlpvUXpNM01UU094NmhYT3FQYWVwaU5CTFQ5LTNOOWo?oc=5",
-      "published": "2026-11-23T14:33:17Z",
+      "title": "South Korea's Kospi leads gains as tech rebound lifts Asia markets",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html",
+      "published": "2026-11-26T01:45:52Z",
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Midday, Nov. 25: Nasdaq Plunges 4% as AI Sell-Off Deepens and Inflation Remains Stubborn",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/25/stock-market-midday-nov-25-nasdaq-plunges-4-as-ai-sell-off-deepens-and-inflation-remains-stubborn/?.tsrc=rss",
-      "published": "2026-11-25T17:37:05Z",
+      "title": "Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business",
+      "source": "Fox Business",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMGo2a2JDeFFQWXZZSUFuc1hYVkctMXBGZzVJWjhCSU4tV21qenB4bVNuLUJFTG1hakVYdGNlQ2tuRXFnOXlnSzFJVjZHWVg3V09EWVVhb1o5NVY3YWJpcHZ4MGFyYm9faWdPOGVsRERlakFST214NC1RZDA4UTBjdUZmYmZtOUdUOWZNNFE1M3dVdGVneWtKeWl4Sll0aFZFcW1qUUtFM2RfVUhkTGNJ0gG0AUFVX3lxTFBlZXlISGdZNkJyblRJX1V4NW9OQTFrYkNHWFZoazJzTDZZUHI4US1sT01jSkhtWVFxeUVqYkdJdzIwYmxjWFFsRTNMYWhUdk9wVWl3aVpUTmhvZi1IQ1ZJcFdKODc1TDdJb2tLZzZ0RzB6d3o4WERicXJ5OGNvcFZpTTl5RmhQRTRkWERGeUFPTmVUeU56dl9ObDNPcTgxeDU2bHlCaDFiSVdQaXlQMlozdzZ1Tw?oc=5",
+      "published": "2026-11-21T01:28:00Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Wall St ends sharply lower on AI selloff, S&P 500, Dow in correction - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOY0VmbDFSZy1pMm1jZlE3SG1PMDdjcHdmZnp3WWFQbTBSSHBndDktSEhpRFB4MkRYZUhTQXFhNm9YY0pwNlczMkxtOF9ZMVA2R1VHN2k1MmE3VkN6d292amFiX1JKUUxVcmN4NmxFTGYwbkhlakpkeTZ4eE5yRkxxTTlubE9PUU1jWmtrZVF6RjhiMWhhYmp2Q29Ucy1aMm13T0F0WTMwSGRBZWdQV3pyRjlZRm9pUEVnV0EzQQ?oc=5",
+      "published": "2026-11-21T01:40:06Z",
+      "tone": "bearish"
+    },
+    {
+      "title": "Stock Market Midday, Nov. 25: Nasdaq Plunges 4% as AI Sell-Off Deepens and Inflation Remains Stubborn - The Motley Fool",
+      "source": "The Motley Fool",
+      "url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOOFdxSUtyREc5anF2S0ZYVWJ1LXpkRmhQS2dORXVhT3RvWkM0Qnh1V3pnXzBQSlFqZ2xGQVd0QmJiUHptZ0wtOE5IX0RCNTk3NXZzb1VNbXVxT182QlJuV2V5REdwYnlyZkVHUmEzZHR2cy1nQ1dPR3F2NzFRMXNnY2ktOVRFLTVUQ0ZYSUtCMWN3TkxLQWgyZFE2aE5SUFJlLW9QOHhBOXc3VjVlVXB4Z2hlMlgxV0dSODBoa3dRRXRfd1pQM1FtUU4tbDAzbXQzV25xRFl5SXhYakVWYS16ckJ2MGVtV3lXamx3QlZ2aw?oc=5",
+      "published": "2026-11-25T17:17:05Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 69
       }
     ],
-    "headline_count": 140,
+    "headline_count": 117,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
