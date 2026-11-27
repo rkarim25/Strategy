@@ -1,16 +1,23 @@
 {
-  "generated_at_utc": "2026-11-27T03:55:23Z",
+  "generated_at_utc": "2026-11-27T17:07:13Z",
   "window_days": 7,
-  "score": 4,
-  "label": "Neutral",
-  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times; U.S. stock futures rise sharply; Nasdaq up 1.7% in holiday-thinned trade. Bearish offsets: Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - KVOA; Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business.",
+  "score": 8,
+  "label": "Bullish",
+  "explanation": "8/10 is bullish from a 7-day headline keyword scan. Bullish drivers: NYSE\u2019s Michael Reinking Dives into Latest Stock Market Choppiness; Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times. Bearish offsets: The S&P 500 is in a correction. Bear markets and recessions don't always follow; Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business.",
   "articles": [
     {
-      "title": "Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - KVOA",
-      "source": "KVOA",
-      "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxOZGJpeFAwblg1ZkhTczJPc1YxbkItWnVHUEFzLVFaT0ZmMU5sbU9sZVZlT0F0SUdOTS1ScDdUUlJCQzFvZjV0d0pQeWJqSVZfU3dfQ2tXZnVCOHFGSk0yTzQyVHpMVjdiam1qbEhVaFBJRC1jdnlJelotQmpCZUhnV3k2WFhHMl91MVoyLTVsZkdCQ0FTZmU1UzNhM1B2UmJqbEttOHRrYm91TlhYazZibHBBdllLRndyS085MXRhNnZvb3M5UGtLZVhWek13R3F3end4Rl9YcWd0ZkgyR1hjNWR1eHJKdTA1UmpWYmZGQUhtTVlLaFhZ?oc=5",
-      "published": "2026-11-25T17:34:00Z",
+      "title": "The S&P 500 is in a correction. Bear markets and recessions don't always follow",
+      "source": "CNBC Markets",
+      "url": "https://www.cnbc.com/2026/11/27/the-sp-500-is-in-a-correction-bear-markets-and-recessions-dont-always-follow.html",
+      "published": "2026-11-27T13:21:56Z",
       "tone": "bearish"
+    },
+    {
+      "title": "NYSE\u2019s Michael Reinking Dives into Latest Stock Market Choppiness",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/video/nyse-michael-reinking-dives-latest-162316778.html?.tsrc=rss",
+      "published": "2026-11-27T16:23:16Z",
+      "tone": "bullish"
     },
     {
       "title": "Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times",
@@ -20,25 +27,18 @@
       "tone": "bullish"
     },
     {
-      "title": "U.S. stock futures rise sharply; Nasdaq up 1.7% in holiday-thinned trade",
-      "source": "Yahoo Finance S&P 500",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/u-stock-futures-rise-holiday-003122658.html?.tsrc=rss",
-      "published": "2026-11-27T00:31:22Z",
-      "tone": "bullish"
-    },
-    {
-      "title": "Morning Wrap: ASX to rise, European markets rally with Wall Street shut, S&P 500 futures climb - Market Index",
-      "source": "Market Index",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPRnd1cmVwckhHNm4xbEJ4NmprVm52cmEzRFh2NDJUdV85SmZkYmdISDdFMjQ3SWM4Z3l0ZGJfNnVjSS1yZnVFdGFXN3hZVVFoRWdybGN3Rm5jQ1hMOVRDSWU2eXJ2WG5iRm5YNXpJUS1saWlsZ2VkdTBrU3BQVjdEOTRrc21fVFJmekZkS3ZVU1IxNU1vejFJWTYtVXNlWDRCRjBXYmVjODNIcnM?oc=5",
-      "published": "2026-11-26T21:44:21Z",
-      "tone": "bullish"
-    },
-    {
       "title": "Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business",
       "source": "Fox Business",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMGo2a2JDeFFQWXZZSUFuc1hYVkctMXBGZzVJWjhCSU4tV21qenB4bVNuLUJFTG1hakVYdGNlQ2tuRXFnOXlnSzFJVjZHWVg3V09EWVVhb1o5NVY3YWJpcHZ4MGFyYm9faWdPOGVsRERlakFST214NC1RZDA4UTBjdUZmYmZtOUdUOWZNNFE1M3dVdGVneWtKeWl4Sll0aFZFcW1qUUtFM2RfVUhkTGNJ0gG0AUFVX3lxTFBlZXlISGdZNkJyblRJX1V4NW9OQTFrYkNHWFZoazJzTDZZUHI4US1sT01jSkhtWVFxeUVqYkdJdzIwYmxjWFFsRTNMYWhUdk9wVWl3aVpUTmhvZi1IQ1ZJcFdKODc1TDdJb2tLZzZ0RzB6d3o4WERicXJ5OGNvcFZpTTl5RmhQRTRkWERGeUFPTmVUeU56dl9ObDNPcTgxeDU2bHlCaDFiSVdQaXlQMlozdzZ1Tw?oc=5",
       "published": "2026-11-21T01:28:00Z",
       "tone": "bearish"
+    },
+    {
+      "title": "Stocks Rally as AI Fears Fade. Call It a Black Friday Bounce.",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/m/05f1578d-68a3-3f47-b2db-e2e55e73dfb0/stocks-rally-as-ai-fears.html?.tsrc=rss",
+      "published": "2026-11-27T16:31:19Z",
+      "tone": "bullish"
     }
   ],
   "data_source": {
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 18
+        "articles": 19
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 66
+        "articles": 73
       }
     ],
-    "headline_count": 114,
+    "headline_count": 122,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
