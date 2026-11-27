@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-26T17:28:17Z",
+  "generated_at_utc": "2026-11-27T03:22:17Z",
   "window_days": 7,
-  "score": 5,
+  "score": 4,
   "label": "Neutral",
-  "explanation": "5/10 is neutral from a 7-day headline keyword scan. Bearish offsets: Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - KVOA; Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business.",
+  "explanation": "4/10 is neutral from a 7-day headline keyword scan. Bullish drivers: Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times; U.S. stock futures rise sharply; Nasdaq up 1.7% in holiday-thinned trade. Bearish offsets: Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - KVOA; Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business.",
   "articles": [
     {
       "title": "Anxiety over the AI boom, inflation and tariffs drag Wall Street lower and the S&P 500 slumps 2.2% - KVOA",
@@ -13,31 +13,31 @@
       "tone": "bearish"
     },
     {
+      "title": "Stocks Surge as Nvidia Sets Off Tech Rally - The New York Times",
+      "source": "The New York Times",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPNXRXMlFUQkJfcnJPMGVlaWZRejZzSnVuRWJiV1E3TUM3c3pkWkxSSGZJaGtCcEc0Uzdja0xzbFFNcWRIZEtZNlFHMHNDclAzVzJqUHU2Z2lFRE51V3AwSWV1cnRoamFsbDVleTdVUFVhSElYMEhXTlhiNkhQNWtSZlRGT1FYQURPeE9RTA?oc=5",
+      "published": "2026-11-24T05:31:15Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "U.S. stock futures rise sharply; Nasdaq up 1.7% in holiday-thinned trade",
+      "source": "Yahoo Finance S&P 500",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/u-stock-futures-rise-holiday-003122658.html?.tsrc=rss",
+      "published": "2026-11-27T00:31:22Z",
+      "tone": "bullish"
+    },
+    {
+      "title": "Morning Wrap: ASX to rise, European markets rally with Wall Street shut, S&P 500 futures climb - Market Index",
+      "source": "Market Index",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPRnd1cmVwckhHNm4xbEJ4NmprVm52cmEzRFh2NDJUdV85SmZkYmdISDdFMjQ3SWM4Z3l0ZGJfNnVjSS1yZnVFdGFXN3hZVVFoRWdybGN3Rm5jQ1hMOVRDSWU2eXJ2WG5iRm5YNXpJUS1saWlsZ2VkdTBrU3BQVjdEOTRrc21fVFJmekZkS3ZVU1IxNU1vejFJWTYtVXNlWDRCRjBXYmVjODNIcnM?oc=5",
+      "published": "2026-11-26T21:44:21Z",
+      "tone": "bullish"
+    },
+    {
       "title": "Wall Street suffers historic losses as Dow, S&P 500 plunge into correction territory - Fox Business",
       "source": "Fox Business",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMGo2a2JDeFFQWXZZSUFuc1hYVkctMXBGZzVJWjhCSU4tV21qenB4bVNuLUJFTG1hakVYdGNlQ2tuRXFnOXlnSzFJVjZHWVg3V09EWVVhb1o5NVY3YWJpcHZ4MGFyYm9faWdPOGVsRERlakFST214NC1RZDA4UTBjdUZmYmZtOUdUOWZNNFE1M3dVdGVneWtKeWl4Sll0aFZFcW1qUUtFM2RfVUhkTGNJ?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMGo2a2JDeFFQWXZZSUFuc1hYVkctMXBGZzVJWjhCSU4tV21qenB4bVNuLUJFTG1hakVYdGNlQ2tuRXFnOXlnSzFJVjZHWVg3V09EWVVhb1o5NVY3YWJpcHZ4MGFyYm9faWdPOGVsRERlakFST214NC1RZDA4UTBjdUZmYmZtOUdUOWZNNFE1M3dVdGVneWtKeWl4Sll0aFZFcW1qUUtFM2RfVUhkTGNJ0gG0AUFVX3lxTFBlZXlISGdZNkJyblRJX1V4NW9OQTFrYkNHWFZoazJzTDZZUHI4US1sT01jSkhtWVFxeUVqYkdJdzIwYmxjWFFsRTNMYWhUdk9wVWl3aVpUTmhvZi1IQ1ZJcFdKODc1TDdJb2tLZzZ0RzB6d3o4WERicXJ5OGNvcFZpTTl5RmhQRTRkWERGeUFPTmVUeU56dl9ObDNPcTgxeDU2bHlCaDFiSVdQaXlQMlozdzZ1Tw?oc=5",
       "published": "2026-11-21T01:28:00Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "How Trump\u2019s latest tariff moves hand India an edge over rival Asian exporters",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/26/trump-us-tariff-india-trade.html",
-      "published": "2026-11-26T04:12:18Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "U.S. tariff-hike threats pile pressure on partners to sign trade deals",
-      "source": "CNBC Markets",
-      "url": "https://www.cnbc.com/2026/11/26/us-tariffs-hike-trade-agreement.html",
-      "published": "2026-11-26T12:46:55Z",
-      "tone": "bearish"
-    },
-    {
-      "title": "Wall St ends sharply lower on AI selloff, S&P 500, Dow in correction - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOY0VmbDFSZy1pMm1jZlE3SG1PMDdjcHdmZnp3WWFQbTBSSHBndDktSEhpRFB4MkRYZUhTQXFhNm9YY0pwNlczMkxtOF9ZMVA2R1VHN2k1MmE3VkN6d292amFiX1JKUUxVcmN4NmxFTGYwbkhlakpkeTZ4eE5yRkxxTTlubE9PUU1jWmtrZVF6RjhiMWhhYmp2Q29Ucy1aMm13T0F0WTMwSGRBZWdQV3pyRjlZRm9pUEVnV0EzQQ?oc=5",
-      "published": "2026-11-21T01:40:06Z",
       "tone": "bearish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 20
+        "articles": 18
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 72
+        "articles": 68
       }
     ],
-    "headline_count": 122,
+    "headline_count": 116,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
