@@ -1,13 +1,13 @@
 {
-  "generated_at_utc": "2026-11-27T17:07:11Z",
+  "generated_at_utc": "2026-11-28T02:59:43Z",
   "data_asof": "2026-11-27",
   "daily_rows": 5945,
-  "quote_price": 57.935001373291016,
+  "quote_price": 58.099998474121094,
   "quote_timestamp": "2026-11-27",
   "quote_source": "Yahoo Finance chart endpoint",
   "sources": {
     "daily_yahoo": {
-      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1795885630&interval=1d&events=history&includeAdjustedClose=true",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/EEM?period1=0&period2=1795921183&interval=1d&events=history&includeAdjustedClose=true",
       "ok": true,
       "status": 200
     }
@@ -26,12 +26,12 @@
   "official_signal": {
     "latest": {
       "date": "2026-11-27",
-      "close": 57.935001373291016
+      "close": 58.099998474121094
     },
-    "latestSma": 59.121750068664554,
+    "latestSma": 59.12999992370605,
     "highWater": 71.20999908447266,
     "highWaterDate": "2026-06-22",
-    "latestDd": -0.1864204168214384,
+    "latestDd": -0.18410336720830267,
     "regime": "tier2",
     "entryClose": 67.56999969482422,
     "entryDate": "2026-07-06",
@@ -48,12 +48,12 @@
   "provisional_signal": {
     "latest": {
       "date": "2026-11-27",
-      "close": 57.935001373291016
+      "close": 58.099998474121094
     },
-    "latestSma": 58.96650009155273,
+    "latestSma": 58.98299980163574,
     "highWater": 71.20999908447266,
     "highWaterDate": "2026-06-22",
-    "latestDd": -0.1864204168214384,
+    "latestDd": -0.18410336720830267,
     "regime": "tier2",
     "entryClose": 67.56999969482422,
     "entryDate": "2026-07-06",
@@ -71,7 +71,7 @@
     "last_observed_asof": "2026-11-27",
     "last_observed_target_leverage": 0,
     "last_observed_target_label": "cash",
-    "last_checked_at_utc": "2026-11-27T17:07:11Z",
+    "last_checked_at_utc": "2026-11-28T02:59:43Z",
     "last_email_sent_on": "2026-11-13",
     "last_transition": {
       "id": "2026-11-11:1->2026-11-13:0",
