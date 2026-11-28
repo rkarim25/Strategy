@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-28T02:59:46Z",
+  "generated_at_utc": "2026-11-28T03:41:52Z",
   "window_days": 7,
-  "score": 10,
+  "score": 9,
   "label": "Bullish",
-  "explanation": "10/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Futures Rally as Tech Rebound Gains Momentum: Markets Wrap - Bloomberg.com; Wall Street ends higher as AI stocks rebound, Nasdaq leads gains - Investing.com. Bearish offsets: The S&P 500 is in a correction. Bear markets and recessions don't always follow.",
+  "explanation": "9/10 is bullish from a 7-day headline keyword scan. Bullish drivers: US Futures Rally as Tech Rebound Gains Momentum: Markets Wrap - Bloomberg.com; Wall Street ends higher as AI stocks rebound, Nasdaq leads gains - Investing.com. Bearish offsets: The S&P 500 is in a correction. Bear markets and recessions don't always follow.",
   "articles": [
     {
       "title": "US Futures Rally as Tech Rebound Gains Momentum: Markets Wrap - Bloomberg.com",
@@ -34,10 +34,10 @@
       "tone": "bullish"
     },
     {
-      "title": "Stock Market Today: Dow, S&P 500, and Nasdaq Surge as Nvidia Leads a Major AI Rebound - 24/7 Wall St.",
-      "source": "24/7 Wall St.",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOQ3RqNWFVcFdnMkhKYUp6NWlwR2MzQTZfSG9xb0NKZlhHY2xGVFFpOS1SS2Q0WVM1U0swSkluQmtEakZFRmdwYkV0RnR2VjVpMktWR0MxY1ZxRFY3akhicGRINUdkVzl6Vm5YOU80bW51d3owc0VQazMzX3dNekRWekV6VFJWMGR0RjVSY1hEenhsVXNtZEVfU0V5YXZaaktka1IyenpFbTBabXZqRGtmaWpXbXFmU1VQbGtKYUx0enlXbjQ?oc=5",
-      "published": "2026-11-23T14:15:00Z",
+      "title": "Stock Market Today, Nov. 27: Anthropic Jumps 11%, Reclaiming Its $83 IPO Price as Wall Street Rallies - The Motley Fool",
+      "source": "The Motley Fool",
+      "url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxORWJEcWhQS3hJNmxCdGYyRjBCSnR0aG5oajhVc0QwdmxvY0NGWlpHYlExSFQwaDJmY21DdUR6NTFIT0thY0RWQUFib3NZNHBFekZEcDNTZlU4RC1wVGV5dVVKZklUOVpQNi1OdXM3UzFyWnpxU1MyTFJOLWU5SXo4WXJHYW1qVXpOd3piZ0dCd3JIaExJeWpzTG53WkR4bktWdUVxcjJYMndKenZlZVJ6bVN6NEcyVF9fRm5Cd20zcGN3a2toZWhCd0dwemN3N2xLZVZGNmlUX1NLZVhreUs4QUhSMHo3dDlJQ2Q2Y0VYRkw?oc=5",
+      "published": "2026-11-27T21:51:03Z",
       "tone": "bullish"
     }
   ],
@@ -48,7 +48,7 @@
         "ok": true,
         "status": 200,
         "name": "Yahoo Finance S&P 500",
-        "articles": 16
+        "articles": 17
       },
       {
         "url": "https://feeds.content.dowjones.io/public/rss/mw_marketpulse",
@@ -69,10 +69,10 @@
         "ok": true,
         "status": 200,
         "name": "Google News market query",
-        "articles": 90
+        "articles": 72
       }
     ],
-    "headline_count": 136,
+    "headline_count": 119,
     "method": "RSS headlines from the last 7 days scored with weighted bullish/bearish keyword lists."
   },
   "limitations": [
